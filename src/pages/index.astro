@@ -1,55 +1,71 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SpiderWeb from '../components/SpiderWeb.astro';
 import { SELECTED, categoryLabel } from '../lib/kb.mjs';
 import { getTitle, getCategory, getExcerpt, href } from '../lib/notes.mjs';
 
 const notes = await getCollection('notes');
 
-// 按精选目录顺序分组
-const order = SELECTED.map(categoryLabel);
-const groups = new Map(order.map((c) => [c, []]));
-for (const n of notes) {
+const cats = SELECTED.map(categoryLabel);
+const counts = Object.fromEntries(cats.map((c) => [c, 0]));
+const items = notes.map((n) => {
   const cat = getCategory(n);
-  if (!groups.has(cat)) groups.set(cat, []);
-  groups.get(cat).push(n);
-}
-for (const list of groups.values()) {
-  list.sort((a, b) => getTitle(a).localeCompare(getTitle(b), 'zh'));
-}
-const total = notes.length;
+  if (cat in counts) counts[cat]++;
+  return { id: n.id, title: getTitle(n), excerpt: getExcerpt(n), cat };
+});
+items.sort((a, b) => a.cat.localeCompare(b.cat, 'zh') || a.title.localeCompare(b.title, 'zh'));
+const total = items.length;
 ---
 
 <BaseLayout description="跳蛛先生的 AIGC 创作方法论公开知识库 —— 杂志风 · 可游的知识网络。">
   <section class="hero">
-    <svg class="web" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      {Array.from({ length: 16 }).map((_, i) => {
-        const a = (i / 16) * Math.PI * 2;
-        return <line x1="400" y1="200" x2={400 + Math.cos(a) * 600} y2={200 + Math.sin(a) * 600} stroke="var(--accent)" stroke-width="0.6" />;
-      })}
-      {Array.from({ length: 7 }).map((_, r) => (
-        <circle cx="400" cy="200" r={(r + 1) * 45} fill="none" stroke="var(--accent)" stroke-width="0.5" />
-      ))}
-    </svg>
-    <h1>蛛网之上</h1>
-    <p>跳蛛先生的 AIGC 创作方法论知识库。{total} 篇可复用的 insight，织成一张可游的知识网。</p>
+    <SpiderWeb />
+    <div class="hero-inner">
+      <h1>蛛网之上</h1>
+      <p>跳蛛先生的 AIGC 创作方法论知识库。{total} 篇可复用的 insight，织成一张可游的知识网。</p>
+    </div>
   </section>
 
-  {order.map((cat) => {
-    const list = groups.get(cat) || [];
-    if (!list.length) return null;
-    return (
-      <section class="section">
-        <h2>{cat} <span class="count">{list.length} 篇</span></h2>
-        <div class="cards">
-          {list.map((n) => (
-            <a class="card" href={href(n.id)}>
-              <h3>{getTitle(n)}</h3>
-              <p>{getExcerpt(n)}</p>
-            </a>
-          ))}
-        </div>
-      </section>
-    );
-  })}
+  <div class="explore">
+    <div class="chips" id="chips">
+      <button class="chip is-active" data-cat="*">全部 <i>{total}</i></button>
+      {cats.map((c) => (
+        <button class="chip" data-cat={c}>{c} <i>{counts[c]}</i></button>
+      ))}
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="cards" id="grid">
+      {items.map((n) => (
+        <a class="card" data-cat={n.cat} data-title={n.title} href={href(n.id)}>
+          <span class="card-cat">{n.cat}</span>
+          <h3>{n.title}</h3>
+          <p>{n.excerpt}</p>
+        </a>
+      ))}
+    </div>
+    <p class="empty" id="empty" hidden>该分类暂无内容</p>
+  </section>
 </BaseLayout>
+
+<script>
+  const chips = [...document.querySelectorAll('.chip')];
+  const cards = [...document.querySelectorAll('#grid .card')];
+  const empty = document.getElementById('empty');
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      const cat = chip.dataset.cat;
+      let shown = 0;
+      cards.forEach((card) => {
+        const visible = cat === '*' || card.dataset.cat === cat;
+        card.style.display = visible ? '' : 'none';
+        if (visible) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+    });
+  });
+</script>

@@ -1,0 +1,113 @@
+---
+// 动态丝网背景：canvas 粒子网络，丝线按距离淡出，鼠标如触网般牵动丝线。
+// 主题感知（读 --accent）、尊重 prefers-reduced-motion、HiDPI 清晰、离屏暂停。
+---
+<canvas id="spiderweb" class="spiderweb" aria-hidden="true"></canvas>
+
+<script>
+  const canvas = document.getElementById('spiderweb');
+  const host = canvas?.parentElement;
+  if (canvas && host) {
+    const ctx = canvas.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const hexToRgb = (h) => {
+      h = (h || '').trim().replace('#', '');
+      if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+      const n = parseInt(h || '7b5cff', 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    };
+    let [ar, ag, ab] = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--accent'));
+    matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => {
+      [ar, ag, ab] = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--accent'));
+    });
+
+    let W = 0, H = 0, DPR = 1, nodes = [];
+    const mouse = { x: -9999, y: -9999, active: false };
+    const MAXD = 150;
+
+    function resize() {
+      const rect = host.getBoundingClientRect();
+      DPR = Math.min(devicePixelRatio || 1, 2);
+      W = rect.width; H = rect.height;
+      canvas.width = W * DPR; canvas.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      const target = Math.max(28, Math.min(110, Math.floor((W * H) / 15000)));
+      nodes = Array.from({ length: target }, () => ({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: reduce ? 0 : (Math.random() - 0.5) * 0.22,
+        vy: reduce ? 0 : (Math.random() - 0.5) * 0.22,
+      }));
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, W, H);
+      for (const n of nodes) {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+        if (mouse.active) {
+          const dx = mouse.x - n.x, dy = mouse.y - n.y, d = Math.hypot(dx, dy) || 1;
+          if (d < 170) { n.x += (dx / d) * 0.45; n.y += (dy / d) * 0.45; }
+        }
+      }
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        for (let j = i + 1; j < nodes.length; j++) {
+          const b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx, dy);
+          if (d < MAXD) {
+            const o = (1 - d / MAXD) * 0.45;
+            ctx.strokeStyle = `rgba(${ar},${ag},${ab},${o})`;
+            ctx.lineWidth = 0.55;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+        ctx.fillStyle = `rgba(${ar},${ag},${ab},0.55)`;
+        ctx.beginPath(); ctx.arc(a.x, a.y, 1.1, 0, 6.2832); ctx.fill();
+      }
+      if (mouse.active) {
+        for (const n of nodes) {
+          const dx = mouse.x - n.x, dy = mouse.y - n.y, d = Math.hypot(dx, dy);
+          if (d < 210) {
+            const o = (1 - d / 210) * 0.85;
+            ctx.strokeStyle = `rgba(${ar},${ag},${ab},${o})`;
+            ctx.lineWidth = 0.7;
+            ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(n.x, n.y); ctx.stroke();
+          }
+        }
+      }
+    }
+
+    let raf = 0, running = false;
+    function loop() { render(); raf = requestAnimationFrame(loop); }
+    function start() { if (running || reduce) return; running = true; loop(); }
+    function stop() { running = false; cancelAnimationFrame(raf); }
+
+    host.addEventListener('pointermove', (e) => {
+      const r = host.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.active = true;
+    });
+    host.addEventListener('pointerleave', () => { mouse.active = false; mouse.x = mouse.y = -9999; });
+    addEventListener('resize', () => { resize(); if (reduce) render(); });
+
+    // 离屏暂停，省电
+    new IntersectionObserver((es) => {
+      es.forEach((e) => (e.isIntersecting ? start() : stop()));
+    }).observe(host);
+
+    resize();
+    reduce ? render() : start();
+  }
+</script>
+
+<style>
+  .spiderweb {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+</style>

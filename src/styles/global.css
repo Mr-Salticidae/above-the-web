@@ -84,11 +84,74 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 /* 页脚 */
 .site-footer { border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .82rem; padding: 2.5rem 1.5rem; text-align: center; }
 
-/* 首页 */
-.hero { text-align: center; padding: 4rem 1.5rem 2rem; position: relative; overflow: hidden; }
-.hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 6vw, 4rem); margin: .2em 0; letter-spacing: .06em; }
-.hero p { color: var(--ink-soft); max-width: 34rem; margin: .6rem auto 0; }
-.hero .web { position: absolute; inset: 0; z-index: -1; opacity: .14; }
+/* 顶栏右侧操作区 + 搜索 */
+.header-actions { display: flex; align-items: center; gap: 1rem; }
+.search-trigger {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-family: var(--sans); font-size: .85rem; color: var(--ink-soft);
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  border: 1px solid var(--line); border-radius: 999px; padding: .4rem .8rem; cursor: pointer;
+  transition: border-color .15s ease, color .15s ease;
+}
+.search-trigger:hover { border-color: var(--accent); color: var(--ink); }
+.search-trigger kbd {
+  font-family: var(--sans); font-size: .68rem; color: var(--ink-soft);
+  border: 1px solid var(--line); border-radius: 4px; padding: .05em .35em; background: var(--paper);
+}
+@media (max-width: 560px) { .search-trigger span, .search-trigger kbd { display: none; } .gh-link { display: none; } }
+
+/* 搜索弹窗 */
+.search-modal {
+  position: fixed; inset: 0; z-index: 50;
+  background: color-mix(in srgb, #000 45%, transparent);
+  backdrop-filter: blur(3px);
+  display: flex; align-items: flex-start; justify-content: center; padding: 8vh 1rem 1rem;
+}
+.search-modal[hidden] { display: none; }
+.search-panel {
+  position: relative; width: min(40rem, 100%);
+  background: var(--paper); border: 1px solid var(--line); border-radius: 16px;
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); padding: 1.5rem;
+}
+.search-close {
+  position: absolute; top: .8rem; right: 1rem; border: none; background: none;
+  color: var(--ink-soft); font-size: 1.1rem; cursor: pointer; line-height: 1;
+}
+.search-panel :global(.pagefind-ui) { --pagefind-ui-primary: var(--accent); --pagefind-ui-text: var(--ink); --pagefind-ui-background: var(--paper); --pagefind-ui-border: var(--line); --pagefind-ui-font: var(--sans); }
+
+/* 首页 hero —— 动态丝网 + 辉光景深 */
+.hero {
+  position: relative; overflow: hidden;
+  min-height: 62vh; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 4rem 1.5rem 3rem;
+  background:
+    radial-gradient(60% 70% at 50% 35%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    radial-gradient(40% 50% at 80% 80%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%);
+}
+.hero-inner { position: relative; z-index: 1; }
+.hero h1 {
+  font-family: var(--serif); font-size: clamp(2.6rem, 7vw, 4.6rem); margin: .1em 0; letter-spacing: .08em;
+  text-shadow: 0 2px 40px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.hero p { color: var(--ink-soft); max-width: 34rem; margin: .8rem auto 0; font-size: 1.05rem; }
+
+/* 分类筛选条 */
+.explore { position: sticky; top: 4rem; z-index: 15;
+  background: color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line); }
+.chips { max-width: 72rem; margin: 0 auto; padding: .9rem 1.5rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+.chip {
+  font-family: var(--sans); font-size: .85rem; color: var(--ink-soft);
+  background: none; border: 1px solid var(--line); border-radius: 999px; padding: .35rem .9rem; cursor: pointer;
+  transition: all .15s ease;
+}
+.chip i { font-style: normal; opacity: .6; font-size: .76em; margin-left: .25em; }
+.chip:hover { border-color: var(--accent); color: var(--ink); }
+.chip.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.chip.is-active i { opacity: .85; }
+
+.card-cat { display: block; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; }
+.empty { text-align: center; color: var(--ink-soft); padding: 3rem 0; }
 
 .section { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem; }
 .section > h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 1.2rem; display: flex; align-items: baseline; gap: .6rem; }
