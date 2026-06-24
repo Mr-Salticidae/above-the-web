@@ -11,9 +11,11 @@ const BASE = process.env.BASE_PATH || '/above-the-web';
 
 // 构建期建立 wikilink 映射（依赖 sync 已把 kb-content 拉好）
 const linkMap = buildLinkMap();
+// base 归一化：BASE_PATH=/ 时拼 `${BASE}/${slug}` 会得到 //slug（协议相对 URL，全站内链失效）。
+const BASE_PREFIX = BASE.endsWith('/') ? BASE.slice(0, -1) : BASE;
 const resolve = (target) => {
   const slug = linkMap.get(target);
-  return slug ? `${BASE}/${encodeURI(slug)}/` : null;
+  return slug ? `${BASE_PREFIX}/${encodeURI(slug)}/` : null;
 };
 
 export default defineConfig({
