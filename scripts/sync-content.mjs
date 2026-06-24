@@ -9,13 +9,14 @@ import path from 'node:path';
 const REPO = 'https://github.com/Mr-Salticidae/knowledge-base.git';
 const DIR = 'kb-content';
 
-// v1 精选发布白名单（skill存档/仓库维护/代码/对外分发 暂不发）
+// 精选发布白名单（仓库维护/代码/对外分发 暂不发）
 const SELECTED = [
   '04_方法论与洞察',
   '03_prompt模板库',
   '01_sref档案',
   '02_参数行为档案',
   '05_视觉系统',
+  '07_skill存档',
 ];
 
 function run(cmd, opts = {}) {

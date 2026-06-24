@@ -3,19 +3,57 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SpiderWeb from '../components/SpiderWeb.astro';
 import { SELECTED, categoryLabel } from '../lib/kb.mjs';
-import { getTitle, getCategory, getExcerpt, href } from '../lib/notes.mjs';
+import { getTitle, getCategory, getSubCategory, getExcerpt, href } from '../lib/notes.mjs';
 
 const notes = await getCollection('notes');
 
 const cats = SELECTED.map(categoryLabel);
 const counts = Object.fromEntries(cats.map((c) => [c, 0]));
+
+// 栏目 → 子栏目（保序）→ 计数
+const subOf = Object.fromEntries(cats.map((c) => [c, new Map()]));
+
 const items = notes.map((n) => {
   const cat = getCategory(n);
+  const sub = getSubCategory(n);
   if (cat in counts) counts[cat]++;
-  return { id: n.id, title: getTitle(n), excerpt: getExcerpt(n), cat };
+  if (sub && subOf[cat]) subOf[cat].set(sub, (subOf[cat].get(sub) || 0) + 1);
+  return { id: n.id, title: getTitle(n), excerpt: getExcerpt(n), cat, sub };
 });
-items.sort((a, b) => a.cat.localeCompare(b.cat, 'zh') || a.title.localeCompare(b.title, 'zh'));
+items.sort(
+  (a, b) =>
+    a.cat.localeCompare(b.cat, 'zh') ||
+    (a.sub || '').localeCompare(b.sub || '', 'zh') ||
+    a.title.localeCompare(b.title, 'zh')
+);
 const total = items.length;
+
+// 栏目一句话定位，给每个分区一点编辑性引导
+const DESC = {
+  '方法论与洞察': '可复用的创作心法、审美判断与踩坑记录。',
+  'prompt模板库': '可直接套用的提示词模板与案例复盘。',
+  'sref档案': '风格参考码（sref）的实测与归档。',
+  '参数行为档案': '模型参数的行为规律与边界实验。',
+  '视觉系统': 'IP 视觉系统与世界观设定。',
+  'skill存档': 'AIGC 创作技能包（Skill）的存档与说明，按技能分簇。',
+};
+
+// 组装分区结构：每栏目 → 无子类的散篇(loose) + 各子类簇(subs)，均按 SELECTED 顺序
+const groups = cats.map((cat) => {
+  const catItems = items.filter((i) => i.cat === cat);
+  const loose = catItems.filter((i) => !i.sub);
+  const subs = [...subOf[cat].keys()].map((name) => ({
+    name,
+    items: catItems.filter((i) => i.sub === name),
+  }));
+  return { cat, count: counts[cat], desc: DESC[cat] || '', loose, subs };
+});
+
+// 子栏目数据 + 栏目真实总数，交给前端脚本驱动二级筛选条
+const subsByCat = Object.fromEntries(
+  cats.map((c) => [c, [...subOf[c].entries()].map(([name, n]) => ({ name, n }))])
+);
+const catCounts = counts;
 ---
 
 <BaseLayout description="跳蛛先生的 AIGC 创作方法论公开知识库 —— 杂志风 · 可游的知识网络。">
@@ -23,7 +61,10 @@ const total = items.length;
     <SpiderWeb />
     <div class="hero-inner">
       <h1>蛛网之上</h1>
-      <p>跳蛛先生的 AIGC 创作方法论知识库。{total} 篇可复用的 insight，织成一张可游的知识网。</p>
+      <p>
+        跳蛛先生的 AIGC 创作方法论知识库。<span class="count-up" id="hero-count" data-target={total}>{total}</span>
+        篇可复用的 insight，织成一张可游的知识网。
+      </p>
     </div>
   </section>
 
@@ -34,38 +75,141 @@ const total = items.length;
         <button class="chip" data-cat={c}>{c} <i>{counts[c]}</i></button>
       ))}
     </div>
+    <div class="subchips" id="subchips" hidden></div>
   </div>
 
   <section class="section">
-    <div class="cards" id="grid">
-      {items.map((n) => (
-        <a class="card" data-cat={n.cat} data-title={n.title} href={href(n.id)}>
-          <span class="card-cat">{n.cat}</span>
-          <h3>{n.title}</h3>
-          <p>{n.excerpt}</p>
-        </a>
-      ))}
+    <div class="section-head">
+      <span class="result-count" id="result-count"><b>{total}</b> / {total} 篇</span>
     </div>
+
+    {groups.map((g) => (
+      <div class="cat-block" data-cat={g.cat}>
+        <header class="cat-head">
+          <h2>{g.cat}</h2>
+          <span class="cat-count">{g.count} 篇</span>
+          {g.desc && <p class="cat-desc">{g.desc}</p>}
+        </header>
+
+        {g.loose.length > 0 && (
+          <div class="cards cards-loose">
+            {g.loose.map((n) => (
+              <a class="card" data-cat={n.cat} data-sub={n.sub || ''} data-title={n.title} href={href(n.id)}>
+                <h3>{n.title}</h3>
+                <p>{n.excerpt}</p>
+              </a>
+            ))}
+          </div>
+        )}
+
+        {g.subs.map((s) => (
+          <div class="sub-block" data-sub={s.name}>
+            <h3 class="sub-head">{s.name} <i>{s.items.length}</i></h3>
+            <div class="cards">
+              {s.items.map((n) => (
+                <a class="card" data-cat={n.cat} data-sub={n.sub || ''} data-title={n.title} href={href(n.id)}>
+                  <h3>{n.title}</h3>
+                  <p>{n.excerpt}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+
     <p class="empty" id="empty" hidden>该分类暂无内容</p>
   </section>
 </BaseLayout>
 
-<script>
-  const chips = [...document.querySelectorAll('.chip')];
-  const cards = [...document.querySelectorAll('#grid .card')];
+<script is:inline define:vars={{ subsByCat, catCounts, total }}>
+  const chips = [...document.querySelectorAll('#chips .chip')];
+  const subBar = document.getElementById('subchips');
   const empty = document.getElementById('empty');
+  const resultCount = document.getElementById('result-count');
+  const blocks = [...document.querySelectorAll('.cat-block')];
+
+  let activeCat = '*';
+  let activeSub = '*';
+
+  function apply() {
+    let shown = 0;
+    for (const block of blocks) {
+      const catOk = activeCat === '*' || block.dataset.cat === activeCat;
+      block.style.display = catOk ? '' : 'none';
+      if (!catOk) continue;
+
+      const subBlocks = block.querySelectorAll('.sub-block');
+      const loose = block.querySelector('.cards-loose');
+      if (subBlocks.length) {
+        subBlocks.forEach((sb) => {
+          const subOk = activeSub === '*' || sb.dataset.sub === activeSub;
+          sb.style.display = subOk ? '' : 'none';
+          if (subOk) shown += sb.querySelectorAll('.card').length;
+        });
+        if (loose) {
+          const looseOk = activeSub === '*';
+          loose.style.display = looseOk ? '' : 'none';
+          if (looseOk) shown += loose.querySelectorAll('.card').length;
+        }
+      } else {
+        shown += block.querySelectorAll('.card').length;
+      }
+    }
+    if (empty) empty.hidden = shown > 0;
+    if (resultCount) resultCount.innerHTML = `<b>${shown}</b> / ${total} 篇`;
+  }
+
+  function renderSubBar(cat) {
+    const subs = cat === '*' ? [] : (subsByCat[cat] || []);
+    if (!subs.length) { subBar.hidden = true; subBar.innerHTML = ''; return; }
+    const catCount = catCounts[cat] ?? subs.reduce((a, s) => a + s.n, 0);
+    let html = '<span class="sub-label">细分</span>';
+    html += `<button class="subchip is-active" data-sub="*">全部 <i>${catCount}</i></button>`;
+    for (const s of subs) html += `<button class="subchip" data-sub="${s.name}">${s.name} <i>${s.n}</i></button>`;
+    subBar.innerHTML = html;
+    subBar.hidden = false;
+    subBar.querySelectorAll('.subchip').forEach((sc) => {
+      sc.addEventListener('click', () => {
+        subBar.querySelectorAll('.subchip').forEach((x) => x.classList.remove('is-active'));
+        sc.classList.add('is-active');
+        activeSub = sc.dataset.sub;
+        apply();
+      });
+    });
+  }
+
   chips.forEach((chip) => {
     chip.addEventListener('click', () => {
       chips.forEach((c) => c.classList.remove('is-active'));
       chip.classList.add('is-active');
-      const cat = chip.dataset.cat;
-      let shown = 0;
-      cards.forEach((card) => {
-        const visible = cat === '*' || card.dataset.cat === cat;
-        card.style.display = visible ? '' : 'none';
-        if (visible) shown++;
-      });
-      if (empty) empty.hidden = shown > 0;
+      activeCat = chip.dataset.cat;
+      activeSub = '*';
+      renderSubBar(activeCat);
+      apply();
+      // 选定栏目后平滑滚到内容区，强化"切换"反馈
+      if (activeCat !== '*') {
+        const target = document.querySelector(`.cat-block[data-cat="${CSS.escape(activeCat)}"]`);
+        target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     });
   });
+
+  apply();
+
+  // 标题数字 count-up（尊重 reduced-motion）
+  const el = document.getElementById('hero-count');
+  const target = el ? +el.dataset.target : 0;
+  if (el && target && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const start = performance.now();
+    const dur = 900;
+    el.textContent = '0';
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target).toString();
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
 </script>

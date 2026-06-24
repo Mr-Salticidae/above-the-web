@@ -1,6 +1,8 @@
 ---
-// 动态丝网背景：canvas 粒子网络，丝线按距离淡出，鼠标如触网般牵动丝线。
-// 主题感知（读 --accent）、尊重 prefers-reduced-motion、HiDPI 清晰、离屏暂停。
+// 动态蛛网背景：真正的圆形蛛网（orb web）——
+//   辐射蛛丝(spokes) + 同心捕丝(rings)，节点带细微抖动，整张网随"风"轻摇；
+//   交点缀露珠微闪；鼠标如手指拨网，附近蛛丝被牵向指尖再弹回。
+// 主题感知（读 --web / --web-strong，监听 themechange）、尊重 reduced-motion、HiDPI 清晰、离屏暂停。
 ---
 <canvas id="spiderweb" class="spiderweb" aria-hidden="true"></canvas>
 
@@ -9,79 +11,138 @@
   const host = canvas?.parentElement;
   if (canvas && host) {
     const ctx = canvas.getContext('2d');
+    // 尊重「减少动态」：不再完全冻结，而是降幅+减速，保留一层轻柔的呼吸感。
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const MOT = reduce ? 0.4 : 1;   // 动效幅度系数
+    const SPD = reduce ? 0.55 : 1;  // 动效速度系数
 
-    const hexToRgb = (h) => {
-      h = (h || '').trim().replace('#', '');
-      if (h.length === 3) h = h.split('').map((c) => c + c).join('');
-      const n = parseInt(h || '7b5cff', 16);
-      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    // 读取 CSS 变量里的 rgb（形如 "120, 96, 180"）
+    const cssRgb = (name, fallback) => {
+      const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      const p = v.split(',').map((s) => parseInt(s, 10));
+      return (p.length === 3 && p.every((n) => !Number.isNaN(n))) ? p : fallback;
     };
-    let [ar, ag, ab] = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--accent'));
-    matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => {
-      [ar, ag, ab] = hexToRgb(getComputedStyle(document.documentElement).getPropertyValue('--accent'));
-    });
+    let webRGB = cssRgb('--web', [120, 96, 180]);
+    let dewRGB = cssRgb('--web-strong', [109, 74, 255]);
+    const refreshTheme = () => { webRGB = cssRgb('--web', webRGB); dewRGB = cssRgb('--web-strong', dewRGB); };
+    window.addEventListener('themechange', refreshTheme);
 
-    let W = 0, H = 0, DPR = 1, nodes = [];
+    let W = 0, H = 0, DPR = 1, cx = 0, cy = 0, R = 0;
+    let spokes = 0, rings = 0, verts = [], dew = [];
     const mouse = { x: -9999, y: -9999, active: false };
-    const MAXD = 150;
 
-    function resize() {
+    // 伪随机（稳定，按种子）
+    const rnd = (s) => { const x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+
+    function build() {
       const rect = host.getBoundingClientRect();
       DPR = Math.min(devicePixelRatio || 1, 2);
       W = rect.width; H = rect.height;
       canvas.width = W * DPR; canvas.height = H * DPR;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      const target = Math.max(28, Math.min(110, Math.floor((W * H) / 15000)));
-      nodes = Array.from({ length: target }, () => ({
-        x: Math.random() * W, y: Math.random() * H,
-        vx: reduce ? 0 : (Math.random() - 0.5) * 0.22,
-        vy: reduce ? 0 : (Math.random() - 0.5) * 0.22,
-      }));
+
+      // 蛛网中心：水平居中，垂直略偏上（标题落在网心）
+      cx = W * 0.5; cy = H * 0.42;
+      R = Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)) * 1.04; // 铺满并溢出边缘
+      spokes = W < 640 ? 16 : W < 1100 ? 22 : 28;
+      rings = W < 640 ? 9 : 12;
+
+      verts = [];
+      for (let s = 0; s < spokes; s++) {
+        const baseA = (s / spokes) * Math.PI * 2;
+        const col = [];
+        for (let r = 1; r <= rings; r++) {
+          // 半径非线性增长：外圈更疏，似真实捕丝
+          const t = Math.pow(r / rings, 1.35);
+          const jA = (rnd(s * 9.1 + r * 2.3) - 0.5) * (Math.PI / spokes) * 0.5; // 角向抖动
+          const jR = (rnd(s * 3.7 + r * 5.9) - 0.5) * (R / rings) * 0.35;        // 径向抖动
+          const a = baseA + jA;
+          const rad = t * R + jR;
+          col.push({
+            a, rad,
+            bx: cx + Math.cos(a) * rad, by: cy + Math.sin(a) * rad,
+            x: 0, y: 0,
+            // 风摇相位 / 频率（外圈摆幅更大）
+            ph: rnd(s * 1.3 + r) * Math.PI * 2,
+            sw: (0.7 + 1.2 * (r / rings)) * (R / 140),
+          });
+        }
+        verts.push(col);
+      }
+      // 露珠：散落在部分交点
+      dew = [];
+      for (let s = 0; s < spokes; s += 1) {
+        for (let r = 2; r < rings; r += 1) {
+          if (rnd(s * 4.1 + r * 7.7) > 0.86) dew.push({ s, r, ph: rnd(s + r * 2) * Math.PI * 2 });
+        }
+      }
     }
 
-    function render() {
+    function step(time) {
+      const t = time * 0.001;
+      // 1) 计算每个节点的当前位置（风摇 + 鼠标牵引弹簧）
+      for (let s = 0; s < spokes; s++) {
+        for (let r = 0; r < rings; r++) {
+          const v = verts[s][r];
+          // 风：沿切向轻摆 + 整体缓慢呼吸（减少动态时降幅减速，但不冻结）
+          const sway = Math.sin(t * 0.9 * SPD + v.ph) * v.sw * MOT;
+          const breathe = Math.sin(t * 0.4 * SPD + v.a) * v.sw * 0.5 * MOT;
+          let tx = v.bx + Math.cos(v.a + Math.PI / 2) * sway + Math.cos(v.a) * breathe;
+          let ty = v.by + Math.sin(v.a + Math.PI / 2) * sway + Math.sin(v.a) * breathe;
+          if (mouse.active) {
+            const dx = mouse.x - tx, dy = mouse.y - ty, d = Math.hypot(dx, dy);
+            const reach = 190;
+            if (d < reach) { const k = (1 - d / reach) * 0.6; tx += dx * k; ty += dy * k; } // 牵向指尖
+          }
+          // 弹簧回弹（平滑跟随目标）
+          v.x = v.x ? v.x + (tx - v.x) * 0.2 : tx;
+          v.y = v.y ? v.y + (ty - v.y) * 0.2 : ty;
+        }
+      }
+
       ctx.clearRect(0, 0, W, H);
-      for (const n of nodes) {
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < 0 || n.x > W) n.vx *= -1;
-        if (n.y < 0 || n.y > H) n.vy *= -1;
-        if (mouse.active) {
-          const dx = mouse.x - n.x, dy = mouse.y - n.y, d = Math.hypot(dx, dy) || 1;
-          if (d < 170) { n.x += (dx / d) * 0.45; n.y += (dy / d) * 0.45; }
-        }
+
+      // 2) 辐射蛛丝（中心 → 外缘，逐节连线）
+      ctx.lineCap = 'round';
+      for (let s = 0; s < spokes; s++) {
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        for (let r = 0; r < rings; r++) ctx.lineTo(verts[s][r].x, verts[s][r].y);
+        const grad = ctx.createLinearGradient(cx, cy, verts[s][rings - 1].x, verts[s][rings - 1].y);
+        grad.addColorStop(0, `rgba(${webRGB},0.30)`);
+        grad.addColorStop(1, `rgba(${webRGB},0.03)`);
+        ctx.strokeStyle = grad; ctx.lineWidth = 0.7; ctx.stroke();
       }
-      for (let i = 0; i < nodes.length; i++) {
-        const a = nodes[i];
-        for (let j = i + 1; j < nodes.length; j++) {
-          const b = nodes[j];
-          const dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx, dy);
-          if (d < MAXD) {
-            const o = (1 - d / MAXD) * 0.45;
-            ctx.strokeStyle = `rgba(${ar},${ag},${ab},${o})`;
-            ctx.lineWidth = 0.55;
-            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-          }
+
+      // 3) 同心捕丝（环向，相邻辐丝间连线；外圈更淡 → 景深）
+      for (let r = 0; r < rings; r++) {
+        const o = (1 - r / rings) * 0.26 + 0.04;
+        ctx.strokeStyle = `rgba(${webRGB},${o})`;
+        ctx.lineWidth = 0.55;
+        ctx.beginPath();
+        for (let s = 0; s <= spokes; s++) {
+          const v = verts[s % spokes][r];
+          s === 0 ? ctx.moveTo(v.x, v.y) : ctx.lineTo(v.x, v.y);
         }
-        ctx.fillStyle = `rgba(${ar},${ag},${ab},0.55)`;
-        ctx.beginPath(); ctx.arc(a.x, a.y, 1.1, 0, 6.2832); ctx.fill();
+        ctx.stroke();
       }
-      if (mouse.active) {
-        for (const n of nodes) {
-          const dx = mouse.x - n.x, dy = mouse.y - n.y, d = Math.hypot(dx, dy);
-          if (d < 210) {
-            const o = (1 - d / 210) * 0.85;
-            ctx.strokeStyle = `rgba(${ar},${ag},${ab},${o})`;
-            ctx.lineWidth = 0.7;
-            ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y); ctx.lineTo(n.x, n.y); ctx.stroke();
-          }
-        }
+
+      // 4) 露珠微闪
+      for (const dp of dew) {
+        const v = verts[dp.s][dp.r];
+        const tw = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(t * 1.6 * SPD + dp.ph));
+        ctx.fillStyle = `rgba(${dewRGB},${tw * 0.85})`;
+        ctx.beginPath(); ctx.arc(v.x, v.y, 1.6, 0, 6.2832); ctx.fill();
       }
+
+      // 5) 网心
+      ctx.fillStyle = `rgba(${dewRGB},0.5)`;
+      ctx.beginPath(); ctx.arc(cx, cy, 2, 0, 6.2832); ctx.fill();
     }
 
     let raf = 0, running = false;
-    function loop() { render(); raf = requestAnimationFrame(loop); }
-    function start() { if (running || reduce) return; running = true; loop(); }
+    function loop(ts) { step(ts); raf = requestAnimationFrame(loop); }
+    function start() { if (running) return; running = true; raf = requestAnimationFrame(loop); }
     function stop() { running = false; cancelAnimationFrame(raf); }
 
     host.addEventListener('pointermove', (e) => {
@@ -89,15 +150,15 @@
       mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.active = true;
     });
     host.addEventListener('pointerleave', () => { mouse.active = false; mouse.x = mouse.y = -9999; });
-    addEventListener('resize', () => { resize(); if (reduce) render(); });
+    addEventListener('resize', () => { build(); });
 
-    // 离屏暂停，省电
     new IntersectionObserver((es) => {
       es.forEach((e) => (e.isIntersecting ? start() : stop()));
     }).observe(host);
 
-    resize();
-    reduce ? render() : start();
+    build();
+    step(0);   // 先同步画一帧，保证任何 rAF 被节流/暂停的环境也不会空白
+    start();
   }
 </script>
 

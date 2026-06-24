@@ -9,6 +9,7 @@ const PATTERNS = [
   '01_sref档案/**/*.md',
   '02_参数行为档案/**/*.md',
   '05_视觉系统/**/*.md',
+  '07_skill存档/**/*.md',
 ];
 
 const notes = defineCollection({

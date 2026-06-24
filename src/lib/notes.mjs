@@ -18,6 +18,12 @@ export function getCategory(note) {
   return categoryLabel(note.id.split('/')[0]);
 }
 
+// 二级子栏目：取路径第二段（若该笔记位于子目录中），否则 null
+export function getSubCategory(note) {
+  const parts = note.id.split('/');
+  return parts.length > 2 ? categoryLabel(parts[1]) : null;
+}
+
 export function getTags(note) {
   return Array.isArray(note.data?.tags) ? note.data.tags : [];
 }
