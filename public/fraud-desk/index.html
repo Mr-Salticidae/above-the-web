@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#f3ede1" />
+<title>The Fraud Desk — An Interactive Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" /></noscript>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Masthead -->
+    <div class="masthead">
+      <div class="mast-top">
+        <span data-i18n="dossierKicker">An Interactive Dossier</span>
+        <span data-i18n="demoBadge">This is a Demo</span>
+      </div>
+      <hr class="rule" />
+      <div class="wordmark serif">The Fraud <em>Desk</em></div>
+      <hr class="rule double" />
+      <div class="mast-meta">
+        <span id="issueMeta" data-i18n="issueMeta">No. 01 — Night Shift</span>
+        <span class="lang" id="langToggle">
+          <button data-lang="en">EN</button><i></i><button data-lang="zh">中</button>
+        </span>
+      </div>
+    </div>
+
+    <!-- Ledger -->
+    <div class="ledger" id="ledger">
+      <div class="cell"><div class="k" data-i18n="saved">Recovered</div><div class="v saved" id="statSaved">$0</div></div>
+      <div class="cell"><div class="k" data-i18n="lost">Lost</div><div class="v lost" id="statLost">$0</div></div>
+      <div class="cell"><div class="k" data-i18n="callsRight">Correct</div><div class="v" id="statAcc">0/0</div></div>
+    </div>
+
+    <!-- Intro -->
+    <section class="screen" id="introScreen">
+      <div class="kicker" data-i18n="introKicker">Field Manual · Night Shift</div>
+      <h1 class="cover-title serif" data-i18n-html="coverTitle">Catch it before<br/>they <em>click</em>.</h1>
+      <p class="dek" data-i18n="introDek"></p>
+      <hr class="rule thin" />
+      <p class="lede" data-i18n-html="introBody" style="margin-top:16px"></p>
+      <div class="begin-wrap">
+        <button class="linkbtn" id="startBtn" data-i18n="startBtn">Begin the shift →</button>
+      </div>
+      <div class="contents">
+        <div class="ct" data-i18n="introContentsTitle">In this demo</div>
+        <p style="font-size:14px;line-height:1.6;color:var(--muted);margin-top:8px" data-i18n="introContentsBody"></p>
+      </div>
+    </section>
+
+    <!-- Case -->
+    <main id="caseScreen" class="hidden">
+      <div class="case-head">
+        <span class="kicker" id="caseKicker"></span>
+        <span class="ticks" id="ticks"></span>
+      </div>
+      <h2 class="case-title serif" id="caseTitle"></h2>
+
+      <div><span class="exhibit-tab" id="exhibitTab"></span></div>
+      <div class="exhibit" id="caseMessage"></div>
+      <div class="sender" id="caseSender"></div>
+
+      <div class="atrisk" id="atRisk">
+        <span class="lbl" data-i18n="atRisk">At risk</span>
+        <span class="fig" id="atRiskFig"></span>
+      </div>
+
+      <div class="timer" id="timer">
+        <span class="tlabel kicker" data-i18n="timerLabel">Time to rule</span>
+        <span class="track"><span class="fill" id="timerFill"></span></span>
+        <span class="secs" id="timerSecs">0:25</span>
+      </div>
+
+      <div class="ruling-prompt kicker" id="rulingPrompt" data-i18n="rulingPrompt">Your ruling</div>
+      <div class="actions" id="caseActions">
+        <button class="act genuine" data-choice="safe">
+          <span data-i18n="btnGenuineLbl">Rule it</span><span class="big" data-i18n="btnGenuine">Genuine</span>
+        </button>
+        <button class="act fraud" data-choice="scam">
+          <span data-i18n="btnFraudLbl">Rule it</span><span class="big" data-i18n="btnFraud">Fraud</span>
+        </button>
+      </div>
+      <div class="hint" id="caseHint" data-i18n="hint"></div>
+
+      <div id="verdictBox"></div>
+    </main>
+
+    <!-- Report -->
+    <section class="screen hidden" id="reportScreen">
+      <div class="kicker" data-i18n="reportKicker">End of Shift · Assessment</div>
+      <div class="grade-row">
+        <div class="grade" id="grade">B</div>
+        <div class="grade-line" id="gradeLine"></div>
+      </div>
+      <div class="figs">
+        <div class="cell"><div class="k" data-i18n="moneySaved">Recovered</div><div class="v saved" id="rSaved">$0</div></div>
+        <div class="cell"><div class="k" data-i18n="moneyLost">Lost</div><div class="v lost" id="rLost">$0</div></div>
+        <div class="cell"><div class="k" data-i18n="accuracy">Accuracy</div><div class="v" id="rAcc">0/0</div></div>
+      </div>
+
+      <div class="contents">
+        <div class="ct" data-i18n="lockTitle">In the full edition</div>
+        <ul>
+          <li><span class="no">01</span><span data-i18n="lockItem1"></span></li>
+          <li><span class="no">02</span><span data-i18n="lockItem2"></span></li>
+          <li><span class="no">03</span><span data-i18n="lockItem3"></span></li>
+          <li><span class="no">04</span><span data-i18n="lockItem4"></span></li>
+        </ul>
+      </div>
+      <p class="mission" data-i18n="mission"></p>
+      <div class="begin-wrap" style="text-align:center">
+        <button class="linkbtn" id="replayBtn" data-i18n="replay">Draw a new shift →</button>
+      </div>
+    </section>
+
+    <footer class="colophon" data-i18n-html="footer"></footer>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
