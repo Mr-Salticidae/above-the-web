@@ -4,6 +4,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SpiderWeb from '../components/SpiderWeb.astro';
 import { SELECTED, categoryLabel } from '../lib/kb.mjs';
 import { getTitle, getCategory, getSubCategory, getExcerpt, href } from '../lib/notes.mjs';
+import { games } from '../data/games.js';
+
+// base-aware 链接：兼容 GitHub Pages 子路径与自定义域名根路径
+const gamesBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+const gameHref = (g) => (/^https?:/.test(g.path) ? g.path : gamesBase + g.path);
 
 const notes = await getCollection('notes');
 
@@ -65,6 +70,35 @@ const catCounts = counts;
         跳蛛先生的 AIGC 创作方法论知识库。<span class="count-up" id="hero-count" data-target={total}>{total}</span>
         篇可复用的 insight，织成一张可游的知识网。
       </p>
+    </div>
+  </section>
+
+  <section class="plays" id="plays">
+    <div class="plays-head">
+      <h2>可玩 <span>· Plays</span></h2>
+      <p>能在浏览器里直接打开就玩的小东西——用 vibe coding 做的互动作品，国内直连、无需安装。</p>
+    </div>
+    <div class="play-grid">
+      {games.map((g) => (
+        <a class="play-card" href={gameHref(g)} style={`--g-accent:${g.accent}`}>
+          <div class="play-badge">{g.emoji}</div>
+          <div class="play-body">
+            <span class="play-status">{g.status}</span>
+            <h3>{g.title}</h3>
+            <p class="play-tagline">{g.tagline}</p>
+            <p class="play-desc">{g.desc}</p>
+            <div class="play-tags">{g.tags.map((t) => <span>{t}</span>)}</div>
+            <span class="play-cta">开始游玩 →</span>
+          </div>
+        </a>
+      ))}
+      <div class="play-card play-soon" aria-hidden="true">
+        <div class="play-badge">＋</div>
+        <div class="play-body">
+          <h3>更多游戏开发中</h3>
+          <p class="play-desc">新的 vibe coding 作品会持续发布在这里。</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -213,3 +247,55 @@ const catCounts = counts;
     requestAnimationFrame(tick);
   }
 </script>
+
+<style>
+  /* 可玩 · Plays —— 数据驱动的作品入口区，风格沿用站点 token */
+  .plays { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem .5rem; }
+  .plays-head h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .3rem; display: flex; align-items: baseline; gap: .5rem; }
+  .plays-head h2 span { font-family: var(--sans); font-weight: 400; font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft); }
+  .plays-head p { margin: 0 0 1.3rem; color: var(--ink-soft); font-size: .92rem; max-width: 42rem; }
+
+  .play-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(20.5rem, 1fr)); gap: 1rem; }
+
+  .play-card {
+    display: flex; gap: 1.1rem; align-items: flex-start; position: relative; overflow: hidden;
+    border: 1px solid var(--line); border-radius: 16px; padding: 1.25rem 1.3rem; background: var(--paper-2);
+    transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, border-color .2s ease;
+  }
+  .play-card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(var(--g-accent, var(--accent)), color-mix(in srgb, var(--g-accent, var(--accent)) 45%, var(--accent-2)));
+    opacity: 0; transition: opacity .2s ease;
+  }
+  .play-card:hover {
+    transform: translateY(-4px); text-decoration: none;
+    box-shadow: 0 16px 40px -16px rgba(var(--shadow), .5);
+    border-color: color-mix(in srgb, var(--g-accent, var(--accent)) 55%, var(--line));
+  }
+  .play-card:hover::before { opacity: 1; }
+
+  .play-badge {
+    flex: none; width: 3.5rem; height: 3.5rem; border-radius: 13px; display: grid; place-items: center; font-size: 1.75rem;
+    background: color-mix(in srgb, var(--g-accent, var(--accent)) 13%, var(--paper));
+    border: 1px solid color-mix(in srgb, var(--g-accent, var(--accent)) 30%, var(--line));
+  }
+  .play-body { min-width: 0; }
+  .play-status {
+    display: inline-block; font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--g-accent, var(--accent)); margin-bottom: .5rem;
+    border: 1px solid color-mix(in srgb, var(--g-accent, var(--accent)) 38%, var(--line)); border-radius: 999px; padding: .12em .6em;
+  }
+  .play-card h3 { font-family: var(--serif); font-size: 1.14rem; margin: 0 0 .2rem; color: var(--ink); }
+  .play-tagline { margin: 0 0 .5rem; font-size: .9rem; color: var(--ink); opacity: .8; }
+  .play-desc { margin: 0; font-size: .85rem; color: var(--ink-soft); line-height: 1.65; }
+  .play-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin: .75rem 0 0; }
+  .play-tags span { font-size: .7rem; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 999px; padding: .12em .65em; }
+  .play-cta { display: inline-block; margin-top: .7rem; font-size: .82rem; font-weight: 600; color: var(--g-accent, var(--accent)); }
+
+  .play-soon { border-style: dashed; opacity: .75; cursor: default; }
+  .play-soon:hover { transform: none; box-shadow: none; border-color: var(--line); }
+  .play-soon:hover::before { opacity: 0; }
+  .play-soon .play-badge { font-size: 1.5rem; color: var(--ink-soft); background: var(--paper-3); border-color: var(--line); }
+
+  @media (max-width: 480px) { .play-card { padding: 1.1rem; gap: .9rem; } .play-badge { width: 3rem; height: 3rem; font-size: 1.5rem; } }
+</style>
