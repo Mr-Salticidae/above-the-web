@@ -5,10 +5,17 @@ import SpiderWeb from '../components/SpiderWeb.astro';
 import { SELECTED, categoryLabel } from '../lib/kb.mjs';
 import { getTitle, getCategory, getSubCategory, getExcerpt, href } from '../lib/notes.mjs';
 import { games } from '../data/games.js';
+import { getEpisodes, getLatestEpisodes } from '../lib/prompt-master.mjs';
 
 // base-aware 链接：兼容 GitHub Pages 子路径与自定义域名根路径
 const gamesBase = import.meta.env.BASE_URL.replace(/\/$/, '');
 const gameHref = (g) => (/^https?:/.test(g.path) ? g.path : gamesBase + g.path);
+
+// 「成为 Prompt 大师」系列：构建时读取同步进 public/ 的画廊数据，首页展示最新几期封面。
+const seriesBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/prompt-master/';
+const seriesTotal = getEpisodes().length;
+const latestEpisodes = getLatestEpisodes(4);
+const coverSrc = (e) => seriesBase + encodeURI(e.folder) + '/' + encodeURI(e.cover);
 
 const notes = await getCollection('notes');
 
@@ -72,6 +79,38 @@ const catCounts = counts;
       </p>
     </div>
   </section>
+
+  {latestEpisodes.length > 0 && (
+    <section class="series" id="prompt-master">
+      <div class="series-head">
+        <h2>成为 Prompt 大师 <span>· Prompt Master</span></h2>
+        <p>
+          面向 AIGC 小白的 prompt 拆解系列：每期一个 battle 主题，讲清「难在哪 → 怎么破题 → 完整 prompt → 四层拆解」。不追结果，记录过程。
+        </p>
+      </div>
+      <div class="series-grid">
+        {latestEpisodes.map((e) => (
+          <a class="series-card" href={seriesBase}>
+            <div class="series-cover">
+              <img src={coverSrc(e)} alt={e.title} loading="lazy" width="300" height="400" />
+            </div>
+            <div class="series-meta">
+              <span class="series-no">{e.no}</span>
+              <h3>{e.title}</h3>
+              <p>{e.sub}</p>
+            </div>
+          </a>
+        ))}
+        <a class="series-card series-all" href={seriesBase}>
+          <div class="series-all-inner">
+            <span class="series-all-arrow">→</span>
+            <h3>查看全部 {seriesTotal} 期</h3>
+            <p>进入完整画廊</p>
+          </div>
+        </a>
+      </div>
+    </section>
+  )}
 
   <section class="plays" id="plays">
     <div class="plays-head">
@@ -249,6 +288,41 @@ const catCounts = counts;
 </script>
 
 <style>
+  /* 成为 Prompt 大师 —— 旗舰发刊系列，独立版块，展示最新几期封面 */
+  .series { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem .5rem; }
+  .series-head h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .3rem; display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+  .series-head h2 span { font-family: var(--sans); font-weight: 400; font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft); }
+  .series-head p { margin: 0 0 1.3rem; color: var(--ink-soft); font-size: .92rem; max-width: 46rem; line-height: 1.7; }
+
+  .series-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); gap: 1rem; }
+
+  .series-card {
+    display: flex; flex-direction: column; overflow: hidden; background: var(--paper-2);
+    border: 1px solid var(--line); border-radius: 14px; text-decoration: none;
+    transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, border-color .2s ease;
+  }
+  .series-card:hover {
+    transform: translateY(-4px); text-decoration: none;
+    box-shadow: 0 16px 40px -16px rgba(var(--shadow), .5);
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  }
+  .series-cover { aspect-ratio: 3 / 4; overflow: hidden; background: var(--paper-3); }
+  .series-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .series-meta { padding: .8rem .9rem 1rem; min-width: 0; }
+  .series-no { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .series-card h3 { font-family: var(--serif); font-size: 1.02rem; margin: .25rem 0 .35rem; color: var(--ink); }
+  .series-meta p { margin: 0; font-size: .8rem; color: var(--ink-soft); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* 末尾「查看全部」卡 */
+  .series-all { align-items: center; justify-content: center; text-align: center; border-style: dashed; }
+  .series-all:hover { border-style: dashed; }
+  .series-all-inner { padding: 1.5rem 1rem; }
+  .series-all-arrow { display: block; font-size: 2rem; line-height: 1; color: var(--accent); margin-bottom: .6rem; }
+  .series-all h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .2rem; color: var(--ink); }
+  .series-all p { margin: 0; font-size: .8rem; color: var(--ink-soft); }
+
+  @media (max-width: 480px) { .series-grid { grid-template-columns: repeat(2, 1fr); gap: .75rem; } }
+
   /* 可玩 · Plays —— 数据驱动的作品入口区，风格沿用站点 token */
   .plays { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem .5rem; }
   .plays-head h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .3rem; display: flex; align-items: baseline; gap: .5rem; }

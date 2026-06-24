@@ -6,6 +6,10 @@ dist/
 # 内容源：构建时从 knowledge-base 仓库克隆，不入库
 kb-content/
 
+# 「成为 Prompt 大师」系列：构建时从独立仓库克隆并镜像进 public/，不入库
+.cache/
+public/prompt-master/
+
 # 系统与编辑器噪声
 .DS_Store
 Thumbs.db

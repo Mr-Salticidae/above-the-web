@@ -9,6 +9,12 @@ import path from 'node:path';
 const REPO = 'https://github.com/Mr-Salticidae/knowledge-base.git';
 const DIR = 'kb-content';
 
+// 「成为 Prompt 大师」系列：独立仓库、自包含画廊。克隆到缓存后镜像进 public/prompt-master/，
+// 作为站点静态独立版块直接托管（/prompt-master/）。缓存与产物均 gitignore，.git 不进 public。
+const SERIES_REPO = 'https://github.com/Mr-Salticidae/becoming-a-prompt-master.git';
+const SERIES_CACHE = path.join('.cache', 'prompt-master');
+const SERIES_PUB = path.join('public', 'prompt-master');
+
 // 精选发布白名单（仓库维护/代码/对外分发 暂不发）
 const SELECTED = [
   '04_方法论与洞察',
@@ -33,6 +39,28 @@ function ensureContent() {
     console.log('[sync] 浅克隆 knowledge-base …');
     run(`git clone --depth 1 ${REPO} ${DIR}`);
   }
+}
+
+// 拉取「成为 Prompt 大师」系列到缓存，再镜像进 public/prompt-master/（排除 .git）。
+// 增量：缓存已存在则 fetch+reset；CI：浅克隆。镜像每次重建，保证删期也能同步。
+function ensureSeries() {
+  if (fs.existsSync(path.join(SERIES_CACHE, '.git'))) {
+    console.log('[sync] 已存在 prompt-master 缓存，执行 git pull …');
+    run(`git -C ${SERIES_CACHE} fetch --depth 1 origin HEAD`);
+    run(`git -C ${SERIES_CACHE} reset --hard FETCH_HEAD`);
+  } else {
+    if (fs.existsSync(SERIES_CACHE)) fs.rmSync(SERIES_CACHE, { recursive: true, force: true });
+    fs.mkdirSync(path.dirname(SERIES_CACHE), { recursive: true });
+    console.log('[sync] 浅克隆 becoming-a-prompt-master …');
+    run(`git clone --depth 1 ${SERIES_REPO} ${SERIES_CACHE}`);
+  }
+  // 镜像到 public/：清空旧产物后整盘复制，排除 .git（不可外泄到 dist）。
+  if (fs.existsSync(SERIES_PUB)) fs.rmSync(SERIES_PUB, { recursive: true, force: true });
+  fs.cpSync(SERIES_CACHE, SERIES_PUB, {
+    recursive: true,
+    filter: (src) => !/[\\/]\.git([\\/]|$)/.test(src),
+  });
+  console.log('[sync] prompt-master 已镜像 →', path.resolve(SERIES_PUB));
 }
 
 function stripBom(text) {
@@ -115,3 +143,5 @@ function clean() {
 ensureContent();
 clean();
 console.log('[sync] 内容就绪 →', path.resolve(DIR));
+
+ensureSeries();

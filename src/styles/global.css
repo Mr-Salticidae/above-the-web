@@ -116,7 +116,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-family: var(--sans); font-size: .68rem; color: var(--ink-soft);
   border: 1px solid var(--line); border-radius: 4px; padding: .05em .35em; background: var(--paper);
 }
-@media (max-width: 560px) { .search-trigger span, .search-trigger kbd { display: none; } .gh-link { display: none; } }
+@media (max-width: 560px) { .search-trigger span, .search-trigger kbd { display: none; } .gh-link, .series-link { display: none; } }
 
 /* 搜索弹窗 */
 .search-modal {
