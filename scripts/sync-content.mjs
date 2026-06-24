@@ -23,6 +23,7 @@ const SELECTED = [
   '02_参数行为档案',
   '05_视觉系统',
   '07_skill存档',
+  '09_平台工程',
 ];
 
 function run(cmd, opts = {}) {
