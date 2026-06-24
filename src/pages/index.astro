@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SELECTED, categoryLabel } from '../lib/kb.mjs';
+import { getTitle, getCategory, getExcerpt, href } from '../lib/notes.mjs';
+
+const notes = await getCollection('notes');
+
+// 按精选目录顺序分组
+const order = SELECTED.map(categoryLabel);
+const groups = new Map(order.map((c) => [c, []]));
+for (const n of notes) {
+  const cat = getCategory(n);
+  if (!groups.has(cat)) groups.set(cat, []);
+  groups.get(cat).push(n);
+}
+for (const list of groups.values()) {
+  list.sort((a, b) => getTitle(a).localeCompare(getTitle(b), 'zh'));
+}
+const total = notes.length;
+---
+
+<BaseLayout description="跳蛛先生的 AIGC 创作方法论公开知识库 —— 杂志风 · 可游的知识网络。">
+  <section class="hero">
+    <svg class="web" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      {Array.from({ length: 16 }).map((_, i) => {
+        const a = (i / 16) * Math.PI * 2;
+        return <line x1="400" y1="200" x2={400 + Math.cos(a) * 600} y2={200 + Math.sin(a) * 600} stroke="var(--accent)" stroke-width="0.6" />;
+      })}
+      {Array.from({ length: 7 }).map((_, r) => (
+        <circle cx="400" cy="200" r={(r + 1) * 45} fill="none" stroke="var(--accent)" stroke-width="0.5" />
+      ))}
+    </svg>
+    <h1>蛛网之上</h1>
+    <p>跳蛛先生的 AIGC 创作方法论知识库。{total} 篇可复用的 insight，织成一张可游的知识网。</p>
+  </section>
+
+  {order.map((cat) => {
+    const list = groups.get(cat) || [];
+    if (!list.length) return null;
+    return (
+      <section class="section">
+        <h2>{cat} <span class="count">{list.length} 篇</span></h2>
+        <div class="cards">
+          {list.map((n) => (
+            <a class="card" href={href(n.id)}>
+              <h3>{getTitle(n)}</h3>
+              <p>{getExcerpt(n)}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</BaseLayout>

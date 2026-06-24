@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getTitle, getCategory, getTags, getExcerpt, buildBacklinks, href } from '../lib/notes.mjs';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  const backlinks = buildBacklinks(notes);
+  return notes.map((note) => ({
+    params: { slug: note.id },
+    props: { note, backlinks: backlinks.get(note.id) || [] },
+  }));
+}
+
+const { note, backlinks } = Astro.props;
+const { Content } = await render(note);
+const title = getTitle(note);
+const category = getCategory(note);
+const tags = getTags(note);
+---
+
+<BaseLayout title={title} description={getExcerpt(note, 120)}>
+  <article class="prose">
+    <p class="meta">{category}</p>
+    <Content />
+    {tags.length > 0 && (
+      <div class="tags">
+        {tags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    )}
+  </article>
+
+  {backlinks.length > 0 && (
+    <nav class="backlinks">
+      <h2>← 链接到这里的笔记</h2>
+      <ul>
+        {backlinks.map((b) => (
+          <li><a href={href(b.slug)}>{b.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+  )}
+</BaseLayout>

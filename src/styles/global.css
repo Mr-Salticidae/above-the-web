@@ -1,0 +1,101 @@
+/* 蛛网之上 · 杂志风基线设计 token（P1 朴素皮肤，P2 再深化） */
+:root {
+  --paper: #f7f4ee;
+  --ink: #1a1814;
+  --ink-soft: #5c554a;
+  --line: #ddd5c7;
+  --accent: #7b5cff;        /* 蛛丝紫 */
+  --accent-soft: #efeaff;
+  --max: 46rem;
+  --serif: "Songti SC", "Noto Serif SC", Georgia, "Times New Roman", serif;
+  --sans: "PingFang SC", "Noto Sans SC", -apple-system, "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #14131a;
+    --ink: #ece8f5;
+    --ink-soft: #a39db5;
+    --line: #2b2838;
+    --accent: #9b85ff;
+    --accent-soft: #221d36;
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
+
+/* 顶栏 */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+}
+.site-header .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.5rem; max-width: 72rem; margin: 0 auto; }
+.brand { font-family: var(--serif); font-weight: 700; font-size: 1.25rem; letter-spacing: .04em; color: var(--ink); }
+.brand:hover { text-decoration: none; }
+.brand small { display: block; font-family: var(--sans); font-weight: 400; font-size: .7rem; letter-spacing: .3em; color: var(--ink-soft); text-transform: uppercase; }
+
+/* 文章排版 */
+.prose { max-width: var(--max); margin: 0 auto; padding: 2rem 1.5rem 6rem; }
+.prose h1 { font-family: var(--serif); font-size: 2.1rem; line-height: 1.25; margin: .2em 0 .6em; letter-spacing: .01em; }
+.prose h2 { font-family: var(--serif); font-size: 1.5rem; margin: 2.2em 0 .6em; padding-top: .4em; border-top: 1px solid var(--line); }
+.prose h3 { font-size: 1.18rem; margin: 1.8em 0 .5em; }
+.prose p, .prose li { font-size: 1.06rem; }
+.prose blockquote { margin: 1.4em 0; padding: .2em 1.2em; border-left: 3px solid var(--accent); color: var(--ink-soft); font-style: italic; }
+.prose code { background: var(--accent-soft); padding: .12em .4em; border-radius: 4px; font-size: .9em; }
+.prose pre { background: var(--ink); color: var(--paper); padding: 1.1em 1.3em; border-radius: 10px; overflow-x: auto; }
+.prose pre code { background: none; padding: 0; color: inherit; }
+.prose table { border-collapse: collapse; width: 100%; margin: 1.4em 0; font-size: .96rem; }
+.prose th, .prose td { border: 1px solid var(--line); padding: .5em .75em; text-align: left; }
+.prose th { background: var(--accent-soft); }
+.prose img { max-width: 100%; border-radius: 8px; }
+.prose hr { border: none; border-top: 1px solid var(--line); margin: 2.5em 0; }
+
+/* wikilink */
+.wikilink { border-bottom: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent); }
+.wikilink--dangling { color: var(--ink-soft); border-bottom: 1px dotted var(--line); cursor: help; }
+
+/* 元信息 / 标签 */
+.meta { color: var(--ink-soft); font-size: .85rem; letter-spacing: .02em; }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0; }
+.tag { font-size: .74rem; padding: .2em .7em; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); }
+
+/* 反向链接 */
+.backlinks { max-width: var(--max); margin: 0 auto; padding: 1.5rem; border-top: 1px solid var(--line); }
+.backlinks h2 { font-family: var(--serif); font-size: 1.1rem; margin: 0 0 .8rem; }
+.backlinks ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.backlinks a { font-size: .95rem; }
+
+/* 页脚 */
+.site-footer { border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .82rem; padding: 2.5rem 1.5rem; text-align: center; }
+
+/* 首页 */
+.hero { text-align: center; padding: 4rem 1.5rem 2rem; position: relative; overflow: hidden; }
+.hero h1 { font-family: var(--serif); font-size: clamp(2.4rem, 6vw, 4rem); margin: .2em 0; letter-spacing: .06em; }
+.hero p { color: var(--ink-soft); max-width: 34rem; margin: .6rem auto 0; }
+.hero .web { position: absolute; inset: 0; z-index: -1; opacity: .14; }
+
+.section { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem; }
+.section > h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 1.2rem; display: flex; align-items: baseline; gap: .6rem; }
+.section > h2 .count { font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; }
+.card { display: block; border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.2rem; background: color-mix(in srgb, var(--paper) 70%, #fff 30%); transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+@media (prefers-color-scheme: dark) { .card { background: color-mix(in srgb, var(--paper) 70%, #fff 4%); } }
+.card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--accent) 40%, transparent); border-color: var(--accent); text-decoration: none; }
+.card h3 { margin: 0 0 .4rem; font-size: 1.05rem; font-family: var(--serif); color: var(--ink); }
+.card p { margin: 0; font-size: .86rem; color: var(--ink-soft); }
