@@ -5,6 +5,7 @@
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import { SELECTED } from '../src/lib/kb.mjs';
 
 const REPO = 'https://github.com/Mr-Salticidae/knowledge-base.git';
 const DIR = 'kb-content';
@@ -15,16 +16,7 @@ const SERIES_REPO = 'https://github.com/Mr-Salticidae/becoming-a-prompt-master.g
 const SERIES_CACHE = path.join('.cache', 'prompt-master');
 const SERIES_PUB = path.join('public', 'prompt-master');
 
-// 精选发布白名单（仓库维护/代码/对外分发 暂不发）
-const SELECTED = [
-  '04_方法论与洞察',
-  '03_prompt模板库',
-  '01_sref档案',
-  '02_参数行为档案',
-  '05_视觉系统',
-  '07_skill存档',
-  '09_平台工程',
-];
+// 精选发布白名单单一真相源在 src/lib/kb.mjs 的 SELECTED（仓库维护/代码/对外分发 暂不发）
 
 function run(cmd, opts = {}) {
   return execSync(cmd, { stdio: 'inherit', ...opts });
