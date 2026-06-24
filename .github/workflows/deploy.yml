@@ -42,3 +42,26 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+
+  # 部署到香港轻量服务器（国内访问主入口，根路径 + 自定义域名）
+  deploy-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          BASE_PATH: /
+          SITE_URL: https://tiaozhuxiansheng.com
+      - name: Rsync dist 到香港服务器
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 43.128.2.172 >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" dist/ root@43.128.2.172:/var/www/tiaozhuxiansheng/
+          ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@43.128.2.172 'chown -R www-data:www-data /var/www/tiaozhuxiansheng'
