@@ -137,7 +137,7 @@ const toc = [
   <section class="plays" id="plays">
     <div class="plays-head">
       <h2>可玩 <span>· Plays</span></h2>
-      <p>能在浏览器里直接打开就玩的小东西——用 vibe coding 做的互动作品，国内直连、无需安装。</p>
+      <p>能在浏览器里直接打开就玩、或免费下载带走的小东西——用 vibe coding 做的作品，国内直连。</p>
     </div>
     <div class="play-grid">
       {games.map((g) => (
@@ -149,7 +149,7 @@ const toc = [
             <p class="play-tagline">{g.tagline}</p>
             <p class="play-desc">{g.desc}</p>
             <div class="play-tags">{g.tags.map((t) => <span>{t}</span>)}</div>
-            <span class="play-cta">开始游玩 →</span>
+            <span class="play-cta">{g.cta ?? '开始游玩 →'}</span>
           </div>
         </a>
       ))}

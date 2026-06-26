@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工位池塘 · Desk Pond —— 你专注，它钓鱼</title>
+<meta name="description" content="一个安静待在桌面角落的 2D 像素陪伴小工具：你专注，它钓鱼；你完成计划，它长树。番茄钟 + 任务苗圃 + 水族馆，本地存档，免费开源，Windows 双击即用。">
+<meta property="og:title" content="工位池塘 · Desk Pond">
+<meta property="og:description" content="你专注，它钓鱼；你完成计划，它长树。安静的桌面陪伴小工具，免费开源。">
+<meta property="og:type" content="website">
+<link rel="icon" href="./assets/icon.png">
+<style>
+  :root{
+    --paper:#f6f1e6; --paper-2:#fbf8f0; --paper-3:#efe7d6;
+    --ink:#1f2a2b; --ink-soft:#5c655e; --ink-faint:#8a938a;
+    --line:rgba(31,42,43,.12);
+    --teal:#2f8fa3; --clay:#c9824a; --clay-ink:#fff7ee;
+    --serif:"Songti SC","Noto Serif SC",Georgia,"Times New Roman",serif;
+    --sans:"PingFang SC","Noto Sans SC",-apple-system,"Segoe UI",system-ui,sans-serif;
+    --shadow:0 30px 70px -40px rgba(31,42,43,.55);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#10171a; --paper-2:#161f22; --paper-3:#1b262a;
+      --ink:#e9efe9; --ink-soft:#9fb0ac; --ink-faint:#6f807c;
+      --line:rgba(233,239,233,.12);
+      --teal:#56b6c9; --clay:#e0a064; --clay-ink:#1b1208;
+      --shadow:0 30px 70px -40px rgba(0,0,0,.7);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans); color:var(--ink); line-height:1.7;
+    background:
+      radial-gradient(1100px 640px at 84% -10%, color-mix(in srgb,var(--paper-2) 80%, transparent) 0%, rgba(0,0,0,0) 55%),
+      linear-gradient(165deg, var(--paper) 0%, var(--paper-3) 100%);
+    background-attachment:fixed; min-height:100vh;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+  a{color:var(--teal); text-decoration:none;}
+  .topbar{display:flex; justify-content:space-between; align-items:center; padding:22px 0; font-size:.92rem;}
+  .topbar .home{color:var(--ink-soft); display:flex; align-items:center; gap:8px;}
+  .topbar .home:hover{color:var(--teal);}
+  .topbar .gh{color:var(--ink-soft);}
+  .topbar .gh:hover{color:var(--ink);}
+
+  /* Hero */
+  .hero{display:flex; gap:30px; align-items:center; padding:40px 0 18px; flex-wrap:wrap;}
+  .hero .ico{width:104px; height:104px; border-radius:24px; box-shadow:var(--shadow); image-rendering:pixelated; flex:0 0 auto;}
+  .hero .htxt{flex:1 1 320px;}
+  .eyebrow{font-size:.86rem; letter-spacing:.22em; color:var(--clay); font-weight:700; text-transform:uppercase;}
+  h1{font-family:var(--serif); font-size:2.6rem; line-height:1.18; margin:.18em 0 .1em; letter-spacing:.01em;}
+  .tagline{font-size:1.22rem; color:var(--ink); font-weight:600; margin-top:.2em;}
+  .sub{color:var(--ink-soft); margin-top:.5em; max-width:46ch;}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:22px;}
+  .btn{display:inline-flex; align-items:center; gap:9px; font-weight:700; font-size:1rem;
+    padding:13px 22px; border-radius:999px; border:1px solid var(--line); transition:transform .12s ease, box-shadow .12s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.primary{background:var(--clay); color:var(--clay-ink); border-color:var(--clay); box-shadow:0 16px 34px -18px var(--clay);}
+  .btn.ghost{background:var(--paper-2); color:var(--ink);}
+  .btn small{font-weight:600; opacity:.8;}
+  .pills{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px;}
+  .pill{font-size:.82rem; font-weight:700; color:var(--ink-soft); background:var(--paper-2);
+    border:1px solid var(--line); border-radius:999px; padding:6px 14px;}
+
+  /* Section */
+  section{margin:54px 0;}
+  h2{font-family:var(--serif); font-size:1.5rem; margin-bottom:.2em; display:flex; align-items:baseline; gap:.5rem;}
+  h2 .en{font-size:.9rem; color:var(--ink-faint); font-weight:400; letter-spacing:.1em;}
+  .lead{color:var(--ink-soft); margin-bottom:24px; max-width:62ch;}
+
+  /* Rooms */
+  .rooms{display:grid; grid-template-columns:1fr; gap:26px;}
+  .room{background:var(--paper-2); border:1px solid var(--line); border-radius:22px; overflow:hidden; box-shadow:var(--shadow);}
+  .room img{display:block; width:100%; image-rendering:pixelated; border-bottom:1px solid var(--line);}
+  .room .cap{padding:16px 20px;}
+  .room .cap h3{font-size:1.05rem; margin-bottom:.15em;}
+  .room .cap p{color:var(--ink-soft); font-size:.94rem;}
+  .room .cap .k{color:var(--teal); font-weight:700;}
+
+  /* Features */
+  .feat{display:grid; grid-template-columns:1fr 1fr; gap:16px 26px;}
+  .feat .it{display:flex; gap:13px; align-items:flex-start;}
+  .feat .dot{flex:0 0 auto; width:11px; height:11px; border-radius:50%; background:var(--clay); margin-top:9px;}
+  .feat .it b{display:block; color:var(--ink); font-size:1.02rem;}
+  .feat .it span{color:var(--ink-soft); font-size:.92rem;}
+
+  /* Download */
+  .dl{background:var(--paper-2); border:1px solid var(--line); border-radius:24px; padding:30px; box-shadow:var(--shadow);
+    display:flex; gap:30px; align-items:center; flex-wrap:wrap;}
+  .dl .col{flex:1 1 300px;}
+  .dl h2{margin-bottom:.3em;}
+  .dl .opt{margin:16px 0;}
+  .dl .opt .t{font-weight:700;}
+  .dl .opt .d{color:var(--ink-soft); font-size:.9rem;}
+  .dl .qr{flex:0 0 auto; text-align:center;}
+  .dl .qr img{width:148px; height:148px; image-rendering:pixelated; border:8px solid #fff; border-radius:12px; box-shadow:var(--shadow);}
+  .dl .qr .c{font-size:.82rem; color:var(--ink-faint); margin-top:10px;}
+
+  footer{border-top:1px solid var(--line); margin-top:60px; padding:30px 0 50px; color:var(--ink-faint); font-size:.88rem;
+    display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+  footer a{color:var(--ink-soft);}
+
+  @media (max-width:620px){
+    h1{font-size:2.1rem;}
+    .feat{grid-template-columns:1fr;}
+    .hero{gap:20px;}
+    .hero .ico{width:84px; height:84px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="home" href="/">← 跳竹先生 · tiaozhuxiansheng.com</a>
+    <a class="gh" href="https://github.com/Mr-Salticidae/desk-pond" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+
+  <header class="hero">
+    <img class="ico" src="./assets/icon.png" alt="工位池塘图标" width="104" height="104">
+    <div class="htxt">
+      <div class="eyebrow">桌面陪伴 · 免费开源</div>
+      <h1>工位池塘 · Desk Pond</h1>
+      <div class="tagline">你专注，它钓鱼；你完成计划，它长树。</div>
+      <p class="sub">一个安静待在桌面角落的像素小窗。不抢注意力，只把你认真过的时间，慢慢攒成看得见的样子。</p>
+      <div class="cta-row">
+        <a class="btn primary" href="https://github.com/Mr-Salticidae/desk-pond/releases/latest" target="_blank" rel="noopener">下载 Windows 版 <small>· 免安装</small></a>
+        <a class="btn ghost" href="#download">其它下载方式</a>
+      </div>
+      <div class="pills">
+        <span class="pill">Windows</span>
+        <span class="pill">双击即用</span>
+        <span class="pill">本地存档</span>
+        <span class="pill">开源 · MIT 思路</span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>这是什么 <span class="en">/ what is it</span></h2>
+    <p class="lead">工位池塘是一个番茄钟，也是一只不闹腾的电子宠物。你点一下池塘开始专注，它替你甩杆钓鱼；你勾掉一项任务，森林里就多长一棵树。钓到的鱼会真的在水族馆里游，越钓越热闹。所有进度只增不减——漏了哪天，它只是安静地等你回来，不清零、不惩罚。</p>
+  </section>
+
+  <section>
+    <h2>三个房间 <span class="en">/ three rooms</span></h2>
+    <p class="lead">顶栏一键切换。池塘是"现在"，森林和水族馆是"积累"——想看看自己攒了多少，就切过去。</p>
+    <div class="rooms">
+      <div class="room">
+        <img src="./assets/pond.png" alt="池塘房间：番茄钟专注钓鱼">
+        <div class="cap"><h3>🏠 池塘 · 现在</h3><p>工作时看着它就好。点池塘或按<span class="k">甩杆</span>开始专注，结束自动进入休息倒计时。</p></div>
+      </div>
+      <div class="room">
+        <img src="./assets/forest.png" alt="森林房间：完成任务长出树">
+        <div class="cap"><h3>🌲 森林 · 任务的痕迹</h3><p>每完成一项任务，森林里就<span class="k">多长一棵树</span>，树种随积累越来越多样。</p></div>
+      </div>
+      <div class="room">
+        <img src="./assets/aquarium.png" alt="水族馆房间：钓到的鱼在缸里游">
+        <div class="cap"><h3>🐟 水族馆 · 专注的收藏</h3><p>钓到的鱼<span class="k">真的在缸里游</span>，还有里程碑鱼、可解锁布置的珊瑚沉船宝箱。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>它的脾气 <span class="en">/ how it feels</span></h2>
+    <div class="feat">
+      <div class="it"><span class="dot"></span><div><b>不抢注意力</b><span>无边框、安静待在角落，可置顶也可最小化。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>只增不减</b><span>累计专注、任务、活跃天数，漏天不清零，没有会断的连胜。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>轻声有回应</b><span>环境水声常驻轻响，甩杆、上鱼、完成各有一声反馈，可一键静音。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>成长看得见</b><span>成长档案记录每条鱼的首次钓获，里程碑解锁缸内布置。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>本地、免费、开源</b><span>存档只在你电脑上，不联网、不收费、不打扰。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>双击即用</b><span>单文件已内置全部资源，Windows 下载即玩，免安装。</span></div></div>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="dl">
+      <div class="col">
+        <h2>把池塘带回家 <span class="en">/ download</span></h2>
+        <div class="opt">
+          <div class="t">① GitHub Releases（推荐）</div>
+          <div class="d">前往 <a href="https://github.com/Mr-Salticidae/desk-pond/releases/latest" target="_blank" rel="noopener">Releases 最新版</a>，下载 <code>DeskPond-v*.exe</code>，双击运行。</div>
+        </div>
+        <div class="opt">
+          <div class="t">② 夸克网盘（国内直连）</div>
+          <div class="d">扫右侧二维码，或打开 <a href="https://pan.quark.cn/s/c08fb54f7bc5" target="_blank" rel="noopener">夸克网盘链接</a>，转存后下载。</div>
+        </div>
+        <div class="opt">
+          <div class="d">老用户覆盖运行即可，存档不受影响。</div>
+        </div>
+      </div>
+      <div class="qr">
+        <img src="./assets/quark_qr.png" alt="夸克网盘下载二维码">
+        <div class="c">手机扫码 · 存到夸克网盘</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>工位池塘 · Desk Pond —— 用 vibe coding 慢慢做的小东西。</span>
+    <span><a href="https://github.com/Mr-Salticidae/desk-pond" target="_blank" rel="noopener">源码 GitHub</a> · <a href="/">返回主页</a></span>
+  </footer>
+
+</div>
+</body>
+</html>

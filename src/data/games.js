@@ -6,10 +6,22 @@
 //   desc     一段简介
 //   tags     标签（数组）
 //   path     站内路径（放在 public/ 下，如 '/fraud-desk/'）；外链请用完整 http(s) 链接
-//   status   状态徽标，如 '在线可玩' / '开发中'
+//   status   状态徽标，如 '在线可玩' / '免费下载' / '开发中'
 //   emoji    卡片角标图标
 //   accent   该作品的主题色（卡片描边/角标/CTA 用，给每个作品一点自有身份）
+//   cta      可选；卡片底部按钮文案，默认 '开始游玩 →'（下载型作品可改成 '了解 · 下载 →'）
 export const games = [
+  {
+    title: '工位池塘 · Desk Pond',
+    tagline: '你专注，它钓鱼；你完成计划，它长树',
+    desc: '一个安静待在桌面角落的像素小窗：番茄钟 + 任务苗圃 + 水族馆。钓到的鱼真的在缸里游，进度只增不减、漏天不清零。本地存档，免费开源，Windows 双击即用。',
+    tags: ['桌面陪伴', '番茄钟', 'vibe coding'],
+    path: '/desk-pond/',
+    status: '免费下载 · Windows',
+    emoji: '🎣',
+    accent: '#2f8fa3',
+    cta: '了解 · 下载 →',
+  },
   {
     title: '反诈柜台 · The Fraud Desk',
     tagline: '反诈版《Papers, Please》',
