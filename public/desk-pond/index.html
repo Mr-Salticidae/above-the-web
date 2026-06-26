@@ -47,14 +47,25 @@
     background-attachment:fixed; min-height:100vh;
     transition:background-color .4s ease, color .4s ease;
   }
-  /* 背景水纹：填满两侧留白，固定不滚动 */
+  /* 背景水纹：填满两侧留白，固定不滚动；缓慢向外扩散淡出，像池塘水波，克制不喧宾 */
   .bg-deco{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
-  .bg-deco i{position:absolute; border-radius:50%; border:2px solid var(--deco-teal);}
-  .bg-deco .a{width:780px;height:780px;right:-300px;top:-280px;}
-  .bg-deco .b{width:520px;height:520px;right:-150px;top:-110px;border-color:var(--deco-teal);}
-  .bg-deco .c{width:620px;height:620px;left:-280px;top:42%;border-color:var(--deco-clay);}
-  .bg-deco .d{width:360px;height:360px;left:-120px;top:50%;border-color:var(--deco-clay);}
-  .bg-deco .e{width:680px;height:680px;right:-280px;bottom:-300px;border-color:var(--deco-clay);}
+  .bg-deco i{position:absolute; border-radius:50%; border:2px solid var(--deco-teal);
+    opacity:0; will-change:transform,opacity; animation:pondRipple 16s ease-in-out infinite both;}
+  /* 同一角的两环错相位 → 一圈圈往外荡的水波；周期各异，整体几乎察觉不到“在动” */
+  .bg-deco .a{width:780px;height:780px;right:-300px;top:-280px; animation-duration:16s; animation-delay:0s;}
+  .bg-deco .b{width:520px;height:520px;right:-150px;top:-110px; animation-duration:16s; animation-delay:5s;}
+  .bg-deco .c{width:620px;height:620px;left:-280px;top:42%;border-color:var(--deco-clay); animation-duration:19s; animation-delay:2s;}
+  .bg-deco .d{width:360px;height:360px;left:-120px;top:50%;border-color:var(--deco-clay); animation-duration:19s; animation-delay:8.5s;}
+  .bg-deco .e{width:680px;height:680px;right:-280px;bottom:-300px;border-color:var(--deco-clay); animation-duration:22s; animation-delay:3s;}
+  @keyframes pondRipple{
+    0%   { transform:scale(.90); opacity:0; }
+    30%  { opacity:1; }
+    100% { transform:scale(1.12); opacity:0; }
+  }
+  /* 尊重“减少动态”：关掉动画，回到静态水纹 */
+  @media (prefers-reduced-motion: reduce){
+    .bg-deco i{animation:none; opacity:1; transform:none;}
+  }
 
   .wrap{max-width:880px; margin:0 auto; padding:0 24px;}
   a{color:var(--teal); text-decoration:none;}
