@@ -47,25 +47,18 @@
     background-attachment:fixed; min-height:100vh;
     transition:background-color .4s ease, color .4s ease;
   }
-  /* 背景水纹：填满两侧留白，固定不滚动；缓慢向外扩散淡出，像池塘水波，克制不喧宾 */
+  /* 固定背景层：两侧静态淡水纹，填充留白；固定在视口、不随页面滚动 */
   .bg-deco{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
-  .bg-deco i{position:absolute; border-radius:50%; border:2px solid var(--deco-teal);
-    opacity:0; will-change:transform,opacity; animation:pondRipple 16s ease-in-out infinite both;}
-  /* 同一角的两环错相位 → 一圈圈往外荡的水波；周期各异，整体几乎察觉不到“在动” */
-  .bg-deco .a{width:780px;height:780px;right:-300px;top:-280px; animation-duration:16s; animation-delay:0s;}
-  .bg-deco .b{width:520px;height:520px;right:-150px;top:-110px; animation-duration:16s; animation-delay:5s;}
-  .bg-deco .c{width:620px;height:620px;left:-280px;top:42%;border-color:var(--deco-clay); animation-duration:19s; animation-delay:2s;}
-  .bg-deco .d{width:360px;height:360px;left:-120px;top:50%;border-color:var(--deco-clay); animation-duration:19s; animation-delay:8.5s;}
-  .bg-deco .e{width:680px;height:680px;right:-280px;bottom:-300px;border-color:var(--deco-clay); animation-duration:22s; animation-delay:3s;}
-  @keyframes pondRipple{
-    0%   { transform:scale(.90); opacity:0; }
-    30%  { opacity:1; }
-    100% { transform:scale(1.12); opacity:0; }
-  }
-  /* 尊重“减少动态”：关掉动画，回到静态水纹 */
-  @media (prefers-reduced-motion: reduce){
-    .bg-deco i{animation:none; opacity:1; transform:none;}
-  }
+  .bg-deco i{position:absolute; border-radius:50%; border:2px solid var(--deco-teal); opacity:.7;}
+  .bg-deco .a{width:780px;height:780px;right:-300px;top:-280px;}
+  .bg-deco .b{width:520px;height:520px;right:-150px;top:-110px;}
+  .bg-deco .c{width:620px;height:620px;left:-280px;top:42%;border-color:var(--deco-clay);}
+  .bg-deco .d{width:360px;height:360px;left:-120px;top:50%;border-color:var(--deco-clay);}
+  .bg-deco .e{width:680px;height:680px;right:-280px;bottom:-300px;border-color:var(--deco-clay);}
+  /* 滚动联动的水波层：往下滚每隔一段就在某处荡开一圈，扩散淡出后自动移除 */
+  .ripple-layer{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
+  .ripple-layer .rp{position:absolute; border-radius:50%; border:2px solid var(--deco-teal);
+    transform:translate(-50%,-50%) scale(0); will-change:transform,opacity;}
 
   .wrap{max-width:880px; margin:0 auto; padding:0 24px;}
   a{color:var(--teal); text-decoration:none;}
@@ -148,6 +141,7 @@
 </head>
 <body>
 <div class="bg-deco"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i></div>
+<div class="ripple-layer" id="ripple-layer"></div>
 <div class="wrap">
 
   <div class="topbar">
@@ -245,6 +239,47 @@
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('atw-theme', next); } catch (_) {}
     });
+  })();
+</script>
+
+<!-- 滚动联动水波：每滚动约一段距离，在侧边某处荡开一圈，克制不喧宾 -->
+<script>
+  (() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const layer = document.getElementById('ripple-layer');
+    if (!layer) return;
+    // 落点偏向两侧留白，避开正文；轮换出现，不固定一处
+    const spots = [[0.10,0.32],[0.90,0.44],[0.14,0.68],[0.86,0.30],[0.08,0.52],[0.92,0.66]];
+    const STEP = 460;            // 每滚动约 460px 荡开一圈
+    let lastY = window.scrollY, acc = 0, idx = 0, ticking = false;
+    function spawn() {
+      const s = spots[idx % spots.length]; idx++;
+      const el = document.createElement('span');
+      el.className = 'rp';
+      el.style.left = (s[0] * 100) + '%';
+      el.style.top = (s[1] * 100) + '%';
+      el.style.borderColor = (idx % 2) ? 'var(--deco-teal)' : 'var(--deco-clay)';
+      const d = 320 + (idx % 3) * 70;   // 直径有点变化，更自然
+      el.style.width = el.style.height = d + 'px';
+      layer.appendChild(el);
+      const anim = el.animate([
+        { transform: 'translate(-50%,-50%) scale(0.10)', opacity: 0 },
+        { opacity: 0.9, offset: 0.16 },
+        { transform: 'translate(-50%,-50%) scale(1)', opacity: 0 }
+      ], { duration: 2600, easing: 'cubic-bezier(.22,.61,.36,1)' });
+      anim.onfinish = () => el.remove();
+      anim.oncancel = () => el.remove();
+    }
+    function step() {
+      const y = window.scrollY;
+      acc += Math.abs(y - lastY);
+      lastY = y;
+      if (acc >= STEP) { acc = 0; spawn(); }
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(step); }
+    }, { passive: true });
   })();
 </script>
 </body>
