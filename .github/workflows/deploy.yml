@@ -57,6 +57,21 @@ jobs:
         env:
           BASE_PATH: /
           SITE_URL: https://tiaozhuxiansheng.com
+      # 从 desk-pond 最新 Release 抓 Windows 安装包，随 dist 一起 rsync 到香港服务器，
+      # 让主页能国内直连直接下载（不入 git、不进 Pages 产物——Pages 单文件 100MB 上限）。
+      # 统一命名为稳定文件名，主页链接无需随版本改动；每次部署自动同步到最新版。
+      - name: 拉取 desk-pond 最新 Release 安装包到 dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p dist/desk-pond/download
+          asset_url=$(curl -sL -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/Mr-Salticidae/desk-pond/releases/latest \
+            | grep -o '"browser_download_url": *"[^"]*\.exe"' | head -1 | sed -E 's/.*"(https[^"]+)".*/\1/')
+          echo "下载: $asset_url"
+          test -n "$asset_url"
+          curl -fL "$asset_url" -o dist/desk-pond/download/DeskPond-Windows.exe
+          ls -la dist/desk-pond/download/
       - name: Rsync dist 到香港服务器
         run: |
           mkdir -p ~/.ssh

@@ -87,16 +87,12 @@
   .feat .it span{color:var(--ink-soft); font-size:.92rem;}
 
   /* Download */
-  .dl{background:var(--paper-2); border:1px solid var(--line); border-radius:24px; padding:30px; box-shadow:var(--shadow);
-    display:flex; gap:30px; align-items:center; flex-wrap:wrap;}
-  .dl .col{flex:1 1 300px;}
+  .dl{background:var(--paper-2); border:1px solid var(--line); border-radius:24px; padding:32px; box-shadow:var(--shadow);}
   .dl h2{margin-bottom:.3em;}
-  .dl .opt{margin:16px 0;}
-  .dl .opt .t{font-weight:700;}
-  .dl .opt .d{color:var(--ink-soft); font-size:.9rem;}
-  .dl .qr{flex:0 0 auto; text-align:center;}
-  .dl .qr img{width:148px; height:148px; image-rendering:pixelated; border:8px solid #fff; border-radius:12px; box-shadow:var(--shadow);}
-  .dl .qr .c{font-size:.82rem; color:var(--ink-faint); margin-top:10px;}
+  .dl .dl-lead{color:var(--ink-soft); max-width:60ch; margin-bottom:22px;}
+  .dl .dl-lead b{color:var(--teal);}
+  .btn.big{font-size:1.12rem; padding:16px 30px;}
+  .dl .dl-alt{color:var(--ink-faint); font-size:.9rem; margin-top:18px;}
 
   footer{border-top:1px solid var(--line); margin-top:60px; padding:30px 0 50px; color:var(--ink-faint); font-size:.88rem;
     display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;}
@@ -126,8 +122,8 @@
       <div class="tagline">你专注，它钓鱼；你完成计划，它长树。</div>
       <p class="sub">一个安静待在桌面角落的像素小窗。不抢注意力，只把你认真过的时间，慢慢攒成看得见的样子。</p>
       <div class="cta-row">
-        <a class="btn primary" href="https://github.com/Mr-Salticidae/desk-pond/releases/latest" target="_blank" rel="noopener">下载 Windows 版 <small>· 免安装</small></a>
-        <a class="btn ghost" href="#download">其它下载方式</a>
+        <a class="btn primary" href="https://tiaozhuxiansheng.com/desk-pond/download/DeskPond-Windows.exe">↓ 下载 Windows 版 <small>· 免安装</small></a>
+        <a class="btn ghost" href="#download">下载说明</a>
       </div>
       <div class="pills">
         <span class="pill">Windows</span>
@@ -178,21 +174,9 @@
     <div class="dl">
       <div class="col">
         <h2>把池塘带回家 <span class="en">/ download</span></h2>
-        <div class="opt">
-          <div class="t">① GitHub Releases（推荐）</div>
-          <div class="d">前往 <a href="https://github.com/Mr-Salticidae/desk-pond/releases/latest" target="_blank" rel="noopener">Releases 最新版</a>，下载 <code>DeskPond-v*.exe</code>，双击运行。</div>
-        </div>
-        <div class="opt">
-          <div class="t">② 夸克网盘（国内直连）</div>
-          <div class="d">扫右侧二维码，或打开 <a href="https://pan.quark.cn/s/c08fb54f7bc5" target="_blank" rel="noopener">夸克网盘链接</a>，转存后下载。</div>
-        </div>
-        <div class="opt">
-          <div class="d">老用户覆盖运行即可，存档不受影响。</div>
-        </div>
-      </div>
-      <div class="qr">
-        <img src="./assets/quark_qr.png" alt="夸克网盘下载二维码">
-        <div class="c">手机扫码 · 存到夸克网盘</div>
+        <p class="dl-lead">点下面的按钮直接下载——文件就放在这个站点上，<b>国内直连</b>、免安装、双击即玩，不用网盘、不用转存。</p>
+        <a class="btn primary big" href="https://tiaozhuxiansheng.com/desk-pond/download/DeskPond-Windows.exe">↓ 下载 Windows 版 <small>· 免安装 · 约 110MB</small></a>
+        <p class="dl-alt">老用户覆盖运行即可，存档不受影响。也可以去 <a href="https://github.com/Mr-Salticidae/desk-pond/releases/latest" target="_blank" rel="noopener">GitHub Releases</a> 查看历史版本与更新说明。</p>
       </div>
     </div>
   </section>
