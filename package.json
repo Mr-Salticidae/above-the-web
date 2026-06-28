@@ -6,8 +6,9 @@
   "description": "蛛网之上 · 跳蛛先生创作知识库的杂志风开源展示站",
   "scripts": {
     "sync": "node scripts/sync-content.mjs",
+    "stamp": "node scripts/stamp-assets.mjs",
     "dev": "npm run sync && astro dev",
-    "build": "npm run sync && astro build && pagefind --site dist",
+    "build": "npm run sync && npm run stamp && astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },
