@@ -79,6 +79,8 @@
   .ledger .v { font-size: 20px; font-weight: 600; margin-top: 1px; font-feature-settings: "tnum"; }
   .ledger .v.saved { color: var(--green); }
   .ledger .v.lost  { color: var(--red); }
+  .ledger .v.trust { color: var(--gold, #9c7320); }
+  .ledger .v.trust.low { color: var(--red); }
 
   /* ---------- Editorial bits ---------- */
   .kicker { font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
@@ -147,6 +149,13 @@
     box-shadow: inset 0 0 0 2px rgba(167,43,34,.15); opacity: .9;
   }
   .stamp.ok { border-color: var(--green); color: var(--green); box-shadow: inset 0 0 0 2px rgba(47,107,79,.15); }
+  .cost {
+    display: inline-block; vertical-align: middle; margin-left: 12px;
+    font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600;
+  }
+  .cost b { font-family: "Fraunces", serif; font-size: 17px; font-weight: 900; letter-spacing: 0; }
+  .cost.money { color: var(--red); }
+  .cost.trust { color: var(--gold, #9c7320); }
   .tells-kicker { margin: 18px 0 8px; }
   .tells { list-style: none; counter-reset: tell; }
   .tells li {
@@ -195,6 +204,7 @@
   .figs .k { font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
   .figs .v { font-family: "Fraunces", serif; font-weight: 900; font-size: 26px; margin-top: 3px; font-feature-settings: "tnum"; }
   .figs .v.saved { color: var(--green); } .figs .v.lost { color: var(--red); }
+  .figs .v.trust { color: var(--gold, #9c7320); } .figs .v.trust.low { color: var(--red); }
   .mission { font-family: "Fraunces", serif; font-style: italic; font-size: 16px; color: var(--ink); margin: 18px 0 6px; line-height: 1.5; text-align: center; }
 
   .colophon { padding: 16px 30px 22px; border-top: 1px solid var(--line); font-size: 10.5px; line-height: 1.7; color: var(--muted); text-align: center; letter-spacing: .02em; }
@@ -221,24 +231,33 @@
     .ledger .v { font-size: 16px; }
     main, .screen { padding: 12px 16px 14px; }
 
-    /* case screen = flexible column; the exhibit caps its height and scrolls inside */
+    /* case screen = full-height column: case sits up top, the ruling area is
+       anchored to the bottom (thumb zone). The slack between them is shared so
+       nothing clusters in the upper half. */
     #caseScreen { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
     .case-head .ticks i { width: 12px; }
     .case-title { font-size: 20px; margin: 8px 0 10px; }
-    .exhibit { font-size: 14.5px; line-height: 1.7; padding: 13px 15px; max-height: 32dvh; overflow-y: auto; }
-    #caseScreen.decided .exhibit { max-height: 15dvh; }
-    .sender { margin-top: 7px; }
-    .atrisk { margin: 12px 0 2px; } .atrisk .fig { font-size: 20px; }
-    .timer { margin: 12px 0 2px; }
-    .ruling-prompt { margin: 12px 0 8px; }
+    /* the evidence box is the focus: let it grow to fill the slack (capped so a
+       long message still scrolls inside), message vertically centered. */
+    .exhibit { font-size: 15px; line-height: 1.75; padding: 16px 18px; flex: 1 1 auto; max-height: 56dvh; overflow-y: auto; display: flex; flex-direction: column; justify-content: center; }
+    #caseScreen.decided .exhibit { flex: 0 0 auto; max-height: 16dvh; justify-content: flex-start; }
+    .sender { margin-top: 8px; }
+    .atrisk { margin: 14px 0 2px; } .atrisk .fig { font-size: 20px; }
+    /* push the timer + ruling + buttons block to the bottom of the screen */
+    .timer { margin: auto 0 6px; }
+    #caseScreen.decided .verdict { margin-top: 14px; }   /* verdict flows top-aligned, no auto-gap */
+    .ruling-prompt { margin: 0 0 10px; }
     .actions { gap: 12px; }
-    .act { padding: 13px 10px; } .act .big { font-size: 18px; }
-    .hint { margin-top: 8px; font-size: 11px; }
+    .act { padding: 16px 10px; } .act .big { font-size: 18px; }
+    .hint { margin-top: 10px; font-size: 11px; }
     .verdict { margin-top: 12px; padding-top: 12px; }
     .stamp { font-size: 20px; }
     .tells li { padding: 7px 0 7px 32px; font-size: 13px; line-height: 1.6; }
     .pull { font-size: 16px; margin: 12px 0 4px; }
-    .next-wrap { margin-top: 14px; }
+    /* decided: verdict fills the column, the next button pins to the bottom */
+    #caseScreen.decided #verdictBox { flex: 1 1 auto; min-height: 0; display: flex; }
+    #caseScreen.decided .verdict { display: flex; flex-direction: column; flex: 1 1 auto; }
+    .next-wrap { margin-top: auto; padding-top: 16px; }
 
     /* intro / report compaction */
     .cover-title { font-size: 30px; }

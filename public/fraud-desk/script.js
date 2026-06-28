@@ -6,6 +6,10 @@
    ========================================================================= */
 
 const DECISION_SECONDS = 25;
+// Harder cases get less time on the clock — pressure rises exactly where you need to think.
+function caseSeconds(c) { const d = (c && c.difficulty) || 1; return d >= 3 ? 16 : d === 2 ? 20 : 25; }
+// Crying wolf on a real message costs trust; harder calls cost more.
+function trustPenalty(c) { const d = (c && c.difficulty) || 1; return 12 + (d - 1) * 6; } // d1:12  d2:18  d3:24
 
 const L = {
   en: {
@@ -18,27 +22,30 @@ const L = {
     introBody: "You are the night analyst. Texts, transfers and calls cross your desk; some are honest, some are built to empty a life's savings. Read closely, find the tell, and rule before the clock runs out. Block the frauds — but cry wolf on a real message and you lose trust, too.",
     startBtn: "Begin the shift →",
     introContentsTitle: "How a shift works",
-    introContentsBody: "Each shift deals 5–10 cases at random from the file room, with 25 seconds to rule on each. The real scams are drawn from China's most common fraud playbooks.",
+    introContentsBody: "Each shift deals 5–10 cases at random — and gets harder as the night goes on, with less time on the clock. Some real messages are built to look like scams; some scams are dressed up as perfectly ordinary business. Get it wrong either way and it costs you: miss a scam and money is lost; flag a real message and you bleed the desk's trust.",
     caseKickerWord: "Case", exhibitWord: "Exhibit", transcriptWord: "Transcript",
     atRisk: "At risk", timerLabel: "Time to rule",
     rulingPrompt: "Your ruling",
     btnGenuineLbl: "Rule it", btnGenuine: "Genuine",
     btnFraudLbl: "Rule it", btnFraud: "Fraud",
-    hint: "Remember: a real institution never asks you to read back a one-time code.",
+    hint: "Read closely — some real messages look like scams, and some scams look like ordinary business.",
+    trustLabel: "Trust", trustWord: "Trust",
+    costLostLbl: "Lost", costTrustLbl: "Trust",
     stampBlocked: "Blocked", stampCleared: "Cleared", stampMissed: "Missed", stampFalse: "False Alarm", stampTimeout: "Timed Out",
     tells: "The tells",
     next: "Next case →", seeReport: "Close the file →",
     reportKicker: "End of Shift · Assessment",
-    gS: "A flawless shift. Nothing got past you.",
-    gA: "Sharp eyes. You're reading the tells now.",
+    gS: "A flawless shift. Nothing got past you, and every real customer kept their trust in you.",
+    gA: "Sharp eyes. You're reading the tells now — and you didn't cry wolf on the real ones.",
     gB: "A solid shift — a couple of clever ones slipped by.",
     gC: "Some got through. Re-read the tells and draw again.",
+    gD: "You lost the desk's trust. Too many real messages flagged as fraud — and when every alert is \"fraud,\" people stop believing the real ones.",
     moneySaved: "Recovered", moneyLost: "Lost", accuracy: "Accuracy",
-    lockTitle: "In the full edition",
-    lockItem1: "Eight shifts — across elderly, student and small-business desks",
-    lockItem2: "60+ real scam playbooks: deepfake voice, QR swaps, fake support lines",
-    lockItem3: "A career mode where the cons adapt to the way you play",
-    lockItem4: "A free, open case library you can share with your family",
+    lockTitle: "What this demo already holds",
+    lockItem1: "300+ real scam scripts — overdraft alerts, fake support lines, “safe-account” cons",
+    lockItem2: "An ambiguity layer: real messages that look like scams, scams dressed as ordinary business",
+    lockItem3: "Two-axis stakes — miss a scam, lose money; flag a real one, lose the desk's trust",
+    lockItem4: "Bilingual, instant-switch, free to share — open in any browser, send it to your family",
     mission: "The aim: make fraud awareness a reflex — free, and for everyone.",
     replay: "Draw a new shift →",
     footer: "<b>This is a demo</b><br/>A vertical slice for The Demo Jam, 2026. Built in a single HTML file, vibe-coded with Claude Code (Anthropic). Scam patterns adapted from public anti-fraud education (incl. China's National Anti-Fraud Center, 2025); no real names or brands are used.",
@@ -53,27 +60,30 @@ const L = {
     introBody: "你是夜班分析员。短信、转账、来电从你桌上经过；有的诚实，有的专为掏空一个人的积蓄而生。仔细读，找出破绽，在倒计时归零前判下裁定。拦下骗局——但对真消息草木皆兵，你也会失去信任。",
     startBtn: "开始当班 →",
     introContentsTitle: "一个班次怎么玩",
-    introContentsBody: "每个班次从案件库随机发 5–10 桩，每桩限时 25 秒裁定。骗局都取材于中国最高发的真实诈骗剧本。",
+    introContentsBody: "每个班次随机发 5–10 桩，越到后面越难、留给你的时间越短。有的真消息，偏偏长得像骗局；有的骗局，偏偏装成一桩正经事。判错哪一边都有代价——漏掉骗局，丢钱；误伤真消息，丢掉柜台对你的信任。",
     caseKickerWord: "案件", exhibitWord: "物证", transcriptWord: "记录",
     atRisk: "风险金额", timerLabel: "限时裁定",
     rulingPrompt: "你的裁定",
     btnGenuineLbl: "判定为", btnGenuine: "属实",
     btnFraudLbl: "判定为", btnFraud: "诈骗",
-    hint: "记住：正规机构，绝不会让你回读一次性验证码。",
+    hint: "仔细读——有的真消息长得像骗局，有的骗局装得像一桩正经事。",
+    trustLabel: "信任", trustWord: "信任",
+    costLostLbl: "损失", costTrustLbl: "信任",
     stampBlocked: "已拦截", stampCleared: "已放行", stampMissed: "漏网", stampFalse: "误判", stampTimeout: "超时未判",
     tells: "破绽",
     next: "下一桩 →", seeReport: "归档结案 →",
     reportKicker: "当班结束 · 考评",
-    gS: "完美的一班。没有一个漏网。",
-    gA: "好眼力。你已经在读破绽了。",
+    gS: "完美的一班。没有一个漏网，每一位真客户也都还信任你。",
+    gA: "好眼力。你已经在读破绽了——而且没有对真消息草木皆兵。",
     gB: "这一班不错——有几个精巧的溜了过去。",
     gC: "有些过去了。重读破绽，再抽一班。",
+    gD: "你失去了柜台的信任。太多真消息被你当成诈骗拦下——当每条预警都被喊成「诈骗」，人们就不再相信真正的那一条了。",
     moneySaved: "已挽回", moneyLost: "已损失", accuracy: "准确率",
-    lockTitle: "完整版收录",
-    lockItem1: "八个班次——覆盖老年、学生、小微企业等柜台",
-    lockItem2: "60+ 真实诈骗剧本：深伪语音、收款码掉包、假冒客服专线",
-    lockItem3: "职业生涯模式：骗术随你的打法自适应进化",
-    lockItem4: "一个可免费分享给家人的开放案例库",
+    lockTitle: "这个 demo 里已经有什么",
+    lockItem1: "300+ 真实诈骗剧本——盗刷预警、假冒客服、「安全账户」骗局",
+    lockItem2: "歧义层：真消息长得像骗局，骗局装成一桩正经事",
+    lockItem3: "双轴代价——漏掉骗局丢钱，误伤真消息丢掉柜台的信任",
+    lockItem4: "中英双语即时切换、免费可分享——浏览器打开即玩，转给爸妈也好上手",
     mission: "目标：把反诈意识练成本能——免费，人人可用。",
     replay: "再抽一个班次 →",
     footer: "<b>这是一个 Demo</b><br/>为 The Demo Jam 2026 制作的切片。单个 HTML 文件，借助 Claude Code（Anthropic）vibe-coding。诈骗话术改编自公开反诈科普（含国家反诈中心 2025 年资料），未使用任何真实人名或品牌。",
@@ -2707,13 +2717,4722 @@ collect. The point will never ask you to pay or for bank details.`,
     truthScam: { en: "Genuine — flagging a library notice just means a missed book.", zh: "真的——拦下图书馆通知,只会错过一本书。" },
     truthSafe: { en: "Right call. A real hold notice asks only that you come and borrow it.", zh: "判得对。真到馆提醒只要你来借,别无所求。" },
   },
+
+  /* ===================================================================
+     AMBIGUITY LAYER — cases built to defeat the lazy heuristic.
+     "decoy-genuine": real messages that LOOK like scams (rule Genuine).
+     "stealth-scam": scams with a clean surface and one buried tell (rule Fraud).
+     difficulty: 2 = ambiguous, 3 = the surface gives almost nothing away.
+     =================================================================== */
+
+  // —— decoy-genuine: a real bank fraud alert that reads like a phishing text ——
+  {
+    answer: "safe", risk: 0, difficulty: 2,
+    title: { en: "The Alert That's Actually Real", zh: "这次预警是真的" },
+    chan: { en: "SMS · card issuer", zh: "短信 · 发卡行" },
+    sender: { en: "Sender — <b>95xxx</b>, the issuer's official five-digit service number", zh: "发件人 — <b>95xxx</b>，发卡行官方五位短号" },
+    text: {
+      en: `Card ending 6212: a 6,800 charge was attempted overseas at 12:41.
+If this was NOT you, freeze the card now in your banking app, or call
+the number printed on the back of your card. We did not block it for you.`,
+      zh: `您尾号6212的卡，12:41在境外发生一笔 6,800 元交易。
+如非本人操作，请立即在手机银行冻结卡片，或拨打卡背面客服热线。
+我们未代您拦截。` },
+    flags: [
+      { en: "Scary amount and urgency — but it asks for nothing: no link, no code, no transfer.",
+        zh: "金额吓人、口气紧急——但它什么都没要你给：没链接、没验证码、没要你转账。" },
+      { en: "It routes you to YOUR OWN app and the number on YOUR card, not a supplied line.",
+        zh: "它让你走自己的手机银行、拨自己卡背面的号，而不是它给你的某个号码。" },
+      { en: "A real fraud alert hands control back to you; a scam tries to keep it.",
+        zh: "真预警把主动权交还给你；骗局则想把它攥在自己手里。" } ],
+    truthScam: { en: "This was the genuine article. Block it and the customer ignores the next real one.",
+                 zh: "这条是真的。把它拦了，客户下次就会无视真正的预警。" },
+    truthSafe: { en: "Right call. Real banks do send urgent alerts — the tell is what they ask you to DO.",
+                 zh: "判得对。真银行确实会发紧急预警——区别在于它让你「去做什么」。" },
+  },
+
+  // —— decoy-genuine: a one-time code, but nobody is asking you to read it back ——
+  {
+    answer: "safe", risk: 0, difficulty: 3,
+    title: { en: "A Code, Just Sitting There", zh: "一串没人问你要的验证码" },
+    chan: { en: "SMS · verification", zh: "短信 · 验证码" },
+    sender: { en: "Source — the login you started 10 seconds ago on your own phone", zh: "来源 — 你 10 秒前在自己手机上发起的登录" },
+    text: {
+      en: `Your verification code is 519830. Valid for 5 minutes.
+We will NEVER call to ask for it. Anyone who does is a scammer —
+do not read it aloud to anyone.`,
+      zh: `您的验证码是 519830，5 分钟内有效。
+我们绝不会来电向您索取。任何来电索要的都是骗子——
+请勿读给任何人听。` },
+    flags: [
+      { en: "The word \"code\" triggers the reflex — but no one here is asking you to share it.",
+        zh: "「验证码」三个字触发条件反射——可这里没有任何人在问你要它。" },
+      { en: "You triggered it yourself by logging in; it's informational, not a request.",
+        zh: "是你自己登录触发的；它是告知，不是索取。" },
+      { en: "The danger is only when a CALLER asks you to read it back. No caller here.",
+        zh: "危险只发生在有人来电让你「回读」时。这里没有来电。" } ],
+    truthScam: { en: "It was genuine. Flag every code SMS and you can never log in to anything.",
+                 zh: "它是真的。把每条验证码短信都拦了，你将永远登不上任何账号。" },
+    truthSafe: { en: "Right call. A code you requested is safe; a code someone asks you to recite is not.",
+                 zh: "判得对。你自己要的验证码是安全的；别人让你念出来的才危险。" },
+  },
+
+  // —— decoy-genuine: tax refund — a real one, via the official app ——
+  {
+    answer: "safe", risk: 0, difficulty: 2,
+    title: { en: "The Refund You Actually Filed For", zh: "你真办过的那笔退税" },
+    chan: { en: "App push · tax authority", zh: "App 推送 · 个税" },
+    sender: { en: "Source — the official Individual Income Tax app you installed", zh: "来源 — 你自己装的「个人所得税」官方 App" },
+    text: {
+      en: `Your annual tax reconciliation is complete. A refund of 432.10 has
+been issued to the bank account on file. View details in the app under
+My Refunds. No fee, no link, nothing further is required.`,
+      zh: `您的年度综合所得汇算已完成，432.10 元退税已退至您预留的银行账户。
+可在 App「我的退税」中查看明细。无需手续费、无外链，无需任何后续操作。` },
+    flags: [
+      { en: "\"Tax refund\" is a notorious scam hook — but this one asks nothing of you.",
+        zh: "「退税」是臭名昭著的诈骗钩子——但这一条对你别无所求。" },
+      { en: "It lives inside the official app you installed, with no outside link to tap.",
+        zh: "它就在你自己装的官方 App 里，没有任何外部链接要点。" },
+      { en: "The money goes back to your own filed account — no \"handling fee\" first.",
+        zh: "钱退回你自己预留的账户——不需要先交什么「手续费」。" } ],
+    truthScam: { en: "Genuine. Refund scams exist — but real refunds never demand a fee or a link first.",
+                 zh: "真的。退税骗局确实有——但真退税从不会先要手续费或让你点链接。" },
+    truthSafe: { en: "Right call. The tell of the fake is the fee or link it needs before paying you.",
+                 zh: "判得对。假退税的破绽，是它在「退钱给你」之前先要的费用或链接。" },
+  },
+
+  // —— decoy-genuine: an ordinary message from the boss (after a boss-scam primed you) ——
+  {
+    answer: "safe", risk: 0, difficulty: 2,
+    title: { en: "An Actual Message From the Actual Boss", zh: "老板本人,一件正经事" },
+    chan: { en: "Work IM · known account", zh: "办公 IM · 实名账号" },
+    sender: { en: "Sender — your manager's verified company account, used daily", zh: "发件人 — 你天天在用的经理实名办公账号" },
+    text: {
+      en: `Send me the Q3 report by 3pm, no rush. Mail it to my work address.
+Also — sign up for Friday's team dinner if you haven't, headcount's due.`,
+      zh: `下午 3 点前把 Q3 报表发我就行，不急，发我办公邮箱。
+对了，周五团建你还没报名的话记得报一下，要统计人数。` },
+    flags: [
+      { en: "After a gift-card \"boss\" scam, you're primed to flag any boss message — don't over-correct.",
+        zh: "被礼品卡「老板」骗局吓过后，你会想拦下任何「老板」消息——别矫枉过正。" },
+      { en: "No money, no codes, no secrecy, no urgency — just normal work.",
+        zh: "不涉及钱、不要验证码、不要求保密、不催——就是正常工作。" },
+      { en: "It comes from the verified account you use every day, not a brand-new one.",
+        zh: "来自你每天在用的实名账号，而不是一个新冒出来的号。" } ],
+    truthScam: { en: "Genuine. Flag your real boss as fraud and you've ground normal work to a halt.",
+                 zh: "真的。把真老板当诈骗拦了，正常工作就被你卡死了。" },
+    truthSafe: { en: "Right call. The boss-scam tell is money + secrecy + a new account — none are here.",
+                 zh: "判得对。冒充领导的破绽是「钱+保密+新账号」——这里一个都没有。" },
+  },
+
+  // —— decoy-genuine: real courier notice with a pickup code ——
+  {
+    answer: "safe", risk: 0, difficulty: 2,
+    title: { en: "Parcel in the Locker", zh: "快递进柜了" },
+    chan: { en: "SMS · courier locker", zh: "短信 · 快递柜" },
+    sender: { en: "Source — the parcel locker for a delivery you're expecting", zh: "来源 — 你正在等的那个包裹的快递柜" },
+    text: {
+      en: `Your parcel is in locker 87-C. Pickup code: 8842. Free to collect
+within 24 hours. No app, no payment — just tap the code on the locker.`,
+      zh: `您的快递已存入 87-C 柜，取件码 8842，24 小时内免费领取。
+无需下载 App、无需付款——到柜机输入取件码即可。` },
+    flags: [
+      { en: "\"Pickup code\" pattern-matches to \"verification code,\" but it only opens a locker.",
+        zh: "「取件码」容易被当成「验证码」，但它只是开柜子用的。" },
+      { en: "No link, no fee, no account — the worst case is someone opens a locker of your socks.",
+        zh: "没链接、没费用、没账号——最坏情况不过是有人开了个装你袜子的柜子。" },
+      { en: "It matches a delivery you're actually expecting.",
+        zh: "它对得上你确实在等的一个包裹。" } ],
+    truthScam: { en: "Genuine. A locker code isn't a bank code — collecting a parcel costs nothing.",
+                 zh: "真的。取件码不是银行验证码——去取个快递不会有任何损失。" },
+    truthSafe: { en: "Right call. The fake-courier tell is a redelivery FEE or a link — neither appears here.",
+                 zh: "判得对。假快递的破绽是「重新投递费」或链接——这里都没有。" },
+  },
+
+  // —— decoy-genuine: a real credit-card bill ——
+  {
+    answer: "safe", risk: 0, difficulty: 2,
+    title: { en: "Just the Monthly Bill", zh: "只是张月账单" },
+    chan: { en: "SMS · card issuer", zh: "短信 · 发卡行" },
+    sender: { en: "Source — your card issuer's official statement number", zh: "来源 — 发卡行官方账单短号" },
+    text: {
+      en: `Your statement is ready: balance 3,250.00, due 25 Jun. Minimum 325.
+Pay anytime in your banking app or by UnionPay. Questions? Use the number
+on your card. No link is included in this message.`,
+      zh: `您本期账单已出：应还 3,250.00 元，还款日 6 月 25 日，最低还款 325 元。
+可在手机银行或云闪付随时还款。如有疑问请拨卡背面客服。
+本条短信不含任何链接。` },
+    flags: [
+      { en: "An amount you \"owe\" plus a deadline pings the scam reflex — but nothing is off-script.",
+        zh: "一个「欠款」金额加一个截止日，会触发诈骗反射——但全程没有越界动作。" },
+      { en: "It points you to your own app / UnionPay, contains no link, and asks for no code.",
+        zh: "它指向你自己的 App / 云闪付，不含链接，也不要验证码。" },
+      { en: "Paying your own bill in your own app can't be intercepted by anyone.",
+        zh: "在自己 App 里还自己的账单，没人能从中拦截。" } ],
+    truthScam: { en: "Genuine. A statement notice with no link and no code request is just a bill.",
+                 zh: "真的。一条不含链接、不要验证码的账单提醒，就只是张账单。" },
+    truthSafe: { en: "Right call. The fake-bill tell is a payment link or a \"verify card\" code — absent here.",
+                 zh: "判得对。假账单的破绽是「还款链接」或「核验卡片」验证码——这里都没有。" },
+  },
+
+  // —— stealth-scam: impersonating police, the "safe account" ask ——
+  {
+    answer: "scam", risk: 60000, difficulty: 3,
+    title: { en: "The Polite Detective", zh: "彬彬有礼的「警官」" },
+    chan: { en: "Phone call · transcript", zh: "来电 · 通话记录" },
+    sender: { en: 'Caller — calm, professional, "Economic Crimes Unit," gives a case number', zh: '来电 — 语气平和专业，自称「经侦支队」，报了案件编号' },
+    text: {
+      en: `"Good afternoon. This is the Economic Crimes Unit. A bank card in your
+name is linked to a money-laundering case, number H2025-0418. You are not
+yet a suspect. To prove the funds are clean and protect them during the
+review, please move your savings into the designated safe account for
+verification. It will be returned in full once you're cleared."`,
+      zh: `「您好，这里是经侦支队。您名下一张银行卡涉嫌一起洗钱案，
+案件编号 H2025-0418。目前您还不是嫌疑人。为证明资金清白、
+并在核查期间保护好这笔钱，请将您的存款转入我们指定的『安全账户』
+接受审查，核查无误后会全额原路退回。」` },
+    flags: [
+      { en: "Calm, authoritative, a real-sounding case number — and zero of the usual red flags.",
+        zh: "语气平和、权威，案件编号像模像样——常见的红旗一个都不见。" },
+      { en: "THE tell: \"safe account.\" Police and prosecutors never have one, and never phone you to transfer money.",
+        zh: "唯一的破绽：「安全账户」。公检法根本不存在这种账户，更不会电话办案让你转账。" },
+      { en: "Real law enforcement summons you in person and in writing — never settles a case by phone transfer.",
+        zh: "真办案是当面、书面传唤——绝不会靠一通电话和一笔转账了结。" } ],
+    truthScam: { en: "The most devastating scam of all. \"Safe account\" is the phrase that empties a life's savings.",
+                 zh: "杀伤力最强的骗局。「安全账户」这四个字，能掏空一个人一生的积蓄。" },
+    truthSafe: { en: "It was a scam. No real authority asks you to wire money to a \"safe account\" — ever.",
+                 zh: "这是骗局。没有任何真机关会让你把钱打进「安全账户」——一次也不会。" },
+  },
+
+  // —— stealth-scam: "cancel your campus loan," remote-control ——
+  {
+    answer: "scam", risk: 24000, difficulty: 2,
+    title: { en: "Closing an Account You Never Opened", zh: "注销一个你没开过的账户" },
+    chan: { en: "Phone call · \"finance support\"", zh: "来电 · 「金融客服」" },
+    sender: { en: 'Caller — helpful "platform support," cites a new regulation', zh: '来电 — 热心的「平台客服」，搬出一条新规' },
+    text: {
+      en: `"Our system shows a student loan account registered under your name
+back in college. Under new rules it must be closed, or it will hurt your
+credit score. I'll guide you through it — just install a screen-share app
+so I can help you clear the credit limit. It only takes a few minutes."`,
+      zh: `「系统显示您学生时期注册过一个校园贷账户，按监管新规需要注销，
+否则会影响您的征信。我来一步步指导您——您先装一个屏幕共享软件，
+我帮您把额度清空就行，几分钟的事。」` },
+    flags: [
+      { en: "Helpful tone, a plausible \"new regulation,\" mild credit-score pressure — no shouting.",
+        zh: "热心口吻、一条像样的「新规」、轻度征信施压——全程不吼不催。" },
+      { en: "The tell: \"install screen-share\" + \"clear the limit\" = they drain a real loan to their account.",
+        zh: "破绽：「装屏幕共享」+「清空额度」=他们把一笔真贷款借出、转进自己账户。" },
+      { en: "No legitimate firm fixes your credit by remote-controlling your phone.",
+        zh: "没有任何正规机构会靠远程控制你的手机来「修复征信」。" } ],
+    truthScam: { en: "The campus-loan con. The \"limit you clear\" becomes a real debt in your name, paid to them.",
+                 zh: "注销校园贷骗局。你「清空的额度」会变成你名下的真实欠款，钱进了他们口袋。" },
+    truthSafe: { en: "It was a scam. Remote-control + \"clear your loan limit\" is borrowing in your name.",
+                 zh: "这是骗局。远程控制 +「清空贷款额度」，本质是用你的名义去借钱。" },
+  },
+
+  // —— stealth-scam: a one-character look-alike domain ——
+  {
+    answer: "scam", risk: 298, difficulty: 3,
+    title: { en: "One Letter Off", zh: "一个字母的差别" },
+    chan: { en: "SMS · \"membership\"", zh: "短信 · 「会员中心」" },
+    sender: { en: "Sender — looks like a video-site membership reminder", zh: "发件人 — 看着像视频网站会员提醒" },
+    text: {
+      en: `Your annual membership renews tonight at 23:59 for 298.00.
+To cancel auto-renew or change your plan, sign in at:
+https://www.iqlyi.com/vip/manage`,
+      zh: `您的年度会员将于今晚 23:59 自动续费 298.00 元。
+如需取消自动续费或变更套餐，请登录：
+https://www.iqlyi.com/vip/manage` },
+    flags: [
+      { en: "Everything reads normal — the only flaw is in the domain itself: iq**l**yi, not iqiyi.",
+        zh: "通篇都正常——唯一的破绽藏在域名里：iq**l**yi，不是 iqiyi。" },
+      { en: "\"Cancel before you're charged\" weaponises urgency so you click before you read the URL.",
+        zh: "「扣费前赶紧取消」把紧迫感武器化，逼你在看清网址前就点进去。" },
+      { en: "Always reach a service through its own app, not a link in a text.",
+        zh: "永远从官方 App 进入服务，而不是短信里的链接。" } ],
+    truthScam: { en: "A look-alike domain harvests your login and card. Under time pressure, almost nobody spells it out.",
+                 zh: "仿冒域名会窃取你的登录和银行卡。在时间压力下，几乎没人会去逐字母核对。" },
+    truthSafe: { en: "It was a scam. The whole con lived in one swapped letter — open the real app instead.",
+                 zh: "这是骗局。整个局就藏在一个被掉包的字母里——该做的是去开真 App。" },
+  },
+
+  // —— stealth-scam: generous "compensation" via a borrowing app ——
+  {
+    answer: "scam", risk: 1200, difficulty: 2,
+    title: { en: "Three Times Your Money Back", zh: "三倍奉还的「理赔」" },
+    chan: { en: "Phone call · \"after-sales\"", zh: "来电 · 「售后」" },
+    sender: { en: 'Caller — "quality control" for a shop you really did buy from', zh: '来电 — 你确实买过东西那家店的「质检」' },
+    text: {
+      en: `"The formula you bought failed a safety check. Under the law we're
+compensating you triple — 1,200. To receive it, open Alipay, go to your
+credit line (Huabei / the cash-advance), and we'll deposit the payout there.
+Then you just withdraw it. Ready?"`,
+      zh: `「您买的那款奶粉抽检不合格，依法我们主动三倍理赔 1,200 元。
+为了把钱打给您，请打开支付宝，进到您的『借呗 / 备用金』额度里，
+我们把理赔款打进去，您提现就行。准备好了吗？」` },
+    flags: [
+      { en: "It sounds generous and even cites a law — disarming you before the real move.",
+        zh: "口气慷慨、还搬出法律——在真正动手前先卸下你的戒心。" },
+      { en: "The tell: a refund that needs you to open a LOAN feature. Real refunds go back the way you paid.",
+        zh: "破绽：一笔需要你打开「借贷」功能才能收的退款。真退款只会原路退回。" },
+      { en: "\"Open Huabei to receive money\" means borrowing in your name and transferring it out.",
+        zh: "「打开借呗收款」=用你的名义借钱，再把它转走。" } ],
+    truthScam: { en: "The refund con. The payout is your own borrowed money, routed straight to the scammer.",
+                 zh: "退款理赔骗局。所谓理赔款，是你自己被借出的钱，直接流向骗子。" },
+    truthSafe: { en: "It was a scam. No real refund ever needs you to open a loan to \"receive\" it.",
+                 zh: "这是骗局。没有任何真退款，需要你开通贷款才能「收到」。" },
+  },
+
+  // —— stealth-scam: slow-burn investment, no romance, no urgency ——
+  {
+    answer: "scam", risk: 5000, difficulty: 3,
+    title: { en: "The Old Classmate's Steady Tip", zh: "老同学的「稳健」门路" },
+    chan: { en: "WeChat · reconnected", zh: "微信 · 久别重逢" },
+    sender: { en: "Sender — a classmate you lost touch with, warm and casual", zh: "发件人 — 失联多年的老同学，热络又随意" },
+    text: {
+      en: `Long time! You doing okay? I've been following a teacher who runs a
+steady fund — nothing crazy, just consistent. There's a small group where
+he shares picks daily. Come take a look if you want, no pressure to put in
+anything, just learn the ropes.`,
+      zh: `好久不见！最近还好吗？我这两年跟着一个老师做基金定投，
+不求暴富，就图个稳。有个小群，他每天分享标的。
+你要不要进来看看？不投也没事，就当学点门道。` },
+    flags: [
+      { en: "No romance, no urgency, no link — just warmth and \"no pressure.\" That's the disarming part.",
+        zh: "不谈感情、不催、没链接——只有热络和「不投也没事」。这恰恰是它的麻醉剂。" },
+      { en: "The tell: being pulled into a group with a \"teacher\" giving daily picks. Pig-butchering's quiet cousin.",
+        zh: "破绽：被拉进一个有「老师」每天荐股的群。这是杀猪盘安静的近亲。" },
+      { en: "The early wins are real and small; the big \"opportunity\" later is where the money vanishes.",
+        zh: "前期的小赚是真的；真正让你下重注的「机会」在后头，钱就在那里蒸发。" } ],
+    truthScam: { en: "A stock-tip group scam. The slow, friendly build-up is exactly what makes it work.",
+                 zh: "荐股带单群骗局。那种慢悠悠、热乎乎的铺垫，正是它奏效的原因。" },
+    truthSafe: { en: "It was a scam. \"Teacher + daily picks + a private group\" is the setup, however friendly.",
+                 zh: "这是骗局。「老师+每天荐股+私密小群」就是局，再热络也是局。" },
+  },
+
+  // —— stealth-scam: deepfake-voice boss, urgent transfer ——
+  {
+    answer: "scam", risk: 80000, difficulty: 3,
+    title: { en: "The Voice That Sounds Exactly Right", zh: "那个声音,分毫不差" },
+    chan: { en: "Video call · \"the boss\"", zh: "视频通话 · 「领导」" },
+    sender: { en: "Caller — looks and sounds like your boss; brief, slightly pixelated video", zh: "来电 — 长相和声音都像你领导；视频短暂、略有马赛克" },
+    text: {
+      en: `"Xiao Wang — I'm out of town closing a deal and the company account
+can't move fast enough. Use your own card to send 80,000 to this supplier
+now; finance will square it with you this afternoon. Keep it quiet, it'd
+look bad if word got out. I'll send the account number now."`,
+      zh: `「小王啊，我在外地谈个项目，公司账户走不动这么急。
+你先用你自己的卡给这个供应商转 8 万，下午财务跟你平账。
+这事先别声张，传出去影响不好。账号我现在发你。」` },
+    flags: [
+      { en: "You can SEE and HEAR your boss — but face and voice can both be deepfaked now.",
+        zh: "你看得见、听得见你领导——但如今人脸和声音都能被深度伪造。" },
+      { en: "The tell isn't the face; it's the pattern: big sum + your own card + urgency + secrecy + can't verify in person.",
+        zh: "破绽不在那张脸，而在套路：大额 + 你自己的卡 + 催促 + 保密 + 无法当面核实。" },
+      { en: "Hang up and call back on the number you already have. A real boss survives that; a fake doesn't.",
+        zh: "挂掉，用你早就存着的号码回拨。真领导经得起这一步，假的经不起。" } ],
+    truthScam: { en: "An AI face-swap scam. The likeness is perfect; the request is what gives it away.",
+                 zh: "AI 换脸骗局。那张脸天衣无缝；露馅的是它提的要求。" },
+    truthSafe: { en: "It was a scam. Never move money on a video call alone — verify on a channel you control.",
+                 zh: "这是骗局。绝不凭一通视频就转账——用一条你自己掌握的渠道去核实。" },
+  },
+
+  /* ===== EXPANDED AMBIGUITY POOL (auto-merged from _gen) ===== */
+  {
+    "answer": "scam",
+    "risk": 138600,
+    "difficulty": 3,
+    "title": {
+      "en": "The Account That Keeps You Safe",
+      "zh": "替你保管的那个账户"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "A composed man identifying himself as an officer of the municipal Economic Crime Division",
+      "zh": "一名自称市公安局经侦支队办案民警、语气沉稳的男子"
+    },
+    "text": {
+      "en": "Hello, this is the Economic Crimes Division. Your ID was found linked to a money-laundering case, file J-2024-0731.\nYou are listed as a witness for now, not a suspect. To clear your name we must verify your funds are clean.\nPlease transfer the balance of your accounts into the National Treasury safe-deposit account we will provide. Once the audit completes, every cent is returned.\nThis is standard asset-verification procedure. Please cooperate calmly.",
+      "zh": "您好，这里是市公安局经侦支队。您的身份证关联到一起洗钱案件，卷宗号 J-2024-0731。\n目前您只是证人，还不是嫌疑人。为洗清嫌疑，我们需要核验您名下资金是否清白。\n请将各账户余额转入我们稍后提供的『国库安全账户』，审查结束后分文退还。\n这是标准的资金核验流程，请您配合，保持冷静。"
+    },
+    "flags": [
+      {
+        "en": "Calm, case-file numbers, legal-sounding 'asset verification' — it performs procedure instead of pressure.",
+        "zh": "语气冷静、报卷宗号、满口『资金核验』，用流程感取代催促，像真办案。"
+      },
+      {
+        "en": "THE tell: there is no such thing as a 'safe account'. No real authority ever asks you to transfer money to prove it is clean.",
+        "zh": "唯一破绽：根本不存在『安全账户』。任何真机关都不会让你把钱转走来『自证清白』。"
+      },
+      {
+        "en": "Police verify assets by freezing or summoning in writing — never by you wiring funds to an account they dictate.",
+        "zh": "警方核查资产靠冻结或书面传唤，绝不会让你把钱打进他们指定的账户。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. 'Safe account' is the single oldest tell in the book — the law never collects your money to protect it.",
+      "zh": "判对了。『安全账户』是教科书级骗局——法律从不会把你的钱收走来『保护』它。"
+    },
+    "truthSafe": {
+      "en": "This was a scam and you let it through. No real police force operates a 'safe account' — the moment you transfer, the money is gone.",
+      "zh": "这是骗局，你放过了它。没有任何真警察设『安全账户』——钱一转出，就再也回不来。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 96000,
+    "difficulty": 3,
+    "title": {
+      "en": "A Warrant With Your Name",
+      "zh": "写着你名字的逮捕令"
+    },
+    "chan": {
+      "en": "Phone call · transferred line",
+      "zh": "来电 · 转接专线"
+    },
+    "sender": {
+      "en": "A clerk who 'transfers' you to a self-styled prosecutor reading out an arrest warrant",
+      "zh": "一名书记员『转接』给一位自称检察官、正在宣读逮捕令的人"
+    },
+    "text": {
+      "en": "This is the People's Procuratorate. An arrest warrant has been issued in your name, warrant no. P-0926.\nI am now reading it to you over a secured line. Do not hang up, or it triggers immediate enforcement.\nYou may avoid detention by accepting non-custodial supervision. This requires posting a guarantee deposit to the court's designated supervision account today.\nDo you understand the charges as read?",
+      "zh": "这里是人民检察院。一份以您姓名签发的逮捕令已生效，令号 P-0926。\n我现在通过保密专线向您宣读，请勿挂断，挂断即触发立即执行。\n您可申请取保候审以免羁押，但需在今日向法院指定的『监管账户』缴纳保证金。\n以上指控您听清楚了吗？"
+    },
+    "flags": [
+      {
+        "en": "Warrant number, formal reading, a 'secured line' — it mimics the gravity of a real procuratorate.",
+        "zh": "宣读令号、保密专线、措辞庄重，模仿真检察院的威严感。"
+      },
+      {
+        "en": "THE tell: arrest warrants and bail are never handled by phone, and never paid into an account someone reads to you live.",
+        "zh": "唯一破绽：逮捕令与取保从不电话办理，更不会让你当场把保证金打进对方报的账户。"
+      },
+      {
+        "en": "Real bail is paid at a court counter against an official receipt; a phone 'supervision account' is always a trap.",
+        "zh": "真保证金在法院窗口缴、有正式收据；电话里的『监管账户』百分百是陷阱。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right call. A warrant read over the phone with a payable account is theatre — courts don't bill bail by phone.",
+      "zh": "判对了。电话里念逮捕令还附缴款账户就是演戏——法院不会电话收保证金。"
+    },
+    "truthSafe": {
+      "en": "This was a scam you missed. No procuratorate reads a warrant by phone or takes bail into a dictated account — it's all a script.",
+      "zh": "这是骗局，你漏了。检察院不会电话宣读逮捕令、更不会把保证金收进口述账户——全是剧本。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 23800,
+    "difficulty": 3,
+    "title": {
+      "en": "Your Card Has Been Talking",
+      "zh": "你的卡『有话要说』"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "A polite agent claiming to be from the Healthcare Security Administration's anti-fraud desk",
+      "zh": "一名自称医保局反欺诈专席、口吻客气的工作人员"
+    },
+    "text": {
+      "en": "Hello, this is the Healthcare Security anti-fraud desk. Your medical-insurance card shows abnormal pharmacy reimbursements in another city — suspected illegal cash-out.\nYour card is at risk of being frozen pending investigation. To prove the activity wasn't you, we need to verify the funds in your linked bank card.\nI'll connect a financial-supervision officer; please follow their guidance to confirm your balance and transfer it for protective review.\nThis avoids your account being frozen during the case.",
+      "zh": "您好，这里是医保局反欺诈专席。您的医保卡在外地出现异常药店报销，疑似违规套现。\n您的卡面临涉案冻结风险。为证明该笔操作非您本人，我们需核验您绑定的银行卡资金。\n稍后为您接入金融监管专员，请按其指引确认余额并转入『保护性审查』。\n这样可避免您的账户在办案期间被冻结。"
+    },
+    "flags": [
+      {
+        "en": "Plausible scenario — out-of-city pharmacy fraud and freezing — sounds like a real welfare-control workflow.",
+        "zh": "外地药店套现、涉案冻结的设定很真实，像真有的福利稽核流程。"
+      },
+      {
+        "en": "THE tell: it escalates from a card 'problem' to moving your bank balance into 'protective review' — a safe-account by another name.",
+        "zh": "唯一破绽：从医保卡『有问题』一路引到把银行余额转入『保护性审查』——换皮的安全账户。"
+      },
+      {
+        "en": "Insurance disputes are settled at the bureau counter; no agency moves your bank money to 'protect' it.",
+        "zh": "医保争议在窗口办理；没有任何机关会把你的银行钱转走来『保护』它。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. The card 'problem' is just bait to hand you to a fake supervisor who empties your bank balance.",
+      "zh": "判对了。医保卡『出问题』只是诱饵，把你交给假专员去搬空银行余额。"
+    },
+    "truthSafe": {
+      "en": "Scam, and you let it pass. The medical-insurance bureau never asks you to transfer bank funds for 'protective review' — that step is the theft.",
+      "zh": "这是骗局，你放过了。医保局绝不会让你把银行钱转去『保护性审查』——那一步就是行窃。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 8800,
+    "difficulty": 2,
+    "title": {
+      "en": "Served Without a Door Knock",
+      "zh": "没有敲门的传票"
+    },
+    "chan": {
+      "en": "Phone call · automated then human",
+      "zh": "来电 · 语音转人工"
+    },
+    "sender": {
+      "en": "A 'court service line' announcing a summons in a contract dispute, pressing 0 for a clerk",
+      "zh": "一条『法院送达专线』通报合同纠纷传票，按 0 转书记员"
+    },
+    "text": {
+      "en": "You have an undelivered court summons regarding a loan-contract dispute. Case docket M-3315.\nA default judgment will be entered if you do not respond today. Press 0 to reach the case clerk.\n[Clerk] To withdraw the case before judgment, the plaintiff agrees to mediation. Please pay the settlement amount into the court's mediation account now and the suit is dropped.\nWe can process this immediately to protect your credit record.",
+      "zh": "您有一份未送达的法院传票，涉及一起借款合同纠纷，案号 M-3315。\n若今日不应诉将缺席判决。请按 0 联系承办书记员。\n【书记员】判决前若想撤案，原告同意调解。请您现在将调解款打入法院『调解专户』，案件即撤销。\n我们可立即办理，以保护您的征信记录。"
+    },
+    "flags": [
+      {
+        "en": "Docket number, 'default judgment', credit-record worry — it reads like a real e-service notice.",
+        "zh": "报案号、提『缺席判决』、拿征信施压，像真的电子送达通知。"
+      },
+      {
+        "en": "THE tell: a real summons is served in person or by registered mail with documents — never settled by phoning money into a 'mediation account'.",
+        "zh": "唯一破绽：真传票当面或挂号书面送达；绝不会让你电话把钱打进『调解专户』了事。"
+      },
+      {
+        "en": "Courts send paper; verify any case via the official court counter, never via a number that called you.",
+        "zh": "法院走纸质流程；任何案件请到法院窗口核实，绝不信主动打来的号码。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. Real service comes on paper, not as a phone call demanding money into a 'mediation account'.",
+      "zh": "判对了。真送达走纸质，不会用电话逼你把钱打进『调解专户』。"
+    },
+    "truthSafe": {
+      "en": "This was a scam and it slipped by. Courts don't settle suits by phone payments — the 'mediation account' is the hook.",
+      "zh": "这是骗局，溜过去了。法院不会电话收款撤案——『调解专户』就是钩子。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 4200,
+    "difficulty": 3,
+    "title": {
+      "en": "Your Number Is Implicated",
+      "zh": "你的号码涉案了"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "An agent from the 'Communications Administration' warning your number is about to be shut off",
+      "zh": "一名自称通信管理局、警告号码即将停机的工作人员"
+    },
+    "text": {
+      "en": "This is the Communications Administration. A number registered under your ID has sent fraudulent messages and will be suspended within two hours.\nIf this number wasn't opened by you, you are a victim of identity misuse and should file a report.\nI'll transfer you to the public-security cyber unit to take your statement. Please stay on the line and do not discuss this with anyone — the case is confidential.\nThe officer will guide you through clearing your record.",
+      "zh": "这里是通信管理局。一个用您身份证开通的号码发送了诈骗短信，两小时内将被停机。\n若该号码非您本人开通，您属于身份被冒用的受害者，应当报案。\n我现在为您转接公安网安部门做笔录，请保持通话，并勿向任何人透露——本案需保密。\n民警将指导您消除涉案记录。"
+    },
+    "flags": [
+      {
+        "en": "Frames you as a victim and offers to 'help' — disarming, not threatening, so it feels legitimate.",
+        "zh": "把你说成受害者、主动『帮你』，姿态不凶反而显得正规。"
+      },
+      {
+        "en": "THE tell: the 'transfer to police' plus 'tell no one, stay on the line' — real cases are never secret and never forbid you to hang up.",
+        "zh": "唯一破绽：『转接公安』加『谁都别说、别挂电话』——真办案从不保密、也不禁你挂机。"
+      },
+      {
+        "en": "Number disputes are handled at a carrier store with your ID; hang up and verify independently.",
+        "zh": "号码纠纷拿身份证去营业厅办；先挂断，自行核实。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. 'Stay on the line, tell no one' is the grooming step before the fake officer drains you.",
+      "zh": "判对了。『别挂、别告诉任何人』是假民警掏空你前的驯化步骤。"
+    },
+    "truthSafe": {
+      "en": "Scam, missed. No real agency forbids you to hang up or demands secrecy — that's the whole con.",
+      "zh": "这是骗局，漏了。没有真机关禁止你挂电话或要你保密——这正是骗局本身。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 67500,
+    "difficulty": 3,
+    "title": {
+      "en": "The Trace That Found You",
+      "zh": "找上门的流调"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "A 'disease-control tracer' whose call pivots to a criminal case",
+      "zh": "一名『疾控流调员』，通话中途话锋转向刑事案件"
+    },
+    "text": {
+      "en": "Hello, this is epidemic contact-tracing. Our records show you traveled to a flagged area; we need to verify your itinerary.\n...I'm sorry, your ID also appears on a quarantine-fraud case where someone used your details to claim subsidies.\nI must transfer you to the police economic unit. To rule you out, they'll verify which of your accounts received the fraudulent funds.\nPlease cooperate with the officer's account check.",
+      "zh": "您好，这里是疫情流调。系统显示您去过中风险地区，需要核实行程。\n……抱歉，您的身份证还出现在一起隔离补贴骗领案中，有人用您的信息冒领了补贴。\n我需为您转接公安经侦。为排除嫌疑，他们将核验您哪个账户收到了这笔涉案款。\n请配合民警的账户核查。"
+    },
+    "flags": [
+      {
+        "en": "Starts as a mundane health trace — the most ordinary call imaginable — lowering your guard.",
+        "zh": "开场是再普通不过的健康流调，先卸下你的防备。"
+      },
+      {
+        "en": "THE tell: a health trace has no business 'transferring you to police' to inspect your bank accounts.",
+        "zh": "唯一破绽：流调根本不会『转接公安』来核查你的银行账户。"
+      },
+      {
+        "en": "Any call that hands you to 'police' to verify your accounts is a relay scam — hang up, call back officially.",
+        "zh": "凡是把你转给『公安』查账户的电话都是接力骗局——挂断，自行回拨官方。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The health angle is camouflage; the account 'verification' is the real target.",
+      "zh": "判对了。流调只是伪装，账户『核查』才是真目标。"
+    },
+    "truthSafe": {
+      "en": "Scam, and you let it through. Contact tracers never transfer you to police or inspect your bank accounts.",
+      "zh": "这是骗局，你放过了。流调员从不会把你转给公安，也不会查你的银行账户。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 31900,
+    "difficulty": 2,
+    "title": {
+      "en": "A Quiet Letter From the Bureau",
+      "zh": "税务局的一封平信"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "A 'tax-audit officer' notifying you of underpaid tax with a penalty deadline",
+      "zh": "一名『税务稽查专员』通知你欠缴税款并设了滞纳期限"
+    },
+    "text": {
+      "en": "This is the Taxation Bureau audit office. A review of prior-year filings shows underreported income; you owe back tax and a late penalty.\nUnder the Tax Collection Law, settle before end of day to avoid the case escalating to enforcement.\nTo expedite, pay the assessed amount into the audit-clearance account I'll provide; a receipt will be issued in the system.\nWe'd rather resolve this administratively than refer it.",
+      "zh": "这里是税务局稽查处。经核查往年申报，您存在少报收入，需补缴税款及滞纳金。\n依《税收征管法》，请于今日内结清，以免案件升级至强制执行。\n为加快处理，请将核定金额打入我稍后提供的『稽查清缴账户』，系统将开具回执。\n我们更希望以行政方式解决，而非移送。"
+    },
+    "flags": [
+      {
+        "en": "Cites a real law, talks 'administrative resolution' — sounds like a measured, by-the-book auditor.",
+        "zh": "援引真法规、谈『行政解决』，像个按章办事、有分寸的稽查员。"
+      },
+      {
+        "en": "THE tell: a 'clearance account' read to you by phone — real tax is paid through the official tax system, never a dictated account.",
+        "zh": "唯一破绽：电话报给你的『清缴账户』——真税款走官方电子税务系统缴纳，绝非口述账户。"
+      },
+      {
+        "en": "Tax notices arrive in writing through official channels; verify and pay only via the tax authority's own platform.",
+        "zh": "税务通知通过官方渠道书面送达；只通过税务机关自有平台核实缴纳。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. The law citation is dressing; the dictated 'clearance account' is where the theft happens.",
+      "zh": "判对了。引用法条只是包装，口述的『清缴账户』才是行窃之处。"
+    },
+    "truthSafe": {
+      "en": "Scam, missed. The tax bureau collects only through its official system — never a phone-dictated account.",
+      "zh": "这是骗局，漏了。税务局只通过官方系统征缴——绝不用电话口述的账户。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 52300,
+    "difficulty": 3,
+    "title": {
+      "en": "A Parcel That Isn't Yours",
+      "zh": "一个不属于你的包裹"
+    },
+    "chan": {
+      "en": "Phone call · transferred line",
+      "zh": "来电 · 转接专线"
+    },
+    "sender": {
+      "en": "A 'customs officer' reporting a parcel under your name held for contraband",
+      "zh": "一名『海关关员』通报有以你名义寄送、因夹带违禁品被扣的包裹"
+    },
+    "text": {
+      "en": "Customs inspection here. A parcel declared under your ID was intercepted containing prohibited items and forged documents.\nThis is now a smuggling case. We are transferring it to the public-security border unit.\nTo demonstrate your accounts are not part of the trafficking proceeds, the officer will ask you to verify your balances under supervision.\nPlease keep this confidential until your statement is recorded.",
+      "zh": "这里是海关查验。一个以您身份证申报的包裹被截获，内含违禁品及伪造证件。\n此事现已构成走私案件，正移交公安边境部门。\n为证明您的账户与贩运所得无关，民警将在监管下要求您核验余额。\n在笔录完成前请予以保密。"
+    },
+    "flags": [
+      {
+        "en": "Customs, contraband, a 'transfer to border police' — an intimidating but coherent chain of authority.",
+        "zh": "海关、违禁品、转接边境公安——一条吓人却自洽的权力链条。"
+      },
+      {
+        "en": "THE tell: 'verify your balances under supervision' plus 'keep it confidential' — the same safe-account/secrecy trap dressed as customs.",
+        "zh": "唯一破绽：『监管下核验余额』加『请保密』——还是安全账户加保密那套，套了海关皮。"
+      },
+      {
+        "en": "Customs handles parcels at the customs office in person; it never inspects your bank balance by phone.",
+        "zh": "海关在现场处理包裹，绝不会电话核查你的银行余额。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. Customs seizes parcels, not bank balances; the 'supervised verification' is the con.",
+      "zh": "判对了。海关查扣的是包裹不是余额，『监管核验』就是骗局。"
+    },
+    "truthSafe": {
+      "en": "Scam, let through. Customs never phones to inspect your accounts or swears you to secrecy.",
+      "zh": "这是骗局，放过了。海关不会电话查你的账户，也不会要你保密。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 1500,
+    "difficulty": 2,
+    "title": {
+      "en": "Six Points and a Link to Pay",
+      "zh": "扣六分，附个缴费口"
+    },
+    "chan": {
+      "en": "Phone call · then SMS handoff",
+      "zh": "来电 · 转短信办理"
+    },
+    "sender": {
+      "en": "A 'Vehicle Administration officer' about an unprocessed serious violation",
+      "zh": "一名『车管所工作人员』，称有一条未处理的严重违章"
+    },
+    "text": {
+      "en": "This is the Vehicle Administration. Your vehicle has an unhandled violation: running a red light, 6 points and a fine, recorded out of province.\nIf not cleared within 24 hours your license enters a pending-revocation status.\nTo settle remotely, I'll send a processing link by text — complete the payment and identity confirmation there to restore your license status.\nPlease handle it promptly to avoid affecting your annual inspection.",
+      "zh": "这里是车管所。您的车辆有一条未处理违章：闯红灯，记 6 分并罚款，外省记录。\n若 24 小时内不处理，您的驾驶证将进入待注销状态。\n为方便您远程处理，我稍后发一个办理链接到短信——在其中完成缴费与身份确认即可恢复证件状态。\n请尽快处理，以免影响年检。"
+    },
+    "flags": [
+      {
+        "en": "Specific penalty (6 points, out of province) and annual-inspection worry make it feel routine.",
+        "zh": "具体到 6 分、外省记录，还拿年检说事，显得是例行公事。"
+      },
+      {
+        "en": "THE tell: a texted 'processing link' for payment and identity — the DMV never settles points via a link someone sends you.",
+        "zh": "唯一破绽：短信发来的『办理链接』要你缴费验身——车管所从不通过别人发的链接处理违章。"
+      },
+      {
+        "en": "Handle violations only via the official traffic-management app or counter; never a link from an incoming call.",
+        "zh": "违章只通过官方交管 App 或窗口处理；绝不点来电发来的链接。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. The texted link is a payment-and-credential trap; real point deductions aren't cleared this way.",
+      "zh": "判对了。短信链接是缴费＋盗号陷阱，真扣分不会这样处理。"
+    },
+    "truthSafe": {
+      "en": "Scam, missed. The DMV never sends a pay-here link by text — that link harvests your money and identity.",
+      "zh": "这是骗局，漏了。车管所从不发『点这里缴费』的链接——那链接专偷钱和身份。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 2600,
+    "difficulty": 3,
+    "title": {
+      "en": "Verify or Forfeit",
+      "zh": "不核验就作废"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "A 'Human Resources & Social Security' clerk verifying a subsidy you qualify for",
+      "zh": "一名『人社局』工作人员，核验你有资格领取的一笔补贴"
+    },
+    "text": {
+      "en": "Hello, this is Human Resources and Social Security. You qualify for a one-time skills-upgrade subsidy, but your bank details on file failed verification.\nTo release the funds we must confirm your receiving account is active. The officer will guide you to make a small verification transfer that is refunded with the subsidy.\nIf unverified by today, the subsidy is forfeited and reallocated.\nShall we proceed with the account confirmation?",
+      "zh": "您好，这里是人社局。您符合一次性技能提升补贴的领取条件，但系统中您的银行信息核验未通过。\n为发放补贴，我们须确认您的收款账户有效。专员将指导您做一笔小额核验转账，届时连同补贴一并退回。\n若今日未核验，补贴将作废并重新分配。\n是否现在进行账户确认？"
+    },
+    "flags": [
+      {
+        "en": "Offers money to you, not demands it — a subsidy you 'qualify for' feels like good news, not a scam.",
+        "zh": "是给你钱不是要你钱——『你符合条件』的补贴像好消息，不像诈骗。"
+      },
+      {
+        "en": "THE tell: a 'small verification transfer' you must send first — receiving a subsidy never requires you to pay out anything.",
+        "zh": "唯一破绽：要你先做一笔『核验转账』——领补贴从不需要你先付出任何钱。"
+      },
+      {
+        "en": "Real benefits go into your card with no outbound payment; any 'pay to receive' step is fraud.",
+        "zh": "真补贴直接打进你卡里、无需你转出；任何『先交钱才能领』都是诈骗。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. No subsidy ever asks you to transfer money first — the 'verification transfer' is the steal.",
+      "zh": "判对了。没有哪笔补贴要你先转钱——『核验转账』就是行窃。"
+    },
+    "truthSafe": {
+      "en": "Scam, let through. Benefits are paid in, never out; the moment you 'verify' by transferring, it's gone.",
+      "zh": "这是骗局，放过了。补贴只进不出；你一『核验转账』，钱就没了。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 119000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Screen They Wanted to See",
+      "zh": "他们想看的那块屏"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "A 'financial-crimes investigator' guiding you to install a remote-assistance app",
+      "zh": "一名『金融犯罪调查员』，引导你安装一个远程协助软件"
+    },
+    "text": {
+      "en": "This is the public-security financial-crimes unit. Your account is flagged in a fraud-laundering chain, case F-1187.\nTo document that the funds aren't under your control, we conduct a remote asset inspection.\nPlease install the secure assistance tool I'll name so our technician can co-view your banking screen during the on-record check.\nKeep the line open; this protects you from being charged as a participant.",
+      "zh": "这里是公安金融犯罪部门。您的账户被标记在一条诈骗洗钱链中，案件 F-1187。\n为记录资金不在您控制之下，我们将进行远程资产核查。\n请安装我下面报的『安全协助工具』，以便我们的技术员在笔录核查中共看您的网银界面。\n请保持通话，这能避免您被列为参与人。"
+    },
+    "flags": [
+      {
+        "en": "Case number, 'on-record check', protective framing — sounds like a procedural digital forensics step.",
+        "zh": "报案件号、『笔录核查』、保护性措辞，像一道数字取证流程。"
+      },
+      {
+        "en": "THE tell: installing remote-assistance so they can co-view your banking screen — no authority ever needs to see your live bank session.",
+        "zh": "唯一破绽：装远程协助让对方共看你的网银界面——没有任何机关需要看你实时的银行操作。"
+      },
+      {
+        "en": "Never install screen-sharing or grant remote access at a stranger's request; it hands them your accounts.",
+        "zh": "绝不应陌生人要求安装屏幕共享或开远程权限；那等于把账户交给对方。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. Remote assistance is the trap — once they see and control your screen, transfers happen 'for' you.",
+      "zh": "判对了。远程协助就是陷阱——一旦对方看到并操控你的屏，转账会『替』你完成。"
+    },
+    "truthSafe": {
+      "en": "Scam, missed. No real investigator co-views your banking screen; remote access means they move your money.",
+      "zh": "这是骗局，漏了。真调查员不会共看你的网银界面；开了远程，他们就能转走你的钱。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 14400,
+    "difficulty": 2,
+    "title": {
+      "en": "Come In, or Send the Deposit",
+      "zh": "要么到案，要么交保证金"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "An 'officer' summoning you to appear, with a phone-payment alternative",
+      "zh": "一名『民警』传唤你到案，并给出电话缴款的替代选项"
+    },
+    "text": {
+      "en": "This is the district public-security bureau. You are summoned in connection with case A-5520; you must appear for questioning tomorrow morning.\nIf you cannot attend in person, you may apply for remote handling. This requires lodging a credibility deposit into the case-handling account today.\nOnce your statement clears, the deposit is fully returned.\nWhich option do you choose — appear in person, or remote with deposit?",
+      "zh": "这里是区公安分局。您因案件 A-5520 被传唤，须于明日上午到案接受询问。\n若无法本人到场，可申请远程办理，但需于今日向『办案账户』缴纳一笔诚信保证金。\n待笔录核实无误，保证金全额退还。\n请选择：本人到场，还是远程＋保证金？"
+    },
+    "flags": [
+      {
+        "en": "It even offers the 'correct' option — appear in person — which makes the phone alternative look reasonable.",
+        "zh": "它甚至给了『正确』选项——本人到场——反衬出电话替代方案像合理选择。"
+      },
+      {
+        "en": "THE tell: the 'remote handling' path needs a deposit into a case account — a real summons is written and never has a pay-to-skip option.",
+        "zh": "唯一破绽：『远程办理』要往办案账户交保证金——真传唤是书面的，绝无『交钱免到场』选项。"
+      },
+      {
+        "en": "A genuine summons is delivered on paper; if in doubt, walk into the station yourself — never pay by phone.",
+        "zh": "真传唤书面送达；有疑问就自己走进派出所——绝不电话缴款。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. Offering 'pay a deposit to skip showing up' is the giveaway — summonses have no such fee.",
+      "zh": "判对了。『交保证金就能不到场』就是马脚——传唤没有这种费用。"
+    },
+    "truthSafe": {
+      "en": "Scam, let through. No summons lets you pay a deposit instead of appearing; the case account is a thief's account.",
+      "zh": "这是骗局，放过了。没有哪份传唤能交保证金代替到案；『办案账户』就是骗子的账户。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 41200,
+    "difficulty": 3,
+    "title": {
+      "en": "Frozen for Your Own Good",
+      "zh": "为你好才冻结"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "A 'social-security control officer' on a suspected pension cash-out",
+      "zh": "一名『社保稽核专员』，就一起疑似养老金套现来电"
+    },
+    "text": {
+      "en": "Hello, social-security audit office. Your social-security account shows a suspected illegal cash-out totalling a large sum; it is now under case review.\nYour linked savings may be frozen as suspected proceeds. To exempt your legitimate funds, transfer them to a court-supervised holding account for segregation.\nAfter the audit, segregated funds return with interest.\nWe advise acting today to avoid the freeze.",
+      "zh": "您好，社保稽核处。您的社保账户出现疑似违规套现，金额较大，现已立案审查。\n您绑定的储蓄可能被作为涉案款冻结。为豁免您的合法资金，请将其转入『法院监管的保管账户』进行隔离。\n审查结束后，隔离资金连本带息返还。\n建议您今日处理，以免被冻结。"
+    },
+    "flags": [
+      {
+        "en": "Uses 'segregation', 'court-supervised', 'returns with interest' — fluent bureaucratic vocabulary.",
+        "zh": "满口『隔离』『法院监管』『连本带息返还』，官话流利。"
+      },
+      {
+        "en": "THE tell: 'transfer your savings to a holding account to exempt them' — segregation by moving money to a stranger's account is always a scam.",
+        "zh": "唯一破绽：『把储蓄转入保管账户以豁免』——靠把钱转到陌生账户来『隔离』永远是诈骗。"
+      },
+      {
+        "en": "If funds are truly suspect, authorities freeze them in place — they never ask you to move them somewhere.",
+        "zh": "若资金真涉案，机关会原地冻结——绝不会让你把钱挪到别处。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. 'Move it to protect it' is a contradiction only a scammer needs you to accept.",
+      "zh": "判对了。『挪走才能保护』这种矛盾，只有骗子才需要你相信。"
+    },
+    "truthSafe": {
+      "en": "Scam, missed. Real authorities freeze suspect money where it sits; asking you to transfer it is the theft.",
+      "zh": "这是骗局，漏了。真机关会原地冻结涉案款；让你转走，就是行窃。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 7300,
+    "difficulty": 2,
+    "title": {
+      "en": "Press 9 to Clear Your Name",
+      "zh": "按 9 自证清白"
+    },
+    "chan": {
+      "en": "Phone call · automated notice",
+      "zh": "来电 · 语音通报"
+    },
+    "sender": {
+      "en": "An automated 'court notice' about an enforcement case, routing to an agent",
+      "zh": "一条自动『法院通知』，通报一起执行案件并转人工"
+    },
+    "text": {
+      "en": "Court enforcement notice: a judgment in your name remains unsatisfied; you face listing as a dishonest debtor. Press 9 for the enforcement clerk.\n[Agent] To suspend the listing, the debt can be settled through the court's enforcement-collection account today.\nPay now and your credit record is preserved; otherwise enforcement proceeds against your assets.\nWould you like to settle and avoid the blacklist?",
+      "zh": "法院执行通知：一份以您名义的判决尚未履行，您将被列入失信被执行人名单。按 9 联系执行书记员。\n【人工】为暂缓列入，您可于今日通过法院『执行清缴账户』结清债务。\n现在缴清即保住征信，否则将对您的财产强制执行。\n是否结清以避免列入黑名单？"
+    },
+    "flags": [
+      {
+        "en": "Dishonest-debtor list and credit damage are real consequences, so the threat lands as plausible.",
+        "zh": "失信名单、征信受损都是真实后果，威胁显得可信。"
+      },
+      {
+        "en": "THE tell: settling a judgment by paying a phone-provided 'enforcement-collection account' — courts collect via official channels, never a dictated account.",
+        "zh": "唯一破绽：往电话给的『执行清缴账户』缴款结案——法院走官方渠道收款，绝非口述账户。"
+      },
+      {
+        "en": "Verify any enforcement case at the court directly; never pay an account given over an inbound call.",
+        "zh": "任何执行案件都到法院当面核实；绝不向来电提供的账户付款。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. A phone-dictated 'collection account' is the tell — courts never bill enforcement this way.",
+      "zh": "判对了。电话口述的『清缴账户』就是马脚——法院不会这样收执行款。"
+    },
+    "truthSafe": {
+      "en": "Scam, let through. Courts collect through official channels, not an account read out to you under threat.",
+      "zh": "这是骗局，放过了。法院通过官方渠道收款，不会在威胁下报给你一个账户。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 88800,
+    "difficulty": 3,
+    "title": {
+      "en": "Confidential, by Order",
+      "zh": "奉命保密"
+    },
+    "chan": {
+      "en": "Phone call · transferred line",
+      "zh": "来电 · 转接专线"
+    },
+    "sender": {
+      "en": "A 'lead investigator' invoking a confidentiality order on your case",
+      "zh": "一名『主办侦查员』，以保密令为名约束你"
+    },
+    "text": {
+      "en": "This is the provincial public-security bureau, major-case division. Your identity is tied to a cross-province fraud ring, case Z-2207.\nBy investigation order this matter is classified. You may not inform family, colleagues, or bank staff — leaking it obstructs justice.\nWe will conduct a confidential asset review; an officer will instruct you on segregating your funds for the duration.\nDo you accept the confidentiality requirement?",
+      "zh": "这里是省公安厅重案组。您的身份关联一起跨省诈骗团伙，案件 Z-2207。\n依侦查令本案列为机密，您不得告知家人、同事或银行职员——泄露即妨碍司法。\n我们将进行保密资产审查，由专员指导您在此期间隔离资金。\n您是否接受保密要求？"
+    },
+    "flags": [
+      {
+        "en": "Invoking a 'confidentiality order' and 'obstruction of justice' sounds like genuine major-case protocol.",
+        "zh": "搬出『侦查保密令』『妨碍司法』，像是真有的重案规程。"
+      },
+      {
+        "en": "THE tell: forbidding you to tell family or bank staff — real police never demand secrecy; isolation is precisely how scammers prevent rescue.",
+        "zh": "唯一破绽：禁止你告诉家人或银行职员——真警察从不要求保密；制造孤立正是骗子防止你被救的手段。"
+      },
+      {
+        "en": "Any 'tell no one' instruction is itself the proof of fraud; tell someone immediately and verify.",
+        "zh": "任何『谁都别说』的指令本身就是诈骗的证据；立刻告诉别人并核实。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. The confidentiality 'order' exists only to cut you off from anyone who'd stop the transfer.",
+      "zh": "判对了。所谓保密令只为切断你与任何能阻止转账之人的联系。"
+    },
+    "truthSafe": {
+      "en": "Scam, missed. No investigation forbids you to tell your bank or family — secrecy is the scam's life support.",
+      "zh": "这是骗局，漏了。没有哪起侦查禁止你告诉银行或家人——保密正是骗局的命门。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 19700,
+    "difficulty": 2,
+    "title": {
+      "en": "Renew Before the Border Closes",
+      "zh": "趁口岸没关，先核验"
+    },
+    "chan": {
+      "en": "Phone call · transcript",
+      "zh": "来电 · 通话记录"
+    },
+    "sender": {
+      "en": "An 'Exit-Entry Administration officer' on suspected misuse of your travel document",
+      "zh": "一名『出入境管理局工作人员』，称你的旅行证件涉嫌被冒用"
+    },
+    "text": {
+      "en": "This is the Exit-Entry Administration. Your passport was used at a border crossing tied to a trafficking case; your travel credentials are suspended.\nTo clear you and restore the document, we must verify your identity and the funds in your name aren't part of the case.\nI'll transfer you to the investigating officer for an account verification on record.\nPlease cooperate so your travel status can be reinstated.",
+      "zh": "这里是出入境管理局。您的护照在一起贩运案件相关的口岸被使用，您的出行证件已被暂停。\n为洗清嫌疑并恢复证件，我们须核验您的身份，并确认您名下资金与该案无关。\n我现在为您转接办案民警，做一次留痕的账户核验。\n请配合，以便恢复您的出行状态。"
+    },
+    "flags": [
+      {
+        "en": "Passport misuse and suspended travel status feel high-stakes and bureaucratically specific.",
+        "zh": "护照被冒用、出行证件被暂停，事大又具体，像真的。"
+      },
+      {
+        "en": "THE tell: yet again, 'transfer to officer' for an 'account verification' — document issues are never resolved by inspecting your bank funds.",
+        "zh": "唯一破绽：又是『转接民警』做『账户核验』——证件问题从不靠核查你的银行资金来解决。"
+      },
+      {
+        "en": "Resolve passport matters at the exit-entry counter in person; no document case touches your bank balance.",
+        "zh": "护照问题到出入境窗口当面办理；任何证件案件都不该牵扯你的银行余额。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The passport story is a doorway to the same account-verification theft.",
+      "zh": "判对了。护照故事只是通往同一套账户核验行窃的入口。"
+    },
+    "truthSafe": {
+      "en": "Scam, let through. The exit-entry bureau handles documents at a counter, never your bank funds by phone.",
+      "zh": "这是骗局，放过了。出入境在窗口办证件，绝不会电话动你的银行资金。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 3400,
+    "difficulty": 2,
+    "title": {
+      "en": "One Code to Restore Service",
+      "zh": "一个码，复机"
+    },
+    "chan": {
+      "en": "Phone call · then verification code",
+      "zh": "来电 · 索要验证码"
+    },
+    "sender": {
+      "en": "A 'Communications Administration' agent about a real-name registration anomaly",
+      "zh": "一名『通信管理局』工作人员，称你的实名登记异常"
+    },
+    "text": {
+      "en": "This is the Communications Administration real-name desk. Your number's real-name registration shows an anomaly and is scheduled for suspension.\nWe can re-verify it now to keep your service. To confirm you control this number, I'll trigger a verification code to your phone.\nPlease read me the 6-digit code so I can complete the re-registration on the system side.\nThis takes a moment and keeps your line active.",
+      "zh": "这里是通信管理局实名专席。您号码的实名登记出现异常，已被列入停机计划。\n我们现在可为您重新核验以保住服务。为确认该号码由您本人使用，我将向您手机触发一条验证码。\n请把这 6 位验证码读给我，我在系统侧完成重新登记。\n稍等片刻，即可保住您的号码。"
+    },
+    "flags": [
+      {
+        "en": "Frames the code as 'proving you control the number' — a believable-sounding verification step.",
+        "zh": "把验证码说成『证明号码归你用』，听起来像合理的核验步骤。"
+      },
+      {
+        "en": "THE tell: it asks you to read out an SMS verification code — no real agency ever needs your code; whoever has it takes over your accounts.",
+        "zh": "唯一破绽：要你读出短信验证码——没有任何真机关需要你的验证码；拿到它就能接管你的账户。"
+      },
+      {
+        "en": "Never tell anyone a verification code, no matter how official; the code is the key to your accounts.",
+        "zh": "无论对方多『官方』，验证码绝不告诉任何人；那是你账户的钥匙。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct. The instant they ask for your SMS code, it's a takeover attempt — codes are for you alone.",
+      "zh": "判对了。一开口要短信验证码就是盗号——验证码只属于你自己。"
+    },
+    "truthSafe": {
+      "en": "Scam, missed. No agency needs your verification code; reading it out hands them your number and accounts.",
+      "zh": "这是骗局，漏了。没有机关需要你的验证码；读出来就是把号码和账户交给对方。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 4980,
+    "difficulty": 3,
+    "title": {
+      "en": "Refund Routed Through a Borrow Account",
+      "zh": "退款要走借呗的「理赔」"
+    },
+    "chan": {
+      "en": "Phone call · \"after-sales\"",
+      "zh": "来电 · 「售后」"
+    },
+    "sender": {
+      "en": "After-sales of the shop you ordered from",
+      "zh": "你买过东西的那家网店售后"
+    },
+    "text": {
+      "en": "Hello, this is after-sales for your recent order. Our warehouse mislabeled your item as a wholesale account, which keeps deducting a monthly fee. Per platform rules we must refund you 4,980 yuan in full.\nThe refund channel requires a verified credit line on your side to receive it. Please open the \"Borrow\" credit feature in your payment app so the system can push the compensation in. Don't worry, you won't be charged—it's just the receiving channel.",
+      "zh": "您好，这边是您近期订单的售后。仓库把您的商品误标成了批发账户，会每月扣费，按平台规定我们要给您全额理赔 4980 元。\n退款通道需要您这边有一个已认证的信用额度来接收，麻烦您在支付App里把「借呗」信用功能开通一下，系统好把赔付款推进来。您放心，不会扣您钱的，只是个收款通道。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: knows your real order, quotes \"platform rules,\" promises a full lawful refund—sounds like a diligent after-sales rep.",
+        "zh": "表层诱饵：说得出你真实订单，搬出「平台规定」「全额理赔」，像尽职的售后。"
+      },
+      {
+        "en": "THE tell: a refund can never require you to OPEN a borrowing/credit line—they make you borrow money, then transfer it out.",
+        "zh": "唯一破绽：退款绝不可能要你「开通借呗」——是借你名下的钱再转走。"
+      },
+      {
+        "en": "Transferable rule: real refunds return along the original payment path; no genuine refund needs you to enable any loan feature.",
+        "zh": "可迁移原则：真退款只原路退回，绝不需要你开通任何借贷功能。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—it's a scam. The \"receiving channel\" line is a script to make you borrow money under your own name and hand it over. Refunds never touch a credit line.",
+      "zh": "判对了，这是诈骗。「收款通道」是话术，目的是让你用自己名义借钱再交出去。退款根本碰不到信用额度。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. A real refund returns along the original payment path—it never requires you to open \"Borrow\" or any credit line. Enabling it means borrowing money the scammer then transfers away.",
+      "zh": "这是骗局。真退款只会原路退回，绝不会要你开通「借呗」或任何信用额度。一开通就是借出你名下的钱，随即被对方转走。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 388,
+    "difficulty": 2,
+    "title": {
+      "en": "Membership Auto-Renewal, One Letter Off",
+      "zh": "会员自动续费——域名一字之差"
+    },
+    "chan": {
+      "en": "SMS · \"video site\"",
+      "zh": "短信 · 「视频网站」"
+    },
+    "sender": {
+      "en": "A video streaming site (member center)",
+      "zh": "某视频网站会员中心"
+    },
+    "text": {
+      "en": "[Member Notice] Your premium membership has switched to annual auto-renew; 388 yuan will be deducted within 24h. If this wasn't you, cancel here:\nwww.iqlyi-vip.com/cancel\nLog in with your account to stop the deduction. No action means the charge proceeds as scheduled.",
+      "zh": "【会员通知】您的尊享会员已转为连续包年，将于24小时内扣款388元。如非本人操作，请在此取消：\nwww.iqlyi-vip.com/cancel\n用账号登录即可终止扣款，逾期不操作将按时扣费。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: calm, plausible auto-renew amount, gives a self-service cancel link—looks like a normal billing reminder.",
+        "zh": "表层诱饵：金额合理、口气平静，给了自助取消链接，像普通的扣费提醒。"
+      },
+      {
+        "en": "THE tell: the domain is iqlyi (l swapped in)—not the real site. A lookalike domain is the whole trap.",
+        "zh": "唯一破绽：域名是 iqlyi（多塞了个 l），不是真站。一字之差的仿冒域名就是陷阱本身。"
+      },
+      {
+        "en": "Transferable rule: never manage subscriptions via a link in a message—open the official app and check the membership page yourself.",
+        "zh": "可迁移原则：永远别点消息里的链接管理订阅，自己打开官方App进会员页核对。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. iqlyi isn't the real site; the cancel page just harvests your login and card. Check renewals only inside the official app.",
+      "zh": "判对了，诈骗。iqlyi 不是真站，取消页只为骗你的账号和卡号。续费只在官方App里查。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. Look closely: iqlyi is one letter off from the real site. The \"cancel\" page exists only to steal your login and payment info. Manage subscriptions inside the official app, never via a texted link.",
+      "zh": "这是骗局。仔细看，iqlyi 跟真站差一个字母。「取消」页只为窃取你的账号和支付信息。订阅一律在官方App里管理，绝不点短信链接。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 1200,
+    "difficulty": 2,
+    "title": {
+      "en": "Lost Parcel, Triple Compensation",
+      "zh": "快递丢件，三倍理赔"
+    },
+    "chan": {
+      "en": "Phone call · \"courier after-sales\"",
+      "zh": "来电 · 「快递售后」"
+    },
+    "sender": {
+      "en": "Courier company claims desk",
+      "zh": "某快递公司理赔专员"
+    },
+    "text": {
+      "en": "Hello, I'm the claims officer for the courier. Your parcel was damaged in transit and can't be delivered; per regulation we'll compensate three times the value, 1,200 yuan.\nTo process it I'll add you on a chat app and send a claims form. Please scan the code in it and pay a small 30-yuan \"claims activation deposit\"—it's refunded together with the compensation once verified.",
+      "zh": "您好，我是快递的理赔专员。您的包裹在运输途中破损无法派送，按规定我们三倍赔付，共 1200 元。\n为了走流程我加您聊天软件发一份理赔单，麻烦您扫单里的码、先付一笔 30 元的「理赔激活保证金」，核验通过后会和赔款一起退还给您。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'per regulation, triple compensation,' polite claims officer, modest believable amount—feels official.",
+        "zh": "表层诱饵：「按规定三倍赔付」、礼貌的理赔专员、金额可信，显得很正规。"
+      },
+      {
+        "en": "THE tell: a real compensation never asks YOU to pay a \"deposit/activation fee\" first—any upfront money is the scam.",
+        "zh": "唯一破绽：真赔付绝不会要你先付「保证金/激活费」——任何让你先掏钱的都是骗局。"
+      },
+      {
+        "en": "Transferable rule: legit claims only pay out to you; if money must flow from you first, walk away.",
+        "zh": "可迁移原则：正规理赔只往你这边付钱；凡是要你先垫钱的，立刻走人。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. The \"activation deposit\" is the catch; real claims never collect money from you. The triple-payout is bait to get that 30 yuan and your scan.",
+      "zh": "判对了，诈骗。「激活保证金」就是套路，真理赔绝不向你收钱。三倍赔款只是诱饵，为了那 30 元和你扫的码。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. Genuine compensation only pays money to you—it never requires a \"deposit\" or \"activation fee\" first. The moment money has to leave your account, it's a fraud.",
+      "zh": "这是骗局。真正的赔付只会把钱给你，绝不会先要「保证金」或「激活费」。只要钱得先从你账户出去，就是诈骗。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 2600,
+    "difficulty": 3,
+    "title": {
+      "en": "Flight Change Compensation",
+      "zh": "航班退改签赔偿"
+    },
+    "chan": {
+      "en": "SMS · \"airline service\"",
+      "zh": "短信 · 「航司客服」"
+    },
+    "sender": {
+      "en": "Airline customer service",
+      "zh": "某航空客服"
+    },
+    "text": {
+      "en": "[Flight Notice] Your flight tomorrow is cancelled due to weather control. Per civil aviation policy you're owed 2,600 yuan in rebooking compensation.\nTo receive it, call our claims line 400-xxx-xxxx and provide your banking app verification when the agent guides you, so the compensation can be wired to your card.",
+      "zh": "【航班通知】您明日航班因天气管制取消，按民航规定可获改签赔偿 2600 元。\n领取请拨打理赔专线 400-xxx-xxxx，按专员指引提供您银行App的验证信息，以便将赔款打入您卡内。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: real-sounding cancellation, cites 'civil aviation policy,' a proper 400 hotline—mirrors a true delay notice.",
+        "zh": "表层诱饵：像真的航班取消、援引「民航规定」、正经 400 专线，跟真延误通知如出一辙。"
+      },
+      {
+        "en": "THE tell: they ask you to hand over your banking-app verification—that's account takeover, not a payout.",
+        "zh": "唯一破绽：让你提供「银行App的验证信息」——这是盗号控账，不是给你赔款。"
+      },
+      {
+        "en": "Transferable rule: receiving money never requires giving anyone your bank verification; verify flights only via the airline's own app/site.",
+        "zh": "可迁移原则：收钱永远不需要把银行验证信息给别人；航班只在航司官方App/官网核实。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. To RECEIVE money you never give out banking verification. That step hands them your account. Check flight status only in the airline's official channel.",
+      "zh": "判对了，诈骗。收钱从不需要交出银行验证信息，这一步是把账户交给对方。航班状态只在航司官方渠道查。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. To receive a payout you never need to provide bank verification—that step exists only to drain your account. Always confirm flight changes through the airline's official app or website, never a texted hotline.",
+      "zh": "这是骗局。领赔款根本不需要你提供银行验证信息，那一步只为掏空你的账户。航班变动一律在航司官方App或官网确认，别打短信里的电话。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 800,
+    "difficulty": 2,
+    "title": {
+      "en": "Accidentally Opened \"Million-Yuan Protection\"",
+      "zh": "误开通了「百万保障」要关闭"
+    },
+    "chan": {
+      "en": "Phone call · \"payment security\"",
+      "zh": "来电 · 「支付安全中心」"
+    },
+    "sender": {
+      "en": "Payment app security center",
+      "zh": "某支付App安全中心"
+    },
+    "text": {
+      "en": "Hello, our records show that during a trial you accidentally activated the \"Million-Yuan Protection\" service. The free period ends today and it will charge 800 yuan per month afterward.\nTo close it I'll walk you through the steps. First, open the loan/credit page so we can verify your identity tier, then follow my instructions to deactivate it before billing starts.",
+      "zh": "您好，系统显示您在试用时误开通了「百万保障」服务，免费期今天到期，之后每月会扣 800 元。\n为了帮您关闭，我一步步指引您：先打开借贷额度页面，我们核验一下您的身份等级，再按我说的操作在扣费前关掉它。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'accidental activation, free period ending,' calm helpful agent guiding you to cancel—classic believable setup.",
+        "zh": "表层诱饵：「误开通、免费期到期」、平静热心地指引你关闭，剧本很可信。"
+      },
+      {
+        "en": "THE tell: 'closing' a service somehow requires opening your loan/credit page—the real goal is to operate your borrowing line.",
+        "zh": "唯一破绽：「关闭」服务却要你打开借贷额度页——真正目的是操作你的借款额度。"
+      },
+      {
+        "en": "Transferable rule: no service is closed by opening a loan page; the \"million-yuan protection\" auto-charge story is a known script.",
+        "zh": "可迁移原则：关服务绝不需要打开借贷页；「百万保障自动扣费」本身就是固定话术。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. There is no real \"million-yuan protection\" auto-charge; the script steers you to your loan page so they can borrow and siphon funds.",
+      "zh": "判对了，诈骗。根本没有「百万保障」自动扣费这回事，话术是引你到借贷页，好借钱抽走。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. The \"million-yuan protection\" auto-charge is a fabricated script—and closing any service never requires opening your loan/credit page. That step is how they access your borrowing line.",
+      "zh": "这是骗局。「百万保障」自动扣费是编出来的固定话术，何况关任何服务都不需要打开你的借贷额度页。那一步正是他们动你借款额度的入口。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 600,
+    "difficulty": 2,
+    "title": {
+      "en": "Order Anomaly, Identity Re-Check",
+      "zh": "订单异常需核验身份"
+    },
+    "chan": {
+      "en": "App message · \"order service\"",
+      "zh": "App消息 · 「订单客服」"
+    },
+    "sender": {
+      "en": "Shop order service",
+      "zh": "网店订单客服"
+    },
+    "text": {
+      "en": "Dear customer, our risk system flagged your recent order as abnormal; it's been frozen to protect you. To unfreeze and continue shipping, we need to re-verify your identity.\nPlease read me the verification code our system sends to your phone now, so the agent can clear the anomaly flag for you.",
+      "zh": "亲，风控系统检测到您近期订单异常，已为保护您临时冻结。为解冻并正常发货，需重新核验您的身份。\n请把系统现在发到您手机的验证码念给我，专员好帮您清除异常标记。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'risk control froze your order to protect you'—sounds responsible and routine.",
+        "zh": "表层诱饵：「风控为保护您冻结了订单」，听着负责又日常。"
+      },
+      {
+        "en": "THE tell: they ask you to read out the SMS verification code—that code is the key to your account/payment, never share it.",
+        "zh": "唯一破绽：让你念出手机验证码——那是你账户/支付的钥匙，绝不能告诉任何人。"
+      },
+      {
+        "en": "Transferable rule: real merchants never need your SMS code; any code shared by phone = account/payment takeover.",
+        "zh": "可迁移原则：正规商家永远不需要你的短信验证码；念出验证码=交出账户/支付权限。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. The whole 'frozen order' story exists to get your SMS code. That code authorizes logins and payments; reading it out hands over your account.",
+      "zh": "判对了，诈骗。「订单冻结」整套就是为了套你的验证码。那串码能授权登录和支付，念出去就是交出账户。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. No legitimate merchant ever needs the verification code texted to you—that code authorizes logins and payments. Reading it aloud lets them take over your account. Never share an SMS code with anyone.",
+      "zh": "这是骗局。任何正规商家都不需要发到你手机的验证码——那串码能授权登录和支付，念出去就是把账户交给对方。验证码绝不告诉任何人。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 15000,
+    "difficulty": 3,
+    "title": {
+      "en": "Service Callback, \"Share Your Screen\"",
+      "zh": "客服回访诱导屏幕共享"
+    },
+    "chan": {
+      "en": "Phone call · \"return visit\"",
+      "zh": "来电 · 「客服回访」"
+    },
+    "sender": {
+      "en": "Bank-affiliated finance service",
+      "zh": "某金融客服回访"
+    },
+    "text": {
+      "en": "Hello, this is a courtesy return-visit regarding your account. Our system shows a settings error on your side that may cause wrongful deductions. We'd like to help you correct it right now.\nPlease join a video meeting and turn on screen sharing, so our specialist can see your settings page and guide each tap. It's the fastest way to fix it together.",
+      "zh": "您好，这边是针对您账户的例行回访。系统显示您这边有一处设置错误，可能导致误扣款，我们想现在就帮您改过来。\n麻烦您进一个视频会议、打开屏幕共享，让专员看到您的设置页面，一步步指引您点。这样一起改最快。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: gentle 'courtesy return-visit,' offers to fix a setting error for you—patient and professional, no urgency.",
+        "zh": "表层诱饵：温和的「例行回访」，主动帮你改设置错误，耐心专业、不催促。"
+      },
+      {
+        "en": "THE tell: asking you to turn on screen sharing—they watch you type passwords/codes and remotely guide transfers.",
+        "zh": "唯一破绽：让你开「屏幕共享」——对方就能看你输密码/验证码，远程指挥转账。"
+      },
+      {
+        "en": "Transferable rule: no real customer service ever needs your screen shared; screen sharing = handing them remote control.",
+        "zh": "可迁移原则：任何正规客服都不需要你共享屏幕；屏幕共享=把遥控权交给对方。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. Screen sharing lets them read every password and code you type and steer you through transfers. No legitimate service ever needs it.",
+      "zh": "判对了，诈骗。屏幕共享让对方看见你输的每个密码和验证码，并引导你转账。正规客服永远不需要它。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. No genuine customer service ever asks you to share your screen—that gives them eyes on every password and code you enter, and lets them guide you into transferring money out.",
+      "zh": "这是骗局。真正的客服绝不会让你共享屏幕——那等于把你输入的每个密码、验证码都暴露给对方，再引导你把钱转走。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 3200,
+    "difficulty": 3,
+    "title": {
+      "en": "Shop \"QC Failed,\" Proactive Refund",
+      "zh": "网店「质检不合格」主动理赔"
+    },
+    "chan": {
+      "en": "Phone call · \"quality control\"",
+      "zh": "来电 · 「质检部」"
+    },
+    "sender": {
+      "en": "Quality dept of the shop you ordered from",
+      "zh": "你下单那家店的质检部"
+    },
+    "text": {
+      "en": "Hello, this is the quality-control department. A batch including your order failed inspection and may pose a safety risk, so we're proactively compensating affected buyers 3,200 yuan, no need to return the item.\nTo receive the funds, please open the credit-borrow feature in your wallet first—the compensation system can only push payment to a verified credit account. Once received, you simply close it again.",
+      "zh": "您好，这边是质检部。包含您订单的一批货抽检不合格、可能有安全隐患，我们主动给受影响的买家赔付 3200 元，东西不用退。\n领款请您先把钱包里的信用借款功能开通一下，赔付系统只能把钱推给已认证的信用账户。到账后您再关掉就行。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'QC failed, safety risk, proactive payout, keep the item'—generous and conscientious, lowers your guard.",
+        "zh": "表层诱饵：「质检不合格、有隐患、主动赔付、东西不用退」，慷慨负责，让你放松警惕。"
+      },
+      {
+        "en": "THE tell: 'the system can only pay a verified credit account'—a refund can NEVER require opening a borrow feature.",
+        "zh": "唯一破绽：「只能打给已认证的信用账户」——退款绝不可能要你开通借款功能。"
+      },
+      {
+        "en": "Transferable rule: receiving money never depends on enabling any loan/credit line; that's borrowing your money to steal it.",
+        "zh": "可迁移原则：收钱绝不取决于开通任何借贷额度；那是借你的钱来偷走。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. 'Only pays a verified credit account' is fiction; refunds never need a borrow feature. They make you borrow, then drain it.",
+      "zh": "判对了，诈骗。「只能打给信用账户」是编的，退款从不需要借款功能。是让你借出钱再抽走。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. No payout system 'can only pay a verified credit account'—that's invented. A real refund never requires opening a borrow/credit feature; that step makes you borrow money the scammer then takes.",
+      "zh": "这是骗局。没有哪个赔付系统「只能打给信用账户」，那是编的。真退款绝不需要开通借款功能，那一步是让你借出钱、再被对方拿走。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 200,
+    "difficulty": 2,
+    "title": {
+      "en": "ETC Expired, Re-Authenticate",
+      "zh": "ETC失效需重新认证"
+    },
+    "chan": {
+      "en": "SMS · \"ETC service\"",
+      "zh": "短信 · 「ETC服务」"
+    },
+    "sender": {
+      "en": "ETC service notice",
+      "zh": "ETC服务通知"
+    },
+    "text": {
+      "en": "[ETC Notice] Your ETC has expired and is suspended; tolls cannot be deducted. Please re-authenticate within 24h to avoid being blacklisted:\nhttps://etc-cn.auth-verify.cc/login\nComplete identity and card binding at the link to restore normal use.",
+      "zh": "【ETC通知】您的ETC已失效并停用，无法正常扣费，请于24小时内重新认证，逾期将列入黑名单：\nhttps://etc-cn.auth-verify.cc/login\n在链接内完成身份与银行卡绑定即可恢复使用。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a familiar 'ETC expired, re-authenticate' notice—a hassle everyone believes, plain and routine.",
+        "zh": "表层诱饵：常见的「ETC失效、重新认证」通知，人人都信的麻烦事，平实又日常。"
+      },
+      {
+        "en": "THE tell: the link is a random unofficial domain (auth-verify.cc) asking you to bind your bank card—a phishing page.",
+        "zh": "唯一破绽：链接是个杂牌非官方域名（auth-verify.cc），让你绑银行卡，是钓鱼页。"
+      },
+      {
+        "en": "Transferable rule: never bind a card via a texted link; ETC is handled only in the bank/official ETC app.",
+        "zh": "可迁移原则：绝不通过短信链接绑卡；ETC 只在银行或官方ETC应用里办理。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. The lookalike domain leads to a phishing page that harvests your identity and card details. ETC is never re-authenticated via a random texted link.",
+      "zh": "判对了，诈骗。仿冒域名通向钓鱼页，专收你的身份和卡信息。ETC 绝不靠短信里的杂牌链接重新认证。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. The domain isn't an official ETC or bank site—it's a phishing page that collects your identity and card binding. Handle ETC only inside the official bank or ETC app, never through a texted link.",
+      "zh": "这是骗局。那域名不是官方ETC或银行站点，是收集你身份和绑卡信息的钓鱼页。ETC 只在官方银行或ETC应用里办，绝不点短信链接。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 500,
+    "difficulty": 2,
+    "title": {
+      "en": "Phone Top-Up Rebate Promo",
+      "zh": "话费充值返利活动"
+    },
+    "chan": {
+      "en": "App message · \"carrier service\"",
+      "zh": "App消息 · 「运营商客服」"
+    },
+    "sender": {
+      "en": "Telecom carrier promo service",
+      "zh": "某运营商活动客服"
+    },
+    "text": {
+      "en": "Dear valued user, as a long-term subscriber you're selected for a top-up rebate: recharge 500 yuan and the system returns 600 to your balance.\nClaim slots are limited. Open the event link and pay the 500 to the designated activation account; your balance and the bonus arrive within 2 hours. This is an official thank-you offer.",
+      "zh": "尊敬的老用户，因您长期在网，特邀参加充值返利：充 500 元，系统返还 600 元到话费余额。\n名额有限，打开活动链接，把 500 元充到指定的激活账户，2小时内余额和奖励一起到账。这是官方回馈活动。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'long-term user reward, official thank-you,' modest amounts—feels like a real loyalty promo.",
+        "zh": "表层诱饵：「老用户回馈、官方活动」、金额不大，像真的会员回馈促销。"
+      },
+      {
+        "en": "THE tell: it routes your top-up to a 'designated activation account' instead of your own number—your money goes to them.",
+        "zh": "唯一破绽：让你把钱充到「指定激活账户」而不是你自己的号码——钱直接进了对方账户。"
+      },
+      {
+        "en": "Transferable rule: real top-ups go to your own phone number; paying any third-party 'activation account' is the loss.",
+        "zh": "可迁移原则：真充值只充到你自己的号码；往任何第三方「激活账户」付钱，钱就没了。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. A genuine top-up always credits your own number. 'Designated activation account' means your 500 goes straight into the scammer's pocket.",
+      "zh": "判对了，诈骗。真充值永远进你自己的号码。「指定激活账户」就是让那 500 元直接落进骗子口袋。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. A real phone top-up always goes to your own number. Being told to pay a 'designated activation account' means the money lands in the scammer's wallet, and no rebate ever comes.",
+      "zh": "这是骗局。真正的话费充值永远充进你自己的号码。让你付到「指定激活账户」，就是让钱进骗子的钱包，所谓返利永远不会到。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 6800,
+    "difficulty": 3,
+    "title": {
+      "en": "Refund Larger Than Order, \"Send Back the Excess\"",
+      "zh": "退款打多了要你「退回多余」"
+    },
+    "chan": {
+      "en": "Phone call · \"after-sales\"",
+      "zh": "来电 · 「售后」"
+    },
+    "sender": {
+      "en": "After-sales of the shop you ordered from",
+      "zh": "你买过东西的那家网店售后"
+    },
+    "text": {
+      "en": "Hello, processing your return refund the operator entered the amount wrong and sent 6,800 yuan instead of 680—we've already pushed it to your credit account.\nPlease check your wallet; once you see it, kindly transfer the extra 6,120 back to our finance account I'll provide. We're recorded on call, so don't worry—just help us correct the slip.",
+      "zh": "您好，给您办退货退款时操作员金额填错了，把 680 打成了 6800，已经推到您信用账户里了。\n麻烦您查一下钱包，看到后请把多出来的 6120 元转回我给您的财务账户。我们全程通话录音，您放心，帮我们把这笔失误改过来就行。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'we made an honest mistake, calls are recorded'—plays on your fairness and sounds accountable.",
+        "zh": "表层诱饵：「我们填错了、全程录音」，利用你的公平心，听着很负责。"
+      },
+      {
+        "en": "THE tell: the 'over-refund' lands in your credit/borrow account (so it's actually borrowed money), and you 'return the excess' to their account—you repay a debt and gift them cash.",
+        "zh": "唯一破绽：「多退的钱」进的是你信用/借款账户（其实是借出的钱），让你把「多余」转到他们账户——你既背了债又白送钱。"
+      },
+      {
+        "en": "Transferable rule: a true over-refund is reversed by the platform on its own; never transfer 'excess' to a personal/finance account.",
+        "zh": "可迁移原则：真多退由平台自行撤回，绝不需要你把「多余」转到个人/财务账户。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. The 'extra' is money quietly borrowed in your name; transferring it back gifts them cash and leaves you owing the loan. Platforms reverse over-refunds themselves.",
+      "zh": "判对了，诈骗。「多出来的钱」是悄悄以你名义借的，转回去就是白送钱、自己还背上贷款。真多退由平台自己撤回。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. A genuine over-refund is reversed by the platform automatically. Here the 'extra' was secretly borrowed in your name—transferring it 'back' gifts the scammer cash while you're stuck repaying the loan. Never send money to a 'finance account.'",
+      "zh": "这是骗局。真正退多了，平台会自己撤回。这里「多出来的钱」是偷偷以你名义借的，转「回去」等于白送骗子钱、自己还得还贷。绝不向「财务账户」转账。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 1500,
+    "difficulty": 2,
+    "title": {
+      "en": "Out of Stock, Compensated Coupon Activation",
+      "zh": "缺货补偿券需激活"
+    },
+    "chan": {
+      "en": "App message · \"order service\"",
+      "zh": "App消息 · 「订单客服」"
+    },
+    "sender": {
+      "en": "Shop order service",
+      "zh": "网店订单客服"
+    },
+    "text": {
+      "en": "Dear customer, your paid item is out of stock and we can't ship. To apologize we're issuing a 1,500-yuan compensation that goes straight to your bank card.\nTo activate the transfer, our finance needs you to read back the one-time code your bank texts you, confirming the receiving card is yours. Then the 1,500 lands immediately.",
+      "zh": "亲，您拍下付款的商品缺货发不了，为表歉意给您 1500 元补偿，直接打到您银行卡。\n为激活这笔转账，财务需要您把银行发给您的一次性验证码念回来，确认收款卡是您本人的，1500 元就马上到账。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'out of stock, apology compensation straight to your card'—reasonable and customer-friendly.",
+        "zh": "表层诱饵：「缺货、致歉补偿直打银行卡」，合情合理、为客户着想。"
+      },
+      {
+        "en": "THE tell: 'read back the one-time bank code to confirm your card'—that code authorizes a payment OUT, not in.",
+        "zh": "唯一破绽：「念回银行一次性验证码确认本人卡」——那串码授权的是付款转出，不是入账。"
+      },
+      {
+        "en": "Transferable rule: receiving a transfer never requires a code from you; any 'read me your bank code' is theft.",
+        "zh": "可迁移原则：收一笔转账从不需要你提供验证码；凡「念银行验证码」都是盗刷。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. Receiving money never needs a code from you. That one-time code authorizes money leaving your account—reading it out lets them charge your card.",
+      "zh": "判对了，诈骗。收钱从不需要你的验证码。那串一次性码授权的是钱转出，念出去就是让对方刷你的卡。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. To receive a transfer you never provide a code—the one-time code your bank sends authorizes money leaving your account. Reading it back lets the scammer charge your card. Never share a bank code.",
+      "zh": "这是骗局。收一笔转账绝不需要你提供验证码——银行发的一次性码授权的是钱从你账户转出。念回去就是让骗子刷你的卡。银行验证码绝不外传。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 9900,
+    "difficulty": 3,
+    "title": {
+      "en": "Defective Batch Recall, Deposit-Backed Refund",
+      "zh": "问题批次召回，缴保证金退款"
+    },
+    "chan": {
+      "en": "Phone call · \"recall service\"",
+      "zh": "来电 · 「召回专线」"
+    },
+    "sender": {
+      "en": "Brand recall service of a product you bought",
+      "zh": "你买过的某商品召回专线"
+    },
+    "text": {
+      "en": "Hello, the batch you purchased is under official recall for a defect; you're entitled to a 9,900-yuan full refund plus goodwill compensation.\nBecause the amount is large, the disbursement requires a temporary 'guarantee deposit' equal to 10% held in our escrow, refunded together once the recall is confirmed. Please transfer 990 to the escrow account to start the process.",
+      "zh": "您好，您购买的批次因缺陷被官方召回，您可获 9900 元全额退款及额外补偿。\n因金额较大，放款需先在我们托管账户暂存 10% 的「履约保证金」，召回确认后连同退款一起返还。请先向托管账户转 990 元启动流程。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'official recall, full refund plus goodwill,' escrow and 'guarantee deposit' jargon—sounds like a formal process.",
+        "zh": "表层诱饵：「官方召回、全额退款加补偿」、托管账户和「履约保证金」术语，像正规流程。"
+      },
+      {
+        "en": "THE tell: it demands you pay a 'guarantee deposit' upfront—any refund that needs you to pay first is a scam.",
+        "zh": "唯一破绽：要你先交「履约保证金」——任何要你先付钱的退款都是骗局。"
+      },
+      {
+        "en": "Transferable rule: legitimate refunds and recalls never collect a deposit from you; money only flows to you.",
+        "zh": "可迁移原则：正规退款和召回绝不向你收保证金；钱只往你这边流。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. 'Guarantee deposit' dressed up with escrow jargon is still you paying first—which a real refund never requires. The 990 just vanishes.",
+      "zh": "判对了，诈骗。包着「托管/保证金」术语，本质还是让你先付钱，真退款绝不会这样。那 990 元直接没了。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. No genuine refund or recall ever requires you to pay a 'guarantee deposit' first—escrow jargon doesn't change that. Money in a real refund only moves toward you, never from you.",
+      "zh": "这是骗局。真正的退款或召回绝不会要你先交「履约保证金」——托管术语改变不了这点。真退款里钱只会流向你，不会从你这儿出。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 2880,
+    "difficulty": 2,
+    "title": {
+      "en": "Auto-Renew Cancel via Lookalike Domain",
+      "zh": "取消连续扣费——仿冒域名"
+    },
+    "chan": {
+      "en": "SMS · \"shopping platform\"",
+      "zh": "短信 · 「购物平台」"
+    },
+    "sender": {
+      "en": "A shopping platform billing",
+      "zh": "某购物平台账务"
+    },
+    "text": {
+      "en": "[Billing] Your store's annual service plan auto-renews tonight; 2,880 yuan will be deducted. To modify or cancel, manage it here:\nwww.taoba0-service.com/manage\nSign in with your account to adjust the renewal. No change means the fee is charged as usual.",
+      "zh": "【账务】您店铺的年度服务套餐将于今晚自动续费，扣款 2880 元。如需修改或取消，请在此管理：\nwww.taoba0-service.com/manage\n用账号登录调整续费，不修改将照常扣费。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: businesslike renewal notice with a self-service 'manage' link and believable amount—reads as routine billing.",
+        "zh": "表层诱饵：商务口吻的续费通知、自助「管理」链接、金额可信，像例行账务。"
+      },
+      {
+        "en": "THE tell: the domain is taoba0 (zero instead of o)—a lookalike, not the real platform.",
+        "zh": "唯一破绽：域名是 taoba0（把 o 写成 0），是仿冒，不是真平台。"
+      },
+      {
+        "en": "Transferable rule: manage subscriptions only inside the official app/seller backend, never via a domain in a text.",
+        "zh": "可迁移原则：订阅只在官方App/卖家后台里管理，绝不点短信里的域名。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. taoba0 with a zero is a lookalike domain; the 'manage' page steals your seller login. Check renewals only in the official backend.",
+      "zh": "判对了，诈骗。带 0 的 taoba0 是仿冒域名，「管理」页是为了偷你的卖家账号。续费只在官方后台查。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. Read it carefully: taoba0 uses a zero in place of the letter o—a lookalike domain. The 'manage' page only steals your seller login. Manage subscriptions inside the official backend, never a texted link.",
+      "zh": "这是骗局。仔细看：taoba0 用数字 0 替了字母 o，是仿冒域名。「管理」页只为偷你的卖家账号。订阅一律在官方后台管理，别点短信链接。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 4500,
+    "difficulty": 3,
+    "title": {
+      "en": "Wrong VIP Tier, Fix via Screen Share",
+      "zh": "会员等级开错，共享屏幕修正"
+    },
+    "chan": {
+      "en": "Phone call · \"member service\"",
+      "zh": "来电 · 「会员客服」"
+    },
+    "sender": {
+      "en": "A video site member service",
+      "zh": "某视频网站会员客服"
+    },
+    "text": {
+      "en": "Hello, our system mistakenly set your account to a corporate VIP tier, which bills 4,500 yuan annually. We want to fix it back to your normal plan before any charge.\nThe correction must be done on your settings screen. Please open a screen-share so our technician can see the exact toggle and guide you through it. It only takes a minute and there's no charge for the fix.",
+      "zh": "您好，系统误把您的账号设成了企业会员档，会按年扣 4500 元。我们想在扣费前帮您改回普通套餐。\n修正要在您的设置页面上做，麻烦您开个屏幕共享，让技术员看到具体的开关、一步步指引您。一分钟就好，修正本身不收费。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'system error set you to a pricey tier, we'll fix it for free before billing'—patient, no pressure, helpful.",
+        "zh": "表层诱饵：「系统误设了贵档、扣费前免费帮你改」，耐心、不施压、很热心。"
+      },
+      {
+        "en": "THE tell: the 'fix' requires turning on screen sharing—remote control to watch your inputs and steer transfers.",
+        "zh": "唯一破绽：「修正」要你开屏幕共享——远程操控，盯你输入、引导转账。"
+      },
+      {
+        "en": "Transferable rule: changing a membership tier never needs your screen shared; screen share = remote control handed over.",
+        "zh": "可迁移原则：改会员档从不需要共享屏幕；屏幕共享=交出遥控权。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. A membership change never needs screen sharing. They use it to watch your passwords/codes and walk you into a transfer.",
+      "zh": "判对了，诈骗。改会员档从不需要屏幕共享。他们用它盯你的密码/验证码，再引你转账。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. Adjusting a membership tier never requires sharing your screen. Screen share hands a stranger live view of your passwords and codes and lets them guide you into transferring money. Adjust plans only inside the official app.",
+      "zh": "这是骗局。调整会员档绝不需要共享屏幕。屏幕共享等于把你的密码、验证码实时暴露给陌生人，还能引你转账。套餐只在官方App里改。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 700,
+    "difficulty": 2,
+    "title": {
+      "en": "Damaged-Goods Claim, Borrow to Receive",
+      "zh": "破损理赔，开通备用金收款"
+    },
+    "chan": {
+      "en": "App message · \"logistics claims\"",
+      "zh": "App消息 · 「物流理赔」"
+    },
+    "sender": {
+      "en": "Logistics claims service",
+      "zh": "物流理赔客服"
+    },
+    "text": {
+      "en": "Dear customer, your parcel was damaged in transit; per regulation we compensate 700 yuan, item not required back.\nOur payout only reaches accounts with an active reserve fund. Please open the 'reserve fund' feature in your wallet to receive it; you can switch it off right after the money arrives. Sorry for the trouble.",
+      "zh": "亲，您的包裹运输中破损，按规定赔付 700 元，物品无需寄回。\n我们的赔付只能到有「备用金」功能的账户，请您在钱包里开通「备用金」来收款，钱到账后立刻关掉即可。给您添麻烦了。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'damaged in transit, compensation per regulation, keep the item'—apologetic, modest, believable.",
+        "zh": "表层诱饵：「运输破损、按规定赔付、东西不用退」，致歉、金额小、可信。"
+      },
+      {
+        "en": "THE tell: 'payout only reaches accounts with reserve fund active'—a refund can never require enabling a borrowing feature.",
+        "zh": "唯一破绽：「赔付只能到开了备用金的账户」——退款绝不可能要你开通借款类功能。"
+      },
+      {
+        "en": "Transferable rule: receiving compensation never depends on activating a loan/reserve line; that's borrowing your money to steal it.",
+        "zh": "可迁移原则：收赔款绝不取决于开通借款/备用金；那是借你的钱来偷走。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. 'Reserve fund' is just a borrowing line; no payout 'only reaches' such accounts. They make you borrow, then siphon it off.",
+      "zh": "判对了，诈骗。「备用金」就是借款额度，没有哪个赔付「只能到」这种账户。是让你借钱再抽走。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. 'Reserve fund' is a borrowing feature, and no payout 'only reaches' accounts that have it—that line is invented. A real refund never needs you to enable any loan/reserve feature; doing so borrows money the scammer then takes.",
+      "zh": "这是骗局。「备用金」是借款功能，也没有哪个赔付「只能到」开了它的账户，那是编的。真退款绝不需要你开通任何借款/备用金，一开就是借出钱被对方拿走。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 25000,
+    "difficulty": 3,
+    "title": {
+      "en": "Store Deposit Unfreeze, Pay Service Fee",
+      "zh": "店铺保证金解冻，先付手续费"
+    },
+    "chan": {
+      "en": "Phone call · \"merchant service\"",
+      "zh": "来电 · 「商家客服」"
+    },
+    "sender": {
+      "en": "Merchant platform service",
+      "zh": "某商家平台客服"
+    },
+    "text": {
+      "en": "Hello, this is merchant support. Due to a system upgrade, your store's 25,000-yuan operating deposit was frozen by mistake. We're prioritizing the unfreeze for you.\nPer the finance process, unfreezing a large sum requires a one-time 1% service fee paid to the settlement account first; it's deducted from the released funds and any difference returned. Once paid, your 25,000 unfreezes within the day.",
+      "zh": "您好，这边是商家客服。因系统升级，您店铺的 2.5 万元经营保证金被误冻结，我们正在优先为您解冻。\n按财务流程，大额解冻需先向结算账户支付一笔 1% 的一次性手续费，会从释放的款项里抵扣、多退少补。付完后您的 2.5 万当天内解冻。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'system upgrade froze your deposit by mistake, we're prioritizing you'—specific, accountable, no urgency theatrics.",
+        "zh": "表层诱饵：「系统升级误冻了保证金、优先帮你」，具体、负责、不演催促。"
+      },
+      {
+        "en": "THE tell: unfreezing requires you to pay a 'service fee' first—any process that needs you to pay to get your own money back is a scam.",
+        "zh": "唯一破绽：解冻要你先付「手续费」——凡是要你先掏钱才能拿回自己钱的流程都是骗局。"
+      },
+      {
+        "en": "Transferable rule: real platforms deduct fees from funds they hold, never demand you pay into a 'settlement account' first.",
+        "zh": "可迁移原则：正规平台从它持有的款项里扣费，绝不会要你先往「结算账户」打钱。"
+      }
+    ],
+    "truthScam": {
+      "en": "Correct—scam. A real platform deducts any fee from funds it already holds; demanding you pay a 'service fee' first to unfreeze your own money is the trap. The fee just disappears.",
+      "zh": "判对了，诈骗。正规平台会从它已持有的款里扣费；要你先付「手续费」才解冻自己的钱，就是陷阱。那笔费用直接没了。"
+    },
+    "truthSafe": {
+      "en": "This was a scam. To release funds it holds, a real platform deducts fees from that money—it never asks you to pay a 'service fee' into a settlement account first. Being told to pay before getting your own money back is always fraud.",
+      "zh": "这是骗局。要释放它持有的款项，正规平台会从那笔钱里扣费，绝不会要你先往结算账户付「手续费」。让你先付钱才能拿回自己的钱，永远是诈骗。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 38000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Free Stock-Picking Master",
+      "zh": "免费荐股老师"
+    },
+    "chan": {
+      "en": "WeChat · group",
+      "zh": "微信 · 群聊"
+    },
+    "sender": {
+      "en": "Wealth Study Group · Assistant Lin",
+      "zh": "财富学习群 · 林助理"
+    },
+    "text": {
+      "en": "Welcome aboard. No fees here, the teacher just shares ideas out of passion.\nNot in a rush for you to buy anything—watch the calls for a week first.\nYesterday's pick the teacher flagged rose 6%, but past results don't bind you.\nWhen you feel comfortable, the assistant can walk you through opening an account on our partner platform.",
+      "zh": "欢迎进群。咱这儿不收费，老师纯属热爱、分享思路。\n也不急着让你买啥，先跟着看一周单子。\n昨天老师点的票涨了6个点，但过往不代表以后，你自己判断。\n等你觉得稳了，助理再带你在合作平台开个户。"
+    },
+    "flags": [
+      {
+        "en": "Bait: no fees, no pressure, 'just watch a week'—patience disarms you.",
+        "zh": "诱饵：不收费、不催、先看一周——耐心让你放下戒备。"
+      },
+      {
+        "en": "THE tell: a 'teacher' giving daily picks in a private group + steering you to a 'partner platform' to open an account is a pump-and-dump funnel.",
+        "zh": "破绽：群里『老师』每天荐股 + 引导去『合作平台』开户，就是养、套、杀的资金盘。"
+      },
+      {
+        "en": "Principle: no legit advisor pulls strangers into a chat to push a specific platform.",
+        "zh": "可迁移：正规投顾不会拉陌生人进群、再指定平台开户。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right call. 'Free teacher + daily picks + designated platform' is the classic stock fraud—the platform is rigged.",
+      "zh": "判对了。『免费老师+每天荐股+指定开户平台』是经典荐股局，那平台是做的局，盘面随他控。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. A 'teacher' running a private group with daily picks who then routes you to a 'partner platform' is the whole trap—the slow, fee-free patience is the anesthetic.",
+      "zh": "这是骗局。『老师+每天荐股+私密群』再指定平台开户就是局，不收费、不催的耐心正是麻醉剂。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 12000,
+    "difficulty": 2,
+    "title": {
+      "en": "The Steady Fund Auto-Invest Club",
+      "zh": "稳健基金定投群"
+    },
+    "chan": {
+      "en": "WeChat · group",
+      "zh": "微信 · 群聊"
+    },
+    "sender": {
+      "en": "Steady Growth Club · Teacher Zhou",
+      "zh": "稳赢定投群 · 周老师"
+    },
+    "text": {
+      "en": "Auto-invest is about patience, friend—no get-rich-quick here.\nFollow my buy/sell signals each morning; small amounts are fine to start.\nWe've held a 2% monthly average for eight months, slow but sure.\nDownload the club's own app from the link the assistant sends so signals sync.",
+      "zh": "定投讲的是耐心，朋友，咱不搞一夜暴富。\n每天早上跟我的买卖信号走，金额小点起步也行。\n我们月均稳在2%八个月了，慢是慢点但踏实。\n装一下助理发的群专属app，信号能同步。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'patience, no quick riches, small amounts fine'—sounds responsible.",
+        "zh": "诱饵：『讲耐心、不暴富、金额小点也行』——听着很负责。"
+      },
+      {
+        "en": "THE tell: a teacher issuing daily buy/sell signals + a 'club-only app' is a closed fake-trading platform you can never withdraw from.",
+        "zh": "破绽：老师每天发买卖信号 + 『群专属app』，是封闭的假盘，钱进得去出不来。"
+      },
+      {
+        "en": "Principle: real funds settle in your own broker account, never a group's private app.",
+        "zh": "可迁移：正规基金在你自己的券商账户里结算，绝不在某群的私有app里。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The 'club-only app' is a fake platform—numbers go up until you try to cash out.",
+      "zh": "判对了。『群专属app』是假盘，数字一直涨，等你提现就出不来了。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. A 'teacher' pushing daily signals into a private app is the trap; the 'steady 2%' is bait to make you put in more.",
+      "zh": "这是骗局。老师每天发信号、导去专属app就是局，『稳赚2%』是诱你加码的鱼饵。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 80000,
+    "difficulty": 3,
+    "title": {
+      "en": "The High-Yield Digital Coin Node",
+      "zh": "数字币高返节点"
+    },
+    "chan": {
+      "en": "WeChat · private",
+      "zh": "微信 · 私聊"
+    },
+    "sender": {
+      "en": "Old contact · Brother Hai",
+      "zh": "旧相识 · 海哥"
+    },
+    "text": {
+      "en": "Long time no talk. I've been quietly running a coin node, nothing flashy.\nIt pays a fixed daily return, withdrawable—I've pulled mine out twice.\nNo pressure to join, I just mention it to people I trust.\nIf curious, start with a tiny amount and see for yourself first.",
+      "zh": "好久没聊了。我这两年悄悄在跑个币的节点，不张扬。\n每天固定返点，能提现，我自己都提过两回了。\n不勉强你进，就是信得过的人才提一句。\n好奇的话先放一点点试试，自己看效果。"
+    },
+    "flags": [
+      {
+        "en": "Bait: an acquaintance, 'low-key', 'I've withdrawn myself', 'just a tiny test'.",
+        "zh": "诱饵：熟人、低调、『我自己提过现』、『先试一点点』。"
+      },
+      {
+        "en": "THE tell: 'fixed daily return' on crypto + small early payouts to lure bigger deposits = Ponzi node, payouts stop once you scale up.",
+        "zh": "破绽：币圈『每天固定返点』+ 前期小额可提诱你加大投入 = 庞氏节点，量一大就提不出。"
+      },
+      {
+        "en": "Principle: any 'guaranteed fixed daily yield' on crypto is impossible—volatility can't be fixed.",
+        "zh": "可迁移：币圈任何『每天固定收益』都不可能，波动无法被固定。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The early small withdrawals are bait; 'fixed daily crypto return' is a Ponzi that collapses once you go big.",
+      "zh": "判对了。前期能提的小钱是饵，『币圈固定日返』是庞氏，等你加大就崩盘提不出。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The early payouts and the acquaintance's calm tone are the lure—'fixed daily return' on crypto cannot exist.",
+      "zh": "这是骗局。前期能提的小钱和熟人的淡定口吻都是引子，币圈『固定日返』根本不存在。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 6800,
+    "difficulty": 2,
+    "title": {
+      "en": "The Advance-Pay Order Boost",
+      "zh": "垫付刷单返利"
+    },
+    "chan": {
+      "en": "WeChat · private",
+      "zh": "微信 · 私聊"
+    },
+    "sender": {
+      "en": "Part-time HR · Sister Mei",
+      "zh": "兼职客服 · 梅姐"
+    },
+    "text": {
+      "en": "Easy gig, work from home, do as few as you like.\nFirst small task: the commission lands the same day, no waiting.\nFor the bigger combo task you front the order amount, then get it all back plus the cut.\nNo rush, do today's small one first and see the money arrive.",
+      "zh": "轻松活儿，在家做，想做几单做几单。\n第一单小的，佣金当天到账，不用等。\n后面组合大单需要你先垫付订单金额，完成后本金加佣金一起退。\n不急，今天先做小的，看着钱到账。"
+    },
+    "flags": [
+      {
+        "en": "Bait: first small commission really arrives same-day—builds trust.",
+        "zh": "诱饵：第一单小佣金真的当天到账——建立信任。"
+      },
+      {
+        "en": "THE tell: 'front the order amount yourself' on the bigger task is the trap—the principal never comes back.",
+        "zh": "破绽：大单要你『先垫付订单金额』就是局，本金有去无回。"
+      },
+      {
+        "en": "Principle: no real job ever asks you to pay out of pocket first.",
+        "zh": "可迁移：任何正规工作都不会让你先自掏腰包垫钱。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The first payout is the hook; once you front a big 'combo task' the money's gone.",
+      "zh": "判对了。第一笔到账是钩子，等你给大『组合单』垫付，钱就没了。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The same-day first commission is bait—the moment a task asks you to advance funds, it's order-boosting fraud.",
+      "zh": "这是骗局。当天到账的第一笔是饵，一旦让你垫付，就是刷单诈骗。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 1500,
+    "difficulty": 2,
+    "title": {
+      "en": "The Like-and-Follow Task Wall",
+      "zh": "点赞关注做任务"
+    },
+    "chan": {
+      "en": "WeChat · group",
+      "zh": "微信 · 群聊"
+    },
+    "sender": {
+      "en": "Casual Earnings Group · Admin",
+      "zh": "零钱任务群 · 管理员"
+    },
+    "text": {
+      "en": "Just like and follow a few accounts, screenshot, get paid—super relaxed.\nThe first three tasks paid out 3 yuan each, withdrawn instantly.\nWant more per task? Join the 'members' batch—deposit to unlock higher-paying jobs.\nTotally optional, plenty of folks stay on the free small tasks.",
+      "zh": "就点个赞、关注几个号，截图领钱，特别轻松。\n前三单每单3块，秒提现到账。\n想单价更高？进『会员』场，充值解锁高价任务就行。\n完全自愿，很多人就一直做免费小单。"
+    },
+    "flags": [
+      {
+        "en": "Bait: tiny real payouts, 'optional', 'stay on free tasks'—feels harmless.",
+        "zh": "诱饵：小额真返、『自愿』、『可一直做免费单』——看着无害。"
+      },
+      {
+        "en": "THE tell: 'deposit to unlock higher-paying tasks' is the trap—the unlock fee is the scam.",
+        "zh": "破绽：『充值解锁高价任务』就是局，那笔解锁充值就是被骗的钱。"
+      },
+      {
+        "en": "Principle: a real task never charges you to access better-paid work.",
+        "zh": "可迁移：真任务绝不会让你花钱才能接更高价的活。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The 3-yuan payouts are warm-up bait; the 'deposit to unlock' step is where they take you.",
+      "zh": "判对了。3块的小返是热身饵，『充值解锁』那步才是收割。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The instant tiny payouts soften you up—charging a deposit to 'unlock' tasks is the order-boosting trap.",
+      "zh": "这是骗局。秒到的小钱是软化你，要『充值解锁』任务就是刷单陷阱。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 30000,
+    "difficulty": 2,
+    "title": {
+      "en": "The Campus Loan Cancellation Notice",
+      "zh": "注销校园贷通知"
+    },
+    "chan": {
+      "en": "Phone · call",
+      "zh": "电话 · 来电"
+    },
+    "sender": {
+      "en": "Platform Compliance · Officer Chen",
+      "zh": "某平台合规专员 · 陈先生"
+    },
+    "text": {
+      "en": "Hello, calm down—nothing's wrong, it's a routine cleanup.\nOur records show a student loan account opened under your ID during school.\nPer new rules it must be formally cancelled, or it may quietly affect your credit.\nNo charge for this; just follow the steps to draw down and clear the leftover quota into our settlement account.",
+      "zh": "您好，别紧张，没出事，例行清理而已。\n系统显示您上学期间名下有个校园贷账户。\n按新规得正式注销，不然以后可能悄悄影响征信。\n这事儿不收费，您配合把残留额度提现、清到我们结算账户就行。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'calm down, nothing's wrong, routine, no charge'—lowers your guard.",
+        "zh": "诱饵：『别紧张、没出事、例行、不收费』——卸下戒心。"
+      },
+      {
+        "en": "THE tell: 'draw down the leftover quota and clear it into our account' = they borrow in your name and take the money.",
+        "zh": "破绽：『把残留额度提现、清到我们账户』= 用你名义借款再转走。"
+      },
+      {
+        "en": "Principle: cancelling an account never requires you to borrow money and send it anywhere.",
+        "zh": "可迁移：注销账户绝不需要你去借款、再把钱转给任何人。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. 'Cancel the campus loan' is the script—drawing down the quota into their account means they pocket a loan in your name.",
+      "zh": "判对了。『注销校园贷』是话术，把额度提现转给对方=他们借你的名义贷款卷走。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The soothing 'routine, no charge' tone hides the trap: making you draw down and transfer the 'quota' is borrowing in your name.",
+      "zh": "这是骗局。『例行、不收费』的安抚口吻藏着局，让你提现额度转出就是借你名义放贷。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 9800,
+    "difficulty": 3,
+    "title": {
+      "en": "The Credit Repair Specialist",
+      "zh": "征信修复洗白"
+    },
+    "chan": {
+      "en": "WeChat · private",
+      "zh": "微信 · 私聊"
+    },
+    "sender": {
+      "en": "Credit Advisor · Manager Guo",
+      "zh": "征信顾问 · 郭经理"
+    },
+    "text": {
+      "en": "Take your time, no pressure—I only take cases I'm confident on.\nThose overdue marks can be 'repaired' off your report through the proper channel.\nWe handle it remotely; you just send me your report login and the service fee up front.\nMany clients had their records cleaned this way, totally legit process.",
+      "zh": "不急，慢慢来，我只接有把握的单子。\n那几条逾期记录，走正规通道是可以『修复』掉的。\n我们远程操作，您把征信查询的登录和服务费先发我就行。\n好多客户都是这么洗白的，流程很正规。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'no pressure, only confident cases, proper channel'—sounds professional.",
+        "zh": "诱饵：『不急、只接有把握的、走正规通道』——听着很专业。"
+      },
+      {
+        "en": "THE tell: 'remote operation + hand over your report login + pay up front' = there is no legal credit repair; they take the fee and your data.",
+        "zh": "破绽：『远程操作+交出征信登录+先付费』= 征信根本无法修复，对方拿钱和你的资料跑路。"
+      },
+      {
+        "en": "Principle: legitimate overdue records can't be deleted by any paid 'repair'; only time and repayment clear them.",
+        "zh": "可迁移：真实逾期记录无法靠付费『修复』删除，只能靠时间和还款覆盖。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. 'Credit repair' is a fiction—the remote access and up-front fee are how they take your money and identity.",
+      "zh": "判对了。『征信修复』是假概念，远程登录和先付费就是骗钱骗资料。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The patient, professional tone covers a flat impossibility: no one can 'repair' a real overdue record—paying for it is the trap.",
+      "zh": "这是骗局。耐心专业的口吻盖住一个硬事实：真实逾期无法『修复』，付费就是被骗。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 15000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Loan Limit Verification",
+      "zh": "网贷提额验资"
+    },
+    "chan": {
+      "en": "Phone · call",
+      "zh": "电话 · 来电"
+    },
+    "sender": {
+      "en": "Lending Platform · Account Service",
+      "zh": "某贷款平台 · 账户客服"
+    },
+    "text": {
+      "en": "Good news—your application was pre-approved, no need to rush a decision.\nTo lift your limit we just need to verify your repayment ability.\nPlease transfer a sum into your own bound card and screenshot the balance to confirm the funds flow.\nThe money stays yours; this is only a verification step.",
+      "zh": "好消息，您的申请预审通过了，您不用急着决定。\n要提额度，我们得验证一下您的还款能力。\n请往您自己绑定的卡里转一笔钱，截图余额，确认资金流水。\n钱还是您自己的，这只是个验资环节。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'pre-approved, no rush, the money stays yours'—feels safe.",
+        "zh": "诱饵：『预审过了、不用急、钱还是你的』——感觉很安全。"
+      },
+      {
+        "en": "THE tell: 'verify repayment ability' by moving money on demand leads to a request to transfer it out 'to confirm flow'—that's the theft step.",
+        "zh": "破绽：所谓『验资』让你按指令转钱，下一步就让你转给指定账户『确认流水』——那才是被划走的环节。"
+      },
+      {
+        "en": "Principle: real lenders never need you to move your own money to 'prove' anything.",
+        "zh": "可迁移：正规放贷绝不需要你转动自己的钱来『证明』什么。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. 'Verifying funds' is the lead-in; the next instruction transfers your money to their account.",
+      "zh": "判对了。『验资』是引子，下一条指令就把你的钱转到对方账户。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. 'Pre-approved, no rush' is the calm cover—any 'verify your money by transferring it' step is loan fraud.",
+      "zh": "这是骗局。『预审过、不用急』是淡定的伪装，凡是『转钱验资』都是贷款诈骗。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 120000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Old Classmate's Side Project",
+      "zh": "老同学的副业"
+    },
+    "chan": {
+      "en": "WeChat · private",
+      "zh": "微信 · 私聊"
+    },
+    "sender": {
+      "en": "Old classmate · Wenwen",
+      "zh": "老同学 · 雯雯"
+    },
+    "text": {
+      "en": "Crazy that we reconnected after all these years! How've you been?\nLife's been steady, my partner and I do a little overseas exchange thing on the side.\nNot pushing it on you at all—just chatting, you know how it is.\nIf you ever feel like dabbling, the platform's clean, I'll show you how I do mine.",
+      "zh": "这么多年了还能联系上，太巧了！你最近咋样啊？\n我挺好的，跟对象顺手做点海外那边的兑换小副业。\n真没想拉你，就是唠唠嗑，你懂的。\n哪天你想玩玩，平台挺干净的，我手把手教你弄。"
+    },
+    "flags": [
+      {
+        "en": "Bait: a 'long-lost classmate', weeks of warm chat, 'not pushing it, just talking'.",
+        "zh": "诱饵：『失联多年的老同学』、几周暖心闲聊、『没想拉你、就唠嗑』。"
+      },
+      {
+        "en": "THE tell: the slow rapport always ends at 'come dabble on the platform I use'—a pig-butchering investment funnel.",
+        "zh": "破绽：慢热的感情最后总落到『来我用的平台玩玩』——杀猪盘投资局。"
+      },
+      {
+        "en": "Principle: when a rekindled relationship steers toward a specific 'clean platform', it's the setup, not luck.",
+        "zh": "可迁移：重逢的关系一旦导向某个『干净平台』，那是设计，不是缘分。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The warm reunion is the slow build of a pig-butchering scam—the 'clean platform' is the kill.",
+      "zh": "判对了。暖心重逢是杀猪盘的养鱼期，那个『干净平台』就是宰杀。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The patient, no-pressure reconnection is exactly the disguise—steering you onto a private platform is pig-butchering.",
+      "zh": "这是骗局。耐心、不催的重逢正是伪装，导你上私有平台就是杀猪盘。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 50000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Betting Insider's Comeback Plan",
+      "zh": "博彩内幕回血"
+    },
+    "chan": {
+      "en": "WeChat · group",
+      "zh": "微信 · 群聊"
+    },
+    "sender": {
+      "en": "Insider Circle · Brother Long",
+      "zh": "内幕交流群 · 龙哥"
+    },
+    "text": {
+      "en": "Take it slow, friend—I never tell anyone to go all in.\nWe've got insider results ahead of time; small steady bets, win back what you lost.\nNo entry fee, follow a few rounds and judge for yourself first.\nThe last three rounds I called all hit—but bet within your means.",
+      "zh": "慢慢来，朋友，我从不让人梭哈。\n咱有提前内幕结果，小注稳走，把亏的慢慢回回来。\n不收入场费，先跟几把自己判断。\n上回我点的三把全中——但你量力，别上头。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'never go all in, bet small, within your means'—sounds responsible.",
+        "zh": "诱饵：『从不梭哈、小注、量力』——听着很克制。"
+      },
+      {
+        "en": "THE tell: 'insider results in advance' is impossible; early 'wins' are rigged to make you deposit and bet big, then you can't withdraw.",
+        "zh": "破绽：『提前内幕结果』不可能存在，前期『连中』是做出来诱你充值加注，之后无法提现。"
+      },
+      {
+        "en": "Principle: any 'guaranteed insider' gambling tip is a controlled trap, no exceptions.",
+        "zh": "可迁移：任何『内幕包中』的赌局都是控盘陷阱，无一例外。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. There's no real 'insider'; the early hits are staged to pull you deeper before the platform freezes your money.",
+      "zh": "判对了。根本没有『内幕』，前期连中是做局，诱你加大后平台就冻你的钱。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The measured 'bet small, within means' tone is the disguise—'insider betting results' cannot exist, and that's the whole trap.",
+      "zh": "这是骗局。『小注、量力』的克制是伪装，『博彩内幕结果』根本不存在，这就是整个局。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 60000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Pre-IPO Internal Allotment",
+      "zh": "原始股内购"
+    },
+    "chan": {
+      "en": "WeChat · private",
+      "zh": "微信 · 私聊"
+    },
+    "sender": {
+      "en": "Acquaintance · Mr. Fang",
+      "zh": "相识 · 方先生"
+    },
+    "text": {
+      "en": "No rush at all—the listing window is still a way off.\nThere's a small internal allotment of pre-IPO shares, normally not open to outsiders.\nI saved a slice for people I know; once it lists you can flip it for several times the price.\nThink it over slowly, no need to decide today.",
+      "zh": "完全不急，上市窗口还早着呢。\n有一批内部认购的原始股，平时不对外开放。\n我给认识的人留了点份额，等上市了能翻好几倍。\n你慢慢考虑，今天不用定。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'no rush, decide slowly, reserved for people I know'—patient and exclusive.",
+        "zh": "诱饵：『不急、慢慢考虑、给认识的人留的』——耐心又专属。"
+      },
+      {
+        "en": "THE tell: privately sold 'pre-IPO shares' with a promised multiple are fake—real pre-IPO equity isn't peddled in WeChat.",
+        "zh": "破绽：私下兜售、承诺翻倍的『原始股』是假的，真正的原始股不会在微信里叫卖。"
+      },
+      {
+        "en": "Principle: any 'guaranteed-to-list, several-times return' share offer in private chat is a scam.",
+        "zh": "可迁移：私聊里『包上市、翻好几倍』的股份认购,一律是骗局。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. Privately hawked 'pre-IPO shares' with a guaranteed multiple are worthless paper—the listing never comes.",
+      "zh": "判对了。私下兜售、承诺翻倍的『原始股』是废纸，那个『上市』永远不会来。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The unhurried, exclusive framing is the lure—'pre-IPO shares sold privately with a promised return' is securities fraud.",
+      "zh": "这是骗局。不急、专属的包装是诱饵，『私下兜售、承诺收益的原始股』就是证券诈骗。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 25000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Quant Strategy Trial Room",
+      "zh": "量化策略体验室"
+    },
+    "chan": {
+      "en": "WeChat · group",
+      "zh": "微信 · 群聊"
+    },
+    "sender": {
+      "en": "Quant Study Room · Teacher Xu",
+      "zh": "量化研习室 · 徐老师"
+    },
+    "text": {
+      "en": "Our strategy isn't magic—it just trims losses and rides steady gains.\nNo hurry to fund anything; paper-trade alongside the signals for two weeks first.\nThose who tried it averaged a calm monthly return, nothing wild.\nWhen ready, the assistant helps you mirror the trades on our linked terminal.",
+      "zh": "我们的策略不神，就是少亏、稳吃趋势。\n不急着让你出钱，先跟着信号模拟盘跑两周。\n体验过的人月收益都挺平稳，不夸张。\n准备好了，助理帮你在对接的终端上同步下单。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'not magic, paper-trade two weeks, calm returns'—understated and credible.",
+        "zh": "诱饵：『不神、先模拟两周、收益平稳』——低调可信。"
+      },
+      {
+        "en": "THE tell: a teacher's daily signals + a 'linked terminal' to mirror trades is the same closed fake-platform funnel.",
+        "zh": "破绽：老师每天发信号 + 『对接终端』同步下单,还是封闭假盘那一套。"
+      },
+      {
+        "en": "Principle: real trades go through a regulated broker, never a group's 'linked terminal'.",
+        "zh": "可迁移：真实交易走持牌券商,绝不在某群的『对接终端』里。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The two-week paper trial builds trust; the 'linked terminal' is a rigged platform that traps real money.",
+      "zh": "判对了。两周模拟是建信任,『对接终端』是做的盘,真金白银进去就出不来。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The low-key 'paper-trade first' patience is the anesthetic—a teacher's signals plus a private terminal is the trap.",
+      "zh": "这是骗局。『先模拟』的低调耐心是麻醉剂,老师信号加私有终端就是局。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 3200,
+    "difficulty": 2,
+    "title": {
+      "en": "The App-Store Review Gig",
+      "zh": "应用试玩评测兼职"
+    },
+    "chan": {
+      "en": "WeChat · private",
+      "zh": "微信 · 私聊"
+    },
+    "sender": {
+      "en": "Recruiter · Sister Qin",
+      "zh": "招募 · 秦姐"
+    },
+    "text": {
+      "en": "Relaxed remote gig: download apps, play a bit, leave a review.\nFirst few tasks pay out clean, you'll see it hit your wallet.\nHigher tiers need you to pre-load 'task funds' that come back with the bonus.\nDo it at your own pace, plenty start with just the small ones.",
+      "zh": "轻松的线上活儿:下载app,玩一会儿,写个评测。\n前几单干净结算,你能看到钱到账。\n高阶单需要你先充『任务本金』,完成连奖金一起退。\n你按自己节奏来,很多人先做小单就行。"
+    },
+    "flags": [
+      {
+        "en": "Bait: first tasks pay cleanly, 'your own pace, start small'—looks harmless.",
+        "zh": "诱饵:前几单干净到账、『按节奏、先做小单』——看着无害。"
+      },
+      {
+        "en": "THE tell: 'pre-load task funds' on higher tiers is advance-pay order fraud—the principal never returns.",
+        "zh": "破绽:高阶单要你先充『任务本金』就是垫付刷单,本金有去无回。"
+      },
+      {
+        "en": "Principle: a real review gig never asks you to deposit money to do the work.",
+        "zh": "可迁移:真的试玩评测绝不会让你充钱才能干活。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The clean first payouts are bait; 'pre-load task funds' is where the money disappears.",
+      "zh": "判对了。前几单干净到账是饵,『先充任务本金』那步钱就没了。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The early clean payouts soften you—any task that asks you to pre-load funds is order-boosting fraud.",
+      "zh": "这是骗局。前期干净到账是软化你,凡要你先充本金都是刷单诈骗。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 18000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Gold Deferred-Trade Mentor",
+      "zh": "黄金递延带单导师"
+    },
+    "chan": {
+      "en": "WeChat · group",
+      "zh": "微信 · 群聊"
+    },
+    "sender": {
+      "en": "Precious Metals Group · Teacher Bai",
+      "zh": "贵金属交流群 · 白老师"
+    },
+    "text": {
+      "en": "Gold's a safe harbor, friend—we play it slow and steady here.\nNo fee to follow; I post my entry and exit each session.\nStart light, take only the calls you're comfortable with.\nThe assistant will help you open on our cooperating exchange when you're set.",
+      "zh": "黄金是避险品,朋友,咱这儿玩的就是稳。\n跟单不收费,我每场把进出点位都发群里。\n轻仓起步,你觉得舒服的单子才跟。\n你定下来了,助理帮你在合作交易所开个户。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'gold is safe, slow and steady, no fee, light positions'—reassuring.",
+        "zh": "诱饵:『黄金避险、稳、不收费、轻仓』——很让人安心。"
+      },
+      {
+        "en": "THE tell: a teacher posting entry/exit calls + a 'cooperating exchange' to open an account is a rigged trading platform.",
+        "zh": "破绽:老师发进出点位 + 『合作交易所』开户,是做出来的假交易盘。"
+      },
+      {
+        "en": "Principle: regulated metals trade on licensed exchanges, not a chat group's 'partner' venue.",
+        "zh": "可迁移:正规贵金属在持牌交易所,不在群里指定的『合作』平台。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. 'Gold is safe' lowers your guard; the teacher's calls steer you onto a rigged exchange.",
+      "zh": "判对了。『黄金避险』卸你戒心,老师的点位把你导上做局的交易所。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The calm 'safe harbor, light positions' framing is the anesthetic—teacher's calls plus a 'cooperating exchange' is the trap.",
+      "zh": "这是骗局。『避险、轻仓』的平稳包装是麻醉剂,老师点位加『合作交易所』就是局。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 7000,
+    "difficulty": 2,
+    "title": {
+      "en": "The Overdue-Account Settlement",
+      "zh": "逾期账户协商"
+    },
+    "chan": {
+      "en": "Phone · call",
+      "zh": "电话 · 来电"
+    },
+    "sender": {
+      "en": "Platform Aftercare · Officer Liang",
+      "zh": "某平台贷后 · 梁专员"
+    },
+    "text": {
+      "en": "No need to worry, this is just a friendly settlement reminder.\nYour account shows a small overdue balance we'd like to help resolve.\nWe can lower the payoff if you clear it today into our designated collection account.\nTake your time deciding—I'll hold the discounted offer for you.",
+      "zh": "别担心,就是个善意的协商提醒。\n您账户有一笔小额逾期,我们想帮您处理掉。\n今天结清的话能给您减免,转到我们指定的归集账户就行。\n您慢慢考虑,这个优惠我先给您留着。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'friendly, no worry, discount, take your time'—gentle and helpful.",
+        "zh": "诱饵:『善意、别担心、有减免、慢慢考虑』——温和又帮忙。"
+      },
+      {
+        "en": "THE tell: 'pay into our designated collection account' is the trap—real repayment goes to the official platform channel, never a private account.",
+        "zh": "破绽:『转到指定归集账户』就是局,真正还款走平台官方渠道,绝不进私人账户。"
+      },
+      {
+        "en": "Principle: any 'settle today into our account for a discount' call is a payoff scam.",
+        "zh": "可迁移:凡是『今天转到我们账户就减免』的电话都是还款诈骗。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The 'discount' is bait; transferring to their 'collection account' sends your money straight to the scammer.",
+      "zh": "判对了。『减免』是饵,转进『归集账户』钱直接进骗子口袋。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The gentle, unhurried tone hides it—real repayment never goes to a 'designated collection account' over the phone.",
+      "zh": "这是骗局。温和不急的口吻盖住它,真正还款绝不会按电话转进『指定归集账户』。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 30000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Fellow Traveler's Trading Tip",
+      "zh": "旅途网友的盘面分享"
+    },
+    "chan": {
+      "en": "WeChat · private",
+      "zh": "微信 · 私聊"
+    },
+    "sender": {
+      "en": "Online friend · Ms. Yan",
+      "zh": "网友 · 颜姐"
+    },
+    "text": {
+      "en": "These weeks chatting with you have been really nice, honestly.\nI don't talk about it much, but I do a little forex on the side, quietly.\nI'd never push you—just sharing how my day went, win or lose.\nIf you're ever curious, I'll let you watch over my shoulder first, no money needed.",
+      "zh": "这几周跟你聊天真挺舒服的,说真的。\n我平时不太提,自己悄悄做点外汇,小打小闹。\n绝不会拉你,就跟你说说我今天赚没赚、亏没亏。\n哪天你好奇,先在旁边看我怎么做,不用出钱。"
+    },
+    "flags": [
+      {
+        "en": "Bait: weeks of pleasant chat, 'I'd never push you, no money needed yet'.",
+        "zh": "诱饵:几周舒服的闲聊、『绝不拉你、暂时不用出钱』。"
+      },
+      {
+        "en": "THE tell: the slow emotional warm-up always lands on 'come do forex on my platform'—pig-butchering, the 'just watch' is the entry ramp.",
+        "zh": "破绽:慢热的感情铺垫最后总落到『来我平台做外汇』——杀猪盘,『先在旁边看』就是入场坡道。"
+      },
+      {
+        "en": "Principle: an online relationship that drifts toward 'invest where I do' is engineered, not coincidence.",
+        "zh": "可迁移:网络关系一旦飘向『跟我一起投』,那是设计,不是偶然。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The warm weeks are the feeding stage of a pig-butchering scam; 'watch me trade' is the on-ramp to her platform.",
+      "zh": "判对了。舒服的几周是杀猪盘养鱼期,『看我做单』是导你上她平台的坡道。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The no-pressure, patient affection is precisely the disguise—steering you toward her forex platform is pig-butchering.",
+      "zh": "这是骗局。不催、耐心的好感正是伪装,导你去她的外汇平台就是杀猪盘。"
+    }
+  },
+  {
+    "answer": "scam",
+    "risk": 22000,
+    "difficulty": 3,
+    "title": {
+      "en": "The Debt-Optimization Consultant",
+      "zh": "债务优化规划师"
+    },
+    "chan": {
+      "en": "WeChat · private",
+      "zh": "微信 · 私聊"
+    },
+    "sender": {
+      "en": "Debt Planner · Advisor Tang",
+      "zh": "债务规划师 · 唐顾问"
+    },
+    "text": {
+      "en": "No rush, let's map your situation out calmly first.\nI can restructure your high-rate loans into one low-rate plan, totally legit.\nFirst I'll need a service deposit and a temporary handover of your loan-app logins to operate.\nMany clients lightened their burden this way—take your time to decide.",
+      "zh": "不急,咱先把你的情况捋清楚。\n我能把你那些高息贷款重组成一笔低息的,完全合规。\n先收个服务定金,再把你贷款app的登录暂时交给我操作。\n好多客户都这么减轻负担的,你慢慢定。"
+    },
+    "flags": [
+      {
+        "en": "Bait: 'no rush, let's map it out, legit, lighten your burden'—calm and caring.",
+        "zh": "诱饵:『不急、先捋清、合规、减轻负担』——冷静又体贴。"
+      },
+      {
+        "en": "THE tell: 'service deposit + hand over your loan-app logins' lets them max out loans in your name and vanish; debt 'restructuring' like this isn't real.",
+        "zh": "破绽:『服务定金+交出贷款app登录』让对方用你名义把贷款拉满卷走,这种债务『重组』根本不存在。"
+      },
+      {
+        "en": "Principle: never pay up front or surrender account logins to anyone promising to 'optimize' your debt.",
+        "zh": "可迁移:任何承诺『优化债务』的人,都不要先付费、更不要交出账户登录。"
+      }
+    ],
+    "truthScam": {
+      "en": "Right. The deposit and login handover are the trap—they drain your loan apps in your name and disappear.",
+      "zh": "判对了。定金和登录交接就是局,对方用你名义把贷款app掏空跑路。"
+    },
+    "truthSafe": {
+      "en": "This is a scam. The unhurried, professional 'restructuring' pitch is the cover—paying up front and handing over loan logins is how they rob you.",
+      "zh": "这是骗局。不急、专业的『重组』话术是伪装,先付费再交出贷款登录就是被洗劫的方式。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Real fraud alert — freeze it yourself",
+      "zh": "真盗刷预警·自助冻结"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Card ending 6621 attempted a $980.00 charge at an overseas merchant 02:14, declined as suspicious. If this wasn't you, freeze the card in your XX Bank app or call the number on the back of your card.",
+      "zh": "【XX银行】您尾号6621的卡02:14在境外商户尝试支出980.00元，已因可疑被拒。若非本人操作，请在XX银行App内冻结该卡，或拨打卡背面客服电话。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a big overseas charge at 2am plus the word 'declined/suspicious' makes the heart race.",
+        "zh": "表层诱饵：凌晨大额境外支出＋『可疑/已拒』字样，第一眼就吓人。"
+      },
+      {
+        "en": "Safe-tell: it asks you for nothing — no code, no password. It tells you to act inside your own app or the number printed on YOUR card.",
+        "zh": "安全凭据：它什么都没向你索要——不要验证码、不要密码，只让你去自己的App或卡背面的号码处理。"
+      },
+      {
+        "en": "Transferable rule: a real alert says 'go do it yourself'; a scam says 'give the thing to me'.",
+        "zh": "可迁移原则：真预警让你『去自己 App 做』，骗局让你『把东西给我』。"
+      }
+    ],
+    "truthScam": {
+      "en": "This one was real. The bank flagged a suspicious charge and pointed you back to your own app — block messages like this and customers stop trusting genuine alerts.",
+      "zh": "这条是真的。银行拦下了可疑支出并让你回到自己的App处理——把真预警当骗局拦掉，客户以后就不信真正的提醒了。"
+    },
+    "truthSafe": {
+      "en": "Right call. Real banks do send urgent alerts — the tell is what they ask you to do: act in your own app, not hand anything over.",
+      "zh": "判得对。真银行确实会发紧急预警，区别在它让你做什么：去自己App处理，而不是把东西交出去。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Real credit card statement",
+      "zh": "真信用卡账单提醒"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[某发卡行] Your June statement is out: balance $3,420.55, minimum due $342.00, due date Jul 18. View details and pay in the bank app.",
+      "zh": "【某发卡行】您的6月账单已出：应还3420.55元，最低还款342.00元，到期还款日7月18日。详情及还款请见手机银行App。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a four-figure amount and a hard due date feel like pressure to pay now.",
+        "zh": "表层诱饵：四位数金额＋明确到期日，像是在催你赶紧还。"
+      },
+      {
+        "en": "Safe-tell: no link, no code, no account number requested — it just routes you to the app you already have.",
+        "zh": "安全凭据：没有链接、没有验证码、不问你账号，只让你去本就装好的App。"
+      },
+      {
+        "en": "Transferable rule: a real bill points you into your own app; a scam pushes a link to 'pay here'.",
+        "zh": "可迁移原则：真账单指向你自己的App，骗局塞给你一个『点这里还款』的链接。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was a genuine statement notice. Treat real bills as scams and people miss payments — and stop reading the alerts that matter.",
+      "zh": "这是真实账单提醒。把真账单当骗局，人会漏还款——也会从此不再看真正要紧的提醒。"
+    },
+    "truthSafe": {
+      "en": "Right call. A statement that just tells you to check your own app and asks for nothing is exactly what a real bill looks like.",
+      "zh": "判得对。只让你去自己App、什么都不索要的账单，正是真账单的样子。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Large incoming transfer received",
+      "zh": "真大额转入到账"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Card ending 0418 — incoming transfer $12,000.00 credited 15:32, available balance $14,260.31. Details in app.",
+      "zh": "【XX银行】您尾号0418卡15:32转入12000.00元已入账，可用余额14260.31元。详情见手机银行。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a sudden five-figure sum landing makes you wonder if something's wrong.",
+        "zh": "表层诱饵：突然一笔五位数到账，让人怀疑是不是出事了。"
+      },
+      {
+        "en": "Safe-tell: the money came IN and there's nothing to do — no verify, no 'confirm to release', no action demanded.",
+        "zh": "安全凭据：钱是转『入』的，且无需任何操作——不验证、不『确认放款』、不要你做任何动作。"
+      },
+      {
+        "en": "Transferable rule: real alerts report money arriving; scams invent a reason you must send money out.",
+        "zh": "可迁移原则：真预警通报钱『进来了』，骗局编个理由让你把钱『转出去』。"
+      }
+    ],
+    "truthScam": {
+      "en": "It was a real credit notice. Flagging genuine 'money received' texts as fraud just trains people to distrust their own bank.",
+      "zh": "这是真实到账通知。把真『到账』短信当诈骗，只会让人连自己银行都不敢信。"
+    },
+    "truthSafe": {
+      "en": "Right call. Money arriving with no action required is the bank informing you, not a trap.",
+      "zh": "判得对。钱进账且无需任何操作，是银行在通知你，而非陷阱。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Login code you triggered yourself",
+      "zh": "你自己触发的登录验证码"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Verification code 538207, valid 5 min, for logging into mobile banking. If this wasn't you, do not enter it.",
+      "zh": "【XX银行】验证码538207，5分钟内有效，用于登录手机银行。如非本人操作请勿输入。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: the words 'verification code' alone set off alarm bells these days.",
+        "zh": "表层诱饵：单是『验证码』三个字，如今就足够拉响警报。"
+      },
+      {
+        "en": "Safe-tell: the code was sent TO you because you just logged in — nobody is on the phone asking you to read it out.",
+        "zh": "安全凭据：验证码是因你刚登录而发『给你』的——没有人来电让你把它念出来。"
+      },
+      {
+        "en": "Transferable rule: a code you requested is safe; danger is only when someone else asks you to hand it over.",
+        "zh": "可迁移原则：你自己触发的验证码是安全的，危险只在『有人让你把它交出去』时。"
+      }
+    ],
+    "truthScam": {
+      "en": "This code was triggered by your own login. The danger isn't the code text — it's anyone who calls asking for it. Blocking the code itself helps no one.",
+      "zh": "这条验证码是你自己登录触发的。危险的从来不是验证码短信，而是来电向你索要它的人。拦掉验证码本身毫无意义。"
+    },
+    "truthSafe": {
+      "en": "Right call. A code you requested, with no one asking you to share it, is exactly how login is supposed to work.",
+      "zh": "判得对。你自己触发、又没人向你索取的验证码，正是登录该有的样子。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Installment repayment reminder",
+      "zh": "真分期还款日提醒"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[某发卡行] Reminder: installment 4/12 of $416.67 is due Jul 10. Keep your card account funded; repay in the app. Late payment affects credit.",
+      "zh": "【某发卡行】提醒：您的分期第4/12期416.67元将于7月10日扣款，请保持账户余额充足，可在App内还款。逾期将影响征信。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a dated deadline plus 'affects credit' feels like a threat.",
+        "zh": "表层诱饵：明确扣款日＋『影响征信』，听着像威胁。"
+      },
+      {
+        "en": "Safe-tell: it asks you only to keep your OWN account funded and to pay in the app — no link, no code, no transfer-to-us.",
+        "zh": "安全凭据：它只让你给自己的账户留够余额、在App内还款——没有链接、没有验证码、不要你转账给谁。"
+      },
+      {
+        "en": "Transferable rule: a real reminder points to your own balance; a scam invents a special 'pay-off account' to wire to.",
+        "zh": "可迁移原则：真提醒指向你自己的余额，骗局会编一个专门的『还款账户』让你汇过去。"
+      }
+    ],
+    "truthScam": {
+      "en": "It was a real installment reminder. Mistaking it for fraud means a missed deduction and a real credit ding — and lost trust in true reminders.",
+      "zh": "这是真实分期提醒。误当诈骗会导致扣款失败、真伤征信——也会让人不再信真提醒。"
+    },
+    "truthSafe": {
+      "en": "Right call. A reminder to fund your own account and pay in-app is the bank doing its job, not a con.",
+      "zh": "判得对。提醒你给自己账户留钱、在App内还款，是银行尽责，不是骗局。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Credit limit increase notice",
+      "zh": "真额度上调通知"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Your card ending 7702 credit limit has been raised to $20,000 effective today, based on your account review. Details in app.",
+      "zh": "【XX银行】根据账户评估，您尾号7702信用卡额度已上调至20000元，即日起生效。详情见手机银行。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a sudden five-figure limit change feels like an account someone tampered with.",
+        "zh": "表层诱饵：额度突然变成五位数，像是账户被人动过。"
+      },
+      {
+        "en": "Safe-tell: it's an informational notice — nothing to confirm, no code to enter, no 'click to accept'.",
+        "zh": "安全凭据：纯告知性通知——不用确认、不要输验证码、没有『点击接受』。"
+      },
+      {
+        "en": "Transferable rule: a real notice just informs; a scam dangles a limit boost behind a link or a fee.",
+        "zh": "可迁移原则：真通知只是告知，骗局会把提额吊在链接或手续费后面。"
+      }
+    ],
+    "truthScam": {
+      "en": "A genuine limit-increase notice. Flagging it as fraud teaches people to fear normal account messages.",
+      "zh": "这是真实提额通知。把它当诈骗，会让人对正常账户消息也草木皆兵。"
+    },
+    "truthSafe": {
+      "en": "Right call. A limit change that asks for nothing and just notifies you is the bank, not a scammer.",
+      "zh": "判得对。什么都不要你做、只通知你的额度变更，是银行而非骗子。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Real card transaction text",
+      "zh": "真消费交易短信"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Card ending 3390 spent $688.00 at a supermarket 19:47, available balance $5,112.40. Not you? Freeze the card in-app.",
+      "zh": "【XX银行】您尾号3390卡19:47在超市消费688.00元，可用余额5112.40元。非本人操作请在App内冻结。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a sizeable charge plus 'not you? freeze it' reads like a breach warning.",
+        "zh": "表层诱饵：一笔不小的消费＋『非本人请冻结』，读着像被盗刷警告。"
+      },
+      {
+        "en": "Safe-tell: the remedy it offers is in YOUR app — it doesn't ask you to call back, confirm a code, or reverse anything via a link.",
+        "zh": "安全凭据：它给的补救手段在你自己的App里——不让你回拨、不让你确认验证码、不让你点链接撤单。"
+      },
+      {
+        "en": "Transferable rule: a real transaction text gives you the off-switch in your own app; a scam gives you a number to call.",
+        "zh": "可迁移原则：真交易短信把『开关』放在你自己App里，骗局给你一个号码让你回拨。"
+      }
+    ],
+    "truthScam": {
+      "en": "An ordinary spend notification. Block these and people lose the very alerts that catch real theft.",
+      "zh": "这是普通消费通知。拦掉它，人就失去了能抓到真盗刷的那条提醒。"
+    },
+    "truthSafe": {
+      "en": "Right call. A spend text that points the fix back into your own app is routine and safe.",
+      "zh": "判得对。把补救指回你自己App的消费短信，是日常且安全的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Card report-lost confirmed",
+      "zh": "真挂失成功通知"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Your card ending 5571 has been reported lost successfully at 11:08; the card is now disabled. A replacement can be requested in-app. If this wasn't you, call the number on your card.",
+      "zh": "【XX银行】您尾号5571的卡已于11:08挂失成功，该卡已停用。可在App内申请补卡。如非本人操作，请拨打卡背面电话。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'card disabled' sounds like you've been locked out by an attacker.",
+        "zh": "表层诱饵：『卡已停用』听着像被攻击者锁了账户。"
+      },
+      {
+        "en": "Safe-tell: it confirms an action and gives you back the controls — replace in-app, or call the number on your own card; it asks for nothing.",
+        "zh": "安全凭据：它确认了一个动作并把控制权交还给你——App内补卡，或拨自己卡背面的号；什么都不向你索要。"
+      },
+      {
+        "en": "Transferable rule: a real confirmation hands control back to you; a scam uses the scare to extract a code or payment.",
+        "zh": "可迁移原则：真确认把控制权还给你，骗局借这一吓向你套验证码或钱。"
+      }
+    ],
+    "truthScam": {
+      "en": "A genuine lost-card confirmation. If someone else reported it, the safe move is your own card's number — not treating the bank as the enemy.",
+      "zh": "这是真实挂失成功通知。若是他人操作，正确做法是拨自己卡背面的号——而不是把银行当成敌人。"
+    },
+    "truthSafe": {
+      "en": "Right call. A confirmation that hands controls back to you and asks for nothing is the bank, plain and simple.",
+      "zh": "判得对。把控制权交还给你、什么都不索要的确认，就是银行本身。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "New card activation reminder",
+      "zh": "真开卡激活提醒"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[某发卡行] Your new card ending 8845 has arrived. Activate it in the bank app or at any branch within 30 days. Unactivated cards cannot be used.",
+      "zh": "【某发卡行】您尾号8845的新卡已寄达，请于30天内在手机银行App或任意网点激活，未激活卡片无法使用。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a deadline plus 'cannot be used' nudges you to act fast.",
+        "zh": "表层诱饵：时限＋『无法使用』，催着你赶紧行动。"
+      },
+      {
+        "en": "Safe-tell: it routes you to the app or a physical branch — never to a link, and it never asks for card numbers or codes.",
+        "zh": "安全凭据：它指向App或实体网点——绝不给链接，也绝不问你卡号或验证码。"
+      },
+      {
+        "en": "Transferable rule: a real activation happens in your app or at a counter; a scam 'activation link' is the trap.",
+        "zh": "可迁移原则：真激活在你App里或柜台办，骗局的『激活链接』才是陷阱。"
+      }
+    ],
+    "truthScam": {
+      "en": "A real activation reminder. Treat it as fraud and a new card sits dead in a drawer — and trust in real notices erodes.",
+      "zh": "这是真实激活提醒。当成诈骗，新卡就废在抽屉里——对真通知的信任也随之流失。"
+    },
+    "truthSafe": {
+      "en": "Right call. Activation pointed to your app or a branch, with no link and no code asked, is the real thing.",
+      "zh": "判得对。指向App或网点、不给链接不问验证码的激活提醒，是真的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Annual fee reminder",
+      "zh": "真年费提醒"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Card ending 2106 annual fee $30.00 will be charged Jul 20. Swipe 6 times before then to waive it. Check progress in-app.",
+      "zh": "【XX银行】您尾号2106卡年费30.00元将于7月20日收取，当期前刷满6笔可减免。进度详见手机银行。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: an upcoming charge and a 'do this or pay' condition feel coercive.",
+        "zh": "表层诱饵：即将扣费＋『不做就收钱』的条件，听着像逼你。"
+      },
+      {
+        "en": "Safe-tell: every action it mentions happens on your own card and in your own app — nothing is handed to anyone.",
+        "zh": "安全凭据：它提到的每个动作都在你自己卡上、自己App里完成——没有任何东西交给别人。"
+      },
+      {
+        "en": "Transferable rule: a real fee notice tells you to swipe your own card; a scam tells you to pay a fee to 'unlock' something.",
+        "zh": "可迁移原则：真年费提醒让你刷自己的卡，骗局让你交一笔费去『解锁』什么。"
+      }
+    ],
+    "truthScam": {
+      "en": "A genuine annual-fee reminder. Block it and a customer pays a fee they could have waived — and learns to ignore the bank.",
+      "zh": "这是真实年费提醒。拦掉它，客户就白交了本可减免的费——还学会了无视银行。"
+    },
+    "truthSafe": {
+      "en": "Right call. A fee notice whose only actions live in your own app is routine and safe.",
+      "zh": "判得对。所有动作都在你自己App里的年费提醒，是日常且安全的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Repeated decline, card auto-locked",
+      "zh": "连续失败·卡自动锁定"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Card ending 9034 was temporarily locked after 3 failed attempts 21:10 for your protection. Unlock it yourself in the bank app, or call the number on the card.",
+      "zh": "【XX银行】您尾号9034卡21:10因连续3次操作失败已临时锁定以保护账户。请在手机银行App内自助解锁，或拨打卡背面电话。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'locked', 'failed attempts', a time stamp — it reads like an active break-in.",
+        "zh": "表层诱饵：『锁定』『连续失败』＋时间戳，读着像正在被入侵。"
+      },
+      {
+        "en": "Safe-tell: the unlock is self-service in your app or via your card's own number — it doesn't ask you to verify with a code or click a link.",
+        "zh": "安全凭据：解锁是在你App里自助、或拨你卡自己的号——不让你用验证码核验、也不让你点链接。"
+      },
+      {
+        "en": "Transferable rule: a real lock gives you the unlock; a scam 'unlock' demands a code, a fee, or a remote-control app.",
+        "zh": "可迁移原则：真锁定把解锁交给你，骗局的『解锁』要验证码、要手续费、或要你装远控App。"
+      }
+    ],
+    "truthScam": {
+      "en": "A real protective lock. The unlock was in your own hands — block this and people fight their own bank instead of the thief.",
+      "zh": "这是真实的保护性锁定。解锁就在你自己手里——拦掉它，人会跟自己银行较劲，而不是防贼。"
+    },
+    "truthSafe": {
+      "en": "Right call. A lock that hands you a self-service unlock and asks for nothing is the bank protecting you.",
+      "zh": "判得对。把自助解锁交还给你、什么都不索要的锁定，是银行在保护你。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Autopay scheduled today",
+      "zh": "真自动还款今日扣款"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[某发卡行] Reminder: autopay will deduct full statement $2,108.66 from your linked account today. Ensure sufficient balance. Manage in-app.",
+      "zh": "【某发卡行】提醒：今日将通过自动还款从您的关联账户扣全额账单2108.66元，请保持余额充足。可在App内管理。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a four-figure deduction 'today' triggers panic about money leaving.",
+        "zh": "表层诱饵：今日扣四位数，立刻让人慌『钱要走了』。"
+      },
+      {
+        "en": "Safe-tell: it's a deduction from YOUR own linked account that you set up — no new payee, no link, no code.",
+        "zh": "安全凭据：是从你自己设定的关联账户扣款——没有新收款人、没有链接、没有验证码。"
+      },
+      {
+        "en": "Transferable rule: a real autopay debits your own linked account; a scam asks you to authorize a stranger's account.",
+        "zh": "可迁移原则：真自动还款扣你自己的关联账户，骗局让你给一个陌生账户授权。"
+      }
+    ],
+    "truthScam": {
+      "en": "A genuine autopay reminder. Mistaking it for fraud can leave the account short and the bill unpaid.",
+      "zh": "这是真实自动还款提醒。误当诈骗，可能导致余额不足、账单没还上。"
+    },
+    "truthSafe": {
+      "en": "Right call. A debit from the account you yourself linked, asking nothing of you, is normal autopay.",
+      "zh": "判得对。从你自己关联的账户扣款、什么都不要你做，是正常的自动还款。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Suspicious login blocked",
+      "zh": "真异地登录已拦截"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] A login from a new device in another city was blocked 03:26. If it was you, log in again normally. If not, change your password in-app.",
+      "zh": "【XX银行】03:26检测到异地新设备登录，已为您拦截。若为本人请重新正常登录；若非本人，请在App内修改密码。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'login from another city' at 3am screams account takeover.",
+        "zh": "表层诱饵：凌晨『异地登录』，第一反应就是账户被盗。"
+      },
+      {
+        "en": "Safe-tell: both remedies are inside your own app — log in normally, or change your password there. No code to give, no callback to make.",
+        "zh": "安全凭据：两个补救都在你自己App里——正常登录或改密码。没有验证码要给，没有电话要回拨。"
+      },
+      {
+        "en": "Transferable rule: a real block tells you to secure your own app; a scam uses the same scare to extract your code 'to verify it's you'.",
+        "zh": "可迁移原则：真拦截让你去自己App加固，骗局用同样的吓唬向你套验证码『核验是不是你』。"
+      }
+    ],
+    "truthScam": {
+      "en": "A real intrusion-blocked notice. The fix lives in your own app — flag it as fraud and you ignore a warning that actually protected you.",
+      "zh": "这是真实的登录拦截通知。补救就在你自己App里——当成诈骗，你忽略的恰是真正保护了你的那条警告。"
+    },
+    "truthSafe": {
+      "en": "Right call. A block whose only remedies are inside your own app, asking for no code, is the bank guarding your account.",
+      "zh": "判得对。补救只在你自己App、不要任何验证码的拦截，是银行在守护你的账户。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Points expiring reminder",
+      "zh": "真积分到期提醒"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Reminder: 8,600 card points worth about $86 expire Jun 30. Redeem in the bank app before then.",
+      "zh": "【XX银行】提醒：您有8600积分（约合86元）将于6月30日到期，请在手机银行App内尽快兑换。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'expires soon' plus a cash value pressures you to act this instant.",
+        "zh": "表层诱饵：『即将到期』＋折算金额，催着你立刻行动。"
+      },
+      {
+        "en": "Safe-tell: redemption happens in your own app — there's no link, no code, and nothing to claim from a stranger.",
+        "zh": "安全凭据：兑换在你自己App里完成——没有链接、没有验证码、不用向谁领取。"
+      },
+      {
+        "en": "Transferable rule: a real points notice sends you into your app; a scam dangles a 'claim your points' link.",
+        "zh": "可迁移原则：真积分提醒把你引向App，骗局吊一个『领取积分』的链接。"
+      }
+    ],
+    "truthScam": {
+      "en": "A real points reminder. Block it and the customer simply loses points they'd earned — no harm prevented, value wasted.",
+      "zh": "这是真实积分提醒。拦掉它，客户白白损失已赚到的积分——没防住任何危险，只是浪费。"
+    },
+    "truthSafe": {
+      "en": "Right call. A points reminder that lives entirely in your own app is harmless and routine.",
+      "zh": "判得对。全程在你自己App里的积分提醒，无害且日常。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Refund credited back to card",
+      "zh": "真退款已退回到卡"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Card ending 4417 received a merchant refund of $529.00 at 14:05, credited to your card. Details in app.",
+      "zh": "【XX银行】您尾号4417卡14:05收到商户退款529.00元，已退回至本卡。详情见手机银行。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: an unexpected refund and the word 'refund' are classic scam openers, so it feels rigged.",
+        "zh": "表层诱饵：意外退款＋『退款』字样，是骗局的经典开场，让人觉得有诈。"
+      },
+      {
+        "en": "Safe-tell: the money was credited TO your card automatically — it doesn't ask you to 'confirm', click, or provide details to receive it.",
+        "zh": "安全凭据：钱已自动退回你卡上——不要你『确认』、不要你点击、也不要你提供信息才能收到。"
+      },
+      {
+        "en": "Transferable rule: a real refund just arrives; a scam 'refund' makes you click or hand over card details first.",
+        "zh": "可迁移原则：真退款直接到账，骗局的『退款』要你先点链接或先交卡信息。"
+      }
+    ],
+    "truthScam": {
+      "en": "A genuine refund notice — the money is already on your card. The scam version makes you act to 'receive' it; this one didn't.",
+      "zh": "这是真实退款通知——钱已经在你卡上了。骗局版会让你做点什么才能『收到』，而这条没有。"
+    },
+    "truthSafe": {
+      "en": "Right call. A refund that simply lands on your card, with nothing required to claim it, is real.",
+      "zh": "判得对。直接落到你卡上、无需任何操作领取的退款，是真的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Password changed successfully",
+      "zh": "真登录密码修改成功"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] Your mobile banking login password was changed successfully 16:20. If this wasn't you, call the number on the back of your card immediately.",
+      "zh": "【XX银行】您的手机银行登录密码已于16:20修改成功。如非本人操作，请立即拨打卡背面客服电话。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'password changed' plus 'immediately' makes you fear you've been hacked.",
+        "zh": "表层诱饵：『密码已修改』＋『立即』，让人怕是被黑了。"
+      },
+      {
+        "en": "Safe-tell: if it wasn't you, it points you to the number on YOUR OWN card — not a hotline in the text, not a code to read out.",
+        "zh": "安全凭据：若非本人，它让你拨自己卡背面的号——不是短信里的热线，也不要你念验证码。"
+      },
+      {
+        "en": "Transferable rule: a real confirmation routes you to your card's own number; a scam supplies the 'support' number itself.",
+        "zh": "可迁移原则：真确认让你拨自己卡上的号，骗局会直接给你一个『客服』号。"
+      }
+    ],
+    "truthScam": {
+      "en": "A real change-confirmation. Even the 'if not you' path sends you to your own card's number — that's the bank, not a trap.",
+      "zh": "这是真实的修改确认。连『若非本人』也是让你拨自己卡上的号——这是银行，不是陷阱。"
+    },
+    "truthSafe": {
+      "en": "Right call. A confirmation that, even in the worst case, points to your own card's number is genuine.",
+      "zh": "判得对。即便最坏情况也只指向你自己卡上号码的确认，是真的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Large outgoing flagged, held for you",
+      "zh": "大额支出待你本人核验"
+    },
+    "chan": {
+      "en": "SMS · card issuer",
+      "zh": "短信 · 发卡行"
+    },
+    "sender": {
+      "en": "95XXX",
+      "zh": "95XXX"
+    },
+    "text": {
+      "en": "[XX Bank] A $9,500.00 transfer from card ending 1180 was paused for risk review 10:40. To proceed or cancel, open your bank app — we will not call you about this.",
+      "zh": "【XX银行】您尾号1180卡10:40一笔9500.00元转出已暂停风控审核。如需继续或取消，请打开手机银行App操作。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a near-five-figure transfer 'paused for review' feels like an emergency you must resolve now.",
+        "zh": "表层诱饵：近五位数转出『暂停审核』，像是必须马上处理的紧急事。"
+      },
+      {
+        "en": "Safe-tell: it puts the proceed/cancel decision inside your own app — it does not call you, does not ask for a code, does not give a number to dial.",
+        "zh": "安全凭据：它把『继续/取消』的决定放进你自己App——不来电、不要验证码、不给你回拨号码。"
+      },
+      {
+        "en": "Transferable rule: a real hold waits for you in your app; a scam 'hold' calls you and walks you through 'releasing' it.",
+        "zh": "可迁移原则：真冻结在你App里等你，骗局的『冻结』会来电一步步教你『解冻』。"
+      }
+    ],
+    "truthScam": {
+      "en": "A real risk-hold on a big transfer — the decision waits safely in your app. The scam version would phone you and coach you; this one stays silent.",
+      "zh": "这是对大额转出的真实风控冻结——决定权安静地在你App里等你。骗局版会来电一步步引导你，而这条不会。"
+    },
+    "truthSafe": {
+      "en": "Right call. A hold that hands the proceed/cancel choice to your own app, with no call and no code, is the bank protecting you.",
+      "zh": "判得对。把继续或取消交给你自己App、不来电不要验证码的冻结，是银行在保护你。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Tax Refund in the Official App",
+      "zh": "个税退税·官方App"
+    },
+    "chan": {
+      "en": "App push · tax authority",
+      "zh": "App 推送 · 个税"
+    },
+    "sender": {
+      "en": "Personal Income Tax App",
+      "zh": "个人所得税 App"
+    },
+    "text": {
+      "en": "Your 2025 annual tax reconciliation shows a refund of ¥1,286 available.\nOpen the Personal Income Tax App, go to Reconciliation, and apply for the refund to your bound bank card.\nNo fee. Refund is paid into your own account.",
+      "zh": "您的2025年度个税汇算结果显示可退税 1286 元。\n请打开个人所得税 App，进入「综合所得年度汇算」，申请退税至您本人绑定的银行卡。\n无需缴纳任何费用，退款直接到您本人账户。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: the word \"refund\" plus an amount is a classic scam hook.",
+        "zh": "表层诱饵：『退税』加金额是诈骗最爱的钩子。"
+      },
+      {
+        "en": "Safe-tell: it sends you into the official app yourself, asks no fee, no code; money goes to your own card.",
+        "zh": "安全点：让你自己进官方 App 办，不收费、不要验证码，钱退到你本人卡。"
+      },
+      {
+        "en": "Transferable rule: a real refund never charges a fee first or makes you click a link to \"unlock\" it.",
+        "zh": "可迁移原则：真退税绝不会先收手续费，也不会要你点链接『解锁』。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. A fake refund gives itself away by demanding a \"handling fee\" or a link before it pays out — this had neither.",
+      "zh": "这其实是真的。假退税的破绽是退钱前先要『手续费』或链接，这条都没有。"
+    },
+    "truthSafe": {
+      "en": "Correct. It routes you to the official app, charges nothing, and pays into your own card — the marks of a genuine refund.",
+      "zh": "判对了。它让你进官方 App、不收费、钱退到本人卡，正是真退税的样子。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Medical Insurance Reimbursement Arrived",
+      "zh": "医保报销·到账"
+    },
+    "chan": {
+      "en": "SMS · municipal medical insurance",
+      "zh": "短信 · 市医保局"
+    },
+    "sender": {
+      "en": "City Medical Insurance Bureau",
+      "zh": "XX市医保局"
+    },
+    "text": {
+      "en": "Your outpatient reimbursement of ¥342.60 has been credited to your medical insurance personal account.\nCheck details in the official medical insurance app or at any service counter.\nNo action or payment required.",
+      "zh": "您的门诊报销款 342.60 元已划入您的医保个人账户。\n可在官方医保 App 或就近经办网点查询明细。\n无需操作，无需缴费。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"insurance payout / reimbursement\" messages are heavily impersonated by scammers.",
+        "zh": "表层诱饵：『医保报销到账』是诈骗高仿的重灾区。"
+      },
+      {
+        "en": "Safe-tell: money is already in your account; it points to the official app/counter and asks nothing of you.",
+        "zh": "安全点：钱已进你账户，只让你去官方 App/网点查，什么都不要你做。"
+      },
+      {
+        "en": "Transferable rule: a genuine payout notifies you — it never requires a code or transfer to \"receive\" it.",
+        "zh": "可迁移原则：真到账只是通知你，绝不会要验证码或转账才能『领取』。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. Fake \"reimbursement\" messages make you confirm a code or click to receive — this just told you it landed.",
+      "zh": "这其实是真的。假报销会让你确认验证码或点链接领取，这条只是告诉你已到账。"
+    },
+    "truthSafe": {
+      "en": "Correct. The money is already in your account and verification stays on official channels — a genuine notice.",
+      "zh": "判对了。钱已在你账户、核验走官方渠道，是真通知。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Social Security Contribution Reminder",
+      "zh": "社保缴费·提醒"
+    },
+    "chan": {
+      "en": "App push · social security",
+      "zh": "App 推送 · 社保"
+    },
+    "sender": {
+      "en": "Social Security Service App",
+      "zh": "社保服务 App"
+    },
+    "text": {
+      "en": "Reminder: your flexible-employment social insurance for this month is due before the 25th.\nPay through the social security app or your bound bank withholding — at the standard rate, no extra charge.\nOverdue may affect your coverage.",
+      "zh": "提醒：您本月灵活就业社保费将于25日前到期，请及时缴纳。\n可通过社保 App 或绑定的银行代扣缴费，按标准费率，无额外收费。\n逾期可能影响参保待遇。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"due / overdue / affects coverage\" creates urgency scammers love.",
+        "zh": "表层诱饵：『到期/逾期/影响待遇』制造紧迫感，正是诈骗惯用。"
+      },
+      {
+        "en": "Safe-tell: it pays at the standard rate through the official app or bank withholding — no special account.",
+        "zh": "安全点：按标准费率走官方 App 或银行代扣，没有指定的『特殊账户』。"
+      },
+      {
+        "en": "Transferable rule: real contribution reminders never route money to a private \"officer\" account.",
+        "zh": "可迁移原则：真缴费提醒绝不会把钱转进某个私人『工作人员』账户。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. A scam version would give you a specific account to wire to — this points to the standard official channel.",
+      "zh": "这其实是真的。诈骗版会给你一个指定账户汇款，这条只指向标准官方渠道。"
+    },
+    "truthSafe": {
+      "en": "Correct. Standard rate, official app, no special account — a genuine due-date reminder.",
+      "zh": "判对了。标准费率、官方 App、无指定账户，是真的缴费提醒。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Housing Fund Withdrawal Credited",
+      "zh": "公积金提取·到账"
+    },
+    "chan": {
+      "en": "SMS · housing provident fund",
+      "zh": "短信 · 公积金中心"
+    },
+    "sender": {
+      "en": "Housing Provident Fund Center",
+      "zh": "住房公积金管理中心"
+    },
+    "text": {
+      "en": "Your housing fund withdrawal application of ¥8,500 has been approved and remitted to your bound bank card.\nCredit usually arrives within 1–2 business days. Query via the official fund app or counter.\nNo fee deducted.",
+      "zh": "您申请的住房公积金提取 8500 元已审核通过，划转至您本人绑定的银行卡。\n通常1-2个工作日到账。可在官方公积金 App 或网点查询。\n未扣取任何费用。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a large sum plus \"approved / remitted\" mimics payout-scam phrasing.",
+        "zh": "表层诱饵：大额加『审核通过/划转』很像到账诈骗的话术。"
+      },
+      {
+        "en": "Safe-tell: it's your own application, money goes to your own card, no fee, query stays official.",
+        "zh": "安全点：是你本人的申请，钱到你本人卡，不扣费，查询走官方。"
+      },
+      {
+        "en": "Transferable rule: a real withdrawal you initiated never charges an \"unfreezing\" fee to release it.",
+        "zh": "可迁移原则：你本人发起的真提取，绝不会再收『解冻费』才放款。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. A fake version invents a fee or a frozen status needing payment — this simply confirms your own withdrawal.",
+      "zh": "这其实是真的。假版本会编个手续费或『冻结需缴费』，这条只是确认你本人的提取。"
+    },
+    "truthSafe": {
+      "en": "Correct. Your application, your card, no fee — a genuine withdrawal notice.",
+      "zh": "判对了。你本人申请、到本人卡、不扣费，是真的提取通知。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Water Bill Arrears Reminder",
+      "zh": "水费欠费·提醒"
+    },
+    "chan": {
+      "en": "SMS · water utility",
+      "zh": "短信 · 自来水公司"
+    },
+    "sender": {
+      "en": "City Water Supply Co.",
+      "zh": "XX市自来水公司"
+    },
+    "text": {
+      "en": "Your water account is in arrears of ¥56.30. Please pay promptly to avoid supply interruption.\nPay via the official utility payment app, WeChat city service, or any business hall.\nKeep your account number handy.",
+      "zh": "您的水费账户欠费 56.30 元，请及时缴纳以免影响正常供水。\n可通过官方缴费 App、城市服务或就近营业厅缴费。\n请准备好您的户号。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"arrears / supply will be cut\" is a top utility-scam pressure line.",
+        "zh": "表层诱饵：『欠费/将停水』是水电诈骗最常用的施压话术。"
+      },
+      {
+        "en": "Safe-tell: it names official channels you go to yourself, no link, no account to wire to.",
+        "zh": "安全点：让你自己去官方渠道缴，没有链接、没有要你汇款的账户。"
+      },
+      {
+        "en": "Transferable rule: a real arrears notice never sends a payment link or asks for your card password.",
+        "zh": "可迁移原则：真欠费通知不会发缴费链接，也不会问你卡密码。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. A scam would embed a payment link or demand immediate transfer — this just told you to pay through normal channels.",
+      "zh": "这其实是真的。诈骗会塞个缴费链接或催你立刻转账，这条只让你走正常渠道缴费。"
+    },
+    "truthSafe": {
+      "en": "Correct. Official channels, no link, no wiring account — a genuine arrears reminder.",
+      "zh": "判对了。官方渠道、没链接、没汇款账户，是真欠费提醒。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Gas Bill Overdue Notice",
+      "zh": "燃气欠费·告知"
+    },
+    "chan": {
+      "en": "SMS · gas company",
+      "zh": "短信 · 燃气公司"
+    },
+    "sender": {
+      "en": "City Gas Co.",
+      "zh": "XX燃气公司"
+    },
+    "text": {
+      "en": "Your natural gas account shows an overdue balance of ¥88.00.\nTop up via the official gas app, the city service mini-program, or a business hall to ensure continued supply.\nNo staff will phone you for card details.",
+      "zh": "您的天然气账户欠费 88.00 元。\n请通过官方燃气 App、城市服务小程序或营业厅充值，以保障正常用气。\n工作人员不会致电索取您的银行卡信息。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"overdue / supply at risk\" is a classic urgency hook.",
+        "zh": "表层诱饵：『欠费/影响用气』是典型的紧迫钩子。"
+      },
+      {
+        "en": "Safe-tell: you top up through official apps yourself; the note even waves off any phone request for card info.",
+        "zh": "安全点：让你自己用官方 App 充，还点明不会电话索要卡信息。"
+      },
+      {
+        "en": "Transferable rule: a real bill never has someone call you to read out your card and code.",
+        "zh": "可迁移原则：真账单不会有人打电话让你报卡号和验证码。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. The scam twist is a follow-up call asking for your card and code — this message preempts exactly that.",
+      "zh": "这其实是真的。诈骗的套路是随后来电索要卡号验证码，这条恰恰提前堵掉了。"
+    },
+    "truthSafe": {
+      "en": "Correct. Self-service official top-up and no card requests — a genuine overdue notice.",
+      "zh": "判对了。自助官方充值、不索要卡信息，是真欠费告知。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "ETC Renewal Reminder",
+      "zh": "ETC续费·提醒"
+    },
+    "chan": {
+      "en": "App push · ETC service",
+      "zh": "App 推送 · ETC"
+    },
+    "sender": {
+      "en": "ETC Service App",
+      "zh": "ETC 服务 App"
+    },
+    "text": {
+      "en": "Your ETC device certificate expires next month. Renew to keep using highway fast lanes.\nRenew inside the official ETC app or at a bank ETC counter — same rate, no extra processing charge.\nNo need to re-bind via any outside link.",
+      "zh": "您的 ETC 设备证书将于下月到期，请续期以继续使用高速快捷通道。\n请在官方 ETC App 内或银行 ETC 网点办理续期，费率不变，无额外手续费。\n无需通过任何外部链接重新绑定。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"certificate expiring / re-verify\" is the exact line of rampant ETC phishing.",
+        "zh": "表层诱饵：『证书到期/重新认证』正是泛滥的 ETC 钓鱼话术。"
+      },
+      {
+        "en": "Safe-tell: it tells you to use the official app/bank counter and explicitly not any outside link.",
+        "zh": "安全点：让你用官方 App/银行网点办，并明说不要外部链接。"
+      },
+      {
+        "en": "Transferable rule: real ETC renewal never needs you to re-enter card and code on a texted link.",
+        "zh": "可迁移原则：真 ETC 续期绝不会让你在短信链接里重填卡号验证码。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. The scam version is a link telling you to \"re-certify\" with full card details — this steers you away from links entirely.",
+      "zh": "这其实是真的。诈骗版是发链接让你『重新认证』填全套卡信息，这条反而让你别碰链接。"
+    },
+    "truthSafe": {
+      "en": "Correct. Official app, unchanged rate, no outside link — a genuine renewal reminder.",
+      "zh": "判对了。官方 App、费率不变、无外部链接，是真续费提醒。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Annual Tax Reconciliation Reminder",
+      "zh": "个税汇算·提醒"
+    },
+    "chan": {
+      "en": "App push · tax authority",
+      "zh": "App 推送 · 个税"
+    },
+    "sender": {
+      "en": "Personal Income Tax App",
+      "zh": "个人所得税 App"
+    },
+    "text": {
+      "en": "The 2025 annual individual tax reconciliation window is open until June 30.\nComplete it yourself in the Personal Income Tax App; you may owe a top-up or be due a refund.\nNo agent fee required.",
+      "zh": "2025年度个人所得税综合所得汇算清缴已开放，截止6月30日。\n请在个人所得税 App 内自行办理，可能需补税或可退税。\n无需缴纳任何代办费用。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"deadline / may owe tax\" pressures you and smells like a scam.",
+        "zh": "表层诱饵：『截止/可能补税』施压，闻着像诈骗。"
+      },
+      {
+        "en": "Safe-tell: you do it yourself in the official app; no \"agent\" and no fee.",
+        "zh": "安全点：让你在官方 App 自办，没有『代办人』也不收费。"
+      },
+      {
+        "en": "Transferable rule: a real reconciliation notice never sells you a paid \"fast-track\" via private chat.",
+        "zh": "可迁移原则：真汇算提醒不会私聊推销付费『加急代办』。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. A scam would offer a paid agent or link to \"help\" — this just points you to the official app.",
+      "zh": "这其实是真的。诈骗会推个付费代办或链接『帮你办』，这条只让你进官方 App。"
+    },
+    "truthSafe": {
+      "en": "Correct. Self-service in the official app, no agent fee — a genuine reconciliation reminder.",
+      "zh": "判对了。官方 App 自办、无代办费，是真的汇算提醒。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Court SMS — Verify Officially",
+      "zh": "法院短信·官方核验"
+    },
+    "chan": {
+      "en": "SMS · people's court",
+      "zh": "短信 · 人民法院"
+    },
+    "sender": {
+      "en": "District People's Court",
+      "zh": "XX区人民法院"
+    },
+    "text": {
+      "en": "You have a case notice pending. Please log in to the official judicial litigation platform with your ID to view it.\nVerify authenticity through the court's public service number.\nDo not transfer money to anyone over this matter.",
+      "zh": "您有一则案件通知待查收，请凭本人身份证登录官方诉讼服务平台查看。\n可通过法院公开服务电话核验真伪。\n切勿就此事向任何人转账。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"court / case notice\" is the textbook impersonation that scares people.",
+        "zh": "表层诱饵：『法院/案件通知』是吓唬人的教科书冒充。"
+      },
+      {
+        "en": "Safe-tell: it tells you to verify via the public number and explicitly to transfer money to no one.",
+        "zh": "安全点：让你打公开电话核验，并明确说别向任何人转账。"
+      },
+      {
+        "en": "Transferable rule: a real court never asks for a transfer to a \"safe account\" by SMS.",
+        "zh": "可迁移原则：真法院绝不会短信要你把钱转到『安全账户』。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. The fake-court scam pivots to a \"safe account\" transfer — this message tells you to do the opposite.",
+      "zh": "这其实是真的。假法院诈骗会转到『安全账户』，这条恰恰叫你别转。"
+    },
+    "truthSafe": {
+      "en": "Correct. Official verification and an explicit no-transfer warning — a genuine court notice.",
+      "zh": "判对了。官方核验、明确叫你别转账，是真的法院通知。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Government Affairs Verification Notice",
+      "zh": "政务短信·可核验"
+    },
+    "chan": {
+      "en": "SMS · government service",
+      "zh": "短信 · 政务服务"
+    },
+    "sender": {
+      "en": "Government Service Platform",
+      "zh": "政务服务平台"
+    },
+    "text": {
+      "en": "Your real-name authentication for the government service account needs re-confirmation.\nComplete it inside the official government service app under My Account.\nNever provide your password or SMS code to any caller.",
+      "zh": "您的政务服务账号实名认证需重新确认。\n请在官方政务服务 App 内「我的-账户」中完成认证。\n请勿向任何来电提供密码或短信验证码。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"authentication needs re-confirming\" is a favorite phishing pretext.",
+        "zh": "表层诱饵：『认证需重新确认』是钓鱼最爱的借口。"
+      },
+      {
+        "en": "Safe-tell: it keeps you inside the official app and tells you never to hand over your code.",
+        "zh": "安全点：让你在官方 App 内完成，并叮嘱别把验证码给任何人。"
+      },
+      {
+        "en": "Transferable rule: real re-authentication happens in-app, never by reading codes to a stranger.",
+        "zh": "可迁移原则：真重新认证在 App 内完成，绝不靠对陌生人报验证码。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. The scam form harvests your code over the phone — this message tells you flatly not to share it.",
+      "zh": "这其实是真的。诈骗版会电话套你验证码，这条直接叫你别给。"
+    },
+    "truthSafe": {
+      "en": "Correct. In-app authentication and a no-code warning — a genuine government notice.",
+      "zh": "判对了。App 内认证、警示别给验证码，是真的政务通知。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Traffic Violation Notice",
+      "zh": "交管违章·告知"
+    },
+    "chan": {
+      "en": "App push · traffic management",
+      "zh": "App 推送 · 交管"
+    },
+    "sender": {
+      "en": "Traffic Management App",
+      "zh": "交管 App"
+    },
+    "text": {
+      "en": "Your vehicle has a pending violation: speeding, recorded on the 18th.\nView details and handle it yourself in the official traffic management app or at a vehicle administration office.\nPay only through official channels.",
+      "zh": "您的车辆有一条待处理违法记录：超速，记录日期18日。\n请在官方交管 App 或车管所自行查看并处理。\n罚款仅通过官方渠道缴纳。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"violation / fine pending\" rattles drivers and is widely faked.",
+        "zh": "表层诱饵：『违章/待缴罚款』让车主紧张，被广泛仿冒。"
+      },
+      {
+        "en": "Safe-tell: you handle it yourself in the official app/office; payment only via official channels.",
+        "zh": "安全点：让你在官方 App/车管所自办，罚款只走官方渠道。"
+      },
+      {
+        "en": "Transferable rule: a real violation notice never includes a pay-now link to a private account.",
+        "zh": "可迁移原则：真违章告知不会附『立即缴罚』到私人账户的链接。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. The scam adds a fake pay link to a private wallet — this points only to official handling.",
+      "zh": "这其实是真的。诈骗会加个假缴费链接到私人钱包，这条只指向官方处理。"
+    },
+    "truthSafe": {
+      "en": "Correct. Self-service in the official app, official-only payment — a genuine violation notice.",
+      "zh": "判对了。官方 App 自办、仅官方缴费，是真的违章告知。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Highway Toll Top-up Reminder",
+      "zh": "高速通行·提醒"
+    },
+    "chan": {
+      "en": "SMS · highway operator",
+      "zh": "短信 · 高速运营"
+    },
+    "sender": {
+      "en": "Highway Operation Center",
+      "zh": "高速公路运营中心"
+    },
+    "text": {
+      "en": "An unpaid toll passage of ¥23.00 was recorded for your plate.\nSettle it in the official highway app or the bound ETC account; standard amount, no surcharge.\nDo not pay through any link sent to you.",
+      "zh": "您的车牌有一笔未结清通行费 23.00 元。\n请在官方高速 App 或绑定的 ETC 账户结清，金额标准，无附加费。\n请勿通过任何收到的链接缴费。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"unpaid toll\" with a precise amount mimics scam billing texts.",
+        "zh": "表层诱饵：『未结清通行费』加精确金额很像诈骗账单短信。"
+      },
+      {
+        "en": "Safe-tell: pay in the official app/ETC, standard amount, and explicitly not via any link.",
+        "zh": "安全点：在官方 App/ETC 缴、金额标准，并明说别用任何链接。"
+      },
+      {
+        "en": "Transferable rule: a real toll notice never bundles a clickable pay link with surcharges.",
+        "zh": "可迁移原则：真通行费通知不会捆绑带附加费的可点缴费链接。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. The scam packs a link plus a bogus surcharge — this tells you to ignore links and pay the standard amount officially.",
+      "zh": "这其实是真的。诈骗会塞链接加虚假附加费，这条让你别点链接、按标准金额官方缴。"
+    },
+    "truthSafe": {
+      "en": "Correct. Official app/ETC, standard amount, no link — a genuine toll reminder.",
+      "zh": "判对了。官方 App/ETC、标准金额、无链接，是真的通行费提醒。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Vaccination Appointment Reminder",
+      "zh": "疫苗预约·提醒"
+    },
+    "chan": {
+      "en": "SMS · community health center",
+      "zh": "短信 · 社区卫生中心"
+    },
+    "sender": {
+      "en": "Community Health Service Center",
+      "zh": "社区卫生服务中心"
+    },
+    "text": {
+      "en": "Reminder: your booster vaccination is booked for the 27th, 9:00–11:00.\nBring your ID and come to the center directly; the public-health vaccine is free.\nReschedule via the official health appointment app if needed.",
+      "zh": "提醒：您预约的加强针接种时间为27日 9:00-11:00。\n请携带本人身份证直接到中心接种，免疫规划疫苗免费。\n如需改约，请在官方健康预约 App 操作。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: an unsolicited health \"appointment\" message can read like a phishing lure.",
+        "zh": "表层诱饵：突来的健康『预约』短信也可能像钓鱼诱饵。"
+      },
+      {
+        "en": "Safe-tell: it's free, you just show up with ID, rescheduling stays in the official app.",
+        "zh": "安全点：免费、带身份证直接去，改约也在官方 App 内。"
+      },
+      {
+        "en": "Transferable rule: a real appointment reminder never asks you to prepay or click to \"confirm slot\".",
+        "zh": "可迁移原则：真预约提醒不会让你预付款或点链接『确认名额』。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. A scam version charges a \"reservation fee\" or links to confirm — this just gives you a time and a free shot.",
+      "zh": "这其实是真的。诈骗版会收『预约费』或发链接确认，这条只给你时间和免费接种。"
+    },
+    "truthSafe": {
+      "en": "Correct. Free, ID only, official rescheduling — a genuine appointment reminder.",
+      "zh": "判对了。免费、只带身份证、官方改约，是真的预约提醒。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Health Check Booking Reminder",
+      "zh": "体检预约·提醒"
+    },
+    "chan": {
+      "en": "SMS · public health checkup",
+      "zh": "短信 · 公共体检"
+    },
+    "sender": {
+      "en": "City Health Examination Center",
+      "zh": "市健康体检中心"
+    },
+    "text": {
+      "en": "Your free annual resident health check is booked for the 29th morning.\nFast beforehand and bring your ID and social security card to the center.\nManage your booking in the official health app.",
+      "zh": "您预约的居民免费年度健康体检定于29日上午。\n请空腹并携带本人身份证、社保卡到中心。\n预约管理请使用官方健康 App。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: free \"resident benefit\" wording resembles subsidy-scam bait.",
+        "zh": "表层诱饵：『居民免费福利』措辞像补贴诈骗的诱饵。"
+      },
+      {
+        "en": "Safe-tell: it's free, you attend in person with ID, booking handled in the official app.",
+        "zh": "安全点：免费、本人带证件到场、预约在官方 App 管理。"
+      },
+      {
+        "en": "Transferable rule: a real free checkup never requires an upfront payment or a link login.",
+        "zh": "可迁移原则：真免费体检不会要先付款或点链接登录。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. A scam would demand a deposit or link login — this only asks you to show up fasting with your card.",
+      "zh": "这其实是真的。诈骗会要押金或链接登录，这条只让你空腹带卡到场。"
+    },
+    "truthSafe": {
+      "en": "Correct. Free, in-person, official-app booking — a genuine checkup reminder.",
+      "zh": "判对了。免费、本人到场、官方 App 预约，是真的体检提醒。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Electricity Arrears Before Cutoff",
+      "zh": "电费欠费·停电前"
+    },
+    "chan": {
+      "en": "SMS · power supply",
+      "zh": "短信 · 供电公司"
+    },
+    "sender": {
+      "en": "City Power Supply Bureau",
+      "zh": "XX市供电局"
+    },
+    "text": {
+      "en": "Your electricity account is overdue ¥130.40. To avoid a power cut, please pay before the 26th.\nPay via the official grid app, bank counter, or business hall.\nNo staff will ask for your card password or a code.",
+      "zh": "您的电费账户欠费 130.40 元，为避免停电，请于26日前缴清。\n可通过官方电网 App、银行柜台或营业厅缴费。\n工作人员不会索取您的卡密码或验证码。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"overdue / cutoff imminent\" is a high-pressure scam staple.",
+        "zh": "表层诱饵：『欠费/即将停电』是高压施压的诈骗常客。"
+      },
+      {
+        "en": "Safe-tell: it lists official payment channels and disclaims any request for password or code.",
+        "zh": "安全点：列出官方缴费渠道，并声明不会索要密码或验证码。"
+      },
+      {
+        "en": "Transferable rule: a real cutoff warning never has someone call to \"help\" you pay over the phone.",
+        "zh": "可迁移原则：真停电预警不会有人来电『帮你』电话缴费。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. The scam twist is a caller offering to pay it for you to grab your card and code — this rules that out.",
+      "zh": "这其实是真的。诈骗套路是来电『替你缴』骗卡号验证码，这条已排除。"
+    },
+    "truthSafe": {
+      "en": "Correct. Official channels, no password or code requests — a genuine arrears warning.",
+      "zh": "判对了。官方渠道、不索要密码验证码，是真的欠费预警。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Childcare Subsidy to Your Account",
+      "zh": "育儿补贴·到本人账户"
+    },
+    "chan": {
+      "en": "SMS · civil affairs bureau",
+      "zh": "短信 · 民政局"
+    },
+    "sender": {
+      "en": "District Civil Affairs Bureau",
+      "zh": "XX区民政局"
+    },
+    "text": {
+      "en": "Your childcare subsidy of ¥500 will be disbursed to the bank card you registered with the bureau.\nNo application link is needed; confirm eligibility at the civil affairs counter or official app.\nThe bureau never collects a fee to release a subsidy.",
+      "zh": "您的育儿补贴 500 元将发放至您在民政局登记的银行卡。\n无需点击任何申领链接，资格可在民政窗口或官方 App 核实。\n民政局发放补贴不会收取任何费用。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"subsidy disbursement\" is one of the most impersonated benefit scams.",
+        "zh": "表层诱饵：『补贴发放』是被冒充最多的福利诈骗之一。"
+      },
+      {
+        "en": "Safe-tell: money goes to your registered card, no link to click, no fee to release it.",
+        "zh": "安全点：钱发到你登记的卡、不用点链接、发放不收费。"
+      },
+      {
+        "en": "Transferable rule: a real subsidy is paid to you and never charges a fee to \"unlock\" it.",
+        "zh": "可迁移原则：真补贴是发给你的，绝不会收费才『解锁』。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. A fake subsidy demands a fee or a link before paying — this pays to your registered card with neither.",
+      "zh": "这其实是真的。假补贴会在发放前要手续费或链接，这条直接发到你登记的卡，两样都没有。"
+    },
+    "truthSafe": {
+      "en": "Correct. Paid to your own card, no link, no fee — a genuine subsidy notice.",
+      "zh": "判对了。发到你本人卡、无链接、无费用，是真的补贴通知。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Pension Authentication Reminder",
+      "zh": "养老金认证·提醒"
+    },
+    "chan": {
+      "en": "App push · pension service",
+      "zh": "App 推送 · 养老金"
+    },
+    "sender": {
+      "en": "Pension Service App",
+      "zh": "养老金服务 App"
+    },
+    "text": {
+      "en": "Your annual pension qualification authentication is due before month-end to keep payments uninterrupted.\nComplete face authentication yourself in the official pension app at home.\nNo fee, no third party, no card details needed.",
+      "zh": "您的养老金资格年度认证将于月底到期，请及时认证以免影响发放。\n可在官方养老金 App 内自助完成人脸认证，足不出户。\n无需费用、无需他人代办、无需提供银行卡信息。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: \"authentication due / payments may stop\" pressures elderly users and is widely faked.",
+        "zh": "表层诱饵：『认证到期/影响发放』施压老人，被广泛仿冒。"
+      },
+      {
+        "en": "Safe-tell: self-service face auth in the official app; no fee, no agent, no card info.",
+        "zh": "安全点：在官方 App 自助人脸认证，无费用、无代办、不要卡信息。"
+      },
+      {
+        "en": "Transferable rule: real qualification authentication never costs money or needs your card number.",
+        "zh": "可迁移原则：真资格认证不花钱，也不需要你的卡号。"
+      }
+    ],
+    "truthScam": {
+      "en": "This was real. The scam version charges an \"agent fee\" or harvests card details — this is free self-service in the official app.",
+      "zh": "这其实是真的。诈骗版会收『代办费』或套卡信息，这条是官方 App 内免费自助。"
+    },
+    "truthSafe": {
+      "en": "Correct. Free in-app face authentication, no card info — a genuine authentication reminder.",
+      "zh": "判对了。官方 App 内免费人脸认证、不要卡信息，是真的认证提醒。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Quarterly Bonus Credited",
+      "zh": "季度奖金已到账"
+    },
+    "chan": {
+      "en": "Bank app push · your account",
+      "zh": "银行 App 推送 · 本人账户"
+    },
+    "sender": {
+      "en": "Your Bank App",
+      "zh": "你的银行 App"
+    },
+    "text": {
+      "en": "Your account ending 6612 was credited ¥4,200.00 at 18:02.\nMemo: Q2 performance bonus.\nView details in-app.",
+      "zh": "您尾号6612账户于18:02收入4,200.00元。\n摘要：二季度绩效奖金。\n详情见App账单。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: an unexpected large credit makes you suspect a 'wrong transfer, send it back' scam.",
+        "zh": "表层诱饵：一笔意外的大额入账，让你联想到「转错账快退回」骗局。"
+      },
+      {
+        "en": "Safe-tell: it's a real incoming credit in your own bank app — no link, no reply, no action asked of you.",
+        "zh": "安全本质：这是你本人银行App里的真实入账通知，没有链接、没让你回复、没让你做任何操作。"
+      },
+      {
+        "en": "Transferable rule: the 'refund the overpayment' scam needs you to send money back — a genuine credit asks nothing.",
+        "zh": "可迁移原则：「退还多打的钱」骗局要你把钱转回去，真入账什么都不要求你做。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually this was real — your bonus genuinely landed. Flagging your own bank's credit notice as fraud means you'd reject your own salary.",
+      "zh": "其实这是真的——奖金确实到账了。把自己银行的入账通知当诈骗拦下，等于把自己的工资也拒之门外。"
+    },
+    "truthSafe": {
+      "en": "Right call. A real credit in your own bank app that asks nothing of you is just good news.",
+      "zh": "判得好。本人银行App里、不要你做任何操作的真实入账，就是个好消息。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Manager Asks to Move a Meeting",
+      "zh": "经理改个会议时间"
+    },
+    "chan": {
+      "en": "Work IM · known account",
+      "zh": "办公 IM · 实名账号"
+    },
+    "sender": {
+      "en": "Manager Lin (work IM)",
+      "zh": "林经理（办公IM实名号）"
+    },
+    "text": {
+      "en": "Tomorrow's 10am review clashes with the client call.\nCan we push it to 2pm? Let the team know.\nThanks.",
+      "zh": "明天上午10点的评审跟客户那边的电话撞了。\n挪到下午2点行吗？麻烦你通知下大家。\n谢了。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a boss messaging you directly screams 'impersonating the leader' after all those scam warnings.",
+        "zh": "表层诱饵：领导直接私信你，被反复警告过的你立刻想到「冒充领导」。"
+      },
+      {
+        "en": "Safe-tell: it's your manager's real IM account asking a normal scheduling favor — no money, no secrecy, no new account.",
+        "zh": "安全本质：是经理本人的IM实名号，让你办件正经排会的事——不涉及钱、不要保密、没有新账号。"
+      },
+      {
+        "en": "Transferable rule: the boss-impersonation scam always has money + urgency + a new account. None here.",
+        "zh": "可迁移原则：冒充领导骗局必有「钱+催促+新账号」，这里一个都没有。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — it's just rescheduling a meeting. Treating every boss message as fraud means you'd ignore your actual manager and miss the new time.",
+      "zh": "其实是真的——只是改个会议时间。把领导每条消息都当诈骗，等于无视真经理、错过新会议时间。"
+    },
+    "truthSafe": {
+      "en": "Good eye. Your manager's real account asking a normal favor with no money or secrecy is just work.",
+      "zh": "看得准。经理本人实名号办件不涉及钱、不要保密的正经事，就是日常工作。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Reimbursement Invoice Approved",
+      "zh": "报销发票已通过"
+    },
+    "chan": {
+      "en": "Finance system · company portal",
+      "zh": "财务系统 · 公司内网"
+    },
+    "sender": {
+      "en": "Finance Notice (intranet)",
+      "zh": "财务通知（内网）"
+    },
+    "text": {
+      "en": "Your June expense claim (4 invoices, ¥863) has been approved.\nPayout with this month's salary.\nNo action needed.",
+      "zh": "您6月的报销单（4张发票，863元）已审核通过。\n随当月工资一并发放。\n无需操作。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'invoice' and 'payout' echo the fake VAT-invoice and fake-refund scams you've been warned about.",
+        "zh": "表层诱饵：「发票」「发放」让你想到被警告过的假发票、假退款骗局。"
+      },
+      {
+        "en": "Safe-tell: it's an in-house finance system note confirming your own claim — no link to click, nothing to confirm.",
+        "zh": "安全本质：是公司财务系统里确认你自己报销单的通知，没有链接可点、没有要确认的东西。"
+      },
+      {
+        "en": "Transferable rule: invoice scams push you to a payment page; this just says 'no action needed'.",
+        "zh": "可迁移原则：发票骗局会把你引到付款页，这条直接写「无需操作」。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — your reimbursement cleared. Blocking the finance system's own approval means your money just sits there.",
+      "zh": "其实是真的——报销过了。把财务系统自己的审核通知拦下，钱就卡在那儿不动了。"
+    },
+    "truthSafe": {
+      "en": "Correct. An internal approval that asks nothing of you is exactly what a real reimbursement looks like.",
+      "zh": "对的。不要你做任何事的内部审核通过，正是真报销该有的样子。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Parcel Pickup Code",
+      "zh": "快递取件码"
+    },
+    "chan": {
+      "en": "SMS · courier locker",
+      "zh": "短信 · 快递柜"
+    },
+    "sender": {
+      "en": "Smart Locker",
+      "zh": "丰巢/某快递柜"
+    },
+    "text": {
+      "en": "Your parcel is in Locker 7, cabinet B-12.\nPickup code: 8246.\nFree storage 18h. Enter code at the screen.",
+      "zh": "您的快递已放入7号柜，B-12格口。\n取件码：8246。\n免费保管18小时，请到柜机屏幕输入取件。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a 'code' in a message triggers your verification-code reflex — you want to never share any code.",
+        "zh": "表层诱饵：消息里有「码」，触发你的验证码警觉——你想着任何码都不外泄。"
+      },
+      {
+        "en": "Safe-tell: this code is for you to type at the locker screen, not to tell anyone — no link, no callback number.",
+        "zh": "安全本质：这个码是给你自己到柜机屏幕上输入的，不是发给谁——没链接、没回拨电话。"
+      },
+      {
+        "en": "Transferable rule: a verification-code scam asks you to read the code to a 'staffer'; a pickup code you key in yourself.",
+        "zh": "可迁移原则：验证码骗局要你把码念给「客服」，取件码是你自己在柜机输入。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — that's just your locker pickup code. Refuse it and your parcel stays locked up until it's returned.",
+      "zh": "其实是真的——这就是取件码。拒了它，包裹只能锁在柜里直到被退回。"
+    },
+    "truthSafe": {
+      "en": "Nice. A code you punch into the locker yourself, with no one to share it with, is perfectly safe.",
+      "zh": "漂亮。一个你自己在柜机上输入、没有对象可外泄的码，完全安全。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Delivery Signed Confirmation",
+      "zh": "快递签收提醒"
+    },
+    "chan": {
+      "en": "Courier app push · your order",
+      "zh": "快递 App 推送 · 你的订单"
+    },
+    "sender": {
+      "en": "Courier App",
+      "zh": "快递 App"
+    },
+    "text": {
+      "en": "Order ...4471 delivered and signed at the front desk at 15:30.\nRate your courier in-app if you like.",
+      "zh": "订单尾号4471已于15:30送达并由前台代签。\n如愿意，可在App内为快递员评价。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'signed for you' rings the fake-delivery / 'compensation for lost parcel' alarm.",
+        "zh": "表层诱饵：「代签」让你想到假签收、「丢件理赔」那类骗局的警铃。"
+      },
+      {
+        "en": "Safe-tell: it's your own courier app confirming a real order — the rating link only opens the app, asks for nothing.",
+        "zh": "安全本质：是你本人快递App确认真实订单，评价入口只是打开App本身，什么都不索取。"
+      },
+      {
+        "en": "Transferable rule: parcel scams push a 'claim compensation' link and bank details; this just confirms delivery.",
+        "zh": "可迁移原则：快递骗局会塞「申请理赔」链接要银行信息，这条只是确认送达。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — your package arrived. Calling a normal delivery confirmation a scam just leaves you anxious over nothing.",
+      "zh": "其实是真的——你的包裹到了。把正常签收提醒当诈骗，只是平白让自己虚惊一场。"
+    },
+    "truthSafe": {
+      "en": "Right. A delivery confirmation in your own app that asks for nothing is just a status update.",
+      "zh": "对。本人App里、什么都不索取的签收提醒，只是个状态更新。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Parcel Rerouted to New Address",
+      "zh": "快递改派通知"
+    },
+    "chan": {
+      "en": "Courier app push · your order",
+      "zh": "快递 App 推送 · 你的订单"
+    },
+    "sender": {
+      "en": "Courier App",
+      "zh": "快递 App"
+    },
+    "text": {
+      "en": "Per your request, order ...0925 has been rerouted to your office address.\nNew ETA: tomorrow before 6pm.",
+      "zh": "已按您的申请，将订单尾号0925改派至您的公司地址。\n预计送达：明天18点前。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'address changed' sounds like the classic 'your parcel had an exception, click to fix' scam.",
+        "zh": "表层诱饵：「地址变更」很像「您的包裹异常，点此处理」那种经典骗局。"
+      },
+      {
+        "en": "Safe-tell: it confirms a change you made in the app yourself — no link, no fee, no info requested.",
+        "zh": "安全本质：它确认的是你自己在App里发起的改派——没链接、没费用、不要任何信息。"
+      },
+      {
+        "en": "Transferable rule: reroute scams demand a 'redelivery fee' or login; a real reroute confirmation charges nothing.",
+        "zh": "可迁移原则：改派骗局会要「重派费」或登录，真改派确认不收一分钱。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — it's confirming the reroute you asked for. Block it and you'll wonder where your parcel went.",
+      "zh": "其实是真的——它在确认你自己申请的改派。拦下它，你反而要纳闷包裹去哪了。"
+    },
+    "truthSafe": {
+      "en": "Sharp. Confirming a change you initiated, with no fee or link, is genuine.",
+      "zh": "敏锐。确认你本人发起的变更、不收费不带链接，是真的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Friend Splits the Bill",
+      "zh": "好友 AA 转账"
+    },
+    "chan": {
+      "en": "WeChat · friend you know",
+      "zh": "微信 · 相熟好友"
+    },
+    "sender": {
+      "en": "Mei (friend)",
+      "zh": "好友 Mei"
+    },
+    "text": {
+      "en": "Sent you ¥58 for last night's hotpot.\nTreat next round's on me, deal?",
+      "zh": "上次火锅的钱给你转过去啦，58。\n下顿我请，说定了哈～"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: an incoming transfer makes you fear a 'mistaken transfer, refund me more' setup.",
+        "zh": "表层诱饵：收到转账让你担心「转错了，多退我点」的套路。"
+      },
+      {
+        "en": "Safe-tell: it's a normal AA payback from a friend you know, with context that matches reality — accept and move on.",
+        "zh": "安全本质：是相熟好友的正常AA回款，情境对得上现实——收下就行。"
+      },
+      {
+        "en": "Transferable rule: the 'wrong transfer' scam later asks you to send extra back; a friend paying their share asks nothing.",
+        "zh": "可迁移原则：「转错账」骗局随后会要你多退钱，朋友还AA分摊什么都不要。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — your friend just paid their hotpot share. Treating a buddy's AA as fraud freezes up normal life.",
+      "zh": "其实是真的——朋友只是还了火锅的AA。把哥们儿的AA当诈骗，正常生活就被你卡死了。"
+    },
+    "truthSafe": {
+      "en": "Good. A known friend paying their share with matching context is just splitting the bill.",
+      "zh": "好。相熟好友按真实情境还分摊款，就是正常AA而已。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Post Liked Notification",
+      "zh": "动态被点赞通知"
+    },
+    "chan": {
+      "en": "Social app push · your account",
+      "zh": "社交 App 推送 · 你的账号"
+    },
+    "sender": {
+      "en": "Social App",
+      "zh": "社交 App"
+    },
+    "text": {
+      "en": "3 people liked your post and 1 left a comment.\nTap to view in-app.",
+      "zh": "3人点赞了你的动态，1条新评论。\n点击在App内查看。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: any app notification feels like phishing bait after so many fake-system warnings.",
+        "zh": "表层诱饵：被那么多假系统通知吓过后，任何App提醒都像钓鱼诱饵。"
+      },
+      {
+        "en": "Safe-tell: it's your real social app's normal engagement ping — opens in-app, asks for no login or info.",
+        "zh": "安全本质：是你真实社交App的正常互动提醒——在App内打开，不要登录不要信息。"
+      },
+      {
+        "en": "Transferable rule: fake-system scams push an external link to 'verify your account'; this stays inside the app.",
+        "zh": "可迁移原则：假系统骗局会推外链让你「验证账号」，这条只在App内停留。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — someone just liked your post. Calling every app ping a scam means you'd silence your whole feed.",
+      "zh": "其实是真的——有人给你点了赞。把每条App提醒当诈骗，等于把整个消息流都静音了。"
+    },
+    "truthSafe": {
+      "en": "Right. A like/comment notice that only opens the app is exactly as harmless as it looks.",
+      "zh": "对。只在App内打开的点赞评论提醒，跟它看起来一样无害。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Satisfaction Survey Callback",
+      "zh": "客服满意度回访"
+    },
+    "chan": {
+      "en": "App in-message · official service",
+      "zh": "App 内消息 · 官方客服"
+    },
+    "sender": {
+      "en": "Customer Service (in-app)",
+      "zh": "官方客服（App内）"
+    },
+    "text": {
+      "en": "About your repair ticket from Mon — was it resolved to your satisfaction?\nTap a star 1–5 below. That's all, thanks!",
+      "zh": "关于您周一的报修工单，本次是否解决满意？\n在下方点1–5颗星即可，仅此而已，感谢！"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'customer service callback' is exactly the wrapper many refund/account scams use.",
+        "zh": "表层诱饵：「客服回访」正是许多退款、盗号骗局常用的外壳。"
+      },
+      {
+        "en": "Safe-tell: it's inside the official app about a ticket you really opened, asking only for a star rating — no info, no link.",
+        "zh": "安全本质：在官方App内、针对你真开过的工单，只要你点星评分——不要信息、不带链接。"
+      },
+      {
+        "en": "Transferable rule: fake-callback scams ask for card/code/screen-share; a real survey only wants a rating.",
+        "zh": "可迁移原则：假回访会要银行卡/验证码/共享屏幕，真满意度调查只要个评分。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — it's just rating a repair you actually had. Reject every callback and even honest surveys get nowhere.",
+      "zh": "其实是真的——只是给你真办过的报修打个分。把每个回访都拒了，连诚实的调查也办不成。"
+    },
+    "truthSafe": {
+      "en": "Good instinct, good call: a survey tied to your real ticket that wants nothing but a star is safe.",
+      "zh": "直觉好、判得也好：绑定你真实工单、只要一颗星的调查，是安全的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Property Notice: Water Shutoff",
+      "zh": "物业停水通知"
+    },
+    "chan": {
+      "en": "Resident group · property mgmt",
+      "zh": "业主群 · 物业管理处"
+    },
+    "sender": {
+      "en": "Property Management",
+      "zh": "物业管理处"
+    },
+    "text": {
+      "en": "Notice: water mains maintenance this Thu 9–12am, Building 3 will have no water.\nPlease store water in advance. Sorry for the trouble.",
+      "zh": "通知：本周四上午9–12点检修主管道，3号楼临时停水。\n请提前储水，给您带来不便敬请谅解。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'utility notice' is a known scam shell (fake gas/water bills demanding payment).",
+        "zh": "表层诱饵：「水电通知」是常见骗局外壳（假水电费催缴）。"
+      },
+      {
+        "en": "Safe-tell: it's an informational notice in your real resident group — no fee, no link, nothing to pay or click.",
+        "zh": "安全本质：是你真实业主群里的告知性通知——不收费、无链接、没有要缴或要点的东西。"
+      },
+      {
+        "en": "Transferable rule: utility scams demand urgent payment via a link; this only tells you to store water.",
+        "zh": "可迁移原则：水电骗局会催你点链接缴费，这条只是让你提前储水。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — it's just a maintenance heads-up. Block it and you'll be the one caught with no water Thursday.",
+      "zh": "其实是真的——只是检修通知。拦下它，周四没水的就是你自己。"
+    },
+    "truthSafe": {
+      "en": "Right. An info-only property notice with no payment or link is genuine housekeeping.",
+      "zh": "对。只告知、不收费不带链接的物业通知，是正经的日常事务。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Classmate Reunion Invite",
+      "zh": "同学聚会通知"
+    },
+    "chan": {
+      "en": "Class group chat · old classmates",
+      "zh": "同学群 · 老同学"
+    },
+    "sender": {
+      "en": "Class Rep (group)",
+      "zh": "班长（同学群）"
+    },
+    "text": {
+      "en": "Reunion set for the 18th, 6pm, the old noodle place near school.\nReply with a thumbs-up if you're coming so I can book a table.",
+      "zh": "聚会定18号晚6点，学校旁边那家老面馆。\n来的扣个赞，方便我订桌。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: group-chat gatherings can front 'collect the AA fee here' scams, so you brace for a payment ask.",
+        "zh": "表层诱饵：群里聚会有时是「这儿交AA费」骗局的幌子，你下意识防着要钱。"
+      },
+      {
+        "en": "Safe-tell: it's your real class group asking only for a thumbs-up to count heads — no money collected here.",
+        "zh": "安全本质：是你真实同学群里只要你扣个赞统计人数——这里没收任何钱。"
+      },
+      {
+        "en": "Transferable rule: fake-collection scams push a 'pay the deposit now' link; this just wants a head count.",
+        "zh": "可迁移原则：假收款骗局会塞「先交订金」链接，这条只想统计到场人数。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — it's just your class rep counting heads. Suspect every reunion and you'll wall yourself off from old friends.",
+      "zh": "其实是真的——只是班长在统计人数。每场聚会都怀疑，你就把老同学全挡在墙外了。"
+    },
+    "truthSafe": {
+      "en": "Good. A class group asking for a thumbs-up to book a table, collecting nothing, is just a get-together.",
+      "zh": "好。同学群里扣赞订桌、不收一分钱，就是次普通聚会。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Salary Deposited",
+      "zh": "工资已发放"
+    },
+    "chan": {
+      "en": "Bank app push · your account",
+      "zh": "银行 App 推送 · 本人账户"
+    },
+    "sender": {
+      "en": "Your Bank App",
+      "zh": "你的银行 App"
+    },
+    "text": {
+      "en": "Account ending 6612 credited ¥9,850.00.\nMemo: payroll — June salary.\nBalance updated in-app.",
+      "zh": "尾号6612账户收入9,850.00元。\n摘要：代发工资——6月薪资。\n余额已在App更新。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a payroll-themed message recalls 'HR needs your card to pay you' scams.",
+        "zh": "表层诱饵：工资主题的消息让你想到「HR要你银行卡才能发薪」骗局。"
+      },
+      {
+        "en": "Safe-tell: it's a plain credit in your own bank app — it already paid you, it isn't asking for a thing.",
+        "zh": "安全本质：是你本人银行App里的纯入账——钱已经发到了，没向你要任何东西。"
+      },
+      {
+        "en": "Transferable rule: payroll scams ask you to 'confirm card details to release pay'; a real deposit just arrives.",
+        "zh": "可迁移原则：工资骗局会让你「确认卡号才能放款」，真发薪直接到账。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — that's your salary. Flagging your own payday as fraud is being scared of good news.",
+      "zh": "其实是真的——这是你的工资。把发薪日当诈骗拦下，是连好消息都害怕了。"
+    },
+    "truthSafe": {
+      "en": "Correct. Money arriving in your own account with nothing asked of you is just payday.",
+      "zh": "对的。钱进你本人账户、什么都不向你要，就是发薪日。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Colleague Needs the Slide Deck",
+      "zh": "同事要份PPT"
+    },
+    "chan": {
+      "en": "Work IM · known account",
+      "zh": "办公 IM · 实名账号"
+    },
+    "sender": {
+      "en": "Coworker Zhao (work IM)",
+      "zh": "同事小赵（办公IM实名号）"
+    },
+    "text": {
+      "en": "Hey, do you still have last week's project deck?\nClient asked for it. Send it to the shared drive when you can, no rush.",
+      "zh": "在不？上周那份项目PPT你那还有吗？\n客户要，方便了传到共享盘就行，不急。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a coworker asking you to 'send a file' pattern-matches the impersonation-then-malware ask.",
+        "zh": "表层诱饵：同事让你「传个文件」，与冒充后投毒的套路撞型。"
+      },
+      {
+        "en": "Safe-tell: it's a colleague's real IM account asking for a routine deck on the internal shared drive — no money, no link, no secrecy.",
+        "zh": "安全本质：是同事本人IM实名号，要份常规PPT传到内部共享盘——不涉及钱、无链接、不要保密。"
+      },
+      {
+        "en": "Transferable rule: the leader-impersonation scam needs money + urgency + secrecy + a new account; this has none.",
+        "zh": "可迁移原则：冒充领导骗局要「钱+催促+保密+新账号」，这条一项都没有。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — a coworker just wants a file for the client. Suspect every 'send me the deck' and teamwork grinds to a halt.",
+      "zh": "其实是真的——同事只是要份给客户的文件。每句「把PPT发我」都怀疑，团队协作就停摆了。"
+    },
+    "truthSafe": {
+      "en": "Reasonable to pause — and right to clear it: a known account, an internal file, no money or secrecy. That's just work.",
+      "zh": "停一下合理——放行也对：实名号、内部文件、不涉及钱不要保密，就是日常工作。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Order Shipped Update",
+      "zh": "订单已发货"
+    },
+    "chan": {
+      "en": "Shopping app push · your order",
+      "zh": "购物 App 推送 · 你的订单"
+    },
+    "sender": {
+      "en": "Shopping App",
+      "zh": "购物 App"
+    },
+    "text": {
+      "en": "Your order ...3380 has shipped.\nExpected in 2–3 days. Track inside the app.",
+      "zh": "您的订单尾号3380已发货。\n预计2–3天送达，可在App内查看物流。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: shipping texts are heavily spoofed in 'your order has a problem, click here' scams.",
+        "zh": "表层诱饵：发货短信常被仿冒成「订单异常，点此处理」骗局。"
+      },
+      {
+        "en": "Safe-tell: it's your own shopping app updating a real order — tracking opens in-app, asks nothing of you.",
+        "zh": "安全本质：是你本人购物App更新真实订单——物流在App内查看，什么都不向你要。"
+      },
+      {
+        "en": "Transferable rule: order-problem scams push an external link for 'refund/verification'; this only shows tracking.",
+        "zh": "可迁移原则：订单异常骗局会推外链让你「退款/验证」，这条只显示物流。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — your order's on its way. Block normal shipping updates and you'll never know where your stuff is.",
+      "zh": "其实是真的——你的订单在路上。把正常发货提醒拦了，你永远不知道东西到哪了。"
+    },
+    "truthSafe": {
+      "en": "Right. A shipping update in your own app that only shows tracking is genuine.",
+      "zh": "对。本人App里只显示物流的发货提醒，是真的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 2,
+    "title": {
+      "en": "Landlord Confirms Repair Visit",
+      "zh": "房东确认上门维修"
+    },
+    "chan": {
+      "en": "WeChat · your landlord",
+      "zh": "微信 · 你的房东"
+    },
+    "sender": {
+      "en": "Landlord Wang",
+      "zh": "房东老王"
+    },
+    "text": {
+      "en": "Plumber's coming Sat morning for the kitchen tap, like we talked about.\nAround 10? Let me know if that works.",
+      "zh": "上次说的厨房水龙头，周六上午让师傅来修。\n10点左右行不？你看方便不。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: 'someone's coming to your home' raises fake-repairman / fake-landlord fears.",
+        "zh": "表层诱饵：「有人要上门」勾起假维修工、假房东的担忧。"
+      },
+      {
+        "en": "Safe-tell: it's your real landlord confirming a repair you already discussed — no deposit, no link, no transfer.",
+        "zh": "安全本质：是你真房东确认你俩早商量好的维修——不要押金、无链接、不要转账。"
+      },
+      {
+        "en": "Transferable rule: rental scams demand an urgent deposit to a new account; this just confirms a time.",
+        "zh": "可迁移原则：租房骗局会催你往新账号打押金，这条只是约个时间。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — it's just scheduling the plumber. Suspect your own landlord and your kitchen tap stays broken.",
+      "zh": "其实是真的——只是约师傅。连真房东都怀疑，你那水龙头就一直坏着。"
+    },
+    "truthSafe": {
+      "en": "Good. Your landlord confirming an agreed repair with no money involved is just life admin.",
+      "zh": "好。房东确认你俩说好的维修、不涉及钱，就是生活琐事。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "HR: Year-End Bonus Schedule",
+      "zh": "HR年终奖发放安排"
+    },
+    "chan": {
+      "en": "Company-wide notice · HR account",
+      "zh": "全员通知 · HR 实名号"
+    },
+    "sender": {
+      "en": "HR (company notice)",
+      "zh": "人事部（全员通知）"
+    },
+    "text": {
+      "en": "Notice to all: year-end bonus will pay to your usual payroll card on the 28th with December salary.\nNo action required; questions to HR.",
+      "zh": "全员通知：年终奖将于28号随12月工资发放至各位常用代发卡。\n无需任何操作，如有疑问请咨询人事。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: a bonus announcement reads like the 'claim your year-end reward, enter card info' phishing wave.",
+        "zh": "表层诱饵：奖金公告像「领取年终福利，填卡号」那波钓鱼。"
+      },
+      {
+        "en": "Safe-tell: it's a real all-staff HR notice paying to your existing card — no new account, no card entry, no link.",
+        "zh": "安全本质：是真实全员HR通知，发到你现有的卡——不要新账号、不要填卡、无链接。"
+      },
+      {
+        "en": "Transferable rule: bonus-phishing makes you 'register your card to receive it'; a real notice pays the card you already use.",
+        "zh": "可迁移原则：奖金钓鱼会让你「登记卡片才能领」，真通知发到你早就在用的卡。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — it's just the bonus schedule. Block HR's own announcement and you'll be chasing a payment that's already coming.",
+      "zh": "其实是真的——只是发奖安排。把HR自己的公告拦了，你反而要去追一笔本就会到的钱。"
+    },
+    "truthSafe": {
+      "en": "Right. An all-staff notice paying your existing card and asking nothing is the real thing.",
+      "zh": "对。发到你现有卡、什么都不要的全员通知，是真的。"
+    }
+  },
+  {
+    "answer": "safe",
+    "risk": 0,
+    "difficulty": 3,
+    "title": {
+      "en": "Manager Approves Your Leave",
+      "zh": "经理批了你的请假"
+    },
+    "chan": {
+      "en": "Work IM · known account",
+      "zh": "办公 IM · 实名账号"
+    },
+    "sender": {
+      "en": "Manager Lin (work IM)",
+      "zh": "林经理（办公IM实名号）"
+    },
+    "text": {
+      "en": "Approved your leave for Fri.\nHand the client follow-up to Zhao before you go. Have a good break.",
+      "zh": "你周五的假批了。\n走之前把客户跟进交接给小赵就行，好好休息。"
+    },
+    "flags": [
+      {
+        "en": "Surface bait: an unprompted boss DM is the exact shape of the leader-impersonation scam you fear.",
+        "zh": "表层诱饵：领导主动私信，正是你提防的冒充领导骗局的形状。"
+      },
+      {
+        "en": "Safe-tell: it's your manager's real account doing normal approval and handover — no money, no secrecy, no new account.",
+        "zh": "安全本质：是经理本人实名号做正常审批与交接——不涉及钱、不要保密、没有新账号。"
+      },
+      {
+        "en": "Transferable rule: impersonation needs money + urgency + secrecy + a new account; a leave approval has none.",
+        "zh": "可迁移原则：冒充领导要「钱+催促+保密+新账号」，批个假一项都没有。"
+      }
+    ],
+    "truthScam": {
+      "en": "Actually real — your boss just approved your day off. Distrust every manager message and you'd reject your own leave.",
+      "zh": "其实是真的——领导只是批了你的假。每条领导消息都不信，等于把自己的假也拒了。"
+    },
+    "truthSafe": {
+      "en": "Good read. A known account handling approval and handover, with no money or secrecy, is just management.",
+      "zh": "判得好。实名号做审批与交接、不涉及钱不要保密，就是正常管理。"
+    }
+  }
 ];
 
 let CASES = [];
-const state = { i: 0, saved: 0, lost: 0, correct: 0, answered: 0, decided: false, lastChoice: null };
+const state = { i: 0, saved: 0, lost: 0, correct: 0, answered: 0, trust: 100, lastChoice: null, lastDelta: null, decided: false };
 let lang = localStorage.getItem("fd_lang") || ((navigator.language || "en").toLowerCase().startsWith("zh") ? "zh" : "en");
 let screenName = "intro";
-let timerId = null, timeLeft = 0;
+let timerId = null, timeLeft = 0, roundSeconds = DECISION_SECONDS;
 
 const $ = (id) => document.getElementById(id);
 const T = (k) => L[lang][k];
@@ -2729,21 +7448,44 @@ function shuffle(a) {
   return a;
 }
 
-// Draw 5–10 random cases, guaranteeing at least one scam and one genuine.
+// Draw 5–10 cases. Guarantee the shift is genuinely confusing: it always
+// includes at least one ambiguous "decoy-genuine" and one "stealth-scam,"
+// plus a plain scam and a plain safe. Then ramp it up — easy first, hard last.
 function drawRound() {
+  // Deterministic single-case load for video capture / deep-linking.
+  // ?case=<index> or ?case=<title substring, en or zh>. No-op for normal play.
+  const forced = new URLSearchParams(location.search).get("case");
+  if (forced) {
+    const q = decodeURIComponent(forced).toLowerCase();
+    const c = /^\d+$/.test(q)
+      ? LIBRARY[+q]
+      : LIBRARY.find((x) => (x.title.en + "|" + x.title.zh).toLowerCase().includes(q));
+    if (c) {
+      CASES = [c];
+      Object.assign(state, { i: 0, saved: 0, lost: 0, correct: 0, answered: 0, trust: 100, decided: false, lastChoice: null, lastDelta: null });
+      return;
+    }
+  }
   const pool = shuffle(LIBRARY.slice());
   const n = Math.min(LIBRARY.length, 5 + Math.floor(Math.random() * 6)); // 5..10
-  const picked = pool.slice(0, n);
-  if (!picked.some((c) => c.answer === "scam")) {
-    const s = pool.find((c) => c.answer === "scam" && !picked.includes(c));
-    if (s) picked[picked.length - 1] = s;
-  }
-  if (!picked.some((c) => c.answer === "safe")) {
-    const s = pool.find((c) => c.answer === "safe" && !picked.includes(c));
-    if (s) picked[0] = s;
-  }
-  CASES = shuffle(picked);
-  Object.assign(state, { i: 0, saved: 0, lost: 0, correct: 0, answered: 0, decided: false, lastChoice: null });
+  const dif = (c) => c.difficulty || 1;
+  const anchors = [
+    (c) => c.answer === "scam" && dif(c) >= 2, // a stealth scam
+    (c) => c.answer === "safe" && dif(c) >= 2, // a decoy genuine
+    (c) => c.answer === "scam",                // any scam
+    (c) => c.answer === "safe",                // any safe
+  ];
+  const picked = [];
+  anchors.forEach((pred) => {
+    const c = pool.find((x) => pred(x) && !picked.includes(x));
+    if (c) picked.push(c);
+  });
+  for (const c of pool) { if (picked.length >= n) break; if (!picked.includes(c)) picked.push(c); }
+  picked.length = Math.min(picked.length, n);
+  // Escalate: ascending difficulty, lightly shuffled within each tier.
+  picked.sort((a, b) => (dif(a) - dif(b)) || (Math.random() < 0.5 ? -1 : 1));
+  CASES = picked;
+  Object.assign(state, { i: 0, saved: 0, lost: 0, correct: 0, answered: 0, trust: 100, decided: false, lastChoice: null, lastDelta: null });
 }
 
 function applyLang() {
@@ -2770,6 +7512,8 @@ function syncStats() {
   $("statSaved").textContent = money(state.saved);
   $("statLost").textContent = money(state.lost);
   $("statAcc").textContent = `${state.correct}/${state.answered}`;
+  const t = $("statTrust");
+  if (t) { t.textContent = state.trust + "%"; t.classList.toggle("low", state.trust <= 50); }
 }
 
 function show(screen) {
@@ -2786,14 +7530,15 @@ function fmtTime(ms) {
   return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
 }
 function paintTimer() {
-  const pct = Math.max(0, timeLeft) / (DECISION_SECONDS * 1000) * 100;
+  const pct = Math.max(0, timeLeft) / (roundSeconds * 1000) * 100;
   $("timerFill").style.width = pct + "%";
   $("timerSecs").textContent = fmtTime(timeLeft);
   $("timer").classList.toggle("low", timeLeft <= 5000);
 }
 function startTimer() {
   stopTimer();
-  timeLeft = DECISION_SECONDS * 1000;
+  roundSeconds = caseSeconds(CASES[state.i]);
+  timeLeft = roundSeconds * 1000;
   $("timer").style.display = "flex";
   paintTimer();
   timerId = setInterval(() => {
@@ -2822,7 +7567,8 @@ function renderCase() {
   paintCase();
   $("caseActions").classList.remove("hidden");
   $("rulingPrompt").classList.remove("hidden");
-  $("caseHint").classList.remove("hidden");
+  // Easy cases keep the framing hint; from difficulty 2 up it's gone — you're on your own.
+  $("caseHint").classList.toggle("hidden", ((CASES[state.i].difficulty || 1) >= 2));
   $("verdictBox").innerHTML = "";
   buildTicks();
   syncStats();
@@ -2837,7 +7583,14 @@ function decide(choice, timedOut) {
   const right = !timedOut && choice === c.answer;
   state.answered++;
   if (right) state.correct++;
-  if (c.answer === "scam") { right ? (state.saved += c.risk) : (state.lost += c.risk); }
+  // Two axes of cost: miss a scam → money bleeds; cry wolf on a real one → trust bleeds.
+  state.lastDelta = { money: 0, trust: 0 };
+  if (c.answer === "scam") {
+    if (right) state.saved += c.risk;
+    else { state.lost += c.risk; state.lastDelta.money = -c.risk; }   // missed (or timed out on) a scam
+  } else { // genuine
+    if (!right) { const p = trustPenalty(c); state.trust = Math.max(0, state.trust - p); state.lastDelta.trust = -p; } // false alarm
+  }
   state.decided = true;
   state.lastChoice = timedOut ? "timeout" : choice;
   syncStats();
@@ -2858,13 +7611,23 @@ function renderVerdict() {
   const stampKey = timedOut ? "stampTimeout"
     : right ? (c.answer === "scam" ? "stampBlocked" : "stampCleared")
             : (c.answer === "scam" ? "stampMissed" : "stampFalse");
-  const truth = tc(c.answer === "scam" ? c.truthScam : c.truthSafe);
+  // Reveal text must match the player's RULING, not just the answer — each case
+  // carries both phrasings (truthScam = ruled fraud, truthSafe = ruled genuine).
+  // On timeout there's no ruling, so show the wrong-side text (a timeout is never "right").
+  const effChoice = timedOut ? (c.answer === "scam" ? "safe" : "scam") : state.lastChoice;
+  const truth = tc(effChoice === "scam" ? c.truthScam : c.truthSafe);
   const tells = c.flags.map((f) => `<li>${tc(f)}</li>`).join("");
   const last = state.i === CASES.length - 1;
 
+  // The price of being wrong, spelled out: money on a missed scam, trust on a false alarm.
+  let cost = "";
+  const d = state.lastDelta || {};
+  if (d.money < 0) cost = `<div class="cost money">${T("costLostLbl")} <b>${money(-d.money)}</b></div>`;
+  else if (d.trust < 0) cost = `<div class="cost trust">${T("costTrustLbl")} <b>−${-d.trust}%</b></div>`;
+
   $("verdictBox").innerHTML = `
     <div class="verdict">
-      <span class="stamp ${right ? "ok" : ""}">${T(stampKey)}</span>
+      <div class="verdict-head"><span class="stamp ${right ? "ok" : ""}">${T(stampKey)}</span>${cost}</div>
       <div class="kicker tells-kicker">${T("tells")}</div>
       <ol class="tells">${tells}</ol>
       <p class="pull">${truth}</p>
@@ -2886,11 +7649,15 @@ function renderReport() {
   $("rSaved").textContent = money(state.saved);
   $("rLost").textContent = money(state.lost);
   $("rAcc").textContent = `${state.correct}/${state.answered}`;
+  const rt = $("rTrust");
+  if (rt) { rt.textContent = state.trust + "%"; rt.classList.toggle("low", state.trust <= 50); }
 
+  // Two axes decide the grade: you must read the tells AND keep the desk's trust.
   const pct = state.answered ? state.correct / state.answered : 0;
   let grade = "C", lineKey = "gC";
-  if (pct === 1) { grade = "S"; lineKey = "gS"; }
-  else if (pct >= 0.8) { grade = "A"; lineKey = "gA"; }
+  if (state.trust <= 40) { grade = "D"; lineKey = "gD"; }            // cried wolf too often
+  else if (pct === 1 && state.trust >= 90) { grade = "S"; lineKey = "gS"; }
+  else if (pct >= 0.8 && state.trust >= 70) { grade = "A"; lineKey = "gA"; }
   else if (pct >= 0.6) { grade = "B"; lineKey = "gB"; }
   $("grade").textContent = grade;
   $("gradeLine").textContent = T(lineKey);
