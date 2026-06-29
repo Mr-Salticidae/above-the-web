@@ -259,7 +259,10 @@
     .case-title { font-size: 20px; margin: 8px 0 10px; }
     /* the evidence box is the focus: let it grow to fill the slack (capped so a
        long message still scrolls inside), message vertically centered. */
-    .exhibit { font-size: 15px; line-height: 1.75; padding: 16px 18px; flex: 1 1 auto; max-height: 56dvh; overflow-y: auto; display: flex; flex-direction: column; justify-content: center; }
+    /* `safe center`: center short messages, but when a long message overflows
+       fall back to top-aligned + scrollable so the top stays reachable
+       (plain `center` makes overflow clip the top — unreachable even by scroll). */
+    .exhibit { font-size: 15px; line-height: 1.75; padding: 16px 18px; flex: 1 1 auto; max-height: 56dvh; overflow-y: auto; display: flex; flex-direction: column; justify-content: safe center; }
     #caseScreen.decided .exhibit { flex: 0 0 auto; max-height: 16dvh; justify-content: flex-start; }
     .sender { margin-top: 8px; }
     .atrisk { margin: 14px 0 2px; } .atrisk .fig { font-size: 20px; }
