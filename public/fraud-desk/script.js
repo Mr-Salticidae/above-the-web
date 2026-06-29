@@ -48,7 +48,7 @@ const L = {
     lockItem4: "Bilingual, instant-switch, free to share — open in any browser, send it to your family",
     mission: "The aim: make fraud awareness a reflex — free, and for everyone.",
     replay: "Draw a new shift →",
-    footer: "<b>This is a demo</b><br/>A vertical slice for The Demo Jam, 2026. Built in a single HTML file, vibe-coded with Claude Code (Anthropic). Scam patterns adapted from public anti-fraud education (incl. China's National Anti-Fraud Center, 2025); no real names or brands are used.",
+    footer: "<b>This is a demo</b><br/>A vertical slice for The Demo Jam, 2026. Built with vanilla HTML/CSS/JS and zero dependencies, vibe-coded with Claude Code (Anthropic). Scam patterns adapted from public anti-fraud education (incl. China's National Anti-Fraud Center, 2025); no real names or brands are used.",
   },
   zh: {
     dossierKicker: "互动调查档案", demoBadge: "这是一个 Demo",
@@ -86,7 +86,7 @@ const L = {
     lockItem4: "中英双语即时切换、免费可分享——浏览器打开即玩，转给爸妈也好上手",
     mission: "目标：把反诈意识练成本能——免费，人人可用。",
     replay: "再抽一个班次 →",
-    footer: "<b>这是一个 Demo</b><br/>为 The Demo Jam 2026 制作的切片。单个 HTML 文件，借助 Claude Code（Anthropic）vibe-coding。诈骗话术改编自公开反诈科普（含国家反诈中心 2025 年资料），未使用任何真实人名或品牌。",
+    footer: "<b>这是一个 Demo</b><br/>为 The Demo Jam 2026 制作的切片。原生 HTML/CSS/JS、零依赖，借助 Claude Code（Anthropic）vibe-coding。诈骗话术改编自公开反诈科普（含国家反诈中心 2025 年资料），未使用任何真实人名或品牌。",
   },
 };
 
