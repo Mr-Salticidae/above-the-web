@@ -21,6 +21,7 @@ const L = {
     introDek: "Every day, scammers steal billions — one believable message at a time. Tonight, you sit at the desk where those messages are caught.",
     introBody: "You are the night analyst. Texts, transfers and calls cross your desk; some are honest, some are built to empty a life's savings. Read closely, find the tell, and rule before the clock runs out. Block the frauds — but cry wolf on a real message and you lose trust, too.",
     startBtn: "Begin the shift →",
+    homeBtn: "↩ Home",
     introContentsTitle: "How a shift works",
     introContentsBody: "Each shift deals 5–10 cases at random — and gets harder as the night goes on, with less time on the clock. Some real messages are built to look like scams; some scams are dressed up as perfectly ordinary business. Get it wrong either way and it costs you: miss a scam and money is lost; flag a real message and you bleed the desk's trust.",
     caseKickerWord: "Case", exhibitWord: "Exhibit", transcriptWord: "Transcript",
@@ -59,6 +60,7 @@ const L = {
     introDek: "每天，骗子卷走数十亿——一次，一条像模像样的消息。今夜，你坐在拦下这些消息的柜台前。",
     introBody: "你是夜班分析员。短信、转账、来电从你桌上经过；有的诚实，有的专为掏空一个人的积蓄而生。仔细读，找出破绽，在倒计时归零前判下裁定。拦下骗局——但对真消息草木皆兵，你也会失去信任。",
     startBtn: "开始当班 →",
+    homeBtn: "↩ 首页",
     introContentsTitle: "一个班次怎么玩",
     introContentsBody: "每个班次随机发 5–10 桩，越到后面越难、留给你的时间越短。有的真消息，偏偏长得像骗局；有的骗局，偏偏装成一桩正经事。判错哪一边都有代价——漏掉骗局，丢钱；误伤真消息，丢掉柜台对你的信任。",
     caseKickerWord: "案件", exhibitWord: "物证", transcriptWord: "记录",
@@ -7522,6 +7524,8 @@ function show(screen) {
   $(screen).classList.remove("hidden");
   screenName = screen === "introScreen" ? "intro" : screen === "caseScreen" ? "case" : "report";
   $("ledger").style.display = screen === "introScreen" ? "none" : "flex";
+  // Home button: redundant on the cover, available once you're in a shift.
+  $("homeBtn").classList.toggle("hidden", screen === "introScreen");
 }
 
 /* ----- decision timer ----- */
@@ -7671,6 +7675,7 @@ $("langToggle").addEventListener("click", (e) => {
 });
 $("startBtn").onclick = () => { drawRound(); renderCase(); };
 $("replayBtn").onclick = () => { drawRound(); renderCase(); };
+$("homeBtn").onclick = () => { show("introScreen"); };
 $("caseActions").addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-choice]");
   if (btn) decide(btn.dataset.choice, false);
