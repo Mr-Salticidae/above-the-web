@@ -194,7 +194,20 @@
   .lede::first-letter { font-family: "Fraunces", serif; font-weight: 900; float: left; font-size: 62px; line-height: .82; padding: 4px 10px 0 0; color: var(--red); }
   .cover-title { font-weight: 900; font-size: 46px; line-height: .98; letter-spacing: -.02em; margin: 6px 0 2px; font-optical-sizing: auto; }
   .cover-title em { font-style: italic; font-weight: 500; color: var(--red); }
-  .begin-wrap { margin: 24px 0 6px; }
+  .begin-wrap { margin: 24px 0 6px; text-align: center; }
+  /* Primary call-to-action: the moment you start a shift. Made deliberately
+     prominent — solid ink slab, serif, paper text, red on hover. */
+  .cta {
+    display: inline-block; cursor: pointer;
+    background: var(--ink); color: var(--card);
+    font-family: "Fraunces", serif; font-weight: 900; font-size: 21px; line-height: 1;
+    letter-spacing: .01em; text-transform: none;
+    border: 1.5px solid var(--ink); border-radius: 2px; padding: 15px 40px;
+    box-shadow: 0 14px 30px -14px rgba(40,30,15,.55);
+    transition: background .15s ease, border-color .15s ease, transform .08s ease;
+  }
+  @media (hover: hover) { .cta:hover { background: var(--red); border-color: var(--red); } }
+  .cta:active { transform: translateY(1px); }
 
   .contents { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 14px; }
   .contents .ct { font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
@@ -279,6 +292,7 @@
   @media (pointer: coarse) {
     .lang button { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; }
     .homebtn { display: inline-flex; align-items: center; min-height: 44px; }
+    .cta { width: 100%; padding: 17px 0; font-size: 20px; }
     .act { padding: 18px 12px; }
     .linkbtn { padding: 12px 0 13px; }
   }
