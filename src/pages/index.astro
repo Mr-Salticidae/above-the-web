@@ -112,7 +112,7 @@ const toc = [
       </div>
       <div class="series-grid">
         {latestEpisodes.map((e) => (
-          <a class="series-card" href={seriesBase}>
+          <a class="series-card" href={`${seriesBase}#${e.id}`}>
             <div class="series-cover">
               <img src={coverSrc(e)} alt={e.title} loading="lazy" width="300" height="400" />
             </div>
