@@ -124,18 +124,34 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   background: color-mix(in srgb, #000 45%, transparent);
   backdrop-filter: blur(3px);
   display: flex; align-items: flex-start; justify-content: center; padding: 8vh 1rem 1rem;
+  overflow-y: auto;              /* 兜底：面板超高时整层可滚动，绝不出现内容够不到 */
 }
 .search-modal[hidden] { display: none; }
 .search-panel {
   position: relative; width: min(40rem, 100%);
+  max-height: 84vh;              /* 限高，避免结果多时撑出视口 */
+  display: flex; flex-direction: column; overflow: hidden;  /* 由内部结果抽屉滚动；面板自身裁切，杜绝溢出撑高遮罩层 */
   background: var(--paper); border: 1px solid var(--line); border-radius: 16px;
   box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); padding: 1.5rem;
 }
 .search-close {
   position: absolute; top: .8rem; right: 1rem; border: none; background: none;
   color: var(--ink-soft); font-size: 1.1rem; cursor: pointer; line-height: 1;
+  z-index: 1;
 }
-.search-panel :global(.pagefind-ui) { --pagefind-ui-primary: var(--accent); --pagefind-ui-text: var(--ink); --pagefind-ui-background: var(--paper); --pagefind-ui-border: var(--line); --pagefind-ui-font: var(--sans); }
+/* 注意：global.css 是普通全局样式表（BaseLayout 里 import 引入），不是 Astro scoped <style>，
+   因此不能用 :global()——那会被当成非法选择器整条丢弃。直接写普通选择器即可命中 Pagefind DOM。 */
+.search-panel .pagefind-ui {
+  --pagefind-ui-primary: var(--accent); --pagefind-ui-text: var(--ink); --pagefind-ui-background: var(--paper); --pagefind-ui-border: var(--line); --pagefind-ui-font: var(--sans);
+  display: flex; flex-direction: column; min-height: 0; flex: 1;   /* 搜索框固定、结果区独立滚动的前提 */
+}
+/* #pagefind 是面板与 pagefind-ui 之间的一层容器，需一并放开高度收缩 */
+.search-panel > #pagefind { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+/* 该版 Pagefind 里输入框与结果抽屉同为 form 的子元素，故让 form 成为纵向 flex 容器：
+   输入框固定在顶部、结果抽屉占据剩余高度并独立滚动。 */
+.search-panel .pagefind-ui__form { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+.search-panel .pagefind-ui__search-input { flex: 0 0 auto; }
+.search-panel .pagefind-ui__drawer { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
 
 /* 首页 hero —— 动态蛛网 + 辉光景深 */
 .hero {

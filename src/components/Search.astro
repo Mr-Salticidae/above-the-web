@@ -22,6 +22,11 @@ const base = import.meta.env.BASE_URL;
   const closeBtn = document.getElementById('searchClose');
   let inited = false;
 
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
   function loadScript(src) {
     return new Promise((res, rej) => {
       const s = document.createElement('script');
