@@ -1,0 +1,137 @@
+---
+// 单期 AIGC 快讯的杂志式渲染：头条（featured）大卡 + 速览细目列表。
+// 供 /news/ 首页（最新一期）与 /news/[date]/（归档单期）复用。
+import { formatDate } from '../lib/news.mjs';
+
+const { issue } = Astro.props;
+const featured = issue.items.filter((i) => i.featured);
+const briefs = issue.items.filter((i) => !i.featured);
+---
+
+<article class="issue">
+  <header class="issue-head">
+    <p class="issue-no">第 {issue.no} 期 <span class="dot">·</span> {formatDate(issue.date)}</p>
+    {issue.headline && <p class="issue-headline">{issue.headline}</p>}
+  </header>
+
+  {featured.length > 0 && (
+    <div class="lead-block">
+      <h3 class="block-label">头条 <span>Top Stories</span></h3>
+      <div class="lead-grid" data-n={featured.length}>
+        {featured.map((it) => (
+          <a class="lead-card" href={it.url} target="_blank" rel="noopener" data-cat={it.category}>
+            <span class="cat-tag">{it.category}</span>
+            <h4>{it.title}</h4>
+            <p>{it.summary}</p>
+            <span class="src">{it.source} ↗</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {briefs.length > 0 && (
+    <div class="brief-block">
+      <h3 class="block-label">速览 <span>Briefing</span></h3>
+      <ol class="brief-list">
+        {briefs.map((it) => (
+          <li data-cat={it.category}>
+            <a href={it.url} target="_blank" rel="noopener">
+              <span class="cat-tag">{it.category}</span>
+              <h4>{it.title}</h4>
+              <p>{it.summary}</p>
+              <span class="src">{it.source} ↗</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  )}
+</article>
+
+<style>
+  /* 期刊头：期号 + 日期 + 当日主线（standfirst） */
+  .issue-head { margin: 0 0 2rem; }
+  .issue-no {
+    margin: 0; font-family: var(--sans); font-size: .78rem; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+  .issue-no .dot { color: var(--ink-soft); margin: 0 .2em; }
+  .issue-headline {
+    margin: .55rem 0 0; font-family: var(--serif); font-size: clamp(1.3rem, 3vw, 1.7rem);
+    line-height: 1.45; color: var(--ink); max-width: 40rem;
+  }
+
+  /* 版块小标（杂志栏题）：细线 + 宋体 + 英文字距标 */
+  .block-label {
+    display: flex; align-items: baseline; gap: .55rem;
+    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 1.1rem;
+    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
+  }
+  .block-label span {
+    font-family: var(--sans); font-weight: 400; font-size: .68rem;
+    letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
+  }
+
+  /* 分类色：中间调色相，昼夜皮肤下均可读 */
+  [data-cat="模型"] { --cat: var(--accent); }
+  [data-cat="工具"] { --cat: #0e9f8a; }
+  [data-cat="行业"] { --cat: #d97a16; }
+  [data-cat="研究"] { --cat: #2f7fd4; }
+  [data-cat="政策"] { --cat: #c9484f; }
+  .cat-tag {
+    display: inline-block; font-family: var(--sans); font-size: .66rem;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--cat, var(--accent));
+    border: 1px solid color-mix(in srgb, var(--cat, var(--accent)) 40%, var(--line));
+    border-radius: 999px; padding: .14em .65em; margin-bottom: .6rem;
+  }
+
+  /* 头条大卡 */
+  .lead-block { margin: 0 0 2.4rem; }
+  .lead-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  .lead-grid[data-n="2"] { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 720px) { .lead-grid[data-n="2"] { grid-template-columns: 1fr; } }
+  .lead-card {
+    display: block; position: relative; overflow: hidden;
+    background: var(--paper-2); border: 1px solid var(--line); border-radius: 16px;
+    padding: 1.6rem 1.7rem 1.4rem;
+    transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, border-color .2s ease;
+  }
+  .lead-card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+    background: linear-gradient(var(--cat, var(--accent)), color-mix(in srgb, var(--cat, var(--accent)) 45%, var(--accent-2)));
+    opacity: 0; transition: opacity .2s ease;
+  }
+  .lead-card:hover {
+    transform: translateY(-4px); text-decoration: none;
+    box-shadow: 0 16px 40px -16px rgba(var(--shadow), .5);
+    border-color: color-mix(in srgb, var(--cat, var(--accent)) 55%, var(--line));
+  }
+  .lead-card:hover::before { opacity: 1; }
+  .lead-card h4 {
+    font-family: var(--serif); font-size: clamp(1.25rem, 2.6vw, 1.55rem);
+    line-height: 1.4; margin: 0 0 .55rem; color: var(--ink);
+  }
+  .lead-card p { margin: 0 0 .9rem; font-size: .95rem; line-height: 1.75; color: var(--ink-soft); }
+
+  /* 速览列表：细线分隔的编目式条目 */
+  .brief-block { margin: 0; }
+  .brief-list { list-style: none; margin: 0; padding: 0; }
+  .brief-list li { border-bottom: 1px solid var(--line); }
+  .brief-list li:last-child { border-bottom: none; }
+  .brief-list a {
+    display: block; padding: 1.15rem .4rem;
+    border-radius: 10px;
+    transition: background .15s ease;
+  }
+  .brief-list a:hover { background: color-mix(in srgb, var(--cat, var(--accent)) 6%, transparent); text-decoration: none; }
+  .brief-list h4 {
+    font-family: var(--serif); font-size: 1.08rem; line-height: 1.45;
+    margin: 0 0 .35rem; color: var(--ink);
+  }
+  .brief-list a:hover h4 { color: var(--cat, var(--accent)); }
+  .brief-list p { margin: 0 0 .5rem; font-size: .89rem; line-height: 1.7; color: var(--ink-soft); }
+
+  .src { font-family: var(--sans); font-size: .76rem; letter-spacing: .04em; color: var(--ink-soft); }
+  .lead-card:hover .src, .brief-list a:hover .src { color: var(--cat, var(--accent)); }
+</style>

@@ -6,6 +6,7 @@ import { SELECTED, categoryLabel } from '../lib/kb.mjs';
 import { getTitle, getCategory, getSubCategory, getExcerpt, href } from '../lib/notes.mjs';
 import { games } from '../data/games.js';
 import { getEpisodes, getLatestEpisodes } from '../lib/prompt-master.mjs';
+import { getLatestIssue, formatDate } from '../lib/news.mjs';
 
 // base-aware 链接：兼容 GitHub Pages 子路径与自定义域名根路径
 const gamesBase = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -16,6 +17,11 @@ const seriesBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/prompt-master
 const seriesTotal = getEpisodes().length;
 const latestEpisodes = getLatestEpisodes(4);
 const coverSrc = (e) => seriesBase + encodeURI(e.folder) + '/' + encodeURI(e.cover);
+
+// 「AIGC 快讯」：首页速览最新一期的头部条目，入口进 /news/
+const newsBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/news/';
+const latestNews = getLatestIssue();
+const newsPeek = latestNews ? latestNews.items.slice(0, 4) : [];
 
 const notes = await getCollection('notes');
 
@@ -71,6 +77,7 @@ const catCounts = counts;
 // 左侧浮动版块索引：首页各版块的锚点目录（栏目项带 cat，点击时联动筛选条确保目标可见）
 const toc = [
   { id: 'top', label: '首页' },
+  ...(latestNews ? [{ id: 'news', label: 'AIGC 快讯' }] : []),
   ...(latestEpisodes.length > 0 ? [{ id: 'prompt-master', label: '成为 Prompt 大师' }] : []),
   { id: 'plays', label: '可玩' },
   ...cats.map((c, i) => ({ id: `sec-cat-${i}`, label: c, cat: c })),
@@ -101,6 +108,31 @@ const toc = [
       </p>
     </div>
   </section>
+
+  {latestNews && (
+    <section class="news-peek" id="news">
+      <div class="news-peek-head">
+        <h2>AIGC 快讯 <span>· AIGC Daily</span></h2>
+        <p>每天早晨自动更新的 AIGC 领域新闻精选——模型发布、工具更新、行业动向，为创作者划重点。</p>
+      </div>
+      <a class="news-peek-issue" href={newsBase}>
+        <span class="np-no">第 {latestNews.no} 期 · {formatDate(latestNews.date)}</span>
+        {latestNews.headline && <span class="np-headline">{latestNews.headline}</span>}
+      </a>
+      <ul class="news-peek-list">
+        {newsPeek.map((it) => (
+          <li>
+            <a href={it.url} target="_blank" rel="noopener">
+              <span class="np-cat">{it.category}</span>
+              <span class="np-title">{it.title}</span>
+              <span class="np-src">{it.source} ↗</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a class="news-peek-all" href={newsBase}>阅读本期全部 {latestNews.items.length} 条 →</a>
+    </section>
+  )}
 
   {latestEpisodes.length > 0 && (
     <section class="series" id="prompt-master">
@@ -384,6 +416,38 @@ const toc = [
   @media (prefers-reduced-motion: reduce) { .toc-label, .toc-dot { transition: none; } }
   /* 窄屏没有侧边空间：隐藏浮动索引，交给顶部筛选条 */
   @media (max-width: 1080px) { .toc { display: none; } }
+
+  /* AIGC 快讯 —— 首页速览版块：最新一期头部条目 + 入口 */
+  .news-peek { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem .5rem; }
+  .news-peek-head h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .3rem; display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+  .news-peek-head h2 span { font-family: var(--sans); font-weight: 400; font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft); }
+  .news-peek-head p { margin: 0 0 1.3rem; color: var(--ink-soft); font-size: .92rem; max-width: 46rem; }
+
+  .news-peek-issue {
+    display: block; padding: 1.1rem 1.3rem; border: 1px solid var(--line); border-radius: 14px 14px 0 0;
+    border-bottom: none; background: var(--paper-2); color: var(--ink);
+  }
+  .news-peek-issue:hover { text-decoration: none; }
+  .news-peek-issue:hover .np-headline { color: var(--accent); }
+  .np-no { display: block; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .np-headline { display: block; margin-top: .35rem; font-family: var(--serif); font-size: 1.15rem; line-height: 1.5; transition: color .15s ease; }
+
+  .news-peek-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 0 0 14px 14px; background: var(--paper-2); overflow: hidden; }
+  .news-peek-list li { border-top: 1px solid var(--line); }
+  .news-peek-list a {
+    display: grid; grid-template-columns: auto 1fr auto; gap: .9rem; align-items: baseline;
+    padding: .8rem 1.3rem; color: var(--ink); transition: background .15s ease;
+  }
+  .news-peek-list a:hover { background: var(--accent-soft); text-decoration: none; }
+  .np-cat { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); white-space: nowrap; }
+  .np-title { font-size: .94rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .np-src { font-size: .74rem; color: var(--ink-soft); white-space: nowrap; }
+  @media (max-width: 640px) {
+    .news-peek-list a { grid-template-columns: auto 1fr; }
+    .np-title { white-space: normal; }
+    .np-src { display: none; }
+  }
+  .news-peek-all { display: inline-block; margin-top: .8rem; font-size: .86rem; font-weight: 600; }
 
   /* 成为 Prompt 大师 —— 旗舰发刊系列，独立版块，展示最新几期封面 */
   .series { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem .5rem; }

@@ -1,0 +1,52 @@
+---
+// AIGC 快讯归档单期页：/news/2026-07-02/。含前后期导航。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsIssue from '../../components/NewsIssue.astro';
+import { getIssues, formatDate } from '../../lib/news.mjs';
+
+export function getStaticPaths() {
+  const issues = getIssues();
+  return issues.map((issue, i) => ({
+    params: { date: issue.date },
+    // issues 按日期倒序：i+1 是更早一期（prev），i-1 是更新一期（next）
+    props: { issue, prev: issues[i + 1] || null, next: issues[i - 1] || null },
+  }));
+}
+
+const { issue, prev, next } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout
+  title={`AIGC 快讯 第 ${issue.no} 期 · ${issue.date}`}
+  description={issue.headline || `AIGC 快讯 ${issue.date}：${issue.items.length} 条 AIGC 领域新闻精选。`}
+>
+  <div class="news-page">
+    <nav class="crumb">
+      <a href={`${base}/news/`}>← AIGC 快讯</a>
+    </nav>
+
+    <NewsIssue issue={issue} />
+
+    <nav class="issue-nav">
+      {prev ? (
+        <a href={`${base}/news/${prev.date}/`}>← 上一期 · {formatDate(prev.date)}</a>
+      ) : <span />}
+      {next ? (
+        <a href={`${base}/news/${next.date}/`}>下一期 · {formatDate(next.date)} →</a>
+      ) : (
+        <a href={`${base}/news/`}>最新一期 →</a>
+      )}
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .news-page { max-width: 52rem; margin: 0 auto; padding: 2.4rem 1.5rem 6rem; }
+  .crumb { margin: 0 0 1.8rem; font-family: var(--sans); font-size: .85rem; }
+  .issue-nav {
+    display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line);
+    font-family: var(--sans); font-size: .88rem;
+  }
+</style>

@@ -1,0 +1,114 @@
+---
+// AIGC 快讯 · AIGC Daily —— 每日更新的 AIGC 领域新闻板块。
+// 首页展示最新一期全文 + 往期归档索引；每期归档页在 /news/[date]/。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NewsIssue from '../../components/NewsIssue.astro';
+import { getIssues, formatDate } from '../../lib/news.mjs';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const issues = getIssues();
+const latest = issues[0] || null;
+const archive = issues.slice(1);
+---
+
+<BaseLayout
+  title="AIGC 快讯"
+  description="每日更新的 AIGC 领域新闻精选：模型发布、创作工具更新、行业动态，为创作者划重点。"
+>
+  <div class="news-page">
+    <header class="masthead">
+      <p class="masthead-kicker">Daily Briefing for Creators</p>
+      <h1>AIGC 快讯</h1>
+      <p class="masthead-sub">AIGC DAILY</p>
+      <p class="masthead-desc">
+        每天早晨自动搜集过去 24 小时 AIGC 领域值得创作者关注的新闻——模型发布、工具更新、行业动向，
+        每条附来源直达。宁缺毋滥，只划重点。
+      </p>
+    </header>
+
+    {latest ? (
+      <section class="latest">
+        <NewsIssue issue={latest} />
+      </section>
+    ) : (
+      <p class="empty">第一期正在路上，明早 9:30 见。</p>
+    )}
+
+    {archive.length > 0 && (
+      <section class="archive">
+        <h2 class="archive-label">往期 <span>Archive</span></h2>
+        <ol class="archive-list">
+          {archive.map((it) => (
+            <li>
+              <a href={`${base}/news/${it.date}/`}>
+                <span class="a-no">第 {it.no} 期</span>
+                <span class="a-date">{formatDate(it.date)}</span>
+                <span class="a-headline">{it.headline}</span>
+                <span class="a-count">{it.items.length} 条</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .news-page { max-width: 52rem; margin: 0 auto; padding: 3.2rem 1.5rem 6rem; }
+
+  /* 刊头：居中排印，衬线大字 + 字距英文刊名，杂志封面式 */
+  .masthead { text-align: center; padding: 0 0 2.6rem; margin: 0 0 2.6rem; border-bottom: 2px solid var(--ink); }
+  .masthead-kicker {
+    margin: 0 0 .8rem; font-family: var(--sans); font-size: .7rem;
+    letter-spacing: .34em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .masthead h1 {
+    margin: 0; font-family: var(--serif); font-size: clamp(2.6rem, 7vw, 4rem);
+    letter-spacing: .1em; line-height: 1.15; color: var(--ink);
+    text-shadow: 0 2px 50px rgba(var(--glow), .3);
+  }
+  .masthead-sub {
+    margin: .5rem 0 0; font-family: var(--sans); font-size: .74rem;
+    letter-spacing: .52em; text-transform: uppercase; color: var(--accent);
+  }
+  .masthead-desc {
+    margin: 1.3rem auto 0; max-width: 34rem;
+    font-size: .92rem; line-height: 1.8; color: var(--ink-soft);
+  }
+
+  .latest { margin: 0 0 3.4rem; }
+  .empty { text-align: center; color: var(--ink-soft); padding: 3rem 0 4rem; }
+
+  /* 往期归档：细线目录体 */
+  .archive-label {
+    display: flex; align-items: baseline; gap: .55rem;
+    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .4rem;
+    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
+  }
+  .archive-label span {
+    font-family: var(--sans); font-weight: 400; font-size: .68rem;
+    letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .archive-list { list-style: none; margin: 0; padding: 0; }
+  .archive-list li { border-bottom: 1px solid var(--line); }
+  .archive-list li:last-child { border-bottom: none; }
+  .archive-list a {
+    display: grid; grid-template-columns: auto auto 1fr auto; gap: 1rem; align-items: baseline;
+    padding: .95rem .4rem; border-radius: 10px; color: var(--ink);
+    transition: background .15s ease;
+  }
+  .archive-list a:hover { background: var(--accent-soft); text-decoration: none; }
+  .a-no { font-family: var(--sans); font-size: .74rem; letter-spacing: .1em; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .a-date { font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .a-headline {
+    font-family: var(--serif); font-size: .98rem;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .a-count { font-family: var(--sans); font-size: .74rem; color: var(--ink-soft); white-space: nowrap; }
+  @media (max-width: 640px) {
+    .archive-list a { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .15rem .8rem; }
+    .a-headline { grid-column: 1 / -1; white-space: normal; }
+    .a-count { display: none; }
+  }
+</style>

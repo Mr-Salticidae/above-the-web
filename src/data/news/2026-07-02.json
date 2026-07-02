@@ -1,0 +1,57 @@
+{
+  "date": "2026-07-02",
+  "headline": "Google Omni Flash 把「任意输入直出视频」带进免费端，Anthropic 用 Sonnet 5 打响价格战",
+  "items": [
+    {
+      "title": "Google 发布 Gemini Omni Flash：任意输入直出视频",
+      "summary": "Google 于 6 月 30 日推出 Omni 家族首个模型 Gemini Omni Flash，支持文本、图片、音频、视频任意组合输入生成短视频，并可用对话方式直接编辑视频、保持角色一致性与物理真实感。已向 Gemini App、Flow 的 AI Plus/Pro/Ultra 订阅用户推送，并在 YouTube Shorts / YouTube Create 免费开放，API 数周内上线。对创作者来说，这是把「生成+改片」合并到一个对话式工作流的标志性产品。",
+      "category": "模型",
+      "source": "Google 官方博客",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-omni/",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 发布 Claude Sonnet 5，7 月 1 日成默认模型",
+      "summary": "Anthropic 于 6 月 30 日发布 Claude Sonnet 5，称其为「最具 agentic 能力的 Sonnet」，多项基准接近旗舰 Opus 4.8，7 月 1 日起成为 Free/Pro 用户默认模型，并给出 $2/$10（每百万 token）的限时优惠价至 8 月底。对用 Claude 写脚本、跑自动化创作流水线的创作者，意味着更强的智能体能力和更低的成本。",
+      "category": "模型",
+      "source": "Anthropic 官方博客",
+      "url": "https://www.anthropic.com/news/claude-sonnet-5",
+      "featured": true
+    },
+    {
+      "title": "Runway 接入 Gemini Omni Flash 与 Seed Audio 1.0",
+      "summary": "Runway 本周连续上新：6 月 29-30 日上线字节 Seed Audio 1.0，用文本提示即可生成最长 120 秒的语音、音效和音乐；7 月 1 日又将 Google Gemini Omni Flash 引入平台供付费用户生成和编辑视频。第三方顶级模型持续聚合进 Runway，创作者可以在一个平台内完成视频+音频的组合创作。",
+      "category": "工具",
+      "source": "Runway 更新日志",
+      "url": "https://releasebot.io/updates/runwayai"
+    },
+    {
+      "title": "Google 图像模型上新：Nano Banana Lite 正式可用",
+      "summary": "6 月 30 日 Google 在 Gemini API 中将 gemini-3.1-flash-lite-image（Nano Banana Lite）转为正式可用（GA），主打超低延迟、低成本的图像生成与编辑；同期公布 Gemini 3.1 Flash Image（$0.50/$3.00 每百万 token）与 Gemini 3 Pro Image（$2.00/$12.00）的分层定价。批量出图、做工作流的创作者有了更便宜的档位可选。",
+      "category": "模型",
+      "source": "Google AI 开发者文档",
+      "url": "https://ai.google.dev/gemini-api/docs/changelog"
+    },
+    {
+      "title": "Anthropic 推出 Claude Science 科研工作台",
+      "summary": "6 月 30 日 Anthropic 发布 Claude Science，把数据库、计算管线和常用科研工具整合进一个可定制的 AI 工作环境，强调「不是新模型而是新工作流」，Pro/Max/Team/Enterprise 订阅即可用 beta 版。它展示了大厂产品思路从「卷模型」转向「卷工作台」，这一趋势同样会影响创作工具的形态。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/06/30/anthropics-claude-science-bets-on-workflow-not-a-new-model-to-win-over-scientists/"
+    },
+    {
+      "title": "Anthropic 宣布 Fable 5 于 7 月 1 日全球重新上线",
+      "summary": "Anthropic 6 月 30 日宣布重新部署 Fable 5，7 月 1 日起全球恢复可用，并联合 Amazon、Microsoft、Google 等推出行业级越狱严重性评分框架。对依赖该模型做创作辅助的用户，服务恢复的同时安全约束框架也在成型。",
+      "category": "行业",
+      "source": "Anthropic 官方博客",
+      "url": "https://www.anthropic.com/news/redeploying-fable-5"
+    },
+    {
+      "title": "加州与 Anthropic 达成全州政府 AI 合作",
+      "summary": "6 月 29 日加州州长 Newsom 宣布与 Anthropic 达成「全美首创」合作：全州机构及自愿加入的市县可半价使用 Claude，并附带免费培训与技术支持，DMV、医保和网络安全部门已在使用。这是迄今美国最大规模的州政府 AI 采购，标志着 AI 工具在公共部门的规模化落地。",
+      "category": "政策",
+      "source": "加州州长办公室",
+      "url": "https://www.gov.ca.gov/2026/06/29/governor-newsom-announces-a-first-of-its-kind-partnership-providing-anthropic-tools-to-state-agencies-and-improving-services-for-californians/"
+    }
+  ]
+}
