@@ -1,0 +1,46 @@
+{
+  "date": "2026-07-03",
+  "headline": "国产视频 AI 军备升级：字节 Seedance 2.5 直出 30 秒，可灵融资 30 亿美元估值 180 亿",
+  "items": [
+    {
+      "title": "字节 Seedance 2.5 本周上线：原生直出 30 秒视频",
+      "summary": "字节跳动在 6 月 23 日火山引擎 FORCE 大会亮相的豆包视频模型 Seedance 2.5，7 月初起陆续开放。相比上一代，单段原生直出时长翻倍到 30 秒（2.0 为 15 秒），单项目可联合输入 50 份全模态参考素材（2.0 为 12 份），新增 3D 白膜预览可提前调试分镜与镜头走位，并支持在不改动原有动作、机位、灯光的前提下做二次编辑。对做长镜头、连贯短故事的创作者，这意味着更少的分段拼接和更强的可控性。",
+      "category": "模型",
+      "source": "站长之家",
+      "url": "https://www.chinaz.com/ainews/29085.shtml",
+      "featured": true
+    },
+    {
+      "title": "快手可灵 AI 完成约 30 亿美元融资，投后估值 180 亿",
+      "summary": "7 月 2-3 日，快手宣布将旗下可灵 AI（北京可灵科技）单独融资约 30 亿美元，投后估值达 180 亿美元，腾讯、阿里云、百度及数十家一线机构参投，并计划 12 个月内启动港股 IPO，募资用于算力、数据中心与人才。可灵 Q1 营收超 65 亿元、ARR 已近 5 亿美元。国产视频 AI 头部玩家正被拆成独立的资本故事，创作者手里的工具背后是一场算力与上市竞赛。",
+      "category": "行业",
+      "source": "新浪科技",
+      "url": "https://finance.sina.com.cn/tech/roll/2026-07-03/doc-inifntfe2385521.shtml",
+      "featured": true
+    },
+    {
+      "title": "xAI 推出 Grok Voice Agent Builder：无代码搭语音智能体",
+      "summary": "7 月 1 日 xAI 发布 Grok Voice Agent Builder（beta），用一句自然语言描述即可在约两分钟内生成可上线的语音电话智能体：$0.05/分钟、内置 80+ 音色并支持用 2 分钟音频克隆声音、25+ 种语言可在对话中切换，底层是单一 speech-to-speech 模型 Grok Voice Think Fast 1.0，主打亚秒级响应。对做有声内容、虚拟角色配音或语音客服的创作者，语音克隆与低成本实时对话的门槛进一步下探。",
+      "category": "工具",
+      "source": "xAI 官方",
+      "url": "https://x.ai/news/grok-voice-agent-builder",
+      "featured": false
+    },
+    {
+      "title": "Claude 在微软 Azure Foundry 正式可用",
+      "summary": "Anthropic 的 Claude（首批含 Opus 4.8 与 Haiku 4.5）在微软 Foundry 上正式 GA，运行于 NVIDIA GB300 Blackwell Ultra，微软称推理成本较上代降约五成，已覆盖美东、西欧、东南亚等区域。对把 Claude 接进自动化创作流水线的团队，这提供了带企业级身份、计费与治理的官方入口，也进一步压低了大模型调用成本。",
+      "category": "行业",
+      "source": "微软 Azure 博客",
+      "url": "https://azure.microsoft.com/en-us/blog/claude-in-microsoft-foundry-is-now-generally-available/",
+      "featured": false
+    },
+    {
+      "title": "联合国发布首份全球 AI 独立科学评估报告",
+      "summary": "联合国 AI 独立科学小组近日发布首份关于 AI 机遇、风险与影响的全球性科学评估报告，秘书长古特雷斯称「科学依据已然呈现，我们再也不能说自己不知情」；联合国「AI 治理全球对话」将于 7 月 6 日在日内瓦启幕。对创作者而言，这预示版权、合成内容标识与责任归属等议题，正加速进入国际规则制定的层面。",
+      "category": "政策",
+      "source": "联合国新闻",
+      "url": "https://news.un.org/zh/story/2026/07/1142415",
+      "featured": false
+    }
+  ]
+}
