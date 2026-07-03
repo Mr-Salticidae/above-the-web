@@ -1,0 +1,122 @@
+# AIGC 每日快讯：云端定时搜集新闻并更新 /news/ 板块。
+# 每天北京时间 9:30（01:30 UTC）运行，不依赖本地电脑开机。
+# 需要仓库 secret：ANTHROPIC_API_KEY。
+# 注：GITHUB_TOKEN 的 push 不会级联触发 deploy.yml 的 on:push，
+#     所以本 workflow 在 push 后用 workflow_dispatch 主动触发一次部署。
+name: AIGC Daily News
+
+on:
+  schedule:
+    - cron: '30 1 * * *' # 01:30 UTC = 09:30 北京时间（GitHub 定时可能延迟数分钟到半小时）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: aigc-daily-news
+  cancel-in-progress: false
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # 当日期刊已存在（比如本地已手动更新过）则跳过，避免重复
+      - name: 检查当日期刊是否已存在
+        id: check
+        run: |
+          TODAY=$(TZ=Asia/Shanghai date +%F)
+          echo "today=$TODAY" >> "$GITHUB_OUTPUT"
+          if [ -f "src/data/news/$TODAY.json" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "当日期刊 $TODAY 已存在，跳过本次更新"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v6
+        if: steps.check.outputs.exists == 'false'
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+        if: steps.check.outputs.exists == 'false'
+
+      - name: Claude 搜集并撰写当日快讯
+        if: steps.check.outputs.exists == 'false'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            你负责更新「蛛网之上」站点的「AIGC 每日快讯」板块。用中文工作，专有名词保留英文。
+            今天的日期（北京时间）：${{ steps.check.outputs.today }}
+
+            ## 目标
+            搜集过去 24 小时 AIGC / 生成式 AI 领域值得创作者关注的新闻，写入
+            src/data/news/${{ steps.check.outputs.today }}.json（UTF-8 无 BOM）。
+            只创建这一个文件，不改动其他任何文件，不要执行 git commit/push（由后续流程处理）。
+
+            ## 搜集新闻
+            用 WebSearch 多角度搜索（5-8 次），必要时 WebFetch 核实原文：
+            - 通用："AI news <今天/昨天日期>"、"generative AI announcement this week"
+            - 创作工具：Midjourney / Runway / Kling(可灵) / Sora / Suno / ElevenLabs / Pika / Luma / Hailuo(海螺) 更新
+            - 大厂：OpenAI / Anthropic / Google DeepMind / Meta AI 发布
+            - 中国厂商：Kuaishou Kling、ByteDance Seedance/即梦、Alibaba Qwen/Wan、Tencent Hunyuan、MiniMax
+
+            选稿标准：6-10 条，全部真实可溯源（必须有真实 URL，禁止编造）；
+            优先级：创作工具更新（图像/视频/音乐模型）> 大模型厂商重要发布 > 行业/政策大事；
+            只收最近 48 小时内的新闻，且不与已有期刊（src/data/news/ 下前几天的 JSON）重复；
+            宁缺毋滥但至少 5 条；如实在凑不够 5 条有效新闻，则不要写文件，直接结束并说明原因。
+
+            ## 期刊 JSON 格式（详见 src/lib/news.mjs 头部注释，写作口吻参考已有期刊文件）
+            {
+              "date": "YYYY-MM-DD",
+              "headline": "一句话概括当天主线，编辑口吻，≤40字",
+              "items": [
+                {
+                  "title": "中文标题，专有名词保留英文，≤30字",
+                  "summary": "2-3 句：发生了什么 + 对创作者意味着什么",
+                  "category": "模型|工具|行业|研究|政策 之一",
+                  "source": "来源名称",
+                  "url": "真实 URL",
+                  "featured": true
+                }
+              ]
+            }
+            featured 只给最重要的 1-2 条。面向中文 AIGC 创作者：克制、划重点、不做标题党。
+
+            写完后可运行 npm run build 自检；若构建报错，修复 JSON 后重试。
+          claude_args: |
+            --model claude-sonnet-5
+            --allowedTools "WebSearch,WebFetch,Read,Glob,Grep,Write,Bash(npm run build)"
+
+      - name: 验证、提交并触发部署
+        if: steps.check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TODAY='${{ steps.check.outputs.today }}'
+          FILE="src/data/news/$TODAY.json"
+          if [ ! -f "$FILE" ]; then
+            echo "Claude 未产出当日期刊（可能有效新闻不足 5 条），本次不更新"
+            exit 0
+          fi
+          # 条数下限校验
+          node -e "const d=require('./$FILE'); if(!Array.isArray(d.items)||d.items.length<5){console.error('items 少于 5 条');process.exit(1)}"
+          # 构建验证：JSON 损坏时 news.mjs 会静默跳过该期，因此必须确认当日页面真的生成了
+          npm run build
+          test -f "dist/news/$TODAY/index.html"
+          # 期号 = news 目录下 JSON 总数（当日文件按日期排序必然是最后一个）
+          N=$(ls src/data/news/*.json | wc -l)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$FILE"
+          git commit -m "news(快讯): 第 $N 期 $TODAY" -m "Co-Authored-By: Claude <noreply@anthropic.com>"
+          git pull --rebase origin main
+          git push
+          # GITHUB_TOKEN 的 push 不触发 deploy.yml 的 on:push，这里手动触发部署
+          gh workflow run deploy.yml --ref main
