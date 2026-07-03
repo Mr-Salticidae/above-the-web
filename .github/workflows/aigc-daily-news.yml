@@ -49,6 +49,10 @@ jobs:
       - name: Claude 搜集并撰写当日快讯
         if: steps.check.outputs.exists == 'false'
         uses: anthropics/claude-code-action@v1
+        env:
+          # API 经中转站（Bedrock 转售）访问；该中转不支持服务端 WebSearch 工具，
+          # 搜索改用 curl 抓 Google News RSS / 官方页面（见 prompt）
+          ANTHROPIC_BASE_URL: https://api.ofox.ai/anthropic
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
@@ -61,11 +65,18 @@ jobs:
             只创建这一个文件，不改动其他任何文件，不要执行 git commit/push（由后续流程处理）。
 
             ## 搜集新闻
-            用 WebSearch 多角度搜索（5-8 次），必要时 WebFetch 核实原文：
-            - 通用："AI news <今天/昨天日期>"、"generative AI announcement this week"
-            - 创作工具：Midjourney / Runway / Kling(可灵) / Sora / Suno / ElevenLabs / Pika / Luma / Hailuo(海螺) 更新
-            - 大厂：OpenAI / Anthropic / Google DeepMind / Meta AI 发布
-            - 中国厂商：Kuaishou Kling、ByteDance Seedance/即梦、Alibaba Qwen/Wan、Tencent Hunyuan、MiniMax
+            注意：本环境的 WebSearch 工具不可用（API 中转不支持服务端搜索），
+            用 Bash 的 curl 抓 Google News RSS 多角度搜索（6-10 次），再用 curl 或 WebFetch 核实原文链接。
+            RSS 端点格式：https://news.google.com/rss/search?q=<关键词URL编码>+when:2d&hl=en-US&gl=US&ceid=US:en
+            建议关键词组合：
+            - 通用："generative AI"、"AI video model"、"AI image model"
+            - 创作工具：Midjourney / Runway / Kling AI / Sora / Suno / ElevenLabs / Pika / Luma / Hailuo 更新
+            - 大厂：OpenAI / Anthropic / Google DeepMind / Meta AI announcement
+            - 中国厂商：Kuaishou Kling、ByteDance Seedance、Alibaba Qwen Wan、Tencent Hunyuan、MiniMax
+            也可以直接 curl 官方渠道核实：blog.google、openai.com/news、anthropic.com/news、
+            runwayml.com、各工具官方 changelog 等。
+            RSS 里 Google News 的跳转链接（news.google.com/rss/articles/…）不要直接用作 url 字段，
+            要写文章的真实原始 URL（RSS item 的 source 或抓原文确认）。
 
             选稿标准：6-10 条，全部真实可溯源（必须有真实 URL，禁止编造）；
             优先级：创作工具更新（图像/视频/音乐模型）> 大模型厂商重要发布 > 行业/政策大事；
@@ -91,8 +102,8 @@ jobs:
 
             写完后可运行 npm run build 自检；若构建报错，修复 JSON 后重试。
           claude_args: |
-            --model claude-sonnet-5
-            --allowedTools "WebSearch,WebFetch,Read,Glob,Grep,Write,Bash(npm run build)"
+            --model anthropic/claude-fable-5
+            --allowedTools "WebFetch,Read,Glob,Grep,Write,Bash(curl:*),Bash(npm run build)"
 
       - name: 验证、提交并触发部署
         if: steps.check.outputs.exists == 'false'
