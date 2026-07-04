@@ -107,7 +107,7 @@ jobs:
           # allowedTools 注意：curl 抓 RSS 后必然接管道/文本处理，组合命令要求每段都在白名单内，
           # 只放行 curl 会导致大量权限拒绝、空手收场（2026-07-04 首跑 12 次拒绝实测）
           claude_args: |
-            --model anthropic/claude-fable-5
+            --model anthropic/claude-sonnet-5
             --allowedTools "WebFetch,Read,Glob,Grep,Write,Bash(curl:*),Bash(node:*),Bash(jq:*),Bash(grep:*),Bash(sed:*),Bash(awk:*),Bash(head:*),Bash(tail:*),Bash(sort:*),Bash(uniq:*),Bash(wc:*),Bash(cat:*),Bash(ls:*),Bash(echo:*),Bash(mkdir:*),Bash(python3:*),Bash(npm run build)"
 
       # Claude 步骤 is_error 时真正的报错只在 runner 的执行输出 JSON 里，
