@@ -13,6 +13,7 @@ on:
 permissions:
   contents: write
   actions: write
+  id-token: write # claude-code-action 通过 OIDC 换取 token，缺这个会在 Claude 步骤直接失败
 
 concurrency:
   group: aigc-daily-news
