@@ -56,6 +56,8 @@ jobs:
           ANTHROPIC_BASE_URL: https://api.ofox.ai/anthropic
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          # 仓库未安装 Claude GitHub App，显式传 GITHUB_TOKEN 跳过 App 的 OIDC 换 token 流程
+          github_token: ${{ github.token }}
           prompt: |
             你负责更新「蛛网之上」站点的「AIGC 每日快讯」板块。用中文工作，专有名词保留英文。
             今天的日期（北京时间）：${{ steps.check.outputs.today }}
