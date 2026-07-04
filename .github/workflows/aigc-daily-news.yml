@@ -110,6 +110,14 @@ jobs:
             --model anthropic/claude-fable-5
             --allowedTools "WebFetch,Read,Glob,Grep,Write,Bash(curl:*),Bash(node:*),Bash(jq:*),Bash(grep:*),Bash(sed:*),Bash(awk:*),Bash(head:*),Bash(tail:*),Bash(sort:*),Bash(uniq:*),Bash(wc:*),Bash(cat:*),Bash(ls:*),Bash(echo:*),Bash(mkdir:*),Bash(python3:*),Bash(npm run build)"
 
+      # Claude 步骤 is_error 时真正的报错只在 runner 的执行输出 JSON 里，
+      # 工作流日志看不到——这里打出末尾部分供排障（API 报错都在最后一条消息）
+      - name: 诊断：打印 Claude 执行输出末尾
+        if: always() && steps.check.outputs.exists == 'false'
+        run: |
+          F="$RUNNER_TEMP/claude-execution-output.json"
+          if [ -f "$F" ]; then tail -c 4000 "$F"; else echo "无执行输出文件"; fi
+
       - name: 验证、提交并触发部署
         if: steps.check.outputs.exists == 'false'
         env:
