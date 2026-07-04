@@ -104,9 +104,11 @@ jobs:
             featured 只给最重要的 1-2 条。面向中文 AIGC 创作者：克制、划重点、不做标题党。
 
             写完后可运行 npm run build 自检；若构建报错，修复 JSON 后重试。
+          # allowedTools 注意：curl 抓 RSS 后必然接管道/文本处理，组合命令要求每段都在白名单内，
+          # 只放行 curl 会导致大量权限拒绝、空手收场（2026-07-04 首跑 12 次拒绝实测）
           claude_args: |
             --model anthropic/claude-fable-5
-            --allowedTools "WebFetch,Read,Glob,Grep,Write,Bash(curl:*),Bash(npm run build)"
+            --allowedTools "WebFetch,Read,Glob,Grep,Write,Bash(curl:*),Bash(node:*),Bash(jq:*),Bash(grep:*),Bash(sed:*),Bash(awk:*),Bash(head:*),Bash(tail:*),Bash(sort:*),Bash(uniq:*),Bash(wc:*),Bash(cat:*),Bash(ls:*),Bash(echo:*),Bash(mkdir:*),Bash(python3:*),Bash(npm run build)"
 
       - name: 验证、提交并触发部署
         if: steps.check.outputs.exists == 'false'
