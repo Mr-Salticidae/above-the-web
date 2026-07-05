@@ -81,6 +81,10 @@ jobs:
             RSS 里 Google News 的跳转链接（news.google.com/rss/articles/…）不要直接用作 url 字段，
             要写文章的真实原始 URL（RSS item 的 source 或抓原文确认）。
 
+            成本纪律（重要）：RSS 搜索控制在 10 次以内；凑足 5-8 条合格新闻就立即写文件收工，
+            不要为凑满 10 条反复换关键词、爬搜索引擎结果页（DuckDuckGo/Bing 等）或逐条深挖；
+            每条新闻的 URL 核实最多 1 次请求。
+
             选稿标准：6-10 条，全部真实可溯源（必须有真实 URL，禁止编造）；
             优先级：创作工具更新（图像/视频/音乐模型）> 大模型厂商重要发布 > 行业/政策大事；
             只收最近 48 小时内的新闻，且不与已有期刊（src/data/news/ 下前几天的 JSON）重复；
@@ -108,6 +112,7 @@ jobs:
           # 只放行 curl 会导致大量权限拒绝、空手收场（2026-07-04 首跑 12 次拒绝实测）
           claude_args: |
             --model anthropic/claude-sonnet-5
+            --max-turns 80
             --allowedTools "WebFetch,Read,Glob,Grep,Write,Bash(curl:*),Bash(node:*),Bash(jq:*),Bash(grep:*),Bash(sed:*),Bash(awk:*),Bash(head:*),Bash(tail:*),Bash(sort:*),Bash(uniq:*),Bash(wc:*),Bash(cat:*),Bash(ls:*),Bash(echo:*),Bash(mkdir:*),Bash(python3:*),Bash(npm run build)"
 
       # Claude 步骤 is_error 时真正的报错只在 runner 的执行输出 JSON 里，
