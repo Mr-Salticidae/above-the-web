@@ -1,0 +1,46 @@
+{
+  "date": "2026-07-05",
+  "headline": "Midjourney 死磕迪士尼版权战举证范围，GLM-5.2 掀起「小 DeepSeek 时刻」",
+  "items": [
+    {
+      "title": "Midjourney 上诉要求迪士尼等公开更多 AI 内部资料",
+      "summary": "在华纳兄弟探索、迪士尼、环球对 Midjourney 的版权诉讼中，主审法官 6 月中裁定三家制片厂只需披露与「面向消费者」AI 工具相关的信息。Midjourney 于 7 月 4 日上诉，要求联邦法院推翻该裁定，主张片方内部的 AI 商业计划、训练数据集、模型权重等资料对其「合理使用」抗辩至关重要。此案将影响今后同类 AI 版权诉讼中证据披露的边界，创作者能否用公开图片训练模型的合法性边界也悬而未决。",
+      "category": "政策",
+      "source": "Engadget",
+      "url": "https://www.engadget.com/2207936/midjourney-wants-studios-that-sued-show-court-ai-use/",
+      "featured": true
+    },
+    {
+      "title": "智谱 GLM-5.2 掀起「小 DeepSeek 时刻」，成本仅六分之一",
+      "summary": "中国 AI 公司 Z.ai（智谱）的 GLM-5.2 因编程与自主 agent 能力逼近 OpenAI、Anthropic 旗舰模型、成本却仅为其约六分之一，引发行业震动，被称为「小 DeepSeek 时刻」。该模型在 OpenRouter 使用量上已超过 Anthropic 系模型，David Sacks 称其「略逊于 Opus 4.8，堪比 GPT-5.5」。对成本敏感、依赖 API 调用的创作者和开发者，这意味着又多了一个性价比选项，但欧美企业对数据安全的顾虑仍是采用的现实门槛。",
+      "category": "模型",
+      "source": "Tekedia",
+      "url": "https://www.tekedia.com/chinese-ai-startup-z-ai-ignites-mini-deepseek-moment-as-glm-5-2-challenges-openai-and-anthropic-at-a-fraction-of-the-cost/",
+      "featured": true
+    },
+    {
+      "title": "生数科技发布 Vidu S1：单张照片秒变实时互动数字人",
+      "summary": "生数科技 7 月 3 日在新加坡全球数字经济大会发布视频基础模型 Vidu S1，可将一张人物、卡通甚至宠物照片，转成能语音驱动、实时连续生成表情动作的互动数字人，无需额外建模或训练。基于 AR+Diffusion 架构，配合 TurboDiffusion 等加速方案，可在消费级 GPU 上跑到 540P、25FPS（峰值 42FPS），并已开放 vidu.com 体验及开发者 API。对做虚拟主播、直播互动、游戏 NPC 的创作者，这把「实时可对话的数字人」的门槛拉到了个人可用的水平。",
+      "category": "模型",
+      "source": "PR Newswire",
+      "url": "https://www.prnewswire.com/news-releases/shengshu-technology-unveils-vidu-s1-bringing-real-time-interactive-generation-to-ai-video-302817626.html",
+      "featured": false
+    },
+    {
+      "title": "字节跳动悄然向好莱坞推广 Seedance 视频模型",
+      "summary": "据《洛杉矶时报》报道，字节跳动正向好莱坞制片人、独立电影人及娱乐业高管推广其 AI 视频模型 Seedance，试图从「内容分发方」转型为「生产工具方」。独立电影人 Kavan Cardoza 已用其在家庭工作室完成短片角色拍摄，显示该工具已进入实际创作流程，但工会、版权归属、训练数据来源等争议仍未解决。对广告与短视频创作者，这意味着提案到成片的周期可能被进一步压缩。",
+      "category": "行业",
+      "source": "WeRSM",
+      "url": "https://wersm.com/bytedance-is-pitching-its-ai-video-tool-to-hollywood/",
+      "featured": false
+    },
+    {
+      "title": "Meta 上线 Pocket：靠 AI 提示词做迷你游戏",
+      "summary": "Meta 悄然上线新应用 Pocket，用户仅凭文字提示即可生成可玩、可分享的互动小游戏（「gizmos」），支持触屏、倾斜、声音、摄像头等交互方式，被认为是此前收购「vibe-coded」游戏平台 Gizmo 团队的成果。应用内置发现信息流，形成「创作—发布—二创—发现」的社交闭环，但 Meta 官方尚未正式置评。对做互动内容、轻量游戏化创作的创作者，这是「无代码做游戏」门槛进一步下探的又一例证。",
+      "category": "工具",
+      "source": "WeRSM",
+      "url": "https://wersm.com/meta-pocket-turns-ai-prompts-into-playable-mini-games/",
+      "featured": false
+    }
+  ]
+}
