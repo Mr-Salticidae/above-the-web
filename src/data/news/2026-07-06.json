@@ -1,0 +1,46 @@
+{
+  "date": "2026-07-06",
+  "headline": "阿里以「后门」为由封禁 Claude Code，中国新规逼停 Doubao、Qwen 智能体功能",
+  "items": [
+    {
+      "title": "阿里巴巴以「隐藏后门」为由禁用 Claude Code",
+      "summary": "据 Tom's Hardware、Reuters 等多家媒体报道，阿里巴巴已要求员工停止使用 Anthropic 的编程工具 Claude Code，理由是发现其存在可疑的「中国地区检测」隐藏机制，并将其列为高风险工具，转而推荐内部工具 Qoder 作为替代。这是继此前 Alibaba Cloud 与 Anthropic 关系趋紧后的又一升级动作，对依赖 Claude Code 处理国内业务的开发者和内容团队，需要关注后续是否有官方回应及安全复核结果。",
+      "category": "政策",
+      "source": "Tom's Hardware",
+      "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/alibaba-bans-anthropics-claude-code-after-an-alleged-hidden-china-detection-backdoor-is-uncovered-employees-told-to-switch-to-qoder-as-the-rift-between-the-firms-widens",
+      "featured": true
+    },
+    {
+      "title": "字节 Doubao、阿里 Qwen 7 月 15 日起停用 AI 智能体功能",
+      "summary": "字节跳动豆包（Doubao）与阿里巴巴 Qwen 于 7 月 4 日同时宣布，将于 7 月 15 日起关闭用户自定义 AI 智能体（agent）创建功能，届时所有已创建的智能体将停止运行，用户需自行导出聊天记录，数据将在 10 月 15 日后彻底不可恢复。此举与同日生效的《拟人化人工智能交互服务管理暂行办法》直接相关，意味着国内消费级 AI 陪伴/智能体产品正进入更严格的合规周期，用相关功能搭建虚拟角色或工作流的创作者需尽快备份配置。",
+      "category": "政策",
+      "source": "TechNode",
+      "url": "https://www.technode.com/2026/07/06/bytedances-doubao-and-alibabas-qwen-to-shut-down-ai-agent-features-on-july-15/",
+      "featured": true
+    },
+    {
+      "title": "好莱坞对 Seedance「边起诉边偷用」，态度分裂",
+      "summary": "美国电影协会（MPA）此前已就一段 AI 生成的 Brad Pitt、Tom Cruise 打斗视频向字节跳动 Seedance 发出停止使用函，指控其构成「系统性侵权」；但据 The Decoder 报道，多位业内人士透露不少制片公司内部对 Seedance 采取「不问不说」的默许态度，因其效果确实领先。字节跳动则持续加码，在圣塔莫尼卡开设体验点、招募上百名美国员工并签约独立电影人。对影视相关创作者而言，工具好用与版权风险并存的局面短期内不会消失。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/hollywood-wants-seedance-banned-and-reportedly-also-wants-to-keep-using-it/",
+      "featured": false
+    },
+    {
+      "title": "Meta 上线 Developer Tools MCP，AI 助手可直接管理应用后台",
+      "summary": "Meta 推出测试版 Developer Tools MCP 服务器，允许 Claude Code、ChatGPT、Cursor 等 AI 编程助手通过 OAuth 直接读取并管理开发者的 Meta 应用配置，无需手动登录后台，可查询合规状态、API 用量、Webhook 等信息，写权限仅限于 Webhook 管理。对做 Meta 生态集成（Instagram/WhatsApp 相关工具）的开发者，日常运维可以完全交给 AI 助手在编码环境内完成。",
+      "category": "工具",
+      "source": "PPC Land",
+      "url": "https://ppc.land/meta-launches-developer-tools-mcp-cutting-dashboard-logins-to-zero/",
+      "featured": false
+    },
+    {
+      "title": "工程师用 Claude Code + Fable 5 数小时移植经典游戏到 iOS",
+      "summary": "Google DeepMind 设计负责人 Ammaar Reshi 用 Anthropic 的 Claude Code 搭配 Fable 5，把 2003 年的 PC 游戏《命令与征服：将军 绝命时刻》原生移植到 iPhone/iPad：首个可运行版本仅耗时约 40 分钟，之后又花数小时排错，两天内用满了 Claude Max 订阅额度。项目已开源，展示了当前 agentic coding 在复杂系统级移植任务（如 DirectX 转 Metal）上的实际能力边界——速度惊人，但仍离不开人工调试。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-code-and-fable-5-ported-the-2003-pc-game-command-and-conquer-to-native-ios-in-a-few-hours/",
+      "featured": false
+    }
+  ]
+}
