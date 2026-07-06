@@ -1,5 +1,5 @@
 # AIGC 每日快讯：云端定时搜集新闻并更新 /news/ 板块。
-# 每天北京时间 9:30（01:30 UTC）运行，不依赖本地电脑开机。
+# 每天早晨自动运行（多个错峰 cron 互为重试），不依赖本地电脑开机。
 # 需要仓库 secret：ANTHROPIC_API_KEY。
 # 注：GITHUB_TOKEN 的 push 不会级联触发 deploy.yml 的 on:push，
 #     所以本 workflow 在 push 后用 workflow_dispatch 主动触发一次部署。
@@ -7,7 +7,13 @@ name: AIGC Daily News
 
 on:
   schedule:
-    - cron: '30 1 * * *' # 01:30 UTC = 09:30 北京时间（GitHub 定时可能延迟数分钟到半小时）
+    # GitHub schedule 在高峰时段（尤其整点/半点）实测延迟 3-4 小时甚至丢弃
+    # （2026-07-04/05 的 01:30 cron 均 13:00+ 北京时间才触发）。
+    # 对策：错峰分钟数 + 一天 4 枪互为重试；"当日期刊已存在"守卫保证幂等（空跑仅 9 秒）。
+    - cron: '47 22 * * *' # 06:47 北京时间（前一天 UTC）
+    - cron: '17 0 * * *'  # 08:17 北京时间
+    - cron: '43 1 * * *'  # 09:43 北京时间
+    - cron: '23 3 * * *'  # 11:23 北京时间（兜底）
   workflow_dispatch:
 
 permissions:
