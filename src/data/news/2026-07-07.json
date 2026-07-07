@@ -1,0 +1,46 @@
+{
+  "date": "2026-07-07",
+  "headline": "腾讯混元 Hy3 开源发布，Anthropic 190亿美元加码算力",
+  "items": [
+    {
+      "title": "腾讯混元 Hy3 发布，任务达成率90%",
+      "summary": "腾讯正式发布新一代开源大模型混元 Hy3，采用 Apache 2.0 许可协议，官方数据显示其 Agent 任务解决率达到 90%，并已接入企业协作工具 WorkBuddy。对依赖国产大模型搭建 Agent 应用的创作者而言，更宽松的开源协议和更高的任务成功率意味着接入门槛进一步降低。",
+      "category": "模型",
+      "source": "Pandaily",
+      "url": "https://pandaily.com",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 签约 TeraWulf，190亿美元租数据中心",
+      "summary": "Anthropic 与比特币矿企 TeraWulf 签署为期 20 年、总额约 190 亿美元的数据中心租赁协议，用于扩充 Claude 系列模型的算力基础设施，消息公布后 TeraWulf 股价大涨。这笔交易刷新了 AI 算力租赁规模纪录，创作者可期待 Claude 未来在推理速度与并发能力上进一步提升。",
+      "category": "行业",
+      "source": "Reuters",
+      "url": "https://www.reuters.com",
+      "featured": true
+    },
+    {
+      "title": "Pika 与 Higgsfield 因\"抄袭\"公开互撕",
+      "summary": "AI 视频工具 Pika 与新兴对手 Higgsfield 因风格模仿、功能抄袭问题爆发公开争执，凸显当前 AI 视频生成工具赛道同质化竞争加剧、模仿门槛极低的现状。对创作者而言，这提醒大家选择工具时应关注长期功能差异化，而非短期营销噱头。",
+      "category": "工具",
+      "source": "The Information",
+      "url": "https://www.theinformation.com",
+      "featured": false
+    },
+    {
+      "title": "ElevenLabs 估值冲至220亿美元",
+      "summary": "语音 AI 公司 ElevenLabs 正筹划新一轮员工老股转让，估值较今年早些时候的 110 亿美元翻倍至约 220 亿美元。语音克隆与配音市场持续升温，对做播客、有声书、多语言配音的创作者而言，头部厂商资本实力增强将直接影响未来功能迭代速度与定价策略。",
+      "category": "行业",
+      "source": "SecondaryLink",
+      "url": "https://secondarylink.com",
+      "featured": false
+    },
+    {
+      "title": "Midjourney 反将一军，逼好莱坞自曝用AI",
+      "summary": "在与迪士尼、环球、华纳兄弟的版权诉讼中，Midjourney 提交动议，要求三大厂披露其自身在内容生产中使用生成式 AI 的具体情况，被视为对\"AI 生成即侵权\"指控的反制策略。这场诉讼的走向将直接影响 AI 图像与视频工具未来的版权风险边界。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/07/06/midjourney-is-trying-to-force-hollywood-to-reveal-how-it-uses-ai/",
+      "featured": false
+    }
+  ]
+}
