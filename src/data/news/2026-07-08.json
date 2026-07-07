@@ -1,0 +1,62 @@
+{
+  "date": "2026-07-08",
+  "headline": "Meta 亲自下场推出图像模型 Muse，Suno 商业化与版权战同步升温",
+  "items": [
+    {
+      "title": "Meta 首款自研图像模型 Muse Image 上线",
+      "summary": "Meta 正式推出自研生成模型 Muse Image 与 Muse Video，可直接把用户 Instagram 好友的形象放入生成图片（默认开启，可选退出），并将接入广告创意制作工具。这是 Meta 首次以自研模型正面进入图像生成赛道，对接下来在 Instagram 生态里做营销素材、二创内容的创作者，会多一个原生绑定社交关系链的 AI 工具。",
+      "category": "模型",
+      "source": "AI at Meta",
+      "url": "https://ai.meta.com/blog/introducing-muse-image-muse-video-msl/",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 发布低延迟语音模型 GPT-Realtime-2.1",
+      "summary": "OpenAI 在 API 中上线 GPT-Realtime-2.1 及轻量版 GPT-Realtime-2.1-mini，通过改进缓存机制将 P95 延迟至少降低 25%，定价与上一代持平。对搭建语音助手、实时配音或互动播客的开发者，这意味着更顺滑的实时对话体验，且不用多付钱。",
+      "category": "工具",
+      "source": "MarkTechPost",
+      "url": "https://www.marktechpost.com/2026/07/06/openai-gpt-realtime-2-1-mini-reasoning-realtime-api/",
+      "featured": false
+    },
+    {
+      "title": "xAI 上线 21 款新版 Grok Voice 语音",
+      "summary": "xAI 为 Grok Voice Agent Builder 新增 21 款旗舰语音，强化多语言支持，面向开发者和企业提供可直接投产的语音智能体音色库。对做多语言配音、虚拟主播的创作者，这进一步扩充了可选声音库，降低语音内容量产的门槛。",
+      "category": "工具",
+      "source": "TestingCatalog",
+      "url": "https://www.testingcatalog.com/spacexai-launches-21-new-grok-voices-on-xai-console/",
+      "featured": false
+    },
+    {
+      "title": "Suno 挖角 Atlantic、YouTube 高管拓展商务",
+      "summary": "AI 音乐公司 Suno 聘请前 Atlantic Records 与 YouTube 高管，分别负责音乐商务拓展与艺人营销，向「音乐公司」角色加速转型。对独立音乐创作者，这意味着 Suno 未来可能推出更多签约、分发、艺人扶持相关的商业化路径，而不只是生成工具。",
+      "category": "行业",
+      "source": "Music Business Worldwide",
+      "url": "https://www.musicbusinessworldwide.com/suno-hires-ex-atlantic-records-and-youtube-veterans-in-senior-roles/",
+      "featured": false
+    },
+    {
+      "title": "Suno 反击 UMG、索尼扩大版权诉讼范围",
+      "summary": "在法官已驳回索尼扩大 Udio 版权案取证范围请求后，Suno 随即要求法院同样驳回环球音乐（UMG）与索尼新增 6.1 万首录音作为侵权证据的动议。这场诉讼将决定 AI 音乐工具训练数据版权认定的边界，直接影响 Suno、Udio 类工具未来可用曲库与侵权风险敞口。",
+      "category": "政策",
+      "source": "Music Business Worldwide",
+      "url": "https://www.musicbusinessworldwide.com/after-a-judge-denied-sonys-move-to-expand-its-udio-case-suno-asks-court-to-reject-umg-and-sonys-bid-to-add-61k-recordings/",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 发现 Claude 存在「内部意识空间」",
+      "summary": "Anthropic 最新可解释性研究显示，Claude 模型内部似乎存在一个「全局工作空间」（global workspace），会产生并不出现在最终输出里的内部想法。理解模型「怎么想」有助于判断生成内容的可控性与可信度，长期会影响创作者对 AI 工具输出结果的信任基准。",
+      "category": "研究",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/research/global-workspace",
+      "featured": false
+    },
+    {
+      "title": "腾讯减持快手，可灵 AI 新融资低于预期估值",
+      "summary": "腾讯出售所持快手约 15.5 亿美元股份，同期快手旗下可灵 AI 完成新一轮约 20 亿美元融资，但定价低于今年 5 月市场传出的预期估值。国产视频大模型的资本竞赛仍在继续，但增速与估值预期已现降温信号，创作者可关注后续算力投入节奏是否受影响。",
+      "category": "行业",
+      "source": "Yahoo Finance",
+      "url": "https://finance.yahoo.com/technology/ai/articles/kuaishou-jumps-6-9-kling-173121772.html",
+      "featured": false
+    }
+  ]
+}
