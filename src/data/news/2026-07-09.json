@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-09",
+  "headline": "Claude Sonnet 5 与字节 Seedance 2.5 同日刷新创作工具能力上限",
+  "items": [
+    {
+      "title": "Anthropic 发布 Claude Sonnet 5",
+      "summary": "Anthropic 正式推出 Claude Sonnet 5，在编程、Agent 任务和专业工作场景上逼近旗舰 Opus 的表现，定价更低，并已同步登陆 GitHub Copilot。对用 Claude 做写作辅助、编程或搭建自动化 Agent 的创作者，意味着用更低成本就能拿到接近顶配的推理能力。",
+      "category": "模型",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/news/claude-sonnet-5",
+      "featured": true
+    },
+    {
+      "title": "字节 Seedance 2.5 单镜头视频破 30 秒",
+      "summary": "字节跳动在 Volcano Engine 大会上发布 Seedance 2.5，可一次性生成最长 30 秒、含转场与节奏变化的单个视频片段，无需后期拼接，并支持一次输入最多 50 个参考素材（图片、音频等）。同期还发布支持原生 4K/10bit 的 Seedance 2.0、图像模型 Seedream 5.0 Pro 及音频模型 Seed-Audio 1.0。对做短剧、多角色叙事内容的视频创作者，这大幅减少了分段生成再拼接的繁琐流程。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/bytedances-seedance-2-5-breaks-the-30-second-barrier-for-ai-video-generation/",
+      "featured": true
+    },
+    {
+      "title": "Runway 推出开发者平台 Runway Dev",
+      "summary": "Runway 上线面向开发者与企业的新平台 Runway Dev，用一套 API 集成自家 Gen-4.5、Aleph 2.0 等模型和 Seedance、GPT Image 2、ElevenLabs 等第三方模型，还提供预置「Recipes」和可复用工作流，一行代码即可切换模型。Adobe、Shutterstock、Figma Weave 等已接入。对需要把 AI 生成能力嵌入自有产品、或批量产出广告素材的团队，这降低了多模型集成的工程成本。",
+      "category": "工具",
+      "source": "Runway",
+      "url": "https://runwayml.com/news/introducing-runway-dev",
+      "featured": false
+    },
+    {
+      "title": "xAI 新一代 Grok 4.5 现身放量迹象",
+      "summary": "基于全新 V9 底座训练的 Grok 4.5 相关代码与入口已在 Grok 网页端出现，被视为即将面向 Heavy 订阅用户开放的信号。若如期上线，将是 xAI 近期在推理能力上的一次整体升级。对用 Grok 做资料检索、内容策划的创作者，值得关注后续正式开放的时间与权限范围。",
+      "category": "模型",
+      "source": "TestingCatalog",
+      "url": "https://www.testingcatalog.com/spacexai-gearing-up-for-upcoming-grok-4-5-release/",
+      "featured": false
+    },
+    {
+      "title": "MiniMax 筹备 2.7 万亿参数开源大模型",
+      "summary": "据路透社报道，中国 AI 公司 MiniMax 正在训练一个开放权重、参数规模达 2.7 万亿的大语言模型，最快三季度问世，届时将超过美团 LongCat-2.0、DeepSeek V4-Pro 等，成为国产参数规模最大的模型之一，并采用 MoE 架构控制推理成本。对依赖开源模型自部署或二次开发的创作者与开发者，未来会有更强、成本更低的国产开源选项可用。",
+      "category": "模型",
+      "source": "Finimize",
+      "url": "https://finimize.com/content/minimax-joins-the-trillion-parameter-ai-race",
+      "featured": false
+    },
+    {
+      "title": "Speechify Simba 3.2 登顶 TTS 盲测榜",
+      "summary": "第三方评测机构 Artificial Analysis 的语音竞技场盲测排行榜显示，Speechify 的 Simba 3.2 以 Elo 1233 分登顶，超过 Google Gemini 3.1 Flash TTS、Cartesia Sonic 3.5、阿里 Fun-Realtime-TTS 等一众模型。其每百万字符 10 美元的定价明显低于榜单其他头部模型（部分定价近 4 倍于它）。对做有声书、配音、无障碍工具的创作者，这是当前性价比最高的语音合成选项之一。",
+      "category": "工具",
+      "source": "OfficeChai",
+      "url": "https://officechai.com/ai/speechifyais-simba-3-2-claims-top-spot-in-artificial-analysis-speech-arena-leaderboard/",
+      "featured": false
+    }
+  ]
+}
