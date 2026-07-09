@@ -20,7 +20,8 @@ export const games = [
     tags: ['互动影游', '人生预演', 'BW 展台'],
     path: 'https://tiaozhuxiansheng.com/mlr/',
     status: '在线可玩',
-    emoji: '🪞',
+    // 🪞 是 Unicode 13.0 新字形，Win10 等旧系统渲染成方框；换全平台通用的 🎭
+    emoji: '🎭',
     accent: '#d8b878',
     cta: '开始预演 →',
   },
