@@ -72,6 +72,17 @@ jobs:
           test -n "$asset_url"
           curl -fL "$asset_url" -o dist/desk-pond/download/DeskPond-Windows.exe
           ls -la dist/desk-pond/download/
+      # 《镜像自我·人生预演》手机报告页镜像到 /mlr/：github.io 在大陆移动网络常不可达，
+      # BW 展台扫码链路改走本域名（展台 config.json 的 reportBase 指向 /mlr/）。
+      # 产物源头仍是 preview 仓库（主仓 deploy-preview.ps1 推送），这里只做镜像，
+      # push / 手动触发 / 每 6 小时定时均会同步最新版。不进 Pages 产物（单文件 100MB 上限）。
+      - name: 镜像 mirror-life-rehearsal 预览站到 dist/mlr
+        run: |
+          git clone --depth 1 https://github.com/Mr-Salticidae/mirror-life-rehearsal-preview.git /tmp/mlr-preview
+          rm -rf /tmp/mlr-preview/.git
+          mkdir -p dist/mlr
+          cp -a /tmp/mlr-preview/. dist/mlr/
+
       - name: Rsync dist 到香港服务器
         run: |
           mkdir -p ~/.ssh
