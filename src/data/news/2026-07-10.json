@@ -1,0 +1,62 @@
+{
+  "date": "2026-07-10",
+  "headline": "OpenAI 一天推出 GPT-5.6 全家桶，Meta 图像模型陷入隐私争议",
+  "items": [
+    {
+      "title": "OpenAI 发布 GPT-5.6 三档模型与 ChatGPT Work",
+      "summary": "OpenAI 推出 GPT-5.6 系列，分为旗舰 Sol、中端 Terra、轻量 Luna 三档，按输入/输出百万 token 分别定价 5/30、2.5/15、1/6 美元，官方称 Sol 是目前最强编程模型，Agent 任务 token 效率提升 54%。同期上线的 ChatGPT Work 面向团队协作，可自动处理文档、表格等 routine 工作。对写代码搭建工具、做批量文案的创作者，多档位选择意味着可以按预算匹配模型能力。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/09/openai-launches-its-new-family-of-models-with-gpt-5-6/",
+      "featured": true
+    },
+    {
+      "title": "Meta Muse Image 默认抓取公开 Instagram 照片惹争议",
+      "summary": "Meta 新上线的图像生成工具 Muse Image 允许任何人 tag 一个公开账号，直接用对方的 Instagram 照片做 AI 二次创作，且被使用者不会收到通知，只有未成年人和私密账号被默认排除在外。舆论担忧这为骚扰、冒用形象、非自愿图像编辑打开口子，用户需自行去「分享与重用」设置里关掉「允许他人用你的内容做 AI 创作」才能拒绝。对以真人形象为素材的创作者和被拍摄者，这是一次值得警惕的默认开启（opt-out）隐私设计。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/09/how-to-stop-metas-ai-image-generator-from-using-your-instagram-photos/",
+      "featured": true
+    },
+    {
+      "title": "Meta 上线 Muse Spark 1.1 编程模型开放 API",
+      "summary": "Meta Superintelligence Labs 发布 Muse Spark 1.1 的开发者 API 版本，正式加入 OpenAI、Anthropic 主导的编程模型竞争，采用付费定价而非此前的免费策略。对用 AI 辅助编程搭建创作工具链的开发者，多一个可选的底层模型意味着议价空间和备选方案更多。",
+      "category": "模型",
+      "source": "Meta AI",
+      "url": "https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/",
+      "featured": false
+    },
+    {
+      "title": "xAI 正式发布 Grok 4.5，马斯克称达 Opus 级别",
+      "summary": "xAI 正式推出 Grok 4.5，马斯克称其推理能力已逼近 Anthropic 旗舰 Opus 系列，且定价为对手价格的一半左右，被视为 xAI 首次真正冲击企业级市场的产品。此前一天该模型的入口代码已在网页端被提前发现。对用 AI 做资料检索、脚本策划的创作者，多了一个性价比更高的强推理选项。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/08/spacexai-releases-grok-4-5-which-elon-describes-as-an-opus-class-model/",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 推出 GPT-Live 全双工语音模型",
+      "summary": "OpenAI 发布新一代语音模型 GPT-Live，支持「边听边说」的全双工对话，能更自然地打断和衔接，官方称这是 ChatGPT 语音模式迄今最大升级，将在 GPT-5.6 全面铺开前率先上线。对做播客、配音、语音助手类应用的创作者，这让 AI 语音交互更接近真人对话的节奏感。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/08/openai-releases-new-voice-models-for-more-natural-live-conversations/",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 上线用量回顾功能「Claude Reflection」",
+      "summary": "Anthropic 推出类似 Spotify Wrapped 的新功能，帮用户回顾自己在 Claude 上的使用习惯与偏好场景，被媒体称为「Claude Wrapped」。分析认为这一功能也在潜移默化地向用户强化「离不开 AI」的使用心理。对高频使用 Claude 辅助创作的用户，这提供了一个审视自己工作流是否过度依赖单一工具的机会。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/09/anthropics-new-claude-feature-is-quietly-selling-you-on-ai/",
+      "featured": false
+    },
+    {
+      "title": "《纽约时报》指控 OpenAI 在版权诉讼中隐瞒证据",
+      "summary": "《纽约时报》在其对 OpenAI 提起的 ChatGPT 版权诉讼中提出新指控，称 OpenAI 在诉讼过程中隐瞒了关键证据。这是双方旷日持久的版权拉锯战中的最新进展，案件结果将影响 AI 公司使用新闻内容训练模型的合法边界。对依赖原创文字内容谋生的写作者和媒体创作者，这场诉讼的走向值得持续关注。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/09/new-york-times-says-openai-hid-evidence-in-chatgpt-copyright-trial/",
+      "featured": false
+    }
+  ]
+}
