@@ -3,11 +3,12 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "蛛网之上 · 跳蛛先生创作知识库的杂志风开源展示站",
+  "description": "蛛网之上 · 跳蛛先生的杂志风个人站（笔记 / 快讯 / 连载 / 可玩）",
   "scripts": {
     "sync": "node scripts/sync-content.mjs",
     "stamp": "node scripts/stamp-assets.mjs",
     "dev": "npm run sync && astro dev",
+    "dev:nosync": "astro dev",
     "build": "npm run sync && npm run stamp && astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"

@@ -54,6 +54,9 @@ body {
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
+::selection { background: color-mix(in srgb, var(--accent) 24%, transparent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
 
 /* 顶栏 */
@@ -99,8 +102,13 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .backlinks ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
 .backlinks a { font-size: .95rem; }
 
-/* 页脚 */
-.site-footer { border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .82rem; padding: 2.5rem 1.5rem; text-align: center; }
+/* 页脚：署名 + 一句站点自白 + 站内导航 + 许可信息 */
+.site-footer { border-top: 1px solid var(--line); color: var(--ink-soft); font-size: .85rem; padding: 3rem 1.5rem 3.4rem; text-align: center; }
+.footer-brand { margin: 0 0 .5rem; font-family: var(--serif); font-size: 1.08rem; font-weight: 700; color: var(--ink); letter-spacing: .06em; }
+.footer-brand span { display: block; font-family: var(--sans); font-weight: 400; font-size: .62rem; letter-spacing: .34em; text-transform: uppercase; color: var(--ink-soft); margin-top: .2rem; }
+.footer-line { margin: 0 0 1.2rem; }
+.footer-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: .4rem 1.5rem; margin: 0 0 1.2rem; font-size: .82rem; }
+.footer-meta { margin: 0; font-size: .76rem; opacity: .85; }
 
 /* 顶栏右侧操作区 + 搜索 */
 .header-actions { display: flex; align-items: center; gap: 1rem; }
@@ -170,6 +178,23 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .hero p { color: var(--ink-soft); max-width: 34rem; margin: .9rem auto 0; font-size: 1.05rem; }
 .hero .count-up { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--accent); }
+/* hero 排印：字距刊眉在上，正文一段克制的自我介绍在下 */
+.hero .hero-kicker {
+  margin: 0 0 .2rem; font-family: var(--sans); font-size: .78rem;
+  letter-spacing: .5em; text-indent: .5em; color: var(--ink-soft);
+}
+.hero .hero-sub { max-width: 38rem; margin-top: 1.1rem; font-size: 1.02rem; line-height: 2; }
+
+/* 首页板块统一栏头：编号刊眉（延伸细线）+ 衬线标题 + 一句引导 */
+.sec-head { margin: 0 0 1.5rem; }
+.sec-kicker {
+  display: flex; align-items: center; gap: .8rem; margin: 0 0 .6rem;
+  font-family: var(--sans); font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--ink-soft);
+}
+.sec-kicker i { font-style: normal; font-weight: 600; color: var(--accent); letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+.sec-kicker::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.sec-head h2 { font-family: var(--serif); font-size: 1.65rem; margin: 0 0 .4rem; letter-spacing: .02em; }
+.sec-head .sec-desc { margin: 0 0 1.4rem; color: var(--ink-soft); font-size: .92rem; line-height: 1.8; max-width: 46rem; }
 
 /* 主题切换按钮 */
 .theme-toggle {

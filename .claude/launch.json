@@ -8,6 +8,12 @@
       "port": 4321
     },
     {
+      "name": "above-the-web-nosync",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:nosync"],
+      "port": 4321
+    },
+    {
       "name": "above-the-web-preview",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview"],

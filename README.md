@@ -1,6 +1,6 @@
 # 蛛网之上 · Above the Web
 
-> 跳蛛先生 / Mr-Salticidae 创作知识库的**杂志风开源展示站**。内容自动同步自 [knowledge-base](https://github.com/Mr-Salticidae/knowledge-base)。
+> 跳蛛先生 / Mr-Salticidae 的**个人站**——AIGC 创作笔记、每日快讯、prompt 拆解连载与可玩小作品，杂志风、开源。笔记内容自动同步自 [knowledge-base](https://github.com/Mr-Salticidae/knowledge-base)。
 
 线上地址：`https://mr-salticidae.github.io/above-the-web/`（启用 Pages 后生效）
 

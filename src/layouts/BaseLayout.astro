@@ -4,7 +4,7 @@ import Search from '../components/Search.astro';
 const { title, description } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const siteName = '蛛网之上';
-const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先生创作知识库`;
+const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先生的个人站`;
 ---
 
 <!doctype html>
@@ -43,7 +43,7 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
             <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
             <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
           </button>
-          <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">源仓库 ↗</a>
+          <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a>
         </div>
       </div>
     </header>
@@ -53,8 +53,14 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     </main>
 
     <footer class="site-footer">
-      <p>蛛网之上 · 跳蛛先生 / Mr-Salticidae 创作方法论知识库</p>
-      <p>内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>
+      <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>
+      <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p>
+      <nav class="footer-nav" aria-label="页脚导航">
+        <a href={`${base}news/`}>AIGC 快讯</a>
+        <a href={`${base}prompt-master/`}>Prompt 大师</a>
+        <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a>
+      </nav>
+      <p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>
     </footer>
 
     <script is:inline>

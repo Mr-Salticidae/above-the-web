@@ -80,11 +80,19 @@ const toc = [
   ...(latestNews ? [{ id: 'news', label: 'AIGC 快讯' }] : []),
   ...(latestEpisodes.length > 0 ? [{ id: 'prompt-master', label: '成为 Prompt 大师' }] : []),
   { id: 'plays', label: '可玩' },
+  { id: 'notes', label: '笔记' },
   ...cats.map((c, i) => ({ id: `sec-cat-${i}`, label: c, cat: c })),
 ];
+
+// 首页板块的杂志式编号刊眉：编号 + 英文标签，随实际存在的板块顺延
+const kickers = [];
+if (latestNews) kickers.push(['news', 'AIGC Daily']);
+if (latestEpisodes.length > 0) kickers.push(['prompt-master', 'Prompt Master']);
+kickers.push(['plays', 'Plays'], ['notes', 'Notes']);
+const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: String(i + 1).padStart(2, '0'), label }]));
 ---
 
-<BaseLayout description="跳蛛先生的 AIGC 创作方法论公开知识库 —— 杂志风 · 可游的知识网络。">
+<BaseLayout description="跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。">
   <nav class="toc" id="toc" aria-label="版块索引">
     <ul>
       {toc.map((t) => (
@@ -101,20 +109,24 @@ const toc = [
   <section class="hero" id="top">
     <SpiderWeb />
     <div class="hero-inner">
+      <p class="hero-kicker">跳蛛先生的个人站</p>
       <h1>蛛网之上</h1>
-      <p>
-        跳蛛先生的 AIGC 创作方法论知识库。<span class="count-up" id="hero-count" data-target={total}>{total}</span>
-        篇可复用的 insight，织成一张可游的知识网。
+      <p class="hero-sub">
+        这里从一份 AIGC 方法论知识库，慢慢长成了现在的样子：每天更新的行业快讯、
+        一期期 prompt 拆解连载、几件可以直接上手玩的小作品，
+        和 <span class="count-up" id="hero-count" data-target={total}>{total}</span> 篇仍在生长的笔记。
+        欢迎随便逛。
       </p>
     </div>
   </section>
 
   {latestNews && (
     <section class="news-peek" id="news">
-      <div class="news-peek-head">
-        <h2>AIGC 快讯 <span>· AIGC Daily</span></h2>
-        <p>每天早晨自动更新的 AIGC 领域新闻精选——模型发布、工具更新、行业动向，为创作者划重点。</p>
-      </div>
+      <header class="sec-head">
+        <p class="sec-kicker"><i>{kickerOf.news.no}</i>{kickerOf.news.label}</p>
+        <h2>AIGC 快讯</h2>
+        <p class="sec-desc">每天早晨自动更新的 AIGC 新闻精选——模型发布、工具更新、行业动向，为创作者划重点。宁缺毋滥。</p>
+      </header>
       <a class="news-peek-issue" href={newsBase}>
         <span class="np-no">第 {latestNews.no} 期 · {formatDate(latestNews.date)}</span>
         {latestNews.headline && <span class="np-headline">{latestNews.headline}</span>}
@@ -136,12 +148,13 @@ const toc = [
 
   {latestEpisodes.length > 0 && (
     <section class="series" id="prompt-master">
-      <div class="series-head">
-        <h2>成为 Prompt 大师 <span>· Prompt Master</span></h2>
-        <p>
-          面向 AIGC 小白的 prompt 拆解系列：每期一个 battle 主题，讲清「难在哪 → 怎么破题 → 完整 prompt → 四层拆解」。不追结果，记录过程。
+      <header class="sec-head">
+        <p class="sec-kicker"><i>{kickerOf['prompt-master'].no}</i>{kickerOf['prompt-master'].label}</p>
+        <h2>成为 Prompt 大师</h2>
+        <p class="sec-desc">
+          面向 AIGC 小白的 prompt 拆解连载：每期一个 battle 主题，讲清「难在哪 → 怎么破题 → 完整 prompt → 四层拆解」。不追结果，记录过程。
         </p>
-      </div>
+      </header>
       <div class="series-grid">
         {latestEpisodes.map((e) => (
           <a class="series-card" href={`${seriesBase}#${e.id}`}>
@@ -167,10 +180,11 @@ const toc = [
   )}
 
   <section class="plays" id="plays">
-    <div class="plays-head">
-      <h2>可玩 <span>· Plays</span></h2>
-      <p>能在浏览器里直接打开就玩、或免费下载带走的小东西——用 vibe coding 做的作品，国内直连。</p>
-    </div>
+    <header class="sec-head">
+      <p class="sec-kicker"><i>{kickerOf.plays.no}</i>{kickerOf.plays.label}</p>
+      <h2>可玩</h2>
+      <p class="sec-desc">能在浏览器里直接打开就玩、或免费下载带走的小东西——用 vibe coding 做的作品，国内直连。</p>
+    </header>
     <div class="play-grid">
       {games.map((g) => (
         <a class="play-card" href={gameHref(g)} style={`--g-accent:${g.accent}`}>
@@ -193,6 +207,14 @@ const toc = [
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="notes-head" id="notes">
+    <header class="sec-head">
+      <p class="sec-kicker"><i>{kickerOf.notes.no}</i>{kickerOf.notes.label}</p>
+      <h2>笔记</h2>
+      <p class="sec-desc">沉淀下来的方法论、模板与档案——按主题分栏，篇篇希望做到可复用。这里是小站最初的样子。</p>
+    </header>
   </section>
 
   <div class="explore">
@@ -324,14 +346,15 @@ const toc = [
 
   apply();
 
-  // 标题数字 count-up（尊重 reduced-motion）
+  // 标题数字 count-up（尊重 reduced-motion；后台标签页 rAF 会暂停，此时直接显示最终值）
   const el = document.getElementById('hero-count');
   const target = el ? +el.dataset.target : 0;
-  if (el && target && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (el && target && !document.hidden && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const start = performance.now();
     const dur = 900;
     el.textContent = '0';
     const tick = (now) => {
+      if (document.hidden) { el.textContent = target.toString(); return; }
       const p = Math.min(1, (now - start) / dur);
       const eased = 1 - Math.pow(1 - p, 3);
       el.textContent = Math.round(eased * target).toString();
@@ -418,10 +441,7 @@ const toc = [
   @media (max-width: 1080px) { .toc { display: none; } }
 
   /* AIGC 快讯 —— 首页速览版块：最新一期头部条目 + 入口 */
-  .news-peek { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem .5rem; }
-  .news-peek-head h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .3rem; display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
-  .news-peek-head h2 span { font-family: var(--sans); font-weight: 400; font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft); }
-  .news-peek-head p { margin: 0 0 1.3rem; color: var(--ink-soft); font-size: .92rem; max-width: 46rem; }
+  .news-peek { max-width: 72rem; margin: 0 auto; padding: 3.4rem 1.5rem .5rem; }
 
   .news-peek-issue {
     display: block; padding: 1.1rem 1.3rem; border: 1px solid var(--line); border-radius: 14px 14px 0 0;
@@ -450,10 +470,7 @@ const toc = [
   .news-peek-all { display: inline-block; margin-top: .8rem; font-size: .86rem; font-weight: 600; }
 
   /* 成为 Prompt 大师 —— 旗舰发刊系列，独立版块，展示最新几期封面 */
-  .series { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem .5rem; }
-  .series-head h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .3rem; display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
-  .series-head h2 span { font-family: var(--sans); font-weight: 400; font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft); }
-  .series-head p { margin: 0 0 1.3rem; color: var(--ink-soft); font-size: .92rem; max-width: 46rem; line-height: 1.7; }
+  .series { max-width: 72rem; margin: 0 auto; padding: 3.4rem 1.5rem .5rem; }
 
   .series-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr)); gap: 1rem; }
 
@@ -485,10 +502,11 @@ const toc = [
   @media (max-width: 480px) { .series-grid { grid-template-columns: repeat(2, 1fr); gap: .75rem; } }
 
   /* 可玩 · Plays —— 数据驱动的作品入口区，风格沿用站点 token */
-  .plays { max-width: 72rem; margin: 0 auto; padding: 2.5rem 1.5rem .5rem; }
-  .plays-head h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .3rem; display: flex; align-items: baseline; gap: .5rem; }
-  .plays-head h2 span { font-family: var(--sans); font-weight: 400; font-size: .78rem; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft); }
-  .plays-head p { margin: 0 0 1.3rem; color: var(--ink-soft); font-size: .92rem; max-width: 42rem; }
+  .plays { max-width: 72rem; margin: 0 auto; padding: 3.4rem 1.5rem .5rem; }
+
+  /* 笔记 —— 板块头独立成节，下方紧跟 sticky 筛选条与卡片区 */
+  .notes-head { max-width: 72rem; margin: 0 auto; padding: 3.4rem 1.5rem 1.4rem; scroll-margin-top: 4.5rem; }
+  .notes-head .sec-head { margin-bottom: 0; }
 
   .play-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(20.5rem, 1fr)); gap: 1rem; }
 
