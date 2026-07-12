@@ -1,0 +1,70 @@
+{
+  "date": "2026-07-12",
+  "headline": "苹果起诉 OpenAI 窃取商业机密，中国 AI 融资潮持续升温",
+  "items": [
+    {
+      "title": "苹果起诉 OpenAI 窃取商业机密",
+      "summary": "苹果向法院提起诉讼，指控 OpenAI 及一名前苹果工程师在硬件项目上窃取商业机密，称相关行为「渗透到公司各个层级」。案件被视为苹果在自研 AI 硬件路线上对 OpenAI 的一次强硬反击。对关注大厂 AI 硬件布局的创作者，这场诉讼可能牵动未来 AI 设备生态的合作与竞争格局。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/",
+      "featured": true
+    },
+    {
+      "title": "MiniMax 完成约 20 亿美元融资，冲击万亿参数模型",
+      "summary": "中国 AI 公司 MiniMax 通过增发股份及可转债完成约 20 亿美元融资，用于打造对标行业顶级水平的开源大模型，同时 CEO 承诺在实现 AGI 前不领薪水。这是近期中国大模型厂商融资潮中的又一笔大额注资，随着 Kling AI、MiniMax 等接连获得巨额资本支持，创作者可关注这些厂商的开源模型和创作工具会否加速迭代。",
+      "category": "行业",
+      "source": "SiliconANGLE",
+      "url": "https://siliconangle.com/2026/07/10/open-source-ai-model-developer-minimax-raises-2b-funding/",
+      "featured": true
+    },
+    {
+      "title": "苹果洽谈 PrismML，压缩 Qwen 模型跑通 iPhone",
+      "summary": "据报道苹果正与 Caltech 孵化的初创公司 PrismML 接触，后者用极限压缩技术把阿里巴巴 270 亿参数的 Qwen 3.6 模型从约 54GB 压至 4GB 以内，并在 iPhone 17 Pro 上实现全部参数同时激活运行。若苹果采用此类技术，未来手机端离线跑大模型辅助创作会变得更现实,值得关注后续是否落地到系统功能。",
+      "category": "模型",
+      "source": "MacDailyNews",
+      "url": "https://macdailynews.com/2026/07/10/apple-eyes-prismml-to-run-huge-ai-models-directly-on-iphone/",
+      "featured": false
+    },
+    {
+      "title": "字节 Seedance 2.5 曝早期 30 秒 4K 视频样片",
+      "summary": "有博主抢先拿到 ByteDance 新一代视频模型 Seedance 2.5 的测试权限，展示了原生单镜头 30 秒、4K 分辨率的生成样片，API 预计延迟后于近期开放。对做短片、广告素材的视频创作者，单镜头时长和分辨率的双重提升意味着更少的分段拼接和后期修补工作。",
+      "category": "工具",
+      "source": "TestingCatalog",
+      "url": "https://www.testingcatalog.com/exclusive-early-30-second-ai-videos-generated-by-seedance-2-5/",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 安全负责人离职，安全与研究团队合并",
+      "summary": "OpenAI 安全团队负责人在公司重组中离职，其职责将被并入一个同时统管研究与安全的新高管岗位。这是 OpenAI 近期第二位安全相关高层离开,该趋势也被外部持续解读为公司在快速商业化与安全把关之间的权衡信号,依赖 OpenAI 产品做创作的用户可留意后续安全政策是否随之调整。",
+      "category": "行业",
+      "source": "Engadget",
+      "url": "https://www.engadget.com/2212941/openai-head-of-safety-leaving-company-reorganization/",
+      "featured": false
+    },
+    {
+      "title": "Adobe Premiere 测试版加入生成式媒体工具",
+      "summary": "Adobe 为 Premiere Pro 测试版新增「Generative Media」功能，编辑可直接在时间线空白处拖拽或双击唤出生成任务栏，输入提示词即可生成视频片段或音效，音频生成仅用 Firefly 模型，视频生成则可选多个模型。对剪辑师和短视频创作者，这让「素材缺口」可以不出剪辑软件直接用 AI 补齐，但视频生成质量和积分消耗仍需实测权衡。",
+      "category": "工具",
+      "source": "ProVideo Coalition",
+      "url": "https://www.provideocoalition.com/adobe-premiere-is-adding-a-generative-media-tool/",
+      "featured": false
+    },
+    {
+      "title": "Character.AI 试水互动微短剧，角色可与观众对话",
+      "summary": "Character.AI 推出自制互动微短剧新业务，与常规微短剧不同的是观众可以直接和剧中角色对话、影响剧情走向，被视为把 AI 对话能力和短剧这一当下最火的内容形式结合的新尝试。对做互动内容、剧本杀式叙事的创作者,这是一个值得关注的内容形态实验，其商业模式和版权归属仍待观察。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/09/character-ai-enters-the-microdrama-arena-with-its-own-productions-but-with-a-twist/",
+      "featured": false
+    },
+    {
+      "title": "Claude 桌面应用登陆 Linux 公测",
+      "summary": "Anthropic 为 Claude 桌面应用推出 Linux 公测版，支持 apt 源持续更新，体验上与 macOS、Windows 版一致，包含 Chat、Cowork、Claude Code 的并行会话、可视化 diff 审阅、内置终端编辑器和实时应用预览。目前 Linux 版暂缺 Computer Use 和语音输入功能，先支持 Ubuntu 22.04+/Debian 12+。对用 Linux 做开发和创作的用户，终于不用再靠社区打包版凑合使用。",
+      "category": "工具",
+      "source": "OMG! Ubuntu",
+      "url": "https://www.omgubuntu.co.uk/2026/07/claude-desktop-linux-beta",
+      "featured": false
+    }
+  ]
+}
