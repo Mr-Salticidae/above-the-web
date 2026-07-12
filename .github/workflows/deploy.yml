@@ -83,6 +83,16 @@ jobs:
           mkdir -p dist/mlr
           cp -a /tmp/mlr-preview/. dist/mlr/
 
+      # 《风眼》台风实况页镜像到 /typhoon-eye/：github.io 在大陆常不可达，防台工具
+      # 恰恰要给大陆用户直连。实时数据由页面运行时从 jsDelivr 多镜像拉取，这里只
+      # 镜像静态壳；push / 手动触发 / 每 6 小时定时均会同步最新版。
+      - name: 镜像 typhoon-eye 到 dist/typhoon-eye
+        run: |
+          git clone --depth 1 https://github.com/Mr-Salticidae/typhoon-eye.git /tmp/typhoon-eye
+          rm -rf /tmp/typhoon-eye/.git
+          mkdir -p dist/typhoon-eye
+          cp -a /tmp/typhoon-eye/. dist/typhoon-eye/
+
       - name: Rsync dist 到香港服务器
         run: |
           mkdir -p ~/.ssh

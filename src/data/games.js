@@ -12,6 +12,20 @@
 //   cta      可选；卡片底部按钮文案，默认 '开始游玩 →'（下载型作品可改成 '了解 · 下载 →'）
 export const games = [
   {
+    // 完整 URL：与 /mlr/ 同理，deploy.yml 每次部署时克隆 typhoon-eye 仓库镜像到
+    // 香港服务器 /typhoon-eye/（大陆直连），不进 GitHub Pages 产物。
+    // 实时数据由页面运行时从 jsDelivr 多镜像拉取，镜像的静态壳不影响数据新鲜度。
+    title: '风眼 · Typhoon Eye',
+    tagline: '台风实况 + 分级预案，一页看懂、照做即可',
+    desc: '台风季常备页：实况面板每 15 分钟更新台风位置、风力与风圈，SVG 路径图逐点可查强度；蓝黄橙红四级预警各配递进式可勾选行动清单，进度自动保存。无台风时预案常备，断网也能降级使用。',
+    tags: ['防灾工具', '实时数据', 'vibe coding'],
+    path: 'https://tiaozhuxiansheng.com/typhoon-eye/',
+    status: '在线可用',
+    emoji: '🌀',
+    accent: '#3d6b99',
+    cta: '打开风眼 →',
+  },
+  {
     // 完整 URL 而非站内路径：游戏由 deploy.yml 镜像到香港服务器 /mlr/（大陆直连），
     // 不进 GitHub Pages 产物，站内相对路径在 Pages 部署上会 404
     title: '镜像自我 · 人生预演',
