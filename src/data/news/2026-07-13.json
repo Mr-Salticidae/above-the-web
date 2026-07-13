@@ -1,0 +1,46 @@
+{
+  "date": "2026-07-13",
+  "headline": "Meta 图像工具因隐私翻车下架，中国新规叫停拟人陪伴功能",
+  "items": [
+    {
+      "title": "Meta Muse Image 上线即遭下架",
+      "summary": "Meta 上周二为 Instagram、WhatsApp 上线 AI 图像工具 Muse Image，允许把任意公开 Instagram 照片当作参考图来生成图像，且该功能默认开启。SAG-AFTRA 及多位明星带头抵制后，Meta 周五宣布下架，称「这个功能没有达到预期」。对常在社交平台发公开图的创作者，这提醒你检查隐私设置，也说明素材授权仍是生成式图像最敏感的红线。",
+      "category": "工具",
+      "source": "Mashable",
+      "url": "https://mashable.com/tech/meta-withdraws-controversial-ai-feature-that-allowed-images-to-be-sourced",
+      "featured": true
+    },
+    {
+      "title": "中国新规将叫停 AI 拟人陪伴功能",
+      "summary": "南华早报报道，中国将于 7 月 15 日起实施针对「情感依赖」及未成年人不适宜内容的新规，字节跳动豆包与阿里巴巴 Qwen 已通知用户将下线各自的拟人化「智能体」陪伴功能，官方说法是「产品功能调整」。对做角色扮演、虚拟陪伴类应用的国内创作者和开发者，需要提前评估合规调整方案。",
+      "category": "政策",
+      "source": "South China Morning Post",
+      "url": "https://www.scmp.com/video/technology/3360099/bytedance-alibaba-disable-humanlike-ai-companions-china-tightens-rules",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 再延 Claude Fable 5 免费额度",
+      "summary": "Anthropic 原定 7 月 7 日起对旗舰模型 Claude Fable 5 收费，此后两次推迟，最新公告把 Pro / Max / Team / Enterprise 用户的免费用量窗口延长至 7 月 19 日，期间最多可用周用量额度的 50% 调用该模型，覆盖网页、桌面、Claude Code、Claude Cowork 等全部客户端。对用 Claude 写作、编程、做设计的创作者，这几天仍是体验其最强模型的窗口期，但该模型消耗额度更快，需留意用量。",
+      "category": "工具",
+      "source": "Bleeping Computer",
+      "url": "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-fable-5-stays-free-for-paid-users-until-july-19-as-anthropic-buys-more-time/",
+      "featured": false
+    },
+    {
+      "title": "音乐产业联合推出 AI 内容标签体系",
+      "summary": "IFPI、RIAA 联合格莱美等八家机构发布两档自愿标签——标示「AI 生成为主」与「人类主导、AI 辅助」的音乐作品，呼吁流媒体平台广泛采用以提升透明度。Deezer 称近半新上传曲目已含 AI 生成成分，苹果音乐此前也透露超三分之一新曲完全由 AI 制作。对做 AI 音乐的创作者，如实标注未来可能成为流媒体上架的新门槛。",
+      "category": "政策",
+      "source": "The Star",
+      "url": "https://www.thestar.com.my/tech/tech-news/2026/07/13/music-industry-launches-ai-generated-content-labels",
+      "featured": false
+    },
+    {
+      "title": "好莱坞秘密备战首部 AI 大片",
+      "summary": "纽约邮报报道，从马丁·斯科塞斯与 Black Forest Labs 合作制作分镜，到本·阿弗莱克投资的 AI 视效公司 InterPositive 被 Netflix 以最高 6 亿美元收购，好莱坞正暗中加速拥抱生成式 AI，试图打造首部真正意义上的「AI 大片」。对影视类创作者，头部资本和知名导演的加码意味着 AI 辅助制片工具会更快进入主流工作流。",
+      "category": "行业",
+      "source": "New York Post",
+      "url": "https://nypost.com/2026/07/12/entertainment/hollywoods-covert-race-to-produce-the-first-ai-blockbuster-with-scorsese-affleck-involved/",
+      "featured": false
+    }
+  ]
+}
