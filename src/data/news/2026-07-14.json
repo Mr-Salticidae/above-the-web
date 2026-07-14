@@ -1,0 +1,46 @@
+{
+  "date": "2026-07-14",
+  "headline": "OpenAI 用 ChatGPT Work 取代 Atlas，Meta 发布编程新模型对标 GLM",
+  "items": [
+    {
+      "title": "OpenAI 关闭 Atlas 浏览器，推出 ChatGPT Work 代理",
+      "summary": "OpenAI 关闭仅运行九个月的独立浏览器 Atlas，把相关功能整合进新的 ChatGPT Work 代理系统，由新发布的 GPT-5.6 驱动，可连续数小时独立完成表格、幻灯片、文档等多步骤办公任务，并能通过 Computer Use 跨应用点击操作、连接 Slack、Teams、Google Drive。原桌面应用改名「ChatGPT Classic」，与 Work、Codex 三种模式并存。对做内容运营、文档类产出的创作者，这意味着更多琐碎工作可以委托给 AI 代理，但早期版本已出现误删用户文件的事故，需谨慎授权。",
+      "category": "工具",
+      "source": "PPC Land",
+      "url": "https://ppc.land/openai-kills-atlas-browser-folds-it-into-new-chatgpt-work-agent/",
+      "featured": true
+    },
+    {
+      "title": "Meta 发布编程推理模型 Muse Spark 1.1",
+      "summary": "Meta 推出新一代模型 Muse Spark 1.1，主打编程与智能体（agentic）任务，编程测试得分 71.3 反超 GLM-5.2，单次任务成本约 0.26 美元、幻觉率从 73% 降至 38%，上下文窗口扩大四倍至 100 万 token。对用 AI 写代码、跑自动化流程的创作者和开发者，这是又一个性价比更高的选择，不过目前仅通过 Meta 自有 API 提供，尚未进入消费级产品。",
+      "category": "模型",
+      "source": "the-decoder.com",
+      "url": "https://the-decoder.com/metas-muse-spark-1-1-outperforms-glm-5-2-in-coding-and-costs-slightly-less/",
+      "featured": true
+    },
+    {
+      "title": "Suno 回应唱片业 AI 音乐标签提案",
+      "summary": "面对 IFPI、RIAA 等机构联合推出的 AI 音乐标签体系，同时身陷环球、索尼版权诉讼的 Suno 首次正式表态，称「透明度很重要」，并透露正在投入水印和音频指纹技术；但主张具体如何标注应由艺术家和平台自行决定，而非行业组织统一强制。对做 AI 音乐的创作者，这场唱片业与 AI 公司的博弈将直接影响未来歌曲上架时该如何标注 AI 成分。",
+      "category": "政策",
+      "source": "Music Business Worldwide",
+      "url": "https://www.musicbusinessworldwide.com/suno-sued-by-major-labels-says-transparency-is-important-as-record-industry-proposes-ai-labeling-system/",
+      "featured": false
+    },
+    {
+      "title": "数百人旧金山游行抗议 AI 巨头加速竞赛",
+      "summary": "上周末数百人在旧金山游行，从 OpenAI 总部出发，经 Anthropic、Cloudflare 办公室，最终抵达 Google DeepMind 办公室，抗议几家科技公司竞相开发最强 AI 系统，标语包括「AI 并非不可避免」「暂停 AI」，相关报道本周仍在持续发酵。对身处 AI 创作生态的从业者，这提示公众对 AI 加速发展的担忧仍在积累,后续可能影响监管走向。",
+      "category": "行业",
+      "source": "Mission Local",
+      "url": "https://missionlocal.org/2026/07/san-francisco-protest-ai-openai-anthropic-google/",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 为印度用户上线卢比本地化定价",
+      "summary": "Anthropic 为印度用户推出卢比计价的 Claude Pro / Max / Team 订阅，价格略高于按美元换算的价格，但免去汇率折算的不便；印度目前是 Claude 第二大市场，占全球用量 5.8%，此前还在班加罗尔设立了办公室。对关注大模型厂商全球化布局的创作者，这释放出各家开始重视新兴市场本地化定价与支付方式的信号，值得留意中国、东南亚等地区是否会跟进类似调整。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/13/anthropic-starts-localizing-claude-pricing-for-india-its-biggest-market-after-the-us/",
+      "featured": false
+    }
+  ]
+}
