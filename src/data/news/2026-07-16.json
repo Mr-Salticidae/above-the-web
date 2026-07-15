@@ -1,0 +1,62 @@
+{
+  "date": "2026-07-16",
+  "headline": "Suno 训练数据抓取内幕曝光，Apple Intelligence 获批入华",
+  "items": [
+    {
+      "title": "Suno 遭黑客攻击，训练数据抓取内幕曝光",
+      "summary": "黑客用一名员工的账号侵入 Suno 源代码库，泄露的资料显示其模型训练数据包含数十年来从 YouTube、Deezer、Genius 等平台大量抓取的音乐，为此前唱片公司起诉 Suno 未获授权使用作品补上了关键证据。对用 AI 音乐工具创作的用户，这进一步暴露了训练数据来源的合规风险，后续版权诉讼走向可能直接影响 Suno 的产品功能与定价策略。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/15/hack-suggests-ai-music-generator-suno-scraped-youtube-for-training-data/",
+      "featured": true
+    },
+    {
+      "title": "Apple Intelligence 获批登陆中国市场",
+      "summary": "Apple Intelligence 服务已在中国网信办完成注册，即将由阿里巴巴 Qwen 大模型提供本地化能力支持，为 iPhone 中国用户开放 AI 功能扫清了监管障碍。对国内创作者，这意味着 Apple 生态内的写作辅助、图像处理等 AI 功能有望落地，也再次印证了 Qwen 模型对外输出能力的商业化进展。",
+      "category": "行业",
+      "source": "MacRumors",
+      "url": "https://www.macrumors.com/2026/07/15/apple-intelligence-cleared-to-launch-in-china/",
+      "featured": true
+    },
+    {
+      "title": "Meta 因隐私抗议紧急下线 Muse Image 功能",
+      "summary": "Meta 上线不到一周就撤下新 AI 图像工具 Muse Image，该功能默认会抓取用户公开的 Instagram 图片作为生成参考，遭到用户与经纪公司 CAA 的强烈抗议后被迫下架。对在 Instagram 等平台发布作品的创作者，这提醒需要主动核查各平台「默认开启」的 AI 训练与生成授权设置。",
+      "category": "政策",
+      "source": "Music Business Worldwide",
+      "url": "https://www.musicbusinessworldwide.com/meta-scraps-ai-muse-image-feature-that-scraped-instagram-accounts-following-caa-backlash/",
+      "featured": false
+    },
+    {
+      "title": "Suno 音乐生成登陆 iMessage，可语音出歌",
+      "summary": "Suno 更新 iOS App，iPhone 用户现在可以直接在 iMessage 对话框内通过文字或语音提示生成歌曲并分享给好友，无需切换到独立 App。对做短内容、社交场景创作的用户，这是把 AI 音乐生成嵌入即时通讯的又一次尝试，进一步降低了随手创作分享的门槛。",
+      "category": "工具",
+      "source": "9to5Mac",
+      "url": "https://9to5mac.com/2026/07/15/suno-now-lets-iphone-users-generate-songs-directly-in-imessage/",
+      "featured": false
+    },
+    {
+      "title": "Google 图片搜索改版，新增按需 AI 生图",
+      "summary": "Google Images 迎来 25 周年最大改版，新增类似 Pinterest 的「For You」个性化推荐信息流，多方报道显示同时上线了按需 AI 图像生成功能，用户可在搜图结果旁直接生成新图片。对做视觉内容、素材搜集的创作者，搜索与生成的边界进一步模糊，找灵感和出图可以在同一入口完成。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/14/google-images-gets-a-pinterest-like-redesign-focused-on-discovery/",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 上线 Reflect 功能回顾 Claude 使用",
+      "summary": "Anthropic 推出 Reflect with Claude，让用户可视化追踪自己使用 Claude 的时间与场景，并判断这些用量是否符合自己设定的目标，是继对话搜索之后又一个「自我管理」向功能。对高频使用 AI 辅助创作的用户，这提供了一个审视工作流、优化 AI 使用习惯的新入口。",
+      "category": "工具",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/news/reflect-with-claude",
+      "featured": false
+    },
+    {
+      "title": "印度编程 Agent 平台 Emergent 融资至独角兽",
+      "summary": "印度 AI 编程创业公司 Emergent 完成 1.3 亿美元 C 轮融资，估值达 15 亿美元，成立仅一年多即跻身独角兽，年化营收已突破 1.2 亿美元、付费用户超 20 万。对借助 AI 辅助开发个人项目、独立工具的创作者，这类编程 Agent 平台的快速崛起意味着未来会有更多自然语言驱动的开发选择。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/15/indian-ai-coding-startup-emergent-becomes-a-unicorn-just-over-a-year-after-launch/",
+      "featured": false
+    }
+  ]
+}
