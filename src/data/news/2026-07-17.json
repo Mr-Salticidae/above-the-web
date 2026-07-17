@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-17",
+  "headline": "Google Vids 头像功能上线，Moonshot Kimi K3 刷新开源纪录",
+  "items": [
+    {
+      "title": "Google Vids 上线个人 AI 头像与 Gemini Omni",
+      "summary": "Google 为 Vids 推出两项更新：Gemini Omni 支持用文字提示和图片参考连续编辑视频（换背景、调光线、加特效均无需重来）；个人 AI 头像功能则让用户上传一张自拍和一段语音，就能生成会模仿自己样貌与声音的数字分身来播报文案。目前面向 Google AI Pro/Ultra 及 Workspace 企业用户开放，成片自带 SynthID 隐形水印。对不想出镜、又想做人设类内容的创作者，这是又一个「免摄像出镜」的低门槛选项。",
+      "category": "工具",
+      "source": "Google Blog",
+      "url": "https://blog.google/products-and-platforms/products/workspace/gemini-omni-personal-avatars/",
+      "featured": true
+    },
+    {
+      "title": "Roblox 上线 AI 游戏创作功能 Build",
+      "summary": "Roblox 推出名为「Build」的 AI 游戏创作工具，用户只需输入一句描述（如「做一个森林冒险游戏」）即可生成可玩游戏初版并自行修改分享，7 月 28 日先在新西兰开放公开测试，年满 16 岁作品才能面向全球玩家发布。面对「AI 垂圾游戏」的行业担忧，Roblox 表示会按玩家留存率而非产量给作品排序。对做互动内容、小游戏的创作者，这进一步把「一句话出游戏」拉到了移动端。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/16/roblox-launches-an-ai-powered-game-creation-feature-in-its-mobile-app/",
+      "featured": false
+    },
+    {
+      "title": "Moonshot 开源 Kimi K3，参数规模冠绝全球",
+      "summary": "月之暗面发布 Kimi K3，总参数达 2.8 万亿、采用稀疏 MoE 架构并支持百万 token 上下文，官方称其为「全球首个开源 3T 级模型」，多项基准测试逼近 Claude、GPT-5.6 等顶级闭源模型。模型开放权重、兼容 OpenAI SDK 调用方式，定价不按上下文长度分层计费。对依赖 AI 辅助写作、长文档处理或自建工作流的创作者和开发者，这类高性价比开源大模型又多了一个能自部署、可深度定制的选项。",
+      "category": "模型",
+      "source": "MarkTechPost",
+      "url": "https://www.marktechpost.com/2026/07/16/moonshot-ai-releases-kimi-k3-a-2-8-trillion-parameter-open-moe-model-with-kimi-delta-attention-and-1m-context/",
+      "featured": true
+    },
+    {
+      "title": "Mira Murati 的 Thinking Machines 发布首个开源模型",
+      "summary": "前 OpenAI CTO Mira Murati 创立的 Thinking Machines Lab 发布首个开源权重模型 Inkling，主打「反一刀切」的可定制化路线，被指借鉴了部分中国厂商的开源思路，意在为开发者提供跳出各大 AI 巨头封闭生态的替代选择。对希望自行微调、本地部署模型的技术型创作者，这是硅谷顶尖团队进一步扩充开源阵营的信号。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/15/thinking-machines-amps-up-its-bet-against-one-size-fits-all-ai-with-its-first-open-model-inkling/",
+      "featured": false
+    },
+    {
+      "title": "TikTok Shop 直播间禁用 AI 配音与静态图",
+      "summary": "TikTok Shop 更新直播质量规范，明令禁止在带货直播中使用 AI 生成配音、预录音频以及静态图片替代真人出镜，违规会直接拉低账号健康分。对靠直播带货的创作者和商家，这意味着「用 AI 配音批量开播」的省力打法在该平台已被明确堵死，真人出镜和现场感重新成为硬性要求。",
+      "category": "政策",
+      "source": "PPC Land",
+      "url": "https://ppc.land/tiktok-shops-quality-rules-ban-ai-voices-and-still-images-from-lives/",
+      "featured": false
+    },
+    {
+      "title": "澳大利亚 AI 版权豁免争议持续发酵",
+      "summary": "澳大利亚政府内部就是否给 AI 公司训练数据版权豁免出现分裂，官方口径是「豁免已被搁置」，但有参议员爆料业界正推动用超 500 亿澳元数据中心投资换取豁免、外加创作者基金的方案，被批为「脏交易」；总理本周将发表 AI 政策演讲，但据报更多是原则表态而非具体新规。对创作者而言，训练数据版权补偿标准仍悬而未决，值得持续关注后续立法走向。",
+      "category": "政策",
+      "source": "The Next Web",
+      "url": "https://thenextweb.com/news/australia-ai-copyright-datacentres-carve-out",
+      "featured": false
+    }
+  ]
+}
