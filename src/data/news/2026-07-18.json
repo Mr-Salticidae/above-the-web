@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-18",
+  "headline": "Netflix 天价收购AI制片公司，Decart 发布实时视频新模型 Lucy 2.5",
+  "items": [
+    {
+      "title": "Netflix 5.87亿美元收购 Affleck 的AI制片公司",
+      "summary": "Netflix 在监管文件中披露，以 5.87 亿美元现金收购 Ben Affleck 创立的AI初创公司 InterPositive，是其历史上最大手笔的收购之一。该公司的核心技术是用剧组自己拍摄的样片（dailies）训练专属模型，用来补齐缺失镜头、修正打光、增强背景，解决的是实拍中的具体制作难题而非从零生成内容。对影视和短片创作者，这标志着头部厂商开始把「用自家素材训练的定制AI」当成制片流程里的标准工具，而不只是一个内容生成器。",
+      "category": "行业",
+      "source": "TheWrap",
+      "url": "https://www.thewrap.com/industry-news/deals-ma/netflix-ben-affleck-interpositive-purchase-price-587-million/",
+      "featured": true
+    },
+    {
+      "title": "Decart 发布实时视频编辑模型 Lucy 2.5",
+      "summary": "Decart AI 推出新一代实时视频模型 Lucy 2.5，能在 30 帧每秒、1080p 分辨率下对直播画面做近乎零延迟的换装、换场景、加特效和物体擦除，并新增「自锁定」技术让编辑效果在人物转身、离开画面后依然保持一致。官方称其瞄准直播电商、虚拟试穿、互动广告和游戏等场景。对做直播和互动内容的创作者，这是「边播边改」的实时视觉特效第一次有了可用于生产环境的模型。",
+      "category": "工具",
+      "source": "Decart AI",
+      "url": "https://decart.ai/publications/lucy-2-5-raising-the-bar-for-live-ai",
+      "featured": true
+    },
+    {
+      "title": "Fortnite 上线 AI 语音 NPC，7月30日铺开",
+      "summary": "Epic Games 宣布 Fortnite 中处于测试阶段的「对话」功能将于 7 月 30 日正式推出：创作者在 UEFN 中用提示词定义 NPC 的性格与知识库，系统结合 Google Gemini 做对话生成、ElevenLabs 的 Eleven V3 做语音合成，目前已为 36 个官方角色配上可复用的AI人设和声音。对做地图、小游戏的 UGC 创作者，这是「一句话给NPC装上会聊天的嘴」的又一次落地，但此前配音演员工会已就此类AI配音提出过异议。",
+      "category": "工具",
+      "source": "Video Games Chronicle",
+      "url": "https://www.videogameschronicle.com/news/fortnite-has-started-adding-ai-voices-to-its-npcs-for-an-upcoming-conversations-feature/",
+      "featured": false
+    },
+    {
+      "title": "Google AI Mode 打通 Canva、Instacart、YouTube",
+      "summary": "Google 为 AI Mode 搜索新增应用直连能力，用户可以直接在搜索结果里调用 Canva 编辑图片、播放 YouTube Music、通过 Instacart 下单，把「问答」搜索升级成能代为执行任务的助手。对做设计、剪辑相关内容的创作者，这进一步说明搜索入口正在变成创作工具的分发渠道，值得关注自己的作品和工具是否会被这类AI直连功能覆盖到。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/16/googles-ai-mode-now-lets-you-link-and-interact-with-select-apps/",
+      "featured": false
+    },
+    {
+      "title": "Meta 与 Anthropic 洽谈百亿美元算力租赁",
+      "summary": "据 The New York Times、Reuters 等多家媒体报道，Meta 正与 Anthropic 商谈一项规模约 100 亿美元的算力租赁协议，Meta 借此从社交平台巨头进一步转型为算力和云服务供应方。对依赖 Claude 等模型做内容生产的创作者，算力供给扩容有助于缓解高峰期的排队和限速，但也说明各家闭源大厂之间的算力绑定正在加深。",
+      "category": "行业",
+      "source": "Data Center Dynamics",
+      "url": "https://www.datacenterdynamics.com/en/news/anthropic-considers-leasing-compute-from-meta-in-10bn-deal/",
+      "featured": false
+    },
+    {
+      "title": "习近平在 WAIC 2026 推动成立 WAICO",
+      "summary": "世界人工智能大会（WAIC）2026 在上海开幕，习近平力推成立「世界人工智能合作组织」（WAICO），首批 29 个成员国包括巴西、印尼、南非、俄罗斯和巴基斯坦，总部设在上海，意在牵头制定跨境AI治理规则、推动开源模型普惠发展中国家。对创作者而言，这标志着中国正把开源大模型的话语权和全球治理规则制定绑在一起，后续跨境合规与开源生态走向值得持续关注。",
+      "category": "政策",
+      "source": "Al Jazeera",
+      "url": "https://www.aljazeera.com/news/2026/7/17/chinas-xi-jinping-launches-new-ai-alliance-what-is-it",
+      "featured": false
+    }
+  ]
+}
