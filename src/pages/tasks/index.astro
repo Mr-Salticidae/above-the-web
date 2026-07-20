@@ -1,0 +1,146 @@
+---
+// 任务书 · Commissions —— 对外发布的合作任务版块。
+// 列表页：招募中的任务置顶展示，已收官的进入归档目录；详情页在 /tasks/[slug]/。
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../lib/news.mjs';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const tasks = (await getCollection('tasks')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const open = tasks.filter((t) => t.data.status === 'open');
+const closed = tasks.filter((t) => t.data.status !== 'open');
+---
+
+<BaseLayout
+  title="任务书"
+  description="对外发布的合作任务：明确的要求、对标素材、时间与报酬，认领前一次看清。"
+>
+  <div class="tasks-page">
+    <header class="masthead">
+      <p class="masthead-kicker">Open Commissions</p>
+      <h1>任务书</h1>
+      <p class="masthead-sub">Commissions</p>
+      <p class="masthead-desc">
+        对外发布的合作任务。每份任务书把要求、对标素材、时间与报酬一次写清——认领前先读完，
+        做起来才不返工。
+      </p>
+    </header>
+
+    {open.length > 0 ? (
+      <section class="open-list">
+        {open.map((t) => (
+          <a class="task-card" href={`${base}/tasks/${t.id}/`}>
+            <div class="tc-top">
+              <span class="tc-status is-open">招募中</span>
+              <span class="tc-date">{formatDate(t.data.date)} 发布</span>
+            </div>
+            <h2>{t.data.title}</h2>
+            <p class="tc-summary">{t.data.summary}</p>
+            <div class="tc-meta">
+              {t.data.fee && <span class="tc-fee">{t.data.fee}</span>}
+              {t.data.deadline && <span class="tc-deadline">截止 {formatDate(t.data.deadline)}</span>}
+              <span class="tc-cta">查看任务书 →</span>
+            </div>
+          </a>
+        ))}
+      </section>
+    ) : (
+      <p class="empty">当前没有招募中的任务，新任务书会第一时间发布在这里。</p>
+    )}
+
+    {closed.length > 0 && (
+      <section class="archive">
+        <h2 class="archive-label">已收官 <span>Archive</span></h2>
+        <ol class="archive-list">
+          {closed.map((t) => (
+            <li>
+              <a href={`${base}/tasks/${t.id}/`}>
+                <span class="a-status">已收官</span>
+                <span class="a-title">{t.data.title}</span>
+                {t.data.fee && <span class="a-fee">{t.data.fee}</span>}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .tasks-page { max-width: 52rem; margin: 0 auto; padding: 3.2rem 1.5rem 6rem; }
+
+  /* 刊头：沿用快讯的杂志封面式排印 */
+  .masthead { text-align: center; padding: 0 0 2.6rem; margin: 0 0 2.6rem; border-bottom: 2px solid var(--ink); }
+  .masthead-kicker {
+    margin: 0 0 .8rem; font-family: var(--sans); font-size: .7rem;
+    letter-spacing: .34em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .masthead h1 {
+    margin: 0; font-family: var(--serif); font-size: clamp(2.6rem, 7vw, 4rem);
+    letter-spacing: .1em; line-height: 1.15; color: var(--ink);
+    text-shadow: 0 2px 50px rgba(var(--glow), .3);
+  }
+  .masthead-sub {
+    margin: .5rem 0 0; font-family: var(--sans); font-size: .74rem;
+    letter-spacing: .52em; text-transform: uppercase; color: var(--accent);
+  }
+  .masthead-desc {
+    margin: 1.3rem auto 0; max-width: 34rem;
+    font-size: .92rem; line-height: 1.8; color: var(--ink-soft);
+  }
+
+  .open-list { display: flex; flex-direction: column; gap: 1.1rem; margin: 0 0 3.4rem; }
+  .empty { text-align: center; color: var(--ink-soft); padding: 3rem 0 4rem; }
+
+  .task-card {
+    display: block; padding: 1.4rem 1.6rem 1.5rem; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2);
+    transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, border-color .2s ease;
+  }
+  .task-card:hover {
+    transform: translateY(-3px); text-decoration: none;
+    box-shadow: 0 16px 40px -16px rgba(var(--shadow), .5);
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  }
+  .tc-top { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .55rem; }
+  .tc-status {
+    font-family: var(--sans); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
+    border-radius: 999px; padding: .18em .7em; white-space: nowrap;
+  }
+  .tc-status.is-open { color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
+  .tc-date { font-family: var(--sans); font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .task-card h2 { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; margin: 0 0 .4rem; }
+  .tc-summary { margin: 0 0 .9rem; font-size: .92rem; line-height: 1.8; color: var(--ink-soft); }
+  .tc-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.2rem; }
+  .tc-fee { font-family: var(--sans); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .tc-deadline { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .tc-cta { margin-left: auto; font-size: .84rem; font-weight: 600; color: var(--accent); }
+
+  /* 已收官：细线目录体，与快讯归档同构 */
+  .archive-label {
+    display: flex; align-items: baseline; gap: .55rem;
+    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .4rem;
+    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
+  }
+  .archive-label span {
+    font-family: var(--sans); font-weight: 400; font-size: .68rem;
+    letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .archive-list { list-style: none; margin: 0; padding: 0; }
+  .archive-list li { border-bottom: 1px solid var(--line); }
+  .archive-list li:last-child { border-bottom: none; }
+  .archive-list a {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: baseline;
+    padding: .95rem .4rem; border-radius: 10px; color: var(--ink);
+    transition: background .15s ease;
+  }
+  .archive-list a:hover { background: var(--accent-soft); text-decoration: none; }
+  .a-status { font-family: var(--sans); font-size: .72rem; letter-spacing: .1em; color: var(--ink-soft); white-space: nowrap; }
+  .a-title { font-family: var(--serif); font-size: .98rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .a-fee { font-family: var(--sans); font-size: .78rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  @media (max-width: 640px) {
+    .archive-list a { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .15rem .8rem; }
+    .a-title { grid-column: 1 / -1; white-space: normal; }
+  }
+</style>

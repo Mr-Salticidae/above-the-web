@@ -23,6 +23,12 @@ const newsBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/news/';
 const latestNews = getLatestIssue();
 const newsPeek = latestNews ? latestNews.items.slice(0, 4) : [];
 
+// 「任务书」：对外发布的合作任务，首页速览最新几份，入口进 /tasks/
+const tasksBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/tasks/';
+const allTasks = (await getCollection('tasks')).sort((a, b) => b.data.date.localeCompare(a.data.date));
+const taskPeek = allTasks.slice(0, 3);
+const openTaskCount = allTasks.filter((t) => t.data.status === 'open').length;
+
 const notes = await getCollection('notes');
 
 const cats = SELECTED.map(categoryLabel);
@@ -80,6 +86,7 @@ const toc = [
   ...(latestNews ? [{ id: 'news', label: 'AIGC 快讯' }] : []),
   ...(latestEpisodes.length > 0 ? [{ id: 'prompt-master', label: '成为 Prompt 大师' }] : []),
   { id: 'plays', label: '可玩' },
+  ...(allTasks.length > 0 ? [{ id: 'tasks', label: '任务书' }] : []),
   { id: 'notes', label: '笔记' },
   ...cats.map((c, i) => ({ id: `sec-cat-${i}`, label: c, cat: c })),
 ];
@@ -88,7 +95,9 @@ const toc = [
 const kickers = [];
 if (latestNews) kickers.push(['news', 'AIGC Daily']);
 if (latestEpisodes.length > 0) kickers.push(['prompt-master', 'Prompt Master']);
-kickers.push(['plays', 'Plays'], ['notes', 'Notes']);
+kickers.push(['plays', 'Plays']);
+if (allTasks.length > 0) kickers.push(['tasks', 'Commissions']);
+kickers.push(['notes', 'Notes']);
 const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: String(i + 1).padStart(2, '0'), label }]));
 ---
 
@@ -208,6 +217,29 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
       </div>
     </div>
   </section>
+
+  {allTasks.length > 0 && (
+    <section class="tasks-peek" id="tasks">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>{kickerOf.tasks.no}</i>{kickerOf.tasks.label}</p>
+        <h2>任务书</h2>
+        <p class="sec-desc">对外发布的合作任务：要求、对标素材、时间与报酬一次写清，认领前先读完。{openTaskCount > 0 ? `当前 ${openTaskCount} 份招募中。` : '当前暂无招募，新任务会发布在这里。'}</p>
+      </header>
+      <ul class="task-peek-list">
+        {taskPeek.map((t) => (
+          <li>
+            <a href={`${tasksBase}${t.id}/`}>
+              <span class:list={['tk-status', { 'is-open': t.data.status === 'open' }]}>{t.data.status === 'open' ? '招募中' : '已收官'}</span>
+              <span class="tk-title">{t.data.title}</span>
+              {t.data.fee && <span class="tk-fee">{t.data.fee}</span>}
+              {t.data.deadline && <span class="tk-deadline">截止 {formatDate(t.data.deadline)}</span>}
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a class="news-peek-all" href={tasksBase}>查看全部 {allTasks.length} 份任务书 →</a>
+    </section>
+  )}
 
   <section class="notes-head" id="notes">
     <header class="sec-head">
@@ -503,6 +535,30 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
 
   /* 可玩 · Plays —— 数据驱动的作品入口区，风格沿用站点 token */
   .plays { max-width: 72rem; margin: 0 auto; padding: 3.4rem 1.5rem .5rem; }
+
+  /* 任务书 —— 首页速览版块：目录体条目 + 入口，与快讯速览同构 */
+  .tasks-peek { max-width: 72rem; margin: 0 auto; padding: 3.4rem 1.5rem .5rem; }
+  .task-peek-list { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2); overflow: hidden; }
+  .task-peek-list li + li { border-top: 1px solid var(--line); }
+  .task-peek-list a {
+    display: grid; grid-template-columns: auto 1fr auto auto; gap: .9rem; align-items: baseline;
+    padding: .85rem 1.3rem; color: var(--ink); transition: background .15s ease;
+  }
+  .task-peek-list a:hover { background: var(--accent-soft); text-decoration: none; }
+  .tk-status {
+    font-family: var(--sans); font-size: .64rem; letter-spacing: .12em; text-transform: uppercase;
+    border-radius: 999px; padding: .16em .65em; white-space: nowrap;
+    color: var(--ink-soft); border: 1px solid var(--line);
+  }
+  .tk-status.is-open { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
+  .tk-title { font-family: var(--serif); font-size: .96rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tk-fee { font-size: .8rem; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tk-deadline { font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  @media (max-width: 640px) {
+    .task-peek-list a { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .2rem .8rem; }
+    .tk-title { grid-column: 1 / -1; white-space: normal; }
+    .tk-deadline { display: none; }
+  }
 
   /* 笔记 —— 板块头独立成节，下方紧跟 sticky 筛选条与卡片区 */
   .notes-head { max-width: 72rem; margin: 0 auto; padding: 3.4rem 1.5rem 1.4rem; scroll-margin-top: 4.5rem; }
