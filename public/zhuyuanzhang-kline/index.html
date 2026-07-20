@@ -80,7 +80,7 @@
     h1 {
       margin: 0;
       font-family: var(--serif);
-      font-size: clamp(1.8rem, 4vw, 3.8rem);
+      font-size: 3.2rem;
       line-height: 1.06;
       letter-spacing: .04em;
       text-shadow: 0 20px 60px rgba(var(--glow-1), .18);
@@ -90,7 +90,7 @@
       margin: .46rem 0 0;
       max-width: 42rem;
       color: var(--ink-soft);
-      font-size: clamp(.82rem, 1.6vw, .98rem);
+      font-size: .94rem;
       line-height: 1.7;
     }
 
@@ -142,11 +142,24 @@
       top: .9rem;
       left: .95rem;
       right: .95rem;
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
       gap: .8rem;
       pointer-events: none;
+    }
+
+    .chapter-badge {
+      justify-self: center;
+      padding: .24rem .62rem;
+      border: 1px solid color-mix(in srgb, var(--gold) 38%, var(--line));
+      border-radius: 999px;
+      color: var(--ink);
+      background: color-mix(in srgb, var(--paper-2) 86%, transparent);
+      font-family: var(--serif);
+      font-size: .72rem;
+      white-space: nowrap;
+      transition: opacity .24s ease, transform .24s ease;
     }
 
     .legend {
@@ -173,11 +186,52 @@
     .legend .line { background: var(--accent); }
 
     .phase {
+      justify-self: end;
       color: var(--ink-soft);
       font-size: .72rem;
       letter-spacing: .16em;
       text-transform: uppercase;
       white-space: nowrap;
+    }
+
+    .opening {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      gap: .72rem;
+      padding: 2rem;
+      text-align: center;
+      background: color-mix(in srgb, var(--paper-2) 94%, transparent);
+      transition: opacity .42s cubic-bezier(.22, 1, .36, 1), visibility .42s;
+    }
+
+    .opening.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .opening-mark {
+      color: var(--cinnabar);
+      font-size: .68rem;
+      letter-spacing: .28em;
+    }
+
+    .opening strong {
+      max-width: 18em;
+      font-family: var(--serif);
+      font-size: 3.1rem;
+      line-height: 1.22;
+      font-weight: 600;
+    }
+
+    .opening span:last-child {
+      color: var(--ink-soft);
+      font-size: .78rem;
+      letter-spacing: .18em;
     }
 
     .event-card {
@@ -196,7 +250,7 @@
     .event-card strong {
       display: block;
       font-family: var(--serif);
-      font-size: clamp(1rem, 2vw, 1.18rem);
+      font-size: 1.1rem;
       line-height: 1.35;
     }
 
@@ -207,6 +261,12 @@
       font-size: .84rem;
       line-height: 1.65;
     }
+
+    .event-card.is-review {
+      border-color: color-mix(in srgb, var(--gold) 55%, var(--line));
+    }
+
+    .event-card.is-review strong { color: var(--cinnabar); }
 
     .controls {
       position: absolute;
@@ -221,6 +281,18 @@
       background: color-mix(in srgb, var(--paper-2) 92%, transparent);
       box-shadow: 0 18px 48px -34px rgba(var(--shadow), .48);
       backdrop-filter: blur(10px);
+      transition: opacity .22s ease, transform .22s ease;
+    }
+
+    .stage.is-playing .controls {
+      opacity: .28;
+      transform: translateY(2px);
+    }
+
+    .stage.is-playing .controls:hover,
+    .stage.is-playing .controls:focus-within {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .icon-btn,
@@ -438,17 +510,18 @@
     }
 
     @media (max-width: 980px) {
-      body { overflow: auto; }
       .app {
         min-height: 100dvh;
-        height: auto;
-        grid-template-rows: auto minmax(24rem, 58dvh) auto;
+        height: 100dvh;
+        grid-template-rows: auto minmax(0, 1fr) auto;
       }
 
       .topbar {
         grid-template-columns: 1fr;
         gap: .65rem;
       }
+
+      h1 { font-size: 2.4rem; }
 
       .meta {
         justify-content: start;
@@ -472,12 +545,13 @@
         min-height: 100dvh;
         padding: .78rem;
         gap: .6rem;
-        grid-template-rows: auto minmax(22rem, 59dvh) auto;
+        grid-template-rows: auto minmax(0, 1fr) 3.45rem;
       }
 
       .kicker { font-size: .62rem; letter-spacing: .24em; }
-      h1 { font-size: clamp(1.62rem, 9vw, 2.4rem); }
-      .subtitle { font-size: .78rem; line-height: 1.58; }
+      h1 { font-size: 1.9rem; }
+      .opening strong { font-size: 1.82rem; }
+      .subtitle { display: none; }
       .meta { grid-template-columns: repeat(3, max-content); }
       .badge { font-size: .66rem; padding: .18rem .52rem; }
 
@@ -485,13 +559,16 @@
         top: .62rem;
         left: .65rem;
         right: .65rem;
-        align-items: flex-start;
+        grid-template-columns: 1fr auto;
+        align-items: start;
       }
 
       canvas { height: calc(100% - 9rem); }
 
       .phase { display: none; }
-      .legend { max-width: 13rem; gap: .42rem; font-size: .64rem; }
+      .chapter-badge { justify-self: end; font-size: .66rem; }
+      .legend { max-width: 10rem; gap: .36rem; font-size: .62rem; }
+      .legend span:nth-child(3) { display: none; }
 
       .event-card {
         left: .65rem;
@@ -524,7 +601,7 @@
       }
 
       .event-button {
-        flex-basis: 7.3rem;
+        flex-basis: 6.8rem;
         padding: .38rem .42rem;
       }
 
@@ -541,10 +618,10 @@
 
       .app {
         padding: .62rem;
-        grid-template-rows: auto minmax(20rem, 58dvh) auto;
+        grid-template-rows: auto minmax(0, 1fr) 3.3rem;
       }
 
-      .legend span:nth-child(3) { display: none; }
+      .legend span:nth-child(2) { display: none; }
       .event-card { bottom: 3.55rem; }
       .event-card span { -webkit-line-clamp: 1; }
       .icon-btn { width: 1.88rem; height: 1.88rem; }
@@ -575,6 +652,11 @@
 
     <section class="stage" aria-label="朱元璋一生叙事K线图">
       <h2 class="sr-only">朱元璋一生叙事K线图</h2>
+      <div class="opening" id="opening" aria-hidden="true">
+        <span class="opening-mark">HISTORICAL CANDLESTICK</span>
+        <strong>如果朱元璋的一生<br />是一根 K 线</strong>
+        <span>1328—1398 · 从赤贫到帝国中枢</span>
+      </div>
       <canvas id="chart" aria-label="红色上行、绿色回撤、紫色均线和金色冲击量组成的朱元璋一生K线图"></canvas>
       <div class="chart-caption">
         <div class="legend" aria-label="图例">
@@ -582,6 +664,7 @@
           <span><i class="down"></i>阶段回撤</span>
           <span><i class="line"></i>命运轨迹</span>
         </div>
+        <span class="chapter-badge" id="chapterLabel">第一章 · 乱世低开</span>
         <span class="phase" id="phaseLabel">1328 · 低位开盘</span>
       </div>
       <div class="event-card" id="eventCard">
@@ -631,6 +714,10 @@
         <label class="setting-toggle" for="glowInput">
           <span>轨迹光点</span>
           <input id="glowInput" type="checkbox" checked />
+        </label>
+        <label class="setting-toggle" for="soundInput">
+          <span>节点声音</span>
+          <input id="soundInput" type="checkbox" />
         </label>
         <div>
           <p class="setting-title">配色方案</p>
@@ -683,8 +770,11 @@
 
     const canvas = document.getElementById('chart');
     const ctx = canvas.getContext('2d');
+    const stage = document.querySelector('.stage');
+    const opening = document.getElementById('opening');
     const timeline = document.getElementById('timeline');
     const eventCard = document.getElementById('eventCard');
+    const chapterLabel = document.getElementById('chapterLabel');
     const phaseLabel = document.getElementById('phaseLabel');
     const playBtn = document.getElementById('playBtn');
     const resetBtn = document.getElementById('resetBtn');
@@ -700,9 +790,10 @@
     const backgroundInput = document.getElementById('backgroundInput');
     const bandInput = document.getElementById('bandInput');
     const glowInput = document.getElementById('glowInput');
+    const soundInput = document.getElementById('soundInput');
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const defaultSettings = Object.freeze({ speed: 1, zoom: 1, background: true, band: false, glow: true, palette: 'above' });
+    const defaultSettings = Object.freeze({ speed: 1, zoom: 1, background: true, band: false, glow: true, sound: false, palette: 'above' });
     const settings = { ...defaultSettings };
     const palettes = {
       above: {
@@ -734,15 +825,45 @@
     let palette;
     let playbackTime = 0;
     let camera = 0;
-    let focusAmount = 1;
+    let cameraSpan = NaN;
+    let narrativeKey = '';
+    let audioContext;
 
     const LAST_INDEX = candles.length - 1;
-    const INTRO_HOLD = .55;
-    const STEP_DURATION = .82;
-    const TRAVEL_DURATION = .46;
-    const NODE_REVEAL_DURATION = .28;
-    const FINAL_HOLD = .48;
-    const END_TIME = INTRO_HOLD + (LAST_INDEX - 1) * STEP_DURATION + TRAVEL_DURATION + FINAL_HOLD;
+    const OPENING_DURATION = 1.55;
+    const TRAVEL_DURATION = .56;
+    const NODE_REVEAL_DURATION = .26;
+    const MINOR_HOLD = .5;
+    const MAJOR_HOLD = 1.85;
+    const CHAPTER_REVIEW_DURATION = 1.55;
+    const FINAL_REVIEW_DURATION = 5.5;
+    const MAJOR_NODES = new Set([0, 1, 4, 7, 10, 14, 15, 20, 24, 25, 26]);
+    const chapters = [
+      { start: 0, end: 3, label: '第一章 · 乱世低开', summary: '灾荒夺走家庭，寺院与云游让一个赤贫少年看见真实天下。' },
+      { start: 4, end: 8, label: '第二章 · 义军起势', summary: '从投军、募兵到据有应天，求生者开始拥有自己的基本盘。' },
+      { start: 9, end: 15, label: '第三章 · 逐鹿天下', summary: '龙湾承压、鄱阳决战、北伐定局，命运曲线冲上权力峰值。' },
+      { start: 16, end: 23, label: '第四章 · 洪武定盘', summary: '统一之后转向制度建设，治理能力与皇权集中同步上行。' },
+      { start: 24, end: 26, label: '第五章 · 高位余震', summary: '功臣案与继承危机接连回撤，帝王晚年在高位震荡中收盘。' }
+    ];
+
+    function chapterForIndex(index) {
+      return chapters.find((chapter) => index >= chapter.start && index <= chapter.end) || chapters[0];
+    }
+
+    const playbackSchedule = (() => {
+      let cursor = OPENING_DURATION;
+      return candles.map((_, index) => {
+        const travelStart = index === 0 ? cursor : cursor;
+        const arrival = index === 0 ? cursor : cursor + TRAVEL_DURATION;
+        const holdEnd = arrival + (MAJOR_NODES.has(index) ? MAJOR_HOLD : MINOR_HOLD);
+        const isChapterEnd = chapters.some((chapter) => chapter.end === index) && index !== LAST_INDEX;
+        const reviewEnd = holdEnd + (isChapterEnd ? CHAPTER_REVIEW_DURATION : 0);
+        cursor = reviewEnd;
+        return { travelStart, arrival, holdEnd, reviewEnd, isChapterEnd };
+      });
+    })();
+    const FINAL_REVIEW_START = playbackSchedule[LAST_INDEX].holdEnd;
+    const END_TIME = FINAL_REVIEW_START + FINAL_REVIEW_DURATION;
 
     const movingAverages = candles.map((_, index) => {
       const start = Math.max(0, index - 2);
@@ -768,11 +889,13 @@
 
     function applySettings(next = {}) {
       if (!next || typeof next !== 'object') return { ...settings };
+      const zoomChanged = 'zoom' in next;
       if ('speed' in next) settings.speed = Math.max(.5, Math.min(2, Number(next.speed) || 1));
       if ('zoom' in next) settings.zoom = Math.max(.5, Math.min(1.5, Number(next.zoom) || 1));
       if ('background' in next) settings.background = Boolean(next.background);
       if ('band' in next) settings.band = Boolean(next.band);
       if ('glow' in next) settings.glow = Boolean(next.glow);
+      if ('sound' in next) settings.sound = Boolean(next.sound);
       if (next.palette && palettes[next.palette]) settings.palette = next.palette;
 
       Object.entries(palettes[settings.palette]).forEach(([name, value]) => {
@@ -787,11 +910,13 @@
       backgroundInput.checked = settings.background;
       bandInput.checked = settings.band;
       glowInput.checked = settings.glow;
+      soundInput.checked = settings.sound;
       document.querySelectorAll('.palette-btn').forEach((button) => {
         button.setAttribute('aria-pressed', String(button.dataset.palette === settings.palette));
       });
 
       readPalette();
+      if (zoomChanged && !narrativeKey.startsWith('review-')) cameraSpan = closeSpanForWidth();
       draw();
       return { ...settings };
     }
@@ -806,8 +931,15 @@
       canvas.width = Math.max(1, Math.floor(rect.width * dpr));
       canvas.height = Math.max(1, Math.floor(rect.height * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!cameraSpan || !Number.isFinite(cameraSpan)) cameraSpan = closeSpanForWidth(rect.width);
       readPalette();
       draw();
+    }
+
+    function closeSpanForWidth(width = canvas.clientWidth) {
+      const baseSpan = width < 520 ? 3.2 : width < 900 ? 4.6 : 6.4;
+      const closeUp = width < 520 ? .7 : width < 900 ? 1.05 : 1.45;
+      return Math.max(2.2, baseSpan - closeUp * settings.zoom);
     }
 
     function xOf(i, plot, viewSpan) {
@@ -828,8 +960,7 @@
     }
 
     function nodeArrival(index) {
-      if (index === 0) return 0;
-      return INTRO_HOLD + (index - 1) * STEP_DURATION + TRAVEL_DURATION;
+      return playbackSchedule[index]?.arrival ?? 0;
     }
 
     function nodeReveal(index, extraDelay = 0) {
@@ -837,12 +968,47 @@
     }
 
     function motionAt(time) {
-      if (time < INTRO_HOLD) return { progress: 0, focus: 1 };
-      const motionTime = time - INTRO_HOLD;
-      const step = Math.min(LAST_INDEX - 1, Math.floor(motionTime / STEP_DURATION));
-      const phaseTime = motionTime - step * STEP_DURATION;
-      const travel = smoothstep(phaseTime / TRAVEL_DURATION);
-      return { progress: Math.min(LAST_INDEX, step + travel), focus: 1 };
+      const closeSpan = closeSpanForWidth();
+      if (time < OPENING_DURATION) {
+        return { progress: 0, active: 0, targetCamera: 0, targetSpan: closeSpan, mode: 'opening' };
+      }
+
+      for (let index = 0; index < playbackSchedule.length; index++) {
+        const segment = playbackSchedule[index];
+        if (index > 0 && time < segment.arrival) {
+          const travel = smoothstep((time - segment.travelStart) / TRAVEL_DURATION);
+          return {
+            progress: index - 1 + travel,
+            active: index - 1,
+            targetCamera: index - 1 + travel,
+            targetSpan: closeSpan,
+            mode: 'travel'
+          };
+        }
+        if (time < segment.holdEnd) {
+          return { progress: index, active: index, targetCamera: index, targetSpan: closeSpan, mode: 'node' };
+        }
+        if (time < segment.reviewEnd) {
+          const chapter = chapterForIndex(index);
+          return {
+            progress: index,
+            active: index,
+            targetCamera: (chapter.start + chapter.end) / 2,
+            targetSpan: Math.max(closeSpan, chapter.end - chapter.start + 2.2),
+            mode: 'chapter-review',
+            chapter
+          };
+        }
+      }
+
+      return {
+        progress: LAST_INDEX,
+        active: LAST_INDEX,
+        targetCamera: LAST_INDEX / 2,
+        targetSpan: LAST_INDEX + 2.4,
+        mode: 'final-review',
+        chapter: chapters[chapters.length - 1]
+      };
     }
 
     function roundedRect(x, y, w, h, r) {
@@ -867,7 +1033,6 @@
       ctx.clearRect(0, 0, width, height);
 
       const phone = width < 520;
-      const tablet = width < 900;
       const plot = {
         x: phone ? 34 : 58,
         y: phone ? 50 : 66,
@@ -875,9 +1040,7 @@
         h: height - (phone ? 122 : 156)
       };
       plot.h = Math.max(phone ? 110 : 130, plot.h);
-      const baseSpan = phone ? 3.2 : tablet ? 4.6 : 6.4;
-      const closeUp = phone ? .7 : tablet ? 1.05 : 1.45;
-      const viewSpan = baseSpan - closeUp * settings.zoom;
+      const viewSpan = Number.isFinite(cameraSpan) ? cameraSpan : closeSpanForWidth(width);
       const spacing = plot.w / viewSpan;
 
       ctx.font = `${phone ? 10 : 12}px ${palette.sans}`;
@@ -899,6 +1062,10 @@
       candles.forEach((item, i) => {
         const x = xOf(i, plot, viewSpan);
         if (x < plot.x - 20 || x > plot.x + plot.w + 20) return;
+        if (viewSpan > 9) {
+          const overviewLabels = phone ? [0, 4, 9, 14, 20, 26] : [0, 3, 4, 8, 9, 15, 16, 23, 24, 26];
+          if (!overviewLabels.includes(i)) return;
+        }
         drawLabel(String(item.year), x, plot.y + plot.h + 22);
       });
 
@@ -1019,15 +1186,41 @@
       ctx.restore();
     }
 
+    function playNodeSound(index) {
+      if (!settings.sound) return;
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      audioContext ||= new AudioContextClass();
+      if (audioContext.state === 'suspended') audioContext.resume().catch(() => {});
+      const now = audioContext.currentTime;
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      oscillator.type = MAJOR_NODES.has(index) ? 'triangle' : 'sine';
+      oscillator.frequency.setValueAtTime(MAJOR_NODES.has(index) ? 164 : 246, now);
+      oscillator.frequency.exponentialRampToValueAtTime(MAJOR_NODES.has(index) ? 110 : 196, now + .11);
+      gain.gain.setValueAtTime(.0001, now);
+      gain.gain.exponentialRampToValueAtTime(MAJOR_NODES.has(index) ? .055 : .025, now + .012);
+      gain.gain.exponentialRampToValueAtTime(.0001, now + .14);
+      oscillator.connect(gain).connect(audioContext.destination);
+      oscillator.start(now);
+      oscillator.stop(now + .15);
+    }
+
     function setActive(index, { redraw = true, announce = true, reveal = true } = {}) {
       active = Math.max(0, Math.min(candles.length - 1, index));
       if (reveal) {
         playbackTime = nodeArrival(active) + NODE_REVEAL_DURATION;
         progress = active;
         camera = active;
-        focusAmount = 1;
+        cameraSpan = closeSpanForWidth();
+        opening.classList.add('is-hidden');
       }
       const item = candles[active];
+      const chapter = chapterForIndex(active);
+      eventCard.classList.remove('is-review');
+      chapterLabel.textContent = chapter.label;
+      narrativeKey = 'node-' + active;
+      if (announce) playNodeSound(active);
       eventCard.innerHTML = `<strong>${item.year} · 约${item.age}岁 · ${item.title}</strong><span>${item.note}</span>`;
       phaseLabel.textContent = `${item.year} · 约${item.age}岁 · ${item.phase}`;
       if (announce && !reducedMotion && eventCard.animate) {
@@ -1046,6 +1239,23 @@
         }
       });
       if (redraw) draw();
+    }
+
+    function showReview(motion) {
+      const isFinal = motion.mode === 'final-review';
+      const key = isFinal ? 'review-final' : 'review-' + motion.chapter.end;
+      if (narrativeKey === key) return;
+      narrativeKey = key;
+      eventCard.classList.add('is-review');
+      if (isFinal) {
+        eventCard.innerHTML = '<strong>七十年，一生收盘</strong><span>从赤贫流民到开国皇帝，这条陡峭曲线既建立了统一秩序，也留下高度集权与继承危机的余震。</span>';
+        chapterLabel.textContent = '全局回望 · 1328—1398';
+        phaseLabel.textContent = '从赤贫到帝国中枢';
+      } else {
+        eventCard.innerHTML = '<strong>' + motion.chapter.label + ' · 阶段回望</strong><span>' + motion.chapter.summary + '</span>';
+        chapterLabel.textContent = motion.chapter.label + ' · 回望';
+        phaseLabel.textContent = '阶段曲线重新入场';
+      }
     }
 
     function renderTimeline() {
@@ -1068,6 +1278,7 @@
       playBtn.innerHTML = playing
         ? '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 5h3v14H7V5Zm7 0h3v14h-3V5Z" fill="currentColor"/></svg>'
         : '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z" fill="currentColor"/></svg>';
+      stage.classList.toggle('is-playing', playing);
     }
 
     function scheduleFrame() {
@@ -1083,16 +1294,21 @@
         playbackTime += delta * settings.speed;
         const motion = motionAt(playbackTime);
         progress = motion.progress;
-        focusAmount = motion.focus;
-        camera += (progress - camera) * (1 - Math.exp(-delta * 10));
-        const nextActive = Math.min(LAST_INDEX, Math.floor(progress + .0001));
-        if (nextActive !== active) setActive(nextActive, { redraw: false, reveal: false });
+        opening.classList.toggle('is-hidden', motion.mode !== 'opening');
+        camera += (motion.targetCamera - camera) * (1 - Math.exp(-delta * 8));
+        cameraSpan += (motion.targetSpan - cameraSpan) * (1 - Math.exp(-delta * 6));
+        if (motion.mode === 'chapter-review' || motion.mode === 'final-review') {
+          showReview(motion);
+        } else if (motion.mode === 'node' && narrativeKey !== 'node-' + motion.active) {
+          setActive(motion.active, { redraw: false, reveal: false });
+        }
         if (playbackTime >= END_TIME) {
           playing = false;
           playbackTime = END_TIME;
           progress = LAST_INDEX;
-          camera = LAST_INDEX;
-          focusAmount = 1;
+          camera = LAST_INDEX / 2;
+          cameraSpan = LAST_INDEX + 2.4;
+          showReview(motionAt(END_TIME));
           updatePlayIcon();
         }
         draw();
@@ -1107,7 +1323,8 @@
         progress = 0;
         playbackTime = 0;
         camera = 0;
-        focusAmount = 1;
+        cameraSpan = closeSpanForWidth();
+        opening.classList.remove('is-hidden');
         setActive(0, { announce: false, reveal: false });
       }
       lastTime = 0;
@@ -1120,7 +1337,8 @@
       progress = 0;
       playbackTime = 0;
       camera = 0;
-      focusAmount = 1;
+      cameraSpan = closeSpanForWidth();
+      opening.classList.remove('is-hidden');
       playing = true;
       lastTime = 0;
       setActive(0, { announce: false, reveal: false });
@@ -1131,7 +1349,16 @@
     nextBtn.addEventListener('click', () => {
       playing = false;
       updatePlayIcon();
-      setActive(active + 1);
+      if (active >= LAST_INDEX) {
+        playbackTime = FINAL_REVIEW_START;
+        progress = LAST_INDEX;
+        showReview(motionAt(END_TIME));
+        camera = LAST_INDEX / 2;
+        cameraSpan = LAST_INDEX + 2.4;
+        draw();
+      } else {
+        setActive(active + 1);
+      }
     });
 
     settingsBtn.addEventListener('click', () => {
@@ -1150,6 +1377,7 @@
     backgroundInput.addEventListener('change', () => applySettings({ background: backgroundInput.checked }));
     bandInput.addEventListener('change', () => applySettings({ band: bandInput.checked }));
     glowInput.addEventListener('change', () => applySettings({ glow: glowInput.checked }));
+    soundInput.addEventListener('change', () => applySettings({ sound: soundInput.checked }));
     resetSettingsBtn.addEventListener('click', resetSettings);
 
     document.querySelectorAll('.palette-btn').forEach((button) => {
@@ -1166,7 +1394,12 @@
     renderTimeline();
     applySettings({ ...defaultSettings });
     setActive(0, { redraw: false, announce: false, reveal: false });
-    if (reducedMotion) playbackTime = NODE_REVEAL_DURATION;
+    if (reducedMotion) {
+      playbackTime = OPENING_DURATION;
+      opening.classList.add('is-hidden');
+    } else {
+      narrativeKey = 'opening';
+    }
     updatePlayIcon();
     resize();
     if (playing) scheduleFrame();
