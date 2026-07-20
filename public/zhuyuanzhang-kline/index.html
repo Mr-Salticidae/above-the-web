@@ -1180,7 +1180,11 @@
 
           ctx.fillStyle = palette.inkSoft;
           ctx.font = `${phone ? 11 : 13}px ${palette.sans}`;
-          drawLabel(`${item.year} · 约${item.age}岁`, x, Math.max(plot.y + 16, wickTop - 18));
+          const labelAbove = wickTop - 18;
+          const labelY = labelAbove < plot.y + 18
+            ? Math.min(plot.y + plot.h - 14, wickBottom + 18)
+            : labelAbove;
+          drawLabel(`${item.year} · 约${item.age}岁`, x, labelY);
         }
       });
       ctx.restore();
