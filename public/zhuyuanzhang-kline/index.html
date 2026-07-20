@@ -234,6 +234,56 @@
       letter-spacing: .18em;
     }
 
+    .review-popover {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      z-index: 3;
+      width: min(26rem, calc(100% - 2rem));
+      padding: .86rem 1rem .92rem;
+      border: 1px solid color-mix(in srgb, var(--gold) 56%, var(--line));
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--paper-2) 94%, transparent);
+      box-shadow: 0 24px 70px -34px rgba(var(--shadow), .62);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate(-50%, -40%) scale(.96);
+      transition:
+        opacity .28s cubic-bezier(.22, 1, .36, 1),
+        transform .34s cubic-bezier(.22, 1, .36, 1),
+        visibility .28s;
+    }
+
+    .review-popover.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .review-kicker {
+      display: block;
+      margin-bottom: .3rem;
+      color: var(--cinnabar);
+      font-size: .66rem;
+      letter-spacing: .18em;
+    }
+
+    .review-popover strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.16rem;
+      line-height: 1.4;
+    }
+
+    .review-popover p {
+      margin: .32rem 0 0;
+      color: var(--ink-soft);
+      font-size: .82rem;
+      line-height: 1.58;
+    }
+
     .event-card {
       position: absolute;
       left: .95rem;
@@ -261,12 +311,6 @@
       font-size: .84rem;
       line-height: 1.65;
     }
-
-    .event-card.is-review {
-      border-color: color-mix(in srgb, var(--gold) 55%, var(--line));
-    }
-
-    .event-card.is-review strong { color: var(--cinnabar); }
 
     .controls {
       position: absolute;
@@ -551,6 +595,9 @@
       .kicker { font-size: .62rem; letter-spacing: .24em; }
       h1 { font-size: 1.9rem; }
       .opening strong { font-size: 1.82rem; }
+      .review-popover { top: 42%; }
+      .review-popover strong { font-size: 1.04rem; }
+      .review-popover p { font-size: .76rem; line-height: 1.5; }
       .subtitle { display: none; }
       .meta { grid-template-columns: repeat(3, max-content); }
       .badge { font-size: .66rem; padding: .18rem .52rem; }
@@ -631,7 +678,8 @@
     @media (prefers-reduced-motion: reduce) {
       .icon-btn,
       .text-btn,
-      .event-button { transition: none; }
+      .event-button,
+      .review-popover { transition: none; }
     }
   </style>
 </head>
@@ -657,6 +705,11 @@
         <strong>如果朱元璋的一生<br />是一根 K 线</strong>
         <span>1328—1398 · 从赤贫到帝国中枢</span>
       </div>
+      <aside class="review-popover" id="reviewPopover" role="status" aria-live="polite">
+        <span class="review-kicker" id="reviewKicker">阶段回望</span>
+        <strong id="reviewTitle">第一章 · 乱世低开</strong>
+        <p id="reviewSummary">灾荒夺走家庭，寺院与云游让一个赤贫少年看见真实天下。</p>
+      </aside>
       <canvas id="chart" aria-label="红色上行、绿色回撤、紫色均线和金色冲击量组成的朱元璋一生K线图"></canvas>
       <div class="chart-caption">
         <div class="legend" aria-label="图例">
@@ -772,6 +825,10 @@
     const ctx = canvas.getContext('2d');
     const stage = document.querySelector('.stage');
     const opening = document.getElementById('opening');
+    const reviewPopover = document.getElementById('reviewPopover');
+    const reviewKicker = document.getElementById('reviewKicker');
+    const reviewTitle = document.getElementById('reviewTitle');
+    const reviewSummary = document.getElementById('reviewSummary');
     const timeline = document.getElementById('timeline');
     const eventCard = document.getElementById('eventCard');
     const chapterLabel = document.getElementById('chapterLabel');
@@ -1212,6 +1269,7 @@
 
     function setActive(index, { redraw = true, announce = true, reveal = true } = {}) {
       active = Math.max(0, Math.min(candles.length - 1, index));
+      hideReview();
       if (reveal) {
         playbackTime = nodeArrival(active) + NODE_REVEAL_DURATION;
         progress = active;
@@ -1221,7 +1279,6 @@
       }
       const item = candles[active];
       const chapter = chapterForIndex(active);
-      eventCard.classList.remove('is-review');
       chapterLabel.textContent = chapter.label;
       narrativeKey = 'node-' + active;
       if (announce) playNodeSound(active);
@@ -1245,18 +1302,26 @@
       if (redraw) draw();
     }
 
+    function hideReview() {
+      reviewPopover.classList.remove('is-visible');
+    }
+
     function showReview(motion) {
       const isFinal = motion.mode === 'final-review';
       const key = isFinal ? 'review-final' : 'review-' + motion.chapter.end;
       if (narrativeKey === key) return;
       narrativeKey = key;
-      eventCard.classList.add('is-review');
+      reviewPopover.classList.add('is-visible');
       if (isFinal) {
-        eventCard.innerHTML = '<strong>七十年，一生收盘</strong><span>从赤贫流民到开国皇帝，这条陡峭曲线既建立了统一秩序，也留下高度集权与继承危机的余震。</span>';
+        reviewKicker.textContent = '全局回望';
+        reviewTitle.textContent = '七十年，一生收盘';
+        reviewSummary.textContent = '从赤贫到帝国中枢：建立统一秩序，也留下集权与继承危机的余震。';
         chapterLabel.textContent = '全局回望 · 1328—1398';
         phaseLabel.textContent = '从赤贫到帝国中枢';
       } else {
-        eventCard.innerHTML = '<strong>' + motion.chapter.label + ' · 阶段回望</strong><span>' + motion.chapter.summary + '</span>';
+        reviewKicker.textContent = '阶段回望';
+        reviewTitle.textContent = motion.chapter.label;
+        reviewSummary.textContent = motion.chapter.summary;
         chapterLabel.textContent = motion.chapter.label + ' · 回望';
         phaseLabel.textContent = '阶段曲线重新入场';
       }
@@ -1303,8 +1368,11 @@
         cameraSpan += (motion.targetSpan - cameraSpan) * (1 - Math.exp(-delta * 6));
         if (motion.mode === 'chapter-review' || motion.mode === 'final-review') {
           showReview(motion);
-        } else if (motion.mode === 'node' && narrativeKey !== 'node-' + motion.active) {
-          setActive(motion.active, { redraw: false, reveal: false });
+        } else {
+          hideReview();
+          if (motion.mode === 'node' && narrativeKey !== 'node-' + motion.active) {
+            setActive(motion.active, { redraw: false, reveal: false });
+          }
         }
         if (playbackTime >= END_TIME) {
           playing = false;
