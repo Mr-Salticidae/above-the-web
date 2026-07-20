@@ -12,6 +12,17 @@
 //   cta      可选；卡片底部按钮文案，默认 '开始游玩 →'（下载型作品可改成 '了解 · 下载 →'）
 export const games = [
   {
+    title: '朱元璋 K线人生',
+    tagline: '把七十年帝王生涯，画成一条会跟拍的命运曲线',
+    desc: '历史叙事可视化：27 个年龄切片化为 K 线节点，镜头跟随朱元璋从濠州少年走向大明开国。可调播放速度、特写强度、背景与配色，所有数值均为帮助理解趋势的叙事指数。',
+    tags: ['历史可视化', '互动叙事', 'Canvas'],
+    path: '/zhuyuanzhang-kline/',
+    status: '在线可看',
+    emoji: '📈',
+    accent: '#a43d2f',
+    cta: '观看一生 →',
+  },
+  {
     // 完整 URL：与 /mlr/ 同理，deploy.yml 每次部署时克隆 typhoon-eye 仓库镜像到
     // 香港服务器 /typhoon-eye/（大陆直连），不进 GitHub Pages 产物。
     // 实时数据由页面运行时从 jsDelivr 多镜像拉取，镜像的静态壳不影响数据新鲜度。
