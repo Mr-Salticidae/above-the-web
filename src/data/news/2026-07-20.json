@@ -1,0 +1,50 @@
+{
+  "date": "2026-07-20",
+  "headline": "Qwen3.8 冲榜、AI 伴侣新规落地，Anthropic 连发新功能",
+  "items": [
+    {
+      "title": "Alibaba 预览 Qwen3.8 Max 旗舰模型",
+      "summary": "阿里巴巴千问团队预览新一代旗舰模型 Qwen3.8 Max，号称综合能力仅次于 Anthropic 的 Claude Fable 5，紧随 Moonshot Kimi K3 开源发布之后。国产大模型密集刷榜，意味着创作者在多模态、写作等底层能力上会有更多高性价比选择。",
+      "category": "模型",
+      "source": "South China Morning Post",
+      "url": "https://www.scmp.com/tech/article/3361119/alibaba-says-newest-qwen-ai-model-second-only-anthropics-claude-fable-5",
+      "featured": true
+    },
+    {
+      "title": "中国新规收紧，AI 伴侣类应用大规模下架",
+      "summary": "中国监管部门以防止用户对聊天机器人产生情感依赖、保护未成年人为由收紧规则，字节跳动、阿里巴巴等旗下的 AI 伴侣类产品被迫下线或大幅削减功能，影响数以亿计用户。做虚拟人设、陪伴类应用的创作者需提前评估合规风险。",
+      "category": "政策",
+      "source": "ABC News (Australia)",
+      "url": "https://www.abc.net.au/news/2026-07-19/china-cracks-down-on-artificial-intelligence-companions/106925352",
+      "featured": true
+    },
+    {
+      "title": "DeepMind：视频生成模型已隐含世界模型能力",
+      "summary": "Google DeepMind 研究团队提出，当前的视频生成模型其实已经具备计算机视觉领域一直缺失的“世界模型”能力，无需专门训练即可理解物理规律与因果关系。这为 AI 视频工具未来做可控叙事、物理仿真提供了理论支撑，值得关注视频生成的创作者留意。",
+      "category": "研究",
+      "source": "the-decoder.com",
+      "url": "https://the-decoder.com/google-deepmind-argues-video-generators-already-contain-the-world-models-computer-vision-has-been-missing/"
+    },
+    {
+      "title": "Spotify 加码 AI 内容功能，遭 Lorde 公开吐槽",
+      "summary": "在被指“AI Slop”音乐灌水的投诉声中，Spotify 反而上线了 AI 生成歌曲摘要等新功能，结果摘要出错，歌手 Lorde 随即公开批评。平台与 AI 生成内容的博弈仍在拉锯，原创音乐人的可见度问题值得持续关注。",
+      "category": "行业",
+      "source": "Futurism",
+      "url": "https://futurism.com/artificial-intelligence/spotify-ai-slop-lorde"
+    },
+    {
+      "title": "Anthropic 上线 Reflect 使用复盘功能",
+      "summary": "Anthropic 为 Claude 推出新功能 Reflect，用仪表盘形式呈现对话时长、使用模式等数据，提醒用户注意使用节奏。对高频依赖 AI 辅助创作的用户来说，是一次关于“用量健康”的直观提醒。",
+      "category": "工具",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/news/reflect-with-claude"
+    },
+    {
+      "title": "Anthropic 推出免费版 Claude for Teachers",
+      "summary": "Anthropic 面向教师群体推出免费的 Claude for Teachers，提供教案设计、批改辅助等场景化功能。教育场景正成为大模型厂商争夺的新阵地，也为内容创作者提供了备课与课程内容生成的新选项。",
+      "category": "工具",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/news/claude-for-teachers"
+    }
+  ]
+}
