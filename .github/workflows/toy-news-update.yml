@@ -1,0 +1,104 @@
+# 把「AIGC 快讯」重新打包并更新到 B 站 Toy（slug aigc-daily）。
+#
+# 站点的每日部署不会同步到 Toy——Toy 包是构建期快照，必须重打重传。
+# 本 workflow 排在 AIGC Daily News 之后跑，当天有新期刊才提交。
+#
+# 需要仓库 secret：TOY_SESSION —— ~/.toy/session.json 的原文（服务端 OAuth 会话）。
+# 该会话没有客户端过期字段、也没有官方刷新机制，服务端失效后本 workflow 会在
+# whoami 步骤硬失败并提示；届时在本机跑一次 `toy login`，再用新的 session.json
+# 重设 secret：gh secret set TOY_SESSION < ~/.toy/session.json
+#
+# 触发面只留 schedule + workflow_dispatch：fork 的 PR 拿不到 secret。
+name: Toy · AIGC 快讯
+
+on:
+  schedule:
+    # 12:30 北京时间。快讯 workflow 最晚一枪是 11:23 北京，留出余量。
+    # 只放一枪：Toy 包每次都含全部期数，漏跑一天由第二天自动补齐，不需要错峰重试；
+    # 多枪反而会把同一份内容重复送审。
+    - cron: '30 4 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '只验证打包与登录态，不提交审核'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: toy-news-update
+  cancel-in-progress: false
+
+env:
+  TOY_ID: '13066620165120'
+
+jobs:
+  update-toy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # 当天没有新期刊就不送审——内容没变还提交，只是白占审核队列
+      - name: 检查当日是否有新期刊
+        id: check
+        run: |
+          TODAY=$(TZ=Asia/Shanghai date +%F)
+          if [ -f "src/data/news/$TODAY.json" ] || [ '${{ github.event_name }}' = 'workflow_dispatch' ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=false" >> "$GITHUB_OUTPUT"
+            echo "当日期刊 $TODAY 不存在（快讯 workflow 未产出），本次不更新 Toy"
+          fi
+
+      - uses: actions/setup-node@v6
+        if: steps.check.outputs.go == 'true'
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+        if: steps.check.outputs.go == 'true'
+
+      # 与 deploy.yml 保持一致：先把 knowledge-base 拉好再构建，避免两条链路构建条件不同
+      - run: npm run sync
+        if: steps.check.outputs.go == 'true'
+
+      - name: 打 Toy 包
+        if: steps.check.outputs.go == 'true'
+        run: |
+          node scripts/build-toy-news.mjs
+          test -f dist-toy-news/index.html
+
+      - name: 安装 toy CLI
+        if: steps.check.outputs.go == 'true'
+        run: |
+          curl -fsSL https://boss.hdslb.com/toy-cli/toy/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: 恢复登录态
+        if: steps.check.outputs.go == 'true'
+        env:
+          TOY_SESSION: ${{ secrets.TOY_SESSION }}
+        run: |
+          mkdir -p "$HOME/.toy"
+          printf '%s' "$TOY_SESSION" > "$HOME/.toy/session.json"
+          chmod 600 "$HOME/.toy/session.json"
+          if ! toy whoami --json; then
+            echo "::error::toy 登录态失效。请在本机跑 toy login，再执行 gh secret set TOY_SESSION < ~/.toy/session.json"
+            exit 1
+          fi
+
+      # --yes：CI 无人确认，直接提交审核。包内容已由 build 脚本的哨兵自检兜底。
+      - name: 更新 Toy 并提交审核
+        if: steps.check.outputs.go == 'true' && inputs.dry_run != true
+        run: toy update "$TOY_ID" dist-toy-news --yes --json
+
+      - name: dry-run：跳过提交
+        if: steps.check.outputs.go == 'true' && inputs.dry_run == true
+        run: echo "dry_run=true：打包与登录态均已验证，未提交审核。"
+
+      - name: 清除登录态
+        if: always()
+        run: rm -f "$HOME/.toy/session.json"
