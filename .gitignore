@@ -3,6 +3,10 @@ node_modules/
 dist/
 .astro/
 
+# 「AIGC 快讯」Toy 独立包（scripts/build-toy-news.mjs 产物与中间构建目录）
+dist-toy-news/
+.toy-build/
+
 # 内容源：构建时从 knowledge-base 仓库克隆，不入库
 kb-content/
 
