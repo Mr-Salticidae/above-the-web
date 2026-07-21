@@ -20,6 +20,7 @@
       --jade: #3f7f68;
       --gold: #b9852d;
       --shadow: 30, 24, 60;
+      --grid-line: 27, 24, 19;
       --glow-1: 109, 74, 255;
       --glow-2: 200, 70, 48;
       --serif: "Songti SC", "Noto Serif SC", Georgia, "Times New Roman", serif;
@@ -124,8 +125,8 @@
       border-radius: 8px;
       overflow: hidden;
       background:
-        linear-gradient(rgba(27, 24, 19, .035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(27, 24, 19, .035) 1px, transparent 1px),
+        linear-gradient(rgba(var(--grid-line), .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--grid-line), .05) 1px, transparent 1px),
         color-mix(in srgb, var(--paper-2) 88%, transparent);
       background-size: 100% 20%, 7.14% 100%, auto;
       box-shadow: 0 28px 90px -44px rgba(var(--shadow), .55);
@@ -228,10 +229,49 @@
       font-weight: 600;
     }
 
-    .opening span:last-child {
+    .opening-sub {
       color: var(--ink-soft);
       font-size: .78rem;
       letter-spacing: .18em;
+    }
+
+    .start-btn {
+      margin-top: 1.15rem;
+      display: grid;
+      justify-items: center;
+      gap: .3rem;
+      min-width: 15rem;
+      border: 0;
+      border-radius: 999px;
+      padding: 1.02rem 2.9rem 1.12rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-family: var(--serif);
+      font-size: 1.34rem;
+      letter-spacing: .12em;
+      cursor: pointer;
+      box-shadow: 0 18px 60px -12px rgba(var(--glow-1), .55);
+      animation: startPulse 2.1s cubic-bezier(.45, 0, .55, 1) infinite;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .start-btn:hover,
+    .start-btn:focus-visible {
+      transform: scale(1.045);
+      box-shadow: 0 22px 72px -10px rgba(var(--glow-1), .68);
+    }
+
+    .start-btn em {
+      font-family: var(--sans);
+      font-style: normal;
+      font-size: .68rem;
+      letter-spacing: .3em;
+      opacity: .82;
+    }
+
+    @keyframes startPulse {
+      0%, 100% { box-shadow: 0 18px 60px -12px rgba(var(--glow-1), .55); transform: scale(1); }
+      50% { box-shadow: 0 20px 78px -8px rgba(var(--glow-1), .8); transform: scale(1.018); }
     }
 
     .review-popover {
@@ -282,6 +322,26 @@
       color: var(--ink-soft);
       font-size: .82rem;
       line-height: 1.58;
+    }
+
+    .resume-hint {
+      display: none;
+      margin-top: .55rem;
+      padding-top: .5rem;
+      border-top: 1px dashed color-mix(in srgb, var(--gold) 45%, var(--line));
+      color: var(--accent);
+      font-size: .72rem;
+      letter-spacing: .22em;
+    }
+
+    .review-popover.is-waiting .resume-hint {
+      display: block;
+      animation: hintBlink 1.6s ease-in-out infinite;
+    }
+
+    @keyframes hintBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .45; }
     }
 
     .event-card {
@@ -390,7 +450,7 @@
     }
 
     .settings-dialog::backdrop {
-      background: rgba(27, 24, 19, .28);
+      background: rgba(var(--shadow), .38);
       backdrop-filter: blur(5px);
     }
 
@@ -443,8 +503,12 @@
 
     .palette-options {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: .45rem;
+    }
+
+    @media (max-width: 640px) {
+      .palette-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     .palette-btn {
@@ -479,6 +543,10 @@
     .palette-btn[data-palette="ink"] .swatches i:nth-child(1) { background: #315f63; }
     .palette-btn[data-palette="ink"] .swatches i:nth-child(2) { background: #b84b3b; }
     .palette-btn[data-palette="ink"] .swatches i:nth-child(3) { background: #b38a42; }
+    .palette-btn[data-palette="night"] { background: #151827; color: #f0ead9; border-color: #2b2e3e; }
+    .palette-btn[data-palette="night"] .swatches i:nth-child(1) { background: #9d7bff; }
+    .palette-btn[data-palette="night"] .swatches i:nth-child(2) { background: #ff6b4a; }
+    .palette-btn[data-palette="night"] .swatches i:nth-child(3) { background: #3fd08f; }
 
     .timeline {
       max-width: 92rem;
@@ -488,23 +556,22 @@
       gap: .34rem;
       overflow-x: auto;
       padding-bottom: .14rem;
-      scroll-snap-type: x proximity;
       scrollbar-width: none;
     }
 
     .timeline::-webkit-scrollbar { display: none; }
 
     .event-button {
-      flex: 0 0 clamp(5.4rem, 6.6vw, 7rem);
+      flex: 0 0 clamp(4.5rem, 5.2vw, 5.9rem);
       min-width: 0;
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: .45rem .46rem;
+      padding: .42rem .44rem;
       background: color-mix(in srgb, var(--paper-2) 82%, transparent);
       cursor: pointer;
       color: var(--ink-soft);
       text-align: left;
-      transition: border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
+      transition: border-color .22s ease, background .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
     }
 
     .event-button:hover,
@@ -579,7 +646,7 @@
       }
 
       .event-button {
-        flex: 0 0 8.2rem;
+        flex: 0 0 7rem;
         scroll-snap-align: start;
       }
     }
@@ -648,7 +715,7 @@
       }
 
       .event-button {
-        flex-basis: 6.8rem;
+        flex-basis: 5.9rem;
         padding: .38rem .42rem;
       }
 
@@ -680,6 +747,8 @@
       .text-btn,
       .event-button,
       .review-popover { transition: none; }
+      .start-btn { animation: none; }
+      .review-popover.is-waiting .resume-hint { animation: none; }
     }
   </style>
 </head>
@@ -703,12 +772,14 @@
       <div class="opening" id="opening" aria-hidden="true">
         <span class="opening-mark">HISTORICAL CANDLESTICK</span>
         <strong>如果朱元璋的一生<br />是一根 K 线</strong>
-        <span>1328—1398 · 从赤贫到帝国中枢</span>
+        <span class="opening-sub">1328—1398 · 从赤贫到帝国中枢</span>
+        <button class="start-btn" id="startBtn" type="button">开始播放<em>SPACE · 按下空格</em></button>
       </div>
       <aside class="review-popover" id="reviewPopover" role="status" aria-live="polite">
         <span class="review-kicker" id="reviewKicker">阶段回望</span>
         <strong id="reviewTitle">第一章 · 乱世低开</strong>
         <p id="reviewSummary">灾荒夺走家庭，寺院与云游让一个赤贫少年看见真实天下。</p>
+        <span class="resume-hint" id="resumeHint">␣ 按空格 · 继续下一章</span>
       </aside>
       <canvas id="chart" aria-label="红色上行、绿色回撤、紫色均线和金色冲击量组成的朱元璋一生K线图"></canvas>
       <div class="chart-caption">
@@ -731,6 +802,9 @@
         <button class="icon-btn" id="resetBtn" aria-label="重播">
           <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
+        <button class="icon-btn" id="darkBtn" aria-label="切换暗色调" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        </button>
         <button class="icon-btn" id="settingsBtn" aria-label="调整播放与外观" aria-haspopup="dialog" aria-expanded="false">
           <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" stroke="currentColor" stroke-width="1.7"/><path d="M19 13.2v-2.4l-2.1-.7a7 7 0 0 0-.6-1.4l1-2-1.7-1.7-2 1a7 7 0 0 0-1.4-.6L11.5 3h-2.4l-.7 2.1a7 7 0 0 0-1.4.6l-2-1-1.7 1.7 1 2a7 7 0 0 0-.6 1.4l-2.1.7v2.4l2.1.7a7 7 0 0 0 .6 1.4l-1 2 1.7 1.7 2-1a7 7 0 0 0 1.4.6l.7 2.1h2.4l.7-2.1a7 7 0 0 0 1.4-.6l2 1 1.7-1.7-1-2a7 7 0 0 0 .6-1.4l2.1-.7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
         </button>
@@ -748,8 +822,8 @@
       <div class="settings-body">
         <div class="setting-row">
           <label for="speedInput">播放速度</label>
-          <output class="setting-value" id="speedValue" for="speedInput">1.0×</output>
-          <input id="speedInput" type="range" min="0.5" max="2" step="0.1" value="1" />
+          <output class="setting-value" id="speedValue" for="speedInput">1.3×</output>
+          <input id="speedInput" type="range" min="0.5" max="2" step="0.1" value="1.3" />
         </div>
         <div class="setting-row">
           <label for="zoomInput">镜头特写</label>
@@ -778,6 +852,7 @@
             <button class="palette-btn" type="button" data-palette="above" aria-pressed="true"><span class="swatches"><i></i><i></i><i></i></span>暮山紫</button>
             <button class="palette-btn" type="button" data-palette="palace" aria-pressed="false"><span class="swatches"><i></i><i></i><i></i></span>宫墙朱</button>
             <button class="palette-btn" type="button" data-palette="ink" aria-pressed="false"><span class="swatches"><i></i><i></i><i></i></span>山水墨</button>
+            <button class="palette-btn" type="button" data-palette="night" aria-pressed="false"><span class="swatches"><i></i><i></i><i></i></span>暗夜盘</button>
           </div>
         </div>
       </div>
@@ -837,6 +912,9 @@
     const resetBtn = document.getElementById('resetBtn');
     const nextBtn = document.getElementById('nextBtn');
     const settingsBtn = document.getElementById('settingsBtn');
+    const darkBtn = document.getElementById('darkBtn');
+    const startBtn = document.getElementById('startBtn');
+    const resumeHint = document.getElementById('resumeHint');
     const settingsDialog = document.getElementById('settingsDialog');
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
     const resetSettingsBtn = document.getElementById('resetSettingsBtn');
@@ -850,32 +928,42 @@
     const soundInput = document.getElementById('soundInput');
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const defaultSettings = Object.freeze({ speed: 1, zoom: 1, background: true, band: false, glow: true, sound: false, palette: 'above' });
+    const defaultSettings = Object.freeze({ speed: 1.3, zoom: 1, background: true, band: false, glow: true, sound: false, palette: 'above' });
     const settings = { ...defaultSettings };
     const palettes = {
       above: {
         '--paper': '#faf8f3', '--paper-2': '#fffdfa', '--paper-3': '#f1ece2', '--ink': '#1b1813',
         '--ink-soft': '#6b6357', '--line': '#e7dfd0', '--accent': '#6d4aff', '--accent-2': '#c44aff',
         '--accent-soft': '#efeaff', '--cinnabar': '#c84630', '--jade': '#3f7f68', '--gold': '#b9852d',
-        '--shadow': '30, 24, 60', '--glow-1': '109, 74, 255', '--glow-2': '200, 70, 48'
+        '--shadow': '30, 24, 60', '--grid-line': '27, 24, 19', '--glow-1': '109, 74, 255', '--glow-2': '200, 70, 48'
       },
       palace: {
         '--paper': '#fbf7ef', '--paper-2': '#fffaf2', '--paper-3': '#eee4d4', '--ink': '#211712',
         '--ink-soft': '#756258', '--line': '#e5d8c5', '--accent': '#a43d2f', '--accent-2': '#bd842f',
         '--accent-soft': '#f4e2da', '--cinnabar': '#b84230', '--jade': '#4d725c', '--gold': '#bd842f',
-        '--shadow': '52, 31, 24', '--glow-1': '164, 61, 47', '--glow-2': '189, 132, 47'
+        '--shadow': '52, 31, 24', '--grid-line': '33, 23, 18', '--glow-1': '164, 61, 47', '--glow-2': '189, 132, 47'
       },
       ink: {
         '--paper': '#f3f6f3', '--paper-2': '#fbfdfb', '--paper-3': '#e5ebe6', '--ink': '#15201e',
         '--ink-soft': '#596b67', '--line': '#d5dfda', '--accent': '#315f63', '--accent-2': '#b38a42',
         '--accent-soft': '#dfeceb', '--cinnabar': '#b84b3b', '--jade': '#3d7367', '--gold': '#b38a42',
-        '--shadow': '20, 41, 39', '--glow-1': '49, 95, 99', '--glow-2': '179, 138, 66'
+        '--shadow': '20, 41, 39', '--grid-line': '21, 32, 30', '--glow-1': '49, 95, 99', '--glow-2': '179, 138, 66'
+      },
+      night: {
+        '--paper': '#0d0f16', '--paper-2': '#151827', '--paper-3': '#090b11', '--ink': '#f0ead9',
+        '--ink-soft': '#9e97a8', '--line': '#2b2e3e', '--accent': '#9d7bff', '--accent-2': '#d76bff',
+        '--accent-soft': '#2a2344', '--cinnabar': '#ff6b4a', '--jade': '#3fd08f', '--gold': '#e3aa4f',
+        '--shadow': '0, 0, 0', '--grid-line': '240, 234, 217', '--glow-1': '157, 123, 255', '--glow-2': '255, 107, 74'
       }
     };
 
     let active = 0;
     let progress = 0;
-    let playing = !reducedMotion;
+    let playing = false;
+    let hasStarted = false;
+    let resumeGate = null;
+    let awaitingSpace = false;
+    let lastLightPalette = 'above';
     let lastTime = 0;
     let dpr = 1;
     let frameId = 0;
@@ -921,6 +1009,7 @@
     })();
     const FINAL_REVIEW_START = playbackSchedule[LAST_INDEX].holdEnd;
     const END_TIME = FINAL_REVIEW_START + FINAL_REVIEW_DURATION;
+    const chapterGates = playbackSchedule.filter((segment) => segment.isChapterEnd).map((segment) => segment.reviewEnd);
 
     const movingAverages = candles.map((_, index) => {
       const start = Math.max(0, index - 2);
@@ -954,11 +1043,13 @@
       if ('glow' in next) settings.glow = Boolean(next.glow);
       if ('sound' in next) settings.sound = Boolean(next.sound);
       if (next.palette && palettes[next.palette]) settings.palette = next.palette;
+      if (settings.palette !== 'night') lastLightPalette = settings.palette;
 
       Object.entries(palettes[settings.palette]).forEach(([name, value]) => {
         document.documentElement.style.setProperty(name, value);
       });
       document.body.classList.toggle('is-plain', !settings.background);
+      darkBtn.setAttribute('aria-pressed', String(settings.palette === 'night'));
 
       speedInput.value = String(settings.speed);
       speedValue.textContent = `${settings.speed.toFixed(1)}×`;
@@ -990,13 +1081,14 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (!cameraSpan || !Number.isFinite(cameraSpan)) cameraSpan = closeSpanForWidth(rect.width);
       readPalette();
+      measureTimeline();
       draw();
     }
 
     function closeSpanForWidth(width = canvas.clientWidth) {
-      const baseSpan = width < 520 ? 3.2 : width < 900 ? 4.6 : 6.4;
-      const closeUp = width < 520 ? .7 : width < 900 ? 1.05 : 1.45;
-      return Math.max(2.2, baseSpan - closeUp * settings.zoom);
+      const baseSpan = width < 520 ? 4.6 : width < 900 ? 7.4 : 10.6;
+      const closeUp = width < 520 ? 1.15 : width < 900 ? 2 : 2.9;
+      return Math.max(2.6, baseSpan - closeUp * settings.zoom);
     }
 
     function xOf(i, plot, viewSpan) {
@@ -1119,7 +1211,7 @@
       candles.forEach((item, i) => {
         const x = xOf(i, plot, viewSpan);
         if (x < plot.x - 20 || x > plot.x + plot.w + 20) return;
-        if (viewSpan > 9) {
+        if (viewSpan > 13) {
           const overviewLabels = phone ? [0, 4, 9, 14, 20, 26] : [0, 3, 4, 8, 9, 15, 16, 23, 24, 26];
           if (!overviewLabels.includes(i)) return;
         }
@@ -1245,6 +1337,7 @@
         }
       });
       ctx.restore();
+      syncTimelineScroll(camera);
     }
 
     function playNodeSound(index) {
@@ -1271,6 +1364,7 @@
       active = Math.max(0, Math.min(candles.length - 1, index));
       hideReview();
       if (reveal) {
+        hasStarted = true;
         playbackTime = nodeArrival(active) + NODE_REVEAL_DURATION;
         progress = active;
         camera = active;
@@ -1295,15 +1389,14 @@
       }
       document.querySelectorAll('.event-button').forEach((btn, i) => {
         btn.classList.toggle('is-active', i === active);
-        if (i === active && announce) {
-          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-        }
       });
       if (redraw) draw();
     }
 
     function hideReview() {
       reviewPopover.classList.remove('is-visible');
+      reviewPopover.classList.remove('is-waiting');
+      awaitingSpace = false;
     }
 
     function showReview(motion) {
@@ -1341,6 +1434,23 @@
         updatePlayIcon();
         setActive(Number(button.dataset.index));
       });
+      measureTimeline();
+    }
+
+    let timelineCenters = [];
+    function measureTimeline() {
+      timelineCenters = [...timeline.querySelectorAll('.event-button')]
+        .map((btn) => btn.offsetLeft + btn.offsetWidth / 2);
+    }
+
+    function syncTimelineScroll(pos) {
+      if (!timelineCenters.length) return;
+      const last = timelineCenters.length - 1;
+      const i0 = Math.max(0, Math.min(last, Math.floor(pos)));
+      const i1 = Math.min(last, i0 + 1);
+      const f = Math.max(0, Math.min(1, pos - i0));
+      const center = timelineCenters[i0] + (timelineCenters[i1] - timelineCenters[i0]) * f;
+      timeline.scrollLeft = center - timeline.clientWidth / 2;
     }
 
     function updatePlayIcon() {
@@ -1360,14 +1470,27 @@
       const delta = Math.min(.05, (now - lastTime) / 1000);
       lastTime = now;
       if (playing) {
+        const prevTime = playbackTime;
         playbackTime += delta * settings.speed;
+        for (const gate of chapterGates) {
+          if (prevTime < gate && playbackTime >= gate && resumeGate !== gate) {
+            playbackTime = gate - .001;
+            resumeGate = gate;
+            awaitingSpace = true;
+            playing = false;
+            resumeHint.textContent = '␣ 按空格 · 继续下一章';
+            reviewPopover.classList.add('is-waiting');
+            updatePlayIcon();
+            break;
+          }
+        }
         const motion = motionAt(playbackTime);
         progress = motion.progress;
-        opening.classList.toggle('is-hidden', motion.mode !== 'opening');
         camera += (motion.targetCamera - camera) * (1 - Math.exp(-delta * 8));
         cameraSpan += (motion.targetSpan - cameraSpan) * (1 - Math.exp(-delta * 6));
         if (motion.mode === 'chapter-review' || motion.mode === 'final-review') {
           showReview(motion);
+          if (awaitingSpace) reviewPopover.classList.add('is-waiting');
         } else {
           hideReview();
           if (motion.mode === 'node' && narrativeKey !== 'node-' + motion.active) {
@@ -1381,6 +1504,8 @@
           camera = LAST_INDEX / 2;
           cameraSpan = LAST_INDEX + 2.4;
           showReview(motionAt(END_TIME));
+          resumeHint.textContent = '␣ 按空格 · 重播一生';
+          reviewPopover.classList.add('is-waiting');
           updatePlayIcon();
         }
         draw();
@@ -1388,34 +1513,72 @@
       if (playing) scheduleFrame();
     }
 
-    playBtn.addEventListener('click', () => {
-      playing = !playing;
-      if (playing && playbackTime >= END_TIME) {
-        active = 0;
-        progress = 0;
-        playbackTime = 0;
-        camera = 0;
-        cameraSpan = closeSpanForWidth();
-        opening.classList.remove('is-hidden');
-        setActive(0, { announce: false, reveal: false });
-      }
-      lastTime = 0;
-      updatePlayIcon();
-      if (playing) scheduleFrame();
-    });
-
-    resetBtn.addEventListener('click', () => {
-      active = 0;
-      progress = 0;
-      playbackTime = 0;
-      camera = 0;
-      cameraSpan = closeSpanForWidth();
-      opening.classList.remove('is-hidden');
+    function beginFromOpening() {
+      hasStarted = true;
+      opening.classList.add('is-hidden');
+      playbackTime = OPENING_DURATION;
       playing = true;
       lastTime = 0;
-      setActive(0, { announce: false, reveal: false });
       updatePlayIcon();
       scheduleFrame();
+    }
+
+    function restartPlayback() {
+      active = 0;
+      progress = 0;
+      camera = 0;
+      cameraSpan = closeSpanForWidth();
+      resumeGate = null;
+      hideReview();
+      setActive(0, { announce: false, reveal: false });
+      hasStarted = true;
+      playbackTime = OPENING_DURATION;
+      opening.classList.add('is-hidden');
+      playing = true;
+      lastTime = 0;
+      updatePlayIcon();
+      scheduleFrame();
+    }
+
+    function togglePlayback() {
+      if (!hasStarted) {
+        beginFromOpening();
+        return;
+      }
+      if (playing) {
+        playing = false;
+        updatePlayIcon();
+        return;
+      }
+      if (awaitingSpace && resumeGate !== null) {
+        awaitingSpace = false;
+        reviewPopover.classList.remove('is-waiting');
+        playbackTime = resumeGate + .001;
+      } else if (playbackTime >= END_TIME) {
+        restartPlayback();
+        return;
+      }
+      playing = true;
+      lastTime = 0;
+      updatePlayIcon();
+      scheduleFrame();
+    }
+
+    playBtn.addEventListener('click', togglePlayback);
+    startBtn.addEventListener('click', beginFromOpening);
+    resetBtn.addEventListener('click', restartPlayback);
+
+    darkBtn.addEventListener('click', () => {
+      applySettings({ palette: settings.palette === 'night' ? lastLightPalette : 'night' });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.code !== 'Space') return;
+      if (settingsDialog.open) return;
+      const tag = event.target instanceof Element ? event.target.tagName : '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      event.preventDefault();
+      togglePlayback();
     });
 
     nextBtn.addEventListener('click', () => {
@@ -1466,12 +1629,7 @@
     renderTimeline();
     applySettings({ ...defaultSettings });
     setActive(0, { redraw: false, announce: false, reveal: false });
-    if (reducedMotion) {
-      playbackTime = OPENING_DURATION;
-      opening.classList.add('is-hidden');
-    } else {
-      narrativeKey = 'opening';
-    }
+    narrativeKey = 'opening';
     updatePlayIcon();
     resize();
     if (playing) scheduleFrame();
