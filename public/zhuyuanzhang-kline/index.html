@@ -334,6 +334,11 @@
       letter-spacing: .22em;
     }
 
+    .review-popover.is-waiting {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
     .review-popover.is-waiting .resume-hint {
       display: block;
       animation: hintBlink 1.6s ease-in-out infinite;
@@ -927,6 +932,9 @@
     const glowInput = document.getElementById('glowInput');
     const soundInput = document.getElementById('soundInput');
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarsePointer = matchMedia('(pointer: coarse)').matches;
+    const CONTINUE_HINT = coarsePointer ? '轻点 · 继续下一章' : '␣ 按空格 · 继续下一章';
+    const REPLAY_HINT = coarsePointer ? '轻点 · 重播一生' : '␣ 按空格 · 重播一生';
 
     const defaultSettings = Object.freeze({ speed: 1.3, zoom: 1, background: true, band: false, glow: true, sound: false, palette: 'above' });
     const settings = { ...defaultSettings };
@@ -1478,7 +1486,7 @@
             resumeGate = gate;
             awaitingSpace = true;
             playing = false;
-            resumeHint.textContent = '␣ 按空格 · 继续下一章';
+            resumeHint.textContent = CONTINUE_HINT;
             reviewPopover.classList.add('is-waiting');
             updatePlayIcon();
             break;
@@ -1504,7 +1512,7 @@
           camera = LAST_INDEX / 2;
           cameraSpan = LAST_INDEX + 2.4;
           showReview(motionAt(END_TIME));
-          resumeHint.textContent = '␣ 按空格 · 重播一生';
+          resumeHint.textContent = REPLAY_HINT;
           reviewPopover.classList.add('is-waiting');
           updatePlayIcon();
         }
@@ -1568,6 +1576,16 @@
     startBtn.addEventListener('click', beginFromOpening);
     resetBtn.addEventListener('click', restartPlayback);
 
+    // 触屏无空格键：等待态直接点弹窗即可继续/重播
+    reviewPopover.addEventListener('click', () => {
+      if (reviewPopover.classList.contains('is-waiting')) togglePlayback();
+    });
+    // 触屏无空格键：点开场任意处也能开始
+    opening.addEventListener('click', (event) => {
+      if (event.target === startBtn) return;
+      if (!hasStarted) beginFromOpening();
+    });
+
     darkBtn.addEventListener('click', () => {
       applySettings({ palette: settings.palette === 'night' ? lastLightPalette : 'night' });
     });
@@ -1628,6 +1646,9 @@
     window.addEventListener('resize', resize);
     renderTimeline();
     applySettings({ ...defaultSettings });
+    const startEm = startBtn.querySelector('em');
+    if (startEm) startEm.textContent = coarsePointer ? '轻点开始' : 'SPACE · 按下空格';
+    resumeHint.textContent = CONTINUE_HINT;
     setActive(0, { redraw: false, announce: false, reveal: false });
     narrativeKey = 'opening';
     updatePlayIcon();
