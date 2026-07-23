@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-23",
+  "headline": "AMD 入股 Anthropic，Moonshot 陷「蒸馏门」制裁风波",
+  "items": [
+    {
+      "title": "阿里巴巴发布 Qwen Image 3 图像模型",
+      "summary": "阿里 Qwen 团队推出新一代图像生成模型 Qwen Image 3.0，主打「好用不只好看」：单次可处理约 4500 token 的复杂指令，能一次性生成排版精细的报纸、多格信息图，并支持 10px 级小字文本渲染和 12 种语言。不过这一版没有开放权重、跑分数据或技术报告，目前只能在 chat.qwen.ai 试用、定价未公布，对做海报和排版类设计的创作者是个值得关注但还需实测验证的新选项。",
+      "category": "工具",
+      "source": "Decrypt",
+      "url": "https://decrypt.co/374084/alibaba-qwen-image-3-ai-useful-not-just-pretty",
+      "featured": true
+    },
+    {
+      "title": "Google 发布三款新 Gemini 模型，旗舰 Pro 缺席",
+      "summary": "Google 推出 Gemini 3.6 Flash、更便宜的 3.5 Flash-Lite，以及仅向政府和特定合作方小范围试点的安全模型 3.5 Flash Cyber，其中 3.6 Flash 主打编程和多模态能力提升，token 消耗还降低了约 17%。但外界期待已久的旗舰 3.5 Pro 仍未现身，据称谷歌内部在性能指标上遇到瓶颈，而 OpenAI、Anthropic 同期都已推出新旗舰模型，落差感明显。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/21/google-releases-three-new-gemini-models-but-no-3-5-pro/",
+      "featured": false
+    },
+    {
+      "title": "AMD 向 Anthropic 投资近 50 亿美元并签芯片大单",
+      "summary": "AMD 与 Anthropic 达成战略合作：Anthropic 将部署最高 2 吉瓦规模的 AMD Instinct MI450 系列 GPU，2027 年上半年先落地 1 吉瓦，AMD 同时承诺对 Anthropic 进行最高 50 亿美元的股权投资。这是 AMD 继与 Meta、微软 Azure 达成类似协议后的又一笔全栈基础设施大单，显示其在算力供应上正试图从 Nvidia 手中抢下更多份额，长期也会影响 Claude 系列模型的算力储备和迭代节奏。",
+      "category": "行业",
+      "source": "HotHardware",
+      "url": "https://hothardware.com/news/amd-partners-anthropic-2-gigawatt-mi450-chip-deal",
+      "featured": false
+    },
+    {
+      "title": "白宫指控 Moonshot 蒸馏 Anthropic 模型，威胁制裁",
+      "summary": "美国白宫和财政部指控中国 Moonshot AI 大规模「蒸馏」Anthropic 的 Fable 模型来训练开源 Kimi K3，并涉嫌通过泰国转运获得受限的 Nvidia GB300 芯片；财长贝森特称正考虑对其实施制裁或列入出口管制实体清单，但也有分析质疑蒸馏指控的时间线是否站得住脚。这场争议发生在中美 9 月 AI 对话前夕，正在用 Kimi K3 写代码、做文本创作的用户，短期内要多留意该模型后续可用性和合规风险的变化。",
+      "category": "政策",
+      "source": "Unite.AI",
+      "url": "https://www.unite.ai/us-threatens-to-blacklist-chinas-moonshot-over-distillation/",
+      "featured": true
+    },
+    {
+      "title": "法官批准 Anthropic 15 亿美元版权和解协议",
+      "summary": "美国法官正式批准 Anthropic 就未经授权使用盗版书籍训练 Claude 一案达成的 15 亿美元和解，这是迄今规模最大的 AI 版权集体诉讼和解案，案件源自作家 Andrea Bartz 等人 2024 年提起的诉讼。这一结果为其他版权方和 AI 公司之间的谈判提供了参考价码，用 AI 写作、做内容的创作者也可借此判断自己作品若被用于训练，大致能主张的赔偿量级。",
+      "category": "政策",
+      "source": "Broadband Breakfast",
+      "url": "https://broadbandbreakfast.com/judge-approves-a-1-5b-anthropic-settlement-over-books-uzed-to-train-claude/",
+      "featured": false
+    },
+    {
+      "title": "德国法院：AI 改绘图片未侵犯原作者版权",
+      "summary": "德国高等法院裁定，一名水下摄影师起诉前合作伙伴用 AI 把她拍摄的照片改绘成漫画风格侵权一案不成立，法官认为 AI 版本改变了构图、视角、光线、景深等受保护的创作表达，只保留了「狗狗伸手够玩具」这一不受版权保护的创意概念本身。这一判例说明欧洲法院对「AI 转绘是否侵权」会具体考察改绘后保留了多少原作的独创表达，而非一概而论，值得做图像二创的创作者留意。",
+      "category": "政策",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/07/22/dog-photographer-loses-copyright-case-over-ai-generated-comic-version-of-her-image/",
+      "featured": false
+    }
+  ]
+}
