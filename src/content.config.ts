@@ -39,7 +39,7 @@ const tasks = defineCollection({
       date: dateStr,
       deadline: dateStr.optional(),
       fee: z.string().optional(),
-      status: z.enum(['open', 'closed']).default('open'),
+      status: z.enum(['open', 'done', 'closed']).default('open'),
     }).passthrough();
   })(),
 });
