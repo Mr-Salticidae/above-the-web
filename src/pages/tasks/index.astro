@@ -49,7 +49,12 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
         ))}
       </section>
     ) : (
-      <p class="empty">当前没有招募中的任务，新任务书会第一时间发布在这里。</p>
+      <div class="empty-state">
+        <div class="es-mark" aria-hidden="true">🕸️</div>
+        <p class="es-title">当前暂无招募中的任务</p>
+        <p class="es-sub">新任务书会第一时间发布在这里。想先了解合作方式，可以看看下面已收官的任务，或读读教程类任务的交付标准。</p>
+        <a class="es-link" href={`${base}/tasks/spec/`}>教程类任务规范 →</a>
+      </div>
     )}
 
     {closed.length > 0 && (
@@ -99,7 +104,21 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
   .masthead-spec a { font-weight: 600; color: var(--accent); }
 
   .open-list { display: flex; flex-direction: column; gap: 1.1rem; margin: 0 0 3.4rem; }
-  .empty { text-align: center; color: var(--ink-soft); padding: 3rem 0 4rem; }
+
+  /* 空状态：没有招募中任务时，给一个成型的卡片而非悬空文字 */
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: .55rem; margin: 0 0 3.4rem; padding: 3rem 1.5rem;
+    border: 1px dashed color-mix(in srgb, var(--accent) 32%, var(--line));
+    border-radius: 16px; background: var(--paper-2);
+  }
+  .es-mark {
+    font-size: 2rem; line-height: 1; margin-bottom: .3rem;
+    filter: grayscale(.15); opacity: .9;
+  }
+  .es-title { margin: 0; font-family: var(--serif); font-size: 1.2rem; color: var(--ink); }
+  .es-sub { margin: 0; max-width: 30rem; font-size: .9rem; line-height: 1.75; color: var(--ink-soft); }
+  .es-link { margin-top: .5rem; font-family: var(--sans); font-size: .88rem; font-weight: 600; color: var(--accent); }
 
   .task-card {
     display: block; padding: 1.4rem 1.6rem 1.5rem; color: var(--ink);
