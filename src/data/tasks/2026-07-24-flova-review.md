@@ -4,7 +4,8 @@ summary: 测评 AI 工具 Flova 并产出一篇「工具评测类」教程，按
 date: 2026-07-24
 deadline: 2026-07-27
 fee: 150 元（税前）
-status: open
+status: taken
+taker: 南山
 ---
 
 ## 零、一句话总结

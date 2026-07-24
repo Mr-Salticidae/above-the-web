@@ -13,7 +13,12 @@ const { task } = Astro.props;
 const { Content } = await render(task);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const isOpen = task.data.status === 'open';
-const statusLabel = isOpen ? '招募中' : task.data.status === 'done' ? '完工待打款' : '已收官';
+const isTaken = task.data.status === 'taken';
+const statusLabel = isOpen
+  ? '招募中'
+  : isTaken
+    ? `进行中${task.data.taker ? ` · ${task.data.taker}` : ''}`
+    : task.data.status === 'done' ? '完工待打款' : '已收官';
 ---
 
 <BaseLayout title={task.data.title} description={task.data.summary}>
@@ -21,7 +26,7 @@ const statusLabel = isOpen ? '招募中' : task.data.status === 'done' ? '完工
     <p class="crumb"><a href={`${base}/tasks/`}>任务书</a> / {statusLabel}</p>
     <h1>{task.data.title}</h1>
     <div class="task-meta">
-      <span class:list={['tm-status', { 'is-open': isOpen }]}>{statusLabel}</span>
+      <span class:list={['tm-status', { 'is-open': isOpen, 'is-taken': isTaken }]}>{statusLabel}</span>
       {task.data.fee && <span class="tm-item">报酬 <b>{task.data.fee}</b></span>}
       {task.data.deadline && <span class="tm-item">截止 <b>{formatDate(task.data.deadline)}</b></span>}
       <span class="tm-item">发布 <b>{formatDate(task.data.date)}</b></span>
@@ -47,6 +52,7 @@ const statusLabel = isOpen ? '招募中' : task.data.status === 'done' ? '完工
     color: var(--ink-soft); border: 1px solid var(--line);
   }
   .tm-status.is-open { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
+  .tm-status.is-taken { text-transform: none; }
 
   .back { margin-top: 3rem; font-family: var(--sans); font-size: .88rem; }
 </style>

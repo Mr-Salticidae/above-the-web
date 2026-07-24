@@ -8,7 +8,8 @@ import { formatDate } from '../../lib/news.mjs';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tasks = (await getCollection('tasks')).sort((a, b) => b.data.date.localeCompare(a.data.date));
 const open = tasks.filter((t) => t.data.status === 'open');
-const closed = tasks.filter((t) => t.data.status !== 'open');
+const inProgress = tasks.filter((t) => t.data.status === 'taken');
+const closed = tasks.filter((t) => t.data.status === 'done' || t.data.status === 'closed');
 const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
 ---
 
@@ -52,9 +53,32 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
       <div class="empty-state">
         <div class="es-mark" aria-hidden="true">🕸️</div>
         <p class="es-title">当前暂无招募中的任务</p>
-        <p class="es-sub">新任务书会第一时间发布在这里。想先了解合作方式，可以看看下面已收官的任务，或读读教程类任务的交付标准。</p>
+        <p class="es-sub">新任务书会第一时间发布在这里。想先了解合作方式，可以读读教程类任务的交付标准。</p>
         <a class="es-link" href={`${base}/tasks/spec/`}>教程类任务规范 →</a>
       </div>
+    )}
+
+    {inProgress.length > 0 && (
+      <section class="inprogress">
+        <h2 class="ip-label">进行中 <span>In Progress</span></h2>
+        <div class="ip-list">
+          {inProgress.map((t) => (
+            <a class="task-card is-taken" href={`${base}/tasks/${t.id}/`}>
+              <div class="tc-top">
+                <span class="tc-status is-taken">进行中{t.data.taker ? ` · ${t.data.taker}` : ''}</span>
+                <span class="tc-date">{formatDate(t.data.date)} 发布</span>
+              </div>
+              <h2>{t.data.title}</h2>
+              <p class="tc-summary">{t.data.summary}</p>
+              <div class="tc-meta">
+                {t.data.fee && <span class="tc-fee">{t.data.fee}</span>}
+                {t.data.deadline && <span class="tc-deadline">截止 {formatDate(t.data.deadline)}</span>}
+                <span class="tc-cta">查看任务书 →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
     )}
 
     {closed.length > 0 && (
@@ -136,6 +160,7 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
     border-radius: 999px; padding: .18em .7em; white-space: nowrap;
   }
   .tc-status.is-open { color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
+  .tc-status.is-taken { color: var(--ink-soft); border: 1px solid var(--line); background: var(--paper-3); text-transform: none; }
   .tc-date { font-family: var(--sans); font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
   .task-card h2 { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; margin: 0 0 .4rem; }
   .tc-summary { margin: 0 0 .9rem; font-size: .92rem; line-height: 1.8; color: var(--ink-soft); }
@@ -143,6 +168,22 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
   .tc-fee { font-family: var(--sans); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
   .tc-deadline { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
   .tc-cta { margin-left: auto; font-size: .84rem; font-weight: 600; color: var(--accent); }
+
+  /* 进行中：已被接取、正在做的任务，卡片体但比招募中收敛（中性色、不抢眼） */
+  .inprogress { margin: 0 0 3.4rem; }
+  .ip-label {
+    display: flex; align-items: baseline; gap: .55rem;
+    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 1rem;
+    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
+  }
+  .ip-label span {
+    font-family: var(--sans); font-weight: 400; font-size: .68rem;
+    letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .ip-list { display: flex; flex-direction: column; gap: 1.1rem; }
+  .task-card.is-taken { background: var(--paper); }
+  .task-card.is-taken:hover { border-color: color-mix(in srgb, var(--ink) 22%, var(--line)); }
+  .task-card.is-taken .tc-cta { color: var(--ink-soft); }
 
   /* 已收官：细线目录体，与快讯归档同构 */
   .archive-label {

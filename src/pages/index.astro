@@ -229,7 +229,7 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
         {taskPeek.map((t) => (
           <li>
             <a href={`${tasksBase}${t.id}/`}>
-              <span class:list={['tk-status', { 'is-open': t.data.status === 'open' }]}>{t.data.status === 'open' ? '招募中' : '已收官'}</span>
+              <span class:list={['tk-status', { 'is-open': t.data.status === 'open' }]}>{t.data.status === 'open' ? '招募中' : t.data.status === 'taken' ? '进行中' : t.data.status === 'done' ? '完工待打款' : '已收官'}</span>
               <span class="tk-title">{t.data.title}</span>
               {t.data.fee && <span class="tk-fee">{t.data.fee}</span>}
               {t.data.deadline && <span class="tk-deadline">截止 {formatDate(t.data.deadline)}</span>}
