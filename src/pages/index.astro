@@ -439,9 +439,10 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
   }
 
   // 滚动渐现：版块头与卡片进入视口时淡入上移，同批错峰。仅 JS 就绪后才隐藏（html.rv-on），
-  // 无 JS / 爬虫 / reduced-motion 下内容照常全量可见。动画走 keyframes 而非 transition，
-  // 结束即摘除 rv 类，把 transform/transition 还给卡片自身的 hover 动效。
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+  // 无 JS / 爬虫下内容照常全量可见。reduced-motion（含 Windows 关闭「动画效果」的机器）不跳过，
+  // 而是由 CSS 降级为纯淡入——规范针对的是位移运动，透明度渐变安全。动画走 keyframes 而非
+  // transition，结束即摘除 rv 类，把 transform/transition 还给卡片自身的 hover 动效。
+  if ('IntersectionObserver' in window) {
     const revealEls = [...document.querySelectorAll(
       '.sec-head, .news-peek-issue, .news-peek-list li, .news-peek-all, .series-card, ' +
       '.play-card, .task-peek-list li, .explore, .cat-head, .sub-head, .cards .card'
@@ -473,10 +474,18 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
 <style is:global>
   /* 滚动渐现（JS 挂 html.rv-on 后才生效，保证无 JS 时内容不被藏起） */
   html.rv-on .rv { opacity: 0; }
-  html.rv-on .rv.rv-in { animation: rv-in .55s cubic-bezier(.2, .7, .3, 1) both; }
+  html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
   @keyframes rv-in {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: none; }
+  }
+  /* reduced-motion：不取消渐现，降级为纯淡入（无位移，规避运动不适） */
+  @media (prefers-reduced-motion: reduce) {
+    html.rv-on .rv.rv-in { animation: rv-fade .5s ease both; }
+  }
+  @keyframes rv-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 </style>
 
