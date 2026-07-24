@@ -1,0 +1,154 @@
+---
+// 教程类任务规范：所有教程类任务书共用的交付格式标准。
+// 结算规定 / 审核时间 / 评分机制三节原文已过期，等甲方更新后再补，这里先不对外发布。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const img = (name: string) => `${base}/tasks/tutorial-spec/${name}`;
+---
+
+<BaseLayout
+  title="教程类任务规范"
+  description="教程类任务书共用的交付标准：标题命名、分享权限、玩法类与评测类的正文模板。"
+>
+  <article class="prose spec">
+    <p class="crumb"><a href={`${base}/tasks/`}>任务书</a> / 教程类任务规范</p>
+    <h1>教程类任务规范</h1>
+    <p class="lede">
+      接教程类任务前先读完这页。下面的标题命名、分享权限和正文模板是交付验收的硬标准——
+      不按这个结构写，返工的概率比你想象的高。
+    </p>
+
+    <aside class="notice">
+      <p><b>三节暂缺</b></p>
+      <p>
+        原规范中的<b>教程金额结算规定</b>、<b>审核时间</b>与<b>评分机制</b>已过期，正在更新，
+        故本页暂不收录。以这三项为准的事宜请直接与发布方确认，不要参照旧版执行。
+      </p>
+    </aside>
+
+    <h2>一、通用要求</h2>
+
+    <h3>1. 标题命名</h3>
+    <p>教程标题统一为 <code>XXX教程（名字-时间）</code>。</p>
+    <p>例：<code>Gemini 3 序列帧动画及应用制作教程（晓笙 25-11-25）</code></p>
+    <figure>
+      <img src={img('title-format.png')} alt="飞书文档中教程标题的命名示例，标题栏用红框标出" loading="lazy" />
+      <figcaption>标题写在文档标题栏，括号内是作者名与日期</figcaption>
+    </figure>
+
+    <h3>2. 分享权限</h3>
+    <p>分享教程链接前，务必把权限打开到<b>互联网上获得链接的人可阅读</b>，否则对方点开是一片空白。</p>
+    <figure>
+      <img src={img('share-permission.png')} alt="文档分享面板，链接分享一项设为「互联网获得链接的人可阅读」" loading="lazy" />
+      <figcaption>链接分享 → 互联网获得链接的人 → 可阅读</figcaption>
+    </figure>
+
+    <h3>3. 上传知识库</h3>
+    <p>
+      每次教程做完后，一定要上传到钉钉总知识库。
+      <span class="tbd">上传流程文档与知识库地址待定</span>——具体链接以发布方最新给出的为准。
+    </p>
+
+    <h2>二、AI 玩法类教程</h2>
+    <p>正文按下面四节走。若教程涉及单个工具或多工具、提示词的横向对比，第二节标题改写成「测评对比」，不再写「软件说明」。</p>
+
+    <h3>一、成品展示</h3>
+    <p>一段话说明用什么工具、什么方法做出的成品案例，下方必须放成品<b>截图或视频</b>。</p>
+    <figure>
+      <img src={img('showcase.png')} alt="成品展示章节示例：一段话描述在上，三张成品图在下" loading="lazy" />
+      <figcaption>一段话描述 + 成品案例，缺一不可</figcaption>
+    </figure>
+
+    <h3>二、软件说明</h3>
+    <p>每个工具一小节，格式为 <code>1. xxx 工具——什么作用</code>，正文一段话介绍工具，再配一张工具页面截图。</p>
+    <p>例：</p>
+    <ul>
+      <li><b>1. gemini3 工具——制作 GIF 动画应用</b>，配 gemini3 工具主页面截图一张</li>
+      <li><b>2. Nano Banana Pro 工具——制作动画分镜图图片</b>，配 Nano Banana Pro 使用主页面截图一张</li>
+    </ul>
+    <figure>
+      <img src={img('software-intro.png')} alt="软件说明章节示例，工具小标题为 H2 级，右侧标注「注意是H2级标题」" loading="lazy" />
+      <figcaption>工具小标题走 H2 级，与目录栏同级</figcaption>
+    </figure>
+
+    <h3>二、测评对比（替代「软件说明」时用）</h3>
+    <p>
+      格式为 <code>1. xxx 工具或提示词名字——什么作用</code>：正文一段话介绍，再讲具体含义和应用，
+      配工具页面截图一张，以此类推。
+    </p>
+
+    <h3>三、操作流程</h3>
+    <p>有网址的就带上「打开 xxx 网址」。按第一步、第二步、第三步逐条拆解，每步说明打开什么工具、起什么作用。</p>
+    <p>二级标题的格式必须是<b>软件名称 + 用途</b>，例：<code>Nano Banana Pro 制作图片</code>。</p>
+    <figure>
+      <img src={img('steps-heading.png')} alt="操作流程章节的目录结构，二级标题均为「软件名称+用途」格式，用黑框标出" loading="lazy" />
+      <figcaption>每个二级标题都是「软件名称 + 用途」</figcaption>
+    </figure>
+
+    <h3>四、总结</h3>
+    <p>图片 + 文字，讲清制作过程中遇到的困难点和需要注意的地方。</p>
+
+    <h2>三、AI 工具评测类教程</h2>
+    <p>评测类只需三节，结构比玩法类短。</p>
+
+    <h3>一、成品展示</h3>
+    <p>一段话说明测评的是什么工具，配相关图片。若测评的是提示词，需给出提示词名称及中英文原文。</p>
+    <figure>
+      <img src={img('review-showcase.png')} alt="评测类教程的成品展示章节示例，标题下方是工具说明与成品图阵列" loading="lazy" />
+      <figcaption>成品展示：说明 + 图片阵列</figcaption>
+    </figure>
+
+    <h3>二、各步骤流程展示</h3>
+    <p>按「工具展示步骤——对应作用」组织，逐步拆解。</p>
+    <figure>
+      <img src={img('review-steps.png')} alt="评测类教程的步骤流程章节示例，左侧目录列出各步骤，右侧配图并标注操作栏功能" loading="lazy" />
+      <figcaption>每一步配图，图上直接标注操作位置</figcaption>
+    </figure>
+
+    <h3>三、总结图文</h3>
+    <p>同样是图片 + 文字，讲清困难点与注意事项。</p>
+    <figure>
+      <img src={img('review-summary.png')} alt="评测类教程的总结章节示例，总结段落用红框标出" loading="lazy" />
+      <figcaption>总结要落到具体结论，不是套话</figcaption>
+    </figure>
+
+    <h2>四、一条红线</h2>
+    <blockquote>
+      <p>
+        涉及教程制作，一定要图片配文字。不要写「通常来说我们需要调试几次才会达到自己满意的效果」
+        这类大白话——空话没有意义，写了等于没写。
+      </p>
+    </blockquote>
+
+    <p class="back"><a href={`${base}/tasks/`}>← 返回全部任务书</a></p>
+  </article>
+</BaseLayout>
+
+<style>
+  .crumb { font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); margin: 0 0 1rem; }
+  .spec h1 { margin-top: 0; }
+  .lede { color: var(--ink-soft); }
+
+  .notice {
+    margin: 1.6em 0 2.4em; padding: .9rem 1.2rem;
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+    border-radius: 10px; background: var(--accent-soft);
+  }
+  .notice p { margin: 0; font-size: .95rem; line-height: 1.75; }
+  .notice p + p { margin-top: .4em; }
+
+  .spec figure { margin: 1.4em 0 1.8em; }
+  .spec figcaption {
+    margin-top: .5em; font-family: var(--sans); font-size: .82rem;
+    color: var(--ink-soft); text-align: center;
+  }
+  .spec img { display: block; border: 1px solid var(--line); }
+
+  .tbd {
+    font-size: .92em; color: var(--ink-soft);
+    border-bottom: 1px dashed color-mix(in srgb, var(--accent) 50%, var(--line));
+  }
+
+  .back { margin-top: 3rem; font-family: var(--sans); font-size: .88rem; }
+</style>

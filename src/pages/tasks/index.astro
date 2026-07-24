@@ -25,6 +25,9 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
         对外发布的合作任务。每份任务书把要求、对标素材、时间与报酬一次写清——认领前先读完，
         做起来才不返工。
       </p>
+      <p class="masthead-spec">
+        教程类任务另有统一的交付格式标准：<a href={`${base}/tasks/spec/`}>教程类任务规范 →</a>
+      </p>
     </header>
 
     {open.length > 0 ? (
@@ -90,6 +93,10 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
     margin: 1.3rem auto 0; max-width: 34rem;
     font-size: .92rem; line-height: 1.8; color: var(--ink-soft);
   }
+  .masthead-spec {
+    margin: .9rem 0 0; font-family: var(--sans); font-size: .86rem; color: var(--ink-soft);
+  }
+  .masthead-spec a { font-weight: 600; color: var(--accent); }
 
   .open-list { display: flex; flex-direction: column; gap: 1.1rem; margin: 0 0 3.4rem; }
   .empty { text-align: center; color: var(--ink-soft); padding: 3rem 0 4rem; }
