@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-24",
+  "headline": "FLUX 3、微软自研模型齐发，AI 语音功能全面进驻创作与编程场景",
+  "items": [
+    {
+      "title": "Black Forest Labs 发布 FLUX 3 视频模型",
+      "summary": "德国 AI 实验室 Black Forest Labs 推出首款视频生成模型 FLUX 3，除了传统文生图，还能生成最长约 20 秒、带音频的视频片段，同一套系统还被用来训练机器人在装配线上完成抓取动作，目前只对外限量开放测试。对做图像转视频、短片创作的用户来说，这是继 Seedance、Kling 之后又一个值得关注的新选项。",
+      "category": "模型",
+      "source": "Decrypt",
+      "url": "https://decrypt.co/374189/black-forest-labs-flux-3-image-video-robot-hands",
+      "featured": true
+    },
+    {
+      "title": "微软发布自研图像与语音生成模型",
+      "summary": "微软 AI 团队推出两款自研模型：主打高保真出图和精细小字文本渲染的 MAI-Image-2.5-Pro，以及面向高并发场景的语音模型 MAI-Voice-2-Flash，并公开数据显示 Bing、PowerPoint、Copilot 等产品已开始用自家模型替代 OpenAI。广告业已有人称赞其图像质量「是生成式媒体工具的一次飞跃」，用微软全家桶做配图、配音的创作者未来会更直接感受到这一变化。",
+      "category": "模型",
+      "source": "VentureBeat",
+      "url": "https://venturebeat.com/infrastructure/microsoft-launches-new-in-house-ai-models-it-says-cut-costs-up-to-89-versus-openai",
+      "featured": true
+    },
+    {
+      "title": "Runway 上线 AI 模型路由器 Media Router",
+      "summary": "Runway 面向开发者推出 Media Router，能按「质量优先、速度优先还是成本优先」自动为图像、视频、音频生成请求挑选合适的模型，Adobe、Shutterstock、ElevenLabs 等已是其客户。在生成式媒体模型越来越多、更新速度极快的当下，这类路由层能替创作者省下反复横向测评模型的功夫。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/23/runway-bets-on-ai-model-routing-as-generative-media-gets-crowded/",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 升级 Claude 语音模式",
+      "summary": "Anthropic 为 Claude 语音模式开放 Opus、Sonnet、Haiku 多档模型选择（此前仅限 Haiku），支持更长对话，并能联动 Gmail、Google Calendar、Slack、Canva、Notion 直接执行写邮件、改日程等任务，目前向全平台用户开放测试。习惯用语音和 AI 沟通构思、改稿的创作者可以少打字、多说话。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/23/anthropic-updates-claude-voice-mode-with-more-capable-models/",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 将 GPT-Live 语音接入 Codex 桌面版",
+      "summary": "OpenAI 把本月初发布的全双工语音模型 GPT-Live 接入 ChatGPT 桌面版（macOS/Windows），可直接用自然语音指挥 Codex 编排多线程编程任务、审查代码、调试程序，无需再逐句等待应答。对用 AI 辅助写代码搭建创作工具、插件的开发者创作者，这意味着「解放双手」的语音协作会成为常态。",
+      "category": "工具",
+      "source": "VentureBeat",
+      "url": "https://venturebeat.com/orchestration/agentic-coding-goes-hands-free-as-openai-brings-gpt-lives-full-duplex-voice-control-to-codex-and-chatgpt-on-the-desktop",
+      "featured": false
+    },
+    {
+      "title": "音乐出版商提交修订版歌词诉讼起诉 Anthropic",
+      "summary": "Concord、环球音乐出版、ABKCO 等对 Anthropic 提交第二次修订版诉状，指控 Claude 训练和输出系统性侵权约 500 首歌曲的歌词，诉状援引取证获得的内部记录，称高管曾直接向 Claude 查询歌词、训练数据被剥离版权声明。同一天，另一起 Anthropic 就盗版书籍训练模型的 15 亿美元和解案获法官正式批准。两案叠加说明音乐类版权方在 AI 训练数据上的追责仍在升级，用 AI 写歌配词的创作者要持续关注平台授权风险。",
+      "category": "政策",
+      "source": "Music Business Worldwide",
+      "url": "https://www.musicbusinessworldwide.com/music-publishers-file-amended-lyrics-lawsuit-against-anthropic-just-as-ai-firms-separate-1-5b-piracy-settlement-with-authors-wins-court-approval/",
+      "featured": false
+    }
+  ]
+}
