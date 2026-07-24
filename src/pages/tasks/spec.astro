@@ -15,8 +15,8 @@ const img = (name: string) => `${base}/tasks/tutorial-spec/${name}`;
     <p class="crumb"><a href={`${base}/tasks/`}>任务书</a> / 教程类任务规范</p>
     <h1>教程类任务规范</h1>
     <p class="lede">
-      接教程类任务前先读完这页。下面的标题命名、分享权限和正文模板是交付验收的硬标准——
-      不按这个结构写，返工的概率比你想象的高。
+      接教程类任务前先读完这页。下面的标题命名、分享权限、上传流程和正文模板是交付验收的硬标准——
+      不按这个结构走，返工的概率比你想象的高。
     </p>
 
     <aside class="notice">
@@ -44,13 +44,54 @@ const img = (name: string) => `${base}/tasks/tutorial-spec/${name}`;
       <figcaption>链接分享 → 互联网获得链接的人 → 可阅读</figcaption>
     </figure>
 
-    <h3>3. 上传知识库</h3>
+    <h2>二、上传钉钉知识库</h2>
     <p>
       每次教程做完后，一定要上传到钉钉总知识库。
-      <span class="tbd">上传流程文档与知识库地址待定</span>——具体链接以发布方最新给出的为准。
+      <b>动手前先申请编辑权限</b>，没有权限是填不进去的。
+      <span class="tbd">知识库地址待定</span>——以发布方最新给出的为准。
     </p>
 
-    <h2>二、AI 玩法类教程</h2>
+    <h3>第一步：新建</h3>
+    <p>进入数据目录页，在左侧数据列表中选中<b>「AI 自媒体教程文档」</b>这张表，点击顶部的<b>「添加记录」</b>。</p>
+    <figure>
+      <img src={img('dd-1-add-record.png')} alt="钉钉知识库数据目录页，左侧选中「AI自媒体教程文档」表，顶部「添加记录」按钮用红框标出" loading="lazy" />
+      <figcaption>先选对表，再点「添加记录」</figcaption>
+    </figure>
+
+    <h3>第二步：填写记录</h3>
+    <p>新建出来的是一条「未命名记录」，把下面五项依次填完。</p>
+
+    <p><b>1. 名称</b>——把教程标题填在「未命名记录」的位置，命名格式见上一节。</p>
+    <figure>
+      <img src={img('dd-2-name.png')} alt="记录编辑面板，标题「未命名记录」处用红框标出" loading="lazy" />
+      <figcaption>标题写在这里</figcaption>
+    </figure>
+
+    <p><b>2. 简介</b>——一句话说明这期教程做的是什么。</p>
+    <figure>
+      <img src={img('dd-3-summary.png')} alt="记录编辑面板，「简介」字段用红框标出" loading="lazy" />
+      <figcaption>简介：请输入内容</figcaption>
+    </figure>
+
+    <p><b>3. 图片</b>——把成品图或封面图粘贴、拖拽进「图片」栏。</p>
+    <figure>
+      <img src={img('dd-4-image.png')} alt="记录编辑面板，「图片」字段用红框标出，提示「粘贴或拖拽至此」" loading="lazy" />
+      <figcaption>图片：粘贴或拖拽至此</figcaption>
+    </figure>
+
+    <p><b>4. 链接</b>——把教程文档链接填进「链接」栏。放之前先确认权限已开到「互联网获得链接的人可阅读」。</p>
+    <figure>
+      <img src={img('dd-5-link.png')} alt="记录编辑面板，「链接」字段用红框标出" loading="lazy" />
+      <figcaption>链接：先开权限，再往这里填</figcaption>
+    </figure>
+
+    <p><b>5. 分类</b>——从下拉菜单中选择对应分类，不要留空。</p>
+    <figure>
+      <img src={img('dd-6-category.png')} alt="记录编辑面板，「分类」字段用红框标出，提示「请从下拉菜单中选择」" loading="lazy" />
+      <figcaption>分类：从下拉菜单里选</figcaption>
+    </figure>
+
+    <h2>三、AI 玩法类教程</h2>
     <p>正文按下面四节走。若教程涉及单个工具或多工具、提示词的横向对比，第二节标题改写成「测评对比」，不再写「软件说明」。</p>
 
     <h3>一、成品展示</h3>
@@ -89,7 +130,7 @@ const img = (name: string) => `${base}/tasks/tutorial-spec/${name}`;
     <h3>四、总结</h3>
     <p>图片 + 文字，讲清制作过程中遇到的困难点和需要注意的地方。</p>
 
-    <h2>三、AI 工具评测类教程</h2>
+    <h2>四、AI 工具评测类教程</h2>
     <p>评测类只需三节，结构比玩法类短。</p>
 
     <h3>一、成品展示</h3>
@@ -113,7 +154,7 @@ const img = (name: string) => `${base}/tasks/tutorial-spec/${name}`;
       <figcaption>总结要落到具体结论，不是套话</figcaption>
     </figure>
 
-    <h2>四、一条红线</h2>
+    <h2>五、一条红线</h2>
     <blockquote>
       <p>
         涉及教程制作，一定要图片配文字。不要写「通常来说我们需要调试几次才会达到自己满意的效果」
