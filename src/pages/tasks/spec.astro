@@ -1,6 +1,6 @@
 ---
 // 教程类任务规范：所有教程类任务书共用的交付格式标准。
-// 结算规定 / 审核时间 / 评分机制三节原文已过期，等甲方更新后再补，这里先不对外发布。
+// 金额与审核时间每期浮动，写在各任务书详情里，这页只管格式。
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -23,7 +23,7 @@ const img = (name: string) => `${base}/tasks/tutorial-spec/${name}`;
       <p><b>金额与时间不在这页</b></p>
       <p>
         <b>教程金额</b>与<b>审核时间</b>每期不同，一律以对应<a href={`${base}/tasks/`}>任务书</a>详情中注明的为准，
-        本页只管交付格式。另有<b>评分机制</b>一节原文已过期，正在更新，暂不收录。
+        本页只管交付格式。
       </p>
     </aside>
 
