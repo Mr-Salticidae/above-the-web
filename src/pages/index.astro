@@ -437,7 +437,48 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
     window.addEventListener('resize', onScroll, { passive: true });
     syncActive();
   }
+
+  // 滚动渐现：版块头与卡片进入视口时淡入上移，同批错峰。仅 JS 就绪后才隐藏（html.rv-on），
+  // 无 JS / 爬虫 / reduced-motion 下内容照常全量可见。动画走 keyframes 而非 transition，
+  // 结束即摘除 rv 类，把 transform/transition 还给卡片自身的 hover 动效。
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const revealEls = [...document.querySelectorAll(
+      '.sec-head, .news-peek-issue, .news-peek-list li, .news-peek-all, .series-card, ' +
+      '.play-card, .task-peek-list li, .explore, .cat-head, .sub-head, .cards .card'
+    )];
+    if (revealEls.length) {
+      document.documentElement.classList.add('rv-on');
+      const settle = (el) => { el.classList.remove('rv', 'rv-in'); el.style.animationDelay = ''; };
+      revealEls.forEach((el) => {
+        el.classList.add('rv');
+        el.addEventListener('animationend', () => settle(el), { once: true });
+      });
+      const io = new IntersectionObserver((entries) => {
+        let batch = 0;
+        for (const en of entries) {
+          if (!en.isIntersecting) continue;
+          io.unobserve(en.target);
+          const delay = Math.min(batch++ * 70, 350);
+          en.target.style.animationDelay = delay + 'ms';
+          en.target.classList.add('rv-in');
+          // animationend 兜底（如动画被打断未回调）：超时后强制 settle，避免填充态动画压住 hover 位移
+          setTimeout(() => settle(en.target), delay + 900);
+        }
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+      revealEls.forEach((el) => io.observe(el));
+    }
+  }
 </script>
+
+<style is:global>
+  /* 滚动渐现（JS 挂 html.rv-on 后才生效，保证无 JS 时内容不被藏起） */
+  html.rv-on .rv { opacity: 0; }
+  html.rv-on .rv.rv-in { animation: rv-in .55s cubic-bezier(.2, .7, .3, 1) both; }
+  @keyframes rv-in {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
+  }
+</style>
 
 <style>
   /* 左侧浮动版块索引 —— 圆点导航，hover 展开标签，滚动高亮当前版块 */
