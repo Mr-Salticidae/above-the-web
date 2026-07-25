@@ -1,0 +1,54 @@
+{
+  "date": "2026-07-25",
+  "headline": "Anthropic 发布 Claude Opus 5，Midjourney 跨界收购占星 App",
+  "items": [
+    {
+      "title": "Anthropic 发布 Claude Opus 5",
+      "summary": "Anthropic 推出新旗舰模型 Claude Opus 5，官方称其能力逼近旗舰级 Claude Fable 5、价格却只要一半，定价维持每百万输入 token 5 美元、输出 25 美元不变，现已成为 Claude Max 默认模型、Claude Pro 顶档选项。新版本在视觉与制品（artifact）生成上有提升，并新增无需打断缓存的对话中途切换模型等测试功能，用 Claude 辅助创作、写代码的用户可以更放心地把日常任务交给这一档模型。",
+      "category": "模型",
+      "source": "Anthropic",
+      "url": "https://www.anthropic.com/news/claude-opus-5",
+      "featured": true
+    },
+    {
+      "title": "Midjourney 收购占星 App Co-Star",
+      "summary": "专注图像生成、长期不融资也能盈利的 Midjourney 宣布收购拥有约 430 万月活用户的占星应用 Co-Star 及其约 24 人团队，交易金额未公开。公司表示正在「打造自己的 App 矩阵」，此前已涉足医学影像等方向，此次收购更像是为了补齐消费级 App 运营人才，而非占星业务本身，显示这家图像模型公司正加速向多元消费产品扩张。",
+      "category": "行业",
+      "source": "Unite.AI",
+      "url": "https://www.unite.ai/bootstrapped-midjourney-buys-astrology-app-co-star/",
+      "featured": true
+    },
+    {
+      "title": "腾讯合并多模态与大模型团队",
+      "summary": "腾讯将旗下多模态团队与大语言模型团队合并为统一的基础模型部门，由首席 AI 科学家姚顺雨牵头，这是继今年 3 月解散 AI Lab、并入混元团队之后的又一次架构收拢。此举被视为在多模态竞争白热化的当下加快追赶步伐，用混元系列工具做图像、视频创作的用户后续或能看到更统一的迭代节奏。",
+      "category": "行业",
+      "source": "Caixin Global",
+      "url": "https://www.caixinglobal.com/2026-07-24/tencent-folds-multimodal-llm-teams-into-new-ai-unit-102467825.html",
+      "featured": false
+    },
+    {
+      "title": "APK 拆包显示 Gemini 或将支持去除 Nano Banana 水印",
+      "summary": "Google 应用最新安装包中出现代号「Robin」的「水印设置」选项，暗示官方正测试让用户关闭 Nano Banana 生成图像上的可见 Gemini Logo 水印，此前 Google 高管征集用户需求时，去水印就是呼声最高的功能之一。需要注意的是，这大概率只是去掉可见 Logo，图片里的隐形 SynthID 水印和 C2PA 元数据信息不会被移除，对用 Nano Banana 出图的创作者仍要留意平台的可追溯标识。",
+      "category": "工具",
+      "source": "Android Authority",
+      "url": "https://www.androidauthority.com/gemini-nano-banana-watermark-remove-apk-teardown-3691067/",
+      "featured": false
+    },
+    {
+      "title": "Google 签署欧盟 AI 生成内容标注准则",
+      "summary": "Google 宣布将签署欧盟《AI生成内容透明度行为准则》，赶在 8 月 2 日欧盟强制性透明规则生效前，选择这条被布鲁塞尔认可的合规路径。这意味着 Google 需要为 SynthID、C2PA 等机器可读标签体系提供更完整的支持，用 Google 系工具产图产文的创作者，之后作品被自动打上 AI 标识的范围可能进一步扩大。",
+      "category": "政策",
+      "source": "Unite.AI",
+      "url": "https://www.unite.ai/google-signs-eu-code-on-labeling-ai-generated-content/",
+      "featured": false
+    },
+    {
+      "title": "德国音乐版权组织 GEMA 推出可合规 AI 训练数据集 PLAI",
+      "summary": "德国音乐版权管理组织 GEMA 推出「PLAI by GEMA」，号称欧洲首个完全获授权、整合音频、元数据与版权信息的 AI 音乐训练数据集，首发即涵盖 60 多种曲风约 17.8 万首曲目，音乐转谱工具 Klangio 已成为首位客户。该数据集选在 GEMA 诉 Suno 版权案 7 月 31 日宣判前上线，意在证明「合规拿数据」这条路是可行的，为做 AI 音乐工具开发和训练的团队提供了一个可参照的授权样本。",
+      "category": "政策",
+      "source": "Music Business Worldwide",
+      "url": "https://www.musicbusinessworldwide.com/as-gema-awaits-its-suno-copyright-verdict-the-german-collecting-society-launches-plai-a-fully-licensed-dataset-for-training-ai-music-tools/",
+      "featured": false
+    }
+  ]
+}
