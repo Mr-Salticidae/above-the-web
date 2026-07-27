@@ -1,6 +1,18 @@
 # AIGC 每日快讯：云端定时搜集新闻并更新 /news/ 板块。
 # 每天早晨自动运行（多个错峰 cron 互为重试），不依赖本地电脑开机。
-# 需要仓库 secret：ANTHROPIC_API_KEY。
+# 需要仓库 secret：LONGCAT_API_KEY。
+#
+# 执行方式：两个脚本，不再用 claude-code-action 的 agentic loop。
+#   1. news-fetch.mjs   —— 纯 Node 抓多个 RSS 源，产出候选列表（零 API 成本）
+#   2. news-compose.mjs —— 单次结构化输出调用，选稿 + 写中文摘要
+# 旧的 agentic 方案让模型自己 curl 抓 RSS，几十 KB 的 XML 在上下文里反复重放，
+# 单次 70+ 回合、3 小时、$7（2026-07-25 实测 $6.89），把中转站余额烧穿。
+# 现方案单次一轮请求（约 3.5K prompt + 0.9K completion）、1-2 分钟跑完。
+# URL 由脚本从候选表回填，模型只输出候选 id，无从编造链接。
+#
+# 模型走 OpenAI 兼容协议（当前 LongCat-2.0）。换供应商只需改下面两个环境变量，
+# 前提是对方支持 response_format.json_schema。
+#
 # 注：GITHUB_TOKEN 的 push 不会级联触发 deploy.yml 的 on:push，
 #     所以本 workflow 在 push 后用 workflow_dispatch 主动触发一次部署。
 name: AIGC Daily News
@@ -9,17 +21,21 @@ on:
   schedule:
     # GitHub schedule 在高峰时段（尤其整点/半点）实测延迟 3-4 小时甚至丢弃
     # （2026-07-04/05 的 01:30 cron 均 13:00+ 北京时间才触发）。
-    # 对策：错峰分钟数 + 一天 4 枪互为重试；"当日期刊已存在"守卫保证幂等（空跑仅 9 秒）。
+    # 对策：错峰分钟数 + 一天 4 枪互为重试；"当日期刊已存在"守卫保证幂等（空跑仅几秒）。
     - cron: '47 22 * * *' # 06:47 北京时间（前一天 UTC）
     - cron: '17 0 * * *'  # 08:17 北京时间
     - cron: '43 1 * * *'  # 09:43 北京时间
     - cron: '23 3 * * *'  # 11:23 北京时间（兜底）
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '只抓候选并把期刊打到日志，不写文件不提交'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
   actions: write
-  id-token: write # claude-code-action 通过 OIDC 换取 token，缺这个会在 Claude 步骤直接失败
 
 concurrency:
   group: aigc-daily-news
@@ -31,13 +47,13 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # 当日期刊已存在（比如本地已手动更新过）则跳过，避免重复
+      # 当日期刊已存在（比如本地已手动更新过）则跳过，避免重复；dry-run 不受此限
       - name: 检查当日期刊是否已存在
         id: check
         run: |
           TODAY=$(TZ=Asia/Shanghai date +%F)
           echo "today=$TODAY" >> "$GITHUB_OUTPUT"
-          if [ -f "src/data/news/$TODAY.json" ]; then
+          if [ -f "src/data/news/$TODAY.json" ] && [ '${{ inputs.dry_run }}' != 'true' ]; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
             echo "当日期刊 $TODAY 已存在，跳过本次更新"
           else
@@ -53,96 +69,43 @@ jobs:
       - run: npm ci
         if: steps.check.outputs.exists == 'false'
 
-      - name: Claude 搜集并撰写当日快讯
+      # 单个源抓取失败只告警不阻断——源随时可能改版或限流，凑够候选比源全更重要
+      - name: 抓取新闻候选
         if: steps.check.outputs.exists == 'false'
-        uses: anthropics/claude-code-action@v1
+        run: node scripts/news-fetch.mjs --date "${{ steps.check.outputs.today }}" --out "$RUNNER_TEMP/candidates.json"
+
+      - name: 选稿并撰写当日快讯
+        id: compose
+        if: steps.check.outputs.exists == 'false'
         env:
-          # API 经中转站（Bedrock 转售）访问；该中转不支持服务端 WebSearch 工具，
-          # 搜索改用 curl 抓 Google News RSS / 官方页面（见 prompt）
-          ANTHROPIC_BASE_URL: https://api.ofox.ai/anthropic
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          # 仓库未安装 Claude GitHub App，显式传 GITHUB_TOKEN 跳过 App 的 OIDC 换 token 流程
-          github_token: ${{ github.token }}
-          prompt: |
-            你负责更新「蛛网之上」站点的「AIGC 每日快讯」板块。用中文工作，专有名词保留英文。
-            今天的日期（北京时间）：${{ steps.check.outputs.today }}
-
-            ## 目标
-            搜集过去 24 小时 AIGC / 生成式 AI 领域值得创作者关注的新闻，写入
-            src/data/news/${{ steps.check.outputs.today }}.json（UTF-8 无 BOM）。
-            只创建这一个文件，不改动其他任何文件，不要执行 git commit/push（由后续流程处理）。
-
-            ## 搜集新闻
-            注意：本环境的 WebSearch 工具不可用（API 中转不支持服务端搜索，调用只会浪费回合，禁止尝试），
-            用 Bash 的 curl 抓 Google News RSS 多角度搜索（6-10 次），再用 curl 或 WebFetch 核实原文链接。
-            RSS 端点格式：https://news.google.com/rss/search?q=<关键词URL编码>+when:2d&hl=en-US&gl=US&ceid=US:en
-            建议关键词组合：
-            - 通用："generative AI"、"AI video model"、"AI image model"
-            - 创作工具：Midjourney / Runway / Kling AI / Sora / Suno / ElevenLabs / Pika / Luma / Hailuo 更新
-            - 大厂：OpenAI / Anthropic / Google DeepMind / Meta AI announcement
-            - 中国厂商：Kuaishou Kling、ByteDance Seedance、Alibaba Qwen Wan、Tencent Hunyuan、MiniMax
-            也可以直接 curl 官方渠道核实：blog.google、openai.com/news、anthropic.com/news、
-            runwayml.com、各工具官方 changelog 等。
-            RSS 里 Google News 的跳转链接（news.google.com/rss/articles/…）不要直接用作 url 字段，
-            要写文章的真实原始 URL（RSS item 的 source 或抓原文确认）。
-
-            成本纪律（重要，2026-07-06 曾因跑满回合上限空手而归）：
-            - 先写文件，再优化：凑足 5 条合格新闻就【立即】写出 JSON 文件，之后如有余力再补充或替换条目。
-              宁可先交一份 5 条的合格稿，也不要把写文件拖到最后。
-            - RSS 搜索控制在 10 次以内；不要为凑满条数反复换关键词、爬搜索引擎结果页（DuckDuckGo/Bing 等）；
-            - 每条新闻的 URL 核实最多 1 次请求，不要逐条深挖发布时间等细节。
-
-            选稿标准：6-10 条，全部真实可溯源（必须有真实 URL，禁止编造）；
-            优先级：创作工具更新（图像/视频/音乐模型）> 大模型厂商重要发布 > 行业/政策大事；
-            只收最近 48 小时内的新闻，且不与已有期刊（src/data/news/ 下前几天的 JSON）重复；
-            宁缺毋滥但至少 5 条；如实在凑不够 5 条有效新闻，则不要写文件，直接结束并说明原因。
-
-            ## 期刊 JSON 格式（详见 src/lib/news.mjs 头部注释，写作口吻参考已有期刊文件）
-            {
-              "date": "YYYY-MM-DD",
-              "headline": "一句话概括当天主线，编辑口吻，≤40字",
-              "items": [
-                {
-                  "title": "中文标题，专有名词保留英文，≤30字",
-                  "summary": "2-3 句：发生了什么 + 对创作者意味着什么",
-                  "category": "模型|工具|行业|研究|政策 之一",
-                  "source": "来源名称",
-                  "url": "真实 URL",
-                  "featured": true
-                }
-              ]
-            }
-            featured 只给最重要的 1-2 条。面向中文 AIGC 创作者：克制、划重点、不做标题党。
-
-            写完后可运行 npm run build 自检；若构建报错，修复 JSON 后重试。
-          # allowedTools 注意：curl 抓 RSS 后必然接管道/文本处理，组合命令要求每段都在白名单内，
-          # 只放行 curl 会导致大量权限拒绝、空手收场（2026-07-04 首跑 12 次拒绝实测）
-          claude_args: |
-            --model anthropic/claude-sonnet-5
-            --max-turns 120
-            --allowedTools "WebFetch,Read,Glob,Grep,Write,Bash(curl:*),Bash(node:*),Bash(jq:*),Bash(grep:*),Bash(sed:*),Bash(awk:*),Bash(head:*),Bash(tail:*),Bash(sort:*),Bash(uniq:*),Bash(wc:*),Bash(cat:*),Bash(ls:*),Bash(echo:*),Bash(mkdir:*),Bash(python3:*),Bash(npm run build)"
-
-      # Claude 步骤 is_error 时真正的报错只在 runner 的执行输出 JSON 里，
-      # 工作流日志看不到——这里打出末尾部分供排障（API 报错都在最后一条消息）
-      - name: 诊断：打印 Claude 执行输出末尾
-        if: always() && steps.check.outputs.exists == 'false'
+          NEWS_API_KEY: ${{ secrets.LONGCAT_API_KEY }}
+          NEWS_API_BASE: https://api.longcat.chat/openai/v1
+          NEWS_MODEL: LongCat-2.0
         run: |
-          F="$RUNNER_TEMP/claude-execution-output.json"
-          if [ -f "$F" ]; then tail -c 4000 "$F"; else echo "无执行输出文件"; fi
+          set +e
+          node scripts/news-compose.mjs \
+            --in "$RUNNER_TEMP/candidates.json" \
+            --date "${{ steps.check.outputs.today }}" \
+            ${{ inputs.dry_run == true && '--dry-run' || '' }}
+          CODE=$?
+          set -e
+          # 退出码 3 = 合格新闻不足（当天确实没料），属正常情况，不算失败
+          if [ $CODE -eq 3 ]; then
+            echo "::notice::合格新闻不足，本次不出稿"
+            echo "skipped=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          exit $CODE
 
       - name: 验证、提交并触发部署
-        if: steps.check.outputs.exists == 'false'
+        if: steps.check.outputs.exists == 'false' && steps.compose.outputs.skipped != 'true' && inputs.dry_run != true
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           TODAY='${{ steps.check.outputs.today }}'
           FILE="src/data/news/$TODAY.json"
-          if [ ! -f "$FILE" ]; then
-            echo "Claude 未产出当日期刊（可能有效新闻不足 5 条），本次不更新"
-            exit 0
-          fi
-          # 条数下限校验
+          test -f "$FILE"
+          # 条数下限校验（compose 已校验一次，这里兜底防脚本被改坏）
           node -e "const d=require('./$FILE'); if(!Array.isArray(d.items)||d.items.length<5){console.error('items 少于 5 条');process.exit(1)}"
           # 构建验证：JSON 损坏时 news.mjs 会静默跳过该期，因此必须确认当日页面真的生成了
           npm run build
@@ -154,8 +117,9 @@ jobs:
           git add "$FILE"
           git commit -m "news(快讯): 第 $N 期 $TODAY" -m "Co-Authored-By: Claude <noreply@anthropic.com>"
           # npm run build 里 stamp-assets 会原地改写 public/*/index.html（跟踪文件），
-          # 不清掉的话 pull --rebase 会因脏工作区失败（2026-07-04 实测丢过一期提交）
-          git checkout -- .
+          # 不清掉的话 pull --rebase 会因脏工作区失败（2026-07-04 实测丢过一期提交）。
+          # 只还原 public/，避免波及其他改动。
+          git checkout -- public/
           git pull --rebase origin main
           git push
           # GITHUB_TOKEN 的 push 不触发 deploy.yml 的 on:push，这里手动触发部署
