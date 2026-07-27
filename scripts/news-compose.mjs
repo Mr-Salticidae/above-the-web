@@ -10,14 +10,17 @@
 // 模型没有机会编造链接（旧方案靠 prompt 约束 + 模型自行核实，是它烧回合的另一个主因）。
 //
 // 用法：node scripts/news-compose.mjs --in candidates.json [--date YYYY-MM-DD] [--dry-run]
-// 需要环境变量 ANTHROPIC_API_KEY；ANTHROPIC_BASE_URL / NEWS_MODEL 可选（走中转站时设置）。
+// 环境变量：NEWS_API_KEY（必需）、NEWS_API_BASE、NEWS_MODEL。
+//
+// 走 OpenAI 兼容协议（当前用 LongCat），故直接用 fetch，不引 SDK：全脚本零依赖。
+// 换供应商时改 NEWS_API_BASE / NEWS_MODEL 即可，只要对方支持 response_format.json_schema。
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import Anthropic from '@anthropic-ai/sdk';
 
-const MODEL = process.env.NEWS_MODEL || 'claude-opus-5';
+const API_BASE = process.env.NEWS_API_BASE || 'https://api.longcat.chat/openai/v1';
+const MODEL = process.env.NEWS_MODEL || 'LongCat-2.0';
 const NEWS_DIR = path.join('src', 'data', 'news');
 const MIN_ITEMS = 5;
 const MAX_ITEMS = 10;
@@ -42,7 +45,7 @@ const SCHEMA = {
         type: 'object',
         properties: {
           id: { type: 'integer', description: '候选列表中的 id，必须原样引用，不可臆造' },
-          title: { type: 'string', description: '中文标题，专有名词保留英文，不超过 30 字' },
+          title: { type: 'string', description: '中文标题，专有名词保留英文，硬上限 30 个字符' },
           summary: { type: 'string', description: '中文摘要：发生了什么 + 对创作者意味着什么' },
           category: { type: 'string', enum: ['模型', '工具', '行业', '研究', '政策'] },
           featured: { type: 'boolean', description: `是否头条，全期最多 ${MAX_FEATURED} 条为 true` },
@@ -86,7 +89,8 @@ ${list}
 
 ## 撰写要求
 
-- title：中文，≤30 字，说清楚「谁做了什么」，不要用候选的英文标题直译腔。
+- title：中文，**严格控制在 30 字以内**（这是硬上限，超出会破坏卡片排版），说清楚「谁做了什么」，
+  不要用候选的英文标题直译腔。产品名尽量简写（如「Claude Opus 5」而非「Anthropic 的 Claude Opus 5」）。
 - summary：2-4 句。第一句说发生了什么（具体、有信息量），最后一句说对创作者意味着什么。
   只能基于候选给出的标题和线索来写，不要编造线索里没有的细节（具体参数、价格、日期都要谨慎）。
   线索信息太少、不足以写出有价值的摘要时，宁可不选这条。
@@ -99,6 +103,38 @@ ${list}
 ${recentTitles.length ? recentTitles.map((t) => `- ${t}`).join('\n') : '（无）'}
 
 请输出符合 schema 的 JSON。items 里的 id 必须原样引用候选列表中的编号。`;
+}
+
+// ── 输出解析 ──────────────────────────────────────────────────────────
+
+// 整体 parse 优先；失败时退回「扫描出最后一个配平的 {...} 块」——
+// 结果可能夹在思考文本里（见调用处关于 reasoning_content 的说明），
+// 且思考文本本身常含花括号，所以从后往前找、按括号配平截取，而不是用正则。
+export function extractJson(text) {
+  const s = (text || '').trim();
+  if (!s) return null;
+  try { return JSON.parse(s); } catch { /* 往下走扫描 */ }
+
+  for (let end = s.lastIndexOf('}'); end !== -1; end = s.lastIndexOf('}', end - 1)) {
+    let depth = 0, inStr = false, esc = false;
+    for (let i = end; i >= 0; i--) {
+      const ch = s[i];
+      if (esc) { esc = false; continue; }
+      if (inStr) {
+        if (ch === '\\') { esc = true; continue; }   // 反扫时的转义判断不完美，够用即可
+        if (ch === '"') inStr = false;
+        continue;
+      }
+      if (ch === '"') { inStr = true; continue; }
+      if (ch === '}') depth++;
+      else if (ch === '{') {
+        if (--depth === 0) {
+          try { return JSON.parse(s.slice(i, end + 1)); } catch { break; }
+        }
+      }
+    }
+  }
+  return null;
 }
 
 // ── 校验与回填 ────────────────────────────────────────────────────────
@@ -123,6 +159,10 @@ export function assemble(result, candidates, date) {
       featured: Boolean(it.featured),
     });
   }
+
+  // 标题过长不致命（卡片会换行），但持续超标说明 prompt 该调，留个信号
+  const longTitles = items.filter((it) => it.title.length > 30).length;
+  if (longTitles) console.error(`[news-compose] ⚠ ${longTitles} 条标题超过 30 字`);
 
   // featured 超额时只保留靠前的（items 已按重要性排序）
   let featured = 0;
@@ -150,49 +190,65 @@ async function main() {
     process.exit(3);
   }
 
-  const client = new Anthropic(); // 读 ANTHROPIC_API_KEY / ANTHROPIC_BASE_URL
+  const apiKey = process.env.NEWS_API_KEY;
+  if (!apiKey) { console.error('[news-compose] 缺少环境变量 NEWS_API_KEY'); process.exit(2); }
+
   const prompt = buildPrompt({ date, candidates, recentTitles: input.recentTitles || [] });
-  console.error(`[news-compose] 模型 ${MODEL}，候选 ${candidates.length} 条，prompt ≈ ${Math.round(prompt.length / 3.2)} tokens`);
+  console.error(`[news-compose] 模型 ${MODEL} @ ${API_BASE}，候选 ${candidates.length} 条，prompt ≈ ${Math.round(prompt.length / 3.2)} tokens`);
 
   let res;
   try {
-    res = await client.messages.create({
-      model: MODEL,
-      max_tokens: 16000,
-      system: SYSTEM,
-      messages: [{ role: 'user', content: prompt }],
-      output_config: { format: { type: 'json_schema', schema: SCHEMA }, effort: 'medium' },
+    res = await fetch(`${API_BASE}/chat/completions`, {
+      method: 'POST',
+      headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 16000,
+        messages: [{ role: 'system', content: SYSTEM }, { role: 'user', content: prompt }],
+        response_format: {
+          type: 'json_schema',
+          json_schema: { name: 'daily_issue', strict: true, schema: SCHEMA },
+        },
+      }),
+      signal: AbortSignal.timeout(300000), // 推理模型可能思考较久
     });
   } catch (e) {
-    // API 报错的堆栈对排障没用，要看的是状态码和 message
-    const status = e?.status;
-    const detail = e?.error?.error?.message || e?.message || String(e);
-    console.error(`[news-compose] API 调用失败${status ? ` (HTTP ${status})` : ''}：${detail}`);
-    if (status === 402) console.error('[news-compose] → 中转站余额不足，充值后重跑本 workflow 即可');
-    if (status === 401) console.error('[news-compose] → ANTHROPIC_API_KEY 无效或已过期');
-    if (status === 404) console.error(`[news-compose] → 模型 ${MODEL} 在当前端点不存在，可用环境变量 NEWS_MODEL 指定`);
+    console.error(`[news-compose] 请求失败（网络层）：${e.message}`);
     process.exit(4);
   }
 
-  if (res.stop_reason === 'refusal') {
-    console.error('[news-compose] 模型拒绝了本次请求，本次不出稿');
+  const bodyText = await res.text();
+  if (!res.ok) {
+    // 报错正文比堆栈有用，直接给出来
+    let detail = bodyText.slice(0, 300);
+    try { detail = JSON.parse(bodyText).error?.message || detail; } catch { /* 非 JSON 就用原文 */ }
+    console.error(`[news-compose] API 调用失败 (HTTP ${res.status})：${detail}`);
+    if (res.status === 401 || res.status === 403) console.error('[news-compose] → NEWS_API_KEY 无效或无权限');
+    if (res.status === 402) console.error('[news-compose] → 账户额度不足');
+    if (res.status === 404) console.error(`[news-compose] → 模型 ${MODEL} 或端点 ${API_BASE} 不存在`);
+    if (res.status === 429) console.error('[news-compose] → 触发限流，稍后重跑');
     process.exit(4);
   }
-  if (res.stop_reason === 'max_tokens') {
+
+  let body;
+  try { body = JSON.parse(bodyText); } catch { console.error('[news-compose] 响应不是合法 JSON：', bodyText.slice(0, 300)); process.exit(5); }
+
+  const choice = body.choices?.[0];
+  if (!choice) { console.error('[news-compose] 响应缺少 choices：', bodyText.slice(0, 300)); process.exit(5); }
+  if (choice.finish_reason === 'length') {
     console.error('[news-compose] 输出被 max_tokens 截断，本次不出稿');
     process.exit(4);
   }
 
-  const u = res.usage;
-  console.error(`[news-compose] usage: in=${u.input_tokens} out=${u.output_tokens}`
-    + ` | 估算成本 $${((u.input_tokens * 5 + u.output_tokens * 25) / 1e6).toFixed(3)}（按 Opus 5 官方价）`);
+  const u = body.usage || {};
+  console.error(`[news-compose] usage: prompt=${u.prompt_tokens ?? '?'} completion=${u.completion_tokens ?? '?'}`);
 
-  const text = res.content.filter((b) => b.type === 'text').map((b) => b.text).join('');
-  let parsed;
-  try {
-    parsed = JSON.parse(text);
-  } catch (e) {
-    console.error('[news-compose] 模型输出不是合法 JSON：', text.slice(0, 400));
+  // LongCat-2.0 在 json_schema 模式下把结果放进 reasoning_content 且不返回 content
+  // （2026-07-27 实测），故两个字段都要认；将来对方修好了也照样工作。
+  const raw = choice.message?.content || choice.message?.reasoning_content || '';
+  const parsed = extractJson(raw);
+  if (!parsed) {
+    console.error('[news-compose] 模型输出中找不到合法 JSON：', raw.slice(0, 400));
     process.exit(5);
   }
 

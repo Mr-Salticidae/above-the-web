@@ -1,13 +1,17 @@
 # AIGC 每日快讯：云端定时搜集新闻并更新 /news/ 板块。
 # 每天早晨自动运行（多个错峰 cron 互为重试），不依赖本地电脑开机。
-# 需要仓库 secret：ANTHROPIC_API_KEY。
+# 需要仓库 secret：LONGCAT_API_KEY。
 #
 # 执行方式：两个脚本，不再用 claude-code-action 的 agentic loop。
 #   1. news-fetch.mjs   —— 纯 Node 抓多个 RSS 源，产出候选列表（零 API 成本）
-#   2. news-compose.mjs —— 单次 Claude 结构化输出调用，选稿 + 写中文摘要
+#   2. news-compose.mjs —— 单次结构化输出调用，选稿 + 写中文摘要
 # 旧的 agentic 方案让模型自己 curl 抓 RSS，几十 KB 的 XML 在上下文里反复重放，
 # 单次 70+ 回合、3 小时、$7（2026-07-25 实测 $6.89），把中转站余额烧穿。
-# 现方案单次约 $0.1、1-2 分钟。URL 由脚本从候选表回填，模型无从编造。
+# 现方案单次一轮请求（约 3.5K prompt + 0.9K completion）、1-2 分钟跑完。
+# URL 由脚本从候选表回填，模型只输出候选 id，无从编造链接。
+#
+# 模型走 OpenAI 兼容协议（当前 LongCat-2.0）。换供应商只需改下面两个环境变量，
+# 前提是对方支持 response_format.json_schema。
 #
 # 注：GITHUB_TOKEN 的 push 不会级联触发 deploy.yml 的 on:push，
 #     所以本 workflow 在 push 后用 workflow_dispatch 主动触发一次部署。
@@ -70,13 +74,13 @@ jobs:
         if: steps.check.outputs.exists == 'false'
         run: node scripts/news-fetch.mjs --date "${{ steps.check.outputs.today }}" --out "$RUNNER_TEMP/candidates.json"
 
-      - name: Claude 选稿并撰写当日快讯
+      - name: 选稿并撰写当日快讯
         id: compose
         if: steps.check.outputs.exists == 'false'
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          # API 经中转站访问；换回官方直连时删掉这一行即可
-          ANTHROPIC_BASE_URL: https://api.ofox.ai/anthropic
+          NEWS_API_KEY: ${{ secrets.LONGCAT_API_KEY }}
+          NEWS_API_BASE: https://api.longcat.chat/openai/v1
+          NEWS_MODEL: LongCat-2.0
         run: |
           set +e
           node scripts/news-compose.mjs \
