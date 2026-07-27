@@ -87,6 +87,7 @@ const toc = [
   ...(latestEpisodes.length > 0 ? [{ id: 'prompt-master', label: '成为 Prompt 大师' }] : []),
   { id: 'plays', label: '可玩' },
   ...(allTasks.length > 0 ? [{ id: 'tasks', label: '任务书' }] : []),
+  { id: 'collab', label: '协作板块' },
   { id: 'notes', label: '笔记' },
   ...cats.map((c, i) => ({ id: `sec-cat-${i}`, label: c, cat: c })),
 ];
@@ -97,6 +98,7 @@ if (latestNews) kickers.push(['news', 'AIGC Daily']);
 if (latestEpisodes.length > 0) kickers.push(['prompt-master', 'Prompt Master']);
 kickers.push(['plays', 'Plays']);
 if (allTasks.length > 0) kickers.push(['tasks', 'Commissions']);
+kickers.push(['collab', 'Collaboration']);
 kickers.push(['notes', 'Notes']);
 const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: String(i + 1).padStart(2, '0'), label }]));
 ---
@@ -240,6 +242,22 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
       <a class="news-peek-all" href={tasksBase}>查看全部 {allTasks.length} 份任务书 →</a>
     </section>
   )}
+
+  <section class="collab" id="collab">
+    <header class="sec-head">
+      <p class="sec-kicker"><i>{kickerOf.collab.no}</i>{kickerOf.collab.label}</p>
+      <h2>协作板块</h2>
+      <p class="sec-desc">带学员做项目时用的内部协作空间——镜头看板、进度流转、评审意见都收在一处，不靠群聊翻记录。当前进行中的是第三届瓦卡奖（VACAT）AI 叙事短片带教项目。</p>
+    </header>
+    <a class="collab-card" href="https://tiaozhuxiansheng.com/vacat/">
+      <div class="collab-body">
+        <h3>VACAT 2026 · 镜头看板</h3>
+        <p>1 位指导 + 2 位首次参赛的学员，35 天做一部 90–120 秒 AI 叙事短片。</p>
+        <p class="collab-note">内部项目，需邀请码登录；未登录只能看到登录页。</p>
+      </div>
+      <span class="collab-cta">进入板块 →</span>
+    </a>
+  </section>
 
   <section class="notes-head" id="notes">
     <header class="sec-head">
@@ -445,7 +463,7 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
   if ('IntersectionObserver' in window) {
     const revealEls = [...document.querySelectorAll(
       '.sec-head, .news-peek-issue, .news-peek-list li, .news-peek-all, .series-card, ' +
-      '.play-card, .task-peek-list li, .explore, .cat-head, .sub-head, .cards .card'
+      '.play-card, .task-peek-list li, .collab-card, .explore, .cat-head, .sub-head, .cards .card'
     )];
     if (revealEls.length) {
       document.documentElement.classList.add('rv-on');
@@ -608,6 +626,39 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
     .task-peek-list a { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .2rem .8rem; }
     .tk-title { grid-column: 1 / -1; white-space: normal; }
     .tk-deadline { display: none; }
+  }
+
+  /* 协作板块 —— 单张入口卡，指向站外同域的 /vacat/（登录墙后面） */
+  .collab { max-width: 72rem; margin: 0 auto; padding: 3.4rem 1.5rem .5rem; }
+  .collab-card {
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    border: 1px solid var(--line); border-radius: 16px; padding: 1.4rem 1.5rem;
+    background: var(--paper-2); color: var(--ink); position: relative; overflow: hidden;
+    transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, border-color .2s ease;
+  }
+  .collab-card::before {
+    content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    background: linear-gradient(var(--accent), var(--accent-2));
+    opacity: 0; transition: opacity .2s ease;
+  }
+  .collab-card:hover {
+    transform: translateY(-4px); text-decoration: none;
+    box-shadow: 0 16px 40px -16px rgba(var(--shadow), .5);
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  }
+  .collab-card:hover::before { opacity: 1; }
+  .collab-body { min-width: 0; }
+  .collab-card h3 { font-family: var(--serif); font-size: 1.14rem; margin: 0 0 .3rem; color: var(--ink); }
+  .collab-body p { margin: 0; font-size: .88rem; color: var(--ink-soft); line-height: 1.65; }
+  .collab-note { margin-top: .4rem !important; font-size: .78rem !important; opacity: .85; }
+  .collab-cta {
+    flex: none; font-size: .86rem; font-weight: 600; color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+    border-radius: 999px; padding: .5em 1.1em; background: var(--accent-soft);
+  }
+  @media (max-width: 640px) {
+    .collab-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .collab-cta { align-self: stretch; text-align: center; }
   }
 
   /* 笔记 —— 板块头独立成节，下方紧跟 sticky 筛选条与卡片区 */
