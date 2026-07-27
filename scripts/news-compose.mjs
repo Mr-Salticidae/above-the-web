@@ -154,13 +154,25 @@ async function main() {
   const prompt = buildPrompt({ date, candidates, recentTitles: input.recentTitles || [] });
   console.error(`[news-compose] 模型 ${MODEL}，候选 ${candidates.length} 条，prompt ≈ ${Math.round(prompt.length / 3.2)} tokens`);
 
-  const res = await client.messages.create({
-    model: MODEL,
-    max_tokens: 16000,
-    system: SYSTEM,
-    messages: [{ role: 'user', content: prompt }],
-    output_config: { format: { type: 'json_schema', schema: SCHEMA }, effort: 'medium' },
-  });
+  let res;
+  try {
+    res = await client.messages.create({
+      model: MODEL,
+      max_tokens: 16000,
+      system: SYSTEM,
+      messages: [{ role: 'user', content: prompt }],
+      output_config: { format: { type: 'json_schema', schema: SCHEMA }, effort: 'medium' },
+    });
+  } catch (e) {
+    // API 报错的堆栈对排障没用，要看的是状态码和 message
+    const status = e?.status;
+    const detail = e?.error?.error?.message || e?.message || String(e);
+    console.error(`[news-compose] API 调用失败${status ? ` (HTTP ${status})` : ''}：${detail}`);
+    if (status === 402) console.error('[news-compose] → 中转站余额不足，充值后重跑本 workflow 即可');
+    if (status === 401) console.error('[news-compose] → ANTHROPIC_API_KEY 无效或已过期');
+    if (status === 404) console.error(`[news-compose] → 模型 ${MODEL} 在当前端点不存在，可用环境变量 NEWS_MODEL 指定`);
+    process.exit(4);
+  }
 
   if (res.stop_reason === 'refusal') {
     console.error('[news-compose] 模型拒绝了本次请求，本次不出稿');
