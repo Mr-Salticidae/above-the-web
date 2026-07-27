@@ -11,6 +11,8 @@ const open = tasks.filter((t) => t.data.status === 'open');
 const inProgress = tasks.filter((t) => t.data.status === 'taken');
 const closed = tasks.filter((t) => t.data.status === 'done' || t.data.status === 'closed');
 const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
+// 教程类标杆：任务书 frontmatter 里写了 exemplar 的成稿，单独成板块供后续任务对标
+const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
 ---
 
 <BaseLayout
@@ -28,6 +30,9 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
       </p>
       <p class="masthead-spec">
         教程类任务另有统一的交付格式标准：<a href={`${base}/tasks/spec/`}>教程类任务规范 →</a>
+        {exemplars.length > 0 && (
+          <Fragment><span class="ms-sep">·</span><a href="#benchmark">教程类标杆 ↓</a></Fragment>
+        )}
       </p>
     </header>
 
@@ -56,6 +61,37 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
         <p class="es-sub">新任务书会第一时间发布在这里。想先了解合作方式，可以读读教程类任务的交付标准。</p>
         <a class="es-link" href={`${base}/tasks/spec/`}>教程类任务规范 →</a>
       </div>
+    )}
+
+    {exemplars.length > 0 && (
+      <section class="benchmark" id="benchmark">
+        <h2 class="bm-label">教程类标杆 <span>Benchmark</span></h2>
+        <p class="bm-intro">
+          往期交付中完成度最高的成稿，经发布方评定收录。接同类任务前先通读一遍——
+          规范写的是底线，这里是目标。
+        </p>
+        <div class="bm-list">
+          {exemplars.map((t) => (
+            <article class="bm-card">
+              <div class="bm-top">
+                <span class="bm-badge">教程类标杆</span>
+                <span class="bm-kind">{t.data.exemplar}</span>
+              </div>
+              <h3>{t.data.title}</h3>
+              <p class="bm-by">
+                {t.data.taker && <b>{t.data.taker}</b>}
+                {t.data.taker && t.data.delivered && ' 交付 · '}
+                {t.data.delivered && formatDate(t.data.delivered)}
+              </p>
+              {t.data.exemplar_note && <p class="bm-note">{t.data.exemplar_note}</p>}
+              <div class="bm-links">
+                <a class="bm-main" href={t.data.deliverable} target="_blank" rel="noopener">读成稿 →</a>
+                <a class="bm-sub" href={`${base}/tasks/${t.id}/`}>对应任务书</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     )}
 
     {inProgress.length > 0 && (
@@ -126,6 +162,40 @@ const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
     margin: .9rem 0 0; font-family: var(--sans); font-size: .86rem; color: var(--ink-soft);
   }
   .masthead-spec a { font-weight: 600; color: var(--accent); }
+  .ms-sep { margin: 0 .5em; opacity: .55; }
+
+  /* 教程类标杆：往期最好的成稿单独陈列，视觉上比任务卡片更「样板」——描边与底色都走 accent */
+  .benchmark { margin: 0 0 3.4rem; }
+  .bm-label {
+    display: flex; align-items: baseline; gap: .55rem;
+    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .6rem;
+    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
+  }
+  .bm-label span {
+    font-family: var(--sans); font-weight: 400; font-size: .68rem;
+    letter-spacing: .26em; text-transform: uppercase; color: var(--accent);
+  }
+  .bm-intro { margin: 0 0 1.2rem; max-width: 38rem; font-size: .9rem; line-height: 1.8; color: var(--ink-soft); }
+  .bm-list { display: flex; flex-direction: column; gap: 1.1rem; }
+  .bm-card {
+    padding: 1.4rem 1.6rem 1.5rem; border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--accent) 42%, var(--line));
+    background: var(--accent-soft);
+  }
+  .bm-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: .7rem; margin-bottom: .6rem; }
+  .bm-badge {
+    font-family: var(--sans); font-size: .66rem; letter-spacing: .14em;
+    border-radius: 999px; padding: .22em .8em; white-space: nowrap;
+    color: var(--paper); background: var(--accent);
+  }
+  .bm-kind { font-family: var(--sans); font-size: .76rem; letter-spacing: .06em; color: var(--ink-soft); }
+  .bm-card h3 { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; margin: 0 0 .3rem; color: var(--ink); }
+  .bm-by { margin: 0 0 .7rem; font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); }
+  .bm-by b { color: var(--ink); font-weight: 600; }
+  .bm-note { margin: 0 0 1rem; font-size: .92rem; line-height: 1.8; color: var(--ink-soft); }
+  .bm-links { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.3rem; }
+  .bm-main { font-family: var(--sans); font-size: .9rem; font-weight: 600; color: var(--accent); }
+  .bm-sub { font-family: var(--sans); font-size: .84rem; color: var(--ink-soft); }
 
   .open-list { display: flex; flex-direction: column; gap: 1.1rem; margin: 0 0 3.4rem; }
 

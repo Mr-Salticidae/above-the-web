@@ -6,6 +6,10 @@ deadline: 2026-07-27
 fee: 100 元（税前）
 status: done
 taker: Jane
+deliverable: https://pcnokxio0sk9.feishu.cn/wiki/OK1QwPE6vibflEkHY2XcpHYynZd
+delivered: 2026-07-27
+exemplar: 评测类
+exemplar_note: 同批评测任务中完成度与专业度最高的一篇，评测类教程一律对标此稿。
 ---
 
 ## 零、一句话总结

@@ -41,6 +41,12 @@ const tasks = defineCollection({
       fee: z.string().optional(),
       status: z.enum(['open', 'taken', 'done', 'closed']).default('open'),
       taker: z.string().optional(),
+      // 成稿链接；写了 exemplar 的会作为「教程类标杆」在任务书首页单独成板块，
+      // exemplar 的值即标杆分类（评测类 / 玩法类），exemplar_note 是一句话推荐语。
+      deliverable: z.string().url().optional(),
+      delivered: dateStr.optional(),
+      exemplar: z.string().optional(),
+      exemplar_note: z.string().optional(),
     }).passthrough();
   })(),
 });
