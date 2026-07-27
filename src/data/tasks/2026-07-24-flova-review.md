@@ -8,6 +8,7 @@ status: done
 taker: 南山
 deliverable: https://ecntvdbna9a2.feishu.cn/wiki/HwJawQZEqiUOFlkO1MucKkPqnx5
 delivered: 2026-07-27
+exemplar: 评测类
 ---
 
 ## 零、一句话总结
@@ -21,6 +22,8 @@ delivered: 2026-07-27
 - 承接人：南山
 - 交付时间：2026 年 7 月 27 日
 - 成稿链接：[Flova 测评教程 →](https://ecntvdbna9a2.feishu.cn/wiki/HwJawQZEqiUOFlkO1MucKkPqnx5)
+
+> **本篇已收录为教程类标杆范例**（评测类），一并列入[教程类任务规范](../spec/)的「AI 工具评测类教程」一节，后续评测类任务可对标此稿。
 
 以下为原任务书内容，存档备查。
 
