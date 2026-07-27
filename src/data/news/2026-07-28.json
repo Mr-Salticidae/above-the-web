@@ -1,0 +1,62 @@
+{
+  "date": "2026-07-28",
+  "headline": "Kimi K3 开源震动硅谷，Claude 分享链接泄露与 AI 版权定性成焦点",
+  "items": [
+    {
+      "title": "Moonshot AI 开源 Kimi K3 权重与基础设施",
+      "summary": "Moonshot AI 正式开源 Kimi K3 模型权重及部分基础设施代码。在主流基准测试中，该模型已接近 Fable 5 和 GPT-5.6 Sol 等西方前沿模型，但在网络和数学性能上存在明显差距。此次开源可能对低成本 AI 创作工具生态产生直接推动。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/moonshot-ai-releases-kimi-k3-open-weights-and-infrastructure-after-shaking-up-the-frontier-model-race",
+      "featured": true
+    },
+    {
+      "title": "Claude 分享聊天记录在 Google 搜索中泄露",
+      "summary": "Anthropic Claude 的“分享聊天”功能因页面缺少 noindex 标签，导致部分私人对话出现在 Google 搜索结果中，涉及加密密钥和法律问题等敏感信息。创作者需注意，通过分享链接公开的内容存在被搜索引擎抓取的风险。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/27/psa-your-claude-shared-chats-and-artifacts-may-have-ended-up-on-google",
+      "featured": true
+    },
+    {
+      "title": "ChatGPT 开始阻止直接模仿作者风格的请求",
+      "summary": "OpenAI 调整了 ChatGPT 的行为策略，开始拒绝直接复制特定作家风格的请求。这一调整可能具有法律意义，对于习惯利用 AI 进行特定风格仿写的创作者而言，使用门槛和版权风险都发生了变化。",
+      "category": "工具",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/07/chatgpt-stops-cloning-famous-writers-voices-but-may-capture-a-similar-feeling",
+      "featured": false
+    },
+    {
+      "title": "德里高院将 AI 训练定性为“私人使用”，OpenAI 胜诉",
+      "summary": "印度德里高等法院驳回了新闻机构 ANI 针对 OpenAI 的版权禁令申请，首次将 AI 训练归类为私人使用。这一判决为全球 AI 版权诉讼提供了新的参考，对依赖版权数据进行模型训练的行业影响深远。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/delhi-high-court-hands-openai-a-win-by-rejecting-major-indian-news-agencys-copyright-injunction",
+      "featured": false
+    },
+    {
+      "title": "Cursor Agent 群实测：便宜模型能干活，旗舰模型做规划",
+      "summary": "Cursor 实验显示，通过分离规划器与执行器，让便宜模型处理大部分编码工作，旗舰模型负责规划，可 100% 通过 SQLite 重建测试。这验证了混合模型路由在复杂编程任务中的高性价比，对 AI 辅助创作工具的开发有指导意义。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/cursors-agent-swarm-suggests-cheaper-models-can-handle-most-coding-when-frontier-models-plan-the-work",
+      "featured": false
+    },
+    {
+      "title": "Ilya Sutskever 的 Safe Superintelligence 与 Nvidia 达成合作",
+      "summary": "隐退两年的 Safe Superintelligence 宣布与 Nvidia 建立长期合作关系，以扩展其 AI 研究规模。此举预示着顶尖人才与算力巨头结合，可能加速下一代安全超级智能模型的研发进程。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/27/ilya-sutskevers-safe-superintelligence-partners-with-nvidia-to-scale-its-ai-research",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 研究：43.5% ChatGPT 工作查询涉及跨职业任务",
+      "summary": "OpenAI 分析超 80 万条工作相关消息发现，43.5% 的特定职业查询涉及其他职业的任务，小型企业尤为明显。这表明 AI 正在重塑职业边界，创作者利用 AI 跨领域工作的趋势已成常态。",
+      "category": "研究",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/how-ai-is-expanding-what-people-do-at-work",
+      "featured": false
+    }
+  ]
+}
