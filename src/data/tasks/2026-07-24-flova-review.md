@@ -9,6 +9,7 @@ taker: 南山
 deliverable: https://ecntvdbna9a2.feishu.cn/wiki/HwJawQZEqiUOFlkO1MucKkPqnx5
 delivered: 2026-07-27
 exemplar: 评测类
+exemplar_note: 以《山海经》伪纪录片为例，跑通 Flova 从剧本、形象图到分镜、配音、自动剪辑的整条链路，每一步都附了原样可抄的提示词。
 ---
 
 ## 零、一句话总结
