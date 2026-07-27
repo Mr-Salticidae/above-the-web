@@ -169,6 +169,15 @@ const img = (name: string) => `${base}/tasks/tutorial-spec/${name}`;
     <h2>四、AI 工具评测类教程</h2>
     <p>评测类只需三节，结构比玩法类短。</p>
 
+    <aside class="notice exemplar">
+      <p><b>标杆范例</b></p>
+      <p>
+        <a href="https://pcnokxio0sk9.feishu.cn/wiki/OK1QwPE6vibflEkHY2XcpHYynZd" target="_blank" rel="noopener">问小白 5 Pro 测评教程</a>
+        （Jane，2026-07-27 交付）经发布方评定为完成度与专业度最高的一篇，现作为评测类教程的对标标杆。
+        动笔前先通读一遍，照着这个完成度要求自己——下面的三节说明是底线，这份范例是目标。
+      </p>
+    </aside>
+
     <div class="step">
       <div class="step-text">
         <h3>一、成品展示</h3>
@@ -229,6 +238,9 @@ const img = (name: string) => `${base}/tasks/tutorial-spec/${name}`;
   }
   .notice p { margin: 0; font-size: .95rem; line-height: 1.75; }
   .notice p + p { margin-top: .4em; }
+
+  /* 标杆范例：比普通提示更实心一点，和「金额不在这页」那类提示区分开 */
+  .notice.exemplar { border-color: var(--ink); background: var(--paper-3); }
 
   /* 一步 = 左侧说明 + 右侧截图 */
   .step {
