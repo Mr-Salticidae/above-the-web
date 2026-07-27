@@ -4,13 +4,25 @@ summary: 测评 AI 工具 Flova 并产出一篇「工具评测类」教程，按
 date: 2026-07-24
 deadline: 2026-07-27
 fee: 150 元（税前）
-status: taken
+status: done
 taker: 南山
+deliverable: https://ecntvdbna9a2.feishu.cn/wiki/HwJawQZEqiUOFlkO1MucKkPqnx5
+delivered: 2026-07-27
 ---
 
 ## 零、一句话总结
 
 测评 AI 工具 **Flova**，产出一篇符合站内规范的「工具评测类」教程，成品最晚于下周一（7 月 27 日）早 9:30 前交付，费用 150 元（税前）。
+
+## 交付情况
+
+**状态：已完工交付。**
+
+- 承接人：南山
+- 交付时间：2026 年 7 月 27 日
+- 成稿链接：[Flova 测评教程 →](https://ecntvdbna9a2.feishu.cn/wiki/HwJawQZEqiUOFlkO1MucKkPqnx5)
+
+以下为原任务书内容，存档备查。
 
 ## 一、任务类型与交付标准
 
@@ -70,3 +82,5 @@ taker: 南山
 **实际到手：** 142.5 元
 
 **打款时间：** 每月 15 号左右集中打款
+
+**结算状态：** 完工待打款——工作已交付完成，款项每月 15 号左右统一打款。
