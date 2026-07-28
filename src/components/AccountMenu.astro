@@ -1,0 +1,41 @@
+---
+// 全站账号入口。默认就是一个「登录」链接——读站的人不需要理它，
+// 只有要认领任务时才会用上。登录后变成昵称，点进个人中心。
+const base = import.meta.env.BASE_URL;
+---
+
+<a class="meta account-entry" href={`${base}account/`} data-account-entry data-state="anonymous">
+  <span class="ae-label" data-account-label>登录</span>
+</a>
+
+<script>
+  import { getCachedUser, onAuthChange, refreshUser } from '../scripts/account-core.js';
+
+  const entry = document.querySelector('[data-account-entry]');
+  const label = document.querySelector('[data-account-label]');
+  if (entry && label) {
+    const render = (user) => {
+      entry.dataset.state = user ? 'signed-in' : 'anonymous';
+      label.textContent = user ? user.display_name || user.username : '登录';
+      entry.title = user ? '个人中心' : '登录后可认领任务';
+    };
+    render(getCachedUser());
+    onAuthChange(render);
+    // 缓存里的资料可能已经过期，静默校验一次
+    refreshUser().then((user) => {
+      if (user) render(user);
+    });
+  }
+</script>
+
+<style>
+  .account-entry {
+    display: inline-flex; align-items: center; gap: .35rem;
+    max-width: 9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .account-entry[data-state='signed-in'] .ae-label { color: var(--accent); }
+  .account-entry[data-state='signed-in']::before {
+    content: ''; width: .4rem; height: .4rem; border-radius: 50%;
+    background: var(--accent); flex: none;
+  }
+</style>

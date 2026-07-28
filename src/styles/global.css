@@ -283,3 +283,139 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .sub-head i { font-style: normal; font-weight: 400; color: var(--ink-soft); font-size: .8em; font-variant-numeric: tabular-nums; }
 .cards-loose { margin-bottom: .2rem; }
 .sub-block .cards-loose, .cat-block > .cards-loose + .sub-block { } /* 占位，便于后续微调 */
+
+/* ============================================================
+   账号与任务流转：这一段必须是全局样式。
+   面板内容由 JS 在运行时 innerHTML 注入，拿不到 Astro 的 scoped 属性，
+   写在组件的 <style> 里会整段失效。
+   ============================================================ */
+
+/* 通用表单（账号页 / 认领面板 / 管理台共用） */
+.atw-form { display: grid; gap: 1rem; margin-top: 1rem; }
+.atw-form label { display: grid; gap: .35rem; font-size: .86rem; }
+.atw-form label > span { color: var(--ink); font-weight: 600; }
+.atw-form label i { display: block; font-style: normal; font-weight: 400; color: var(--ink-soft); font-size: .78rem; }
+.atw-form input, .atw-form textarea, .atw-form select {
+  font: inherit; font-size: .92rem; padding: .55rem .7rem; width: 100%;
+  border: 1px solid var(--line); border-radius: .4rem;
+  background: var(--paper-2); color: var(--ink);
+}
+.atw-form textarea { resize: vertical; line-height: 1.7; }
+.atw-form input:focus-visible, .atw-form textarea:focus-visible { border-color: var(--accent); }
+
+.atw-primary {
+  display: inline-block; justify-self: start; font: inherit; font-size: .9rem; cursor: pointer;
+  padding: .5rem 1.4rem; border-radius: 999px; border: 1px solid var(--accent);
+  background: var(--accent); color: #fff; text-align: center;
+}
+.atw-primary:hover { filter: brightness(1.08); text-decoration: none; color: #fff; }
+.atw-ghost {
+  display: inline-block; font: inherit; font-size: .84rem; cursor: pointer;
+  padding: .35rem .9rem; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
+}
+.atw-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+.atw-msg { min-height: 1.2em; margin: 0; font-size: .84rem; color: var(--ink-soft); }
+.atw-msg[data-tone="error"] { color: #d0342c; }
+.atw-msg[data-tone="ok"] { color: var(--accent); }
+.atw-empty { color: var(--ink-soft); font-size: .88rem; }
+
+/* 任务详情页的认领 / 交付面板 */
+.claim-panel {
+  margin: 3rem 0 0; padding: 1.4rem 1.6rem 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--line));
+  border-radius: 14px; background: var(--paper-2);
+}
+.claim-panel .cp-title { font-family: var(--serif); font-size: 1.15rem; margin: 0 0 .5rem; }
+.claim-panel .cp-note { margin: 0 0 1rem; font-size: .88rem; line-height: 1.75; color: var(--ink-soft); }
+.claim-panel .cp-rejected { color: var(--ink-soft); }
+.claim-panel .cp-closed { margin: 0; font-size: .9rem; color: var(--ink-soft); }
+.claim-panel .cp-form { display: grid; gap: 1rem; }
+.claim-panel .cp-form label { display: grid; gap: .35rem; font-size: .86rem; }
+.claim-panel .cp-form label > span { color: var(--ink); font-weight: 600; }
+.claim-panel .cp-form label i { display: block; font-style: normal; font-weight: 400; color: var(--ink-soft); font-size: .78rem; }
+.claim-panel .cp-form input, .claim-panel .cp-form textarea {
+  font: inherit; font-size: .92rem; padding: .55rem .7rem; width: 100%;
+  border: 1px solid var(--line); border-radius: .4rem; background: var(--paper); color: var(--ink);
+}
+.claim-panel .cp-form textarea { resize: vertical; line-height: 1.7; }
+.claim-panel .cp-primary {
+  display: inline-block; justify-self: start; font: inherit; font-size: .9rem; cursor: pointer;
+  padding: .5rem 1.4rem; border-radius: 999px; border: 1px solid var(--accent);
+  background: var(--accent); color: #fff;
+}
+.claim-panel .cp-primary:hover { filter: brightness(1.08); text-decoration: none; color: #fff; }
+.claim-panel .cp-ghost {
+  font: inherit; font-size: .84rem; cursor: pointer; padding: .35rem .9rem;
+  border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
+}
+.claim-panel .cp-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.claim-panel .cp-msg { min-height: 1.2em; margin: .2rem 0 0; font-size: .84rem; color: var(--ink-soft); }
+.claim-panel .cp-msg[data-tone="error"] { color: #d0342c; }
+.claim-panel .cp-msg[data-tone="ok"] { color: var(--accent); }
+
+/* 流转记录 */
+.timeline { margin: 2.4rem 0 0; }
+.timeline .tl-title {
+  font-family: var(--serif); font-size: 1rem; margin: 0 0 .6rem;
+  padding-top: .8rem; border-top: 1px solid var(--line); color: var(--ink);
+}
+.timeline .tl-list { list-style: none; margin: 0; padding: 0; }
+.timeline .tl-list li {
+  display: grid; grid-template-columns: 5.5rem 1fr; gap: .8rem;
+  padding: .4rem 0; font-size: .86rem; color: var(--ink-soft);
+}
+.timeline .tl-when { font-variant-numeric: tabular-nums; }
+.timeline .tl-what { color: var(--ink); }
+.timeline .tl-paid { margin: .6rem 0 0; font-size: .84rem; color: var(--accent); }
+
+/* 「我的认领」列表（账号页与管理台复用） */
+.atw-claim { padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.atw-claim:last-child { border-bottom: 0; }
+.atw-claim-top { display: flex; flex-wrap: wrap; gap: .8rem; align-items: baseline; font-size: .76rem; }
+.atw-claim-status { border-radius: 999px; padding: .12em .6em; border: 1px solid var(--line); color: var(--ink-soft); }
+.atw-claim-status.is-accepted { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.atw-claim-status.is-rejected, .atw-claim-status.is-withdrawn { opacity: .7; }
+.atw-claim-date { color: var(--ink-soft); }
+.atw-claim h3 { font-family: var(--serif); font-size: 1.05rem; margin: .4rem 0 .2rem; }
+.atw-claim-meta, .atw-claim-note { margin: 0; font-size: .82rem; color: var(--ink-soft); }
+.atw-claim-note { margin-top: .3rem; }
+
+/* 管理台：卡片与行内编辑控件（同样由 JS 注入，必须全局） */
+.ad-claim, .ad-task, .ad-user {
+  padding: 1rem 1.1rem; margin: 0 0 .8rem;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2);
+}
+.ad-task.is-unlisted { opacity: .62; }
+.ad-claim-head, .ad-task-head {
+  display: flex; flex-wrap: wrap; gap: .6rem; align-items: baseline; justify-content: space-between;
+}
+.ad-claim-head a, .ad-task-head a { font-family: var(--serif); font-size: 1.02rem; color: var(--ink); }
+.ad-claim-date, .ad-task-meta { font-size: .78rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.ad-claim-who { margin: .5rem 0 .2rem; font-size: .84rem; color: var(--ink-soft); }
+.ad-claim-who b { color: var(--ink); }
+.ad-claim-pitch {
+  margin: .4rem 0 .8rem; padding: .6rem .8rem; font-size: .86rem; line-height: 1.7;
+  white-space: pre-wrap; color: var(--ink-soft); background: var(--paper-3); border-radius: .4rem;
+}
+.ad-claim-actions, .ad-task-row {
+  display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: .6rem;
+}
+.ad-inline-input, .ad-task-row select {
+  font: inherit; font-size: .84rem; padding: .38rem .6rem; min-width: 8rem; flex: 1 1 10rem;
+  border: 1px solid var(--line); border-radius: .4rem; background: var(--paper); color: var(--ink);
+}
+.ad-task-row select { flex: 0 0 auto; min-width: 8.5rem; }
+.ad-task-stamp { margin: .6rem 0 0; font-size: .76rem; color: var(--ink-soft); }
+.ad-user { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; justify-content: space-between; }
+.ad-user-name { margin: 0; font-size: .9rem; }
+.ad-user-meta { margin: .2rem 0 0; font-size: .78rem; color: var(--ink-soft); }
+.ad-user-actions { display: flex; gap: .5rem; }
+.ad-logs { list-style: none; margin: 0; padding: 0; font-size: .8rem; color: var(--ink-soft); }
+.ad-logs li {
+  display: grid; grid-template-columns: 6rem 8rem 10rem 1fr; gap: .6rem;
+  padding: .35rem 0; border-bottom: 1px solid var(--line);
+}
+@media (max-width: 640px) {
+  .ad-logs li { grid-template-columns: 1fr 1fr; }
+}

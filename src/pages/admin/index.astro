@@ -1,0 +1,311 @@
+---
+// 管理台：定人、改状态、标打款、管账号。只有 role=admin 看得到内容，
+// 未登录或普通成员进来只会看到一句提示——这页本身不是秘密，秘密在接口那边。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="管理台" description="任务流转与账号管理" noindex>
+  <div class="admin-page">
+    <header class="ad-head">
+      <div>
+        <p class="ad-kicker">Admin</p>
+        <h1>管理台</h1>
+      </div>
+      <div class="ad-head-actions">
+        <button class="atw-ghost" type="button" data-sync>同步任务清单</button>
+        <a class="atw-ghost" href={`${base}account/`}>个人中心</a>
+      </div>
+    </header>
+
+    <p class="ad-gate" data-gate>正在确认权限…</p>
+
+    <div data-console hidden>
+      <p class="atw-msg" data-global-msg role="status"></p>
+
+      <section class="ad-block">
+        <h2>待处理申请 <span data-pending-count></span></h2>
+        <p class="ad-note">
+          同意即定人：任务转「进行中」，同一份任务其余申请自动落选，申请人在个人中心能看到结果。
+        </p>
+        <div data-pending><p class="atw-empty">加载中…</p></div>
+      </section>
+
+      <section class="ad-block">
+        <h2>任务</h2>
+        <p class="ad-note">
+          状态以这里为准，页面上实时生效，不用改 markdown 重新构建。
+          正文、报酬、截止时间仍归 <code>src/data/tasks/*.md</code>——改完 push 即可。
+        </p>
+        <div data-tasks><p class="atw-empty">加载中…</p></div>
+      </section>
+
+      <section class="ad-block">
+        <h2>账号</h2>
+        <div data-users><p class="atw-empty">加载中…</p></div>
+      </section>
+
+      <section class="ad-block">
+        <h2>最近操作</h2>
+        <div data-logs><p class="atw-empty">加载中…</p></div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import {
+    api,
+    escapeHtml,
+    formatDate,
+    getToken,
+    refreshUser,
+    url,
+    TASK_STATUS_LABEL,
+  } from '../../scripts/account-core.js';
+
+  const gate = document.querySelector('[data-gate]');
+  const consoleView = document.querySelector('[data-console]');
+
+  function say(text, ok = false) {
+    const node = document.querySelector('[data-global-msg]');
+    node.textContent = text;
+    node.dataset.tone = ok ? 'ok' : text ? 'error' : '';
+  }
+
+  function renderPending(claims) {
+    document.querySelector('[data-pending-count]').textContent = claims.length ? `· ${claims.length}` : '';
+    const host = document.querySelector('[data-pending]');
+    if (!claims.length) {
+      host.innerHTML = '<p class="atw-empty">没有待处理的申请。</p>';
+      return;
+    }
+    host.innerHTML = claims
+      .map(
+        (c) => `<article class="ad-claim" data-claim-id="${escapeHtml(c.id)}">
+          <div class="ad-claim-head">
+            <a href="${url(`tasks/${c.taskSlug}/`)}">${escapeHtml(c.taskTitle || c.taskSlug)}</a>
+            <span class="ad-claim-date">${formatDate(c.createdAt)}</span>
+          </div>
+          <p class="ad-claim-who"><b>${escapeHtml(c.user)}</b> @${escapeHtml(c.username)} · ${escapeHtml(
+            c.contact || '未填联系方式',
+          )}</p>
+          ${c.pitch ? `<p class="ad-claim-pitch">${escapeHtml(c.pitch)}</p>` : ''}
+          <div class="ad-claim-actions">
+            <input class="ad-inline-input" data-note placeholder="给对方的留言（可留空）" maxlength="500" />
+            <button class="atw-primary" type="button" data-accept>定给他</button>
+            <button class="atw-ghost" type="button" data-reject>不选</button>
+          </div>
+        </article>`,
+      )
+      .join('');
+
+    host.querySelectorAll('[data-claim-id]').forEach((card) => {
+      const id = card.dataset.claimId;
+      const note = () => card.querySelector('[data-note]').value;
+      card.querySelector('[data-accept]').addEventListener('click', () => decide(id, 'accept', note()));
+      card.querySelector('[data-reject]').addEventListener('click', () => decide(id, 'reject', note()));
+    });
+  }
+
+  function renderTasks(tasks) {
+    const host = document.querySelector('[data-tasks]');
+    if (!tasks.length) {
+      host.innerHTML = '<p class="atw-empty">库里还没有任务，点右上角「同步任务清单」。</p>';
+      return;
+    }
+    host.innerHTML = tasks
+      .map((t) => {
+        const options = Object.entries(TASK_STATUS_LABEL)
+          .map(([value, label]) => `<option value="${value}"${value === t.status ? ' selected' : ''}>${label}</option>`)
+          .join('');
+        return `<article class="ad-task${t.listed ? '' : ' is-unlisted'}" data-slug="${escapeHtml(t.slug)}">
+          <div class="ad-task-head">
+            <a href="${url(`tasks/${t.slug}/`)}">${escapeHtml(t.title || t.slug)}</a>
+            <span class="ad-task-meta">${escapeHtml(t.fee || '')}${
+              t.deadline ? ` · 截止 ${escapeHtml(t.deadline)}` : ''
+            }${t.listed ? '' : ' · markdown 已删除'}</span>
+          </div>
+          <div class="ad-task-row">
+            <select data-status>${options}</select>
+            <input class="ad-inline-input" data-taker value="${escapeHtml(t.taker || '')}" placeholder="承接人（无账号时手填）" maxlength="32" />
+            <input class="ad-inline-input" data-deliverable value="${escapeHtml(
+              t.deliverableUrl || '',
+            )}" placeholder="成稿链接" />
+            <input class="ad-inline-input" data-note placeholder="备注（写进流转记录）" maxlength="500" />
+            <button class="atw-ghost" type="button" data-save>保存</button>
+          </div>
+          <p class="ad-task-stamp">
+            ${t.pendingClaims ? `${t.pendingClaims} 人在申请 · ` : ''}
+            ${t.claimedAt ? `定人 ${formatDate(t.claimedAt)} · ` : ''}
+            ${t.deliveredAt ? `交付 ${formatDate(t.deliveredAt)} · ` : ''}
+            ${t.paidAt ? `打款 ${formatDate(t.paidAt)}` : ''}
+          </p>
+        </article>`;
+      })
+      .join('');
+
+    host.querySelectorAll('[data-slug]').forEach((card) => {
+      card.querySelector('[data-save]').addEventListener('click', async () => {
+        say('保存中…');
+        try {
+          await api('PATCH', `/admin/tasks/${encodeURIComponent(card.dataset.slug)}`, {
+            status: card.querySelector('[data-status]').value,
+            takerName: card.querySelector('[data-taker]').value,
+            deliverableUrl: card.querySelector('[data-deliverable]').value,
+            note: card.querySelector('[data-note]').value,
+          });
+          say('已保存', true);
+          await load();
+        } catch (error) {
+          say(error.message);
+        }
+      });
+    });
+  }
+
+  function renderUsers(users) {
+    const host = document.querySelector('[data-users]');
+    host.innerHTML = users
+      .map(
+        (u) => `<article class="ad-user" data-user-id="${escapeHtml(u.id)}">
+          <div>
+            <p class="ad-user-name"><b>${escapeHtml(u.display_name)}</b> @${escapeHtml(u.username)}${
+              u.role === 'admin' ? ' · 发布方' : ''
+            }${u.status === 'suspended' ? ' · 已停用' : ''}</p>
+            <p class="ad-user-meta">${escapeHtml(u.email)}${
+              u.contact ? ` · ${escapeHtml(u.contact)}` : ''
+            }${u.payee ? ` · 收款 ${escapeHtml(u.payee)}` : ''}</p>
+          </div>
+          <div class="ad-user-actions">
+            <button class="atw-ghost" type="button" data-toggle-role>${
+              u.role === 'admin' ? '降为成员' : '设为发布方'
+            }</button>
+            <button class="atw-ghost" type="button" data-toggle-status>${
+              u.status === 'active' ? '停用' : '恢复'
+            }</button>
+          </div>
+        </article>`,
+      )
+      .join('');
+
+    host.querySelectorAll('[data-user-id]').forEach((card) => {
+      const user = users.find((u) => u.id === card.dataset.userId);
+      card.querySelector('[data-toggle-role]').addEventListener('click', () =>
+        patchUser(user.id, { role: user.role === 'admin' ? 'member' : 'admin', status: user.status }),
+      );
+      card.querySelector('[data-toggle-status]').addEventListener('click', () =>
+        patchUser(user.id, { role: user.role, status: user.status === 'active' ? 'suspended' : 'active' }),
+      );
+    });
+  }
+
+  function renderLogs(logs) {
+    const host = document.querySelector('[data-logs]');
+    host.innerHTML = logs.length
+      ? `<ul class="ad-logs">${logs
+          .slice(0, 40)
+          .map(
+            (l) => `<li>
+              <span>${formatDate(l.created_at)}</span>
+              <span>${escapeHtml(l.actor_name || '—')}</span>
+              <span>${escapeHtml(l.action)}</span>
+              <span>${escapeHtml(l.target_id || '')}</span>
+            </li>`,
+          )
+          .join('')}</ul>`
+      : '<p class="atw-empty">还没有操作记录。</p>';
+  }
+
+  async function decide(claimId, action, note) {
+    say('处理中…');
+    try {
+      await api('POST', `/admin/claims/${encodeURIComponent(claimId)}/${action}`, { note });
+      say(action === 'accept' ? '已定人' : '已标记落选', true);
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  async function patchUser(id, body) {
+    say('更新中…');
+    try {
+      await api('PATCH', `/admin/users/${encodeURIComponent(id)}`, body);
+      say('已更新', true);
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  document.querySelector('[data-sync]').addEventListener('click', async () => {
+    say('同步中…');
+    try {
+      const { sync } = await api('POST', '/admin/tasks/sync');
+      say(`同步完成：新增 ${sync.created}、刷新 ${sync.updated}、下架 ${sync.delisted}`, true);
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  });
+
+  async function load() {
+    const [overview, users, logs] = await Promise.all([
+      api('GET', '/admin/overview'),
+      api('GET', '/admin/users'),
+      api('GET', '/admin/audit-logs').catch(() => ({ logs: [] })),
+    ]);
+    renderPending(overview.pendingClaims);
+    renderTasks(overview.tasks);
+    renderUsers(users.users);
+    renderLogs(logs.logs);
+  }
+
+  async function boot() {
+    if (!getToken()) {
+      gate.innerHTML = `这页要用发布方账号登录。<a href="${url('account/?next=' + encodeURIComponent(location.pathname))}">去登录 →</a>`;
+      return;
+    }
+    const user = await refreshUser();
+    if (!user) {
+      gate.innerHTML = `登录已过期。<a href="${url('account/')}">重新登录 →</a>`;
+      return;
+    }
+    if (user.role !== 'admin') {
+      gate.textContent = '这页只对发布方开放。你的认领记录在个人中心。';
+      return;
+    }
+    gate.hidden = true;
+    consoleView.hidden = false;
+    try {
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  boot();
+</script>
+
+<style>
+  .admin-page { max-width: 56rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+  .ad-head {
+    display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; justify-content: space-between;
+    border-bottom: 2px solid var(--ink); padding-bottom: 1.2rem; margin-bottom: 1.6rem;
+  }
+  .ad-kicker {
+    margin: 0 0 .3rem; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--accent);
+  }
+  .ad-head h1 { font-family: var(--serif); font-size: 2rem; margin: 0; }
+  .ad-head-actions { display: flex; gap: .5rem; }
+  .ad-gate { color: var(--ink-soft); font-size: .9rem; }
+  .ad-block { margin: 2.6rem 0 0; }
+  .ad-block h2 {
+    font-family: var(--serif); font-size: 1.15rem; margin: 0 0 .3rem;
+    padding-bottom: .4rem; border-bottom: 1px solid var(--line);
+  }
+  .ad-block h2 span { font-family: var(--sans); font-size: .8rem; color: var(--accent); }
+  .ad-note { margin: .5rem 0 1rem; font-size: .82rem; line-height: 1.7; color: var(--ink-soft); }
+  .ad-note code { font-size: .95em; background: var(--paper-3); padding: .1em .35em; border-radius: .25em; }
+</style>

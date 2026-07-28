@@ -1,16 +1,24 @@
 ---
 // 任务书 · Commissions —— 对外发布的合作任务版块。
-// 列表页：招募中的任务置顶展示，已收官的进入归档目录；详情页在 /tasks/[slug]/。
+// 三个分组（招募中 / 进行中 / 已收官）的 DOM 结构一致，卡片能在组间原样搬运：
+// 构建时按 markdown 的 status 就位，页面加载后由 tasks-live.js 按数据库的真实状态重排。
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../lib/news.mjs';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tasks = (await getCollection('tasks')).sort((a, b) => b.data.date.localeCompare(a.data.date));
-const open = tasks.filter((t) => t.data.status === 'open');
-const inProgress = tasks.filter((t) => t.data.status === 'taken');
-const closed = tasks.filter((t) => t.data.status === 'done' || t.data.status === 'closed');
-const statusLabel = (s) => (s === 'done' ? '完工待打款' : '已收官');
+const GROUP_OF = { open: 'open', taken: 'taken', done: 'archive', closed: 'archive' };
+const groups = {
+  open: tasks.filter((t) => GROUP_OF[t.data.status] === 'open'),
+  taken: tasks.filter((t) => GROUP_OF[t.data.status] === 'taken'),
+  archive: tasks.filter((t) => GROUP_OF[t.data.status] === 'archive'),
+};
+const statusLabel = (s, taker) =>
+  s === 'open' ? '招募中'
+  : s === 'taken' ? `进行中${taker ? ` · ${taker}` : ''}`
+  : s === 'done' ? '完工待打款'
+  : '已收官';
 // 教程类标杆：任务书 frontmatter 里写了 exemplar 的成稿，单独成板块供后续任务对标
 const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
 ---
@@ -34,14 +42,24 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
           <Fragment><span class="ms-sep">·</span><a href="#benchmark">教程类标杆 ↓</a></Fragment>
         )}
       </p>
+      <p class="masthead-login">认领任务需要登录（要对接人和打款）；只读站的话不用管账号。</p>
     </header>
 
-    {open.length > 0 ? (
-      <section class="open-list">
-        {open.map((t) => (
-          <a class="task-card" href={`${base}/tasks/${t.id}/`}>
+    <section class="group open-group" data-group="open" hidden={groups.open.length === 0}>
+      <div class="group-list" data-group-list>
+        {groups.open.map((t) => (
+          <a
+            class="task-card"
+            href={`${base}/tasks/${t.id}/`}
+            data-task-card
+            data-slug={t.id}
+            data-status={t.data.status}
+            data-date={t.data.date}
+          >
             <div class="tc-top">
-              <span class="tc-status is-open">招募中</span>
+              <span class={`tc-status is-${t.data.status}`} data-status-label>
+                {statusLabel(t.data.status, t.data.taker)}
+              </span>
               <span class="tc-date">{formatDate(t.data.date)} 发布</span>
             </div>
             <h2>{t.data.title}</h2>
@@ -49,19 +67,20 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
             <div class="tc-meta">
               {t.data.fee && <span class="tc-fee">{t.data.fee}</span>}
               {t.data.deadline && <span class="tc-deadline">截止 {formatDate(t.data.deadline)}</span>}
+              <span class="tc-queue" data-queue hidden></span>
               <span class="tc-cta">查看任务书 →</span>
             </div>
           </a>
         ))}
-      </section>
-    ) : (
-      <div class="empty-state">
-        <div class="es-mark" aria-hidden="true">🕸️</div>
-        <p class="es-title">当前暂无招募中的任务</p>
-        <p class="es-sub">新任务书会第一时间发布在这里。想先了解合作方式，可以读读教程类任务的交付标准。</p>
-        <a class="es-link" href={`${base}/tasks/spec/`}>教程类任务规范 →</a>
       </div>
-    )}
+    </section>
+
+    <div class="empty-state" data-empty-open hidden={groups.open.length > 0}>
+      <div class="es-mark" aria-hidden="true">🕸️</div>
+      <p class="es-title">当前暂无招募中的任务</p>
+      <p class="es-sub">新任务书会第一时间发布在这里。想先了解合作方式，可以读读教程类任务的交付标准。</p>
+      <a class="es-link" href={`${base}/tasks/spec/`}>教程类任务规范 →</a>
+    </div>
 
     {exemplars.length > 0 && (
       <section class="benchmark" id="benchmark">
@@ -94,47 +113,74 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
       </section>
     )}
 
-    {inProgress.length > 0 && (
-      <section class="inprogress">
-        <h2 class="ip-label">进行中 <span>In Progress</span></h2>
-        <div class="ip-list">
-          {inProgress.map((t) => (
-            <a class="task-card is-taken" href={`${base}/tasks/${t.id}/`}>
-              <div class="tc-top">
-                <span class="tc-status is-taken">进行中{t.data.taker ? ` · ${t.data.taker}` : ''}</span>
-                <span class="tc-date">{formatDate(t.data.date)} 发布</span>
-              </div>
-              <h2>{t.data.title}</h2>
-              <p class="tc-summary">{t.data.summary}</p>
-              <div class="tc-meta">
-                {t.data.fee && <span class="tc-fee">{t.data.fee}</span>}
-                {t.data.deadline && <span class="tc-deadline">截止 {formatDate(t.data.deadline)}</span>}
-                <span class="tc-cta">查看任务书 →</span>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-    )}
+    <section class="group inprogress" data-group="taken" hidden={groups.taken.length === 0}>
+      <h2 class="group-label">进行中 <span>In Progress</span></h2>
+      <div class="group-list" data-group-list>
+        {groups.taken.map((t) => (
+          <a
+            class="task-card is-taken"
+            href={`${base}/tasks/${t.id}/`}
+            data-task-card
+            data-slug={t.id}
+            data-status={t.data.status}
+            data-date={t.data.date}
+          >
+            <div class="tc-top">
+              <span class={`tc-status is-${t.data.status}`} data-status-label>
+                {statusLabel(t.data.status, t.data.taker)}
+              </span>
+              <span class="tc-date">{formatDate(t.data.date)} 发布</span>
+            </div>
+            <h2>{t.data.title}</h2>
+            <p class="tc-summary">{t.data.summary}</p>
+            <div class="tc-meta">
+              {t.data.fee && <span class="tc-fee">{t.data.fee}</span>}
+              {t.data.deadline && <span class="tc-deadline">截止 {formatDate(t.data.deadline)}</span>}
+              <span class="tc-queue" data-queue hidden></span>
+              <span class="tc-cta">查看任务书 →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
 
-    {closed.length > 0 && (
-      <section class="archive">
-        <h2 class="archive-label">已收官 <span>Archive</span></h2>
-        <ol class="archive-list">
-          {closed.map((t) => (
-            <li>
-              <a href={`${base}/tasks/${t.id}/`}>
-                <span class="a-status">{statusLabel(t.data.status)}</span>
-                <span class="a-title">{t.data.title}</span>
-                {t.data.fee && <span class="a-fee">{t.data.fee}</span>}
-              </a>
-            </li>
-          ))}
-        </ol>
-      </section>
-    )}
+    <section class="group archive" data-group="archive" hidden={groups.archive.length === 0}>
+      <h2 class="group-label">已收官 <span>Archive</span></h2>
+      <div class="group-list" data-group-list>
+        {groups.archive.map((t) => (
+          <a
+            class="task-card"
+            href={`${base}/tasks/${t.id}/`}
+            data-task-card
+            data-slug={t.id}
+            data-status={t.data.status}
+            data-date={t.data.date}
+          >
+            <div class="tc-top">
+              <span class={`tc-status is-${t.data.status}`} data-status-label>
+                {statusLabel(t.data.status, t.data.taker)}
+              </span>
+              <span class="tc-date">{formatDate(t.data.date)} 发布</span>
+            </div>
+            <h2>{t.data.title}</h2>
+            <p class="tc-summary">{t.data.summary}</p>
+            <div class="tc-meta">
+              {t.data.fee && <span class="tc-fee">{t.data.fee}</span>}
+              {t.data.deadline && <span class="tc-deadline">截止 {formatDate(t.data.deadline)}</span>}
+              <span class="tc-queue" data-queue hidden></span>
+              <span class="tc-cta">查看任务书 →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
   </div>
 </BaseLayout>
+
+<script>
+  import { hydrateTaskList } from '../../scripts/tasks-live.js';
+  hydrateTaskList();
+</script>
 
 <style>
   .tasks-page { max-width: 52rem; margin: 0 auto; padding: 3.2rem 1.5rem 6rem; }
@@ -162,6 +208,7 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
     margin: .9rem 0 0; font-family: var(--sans); font-size: .86rem; color: var(--ink-soft);
   }
   .masthead-spec a { font-weight: 600; color: var(--accent); }
+  .masthead-login { margin: .5rem 0 0; font-family: var(--sans); font-size: .78rem; color: var(--ink-soft); opacity: .85; }
   .ms-sep { margin: 0 .5em; opacity: .55; }
 
   /* 教程类标杆：往期最好的成稿单独陈列，视觉上比任务卡片更「样板」——描边与底色都走 accent */
@@ -197,7 +244,17 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
   .bm-main { font-family: var(--sans); font-size: .9rem; font-weight: 600; color: var(--accent); }
   .bm-sub { font-family: var(--sans); font-size: .84rem; color: var(--ink-soft); }
 
-  .open-list { display: flex; flex-direction: column; gap: 1.1rem; margin: 0 0 3.4rem; }
+  .group { margin: 0 0 3.4rem; }
+  .group-list { display: flex; flex-direction: column; gap: 1.1rem; }
+  .group-label {
+    display: flex; align-items: baseline; gap: .55rem;
+    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 1rem;
+    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
+  }
+  .group-label span {
+    font-family: var(--sans); font-weight: 400; font-size: .68rem;
+    letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
+  }
 
   /* 空状态：没有招募中任务时，给一个成型的卡片而非悬空文字 */
   .empty-state {
@@ -228,57 +285,48 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
   .tc-status {
     font-family: var(--sans); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
     border-radius: 999px; padding: .18em .7em; white-space: nowrap;
+    color: var(--ink-soft); border: 1px solid var(--line);
   }
-  .tc-status.is-open { color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
-  .tc-status.is-taken { color: var(--ink-soft); border: 1px solid var(--line); background: var(--paper-3); text-transform: none; }
+  .tc-status.is-open { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
+  .tc-status.is-taken { background: var(--paper-3); text-transform: none; }
+  .tc-status.is-done { text-transform: none; }
   .tc-date { font-family: var(--sans); font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
   .task-card h2 { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; margin: 0 0 .4rem; }
   .tc-summary { margin: 0 0 .9rem; font-size: .92rem; line-height: 1.8; color: var(--ink-soft); }
   .tc-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.2rem; }
   .tc-fee { font-family: var(--sans); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
   .tc-deadline { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .tc-queue { font-family: var(--sans); font-size: .78rem; color: var(--ink-soft); }
   .tc-cta { margin-left: auto; font-size: .84rem; font-weight: 600; color: var(--accent); }
 
   /* 进行中：已被接取、正在做的任务，卡片体但比招募中收敛（中性色、不抢眼） */
-  .inprogress { margin: 0 0 3.4rem; }
-  .ip-label {
-    display: flex; align-items: baseline; gap: .55rem;
-    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 1rem;
-    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
-  }
-  .ip-label span {
-    font-family: var(--sans); font-weight: 400; font-size: .68rem;
-    letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
-  }
-  .ip-list { display: flex; flex-direction: column; gap: 1.1rem; }
   .task-card.is-taken { background: var(--paper); }
   .task-card.is-taken:hover { border-color: color-mix(in srgb, var(--ink) 22%, var(--line)); }
   .task-card.is-taken .tc-cta { color: var(--ink-soft); }
 
-  /* 已收官：细线目录体，与快讯归档同构 */
-  .archive-label {
-    display: flex; align-items: baseline; gap: .55rem;
-    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .4rem;
-    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
-  }
-  .archive-label span {
-    font-family: var(--sans); font-weight: 400; font-size: .68rem;
-    letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
-  }
-  .archive-list { list-style: none; margin: 0; padding: 0; }
-  .archive-list li { border-bottom: 1px solid var(--line); }
-  .archive-list li:last-child { border-bottom: none; }
-  .archive-list a {
+  /* 已收官：同一份卡片 DOM 压成细线目录体（与快讯归档同构），
+     这样卡片在分组之间搬运时不需要重建结构，只是换了个容器。 */
+  .archive .group-list { gap: 0; }
+  .archive .task-card {
     display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: baseline;
-    padding: .95rem .4rem; border-radius: 10px; color: var(--ink);
-    transition: background .15s ease;
+    padding: .95rem .4rem; border: 0; border-bottom: 1px solid var(--line);
+    border-radius: 10px; background: transparent; transition: background .15s ease;
   }
-  .archive-list a:hover { background: var(--accent-soft); text-decoration: none; }
-  .a-status { font-family: var(--sans); font-size: .72rem; letter-spacing: .1em; color: var(--ink-soft); white-space: nowrap; }
-  .a-title { font-family: var(--serif); font-size: .98rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .a-fee { font-family: var(--sans); font-size: .78rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .archive .task-card:hover { transform: none; box-shadow: none; background: var(--accent-soft); }
+  .archive .task-card:last-child { border-bottom: 0; }
+  .archive .tc-top, .archive .tc-meta { display: contents; }
+  .archive .tc-summary, .archive .tc-date, .archive .tc-deadline,
+  .archive .tc-queue, .archive .tc-cta { display: none; }
+  .archive .tc-status {
+    border: 0; background: transparent; padding: 0; letter-spacing: .1em;
+    font-size: .72rem; color: var(--ink-soft);
+  }
+  .archive .task-card h2 {
+    font-size: .98rem; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .archive .tc-fee { font-size: .78rem; font-weight: 400; color: var(--ink-soft); white-space: nowrap; }
   @media (max-width: 640px) {
-    .archive-list a { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .15rem .8rem; }
-    .a-title { grid-column: 1 / -1; white-space: normal; }
+    .archive .task-card { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .15rem .8rem; }
+    .archive .task-card h2 { grid-column: 1 / -1; white-space: normal; }
   }
 </style>

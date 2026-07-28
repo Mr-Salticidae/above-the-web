@@ -23,3 +23,6 @@ Thumbs.db
 
 # Toy 封面成品（由 scripts/toy-news-poster/make-poster.py 从 base.jpg 生成）
 scripts/toy-news-poster/poster.png
+
+# 账号服务的本地数据库（线上在 /var/lib/atw-platform/）
+platform/server/data/

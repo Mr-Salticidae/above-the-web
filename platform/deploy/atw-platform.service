@@ -1,0 +1,33 @@
+[Unit]
+Description=蛛网之上 · 站点账号与任务流转服务
+After=network.target
+
+[Service]
+Type=simple
+User=atwplat
+Group=atwplat
+WorkingDirectory=/opt/atw-platform/server
+EnvironmentFile=/opt/atw-platform/server/.env
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=3
+
+# 数据落在 /var/lib/atw-platform，与代码目录分开，重新部署不会碰到数据库
+ReadWritePaths=/var/lib/atw-platform
+
+# 收紧权限：除了自己的数据目录不需要写任何地方。
+# 任务清单 /var/www/tiaozhuxiansheng/tasks/index.json 只读，ProtectSystem=strict 不影响读。
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=atw-platform
+
+[Install]
+WantedBy=multi-user.target

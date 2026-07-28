@@ -1,0 +1,61 @@
+name: 部署账号与任务服务
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'platform/**'
+      - '.github/workflows/deploy-platform.yml'
+  workflow_dispatch:
+
+# 同时只跑一次，避免两次推送把服务反复重启
+concurrency:
+  group: atw-platform-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+
+      - name: 跑流转回归（不过就不上线）
+        run: cd platform/server && node --test test/*.test.js
+
+      - name: 同步到香港服务器并重启
+        env:
+          HOST: 43.128.2.172
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          # 先把整份 platform（含 deploy 脚本）放到暂存目录，装没装过都用得上
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" \
+            platform/ \
+            root@"$HOST":/tmp/atw-platform-src/
+
+          ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@"$HOST" '
+            set -e
+            if [ ! -f /opt/atw-platform/server/.env ]; then
+              echo "首次部署：跑安装脚本（建服务账号、目录、systemd、初始口令）"
+              bash /tmp/atw-platform-src/deploy/setup-server.sh
+            else
+              # --delete 让删掉的文件线上也消失；但要排除运行时产物：
+              #   .env  是服务器上生成的密钥，不在仓库里
+              #   data/ 是本地开发遗留的数据目录（线上用 /var/lib/atw-platform）
+              rsync -a --delete --exclude ".env" --exclude "data/" \
+                /tmp/atw-platform-src/server/ /opt/atw-platform/server/
+              chown -R atwplat:atwplat /opt/atw-platform
+              chmod 600 /opt/atw-platform/server/.env
+              systemctl restart atw-platform
+            fi
+            sleep 1
+            systemctl is-active atw-platform
+            curl -fsS http://127.0.0.1:3200/api/meta > /dev/null && echo "API 自检通过"
+          '

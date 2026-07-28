@@ -1,0 +1,15 @@
+{
+  "name": "atw-platform-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "蛛网之上 · 站点账号与任务流转后端（零第三方依赖，node:sqlite）",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "engines": {
+    "node": ">=22.5"
+  }
+}

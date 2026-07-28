@@ -10,6 +10,7 @@
 - 内容源：构建时浅克隆 `knowledge-base`，仅取 v1 精选目录（见 `src/lib/kb.mjs` 的 `SELECTED`）
 - 搜索：Pagefind（静态全文，零后端）
 - 部署：GitHub Pages + Actions
+- 账号与任务流转：`platform/`（Node + node:sqlite，跑在香港服务器，见下）
 
 ## 本地开发
 
@@ -28,6 +29,18 @@ npm run dev        # 自动 sync 内容后启动 dev server
 1. 建一个有 `repo` 权限的 PAT，加到 `knowledge-base` 仓库 secret `DISPATCH_TOKEN`。
 2. 在 `knowledge-base` 加 workflow，push 时调用本仓库 `repository_dispatch`（event_type `kb-updated`）。
 未配置时，定时 + push 已能保证同步，只是不即时。
+
+## 账号与任务书
+
+读站不需要账号——快讯、笔记、Prompt 大师、玩具一律不拦。**只有认领任务书要登录**，
+因为那头连着报酬和打款，得能把人对上。
+
+任务书正文仍写在 `src/data/tasks/*.md`（push 即发布），但状态归数据库：认领、定人、
+交付、打款在站内点，页面实时生效，不用改 markdown 重新构建。服务代码、状态机、
+部署与运维都在 [platform/README.md](platform/README.md)。
+
+登录态只在自有域名 `tiaozhuxiansheng.com` 上完整可用；GitHub Pages 镜像跨域读得到任务状态，
+但认领请走主域名。
 
 ## 内容范围
 
