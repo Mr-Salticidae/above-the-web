@@ -1,0 +1,15 @@
+{
+  // kb-content/ 是构建期从 knowledge-base 仓库克隆的内容源（见 .gitignore 与
+  // scripts/sync-content.mjs）：每次 npm run sync / dev / build 都会先 reset --hard，
+  // 再就地跑 normalizeFrontmatter（去 BOM、tags 重排成 YAML 列表、丢弃 tags/title
+  // 以外的键）。于是它稳定地呈现为「几百个未提交改动」——那是同步脚本的正常产物，
+  // 不是待办，也不该提交（它连 .gitignore 都进了）。
+  //
+  // VSCode 会自动检测嵌套的 git 仓库并单独列进源代码管理面板，让人每次都误以为
+  // 漏提交了东西。这里把它从检测里排除，只保留 above-the-web 本身。
+  // 需要看它的真实状态时，用命令行：git -C kb-content status
+  "git.ignoredRepositories": [
+    "kb-content",
+    "E:\\above-the-web\\kb-content"
+  ]
+}
