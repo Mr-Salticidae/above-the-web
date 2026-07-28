@@ -26,7 +26,10 @@ id -u atwplat >/dev/null 2>&1 || useradd --system --no-create-home --shell /usr/
 mkdir -p "$APP_DIR" "$DATA_DIR"
 
 echo "==> 复制代码"
-cp -a "$SRC_DIR/server" "$APP_DIR/"
+# 复制目录内容而不是目录本身：装过一次之后 $APP_DIR/server 已存在，
+# `cp -a src/server dst/` 会变成 dst/server/server，重跑就套娃了。
+mkdir -p "$APP_DIR/server"
+cp -a "$SRC_DIR/server/." "$APP_DIR/server/"
 
 echo "==> 准备 .env"
 if [ ! -f "$APP_DIR/server/.env" ]; then

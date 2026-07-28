@@ -20,6 +20,8 @@ Thumbs.db
 *.log
 .env
 .env.*
+# 但配置模板要进库——服务器首次安装靠它生成 .env
+!platform/server/.env.example
 
 # Toy 封面成品（由 scripts/toy-news-poster/make-poster.py 从 base.jpg 生成）
 scripts/toy-news-poster/poster.png
