@@ -40,6 +40,9 @@ body, .site-header, .explore, .card, .search-trigger, .chip, .subchip { transiti
 @media (prefers-reduced-motion: reduce) { :root { --theme-tx: none; } }
 
 * { box-sizing: border-box; }
+/* 组件里凡是写了 display 的元素，都会盖掉 [hidden] 自带的 display:none
+   （UA 样式优先级最低）。账号页大量用 hidden 切视图，这里统一兜住。 */
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
@@ -302,6 +305,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .atw-form textarea { resize: vertical; line-height: 1.7; }
 .atw-form input:focus-visible, .atw-form textarea:focus-visible { border-color: var(--accent); }
+.atw-form input:disabled { color: var(--ink-soft); background: var(--paper-3); cursor: not-allowed; }
 
 .atw-primary {
   display: inline-block; justify-self: start; font: inherit; font-size: .9rem; cursor: pointer;
@@ -345,10 +349,12 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   background: var(--accent); color: #fff;
 }
 .claim-panel .cp-primary:hover { filter: brightness(1.08); text-decoration: none; color: #fff; }
+.claim-panel .cp-actions { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; }
 .claim-panel .cp-ghost {
-  font: inherit; font-size: .84rem; cursor: pointer; padding: .35rem .9rem;
+  display: inline-block; font: inherit; font-size: .84rem; cursor: pointer; padding: .35rem .9rem;
   border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
 }
+.claim-panel .cp-ghost:hover { text-decoration: none; }
 .claim-panel .cp-ghost:hover { border-color: var(--accent); color: var(--accent); }
 .claim-panel .cp-msg { min-height: 1.2em; margin: .2rem 0 0; font-size: .84rem; color: var(--ink-soft); }
 .claim-panel .cp-msg[data-tone="error"] { color: #d0342c; }
@@ -418,4 +424,252 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 @media (max-width: 640px) {
   .ad-logs li { grid-template-columns: 1fr 1fr; }
+}
+
+/* ============================================================
+   账号 UI：头像、顶栏下拉、登录/注册板块、个人中心。
+   同样必须全局——这几处的内容大半是 JS 运行时注入的。
+   ============================================================ */
+
+/* 头像：没有上传功能，用昵称首字 + 用户名算出的稳定色相 */
+:root { --av-sat: 58%; --av-bg-l: 89%; --av-fg-l: 32%; }
+:root[data-theme="dark"] { --av-bg-l: 27%; --av-fg-l: 84%; }
+.atw-avatar {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 1.8rem; height: 1.8rem; border-radius: 50%;
+  font-size: .8rem; font-weight: 600; line-height: 1; letter-spacing: 0;
+  background: hsl(var(--av-hue, 260) var(--av-sat) var(--av-bg-l));
+  color: hsl(var(--av-hue, 260) var(--av-sat) var(--av-fg-l));
+}
+.atw-avatar-lg { width: 2.6rem; height: 2.6rem; font-size: 1.1rem; }
+.atw-avatar-xl { width: 3.4rem; height: 3.4rem; font-size: 1.45rem; }
+
+/* 顶栏账号入口与下拉 */
+.acct { position: relative; }
+.acct-trigger {
+  display: inline-flex; align-items: center; gap: .4rem; cursor: pointer;
+  font: inherit; font-size: .85rem; letter-spacing: .02em; color: var(--ink-soft);
+  padding: .22rem .5rem .22rem .28rem; border-radius: 999px;
+  border: 1px solid transparent; background: transparent;
+}
+.acct[data-state="anonymous"] .acct-trigger { padding-left: .85rem; }
+.acct-trigger:hover { border-color: var(--line); color: var(--ink); background: var(--paper-2); }
+.acct[data-state="signed-in"] .acct-name { color: var(--ink); }
+.acct-trigger-face { display: inline-flex; align-items: center; gap: .45rem; }
+.acct-name { max-width: 6.5rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.acct-caret { width: .8rem; height: .8rem; opacity: .55; }
+.acct-trigger[aria-expanded="true"] .acct-caret { transform: rotate(180deg); }
+
+.acct-pop {
+  position: absolute; right: 0; top: calc(100% + .6rem); z-index: 40;
+  width: 17.5rem; max-width: calc(100vw - 2rem); padding: .45rem;
+  border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2);
+  box-shadow: 0 20px 44px -20px rgba(var(--shadow), .55);
+}
+.acct-card { display: flex; align-items: center; gap: .7rem; padding: .7rem .6rem .8rem; }
+.acct-card-text { min-width: 0; }
+.acct-card-name {
+  margin: 0; font-size: .95rem; font-weight: 600; color: var(--ink);
+  display: flex; align-items: center; gap: .4rem;
+}
+.acct-card-sub, .acct-row-sub {
+  margin: .15rem 0 0; font-size: .76rem; color: var(--ink-soft);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.acct-badge {
+  font-size: .66rem; padding: .1em .5em; border-radius: 999px;
+  color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent);
+}
+.acct-group { padding: .35rem 0; border-top: 1px solid var(--line); }
+.acct-group:first-child { border-top: 0; }
+.acct-group-title {
+  margin: .35rem .6rem .3rem; font-size: .7rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.acct-link, .acct-row {
+  display: flex; align-items: center; gap: .55rem; width: 100%; text-align: left;
+  font: inherit; font-size: .87rem; cursor: pointer; color: var(--ink);
+  padding: .5rem .6rem; border: 0; border-radius: 8px; background: transparent;
+}
+.acct-link:hover, .acct-row:hover { background: var(--paper-3); text-decoration: none; color: var(--ink); }
+.acct-link.is-add { color: var(--accent); font-size: .82rem; }
+.acct-link.is-danger { color: #d0342c; }
+:root[data-theme="dark"] .acct-link.is-danger { color: #ff8b81; }
+.acct-row-text { min-width: 0; }
+.acct-row-name { display: block; font-size: .87rem; }
+.acct-hint { margin: .6rem .6rem .8rem; font-size: .8rem; line-height: 1.7; color: var(--ink-soft); }
+.acct-note { margin: .4rem .6rem .2rem; font-size: .74rem; color: var(--ink-soft); }
+.acct-cta-row { display: flex; gap: .5rem; padding: 0 .6rem .7rem; }
+.acct-cta {
+  flex: 1; text-align: center; font-size: .87rem; padding: .45rem 0; border-radius: 999px;
+  border: 1px solid var(--accent); background: var(--accent); color: #fff;
+}
+.acct-cta:hover { filter: brightness(1.08); text-decoration: none; color: #fff; }
+.acct-cta.is-ghost { background: transparent; color: var(--accent); }
+.acct-cta.is-ghost:hover { background: var(--accent-soft); }
+
+/* 登录 / 注册板块 */
+.auth-page {
+  max-width: 60rem; margin: 0 auto; padding: 3.5rem 1.5rem 5rem;
+  display: grid; grid-template-columns: 1fr 24rem; gap: 3.5rem; align-items: start;
+}
+.auth-kicker {
+  font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 .6rem;
+}
+.auth-aside h1 { font-family: var(--serif); font-size: clamp(2rem, 6vw, 2.9rem); margin: 0 0 .8rem; }
+.auth-lead { margin: 0 0 1.4rem; font-size: .95rem; line-height: 1.85; color: var(--ink-soft); }
+.auth-points { margin: 0; padding: 0; list-style: none; display: grid; gap: .55rem; }
+.auth-points li {
+  position: relative; padding-left: 1.1rem; font-size: .86rem; color: var(--ink-soft);
+}
+.auth-points li::before {
+  content: ""; position: absolute; left: 0; top: .55em; width: .4rem; height: .4rem;
+  border-radius: 50%; background: linear-gradient(var(--accent), var(--accent-2));
+}
+.auth-card {
+  padding: 1.6rem 1.6rem 1.8rem; border: 1px solid var(--line); border-radius: 16px;
+  background: var(--paper-2); box-shadow: 0 20px 50px -30px rgba(var(--shadow), .5);
+}
+.auth-card-title { margin: 0 0 .2rem; font-family: var(--serif); font-size: 1.2rem; }
+.auth-loading, .auth-hint { margin: 0; font-size: .88rem; line-height: 1.8; color: var(--ink-soft); }
+.auth-card .atw-form { margin-top: 1.1rem; }
+.auth-card .atw-primary { justify-self: stretch; }
+.auth-pw { position: relative; display: block; }
+.auth-pw input { padding-right: 3.6rem !important; }
+.auth-pw-toggle {
+  position: absolute; right: .5rem; top: 50%; transform: translateY(-50%);
+  font: inherit; font-size: .76rem; cursor: pointer; color: var(--ink-soft);
+  padding: .2rem .45rem; border: 0; border-radius: 6px; background: transparent;
+}
+.auth-pw-toggle:hover { color: var(--accent); background: var(--accent-soft); }
+.auth-caps, .auth-field-msg {
+  display: block; font-style: normal; font-size: .76rem; color: #d0342c; min-height: 0;
+}
+:root[data-theme="dark"] .auth-caps, :root[data-theme="dark"] .auth-field-msg { color: #ff8b81; }
+.auth-field-msg:empty { display: none; }
+.auth-strength { display: flex; align-items: center; gap: .6rem; }
+.auth-strength-bar {
+  flex: 1; height: .28rem; border-radius: 999px; background: var(--paper-3); overflow: hidden;
+}
+.auth-strength-bar i { display: block; height: 100%; width: 0; background: #d0342c; transition: width .2s ease; }
+.auth-strength[data-level="2"] .auth-strength-bar i { background: #d98a1f; }
+.auth-strength[data-level="3"] .auth-strength-bar i,
+.auth-strength[data-level="4"] .auth-strength-bar i { background: var(--accent); }
+.auth-strength-text { font-size: .74rem; color: var(--ink-soft); }
+.auth-agree { grid-auto-flow: column; grid-template-columns: auto 1fr; align-items: start; gap: .6rem !important; }
+.auth-agree input { width: auto !important; margin-top: .15rem; }
+.auth-agree span { font-size: .8rem; font-weight: 400 !important; line-height: 1.7; color: var(--ink-soft) !important; }
+.auth-alt { margin: .8rem 0 0; }
+.auth-foot { margin: 1.1rem 0 0; font-size: .84rem; color: var(--ink-soft); }
+.auth-foot-dim { margin-top: .4rem; font-size: .78rem; }
+.auth-switch-link {
+  font: inherit; font-size: .82rem; cursor: pointer; padding: 0;
+  border: 0; background: transparent; color: var(--accent);
+}
+.auth-switch-link:hover { text-decoration: underline; }
+.auth-signed .auth-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.2rem; align-items: center; }
+.auth-current, .auth-account {
+  display: flex; align-items: center; gap: .8rem; width: 100%; text-align: left;
+  margin-top: 1rem; padding: .8rem .9rem; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--paper); color: var(--ink);
+}
+.auth-account { cursor: pointer; font: inherit; margin-top: .6rem; }
+.auth-account:hover { border-color: var(--accent); background: var(--accent-soft); }
+.auth-account-text { min-width: 0; flex: 1; }
+.auth-account-name { display: block; font-size: .92rem; font-weight: 600; }
+.auth-account-sub {
+  display: block; font-size: .76rem; color: var(--ink-soft);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.auth-account-go { color: var(--accent); font-size: 1rem; }
+.auth-chooser .auth-switch-link { margin-top: 1rem; }
+
+@media (max-width: 860px) {
+  .auth-page { grid-template-columns: 1fr; gap: 2.2rem; padding-top: 2.5rem; }
+  .auth-points { display: none; }
+  .auth-card { padding: 1.3rem 1.2rem 1.5rem; }
+}
+
+/* 个人中心 */
+.account-page { max-width: 46rem; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
+.acc-loading { color: var(--ink-soft); font-size: .9rem; }
+.acc-head {
+  display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;
+  padding-bottom: 1.4rem; border-bottom: 2px solid var(--ink);
+}
+.acc-id { display: flex; align-items: center; gap: .9rem; min-width: 0; }
+.acc-id-text { min-width: 0; }
+.acc-id h1 {
+  margin: 0; font-family: var(--serif); font-size: clamp(1.5rem, 4vw, 1.9rem);
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+}
+.acc-id-sub {
+  margin: .25rem 0 0; font-size: .82rem; color: var(--ink-soft);
+  overflow: hidden; text-overflow: ellipsis;
+}
+.acc-head-actions { display: flex; gap: .5rem; }
+
+.acc-tabs { display: flex; gap: .4rem; margin: 1.4rem 0 .4rem; flex-wrap: wrap; }
+.acc-tab {
+  font: inherit; font-size: .88rem; cursor: pointer; padding: .4rem 1rem; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
+}
+.acc-tab:hover { color: var(--ink); }
+.acc-tab.is-active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+
+.acc-panel h2 {
+  font-family: var(--serif); font-size: 1.2rem; margin: 2.4rem 0 .4rem;
+  padding-bottom: .4rem; border-bottom: 1px solid var(--line); scroll-margin-top: 6rem;
+}
+.acc-panel h2:first-child { margin-top: 1.8rem; }
+.acc-note { color: var(--ink-soft); font-size: .84rem; line-height: 1.75; margin: .6rem 0 1rem; }
+
+.acc-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: .7rem;
+  margin-top: 1.6rem;
+}
+.acc-stat {
+  padding: .8rem .9rem; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--paper-2); display: grid; gap: .2rem;
+}
+.acc-stat b { font-family: var(--serif); font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+/* 日期比计数长得多，缩一号并禁止断行，免得裂成两行 */
+.acc-stat.is-date b { font-size: .95rem; letter-spacing: .01em; white-space: nowrap; }
+.acc-stat span { font-size: .76rem; color: var(--ink-soft); }
+.acc-stat.is-todo {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: var(--accent-soft); color: var(--ink); font-size: .82rem; align-content: center;
+}
+.acc-stat.is-todo span { color: var(--accent); }
+.acc-stat.is-todo:hover { text-decoration: none; filter: brightness(1.02); }
+
+.acc-session, .acc-account {
+  display: flex; align-items: center; gap: .8rem; justify-content: space-between;
+  padding: .8rem .9rem; margin-bottom: .6rem;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--paper-2);
+}
+.acc-session.is-current, .acc-account.is-current {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+.acc-session-name { margin: 0; font-size: .88rem; font-weight: 600; }
+.acc-session-meta { margin: .2rem 0 0; font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.acc-account-text { flex: 1; min-width: 0; }
+.acc-account-name { margin: 0; font-size: .9rem; font-weight: 600; display: flex; align-items: center; gap: .4rem; }
+.acc-account-sub { margin: .2rem 0 0; font-size: .76rem; color: var(--ink-soft); }
+.acc-account-tag {
+  font-size: .66rem; font-weight: 400; padding: .1em .5em; border-radius: 999px;
+  color: var(--accent); background: var(--accent-soft);
+}
+.acc-account-actions { display: flex; gap: .4rem; flex: none; }
+.acc-danger { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+
+@media (max-width: 560px) {
+  .acct-name { max-width: 4.5rem; }
+  .acc-account, .acc-session { flex-wrap: wrap; }
+  .acc-account-actions { width: 100%; }
+}
+/* 手机上顶栏挤，登录后只留头像，昵称在下拉里照样看得到 */
+@media (max-width: 440px) {
+  .acct[data-state="signed-in"] .acct-name { display: none; }
 }

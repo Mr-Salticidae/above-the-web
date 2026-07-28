@@ -39,6 +39,10 @@ npm run dev        # 自动 sync 内容后启动 dev server
 交付、打款在站内点，页面实时生效，不用改 markdown 重新构建。服务代码、状态机、
 部署与运维都在 [platform/README.md](platform/README.md)。
 
+登录（`/account/login/`）与注册（`/account/register/`）各自成页，`/account/` 是登录后的个人中心。
+顶栏账号菜单里可以切换账号、退出登录——本机能同时留几个账号，切换不用重输密码；
+个人中心的「安全」还能看登录设备、单独踢掉某一处或退出所有设备。
+
 API 只有一套（自有域名 `tiaozhuxiansheng.com/api/`）。Pages 镜像跨域也能用（CORS 白名单里有
 `mr-salticidae.github.io`，令牌走 Bearer 不依赖 cookie），只是两个域的登录态各自独立，
 要各登录一次。

@@ -250,6 +250,35 @@ export function createDatabase(config) {
       );
     },
 
+    // 「登录设备」列表：只列还能用的会话，吊销与过期的不给看
+    listSessions(userId) {
+      return db
+        .prepare(
+          `SELECT id, token_hash, created_at, expires_at FROM sessions
+           WHERE user_id = ? AND revoked_at IS NULL AND expires_at > ?
+           ORDER BY created_at DESC`,
+        )
+        .all(userId, now());
+    },
+
+    // 带 user_id 一起匹配：拿到别人的会话 id 也踢不动
+    revokeSessionById(userId, id) {
+      return (
+        db
+          .prepare(
+            `UPDATE sessions SET revoked_at = ?
+             WHERE id = ? AND user_id = ? AND revoked_at IS NULL`,
+          )
+          .run(now(), id, userId).changes > 0
+      );
+    },
+
+    revokeAllSessions(userId) {
+      return db
+        .prepare("UPDATE sessions SET revoked_at = ? WHERE user_id = ? AND revoked_at IS NULL")
+        .run(now(), userId).changes;
+    },
+
     revokeOtherSessions(userId, keepTokenHash) {
       db.prepare(
         `UPDATE sessions SET revoked_at = ?

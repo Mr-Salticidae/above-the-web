@@ -1,0 +1,230 @@
+---
+// 注册板块。和登录彻底分开：这边只管开号，开完直接带着登录态回原处。
+// 校验分两层——这里做即时提示（格式、强度、两次密码是否一致），服务端再判一遍权威的。
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="注册" description="注册蛛网之上的站内账号：认领任务书用。" noindex>
+  <div class="auth-page">
+    <section class="auth-aside">
+      <p class="auth-kicker">Create account</p>
+      <h1>注册</h1>
+      <p class="auth-lead">
+        开一个号只为一件事：任务书定人之后，报酬能打到对的人手上。
+        读站的人永远不需要走这一步。
+      </p>
+      <ul class="auth-points">
+        <li>只要用户名、邮箱、密码，不要手机号、不做实名</li>
+        <li>联系方式与收款方式在个人中心填，只有你和发布方看得到</li>
+        <li>站内不接支付：打款走微信手动转账，站里只记时间</li>
+      </ul>
+    </section>
+
+    <section class="auth-card">
+      <p class="auth-loading" data-view="loading">正在准备…</p>
+
+      <div class="auth-signed" data-view="closed" hidden>
+        <p class="auth-card-title">暂时关闭注册</p>
+        <p class="auth-hint">站长把注册关了。已经有账号的话，直接<a data-login-link href="#">去登录</a>。</p>
+      </div>
+
+      <div data-view="form" hidden>
+        <p class="auth-card-title">创建账号</p>
+        <form class="atw-form" data-form="register" novalidate>
+          <label>
+            <span>用户名<i>登录用，2–32 位字母数字或 - _，注册后不可改</i></span>
+            <input
+              name="username"
+              autocomplete="username"
+              autocapitalize="off"
+              spellcheck="false"
+              required
+              pattern="[A-Za-z0-9_-]{2,32}"
+            />
+            <i class="auth-field-msg" data-field="username"></i>
+          </label>
+          <label>
+            <span>昵称<i>公开显示，比如任务定给你之后。留空就用用户名</i></span>
+            <input name="displayName" autocomplete="nickname" maxlength="32" />
+          </label>
+          <label>
+            <span>邮箱<i>找回账号用，不外显</i></span>
+            <input name="email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" required />
+            <i class="auth-field-msg" data-field="email"></i>
+          </label>
+          <label>
+            <span>密码<i>8 位以上，建议字母加数字</i></span>
+            <span class="auth-pw">
+              <input name="password" type="password" autocomplete="new-password" required minlength="8" />
+              <button class="auth-pw-toggle" type="button" data-toggle-pw aria-label="显示密码">显示</button>
+            </span>
+            <span class="auth-strength" data-strength hidden>
+              <span class="auth-strength-bar"><i data-strength-fill></i></span>
+              <span class="auth-strength-text" data-strength-text></span>
+            </span>
+          </label>
+          <label>
+            <span>确认密码</span>
+            <input name="confirm" type="password" autocomplete="new-password" required />
+            <i class="auth-field-msg" data-field="confirm"></i>
+          </label>
+          <label data-invite hidden>
+            <span>邀请码<i>站长给的那串</i></span>
+            <input name="inviteCode" autocapitalize="off" spellcheck="false" />
+          </label>
+          <label class="auth-agree">
+            <input name="agree" type="checkbox" required />
+            <span>
+              我填的联系方式与收款方式真实可用，明白报酬走站外手动转账、站内只记录进度。
+            </span>
+          </label>
+          <button class="atw-primary" type="submit">注册并登录</button>
+          <p class="atw-msg" data-msg="register" role="status"></p>
+        </form>
+        <p class="auth-foot">
+          已经有账号了？<a data-login-link href="#">去登录 →</a>
+        </p>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { api, currentNext, loginUrl, setSession, url } from '../../../scripts/account-core.js';
+
+  const views = {
+    loading: document.querySelector('[data-view="loading"]'),
+    closed: document.querySelector('[data-view="closed"]'),
+    form: document.querySelector('[data-view="form"]'),
+  };
+  const next = currentNext();
+  const form = document.querySelector('[data-form="register"]');
+
+  function show(name) {
+    for (const [key, node] of Object.entries(views)) node.hidden = key !== name;
+  }
+
+  function say(text, ok = false) {
+    const node = document.querySelector('[data-msg="register"]');
+    node.textContent = text;
+    node.dataset.tone = ok ? 'ok' : text ? 'error' : '';
+  }
+
+  function fieldMsg(name, text) {
+    const node = document.querySelector(`[data-field="${name}"]`);
+    if (node) node.textContent = text || '';
+    return !text;
+  }
+
+  document.querySelectorAll('[data-login-link]').forEach((link) => {
+    link.href = loginUrl(next);
+  });
+
+  // ---------- 即时校验 ----------
+
+  const checks = {
+    username: (value) =>
+      !value
+        ? ''
+        : /^[A-Za-z0-9_-]{2,32}$/.test(value)
+          ? ''
+          : '2–32 位，只能用字母、数字、下划线或连字符',
+    email: (value) => (!value || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? '' : '这个邮箱看着不对'),
+    confirm: (value) => (!value || value === form.password.value ? '' : '两次输入的密码不一样'),
+  };
+
+  for (const [name, check] of Object.entries(checks)) {
+    form[name].addEventListener('input', () => fieldMsg(name, check(form[name].value)));
+    form[name].addEventListener('blur', () => fieldMsg(name, check(form[name].value)));
+  }
+
+  // 强度只看长度与字符种类，够用就行——真正的门槛在「别用同一个密码」，不在花样
+  const STRENGTH = ['太短了', '还是弱', '一般', '够结实'];
+
+  form.password.addEventListener('input', () => {
+    const value = form.password.value;
+    const box = document.querySelector('[data-strength]');
+    box.hidden = !value;
+    let score = 0;
+    if (value.length >= 8) score += 1;
+    if (value.length >= 12) score += 1;
+    if (/[A-Za-z]/.test(value) && /\d/.test(value)) score += 1;
+    if (/[^A-Za-z0-9]/.test(value)) score += 1;
+    const level = Math.min(score, 4);
+    document.querySelector('[data-strength-fill]').style.width = `${(level / 4) * 100}%`;
+    box.dataset.level = String(level);
+    document.querySelector('[data-strength-text]').textContent =
+      value.length < 8 ? STRENGTH[0] : STRENGTH[Math.max(1, level - 1)];
+    if (form.confirm.value) fieldMsg('confirm', checks.confirm(form.confirm.value));
+  });
+
+  document.querySelector('[data-toggle-pw]').addEventListener('click', (event) => {
+    const shown = form.password.type === 'text';
+    form.password.type = shown ? 'password' : 'text';
+    event.target.textContent = shown ? '显示' : '隐藏';
+    event.target.setAttribute('aria-label', shown ? '显示密码' : '隐藏密码');
+    form.password.focus();
+  });
+
+  // ---------- 提交 ----------
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const invalid = Object.entries(checks)
+      .map(([name, check]) => fieldMsg(name, check(form[name].value)))
+      .some((ok) => !ok);
+    if (invalid) {
+      say('上面还有没填对的地方');
+      return;
+    }
+    if (!form.username.value || !form.email.value) {
+      say('用户名和邮箱都得填');
+      return;
+    }
+    if (form.password.value.length < 8) {
+      say('密码至少 8 位');
+      return;
+    }
+    if (!form.agree.checked) {
+      say('请先确认上面那条');
+      return;
+    }
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    say('创建中…');
+    try {
+      const payload = await api('POST', '/auth/register', {
+        username: form.username.value,
+        displayName: form.displayName.value,
+        email: form.email.value,
+        password: form.password.value,
+        inviteCode: form.inviteCode.value,
+      });
+      setSession(payload);
+      // 注册即登录：从任务书过来的送回去接着认领，直接来的进个人中心填资料
+      location.replace(next || url('account/'));
+    } catch (error) {
+      button.disabled = false;
+      say(error.message);
+    }
+  });
+
+  // ---------- 入口 ----------
+
+  api('GET', '/meta')
+    .then((meta) => {
+      if (!meta.registrationOpen) {
+        show('closed');
+        return;
+      }
+      if (meta.requiresInvite) {
+        document.querySelector('[data-invite]').hidden = false;
+        form.inviteCode.required = true;
+      }
+      show('form');
+    })
+    .catch(() => {
+      // 服务拿不到就先把表单放出来，提交时该报错还是会报
+      show('form');
+    });
+</script>

@@ -59,6 +59,7 @@ const base = import.meta.env.BASE_URL;
     escapeHtml,
     formatDate,
     getToken,
+    loginUrl,
     refreshUser,
     url,
     TASK_STATUS_LABEL,
@@ -264,16 +265,24 @@ const base = import.meta.env.BASE_URL;
 
   async function boot() {
     if (!getToken()) {
-      gate.innerHTML = `这页要用发布方账号登录。<a href="${url('account/?next=' + encodeURIComponent(location.pathname))}">去登录 →</a>`;
+      gate.innerHTML = `这页要用发布方账号登录。<a href="${escapeHtml(
+        loginUrl(location.pathname),
+      )}">去登录 →</a>`;
       return;
     }
     const user = await refreshUser();
     if (!user) {
-      gate.innerHTML = `登录已过期。<a href="${url('account/')}">重新登录 →</a>`;
+      gate.innerHTML = `登录已过期。<a href="${escapeHtml(
+        loginUrl(location.pathname),
+      )}">重新登录 →</a>`;
       return;
     }
     if (user.role !== 'admin') {
-      gate.textContent = '这页只对发布方开放。你的认领记录在个人中心。';
+      gate.innerHTML = `这页只对发布方开放。你的认领记录在<a href="${url(
+        'account/',
+      )}">个人中心</a>；要换个账号进来，去<a href="${escapeHtml(
+        loginUrl(location.pathname, { add: true }),
+      )}">登录页</a>。`;
       return;
     }
     gate.hidden = true;

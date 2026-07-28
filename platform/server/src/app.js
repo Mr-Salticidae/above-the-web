@@ -311,9 +311,54 @@ export function createApplication(config, log = console) {
 
       if (route === "POST /api/auth/logout") {
         const { user, token } = authenticate(request);
+        const body = await readJson(request);
+        // { all: true } 是「退出所有设备」：本机换账号只退当前这一个，别人的设备不受牵连
+        if (body.all === true) {
+          const revoked = database.revokeAllSessions(user.id);
+          database.createAuditLog({
+            actorUserId: user.id,
+            action: "auth.logout_all",
+            targetType: "session",
+            details: { revoked },
+          });
+          reply(200, { ok: true, revoked });
+          return;
+        }
         database.revokeSession(hashToken(token));
         database.createAuditLog({ actorUserId: user.id, action: "auth.logout", targetType: "session" });
-        reply(200, { ok: true });
+        reply(200, { ok: true, revoked: 1 });
+        return;
+      }
+
+      if (route === "GET /api/auth/sessions") {
+        const { user, token } = authenticate(request);
+        const currentHash = hashToken(token);
+        reply(200, {
+          sessions: database.listSessions(user.id).map((session) => ({
+            id: session.id,
+            createdAt: session.created_at,
+            expiresAt: session.expires_at,
+            current: session.token_hash === currentHash,
+          })),
+        });
+        return;
+      }
+
+      const sessionMatch = url.pathname.match(/^\/api\/auth\/sessions\/([^/]+)$/);
+      if (request.method === "DELETE" && sessionMatch) {
+        const { user, token } = authenticate(request);
+        const sessionId = decodeURIComponent(sessionMatch[1]);
+        const target = database.listSessions(user.id).find((s) => s.id === sessionId);
+        if (!target) throw new HttpError(404, "SESSION_NOT_FOUND", "这个登录已经失效了");
+        database.revokeSessionById(user.id, sessionId);
+        database.createAuditLog({
+          actorUserId: user.id,
+          action: "auth.session_revoke",
+          targetType: "session",
+          targetId: sessionId,
+        });
+        // current=true 时前端要把本地令牌一起清掉，否则页面还挂着一个已经吊销的会话
+        reply(200, { ok: true, current: target.token_hash === hashToken(token) });
         return;
       }
 

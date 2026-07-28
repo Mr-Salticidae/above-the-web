@@ -1,140 +1,132 @@
 ---
-// 账号页：一页三态——加载中 / 未登录（登录·注册）/ 已登录（资料·我的认领·改密码）。
-// 全站只有这里和任务认领用得上账号，读站的人永远不会被拦到这一页。
+// 个人中心。登录后才有内容——没登录直接送去 /account/login/，登完回来。
+// 登录与注册各自成板块（account/login、account/register），这一页只管「登录之后的事」：
+// 概览与认领记录 / 资料 / 安全（改密码、登录设备、本机账号切换、退出）。
 import BaseLayout from '../../layouts/BaseLayout.astro';
-const base = import.meta.env.BASE_URL;
 ---
 
-<BaseLayout title="账号" description="蛛网之上的站内账号：读站不需要，认领任务才需要。">
+<BaseLayout title="个人中心" description="蛛网之上的站内账号：资料、认领记录与登录安全。" noindex>
   <div class="account-page">
-    <header class="masthead">
-      <p class="masthead-kicker">Account</p>
-      <h1>账号</h1>
-      <p class="masthead-desc">
-        读站、看快讯、翻笔记都不需要账号。只有认领任务书要登录——那头连着报酬和打款，
-        得能把人对上。
-      </p>
-    </header>
+    <p class="acc-loading" data-view="loading">正在确认登录状态…</p>
 
-    <p class="loading" data-view="loading">正在确认登录状态…</p>
-
-    <!-- 未登录 -->
-    <section class="panel" data-view="anonymous" hidden>
-      <div class="tabs" role="tablist">
-        <button type="button" class="tab is-active" data-tab="login" role="tab">登录</button>
-        <button type="button" class="tab" data-tab="register" role="tab">注册</button>
-      </div>
-
-      <form class="atw-form" data-form="login">
-        <label>
-          <span>用户名或邮箱</span>
-          <input name="identifier" autocomplete="username" required />
-        </label>
-        <label>
-          <span>密码</span>
-          <input name="password" type="password" autocomplete="current-password" required />
-        </label>
-        <button class="atw-primary" type="submit">登录</button>
-        <p class="atw-msg" data-msg="login" role="status"></p>
-      </form>
-
-      <form class="atw-form" data-form="register" hidden>
-        <label>
-          <span>用户名<i>登录用，2–32 位字母数字或 - _</i></span>
-          <input name="username" autocomplete="username" required pattern="[A-Za-z0-9_-]{2,32}" />
-        </label>
-        <label>
-          <span>昵称<i>公开显示，比如任务定给你之后</i></span>
-          <input name="displayName" autocomplete="nickname" maxlength="32" />
-        </label>
-        <label>
-          <span>邮箱</span>
-          <input name="email" type="email" autocomplete="email" required />
-        </label>
-        <label>
-          <span>密码<i>8 位以上</i></span>
-          <input name="password" type="password" autocomplete="new-password" required minlength="8" />
-        </label>
-        <label data-invite hidden>
-          <span>邀请码</span>
-          <input name="inviteCode" />
-        </label>
-        <button class="atw-primary" type="submit">注册并登录</button>
-        <p class="atw-msg" data-msg="register" role="status"></p>
-      </form>
-    </section>
-
-    <!-- 已登录 -->
-    <section class="panel" data-view="signed-in" hidden>
-      <div class="whoami">
-        <div>
-          <p class="who-name" data-who-name></p>
-          <p class="who-meta" data-who-meta></p>
-        </div>
-        <div class="who-actions">
-          <a class="atw-ghost" href={`${base}admin/`} data-admin-link hidden>管理台</a>
+    <div data-view="ready" hidden>
+      <header class="acc-head">
+        <div class="acc-id" data-identity></div>
+        <div class="acc-head-actions">
+          <a class="atw-ghost" href="#" data-admin-link hidden>管理台</a>
           <button class="atw-ghost" type="button" data-logout>退出登录</button>
         </div>
-      </div>
+      </header>
 
-      <h2>资料</h2>
-      <p class="section-note">
-        联系方式和收款方式只有你自己和发布方看得到，不出现在任何公开页面上。
-        认领任务前建议先填好，定了人当天就能对接。
-      </p>
-      <form class="atw-form" data-form="profile">
-        <label>
-          <span>昵称</span>
-          <input name="displayName" maxlength="32" />
-        </label>
-        <label>
-          <span>联系方式<i>微信号 / QQ / 邮箱，能找到你就行</i></span>
-          <input name="contact" maxlength="120" />
-        </label>
-        <label>
-          <span>收款方式<i>微信 / 支付宝账号，打款时用</i></span>
-          <input name="payee" maxlength="120" />
-        </label>
-        <label>
-          <span>一句话简介<i>可留空</i></span>
-          <input name="bio" maxlength="200" />
-        </label>
-        <button class="atw-primary" type="submit">保存资料</button>
-        <p class="atw-msg" data-msg="profile" role="status"></p>
-      </form>
+      <nav class="acc-tabs" role="tablist" aria-label="账号设置">
+        <button class="acc-tab is-active" type="button" role="tab" data-tab="overview">概览</button>
+        <button class="acc-tab" type="button" role="tab" data-tab="profile">资料</button>
+        <button class="acc-tab" type="button" role="tab" data-tab="security">安全</button>
+      </nav>
 
-      <h2>我的认领</h2>
-      <div data-claims><p class="atw-empty">还没有认领记录。</p></div>
+      <!-- 概览 -->
+      <section class="acc-panel" data-panel="overview">
+        <div class="acc-stats" data-stats></div>
 
-      <h2>改密码</h2>
-      <form class="atw-form" data-form="password">
-        <label>
-          <span>当前密码</span>
-          <input name="currentPassword" type="password" autocomplete="current-password" required />
-        </label>
-        <label>
-          <span>新密码<i>8 位以上；改完其它设备会被踢下线</i></span>
-          <input name="newPassword" type="password" autocomplete="new-password" required minlength="8" />
-        </label>
-        <button class="atw-primary" type="submit">更新密码</button>
-        <p class="atw-msg" data-msg="password" role="status"></p>
-      </form>
-    </section>
+        <h2 id="claims">我的认领</h2>
+        <p class="acc-note">
+          申请、定人、交付、打款的进度都在这儿。发布方定了人之后，会直接按你填的联系方式找你。
+        </p>
+        <div data-claims><p class="atw-empty">加载中…</p></div>
+      </section>
+
+      <!-- 资料 -->
+      <section class="acc-panel" data-panel="profile" hidden>
+        <h2>资料</h2>
+        <p class="acc-note">
+          联系方式和收款方式只有你自己和发布方看得到，不出现在任何公开页面、也不进任何公开接口。
+          认领任务前建议先填好，定了人当天就能对接。
+        </p>
+        <form class="atw-form" data-form="profile">
+          <label>
+            <span>用户名<i>登录用，不可修改</i></span>
+            <input name="username" disabled />
+          </label>
+          <label>
+            <span>昵称<i>公开显示，比如任务定给你之后</i></span>
+            <input name="displayName" maxlength="32" />
+          </label>
+          <label>
+            <span>联系方式<i>微信号 / QQ / 邮箱，能找到你就行</i></span>
+            <input name="contact" maxlength="120" />
+          </label>
+          <label>
+            <span>收款方式<i>微信 / 支付宝账号，打款时用</i></span>
+            <input name="payee" maxlength="120" />
+          </label>
+          <label>
+            <span>一句话简介<i>可留空</i></span>
+            <input name="bio" maxlength="200" />
+          </label>
+          <button class="atw-primary" type="submit">保存资料</button>
+          <p class="atw-msg" data-msg="profile" role="status"></p>
+        </form>
+      </section>
+
+      <!-- 安全 -->
+      <section class="acc-panel" data-panel="security" hidden>
+        <h2>改密码</h2>
+        <form class="atw-form" data-form="password">
+          <label>
+            <span>当前密码</span>
+            <input name="currentPassword" type="password" autocomplete="current-password" required />
+          </label>
+          <label>
+            <span>新密码<i>8 位以上；改完其它设备会被踢下线，这台不受影响</i></span>
+            <input name="newPassword" type="password" autocomplete="new-password" required minlength="8" />
+          </label>
+          <button class="atw-primary" type="submit">更新密码</button>
+          <p class="atw-msg" data-msg="password" role="status"></p>
+        </form>
+
+        <h2>登录设备</h2>
+        <p class="acc-note">
+          每次登录算一个会话。看到不认识的，退掉它——那台设备上的登录立刻作废。
+        </p>
+        <div data-sessions><p class="atw-empty">加载中…</p></div>
+        <p class="atw-msg" data-msg="sessions" role="status"></p>
+
+        <h2>这台机器上的账号</h2>
+        <p class="acc-note">
+          浏览器里可以同时留几个账号，切换不用重输密码。「移除」只把令牌从这台机器上抹掉，
+          账号本身不动；「退出登录」会连服务端的这次会话一起吊销。
+        </p>
+        <div data-accounts></div>
+        <div class="acc-danger">
+          <a class="atw-ghost" href="#" data-add-account>用其它账号登录</a>
+          <button class="atw-ghost" type="button" data-logout-all>退出所有设备</button>
+        </div>
+        <p class="atw-msg" data-msg="accounts" role="status"></p>
+      </section>
+    </div>
   </div>
 </BaseLayout>
 
 <script>
   import {
     api,
+    avatarHtml,
     cacheUser,
-    clearSession,
+    displayNameOf,
     escapeHtml,
+    forgetAccount,
     formatDate,
+    formatDateTime,
     getCachedUser,
     getToken,
+    listAccounts,
+    loginUrl,
     refreshUser,
-    setSession,
+    requireSignIn,
+    signOut,
+    switchAccount,
     url,
+    ROLE_LABEL,
     TASK_STATUS_LABEL,
   } from '../../scripts/account-core.js';
 
@@ -145,88 +137,105 @@ const base = import.meta.env.BASE_URL;
     withdrawn: '你已撤回',
   };
 
-  const views = {
-    loading: document.querySelector('[data-view="loading"]'),
-    anonymous: document.querySelector('[data-view="anonymous"]'),
-    'signed-in': document.querySelector('[data-view="signed-in"]'),
-  };
-
-  function show(name) {
-    for (const [key, node] of Object.entries(views)) node.hidden = key !== name;
-  }
+  let me = null;
 
   function say(key, text, ok = false) {
     const node = document.querySelector(`[data-msg="${key}"]`);
+    if (!node) return;
     node.textContent = text;
     node.dataset.tone = ok ? 'ok' : text ? 'error' : '';
   }
 
-  function fields(form) {
-    return Object.fromEntries(new FormData(form).entries());
+  // ---------- 标签页 ----------
+
+  const TABS = ['overview', 'profile', 'security'];
+
+  function selectTab(name) {
+    const tab = TABS.includes(name) ? name : 'overview';
+    document.querySelectorAll('[data-tab]').forEach((node) => {
+      const on = node.dataset.tab === tab;
+      node.classList.toggle('is-active', on);
+      node.setAttribute('aria-selected', String(on));
+    });
+    document.querySelectorAll('[data-panel]').forEach((node) => {
+      node.hidden = node.dataset.panel !== tab;
+    });
   }
 
-  // ---------- 未登录 ----------
-
-  document.querySelectorAll('[data-tab]').forEach((tab) => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('[data-tab]').forEach((t) => t.classList.toggle('is-active', t === tab));
-      document.querySelectorAll('[data-form="login"], [data-form="register"]').forEach((form) => {
-        form.hidden = form.dataset.form !== tab.dataset.tab;
-      });
+  document.querySelectorAll('[data-tab]').forEach((node) => {
+    node.addEventListener('click', () => {
+      selectTab(node.dataset.tab);
+      history.replaceState(null, '', `#${node.dataset.tab}`);
     });
   });
 
-  document.querySelector('[data-form="login"]').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    say('login', '登录中…');
-    try {
-      const payload = await api('POST', '/auth/login', fields(event.target));
-      setSession(payload);
-      afterSignIn(payload.user);
-    } catch (error) {
-      say('login', error.message);
-    }
-  });
+  function tabFromHash() {
+    const hash = location.hash.replace('#', '');
+    // #claims 是概览里的锚点，别当成第四个标签页
+    return hash === 'claims' ? 'overview' : hash;
+  }
 
-  document.querySelector('[data-form="register"]').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    say('register', '创建中…');
-    try {
-      const payload = await api('POST', '/auth/register', fields(event.target));
-      setSession(payload);
-      afterSignIn(payload.user);
-    } catch (error) {
-      say('register', error.message);
-    }
-  });
+  window.addEventListener('hashchange', () => selectTab(tabFromHash()));
 
-  // ---------- 已登录 ----------
+  // ---------- 渲染 ----------
 
-  function renderUser(user) {
-    document.querySelector('[data-who-name]').textContent = user.display_name || user.username;
-    document.querySelector('[data-who-meta]').textContent =
-      `@${user.username} · ${user.email}${user.role === 'admin' ? ' · 发布方' : ''}`;
-    document.querySelector('[data-admin-link]').hidden = user.role !== 'admin';
+  function renderIdentity(user) {
+    const role = user.role === 'admin' ? `<span class="acct-badge">${ROLE_LABEL.admin}</span>` : '';
+    document.querySelector('[data-identity]').innerHTML = `${avatarHtml(user, 'xl')}
+      <div class="acc-id-text">
+        <h1>${escapeHtml(displayNameOf(user))}${role}</h1>
+        <p class="acc-id-sub">@${escapeHtml(user.username)} · ${escapeHtml(user.email)}</p>
+      </div>`;
+    const adminLink = document.querySelector('[data-admin-link]');
+    adminLink.hidden = user.role !== 'admin';
+    adminLink.href = url('admin/');
+    document.querySelector('[data-add-account]').href = loginUrl(location.pathname, { add: true });
+
     const form = document.querySelector('[data-form="profile"]');
+    form.username.value = user.username;
     form.displayName.value = user.display_name || '';
     form.contact.value = user.contact || '';
     form.payee.value = user.payee || '';
     form.bio.value = user.bio || '';
   }
 
+  function renderStats(user, claims) {
+    const running = claims.filter((claim) => claim.status === 'accepted').length;
+    const waiting = claims.filter((claim) => claim.status === 'pending').length;
+    const missing = [
+      !user.contact ? '联系方式' : '',
+      !user.payee ? '收款方式' : '',
+    ].filter(Boolean);
+    const todo = missing.length
+      ? `<a class="acc-stat is-todo" href="#profile">还差${missing.join('、')}<span>去补上 →</span></a>`
+      : '';
+    document.querySelector('[data-stats]').innerHTML = `
+      <div class="acc-stat"><b>${claims.length}</b><span>累计申请</span></div>
+      <div class="acc-stat"><b>${waiting}</b><span>等定人</span></div>
+      <div class="acc-stat"><b>${running}</b><span>已定给你</span></div>
+      <div class="acc-stat is-date"><b>${formatDate(user.created_at) || '—'}</b><span>注册于</span></div>
+      ${todo}`;
+  }
+
   function renderClaims(claims) {
     const host = document.querySelector('[data-claims]');
     if (!claims.length) {
-      host.innerHTML = '<p class="atw-empty">还没有认领记录。去任务书看看有什么在招。</p>';
+      host.innerHTML = `<p class="atw-empty">还没有认领记录。去<a href="${url(
+        'tasks/',
+      )}">任务书</a>看看有什么在招。</p>`;
       return;
     }
     host.innerHTML = claims
       .map((claim) => {
         const taskUrl = url(`tasks/${claim.taskSlug}/`);
-        const note = claim.decideNote ? `<p class="atw-claim-note">发布方留言：${escapeHtml(claim.decideNote)}</p>` : '';
+        const note = claim.decideNote
+          ? `<p class="atw-claim-note">发布方留言：${escapeHtml(claim.decideNote)}</p>`
+          : '';
         return `<article class="atw-claim">
           <div class="atw-claim-top">
-            <span class="atw-claim-status is-${claim.status}">${CLAIM_LABEL[claim.status] || claim.status}</span>
+            <span class="atw-claim-status is-${claim.status}">${
+              CLAIM_LABEL[claim.status] || claim.status
+            }</span>
             <span class="atw-claim-date">${formatDate(claim.createdAt)} 申请</span>
           </div>
           <h3><a href="${taskUrl}">${escapeHtml(claim.taskTitle || claim.taskSlug)}</a></h3>
@@ -240,13 +249,75 @@ const base = import.meta.env.BASE_URL;
       .join('');
   }
 
+  function renderSessions(sessions) {
+    const host = document.querySelector('[data-sessions]');
+    if (!sessions.length) {
+      host.innerHTML = '<p class="atw-empty">没有其它登录中的会话。</p>';
+      return;
+    }
+    host.innerHTML = sessions
+      .map(
+        (session) => `<div class="acc-session${session.current ? ' is-current' : ''}">
+          <div>
+            <p class="acc-session-name">${session.current ? '当前设备' : '另一处登录'}</p>
+            <p class="acc-session-meta">${formatDateTime(session.createdAt)} 登录 · ${formatDate(
+              session.expiresAt,
+            )} 到期</p>
+          </div>
+          <button class="atw-ghost" type="button" data-revoke="${escapeHtml(session.id)}">${
+            session.current ? '退出这台' : '退掉'
+          }</button>
+        </div>`,
+      )
+      .join('');
+  }
+
+  function renderAccounts() {
+    const accounts = listAccounts();
+    document.querySelector('[data-accounts]').innerHTML = accounts
+      .map(
+        (account) => `<div class="acc-account${account.isActive ? ' is-current' : ''}">
+          ${avatarHtml(account.user)}
+          <div class="acc-account-text">
+            <p class="acc-account-name">${escapeHtml(displayNameOf(account.user))}${
+              account.isActive ? '<span class="acc-account-tag">当前</span>' : ''
+            }</p>
+            <p class="acc-account-sub">@${escapeHtml(account.user.username)}</p>
+          </div>
+          ${
+            account.isActive
+              ? ''
+              : `<span class="acc-account-actions">
+                  <button class="atw-ghost" type="button" data-switch="${escapeHtml(
+                    account.userId,
+                  )}">切到这个</button>
+                  <button class="atw-ghost" type="button" data-forget="${escapeHtml(
+                    account.userId,
+                  )}">移除</button>
+                </span>`
+          }
+        </div>`,
+      )
+      .join('');
+  }
+
+  // ---------- 动作 ----------
+
   document.querySelector('[data-form="profile"]').addEventListener('submit', async (event) => {
     event.preventDefault();
     say('profile', '保存中…');
+    const form = event.target;
     try {
-      const { user } = await api('PATCH', '/profile', fields(event.target));
+      const { user } = await api('PATCH', '/profile', {
+        displayName: form.displayName.value,
+        contact: form.contact.value,
+        payee: form.payee.value,
+        bio: form.bio.value,
+      });
+      me = user;
       cacheUser(user);
-      renderUser(user);
+      renderIdentity(user);
+      renderAccounts();
       say('profile', '已保存', true);
     } catch (error) {
       say('profile', error.message);
@@ -257,111 +328,122 @@ const base = import.meta.env.BASE_URL;
     event.preventDefault();
     say('password', '更新中…');
     try {
-      await api('POST', '/auth/password', fields(event.target));
+      await api('POST', '/auth/password', {
+        currentPassword: event.target.currentPassword.value,
+        newPassword: event.target.newPassword.value,
+      });
       event.target.reset();
       say('password', '密码已更新，其它设备已退出', true);
+      loadSessions();
     } catch (error) {
       say('password', error.message);
     }
   });
 
-  document.querySelector('[data-logout]').addEventListener('click', async () => {
+  document.querySelector('[data-sessions]').addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-revoke]');
+    if (!button) return;
+    button.disabled = true;
+    say('sessions', '处理中…');
     try {
-      await api('POST', '/auth/logout');
-    } catch {
-      /* 服务端不认这个会话也无妨，本地照样清干净 */
+      const { current } = await api('DELETE', `/auth/sessions/${encodeURIComponent(button.dataset.revoke)}`);
+      if (current) {
+        // 把自己这台退了，就地清干净再送回登录页
+        await signOut();
+        location.href = loginUrl(location.pathname);
+        return;
+      }
+      say('sessions', '已退出那一处登录', true);
+      loadSessions();
+    } catch (error) {
+      button.disabled = false;
+      say('sessions', error.message);
     }
-    clearSession();
-    show('anonymous');
   });
 
-  async function afterSignIn(user) {
-    renderUser(user);
-    show('signed-in');
-    // 登录前如果是从某份任务书跳过来的，登录完送回去接着认领
-    const back = new URLSearchParams(location.search).get('next');
-    if (back && back.startsWith('/')) {
-      location.href = back;
+  document.querySelector('[data-accounts]').addEventListener('click', async (event) => {
+    const switchTo = event.target.closest('[data-switch]');
+    if (switchTo) {
+      switchTo.disabled = true;
+      say('accounts', '切换中…');
+      const user = await switchAccount(switchTo.dataset.switch);
+      if (user) location.reload();
+      else location.href = loginUrl(location.pathname);
       return;
     }
+    const forget = event.target.closest('[data-forget]');
+    if (forget) {
+      forgetAccount(forget.dataset.forget);
+      renderAccounts();
+      say('accounts', '已从这台机器上移除', true);
+    }
+  });
+
+  document.querySelector('[data-logout]').addEventListener('click', async (event) => {
+    event.target.disabled = true;
+    const { remaining } = await signOut();
+    // 还留着别的账号就回登录页选一个，否则回首页
+    location.href = remaining ? loginUrl('') : url('');
+  });
+
+  document.querySelector('[data-logout-all]').addEventListener('click', async (event) => {
+    if (!confirm('退出所有设备？这个账号在别处的登录会立刻作废。')) return;
+    event.target.disabled = true;
+    await signOut({ everywhere: true });
+    location.href = url('');
+  });
+
+  // ---------- 加载 ----------
+
+  async function loadSessions() {
     try {
-      const { claims } = await api('GET', '/my/claims');
-      renderClaims(claims);
-    } catch {
-      /* 认领列表拉不到不影响主流程 */
+      const { sessions } = await api('GET', '/auth/sessions');
+      renderSessions(sessions);
+    } catch (error) {
+      document.querySelector('[data-sessions]').innerHTML =
+        '<p class="atw-empty">会话列表暂时读不到。</p>';
     }
   }
 
   async function boot() {
-    // 注册是否需要邀请码，由服务端说了算
-    api('GET', '/meta')
-      .then((meta) => {
-        document.querySelector('[data-invite]').hidden = !meta.requiresInvite;
-        if (meta.requiresInvite) {
-          document.querySelector('[data-form="register"] [name="inviteCode"]').required = true;
-        }
-      })
-      .catch(() => {});
-
     if (!getToken()) {
-      show('anonymous');
+      requireSignIn();
       return;
     }
+    // 缓存先上屏，避免白一下；随后用服务端的权威资料覆盖
     const cached = getCachedUser();
     if (cached) {
-      renderUser(cached);
-      show('signed-in');
+      me = cached;
+      renderIdentity(cached);
+      document.querySelector('[data-view="loading"]').hidden = true;
+      document.querySelector('[data-view="ready"]').hidden = false;
     }
     const user = await refreshUser();
     if (!user) {
-      show('anonymous');
+      requireSignIn();
       return;
     }
-    renderUser(user);
-    show('signed-in');
+    me = user;
+    renderIdentity(user);
+    renderAccounts();
+    selectTab(tabFromHash());
+    document.querySelector('[data-view="loading"]').hidden = true;
+    document.querySelector('[data-view="ready"]').hidden = false;
+    if (location.hash === '#claims') {
+      document.getElementById('claims')?.scrollIntoView({ block: 'start' });
+    }
+
     try {
       const { claims } = await api('GET', '/my/claims');
       renderClaims(claims);
+      renderStats(user, claims);
     } catch {
-      /* 同上 */
+      document.querySelector('[data-claims]').innerHTML =
+        '<p class="atw-empty">认领记录暂时读不到，刷新试试。</p>';
+      renderStats(user, []);
     }
+    loadSessions();
   }
 
   boot();
 </script>
-
-<style>
-  .account-page { max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem 5rem; }
-
-  .masthead { border-bottom: 2px solid var(--ink); padding-bottom: 1.4rem; margin-bottom: 2rem; }
-  .masthead-kicker {
-    font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--accent); margin: 0 0 .5rem;
-  }
-  .masthead h1 { font-family: var(--serif); font-size: clamp(2rem, 6vw, 2.8rem); margin: 0 0 .6rem; }
-  .masthead-desc { margin: 0; color: var(--ink-soft); font-size: .92rem; }
-
-  .loading { color: var(--ink-soft); font-size: .9rem; }
-
-  .panel h2 {
-    font-family: var(--serif); font-size: 1.2rem; margin: 2.6rem 0 .4rem;
-    padding-bottom: .4rem; border-bottom: 1px solid var(--line);
-  }
-  .section-note { color: var(--ink-soft); font-size: .84rem; margin: .6rem 0 1rem; }
-
-  .tabs { display: flex; gap: .4rem; margin-bottom: 1.4rem; }
-  .tab {
-    font: inherit; font-size: .88rem; cursor: pointer;
-    padding: .4rem 1rem; border-radius: 999px;
-    border: 1px solid var(--line); background: transparent; color: var(--ink-soft);
-  }
-  .tab.is-active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
-
-  .whoami {
-    display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;
-    padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: .6rem; background: var(--paper-2);
-  }
-  .who-name { margin: 0; font-family: var(--serif); font-size: 1.25rem; }
-  .who-meta { margin: .2rem 0 0; font-size: .8rem; color: var(--ink-soft); }
-  .who-actions { display: flex; gap: .5rem; }
-</style>

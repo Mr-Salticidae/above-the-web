@@ -1,41 +1,205 @@
 ---
-// 全站账号入口。默认就是一个「登录」链接——读站的人不需要理它，
-// 只有要认领任务时才会用上。登录后变成昵称，点进个人中心。
-const base = import.meta.env.BASE_URL;
+// 全站账号入口：一个按钮 + 一个下拉。读站的人不需要理它。
+// 未登录时是「登录 / 注册」两个入口；登录后是头像 + 昵称，下拉里有个人中心、
+// 切换账号（本机留着的其它账号一点就换，不用重输密码）和退出登录。
+// 下拉内容由 JS 注入，样式一律写在 global.css —— scoped 样式罩不住运行时插入的节点。
 ---
 
-<a class="meta account-entry" href={`${base}account/`} data-account-entry data-state="anonymous">
-  <span class="ae-label" data-account-label>登录</span>
-</a>
+<div class="acct" data-account-menu>
+  <button
+    class="acct-trigger"
+    type="button"
+    aria-haspopup="menu"
+    aria-expanded="false"
+    aria-controls="acct-pop"
+    data-acct-trigger
+  >
+    <span class="acct-trigger-face" data-acct-face></span>
+    <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+  </button>
+  <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div>
+</div>
 
 <script>
-  import { getCachedUser, onAuthChange, refreshUser } from '../scripts/account-core.js';
+  import {
+    avatarHtml,
+    displayNameOf,
+    escapeHtml,
+    getCachedUser,
+    listAccounts,
+    loginUrl,
+    onAuthChange,
+    refreshUser,
+    registerUrl,
+    signOut,
+    switchAccount,
+    url,
+    ROLE_LABEL,
+  } from '../scripts/account-core.js';
 
-  const entry = document.querySelector('[data-account-entry]');
-  const label = document.querySelector('[data-account-label]');
-  if (entry && label) {
-    const render = (user) => {
-      entry.dataset.state = user ? 'signed-in' : 'anonymous';
-      label.textContent = user ? user.display_name || user.username : '登录';
-      entry.title = user ? '个人中心' : '登录后可认领任务';
-    };
-    render(getCachedUser());
-    onAuthChange(render);
+  const root = document.querySelector('[data-account-menu]');
+  const trigger = root?.querySelector('[data-acct-trigger]');
+  const face = root?.querySelector('[data-acct-face]');
+  const pop = root?.querySelector('[data-acct-pop]');
+
+  if (root && trigger && face && pop) {
+    let current = getCachedUser();
+
+    function renderFace(user) {
+      root.dataset.state = user ? 'signed-in' : 'anonymous';
+      trigger.title = user ? '账号菜单' : '登录后可认领任务';
+      trigger.setAttribute('aria-label', user ? `账号：${displayNameOf(user)}` : '登录');
+      face.innerHTML = user
+        ? `${avatarHtml(user)}<span class="acct-name">${escapeHtml(displayNameOf(user))}</span>`
+        : '<span class="acct-name">登录</span>';
+    }
+
+    function accountRow(account) {
+      const user = account.user;
+      return `<button class="acct-row" type="button" role="menuitem" data-switch="${escapeHtml(
+        account.userId,
+      )}">
+        ${avatarHtml(user)}
+        <span class="acct-row-text">
+          <span class="acct-row-name">${escapeHtml(displayNameOf(user))}</span>
+          <span class="acct-row-sub">@${escapeHtml(user.username)}</span>
+        </span>
+      </button>`;
+    }
+
+    function renderPop() {
+      const accounts = listAccounts();
+      const others = accounts.filter((account) => !account.isActive);
+      const next = location.pathname + location.search;
+
+      if (!current) {
+        const back = others.length
+          ? `<div class="acct-group">
+              <p class="acct-group-title">切回用过的账号</p>
+              ${others.map(accountRow).join('')}
+              <p class="acct-note">登录态过期了，点一下重新登录即可。</p>
+            </div>`
+          : '';
+        pop.innerHTML = `
+          <p class="acct-hint">读站、看快讯、翻笔记都不用账号。<br />只有认领任务书要登录——那头连着报酬和打款。</p>
+          <div class="acct-cta-row">
+            <a class="acct-cta" role="menuitem" href="${escapeHtml(loginUrl(next))}">登录</a>
+            <a class="acct-cta is-ghost" role="menuitem" href="${escapeHtml(registerUrl(next))}">注册</a>
+          </div>
+          ${back}`;
+        return;
+      }
+
+      const role =
+        current.role === 'admin'
+          ? `<span class="acct-badge">${ROLE_LABEL.admin}</span>`
+          : '';
+      const adminLink =
+        current.role === 'admin'
+          ? `<a class="acct-link" role="menuitem" href="${url('admin/')}">管理台</a>`
+          : '';
+      pop.innerHTML = `
+        <div class="acct-card">
+          ${avatarHtml(current, 'lg')}
+          <div class="acct-card-text">
+            <p class="acct-card-name">${escapeHtml(displayNameOf(current))}${role}</p>
+            <p class="acct-card-sub">@${escapeHtml(current.username)}</p>
+          </div>
+        </div>
+        <div class="acct-group">
+          <a class="acct-link" role="menuitem" href="${url('account/')}">个人中心</a>
+          <a class="acct-link" role="menuitem" href="${url('account/#claims')}">我的认领</a>
+          ${adminLink}
+        </div>
+        <div class="acct-group">
+          <p class="acct-group-title">切换账号</p>
+          ${others.map(accountRow).join('')}
+          <a class="acct-link is-add" role="menuitem" href="${escapeHtml(
+            loginUrl(next, { add: true }),
+          )}">用其它账号登录</a>
+        </div>
+        <div class="acct-group is-foot">
+          <button class="acct-link is-danger" type="button" role="menuitem" data-logout>退出登录</button>
+        </div>`;
+    }
+
+    function open() {
+      renderPop();
+      pop.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      document.addEventListener('click', onDocumentClick, true);
+      document.addEventListener('keydown', onKeydown);
+      pop.querySelector('a, button')?.focus();
+    }
+
+    function close({ restoreFocus = false } = {}) {
+      pop.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('click', onDocumentClick, true);
+      document.removeEventListener('keydown', onKeydown);
+      if (restoreFocus) trigger.focus();
+    }
+
+    const isOpen = () => !pop.hidden;
+
+    function onDocumentClick(event) {
+      if (!root.contains(event.target)) close();
+    }
+
+    function onKeydown(event) {
+      if (event.key === 'Escape') {
+        close({ restoreFocus: true });
+        return;
+      }
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+      const items = [...pop.querySelectorAll('a, button')];
+      if (!items.length) return;
+      event.preventDefault();
+      const at = items.indexOf(document.activeElement);
+      const step = event.key === 'ArrowDown' ? 1 : -1;
+      items[(at + step + items.length) % items.length].focus();
+    }
+
+    trigger.addEventListener('click', () => (isOpen() ? close() : open()));
+
+    pop.addEventListener('click', async (event) => {
+      const switchTo = event.target.closest('[data-switch]');
+      if (switchTo) {
+        switchTo.disabled = true;
+        const user = await switchAccount(switchTo.dataset.switch);
+        close();
+        // 换了身份，页面上的「我的申请」「承接人是不是我」都得重来一遍
+        if (user) location.reload();
+        else location.href = loginUrl(location.pathname + location.search);
+        return;
+      }
+      const logout = event.target.closest('[data-logout]');
+      if (logout) {
+        logout.disabled = true;
+        logout.textContent = '退出中…';
+        await signOut();
+        close();
+        // 管理台这类要登录的页面留在原地会是一片空白，退到首页更实在
+        const gated = /\/(admin|account)\//.test(location.pathname);
+        if (gated) location.href = url('');
+        else location.reload();
+      }
+    });
+
+    onAuthChange((user) => {
+      current = user;
+      renderFace(user);
+      if (isOpen()) renderPop();
+    });
+
+    renderFace(current);
     // 缓存里的资料可能已经过期，静默校验一次
     refreshUser().then((user) => {
-      if (user) render(user);
+      if (user) {
+        current = user;
+        renderFace(user);
+        if (isOpen()) renderPop();
+      }
     });
   }
 </script>
-
-<style>
-  .account-entry {
-    display: inline-flex; align-items: center; gap: .35rem;
-    max-width: 9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .account-entry[data-state='signed-in'] .ae-label { color: var(--accent); }
-  .account-entry[data-state='signed-in']::before {
-    content: ''; width: .4rem; height: .4rem; border-radius: 50%;
-    background: var(--accent); flex: none;
-  }
-</style>

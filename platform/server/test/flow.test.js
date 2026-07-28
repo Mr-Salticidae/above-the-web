@@ -248,3 +248,96 @@ test("再次同步清单不会覆盖运行时状态", async () => {
   assert.equal(legacy.listed, false); // 管理台还看得到，历史不丢
   assert.equal(admin.payload.tasks.find((t) => t.slug === "demo-open").fee, "500 元");
 });
+
+// ---------- 多会话：切换账号与退出登录 ----------
+
+let switcherA = "";
+let switcherB = "";
+let switcherC = "";
+
+test("同一个账号可以有多处登录，每处一个独立会话", async () => {
+  const registered = await call("POST", "/api/auth/register", {
+    body: {
+      username: "switcher",
+      displayName: "换号的人",
+      email: "switcher@test.local",
+      password: "switcher-password-1",
+    },
+  });
+  assert.equal(registered.status, 201);
+  switcherA = registered.payload.token;
+
+  for (const slot of ["B", "C"]) {
+    const login = await call("POST", "/api/auth/login", {
+      body: { identifier: "switcher", password: "switcher-password-1" },
+    });
+    assert.equal(login.status, 200);
+    if (slot === "B") switcherB = login.payload.token;
+    else switcherC = login.payload.token;
+  }
+
+  // 三个令牌都能用，互不影响——这正是本地留着多个账号来回切的前提
+  for (const token of [switcherA, switcherB, switcherC]) {
+    const me = await call("GET", "/api/auth/me", { token });
+    assert.equal(me.status, 200);
+    assert.equal(me.payload.user.username, "switcher");
+  }
+
+  const sessions = await call("GET", "/api/auth/sessions", { token: switcherA });
+  assert.equal(sessions.status, 200);
+  assert.equal(sessions.payload.sessions.length, 3);
+  assert.equal(sessions.payload.sessions.filter((s) => s.current).length, 1);
+});
+
+test("退掉某一处登录：只有那一处失效，别处照旧", async () => {
+  const own = await call("GET", "/api/auth/sessions", { token: switcherB });
+  const idB = own.payload.sessions.find((s) => s.current).id;
+
+  const revoked = await call("DELETE", `/api/auth/sessions/${idB}`, { token: switcherA });
+  assert.equal(revoked.status, 200);
+  assert.equal(revoked.payload.current, false); // 不是自己这台
+
+  assert.equal((await call("GET", "/api/auth/me", { token: switcherB })).status, 401);
+  assert.equal((await call("GET", "/api/auth/me", { token: switcherA })).status, 200);
+
+  // 已经失效的会话不能再退一次
+  assert.equal((await call("DELETE", `/api/auth/sessions/${idB}`, { token: switcherA })).status, 404);
+});
+
+test("别人的会话 id 踢不动", async () => {
+  const stranger = await call("GET", "/api/auth/sessions", { token: memberToken });
+  const strangerId = stranger.payload.sessions[0].id;
+
+  const denied = await call("DELETE", `/api/auth/sessions/${strangerId}`, { token: switcherA });
+  assert.equal(denied.status, 404);
+  assert.equal((await call("GET", "/api/auth/me", { token: memberToken })).status, 200);
+});
+
+test("退出登录只丢当前这一个会话", async () => {
+  const out = await call("POST", "/api/auth/logout", { token: switcherA });
+  assert.equal(out.status, 200);
+  assert.equal(out.payload.revoked, 1);
+
+  assert.equal((await call("GET", "/api/auth/me", { token: switcherA })).status, 401);
+  assert.equal((await call("GET", "/api/auth/me", { token: switcherC })).status, 200);
+});
+
+test("退出所有设备：这个账号所有令牌一起作废，别的账号不受牵连", async () => {
+  const everywhere = await call("POST", "/api/auth/logout", {
+    token: switcherC,
+    body: { all: true },
+  });
+  assert.equal(everywhere.status, 200);
+  assert.ok(everywhere.payload.revoked >= 1);
+
+  assert.equal((await call("GET", "/api/auth/me", { token: switcherC })).status, 401);
+  assert.equal((await call("GET", "/api/auth/me", { token: memberToken })).status, 200);
+
+  // 退光之后还能重新登录，账号本身没事
+  const again = await call("POST", "/api/auth/login", {
+    body: { identifier: "switcher@test.local", password: "switcher-password-1" },
+  });
+  assert.equal(again.status, 200);
+  const sessions = await call("GET", "/api/auth/sessions", { token: again.payload.token });
+  assert.equal(sessions.payload.sessions.length, 1);
+});

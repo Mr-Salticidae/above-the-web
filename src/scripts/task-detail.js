@@ -7,7 +7,9 @@ import {
   formatDate,
   getCachedUser,
   getToken,
+  loginUrl,
   refreshUser,
+  registerUrl,
   TASK_STATUS_LABEL,
   url,
 } from './account-core.js';
@@ -121,11 +123,14 @@ export async function hydrateTaskDetail() {
 
     // 招募中：未登录先去登录，登录后按申请状态给不同的动作
     if (!user) {
-      const next = encodeURIComponent(location.pathname);
+      const next = location.pathname;
       panel.innerHTML = html`
         <h2 class="cp-title">认领这份任务</h2>
         <p class="cp-note">认领需要登录——任务连着报酬和打款，得能把人对上。读站不需要账号。</p>
-        <a class="cp-primary" href="${url(`account/?next=${next}`)}">登录后认领</a>`;
+        <div class="cp-actions">
+          <a class="cp-primary" href="${escapeHtml(loginUrl(next))}">登录后认领</a>
+          <a class="cp-ghost" href="${escapeHtml(registerUrl(next))}">没有账号，去注册</a>
+        </div>`;
       return;
     }
 
