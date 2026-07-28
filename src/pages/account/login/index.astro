@@ -2,8 +2,6 @@
 // 登录板块。只做一件事：把人认出来。注册在隔壁 /account/register/，个人中心在 /account/。
 // 三种状态：选账号继续（本机存着的账号，一点就进）/ 输密码登录 / 已经登录着（提示并给切号入口）。
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-// 没有邮件服务，也就没有自助重置密码。忘了密码只能找站长人工改，这里给个能找到人的地方。
-const OWNER_URL = 'https://github.com/Mr-Salticidae';
 ---
 
 <BaseLayout title="登录" description="登录蛛网之上：读站不需要账号，认领任务书才需要。" noindex>
@@ -68,7 +66,7 @@ const OWNER_URL = 'https://github.com/Mr-Salticidae';
           还没有账号？<a data-register-link href="#">注册一个 →</a>
         </p>
         <p class="auth-foot auth-foot-dim">
-          忘了密码？站内还没有自助重置，去 <a href={OWNER_URL} target="_blank" rel="noopener">GitHub</a> 找站长改。
+          <a data-forgot-link href="#">忘了密码？</a>用注册邮箱收一封重置信。
         </p>
       </div>
     </section>
@@ -108,10 +106,11 @@ const OWNER_URL = 'https://github.com/Mr-Salticidae';
     for (const [key, node] of Object.entries(views)) node.hidden = key !== name;
   }
 
-  function say(text, ok = false) {
+  function say(text, tone = 'error') {
     const node = document.querySelector('[data-msg="login"]');
     node.textContent = text;
-    node.dataset.tone = ok ? 'ok' : text ? 'error' : '';
+    // 三种口吻：busy 进行中/ok 成功/error 出错——「保存中…」不该是红的
+    node.dataset.tone = text ? tone : '';
   }
 
   function done() {
@@ -119,6 +118,7 @@ const OWNER_URL = 'https://github.com/Mr-Salticidae';
   }
 
   document.querySelector('[data-register-link]').href = registerUrl(next);
+  document.querySelector('[data-forgot-link]').href = url('account/forgot/');
 
   // ---------- 已保存的账号 ----------
 
@@ -189,7 +189,7 @@ const OWNER_URL = 'https://github.com/Mr-Salticidae';
     event.preventDefault();
     const button = event.target.querySelector('button[type="submit"]');
     button.disabled = true;
-    say('登录中…');
+    say('登录中…', 'busy');
     try {
       const payload = await api('POST', '/auth/login', {
         identifier: event.target.identifier.value,

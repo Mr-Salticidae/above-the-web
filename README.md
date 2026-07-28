@@ -43,6 +43,10 @@ npm run dev        # 自动 sync 内容后启动 dev server
 顶栏账号菜单里可以切换账号、退出登录——本机能同时留几个账号，切换不用重输密码；
 个人中心的「安全」还能看登录设备、单独踢掉某一处或退出所有设备。
 
+忘了密码走 `/account/forgot/`：填注册邮箱收一封带一次性链接的信，链接 60 分钟有效、用过即焚，
+重置成功后所有设备一并下线。发信通道在服务端配（见 platform/README.md 的「自助重置密码」），
+没配时自动退回「管理台生成链接、站长人工发」。
+
 API 只有一套（自有域名 `tiaozhuxiansheng.com/api/`）。Pages 镜像跨域也能用（CORS 白名单里有
 `mr-salticidae.github.io`，令牌走 Bearer 不依赖 cookie），只是两个域的登录态各自独立，
 要各登录一次。

@@ -47,6 +47,20 @@ CREATE TABLE IF NOT EXISTS sessions (
 
 CREATE INDEX IF NOT EXISTS sessions_user_idx ON sessions (user_id, expires_at);
 
+-- 重置密码的一次性令牌。和会话一样只存 sha256 摘要，库被拖走也换不到密码。
+CREATE TABLE IF NOT EXISTS password_resets (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  token_hash TEXT NOT NULL UNIQUE,
+  channel TEXT NOT NULL DEFAULT 'email',   -- email：用户自助；manual：发布方在管理台生成
+  issued_by TEXT REFERENCES users(id) ON DELETE SET NULL,
+  created_at INTEGER NOT NULL,
+  expires_at INTEGER NOT NULL,
+  used_at INTEGER
+);
+
+CREATE INDEX IF NOT EXISTS password_resets_user_idx ON password_resets (user_id, created_at DESC);
+
 CREATE TABLE IF NOT EXISTS audit_logs (
   id TEXT PRIMARY KEY,
   actor_user_id TEXT REFERENCES users(id) ON DELETE SET NULL,
@@ -177,6 +191,14 @@ export function createDatabase(config) {
       );
     },
 
+    findUserByEmail(email) {
+      return (
+        db
+          .prepare(`SELECT ${PUBLIC_USER_COLUMNS} FROM users WHERE email = ? COLLATE NOCASE`)
+          .get(email) ?? null
+      );
+    },
+
     listUsers() {
       return db.prepare(`SELECT ${PUBLIC_USER_COLUMNS} FROM users ORDER BY created_at`).all();
     },
@@ -288,6 +310,56 @@ export function createDatabase(config) {
 
     purgeExpiredSessions() {
       db.prepare("DELETE FROM sessions WHERE expires_at < ?").run(now() - 7 * 24 * 60 * 60 * 1000);
+    },
+
+    // ---------- 重置密码 ----------
+
+    createPasswordReset({ userId, tokenHash, expiresAt, channel = "email", issuedBy = null }) {
+      const id = randomUUID();
+      db.prepare(
+        `INSERT INTO password_resets (id, user_id, token_hash, channel, issued_by, created_at, expires_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      ).run(id, userId, tokenHash, channel, issuedBy, now(), expiresAt);
+      return id;
+    },
+
+    findActivePasswordReset(tokenHash) {
+      return (
+        db
+          .prepare(
+            `SELECT r.*, u.username, u.display_name, u.email, u.status AS user_status
+             FROM password_resets r JOIN users u ON u.id = r.user_id
+             WHERE r.token_hash = ? AND r.used_at IS NULL AND r.expires_at > ?`,
+          )
+          .get(tokenHash, now()) ?? null
+      );
+    },
+
+    usePasswordReset(id) {
+      return (
+        db
+          .prepare("UPDATE password_resets SET used_at = ? WHERE id = ? AND used_at IS NULL")
+          .run(now(), id).changes > 0
+      );
+    },
+
+    // 新发一张就把这个人手里没用过的旧票全作废，免得一堆链接同时有效
+    invalidatePasswordResets(userId) {
+      return db
+        .prepare("UPDATE password_resets SET used_at = ? WHERE user_id = ? AND used_at IS NULL")
+        .run(now(), userId).changes;
+    },
+
+    countPasswordResetsSince(userId, since) {
+      return db
+        .prepare("SELECT COUNT(*) AS n FROM password_resets WHERE user_id = ? AND created_at > ?")
+        .get(userId, since).n;
+    },
+
+    purgeExpiredPasswordResets() {
+      db.prepare("DELETE FROM password_resets WHERE expires_at < ?").run(
+        now() - 7 * 24 * 60 * 60 * 1000,
+      );
     },
 
     // ---------- 审计 ----------

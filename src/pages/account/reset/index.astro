@@ -1,0 +1,193 @@
+---
+// 设新密码。链接里的 token 由服务端校验：有效就显示表单，失效就说清楚并给重发入口。
+// 重置成功后所有设备都会被退掉，所以这页不自动登录，改完老老实实回登录页输一次。
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="设置新密码" description="用重置链接设置新的账号密码。" noindex>
+  <div class="auth-page">
+    <section class="auth-aside">
+      <p class="auth-kicker">New password</p>
+      <h1>设置新密码</h1>
+      <p class="auth-lead">
+        设好之后这个链接立刻失效，这个账号在所有设备上的登录也会一并退掉——
+        包括你自己手上这台，改完重新登录一次就好。
+      </p>
+    </section>
+
+    <section class="auth-card">
+      <p class="auth-loading" data-view="loading">正在验证链接…</p>
+
+      <!-- 链接有效 -->
+      <div data-view="form" hidden>
+        <p class="auth-card-title">给 <b data-who></b> 设新密码</p>
+        <form class="atw-form" data-form="reset" novalidate>
+          <label>
+            <span>新密码<i>8 位以上，建议字母加数字</i></span>
+            <span class="auth-pw">
+              <input name="password" type="password" autocomplete="new-password" required minlength="8" />
+              <button class="auth-pw-toggle" type="button" data-toggle-pw aria-label="显示密码">显示</button>
+            </span>
+            <span class="auth-strength" data-strength hidden>
+              <span class="auth-strength-bar"><i data-strength-fill></i></span>
+              <span class="auth-strength-text" data-strength-text></span>
+            </span>
+          </label>
+          <label>
+            <span>确认新密码</span>
+            <input name="confirm" type="password" autocomplete="new-password" required />
+            <i class="auth-field-msg" data-field="confirm"></i>
+          </label>
+          <button class="atw-primary" type="submit">设为新密码</button>
+          <p class="atw-msg" data-msg="reset" role="status"></p>
+        </form>
+      </div>
+
+      <!-- 链接失效 -->
+      <div class="auth-signed" data-view="invalid" hidden>
+        <p class="auth-card-title">这个链接用不了了</p>
+        <p class="auth-hint" data-invalid-why>
+          链接可能已经过期、已经用过，或者后来又发过一封新的——以最后一封为准。
+        </p>
+        <div class="auth-actions">
+          <a class="atw-primary" data-forgot-link href="#">重新发一封</a>
+          <a class="atw-ghost" data-login-link href="#">回去登录</a>
+        </div>
+      </div>
+
+      <!-- 改好了 -->
+      <div class="auth-signed" data-view="done" hidden>
+        <p class="auth-card-title">密码已经换好了</p>
+        <p class="auth-hint">
+          这个账号在所有设备上的登录都退掉了，用新密码登一次就行。
+        </p>
+        <div class="auth-actions">
+          <a class="atw-primary" data-login-link href="#">去登录</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { api, escapeHtml, loginUrl, url } from '../../../scripts/account-core.js';
+
+  const views = {
+    loading: document.querySelector('[data-view="loading"]'),
+    form: document.querySelector('[data-view="form"]'),
+    invalid: document.querySelector('[data-view="invalid"]'),
+    done: document.querySelector('[data-view="done"]'),
+  };
+  const token = new URLSearchParams(location.search).get('token') || '';
+  const form = document.querySelector('[data-form="reset"]');
+
+  function show(name) {
+    for (const [key, node] of Object.entries(views)) node.hidden = key !== name;
+  }
+
+  function say(text, tone = 'error') {
+    const node = document.querySelector('[data-msg="reset"]');
+    node.textContent = text;
+    // 三种口吻：busy 进行中/ok 成功/error 出错——「保存中…」不该是红的
+    node.dataset.tone = text ? tone : '';
+  }
+
+  document.querySelectorAll('[data-login-link]').forEach((link) => {
+    link.href = loginUrl('');
+  });
+  document.querySelectorAll('[data-forgot-link]').forEach((link) => {
+    link.href = url('account/forgot/');
+  });
+
+  // ---------- 密码强度与一致性 ----------
+
+  const STRENGTH = ['太短了', '还是弱', '一般', '够结实'];
+
+  form.password.addEventListener('input', () => {
+    const value = form.password.value;
+    const box = document.querySelector('[data-strength]');
+    box.hidden = !value;
+    let score = 0;
+    if (value.length >= 8) score += 1;
+    if (value.length >= 12) score += 1;
+    if (/[A-Za-z]/.test(value) && /\d/.test(value)) score += 1;
+    if (/[^A-Za-z0-9]/.test(value)) score += 1;
+    const level = Math.min(score, 4);
+    box.dataset.level = String(level);
+    document.querySelector('[data-strength-fill]').style.width = `${(level / 4) * 100}%`;
+    document.querySelector('[data-strength-text]').textContent =
+      value.length < 8 ? STRENGTH[0] : STRENGTH[Math.max(1, level - 1)];
+    checkConfirm();
+  });
+
+  function checkConfirm() {
+    const mismatch = form.confirm.value && form.confirm.value !== form.password.value;
+    document.querySelector('[data-field="confirm"]').textContent = mismatch ? '两次输入的密码不一样' : '';
+    return !mismatch;
+  }
+
+  form.confirm.addEventListener('input', checkConfirm);
+
+  document.querySelector('[data-toggle-pw]').addEventListener('click', (event) => {
+    const shown = form.password.type === 'text';
+    form.password.type = shown ? 'password' : 'text';
+    event.target.textContent = shown ? '显示' : '隐藏';
+    event.target.setAttribute('aria-label', shown ? '显示密码' : '隐藏密码');
+    form.password.focus();
+  });
+
+  // ---------- 提交 ----------
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (form.password.value.length < 8) {
+      say('密码至少 8 位');
+      return;
+    }
+    if (!checkConfirm()) {
+      // 字段下面已经写了「两次输入的密码不一样」，这里不必再说一遍
+      say('');
+      return;
+    }
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    say('设置中…', 'busy');
+    try {
+      await api('POST', '/auth/reset', { token, password: form.password.value });
+      show('done');
+    } catch (error) {
+      button.disabled = false;
+      if (error.code === 'RESET_INVALID') {
+        // 表单还开着的时候链接过期了：切到失效那一屏，别让人对着表单反复试
+        show('invalid');
+        return;
+      }
+      say(error.message);
+    }
+  });
+
+  // ---------- 入口 ----------
+
+  async function boot() {
+    if (!token) {
+      document.querySelector('[data-invalid-why]').textContent =
+        '这个地址里没有重置令牌。请直接点邮件里的链接，或者重新发一封。';
+      show('invalid');
+      return;
+    }
+    try {
+      const info = await api('GET', `/auth/reset?token=${encodeURIComponent(token)}`);
+      document.querySelector('[data-who]').textContent = `${info.displayName || info.username}（@${info.username}）`;
+      show('form');
+      form.password.focus();
+    } catch (error) {
+      if (error.code === 'NETWORK') {
+        document.querySelector('[data-invalid-why]').textContent =
+          '连不上服务器，没法验证这个链接。等会儿再点一次，链接本身还在有效期内就不受影响。';
+      }
+      show('invalid');
+    }
+  }
+
+  boot();
+</script>

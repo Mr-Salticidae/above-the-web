@@ -38,6 +38,25 @@ export function getConfig(env = process.env) {
 
     sessionHours: positiveInteger(env.ATW_SESSION_HOURS, 720), // 30 天
 
+    // 站点地址：重置密码的链接拼在这上面，必须是用户实际访问的那个域
+    // （主域根路径部署，见 .github/workflows/deploy.yml 的 BASE_PATH=/）
+    siteUrl: String(env.ATW_SITE_URL || "https://tiaozhuxiansheng.com").replace(/\/+$/, ""),
+
+    // 发信。没配 API key 就是「没有发信通道」——自助重置自动退回「找站长人工发链接」，
+    // 接口照样在，只是不发信，不会因为漏配环境变量把整条路走死。
+    mail: {
+      provider: String(env.ATW_MAIL_PROVIDER || "resend").toLowerCase(),
+      apiKey: String(env.ATW_MAIL_API_KEY || "").trim(),
+      from: String(env.ATW_MAIL_FROM || "").trim(),
+      replyTo: String(env.ATW_MAIL_REPLY_TO || "").trim(),
+      // 留出口子是为了能对着本地假服务器跑真实的发信回归
+      endpoint: String(env.ATW_MAIL_ENDPOINT || "https://api.resend.com/emails").trim(),
+      timeoutMs: positiveInteger(env.ATW_MAIL_TIMEOUT_MS, 10_000),
+    },
+
+    // 重置令牌有效期。短一点更安全，长一点更宽容——1 小时是常见折中。
+    resetTtlMinutes: positiveInteger(env.ATW_RESET_TTL_MINUTES, 60),
+
     // 全站开放注册：读站不需要账号，只有认领任务要登录。留邀请码开关是为了
     // 万一被刷号时能临时收口，平时留空。
     inviteCode: String(env.ATW_INVITE_CODE || "").trim(),

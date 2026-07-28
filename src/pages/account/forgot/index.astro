@@ -1,0 +1,138 @@
+---
+// 忘记密码：填邮箱，站里发一封带一次性链接的信。
+// 不管这个邮箱在不在库里，提交之后看到的都是同一句话——页面上也不能泄露「谁注册过」。
+// 没配发信通道时（服务端 /meta 的 selfServiceReset=false），这页改成「找站长人工发链接」的说法。
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+const OWNER_URL = 'https://github.com/Mr-Salticidae';
+---
+
+<BaseLayout title="找回密码" description="重置蛛网之上的站内账号密码。" noindex>
+  <div class="auth-page">
+    <section class="auth-aside">
+      <p class="auth-kicker">Reset password</p>
+      <h1>找回密码</h1>
+      <p class="auth-lead">
+        填注册时用的邮箱，站里发一封带链接的信过去，点开就能设新密码。
+      </p>
+      <ul class="auth-points">
+        <li>链接一次性，用过即失效</li>
+        <li>重置成功后，这个账号在所有设备上的登录都会被退掉</li>
+        <li>没收到信先翻垃圾箱；还是没有就直接找站长</li>
+      </ul>
+    </section>
+
+    <section class="auth-card">
+      <p class="auth-loading" data-view="loading">正在准备…</p>
+
+      <!-- 有发信通道 -->
+      <div data-view="form" hidden>
+        <p class="auth-card-title">发送重置链接</p>
+        <form class="atw-form" data-form="forgot" novalidate>
+          <label>
+            <span>注册时用的邮箱</span>
+            <input name="email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" required />
+            <i class="auth-field-msg" data-field="email"></i>
+          </label>
+          <button class="atw-primary" type="submit">发送重置链接</button>
+          <p class="atw-msg" data-msg="forgot" role="status"></p>
+        </form>
+        <p class="auth-foot">
+          想起来了？<a data-login-link href="#">回去登录 →</a>
+        </p>
+      </div>
+
+      <!-- 发完了 -->
+      <div class="auth-signed" data-view="sent" hidden>
+        <p class="auth-card-title">信已经发出去了</p>
+        <p class="auth-hint">
+          如果 <b data-sent-email></b> 确实注册过账号，重置链接已经在路上，
+          <b data-ttl>60</b> 分钟内有效。没看到就翻一下垃圾箱。
+        </p>
+        <div class="auth-actions">
+          <a class="atw-primary" data-login-link href="#">回去登录</a>
+          <button class="atw-ghost" type="button" data-retry>换个邮箱再发</button>
+        </div>
+      </div>
+
+      <!-- 没有发信通道 -->
+      <div class="auth-signed" data-view="manual" hidden>
+        <p class="auth-card-title">这站暂时不发信</p>
+        <p class="auth-hint">
+          站内还没接发信通道，密码要站长手工重置：去
+          <a href={OWNER_URL} target="_blank" rel="noopener">GitHub</a> 找跳蛛先生，
+          说清楚你的用户名，他会生成一个一次性链接发给你，点开自己设新密码。
+        </p>
+        <div class="auth-actions">
+          <a class="atw-primary" data-login-link href="#">回去登录</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { api, currentNext, escapeHtml, loginUrl } from '../../../scripts/account-core.js';
+
+  const views = {
+    loading: document.querySelector('[data-view="loading"]'),
+    form: document.querySelector('[data-view="form"]'),
+    sent: document.querySelector('[data-view="sent"]'),
+    manual: document.querySelector('[data-view="manual"]'),
+  };
+  const next = currentNext();
+  const form = document.querySelector('[data-form="forgot"]');
+
+  function show(name) {
+    for (const [key, node] of Object.entries(views)) node.hidden = key !== name;
+  }
+
+  function say(text, tone = 'error') {
+    const node = document.querySelector('[data-msg="forgot"]');
+    node.textContent = text;
+    // 三种口吻：busy 进行中/ok 成功/error 出错——「保存中…」不该是红的
+    node.dataset.tone = text ? tone : '';
+  }
+
+  document.querySelectorAll('[data-login-link]').forEach((link) => {
+    link.href = loginUrl(next);
+  });
+
+  const validEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  form.email.addEventListener('input', () => {
+    document.querySelector('[data-field="email"]').textContent =
+      !form.email.value || validEmail(form.email.value) ? '' : '这个邮箱看着不对';
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!validEmail(form.email.value)) {
+      say('先把邮箱填对');
+      return;
+    }
+    const button = form.querySelector('button[type="submit"]');
+    button.disabled = true;
+    say('发送中…', 'busy');
+    try {
+      const result = await api('POST', '/auth/forgot', { email: form.email.value });
+      document.querySelector('[data-sent-email]').textContent = form.email.value;
+      document.querySelector('[data-ttl]').textContent = String(result.ttlMinutes || 60);
+      show(result.delivery === 'manual' ? 'manual' : 'sent');
+    } catch (error) {
+      button.disabled = false;
+      say(error.message);
+    }
+  });
+
+  document.querySelector('[data-retry]').addEventListener('click', () => {
+    form.querySelector('button[type="submit"]').disabled = false;
+    say('');
+    show('form');
+    form.email.focus();
+  });
+
+  api('GET', '/meta')
+    .then((meta) => show(meta.selfServiceReset ? 'form' : 'manual'))
+    // 服务拿不到就先给表单，提交时该报错还是会报
+    .catch(() => show('form'));
+</script>

@@ -139,11 +139,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   let me = null;
 
-  function say(key, text, ok = false) {
+  function say(key, text, tone = 'error') {
     const node = document.querySelector(`[data-msg="${key}"]`);
     if (!node) return;
     node.textContent = text;
-    node.dataset.tone = ok ? 'ok' : text ? 'error' : '';
+    // 三种口吻：busy 进行中/ok 成功/error 出错——「保存中…」不该是红的
+    node.dataset.tone = text ? tone : '';
   }
 
   // ---------- 标签页 ----------
@@ -305,7 +306,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   document.querySelector('[data-form="profile"]').addEventListener('submit', async (event) => {
     event.preventDefault();
-    say('profile', '保存中…');
+    say('profile', '保存中…', 'busy');
     const form = event.target;
     try {
       const { user } = await api('PATCH', '/profile', {
@@ -318,7 +319,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       cacheUser(user);
       renderIdentity(user);
       renderAccounts();
-      say('profile', '已保存', true);
+      say('profile', '已保存', 'ok');
     } catch (error) {
       say('profile', error.message);
     }
@@ -326,14 +327,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
   document.querySelector('[data-form="password"]').addEventListener('submit', async (event) => {
     event.preventDefault();
-    say('password', '更新中…');
+    say('password', '更新中…', 'busy');
     try {
       await api('POST', '/auth/password', {
         currentPassword: event.target.currentPassword.value,
         newPassword: event.target.newPassword.value,
       });
       event.target.reset();
-      say('password', '密码已更新，其它设备已退出', true);
+      say('password', '密码已更新，其它设备已退出', 'ok');
       loadSessions();
     } catch (error) {
       say('password', error.message);
@@ -344,7 +345,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     const button = event.target.closest('[data-revoke]');
     if (!button) return;
     button.disabled = true;
-    say('sessions', '处理中…');
+    say('sessions', '处理中…', 'busy');
     try {
       const { current } = await api('DELETE', `/auth/sessions/${encodeURIComponent(button.dataset.revoke)}`);
       if (current) {
@@ -353,7 +354,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         location.href = loginUrl(location.pathname);
         return;
       }
-      say('sessions', '已退出那一处登录', true);
+      say('sessions', '已退出那一处登录', 'ok');
       loadSessions();
     } catch (error) {
       button.disabled = false;
@@ -365,7 +366,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     const switchTo = event.target.closest('[data-switch]');
     if (switchTo) {
       switchTo.disabled = true;
-      say('accounts', '切换中…');
+      say('accounts', '切换中…', 'busy');
       const user = await switchAccount(switchTo.dataset.switch);
       if (user) location.reload();
       else location.href = loginUrl(location.pathname);
@@ -375,7 +376,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     if (forget) {
       forgetAccount(forget.dataset.forget);
       renderAccounts();
-      say('accounts', '已从这台机器上移除', true);
+      say('accounts', '已从这台机器上移除', 'ok');
     }
   });
 

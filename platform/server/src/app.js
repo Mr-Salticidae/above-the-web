@@ -1,12 +1,17 @@
 import http from "node:http";
 import { createDatabase, TASK_STATUSES, ROLES } from "./database.js";
 import { createTaskSync } from "./task-sync.js";
+import { createMailer, passwordResetMail } from "./mailer.js";
 import { createSessionToken, hashPassword, hashToken, verifyPassword } from "./security.js";
 
 const JSON_LIMIT_BYTES = 256 * 1024;
 const AUTH_WINDOW_MS = 10 * 60 * 1000;
 const AUTH_MAX_ATTEMPTS = 10;
 const authAttempts = new Map();
+
+// 同一个账号一小时内最多发几封重置信。挡的是「拿别人注册过的邮箱刷他收件箱」。
+const RESET_WINDOW_MS = 60 * 60 * 1000;
+const RESET_MAX_PER_WINDOW = 3;
 
 class HttpError extends Error {
   constructor(status, code, message) {
@@ -151,9 +156,26 @@ function ownClaim(row) {
   };
 }
 
-export function createApplication(config, log = console) {
+export function createApplication(config, log = console, deps = {}) {
   const database = createDatabase(config);
   const taskSync = createTaskSync(config, database, log);
+  // 测试里换成假的发信器，就能验证「发了什么信」而不真发出去
+  const mailer = deps.mailer ?? createMailer(config, log);
+
+  // 开一张一次性重置票。旧的没用过的一并作废，同一时间只留一个有效链接。
+  function issuePasswordReset(user, { channel = "email", issuedBy = null } = {}) {
+    database.invalidatePasswordResets(user.id);
+    const token = createSessionToken();
+    const expiresAt = Date.now() + config.resetTtlMinutes * 60 * 1000;
+    database.createPasswordReset({
+      userId: user.id,
+      tokenHash: hashToken(token),
+      expiresAt,
+      channel,
+      issuedBy,
+    });
+    return { token, expiresAt, url: `${config.siteUrl}/account/reset/?token=${encodeURIComponent(token)}` };
+  }
 
   function authenticate(request) {
     const token = bearerToken(request);
@@ -229,6 +251,9 @@ export function createApplication(config, log = console) {
         reply(200, {
           registrationOpen: config.registrationOpen,
           requiresInvite: Boolean(config.inviteCode),
+          // 没有发信通道时前端把「忘记密码」改成「找站长人工发链接」的说法
+          selfServiceReset: mailer.enabled,
+          resetTtlMinutes: config.resetTtlMinutes,
           taskStatuses: TASK_STATUSES,
           roles: ROLES,
         });
@@ -387,6 +412,113 @@ export function createApplication(config, log = console) {
           targetId: user.id,
         });
         reply(200, { passwordChanged: true });
+        return;
+      }
+
+      // ---------- 忘记密码 ----------
+
+      if (route === "POST /api/auth/forgot") {
+        checkAuthRateLimit(request);
+        const body = await readJson(request);
+        const email = clean(body.email).toLowerCase();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          throw new HttpError(422, "INVALID_EMAIL", "邮箱格式不正确");
+        }
+        // 不管这个邮箱在不在库里、发信成没成功，回的东西都一模一样。
+        // 否则这个接口就成了「查某个邮箱注册过没有」的探测器。
+        const sameAnswer = () =>
+          reply(200, {
+            ok: true,
+            delivery: mailer.enabled ? "email" : "manual",
+            ttlMinutes: config.resetTtlMinutes,
+          });
+
+        const user = database.findUserByEmail(email);
+        if (!user || user.status !== "active") {
+          sameAnswer();
+          return;
+        }
+        if (
+          database.countPasswordResetsSince(user.id, Date.now() - RESET_WINDOW_MS) >=
+          RESET_MAX_PER_WINDOW
+        ) {
+          sameAnswer();
+          return;
+        }
+
+        const issued = issuePasswordReset(user, { channel: "email" });
+        let mailed = false;
+        let failure = "";
+        if (mailer.enabled) {
+          try {
+            await mailer.send({
+              to: user.email,
+              ...passwordResetMail({
+                displayName: user.display_name,
+                resetUrl: issued.url,
+                ttlMinutes: config.resetTtlMinutes,
+                siteUrl: config.siteUrl,
+              }),
+            });
+            mailed = true;
+          } catch (error) {
+            // 发不出去也不能告诉调用方——那等于确认了这个邮箱有账号。
+            // 记日志 + 记审计，站长在管理台看得到，可以改用人工发链接。
+            failure = error.detail || error.message;
+            log.error("[atw-platform] 重置信发送失败", failure);
+          }
+        }
+        database.createAuditLog({
+          actorUserId: user.id,
+          action: "auth.reset_request",
+          targetType: "user",
+          targetId: user.id,
+          details: { mailed, provider: mailer.provider, ...(failure ? { failure } : {}) },
+        });
+        sameAnswer();
+        return;
+      }
+
+      if (route === "GET /api/auth/reset") {
+        const reset = database.findActivePasswordReset(hashToken(clean(url.searchParams.get("token"))));
+        if (!reset || reset.user_status !== "active") {
+          throw new HttpError(404, "RESET_INVALID", "这个链接已经失效了，重新发一次");
+        }
+        reply(200, {
+          valid: true,
+          username: reset.username,
+          displayName: reset.display_name,
+          expiresAt: reset.expires_at,
+        });
+        return;
+      }
+
+      if (route === "POST /api/auth/reset") {
+        checkAuthRateLimit(request);
+        const body = await readJson(request);
+        const password = String(body.password || "");
+        const reset = database.findActivePasswordReset(hashToken(clean(body.token)));
+        if (!reset || reset.user_status !== "active") {
+          throw new HttpError(404, "RESET_INVALID", "这个链接已经失效了，重新发一次");
+        }
+        if (password.length < 8 || password.length > 128) {
+          throw new HttpError(422, "WEAK_PASSWORD", "新密码需为 8–128 位");
+        }
+        database.setPassword(reset.user_id, hashPassword(password));
+        database.usePasswordReset(reset.id);
+        // 还没用的票一起作废；改完密码把所有设备都踢下线——
+        // 走到重置这一步，通常正是因为号可能不干净了
+        database.invalidatePasswordResets(reset.user_id);
+        const revoked = database.revokeAllSessions(reset.user_id);
+        database.createAuditLog({
+          actorUserId: reset.user_id,
+          action: "auth.reset_complete",
+          targetType: "user",
+          targetId: reset.user_id,
+          details: { channel: reset.channel, revokedSessions: revoked },
+        });
+        clearAuthFailures(request);
+        reply(200, { ok: true, username: reset.username, revokedSessions: revoked });
         return;
       }
 
@@ -740,6 +872,27 @@ export function createApplication(config, log = console) {
           details: { role, status },
         });
         reply(200, { user: updated });
+        return;
+      }
+
+      // 人工兜底：没有发信通道、或者用户邮箱早就不用了，发布方在管理台生成链接，
+      // 通过微信/QQ 发给本人。链接和自助那条走的是同一套一次性令牌。
+      const resetLinkMatch = url.pathname.match(/^\/api\/admin\/users\/([^/]+)\/reset-link$/);
+      if (request.method === "POST" && resetLinkMatch) {
+        const { user: admin } = requireAdmin(request);
+        const target = database.findUserById(decodeURIComponent(resetLinkMatch[1]));
+        if (!target) throw new HttpError(404, "USER_NOT_FOUND", "用户不存在");
+        if (target.status !== "active") {
+          throw new HttpError(409, "ACCOUNT_RESTRICTED", "账号已停用，先恢复再重置");
+        }
+        const issued = issuePasswordReset(target, { channel: "manual", issuedBy: admin.id });
+        database.createAuditLog({
+          actorUserId: admin.id,
+          action: "user.reset_link",
+          targetType: "user",
+          targetId: target.id,
+        });
+        reply(201, { url: issued.url, expiresAt: issued.expiresAt, username: target.username });
         return;
       }
 

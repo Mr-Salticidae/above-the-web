@@ -320,6 +320,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .atw-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 .atw-msg { min-height: 1.2em; margin: 0; font-size: .84rem; color: var(--ink-soft); }
+.atw-msg[data-tone="busy"] { color: var(--ink-soft); }   /* 「保存中…」是进行中，不是出错 */
 .atw-msg[data-tone="error"] { color: #d0342c; }
 .atw-msg[data-tone="ok"] { color: var(--accent); }
 .atw-empty { color: var(--ink-soft); font-size: .88rem; }
@@ -357,6 +358,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .claim-panel .cp-ghost:hover { text-decoration: none; }
 .claim-panel .cp-ghost:hover { border-color: var(--accent); color: var(--accent); }
 .claim-panel .cp-msg { min-height: 1.2em; margin: .2rem 0 0; font-size: .84rem; color: var(--ink-soft); }
+.claim-panel .cp-msg[data-tone="busy"] { color: var(--ink-soft); }
 .claim-panel .cp-msg[data-tone="error"] { color: #d0342c; }
 .claim-panel .cp-msg[data-tone="ok"] { color: var(--accent); }
 
@@ -414,6 +416,13 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ad-task-row select { flex: 0 0 auto; min-width: 8.5rem; }
 .ad-task-stamp { margin: .6rem 0 0; font-size: .76rem; color: var(--ink-soft); }
 .ad-user { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; justify-content: space-between; }
+/* 管理台生成的一次性重置链接：长，得能整段选中复制 */
+.ad-reset-out { flex-basis: 100%; margin: .2rem 0 0; font-size: .78rem; color: var(--ink-soft); }
+.ad-reset-out code {
+  display: block; padding: .45rem .6rem; margin-bottom: .3rem; word-break: break-all;
+  background: var(--paper-3); border-radius: .4rem; color: var(--ink); user-select: all;
+}
+.ad-reset-hint { color: var(--ink-soft); }
 .ad-user-name { margin: 0; font-size: .9rem; }
 .ad-user-meta { margin: .2rem 0 0; font-size: .78rem; color: var(--ink-soft); }
 .ad-user-actions { display: flex; gap: .5rem; }

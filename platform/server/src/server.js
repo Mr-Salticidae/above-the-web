@@ -12,8 +12,11 @@ const { server, database, taskSync } = createApplication(config);
 
 taskSync.start();
 
-// 过期会话每天清一次，库里不留死数据
-const sessionCleanup = setInterval(() => database.purgeExpiredSessions(), 24 * 60 * 60 * 1000);
+// 过期会话与用剩的重置票每天清一次，库里不留死数据
+const sessionCleanup = setInterval(() => {
+  database.purgeExpiredSessions();
+  database.purgeExpiredPasswordResets();
+}, 24 * 60 * 60 * 1000);
 sessionCleanup.unref?.();
 
 server.listen(config.port, config.host, () => {

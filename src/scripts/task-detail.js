@@ -169,11 +169,12 @@ export async function hydrateTaskDetail() {
     panel.querySelector('[data-claim]').addEventListener('submit', submitClaim);
   }
 
-  function say(text, ok = false) {
+  function say(text, tone = 'error') {
     const node = panel.querySelector('[data-cp-msg]');
     if (!node) return;
     node.textContent = text;
-    node.dataset.tone = ok ? 'ok' : text ? 'error' : '';
+    // 三种口吻：busy 进行中/ok 成功/error 出错——「保存中…」不该是红的
+    node.dataset.tone = text ? tone : '';
   }
 
   async function reload() {
@@ -183,7 +184,7 @@ export async function hydrateTaskDetail() {
 
   async function submitClaim(event) {
     event.preventDefault();
-    say('提交中…');
+    say('提交中…', 'busy');
     const form = new FormData(event.target);
     try {
       await api('POST', `/tasks/${encodeURIComponent(slug)}/claim`, {
@@ -197,7 +198,7 @@ export async function hydrateTaskDetail() {
   }
 
   async function withdraw() {
-    say('撤回中…');
+    say('撤回中…', 'busy');
     try {
       await api('DELETE', `/tasks/${encodeURIComponent(slug)}/claim`);
       await reload();
@@ -208,7 +209,7 @@ export async function hydrateTaskDetail() {
 
   async function submitDelivery(event) {
     event.preventDefault();
-    say('提交中…');
+    say('提交中…', 'busy');
     const form = new FormData(event.target);
     try {
       await api('POST', `/tasks/${encodeURIComponent(slug)}/delivery`, {

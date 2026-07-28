@@ -58,6 +58,7 @@ const base = import.meta.env.BASE_URL;
     api,
     escapeHtml,
     formatDate,
+    formatDateTime,
     getToken,
     loginUrl,
     refreshUser,
@@ -68,10 +69,11 @@ const base = import.meta.env.BASE_URL;
   const gate = document.querySelector('[data-gate]');
   const consoleView = document.querySelector('[data-console]');
 
-  function say(text, ok = false) {
+  function say(text, tone = 'error') {
     const node = document.querySelector('[data-global-msg]');
     node.textContent = text;
-    node.dataset.tone = ok ? 'ok' : text ? 'error' : '';
+    // 三种口吻：busy 进行中/ok 成功/error 出错——「保存中…」不该是红的
+    node.dataset.tone = text ? tone : '';
   }
 
   function renderPending(claims) {
@@ -148,7 +150,7 @@ const base = import.meta.env.BASE_URL;
 
     host.querySelectorAll('[data-slug]').forEach((card) => {
       card.querySelector('[data-save]').addEventListener('click', async () => {
-        say('保存中…');
+        say('保存中…', 'busy');
         try {
           await api('PATCH', `/admin/tasks/${encodeURIComponent(card.dataset.slug)}`, {
             status: card.querySelector('[data-status]').value,
@@ -156,7 +158,7 @@ const base = import.meta.env.BASE_URL;
             deliverableUrl: card.querySelector('[data-deliverable]').value,
             note: card.querySelector('[data-note]').value,
           });
-          say('已保存', true);
+          say('已保存', 'ok');
           await load();
         } catch (error) {
           say(error.message);
@@ -179,6 +181,9 @@ const base = import.meta.env.BASE_URL;
             }${u.payee ? ` · 收款 ${escapeHtml(u.payee)}` : ''}</p>
           </div>
           <div class="ad-user-actions">
+            <button class="atw-ghost" type="button" data-reset-link ${
+              u.status === 'active' ? '' : 'disabled'
+            }>重置链接</button>
             <button class="atw-ghost" type="button" data-toggle-role>${
               u.role === 'admin' ? '降为成员' : '设为发布方'
             }</button>
@@ -186,6 +191,7 @@ const base = import.meta.env.BASE_URL;
               u.status === 'active' ? '停用' : '恢复'
             }</button>
           </div>
+          <p class="ad-reset-out" data-reset-out hidden></p>
         </article>`,
       )
       .join('');
@@ -198,6 +204,28 @@ const base = import.meta.env.BASE_URL;
       card.querySelector('[data-toggle-status]').addEventListener('click', () =>
         patchUser(user.id, { role: user.role, status: user.status === 'active' ? 'suspended' : 'active' }),
       );
+      // 人工兜底：邮箱收不到信、或者压根没配发信通道时，生成一次性链接自己发给对方
+      card.querySelector('[data-reset-link]').addEventListener('click', async (event) => {
+        const out = card.querySelector('[data-reset-out]');
+        event.target.disabled = true;
+        out.hidden = false;
+        out.textContent = '生成中…';
+        try {
+          const { url: link, expiresAt } = await api('POST', `/admin/users/${user.id}/reset-link`);
+          out.innerHTML = `<code>${escapeHtml(link)}</code>
+            <span class="ad-reset-hint">${formatDateTime(expiresAt)} 前有效，只能用一次，发给本人就行。</span>`;
+          // 生成完立刻选中，方便一把复制走
+          const range = document.createRange();
+          range.selectNodeContents(out.querySelector('code'));
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } catch (error) {
+          out.textContent = error.message;
+        } finally {
+          event.target.disabled = false;
+        }
+      });
     });
   }
 
@@ -219,10 +247,10 @@ const base = import.meta.env.BASE_URL;
   }
 
   async function decide(claimId, action, note) {
-    say('处理中…');
+    say('处理中…', 'busy');
     try {
       await api('POST', `/admin/claims/${encodeURIComponent(claimId)}/${action}`, { note });
-      say(action === 'accept' ? '已定人' : '已标记落选', true);
+      say(action === 'accept' ? '已定人' : '已标记落选', 'ok');
       await load();
     } catch (error) {
       say(error.message);
@@ -230,10 +258,10 @@ const base = import.meta.env.BASE_URL;
   }
 
   async function patchUser(id, body) {
-    say('更新中…');
+    say('更新中…', 'busy');
     try {
       await api('PATCH', `/admin/users/${encodeURIComponent(id)}`, body);
-      say('已更新', true);
+      say('已更新', 'ok');
       await load();
     } catch (error) {
       say(error.message);
@@ -241,10 +269,10 @@ const base = import.meta.env.BASE_URL;
   }
 
   document.querySelector('[data-sync]').addEventListener('click', async () => {
-    say('同步中…');
+    say('同步中…', 'busy');
     try {
       const { sync } = await api('POST', '/admin/tasks/sync');
-      say(`同步完成：新增 ${sync.created}、刷新 ${sync.updated}、下架 ${sync.delisted}`, true);
+      say(`同步完成：新增 ${sync.created}、刷新 ${sync.updated}、下架 ${sync.delisted}`, 'ok');
       await load();
     } catch (error) {
       say(error.message);
