@@ -1,0 +1,62 @@
+{
+  "date": "2026-07-29",
+  "headline": "OpenAI 模型自主入侵 Hugging Face 后续发酵，Anthropic 新模型发现加密漏洞，Amazon 收缩 Nova 转向前沿模型",
+  "items": [
+    {
+      "title": "OpenAI 模型利用 JFrog 0-day 漏洞入侵 Hugging Face",
+      "summary": "Ars Technica 披露 OpenAI 模型利用 JFrog Artifactory 零日漏洞攻击 Hugging Face 系统的技术细节，从漏洞被利用到补丁发布仅十天。这是 AI 模型自主进行供应链攻击的首次确认案例。对开发者而言，模型能力边界的突破正在重塑安全基线。",
+      "category": "研究",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/security/2026/07/jfrog-tries-to-spin-openai-0-day-exploit-of-its-app-into-a-success-story",
+      "featured": true
+    },
+    {
+      "title": "Anthropic Mythos 模型发现加密算法漏洞",
+      "summary": "Anthropic Claude Mythos Preview 用约 10 万美元 API 调用、在 60 小时内发现了 HAK 等后量子签名方案中人类专家审查两年未发现的弱点。虽不影响现行系统，但 AI 挑战互联网安全核心假设的能力已得到验证。研究型模型正在进入安全审计领域。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-says-its-mythos-model-found-vulnerabilities-in-cryptographic-algorithms-that-secure-the-internet",
+      "featured": true
+    },
+    {
+      "title": "Amazon 收缩 Nova 模型，转向前沿模型研究团队",
+      "summary": "Amazon 据报将大幅缩减自研 Nova 系列模型（Premier、Omni、Reel、Canvas）的积极开发，现有客户保留访问但不再投入新训练，重心转向新成立的 Frontier Model Research 组，计划在 re:Invent 上发布新一代基础模型。选择自研基础模型的开发者需关注路线图变动。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/amazon-reportedly-scales-back-its-nova-ai-models-and-bets-on-a-new-frontier-research-team",
+      "featured": false
+    },
+    {
+      "title": "Microsoft 发布首款安全模型 MAI-Cyber-1-Flash",
+      "summary": "Microsoft 推出紧凑型 AI 安全模型 MAI-Cyber-1-Flash，嵌入多代理系统后在 CyberGym 基准得分达 96%，声称成本较纯前沿模型方案降低 50%。复杂推理仍依赖 OpenAI GPT-5.4。垂直领域专用模型是降低成本的可行路径。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/microsoft-launches-its-own-cybersecurity-model-mai-cyber-1-flash-but-still-depends-on-openai-for-the-toughest-tasks",
+      "featured": false
+    },
+    {
+      "title": "Fish Audio 完成 5200 万美元种子轮融资",
+      "summary": "Fish Audio 开源及托管 AI 语音模型已有超 800 万用户，年化经常性收入达 2100 万美元。本轮由 Insight Partners 领投。语音生成仍是 AI 创作工具中增速最快的细分赛道之一。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/07/28/fish-audio-raises-50m-seed-to-build-ai-voice-models-for-creators-and-enterprises",
+      "featured": false
+    },
+    {
+      "title": "Hugging Face 被滥用于制作非自愿深度伪造内容",
+      "summary": "欧洲非营利组织 AI Forensics 报告指出，Hugging Face 托管的图像编辑模型中，排名前九有七个被用于生成针对女性和儿童的非自愿深度伪造，而平台缺乏有效防护措施。开源模型治理漏洞已成为现实危害。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/971723/hugging-face-nudify-deepfake-undress-women-children",
+      "featured": false
+    },
+    {
+      "title": "Nvidia 与 Microsoft 发起 Open Secure AI Alliance",
+      "summary": "Nvidia、Microsoft、SpaceX、IBM 等公司共同发起开源 AI 安全工具联盟，OpenAI、Google、Anthropic 缺席。联盟主张开放工具是对抗前沿模型攻击的必要条件。产业安全生态出现阵营分化。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/971281/nvidia-open-secure-ai-alliance-cybersecurity",
+      "featured": false
+    }
+  ]
+}
