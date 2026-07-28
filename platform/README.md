@@ -39,7 +39,7 @@ markdown 里的 `status` / `taker` 只在任务第一次入库时当初值用。
 
 ## 状态机
 
-```
+```text
 open 招募中 ──[发布方在管理台点「定给他」]──> taken 进行中
                                                   │
                         [承接人提交成稿链接]────────┘
@@ -135,6 +135,22 @@ ATW_INVITE_CODE=某个口令         # 或者改成凭邀请码注册
 ```
 
 数据在 `/var/lib/atw-platform/`，代码在 `/opt/atw-platform/`，重新部署不会碰数据。
+
+### 改 nginx 之前先读这三条
+
+首次接入时踩过，都是本地测不出来的：
+
+1. **备份别放 `sites-enabled/`。** nginx 会加载那个目录下的**所有**文件，不看后缀——备份副本里的 `listen 443` 会和正本撞车（`duplicate listen options for [::]:443`），校验直接失败。备份放 `/root/`。`sites-available/` 里放备份是安全的（不被加载），所以"以前一直这么备份没事"会给人错误的安全感。
+2. **确认哪份配置真正生效。** 本站的 `sites-enabled/tiaozhuxiansheng` 是**实体文件不是软链**，而 `sites-available/` 里的同名文件是过期副本（连 `/vacat/` 都没有）。按常规去改 available 会白改一轮，且 `nginx -t` 照样通过。动手前先 `ls -l /etc/nginx/sites-enabled/` 看有没有 `->`。
+3. **远程手工操作给单行命令。** 带 `if/else` 的多行脚本粘进远程终端会被粘连成一个字符串，输出错乱到看不出真实原因。一条一条来，每条都能独立看到结果。
+
+配置片段每次部署会同步到 `/opt/atw-platform/deploy/`，改 nginx 时直接从那里取。
+
+### 忘了服务器 root 密码
+
+- 手上还有 root 会话：直接 `passwd`，root 改自己的密码不需要旧密码。
+- 完全进不去：腾讯云控制台 → 轻量应用服务器 → 实例 → 重置密码（通常要重启生效）；同页的「登录」是网页 VNC，兜底手段。
+- **重置密码不影响自动部署**：CI 走的是 `HK_SSH_KEY` 那把独立部署密钥（`gh_deploy_hk`），与 root 密码无关。
 
 ## 与 VACAT 协作板块的关系
 
