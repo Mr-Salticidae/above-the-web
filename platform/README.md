@@ -72,7 +72,18 @@ markdown 里的 `status` / `taker` 只在任务第一次入库时当初值用。
 
 发信走 `src/mailer.js`，目前接 Resend——一个 `fetch` POST 就完事，不引第三方 SDK。
 要换别家（阿里云邮件推送等）在那个文件里加一个分支即可，`send()` 的形状不变。
-配置见 `.env.example` 的 `ATW_MAIL_*`；Resend 那边要把 `tiaozhuxiansheng.com` 加成发件域名。
+
+**开通顺序不能反**（2026-07-28 踩过）：
+
+1. `resend.com/domains` 加 `tiaozhuxiansheng.com`，拿到 DKIM / SPF / MX 三条记录；
+2. 本域 NS 在 `dns23/24.hichina.com`，记录加在**阿里云云解析**，等状态变 Verified；
+3. 最后才把 `ATW_MAIL_API_KEY` 填进服务器的 `.env` 并 `systemctl restart atw-platform`。
+
+顺序反了的后果很具体：`/meta` 的 `selfServiceReset` 变成 `true`，页面照常说「信已经发出去了」，
+而 Resend 那边直接 `403 domain is not verified`——用户永远等不到信，比没有这个功能更糟。
+所以域名没验证之前，`ATW_MAIL_API_KEY` 就该留空，让它老实走人工兜底。
+
+用「只允许发信」的受限 key 就够了（它调不了 `/domains` 之类的管理接口，被拖走也只能发信）。
 
 **没配发信通道也不会走死**：`/meta` 的 `selfServiceReset` 会变成 `false`，`/account/forgot/`
 自动改口成「找站长人工发」，发布方在管理台每个用户旁边点「重置链接」生成一次性链接，
