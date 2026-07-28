@@ -76,7 +76,8 @@ markdown 里的 `status` / `taker` 只在任务第一次入库时当初值用。
 **开通顺序不能反**（2026-07-28 踩过）：
 
 1. `resend.com/domains` 加 `tiaozhuxiansheng.com`，拿到 DKIM / SPF / MX 三条记录；
-2. 本域 NS 在 `dns23/24.hichina.com`，记录加在**阿里云云解析**，等状态变 Verified；
+2. 本域 NS 在 `dns23/24.hichina.com`，记录加在**阿里云云解析**，等状态变 Verified
+   （逐字段的操作手册见 [deploy/resend-domain-verify.md](deploy/resend-domain-verify.md)）；
 3. 最后才把 `ATW_MAIL_API_KEY` 填进服务器的 `.env` 并 `systemctl restart atw-platform`。
 
 顺序反了的后果很具体：`/meta` 的 `selfServiceReset` 变成 `true`，页面照常说「信已经发出去了」，
