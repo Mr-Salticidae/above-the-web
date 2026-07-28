@@ -51,6 +51,8 @@ jobs:
               #   data/ 是本地开发遗留的数据目录（线上用 /var/lib/atw-platform）
               rsync -a --delete --exclude ".env" --exclude "data/" \
                 /tmp/atw-platform-src/server/ /opt/atw-platform/server/
+              # deploy 目录一并留一份：改 nginx 片段或重装时不用再去 /tmp 里翻
+              rsync -a --delete /tmp/atw-platform-src/deploy/ /opt/atw-platform/deploy/
               chown -R atwplat:atwplat /opt/atw-platform
               chmod 600 /opt/atw-platform/server/.env
               systemctl restart atw-platform
