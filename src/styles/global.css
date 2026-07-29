@@ -189,6 +189,42 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .hero .hero-sub { max-width: 38rem; margin-top: 1.1rem; font-size: 1.02rem; line-height: 2; }
 
 /* 首页板块统一栏头：编号刊眉（延伸细线）+ 衬线标题 + 一句引导 */
+/* 杂志封面式刊头：快讯 / 任务书 / 笔记三个板块页共用一套 */
+.masthead { text-align: center; padding: 0 0 2.6rem; margin: 0 0 2.6rem; border-bottom: 2px solid var(--ink); }
+.masthead-kicker {
+  margin: 0 0 .8rem; font-family: var(--sans); font-size: .7rem;
+  letter-spacing: .34em; text-transform: uppercase; color: var(--ink-soft);
+}
+.masthead h1 {
+  margin: 0; font-family: var(--serif); font-size: clamp(2.6rem, 7vw, 4rem);
+  letter-spacing: .1em; line-height: 1.15; color: var(--ink);
+  text-shadow: 0 2px 50px rgba(var(--glow), .3);
+}
+.masthead-sub {
+  margin: .5rem 0 0; font-family: var(--sans); font-size: .74rem;
+  letter-spacing: .52em; text-transform: uppercase; color: var(--accent);
+}
+.masthead-desc {
+  margin: 1.3rem auto 0; max-width: 34rem;
+  font-size: .92rem; line-height: 1.8; color: var(--ink-soft);
+}
+
+/* 滚动渐现（scripts/reveal.js 挂上 html.rv-on 后才生效，保证无 JS 时内容不被藏起） */
+html.rv-on .rv { opacity: 0; }
+html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
+@keyframes rv-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+/* reduced-motion：不取消渐现，降级为纯淡入（无位移，规避运动不适） */
+@media (prefers-reduced-motion: reduce) {
+  html.rv-on .rv.rv-in { animation: rv-fade .5s ease both; }
+}
+@keyframes rv-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .sec-head { margin: 0 0 1.5rem; }
 .sec-kicker {
   display: flex; align-items: center; gap: .8rem; margin: 0 0 .6rem;

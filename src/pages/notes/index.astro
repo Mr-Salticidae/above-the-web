@@ -1,0 +1,173 @@
+---
+// 笔记库 · Notes —— 全部笔记的索引。
+//
+// 这一整套（筛选条 + 分栏卡片）原先长在首页底部：362 张卡、134 KB，
+// 占了首页八成篇幅，进站第一眼就是一面卡片墙。现在挪到这儿单独成页，
+// 首页只留七个栏目入口。`?cat=` 带栏目名进来会直接选中对应筛选。
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { href } from '../../lib/notes.mjs';
+import { groupNotes } from '../../lib/note-groups.mjs';
+
+const { cats, counts, groups, subsByCat, total } = groupNotes(await getCollection('notes'));
+const catCounts = counts;
+---
+
+<BaseLayout
+  title="笔记"
+  description="沉淀下来的 AIGC 方法论、prompt 模板、sref 档案与平台工程记录，按主题分栏。"
+>
+  <div class="notes-page">
+    <header class="masthead">
+      <p class="masthead-kicker">Working Notes</p>
+      <h1>笔记</h1>
+      <p class="masthead-sub">Notes</p>
+      <p class="masthead-desc">
+        沉淀下来的方法论、模板与档案——按主题分栏，篇篇希望做到可复用。
+        这里是小站最初的样子，目前 {total} 篇。
+      </p>
+    </header>
+  </div>
+
+  <div class="explore">
+    <div class="chips" id="chips">
+      <button class="chip is-active" data-cat="*">全部 <i>{total}</i></button>
+      {cats.map((c) => (
+        <button class="chip" data-cat={c}>{c} <i>{counts[c]}</i></button>
+      ))}
+    </div>
+    <div class="subchips" id="subchips" hidden></div>
+  </div>
+
+  <section class="section">
+    <div class="section-head">
+      <span class="result-count" id="result-count"><b>{total}</b> / {total} 篇</span>
+    </div>
+
+    {groups.map((g, i) => (
+      <div class="cat-block" id={`sec-cat-${i}`} data-cat={g.cat}>
+        <header class="cat-head">
+          <h2>{g.cat}</h2>
+          <span class="cat-count">{g.count} 篇</span>
+          {g.desc && <p class="cat-desc">{g.desc}</p>}
+        </header>
+
+        {g.loose.length > 0 && (
+          <div class="cards cards-loose">
+            {g.loose.map((n) => (
+              <a class="card" data-cat={n.cat} data-sub={n.sub || ''} data-title={n.title} href={href(n.id)}>
+                <h3>{n.title}</h3>
+                <p>{n.excerpt}</p>
+              </a>
+            ))}
+          </div>
+        )}
+
+        {g.subs.map((s) => (
+          <div class="sub-block" data-sub={s.name}>
+            <h3 class="sub-head">{s.name} <i>{s.items.length}</i></h3>
+            <div class="cards">
+              {s.items.map((n) => (
+                <a class="card" data-cat={n.cat} data-sub={n.sub || ''} data-title={n.title} href={href(n.id)}>
+                  <h3>{n.title}</h3>
+                  <p>{n.excerpt}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+
+    <p class="empty" id="empty" hidden>该分类暂无内容</p>
+  </section>
+</BaseLayout>
+
+<script>
+  import { revealOnScroll } from '../../scripts/reveal.js';
+  revealOnScroll('.explore, .cat-head, .sub-head, .cards .card');
+</script>
+
+<script is:inline define:vars={{ subsByCat, catCounts, total }}>
+  const chips = [...document.querySelectorAll('#chips .chip')];
+  const subBar = document.getElementById('subchips');
+  const empty = document.getElementById('empty');
+  const resultCount = document.getElementById('result-count');
+  const blocks = [...document.querySelectorAll('.cat-block')];
+
+  let activeCat = '*';
+  let activeSub = '*';
+
+  function apply() {
+    let shown = 0;
+    for (const block of blocks) {
+      const catOk = activeCat === '*' || block.dataset.cat === activeCat;
+      block.style.display = catOk ? '' : 'none';
+      if (!catOk) continue;
+
+      const subBlocks = block.querySelectorAll('.sub-block');
+      const loose = block.querySelector('.cards-loose');
+      if (subBlocks.length) {
+        subBlocks.forEach((sb) => {
+          const subOk = activeSub === '*' || sb.dataset.sub === activeSub;
+          sb.style.display = subOk ? '' : 'none';
+          if (subOk) shown += sb.querySelectorAll('.card').length;
+        });
+        if (loose) {
+          const looseOk = activeSub === '*';
+          loose.style.display = looseOk ? '' : 'none';
+          if (looseOk) shown += loose.querySelectorAll('.card').length;
+        }
+      } else {
+        shown += block.querySelectorAll('.card').length;
+      }
+    }
+    if (empty) empty.hidden = shown > 0;
+    if (resultCount) resultCount.innerHTML = `<b>${shown}</b> / ${total} 篇`;
+  }
+
+  function renderSubBar(cat) {
+    const subs = cat === '*' ? [] : (subsByCat[cat] || []);
+    if (!subs.length) { subBar.hidden = true; subBar.innerHTML = ''; return; }
+    const catCount = catCounts[cat] ?? subs.reduce((a, s) => a + s.n, 0);
+    let html = '<span class="sub-label">细分</span>';
+    html += `<button class="subchip is-active" data-sub="*">全部 <i>${catCount}</i></button>`;
+    for (const s of subs) html += `<button class="subchip" data-sub="${s.name}">${s.name} <i>${s.n}</i></button>`;
+    subBar.innerHTML = html;
+    subBar.hidden = false;
+    subBar.querySelectorAll('.subchip').forEach((sc) => {
+      sc.addEventListener('click', () => {
+        subBar.querySelectorAll('.subchip').forEach((x) => x.classList.remove('is-active'));
+        sc.classList.add('is-active');
+        activeSub = sc.dataset.sub;
+        apply();
+      });
+    });
+  }
+
+  function selectCat(chip, { scroll = true } = {}) {
+    chips.forEach((c) => c.classList.toggle('is-active', c === chip));
+    activeCat = chip.dataset.cat;
+    activeSub = '*';
+    renderSubBar(activeCat);
+    apply();
+    // 选定栏目后平滑滚到内容区，强化「切换」反馈；从首页带 ?cat= 进来时不滚，
+    // 那时人还没看过刊头，直接把页面拽走反而莫名其妙
+    if (scroll && activeCat !== '*') {
+      document
+        .querySelector(`.cat-block[data-cat="${CSS.escape(activeCat)}"]`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  chips.forEach((chip) => chip.addEventListener('click', () => selectCat(chip)));
+
+  // 首页的栏目卡片带 ?cat=xxx 进来，直接落在那个栏目上
+  const wanted = new URLSearchParams(location.search).get('cat');
+  const startChip = wanted ? chips.find((c) => c.dataset.cat === wanted) : null;
+  selectCat(startChip || chips[0], { scroll: false });
+</script>
+
+<style>
+  .notes-page { max-width: 72rem; margin: 0 auto; padding: 3.2rem 1.5rem 0; }
+</style>

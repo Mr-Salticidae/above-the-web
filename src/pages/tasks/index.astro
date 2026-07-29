@@ -185,25 +185,7 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
 <style>
   .tasks-page { max-width: 52rem; margin: 0 auto; padding: 3.2rem 1.5rem 6rem; }
 
-  /* 刊头：沿用快讯的杂志封面式排印 */
-  .masthead { text-align: center; padding: 0 0 2.6rem; margin: 0 0 2.6rem; border-bottom: 2px solid var(--ink); }
-  .masthead-kicker {
-    margin: 0 0 .8rem; font-family: var(--sans); font-size: .7rem;
-    letter-spacing: .34em; text-transform: uppercase; color: var(--ink-soft);
-  }
-  .masthead h1 {
-    margin: 0; font-family: var(--serif); font-size: clamp(2.6rem, 7vw, 4rem);
-    letter-spacing: .1em; line-height: 1.15; color: var(--ink);
-    text-shadow: 0 2px 50px rgba(var(--glow), .3);
-  }
-  .masthead-sub {
-    margin: .5rem 0 0; font-family: var(--sans); font-size: .74rem;
-    letter-spacing: .52em; text-transform: uppercase; color: var(--accent);
-  }
-  .masthead-desc {
-    margin: 1.3rem auto 0; max-width: 34rem;
-    font-size: .92rem; line-height: 1.8; color: var(--ink-soft);
-  }
+  /* 刊头样式在 global.css：快讯 / 任务书 / 笔记三页共用 */
   .masthead-spec {
     margin: .9rem 0 0; font-family: var(--sans); font-size: .86rem; color: var(--ink-soft);
   }
