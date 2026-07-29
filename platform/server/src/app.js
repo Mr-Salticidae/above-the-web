@@ -183,7 +183,10 @@ function publicTask(row) {
     source: row.source || "md",
     title: row.title || "",
     summary: row.summary || "",
-    fee: row.fee || "",
+    // fee 永远是「现在到底结多少」：调过价就是调整后的数，页面不用各自判断
+    fee: row.fee_override || row.fee || "",
+    feeBase: row.fee_override ? row.fee || "" : "",
+    feeNote: row.fee_override ? row.fee_note || "" : "",
     deadline: row.deadline || "",
     publishedAt: row.published_at || "",
     status: row.status,
@@ -901,6 +904,24 @@ export function createApplication(config, log = console, deps = {}) {
         }
         if (body.note !== undefined) extra.note = note;
 
+        // 调整报酬。md 那批也能调——这是运行时状态，同步不碰；改 md 反而会被下一轮同步覆盖回去。
+        // 典型场景：定完人之后谈成「报销一份会员费」，结款从 100 提到 140，双方都要看得见。
+        // 传空串即撤销调整，回到任务书里写的那个数。
+        let feeEvent = '';
+        if (body.feeOverride !== undefined) {
+          const override = taskText(body.feeOverride, "fee");
+          const feeNote = clean(body.feeNote).slice(0, 120);
+          const before = task.fee_override || task.fee;
+          const after = override || task.fee;
+          extra.fee_override = override;
+          extra.fee_note = override ? feeNote : "";
+          if (before !== after || feeNote !== (task.fee_note || "")) {
+            feeEvent = override
+              ? `报酬调整：${before || "未定"} → ${after}${feeNote ? `（${feeNote}）` : ""}`
+              : `报酬恢复为任务书里的 ${after || "未定"}`;
+          }
+        }
+
         // 正文类字段只有站内新建的任务书能在这儿改。md 那份的真相源是 git——
         // 在管理台改了也会被下一次同步覆盖回去，与其埋这个坑不如当场说清楚。
         const CONTENT_KEYS = ["title", "summary", "fee", "deadline", "publishedAt", "body", "listed"];
@@ -956,6 +977,23 @@ export function createApplication(config, log = console, deps = {}) {
               note,
             });
           }
+        }
+        // 调价单独记一条流转记录与审计：钱变了多少、因为什么，双方都得有据可查
+        if (feeEvent) {
+          database.createTaskEvent({
+            taskSlug: slug,
+            actorUserId: admin.id,
+            fromStatus: updated.status,
+            toStatus: updated.status,
+            note: feeEvent,
+          });
+          database.createAuditLog({
+            actorUserId: admin.id,
+            action: "task.fee_adjust",
+            targetType: "task",
+            targetId: slug,
+            details: { fee: updated.fee_override || updated.fee },
+          });
         }
         database.createAuditLog({
           actorUserId: admin.id,

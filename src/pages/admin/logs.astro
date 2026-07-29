@@ -1,0 +1,53 @@
+---
+// 操作记录：谁在什么时候做了什么。出事时先看这里。
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="操作记录" current="logs">
+  <section class="ad-block">
+    <h2>最近操作</h2>
+    <p class="ad-note">最近 200 条，倒序。发信失败、生成重置链接、调整报酬这些都在里面。</p>
+    <div data-logs><p class="atw-empty">加载中…</p></div>
+  </section>
+</AdminLayout>
+
+<script>
+  import { api, escapeHtml, formatDateTime } from '../../scripts/account-core.js';
+  import { bootAdmin, say } from '../../scripts/admin-core.js';
+
+  function renderLogs(logs) {
+    const host = document.querySelector('[data-logs]');
+    host.innerHTML = logs.length
+      ? `<ul class="ad-logs">${logs
+          .map((l) => {
+            // details 里有用的东西不多，但发信失败、调价后的金额都在里面，值得摊开
+            let extra = '';
+            try {
+              const details = JSON.parse(l.details_json || '{}');
+              extra = details.fee || details.failure || details.title || '';
+            } catch {
+              extra = '';
+            }
+            return `<li>
+              <span>${formatDateTime(l.created_at)}</span>
+              <span>${escapeHtml(l.actor_name || '—')}</span>
+              <span>${escapeHtml(l.action)}</span>
+              <span>${escapeHtml(l.target_id || '')}${extra ? ` · ${escapeHtml(String(extra))}` : ''}</span>
+            </li>`;
+          })
+          .join('')}</ul>`
+      : '<p class="atw-empty">还没有操作记录。</p>';
+  }
+
+  async function boot() {
+    if (!(await bootAdmin())) return;
+    try {
+      const { logs } = await api('GET', '/admin/audit-logs');
+      renderLogs(logs);
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  boot();
+</script>

@@ -31,10 +31,12 @@ const statusLabel = isOpen
         class:list={['tm-status', { 'is-open': isOpen, 'is-taken': isTaken }]}
         data-status-label
       >{statusLabel}</span>
-      {task.data.fee && <span class="tm-item">报酬 <b>{task.data.fee}</b></span>}
+      {/* 报酬可能被发布方在站内调过（报销、加急费），运行时以数据库为准，见 task-detail.js */}
+      <span class="tm-item" data-meta-fee hidden={!task.data.fee}>报酬 <b>{task.data.fee}</b></span>
       {task.data.deadline && <span class="tm-item">截止 <b>{formatDate(task.data.deadline)}</b></span>}
       <span class="tm-item">发布 <b>{formatDate(task.data.date)}</b></span>
     </div>
+    <p class="fee-note" data-fee-note hidden></p>
     <Content />
 
     <section class="claim-panel" data-claim-panel hidden></section>

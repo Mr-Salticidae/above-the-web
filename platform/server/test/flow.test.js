@@ -390,6 +390,56 @@ test("同步不碰站内新建的任务，md 补上同名任务书后由 md 接�
   assert.equal(claims.payload.claims.length, 1);
 });
 
+// ---------- 调整报酬 ----------
+
+test("调整报酬：md 任务书也能调，时间线留痕，同步不覆盖", async () => {
+  // demo-open 是 md 来的，清单里写着 500 元
+  const adjusted = await call("PATCH", "/api/admin/tasks/demo-open", {
+    token: adminToken,
+    body: { feeOverride: "540 元", feeNote: "报销 40 元会员费" },
+  });
+  assert.equal(adjusted.status, 200);
+  assert.equal(adjusted.payload.task.fee, "540 元");
+  assert.equal(adjusted.payload.task.feeBase, "500 元");
+  assert.equal(adjusted.payload.task.feeNote, "报销 40 元会员费");
+
+  const detail = await call("GET", "/api/tasks/demo-open");
+  assert.equal(detail.payload.events.at(-1).note, "报酬调整：500 元 → 540 元（报销 40 元会员费）");
+
+  // 改 md 会被同步覆盖，调价不会——这正是它单独存一列的理由
+  taskSync.runOnce();
+  const synced = await call("GET", "/api/tasks/demo-open");
+  assert.equal(synced.payload.task.fee, "540 元");
+  assert.equal(synced.payload.task.feeBase, "500 元");
+});
+
+test("承接人在「我的认领」里看到的是调整后的报酬", async () => {
+  const mine = await call("GET", "/api/my/claims", { token: memberToken });
+  const claim = mine.payload.claims.find((c) => c.taskSlug === "demo-open");
+  assert.equal(claim.taskFee, "540 元");
+});
+
+test("撤销调整：回到任务书里写的那个数", async () => {
+  const restored = await call("PATCH", "/api/admin/tasks/demo-open", {
+    token: adminToken,
+    body: { feeOverride: "" },
+  });
+  assert.equal(restored.payload.task.fee, "500 元");
+  assert.equal(restored.payload.task.feeBase, "");
+
+  const detail = await call("GET", "/api/tasks/demo-open");
+  assert.equal(detail.payload.events.at(-1).note, "报酬恢复为任务书里的 500 元");
+
+  // 同一个值再提交一次不该再记一条
+  const noop = await call("PATCH", "/api/admin/tasks/demo-open", {
+    token: adminToken,
+    body: { feeOverride: "" },
+  });
+  assert.equal(noop.status, 200);
+  const again = await call("GET", "/api/tasks/demo-open");
+  assert.equal(again.payload.events.length, detail.payload.events.length);
+});
+
 // ---------- 多会话：切换账号与退出登录 ----------
 
 let switcherA = "";

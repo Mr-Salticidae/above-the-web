@@ -1,0 +1,52 @@
+---
+// 管理台的外壳：标题、板块导航、权限门禁。
+//
+// 管理台原先是一整页，待处理申请、任务、账号、操作记录堆在一起，越加越挤。
+// 现在一件事一页，共用的只有这层壳：门禁逻辑在 scripts/admin-core.js 的 bootAdmin()，
+// 各页 boot 通过之后才拿得到 [data-console] 里的内容。
+//
+// 样式都在 global.css：slot 进来的内容属于各页的作用域，写在这里的 scoped 样式管不到。
+import BaseLayout from './BaseLayout.astro';
+
+const { title, current } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const NAV = [
+  { key: 'home', label: '概览', href: 'admin/' },
+  { key: 'claims', label: '待处理申请', href: 'admin/claims/' },
+  { key: 'tasks', label: '任务', href: 'admin/tasks/' },
+  { key: 'new', label: '新建任务书', href: 'admin/tasks/new/' },
+  { key: 'users', label: '账号', href: 'admin/users/' },
+  { key: 'logs', label: '操作记录', href: 'admin/logs/' },
+];
+---
+
+<BaseLayout title={`${title} · 管理台`} description="任务流转与账号管理" noindex>
+  <div class="admin-page">
+    <header class="ad-head">
+      <div>
+        <p class="ad-kicker">Admin</p>
+        <h1>{title}</h1>
+      </div>
+      <div class="ad-head-actions">
+        <slot name="actions" />
+        <a class="atw-ghost" href={`${base}account/`}>个人中心</a>
+      </div>
+    </header>
+
+    <nav class="ad-nav" aria-label="管理台板块">
+      {NAV.map((item) => (
+        <a href={`${base}${item.href}`} aria-current={item.key === current ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <p class="ad-gate" data-gate>正在确认权限…</p>
+
+    <div data-console hidden>
+      <p class="atw-msg" data-global-msg role="status"></p>
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

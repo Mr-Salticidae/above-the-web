@@ -1,0 +1,333 @@
+---
+// 任务：状态流转、调整报酬，站内新建的那批还能改正文 / 下架 / 导出 md。
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="任务" current="tasks">
+  <button class="atw-ghost" type="button" data-sync slot="actions">同步任务清单</button>
+
+  <section class="ad-block">
+    <h2>全部任务</h2>
+    <p class="ad-note">
+      状态与报酬以这里为准，页面上实时生效，不用改 markdown 重新构建。
+      <code>src/data/tasks/*.md</code> 来的那些，正文与截止时间仍归 git——改完 push 即可；
+      站内新建的那些直接在这儿改。
+    </p>
+    <div data-tasks><p class="atw-empty">加载中…</p></div>
+  </section>
+</AdminLayout>
+
+<script>
+  import { api, escapeHtml, formatDate, TASK_STATUS_LABEL } from '../../../scripts/account-core.js';
+  import { bootAdmin, bumpFee, loadOverview, say, taskHref, tell } from '../../../scripts/admin-core.js';
+
+  function renderTasks(list) {
+    const host = document.querySelector('[data-tasks]');
+    if (!list.length) {
+      host.innerHTML =
+        '<p class="atw-empty">库里还没有任务，去「新建任务书」发一份，或点右上角「同步任务清单」。</p>';
+      return;
+    }
+    host.innerHTML = list
+      .map((t) => {
+        const options = Object.entries(TASK_STATUS_LABEL)
+          .map(([value, label]) => `<option value="${value}"${value === t.status ? ' selected' : ''}>${label}</option>`)
+          .join('');
+        // 同样是「不在列表里」，md 那份是文件没了，站内这份是发布方主动下架的
+        const unlisted = t.listed ? '' : t.source === 'web' ? ' · 已下架' : ' · markdown 已删除';
+        const webButtons =
+          t.source === 'web'
+            ? `<button class="atw-ghost" type="button" data-edit>编辑正文</button>
+               <button class="atw-ghost" type="button" data-toggle-listed>${t.listed ? '下架' : '重新上架'}</button>
+               <button class="atw-ghost" type="button" data-export>导出 md</button>`
+            : '';
+        return `<article class="ad-task${t.listed ? '' : ' is-unlisted'}" data-slug="${escapeHtml(t.slug)}">
+          <div class="ad-task-head">
+            <a href="${taskHref(t)}">${escapeHtml(t.title || t.slug)}</a>
+            <span class="ad-task-meta">${t.source === 'web' ? '站内新建 · ' : ''}${escapeHtml(t.fee || '')}${
+              t.feeBase ? `（原 ${escapeHtml(t.feeBase)}）` : ''
+            }${t.deadline ? ` · 截止 ${escapeHtml(t.deadline)}` : ''}${unlisted}</span>
+          </div>
+          <div class="ad-task-row">
+            <select data-status>${options}</select>
+            <input class="ad-inline-input" data-taker value="${escapeHtml(t.taker || '')}" placeholder="承接人（无账号时手填）" maxlength="32" />
+            <input class="ad-inline-input" data-deliverable value="${escapeHtml(
+              t.deliverableUrl || '',
+            )}" placeholder="成稿链接" />
+            <input class="ad-inline-input" data-note placeholder="备注（写进流转记录）" maxlength="500" />
+            <button class="atw-ghost" type="button" data-save>保存</button>
+          </div>
+          <div class="ad-task-row">
+            <button class="atw-ghost" type="button" data-fee>调整报酬</button>
+            ${webButtons}
+          </div>
+          <div class="ad-fee-box" data-fee-box hidden></div>
+          <div class="ad-task-edit" data-edit-box hidden></div>
+          <p class="ad-task-stamp">
+            ${t.pendingClaims ? `${t.pendingClaims} 人在申请 · ` : ''}
+            ${t.claimedAt ? `定人 ${formatDate(t.claimedAt)} · ` : ''}
+            ${t.deliveredAt ? `交付 ${formatDate(t.deliveredAt)} · ` : ''}
+            ${t.paidAt ? `打款 ${formatDate(t.paidAt)}` : ''}
+          </p>
+        </article>`;
+      })
+      .join('');
+
+    host.querySelectorAll('[data-slug]').forEach((card) => {
+      const task = list.find((t) => t.slug === card.dataset.slug);
+      card.querySelector('[data-save]').addEventListener('click', () =>
+        patchTask(task.slug, {
+          status: card.querySelector('[data-status]').value,
+          takerName: card.querySelector('[data-taker]').value,
+          deliverableUrl: card.querySelector('[data-deliverable]').value,
+          note: card.querySelector('[data-note]').value,
+        }, '已保存'),
+      );
+      card.querySelector('[data-fee]').addEventListener('click', () => toggleFee(card, task));
+      if (task.source !== 'web') return;
+      card.querySelector('[data-edit]').addEventListener('click', () => toggleEditor(card, task));
+      card.querySelector('[data-toggle-listed]').addEventListener('click', () =>
+        patchTask(task.slug, { listed: !task.listed }, task.listed ? '已下架' : '已重新上架'),
+      );
+      card.querySelector('[data-export]').addEventListener('click', () => exportMarkdown(task));
+    });
+  }
+
+  async function patchTask(slug, body, okText) {
+    say('保存中…', 'busy');
+    try {
+      await api('PATCH', `/admin/tasks/${encodeURIComponent(slug)}`, body);
+      say(okText, 'ok');
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  // 调整报酬 --------------------------------------------------------------
+  // 定完人之后临时加钱（报销会员费、加急费）是常事。改 md 既慢又会被同步覆盖回去，
+  // 所以这是一条独立的运行时改动：原价留着，调整后的数与事由一并写进流转记录。
+  function toggleFee(card, task) {
+    const box = card.querySelector('[data-fee-box]');
+    if (!box.hidden) {
+      box.hidden = true;
+      box.innerHTML = '';
+      return;
+    }
+    const base = task.feeBase || task.fee || '';
+    box.hidden = false;
+    box.innerHTML = `<form class="atw-form" data-fee-form>
+      <p class="ad-fee-now">当前：<b>${escapeHtml(task.fee || '未定')}</b>${
+        task.feeBase
+          ? ` <span>（原 ${escapeHtml(task.feeBase)}${
+              task.feeNote ? ` · ${escapeHtml(task.feeNote)}` : ''
+            }）</span>`
+          : ''
+      }</p>
+      <div class="ad-new-row">
+        <label>
+          <span>在原价上加<i>报销、加急费；填负数就是减</i></span>
+          <input name="delta" type="number" step="1" inputmode="decimal" />
+        </label>
+        <label>
+          <span>或直接写新报酬<i>填了这栏就以它为准</i></span>
+          <input name="override" maxlength="40" placeholder="${escapeHtml(base)}" />
+        </label>
+      </div>
+      <label>
+        <span>事由<i>写进流转记录，承接人在任务页看得到</i></span>
+        <input name="feeNote" maxlength="120" value="${escapeHtml(task.feeNote || '')}" placeholder="报销 40 元会员费" />
+      </label>
+      <p class="ad-fee-preview" data-fee-preview></p>
+      <div class="ad-new-actions">
+        <button class="atw-primary" type="submit">保存调整</button>
+        ${task.feeBase ? '<button class="atw-ghost" type="button" data-fee-reset>撤销调整</button>' : ''}
+        <button class="atw-ghost" type="button" data-fee-cancel>收起</button>
+      </div>
+      <p class="atw-msg" data-fee-msg role="status"></p>
+    </form>`;
+
+    const form = box.querySelector('[data-fee-form]');
+    const preview = box.querySelector('[data-fee-preview]');
+    // 最终报酬：直接写了就用它，否则在原价上加减
+    const nextFee = () => {
+      const override = form.querySelector('[name="override"]').value.trim();
+      if (override) return override;
+      const delta = form.querySelector('[name="delta"]').value.trim();
+      return delta ? bumpFee(base, delta) : '';
+    };
+    const refresh = () => {
+      const next = nextFee();
+      const delta = form.querySelector('[name="delta"]').value.trim();
+      if (delta && !next) {
+        preview.textContent = `「${base || '空'}」里没有可加减的数字，请直接写新报酬`;
+        preview.dataset.tone = 'error';
+        return;
+      }
+      preview.dataset.tone = '';
+      preview.textContent = next ? `${base || '未定'} → ${next}` : '';
+    };
+    form.addEventListener('input', refresh);
+    refresh();
+
+    box.querySelector('[data-fee-cancel]').addEventListener('click', () => {
+      box.hidden = true;
+      box.innerHTML = '';
+    });
+    box.querySelector('[data-fee-reset]')?.addEventListener('click', () =>
+      patchTask(task.slug, { feeOverride: '' }, '已撤销调整，报酬回到任务书里的数'),
+    );
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const next = nextFee();
+      if (!next) {
+        tell('[data-fee-msg]', '填个加减金额，或者直接写新报酬');
+        return;
+      }
+      tell('[data-fee-msg]', '保存中…', 'busy');
+      try {
+        await api('PATCH', `/admin/tasks/${encodeURIComponent(task.slug)}`, {
+          feeOverride: next,
+          feeNote: form.querySelector('[name="feeNote"]').value,
+        });
+        say(`报酬已调整为 ${next}`, 'ok');
+        await load();
+      } catch (error) {
+        tell('[data-fee-msg]', error.message);
+      }
+    });
+  }
+
+  // 编辑正文：正文有可能几千字，列表接口不带它，点开时才单独取一次
+  async function toggleEditor(card, task) {
+    const box = card.querySelector('[data-edit-box]');
+    if (!box.hidden) {
+      box.hidden = true;
+      box.innerHTML = '';
+      return;
+    }
+    box.hidden = false;
+    box.innerHTML = '<p class="atw-empty">读取正文…</p>';
+    let detail;
+    try {
+      detail = await api('GET', `/tasks/${encodeURIComponent(task.slug)}`);
+    } catch (error) {
+      box.innerHTML = `<p class="atw-empty">${escapeHtml(error.message)}</p>`;
+      return;
+    }
+    const t = detail.task;
+    box.innerHTML = `<form class="atw-form" data-edit-form>
+      <label><span>标题</span><input name="title" maxlength="80" required value="${escapeHtml(t.title)}" /></label>
+      <label><span>一句话摘要</span><textarea name="summary" rows="2" maxlength="200" required>${escapeHtml(
+        t.summary,
+      )}</textarea></label>
+      <div class="ad-new-row">
+        <label><span>报酬<i>任务书上写的数；临时加钱用「调整报酬」</i></span><input name="fee" maxlength="40" value="${escapeHtml(
+          t.feeBase || t.fee,
+        )}" /></label>
+        <label><span>截止日期</span><input name="deadline" type="date" value="${escapeHtml(t.deadline)}" /></label>
+        <label><span>发布日期</span><input name="publishedAt" type="date" value="${escapeHtml(
+          t.publishedAt,
+        )}" /></label>
+      </div>
+      <label><span>正文<i>markdown</i></span><textarea name="body" rows="16" maxlength="20000" required>${escapeHtml(
+        detail.body,
+      )}</textarea></label>
+      <div class="ad-new-actions">
+        <button class="atw-primary" type="submit">保存正文</button>
+        <button class="atw-ghost" type="button" data-cancel>收起</button>
+      </div>
+      <p class="atw-msg" data-edit-msg role="status"></p>
+    </form>`;
+
+    box.querySelector('[data-cancel]').addEventListener('click', () => {
+      box.hidden = true;
+      box.innerHTML = '';
+    });
+    box.querySelector('[data-edit-form]').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = new FormData(event.target);
+      tell('[data-edit-msg]', '保存中…', 'busy');
+      try {
+        await api('PATCH', `/admin/tasks/${encodeURIComponent(task.slug)}`, {
+          title: data.get('title'),
+          summary: data.get('summary'),
+          fee: data.get('fee'),
+          deadline: data.get('deadline'),
+          publishedAt: data.get('publishedAt'),
+          body: data.get('body'),
+        });
+        say('正文已更新', 'ok');
+        await load();
+      } catch (error) {
+        tell('[data-edit-msg]', error.message);
+      }
+    });
+  }
+
+  // 导出成 src/data/tasks/ 里那种 md：站内发的任务想长期沉淀进 git 时走这条
+  async function exportMarkdown(task) {
+    say('导出中…', 'busy');
+    try {
+      const { task: t, body } = await api('GET', `/tasks/${encodeURIComponent(task.slug)}`);
+      // 双引号标量：JSON 的转义规则是 YAML 双引号形式的子集，直接借来用
+      const yaml = (value) => JSON.stringify(String(value ?? ''));
+      const front = [
+        '---',
+        `title: ${yaml(t.title)}`,
+        `summary: ${yaml(t.summary)}`,
+        `date: ${t.publishedAt}`,
+        ...(t.deadline ? [`deadline: ${t.deadline}`] : []),
+        // 导出的是任务书本身，写原价；临时调价属于运行时状态，留在库里
+        ...(t.feeBase || t.fee ? [`fee: ${yaml(t.feeBase || t.fee)}`] : []),
+        `status: ${t.status}`,
+        ...(t.taker ? [`taker: ${yaml(t.taker)}`] : []),
+        '---',
+        '',
+        '',
+      ];
+      const blob = new Blob([`${front.join('\n')}${body.trim()}\n`], {
+        type: 'text/markdown;charset=utf-8',
+      });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${t.publishedAt}-${t.slug}.md`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+      say('已导出，放进 src/data/tasks/ 提交即可（同步后由 md 接管）', 'ok');
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  document.querySelector('[data-sync]').addEventListener('click', async () => {
+    say('同步中…', 'busy');
+    try {
+      const { sync } = await api('POST', '/admin/tasks/sync');
+      say(
+        `同步完成：新增 ${sync.created}、刷新 ${sync.updated}、下架 ${sync.delisted}` +
+          (sync.adopted ? `，其中 ${sync.adopted} 份改由 md 接管` : ''),
+        'ok',
+      );
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  });
+
+  async function load() {
+    const { tasks: list } = await loadOverview();
+    renderTasks(list);
+  }
+
+  async function boot() {
+    if (!(await bootAdmin())) return;
+    try {
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  boot();
+</script>

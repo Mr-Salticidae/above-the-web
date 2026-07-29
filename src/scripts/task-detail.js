@@ -79,7 +79,6 @@ export async function hydrateTaskDetail() {
       const slot = node.querySelector('b');
       if (slot) slot.textContent = text;
     };
-    fill('[data-meta-fee]', task.fee);
     fill('[data-meta-deadline]', formatDayLabel(task.deadline));
     fill('[data-meta-published]', formatDayLabel(task.publishedAt));
 
@@ -102,20 +101,41 @@ export async function hydrateTaskDetail() {
     const crumb = root.querySelector('[data-crumb-status]');
     if (crumb) crumb.textContent = TASK_STATUS_LABEL[task.status] || task.status;
 
+    renderFee(task);
     renderTimeline(events, deliveries, task);
     renderPanel(task, myClaim);
   }
 
+  // 报酬以数据库为准：发布方可能在站内调过（报销会员费、加急费），
+  // md 里那个数只是初值。调过就把原价和事由一并写出来，别让人以为看错了。
+  function renderFee(task) {
+    const item = root.querySelector('[data-meta-fee]');
+    if (item) {
+      item.hidden = !task.fee;
+      const slot = item.querySelector('b');
+      if (slot) slot.textContent = task.fee;
+    }
+    const note = root.querySelector('[data-fee-note]');
+    if (!note) return;
+    note.hidden = !task.feeBase;
+    note.textContent = task.feeBase
+      ? `报酬已调整：原 ${task.feeBase}${task.feeNote ? ` · ${task.feeNote}` : ''}`
+      : '';
+  }
+
   function renderTimeline(events, deliveries, task) {
     if (!timeline) return;
-    const rows = events.map(
-      (e) => html`<li>
+    const rows = events.map((e) => {
+      // 状态没变的那些（调价、补一句备注）只写事由，不必再报一遍「进行中」
+      const what =
+        e.from === e.to && e.note
+          ? escapeHtml(e.note)
+          : escapeHtml(TASK_STATUS_LABEL[e.to] || e.to) + (e.note ? `：${escapeHtml(e.note)}` : '');
+      return html`<li>
         <span class="tl-when">${formatDate(e.createdAt)}</span>
-        <span class="tl-what">${escapeHtml(TASK_STATUS_LABEL[e.to] || e.to)}${
-          e.note ? `：${escapeHtml(e.note)}` : ''
-        }</span>
-      </li>`,
-    );
+        <span class="tl-what">${what}</span>
+      </li>`;
+    });
     const links = deliveries.map(
       (d) => html`<li>
         <span class="tl-when">${formatDate(d.createdAt)}</span>

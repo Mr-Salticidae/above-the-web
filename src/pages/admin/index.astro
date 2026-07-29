@@ -1,609 +1,71 @@
 ---
-// 管理台：定人、改状态、标打款、管账号。只有 role=admin 看得到内容，
-// 未登录或普通成员进来只会看到一句提示——这页本身不是秘密，秘密在接口那边。
-import BaseLayout from '../../layouts/BaseLayout.astro';
-const base = import.meta.env.BASE_URL;
+// 管理台首页：只回答「现在有什么在等我」，具体操作各自成页。
+import AdminLayout from '../../layouts/AdminLayout.astro';
 ---
 
-<BaseLayout title="管理台" description="任务流转与账号管理" noindex>
-  <div class="admin-page">
-    <header class="ad-head">
-      <div>
-        <p class="ad-kicker">Admin</p>
-        <h1>管理台</h1>
-      </div>
-      <div class="ad-head-actions">
-        <button class="atw-ghost" type="button" data-sync>同步任务清单</button>
-        <a class="atw-ghost" href={`${base}account/`}>个人中心</a>
-      </div>
-    </header>
+<AdminLayout title="概览" current="home">
+  <section class="ad-block">
+    <h2>眼下的活</h2>
+    <p class="ad-note">数字点得动，直接跳到对应板块。</p>
+    <div class="ad-stats" data-stats><p class="atw-empty">加载中…</p></div>
+  </section>
 
-    <p class="ad-gate" data-gate>正在确认权限…</p>
-
-    <div data-console hidden>
-      <p class="atw-msg" data-global-msg role="status"></p>
-
-      <section class="ad-block">
-        <h2>待处理申请 <span data-pending-count></span></h2>
-        <p class="ad-note">
-          同意即定人：任务转「进行中」，同一份任务其余申请自动落选，申请人在个人中心能看到结果。
-        </p>
-        <div data-pending><p class="atw-empty">加载中…</p></div>
-      </section>
-
-      <section class="ad-block">
-        <h2>新建任务书</h2>
-        <p class="ad-note">
-          在站里直接发一份任务书：填完提交就出现在任务书列表，不用写 markdown，也不用等一轮构建。
-          正文按 markdown 写——<code>## 标题</code>、列表、<code>&gt; 引用</code>、
-          <code>**粗体**</code>、<code>[文字](链接)</code>、<code>![图](图片链接)</code>都认。
-          想让它长期沉淀进 git，发完在下面点「导出 md」，把文件放进
-          <code>src/data/tasks/</code> 提交即可，下一轮同步 md 会自动接管这份任务（认领记录不丢）。
-        </p>
-        <form class="atw-form ad-new" data-new-task>
-          <label><span>标题</span><input name="title" maxlength="80" required /></label>
-          <label>
-            <span>一句话摘要<i>列表卡片上就显示这句</i></span>
-            <textarea name="summary" rows="2" maxlength="200" required></textarea>
-          </label>
-          <div class="ad-new-row">
-            <label><span>报酬<i>照写，如 150 元（税前）</i></span><input name="fee" maxlength="40" /></label>
-            <label><span>截止日期</span><input name="deadline" type="date" /></label>
-            <label><span>发布日期</span><input name="publishedAt" type="date" /></label>
-          </div>
-          <label>
-            <span>链接后缀<i>留空自动生成；小写字母、数字与连字符</i></span>
-            <input name="slug" maxlength="60" placeholder="ojo-review" />
-          </label>
-          <label><span>正文<i>markdown</i></span><textarea name="body" rows="14" maxlength="20000" required></textarea></label>
-          <div class="ad-new-actions">
-            <button class="atw-primary" type="submit">发布任务书</button>
-            <button class="atw-ghost" type="button" data-template>填入模板</button>
-            <button class="atw-ghost" type="button" data-preview>预览正文</button>
-          </div>
-          <p class="atw-msg" data-new-msg role="status"></p>
-        </form>
-        <div class="prose ad-preview" data-preview-out hidden></div>
-      </section>
-
-      <section class="ad-block">
-        <h2>任务</h2>
-        <p class="ad-note">
-          状态以这里为准，页面上实时生效，不用改 markdown 重新构建。
-          <code>src/data/tasks/*.md</code> 来的那些，正文、报酬、截止时间仍归 git——改完 push 即可；
-          站内新建的那些直接在这儿改。
-        </p>
-        <div data-tasks><p class="atw-empty">加载中…</p></div>
-      </section>
-
-      <section class="ad-block">
-        <h2>账号</h2>
-        <div data-users><p class="atw-empty">加载中…</p></div>
-      </section>
-
-      <section class="ad-block">
-        <h2>最近操作</h2>
-        <div data-logs><p class="atw-empty">加载中…</p></div>
-      </section>
-    </div>
-  </div>
-</BaseLayout>
+  <section class="ad-block">
+    <h2>最近的申请</h2>
+    <div data-recent><p class="atw-empty">加载中…</p></div>
+  </section>
+</AdminLayout>
 
 <script>
-  import {
-    api,
-    escapeHtml,
-    formatDate,
-    formatDateTime,
-    getToken,
-    loginUrl,
-    refreshUser,
-    url,
-    TASK_STATUS_LABEL,
-  } from '../../scripts/account-core.js';
-  import { renderMarkdown } from '../../scripts/mini-markdown.js';
+  import { escapeHtml, formatDate, url } from '../../scripts/account-core.js';
+  import { bootAdmin, loadOverview, say, taskHref } from '../../scripts/admin-core.js';
 
-  const gate = document.querySelector('[data-gate]');
-  const consoleView = document.querySelector('[data-console]');
-
-  function tell(selector, text, tone) {
-    const node = document.querySelector(selector);
-    if (!node) return;
-    node.textContent = text;
-    // 三种口吻：busy 进行中/ok 成功/error 出错——「保存中…」不该是红的
-    node.dataset.tone = text ? tone : '';
+  function renderStats({ tasks, pendingClaims }) {
+    const count = (status) => tasks.filter((t) => t.listed && t.status === status).length;
+    const stats = [
+      { n: pendingClaims.length, label: '待处理申请', href: 'admin/claims/', hot: pendingClaims.length > 0 },
+      { n: count('open'), label: '招募中', href: 'admin/tasks/' },
+      { n: count('taken'), label: '进行中', href: 'admin/tasks/' },
+      { n: count('done'), label: '完工待打款', href: 'admin/tasks/', hot: count('done') > 0 },
+    ];
+    document.querySelector('[data-stats]').innerHTML = stats
+      .map(
+        (s) => `<a class="ad-stat${s.hot ? ' is-hot' : ''}" href="${url(s.href)}">
+          <b>${s.n}</b><span>${s.label}</span>
+        </a>`,
+      )
+      .join('');
   }
 
-  const say = (text, tone = 'error') => tell('[data-global-msg]', text, tone);
-  const sayNew = (text, tone = 'error') => tell('[data-new-msg]', text, tone);
-
-  function renderPending(claims) {
-    document.querySelector('[data-pending-count]').textContent = claims.length ? `· ${claims.length}` : '';
-    const host = document.querySelector('[data-pending]');
-    if (!claims.length) {
+  function renderRecent({ pendingClaims, tasks }) {
+    const host = document.querySelector('[data-recent]');
+    if (!pendingClaims.length) {
       host.innerHTML = '<p class="atw-empty">没有待处理的申请。</p>';
       return;
     }
-    host.innerHTML = claims
+    const bySlug = Object.fromEntries(tasks.map((t) => [t.slug, t]));
+    host.innerHTML = `${pendingClaims
+      .slice(0, 5)
       .map(
-        (c) => `<article class="ad-claim" data-claim-id="${escapeHtml(c.id)}">
+        (c) => `<article class="ad-claim">
           <div class="ad-claim-head">
-            <a href="${url(`tasks/${c.taskSlug}/`)}">${escapeHtml(c.taskTitle || c.taskSlug)}</a>
+            <a href="${taskHref(bySlug[c.taskSlug] || { slug: c.taskSlug, source: 'md' })}">${escapeHtml(
+              c.taskTitle || c.taskSlug,
+            )}</a>
             <span class="ad-claim-date">${formatDate(c.createdAt)}</span>
           </div>
-          <p class="ad-claim-who"><b>${escapeHtml(c.user)}</b> @${escapeHtml(c.username)} · ${escapeHtml(
-            c.contact || '未填联系方式',
-          )}</p>
-          ${c.pitch ? `<p class="ad-claim-pitch">${escapeHtml(c.pitch)}</p>` : ''}
-          <div class="ad-claim-actions">
-            <input class="ad-inline-input" data-note placeholder="给对方的留言（可留空）" maxlength="500" />
-            <button class="atw-primary" type="button" data-accept>定给他</button>
-            <button class="atw-ghost" type="button" data-reject>不选</button>
-          </div>
+          <p class="ad-claim-who"><b>${escapeHtml(c.user)}</b> @${escapeHtml(c.username)}</p>
         </article>`,
       )
-      .join('');
-
-    host.querySelectorAll('[data-claim-id]').forEach((card) => {
-      const id = card.dataset.claimId;
-      const note = () => card.querySelector('[data-note]').value;
-      card.querySelector('[data-accept]').addEventListener('click', () => decide(id, 'accept', note()));
-      card.querySelector('[data-reject]').addEventListener('click', () => decide(id, 'reject', note()));
-    });
-  }
-
-  // md 任务书有各自的静态页；站内新建的走通用详情页，靠 ?slug= 认人
-  const taskHref = (t) =>
-    t.source === 'web'
-      ? url(`tasks/detail/?slug=${encodeURIComponent(t.slug)}`)
-      : url(`tasks/${t.slug}/`);
-
-  function renderTasks(tasks) {
-    const host = document.querySelector('[data-tasks]');
-    if (!tasks.length) {
-      host.innerHTML = '<p class="atw-empty">库里还没有任务，上面新建一份，或点右上角「同步任务清单」。</p>';
-      return;
-    }
-    host.innerHTML = tasks
-      .map((t) => {
-        const options = Object.entries(TASK_STATUS_LABEL)
-          .map(([value, label]) => `<option value="${value}"${value === t.status ? ' selected' : ''}>${label}</option>`)
-          .join('');
-        // 同样是「不在列表里」，md 那份是文件没了，站内这份是发布方主动下架的
-        const unlisted = t.listed ? '' : t.source === 'web' ? ' · 已下架' : ' · markdown 已删除';
-        const webRow =
-          t.source === 'web'
-            ? `<div class="ad-task-row">
-                <button class="atw-ghost" type="button" data-edit>编辑正文</button>
-                <button class="atw-ghost" type="button" data-toggle-listed>${t.listed ? '下架' : '重新上架'}</button>
-                <button class="atw-ghost" type="button" data-export>导出 md</button>
-              </div>
-              <div class="ad-task-edit" data-edit-box hidden></div>`
-            : '';
-        return `<article class="ad-task${t.listed ? '' : ' is-unlisted'}" data-slug="${escapeHtml(t.slug)}">
-          <div class="ad-task-head">
-            <a href="${taskHref(t)}">${escapeHtml(t.title || t.slug)}</a>
-            <span class="ad-task-meta">${t.source === 'web' ? '站内新建 · ' : ''}${escapeHtml(t.fee || '')}${
-              t.deadline ? ` · 截止 ${escapeHtml(t.deadline)}` : ''
-            }${unlisted}</span>
-          </div>
-          <div class="ad-task-row">
-            <select data-status>${options}</select>
-            <input class="ad-inline-input" data-taker value="${escapeHtml(t.taker || '')}" placeholder="承接人（无账号时手填）" maxlength="32" />
-            <input class="ad-inline-input" data-deliverable value="${escapeHtml(
-              t.deliverableUrl || '',
-            )}" placeholder="成稿链接" />
-            <input class="ad-inline-input" data-note placeholder="备注（写进流转记录）" maxlength="500" />
-            <button class="atw-ghost" type="button" data-save>保存</button>
-          </div>
-          ${webRow}
-          <p class="ad-task-stamp">
-            ${t.pendingClaims ? `${t.pendingClaims} 人在申请 · ` : ''}
-            ${t.claimedAt ? `定人 ${formatDate(t.claimedAt)} · ` : ''}
-            ${t.deliveredAt ? `交付 ${formatDate(t.deliveredAt)} · ` : ''}
-            ${t.paidAt ? `打款 ${formatDate(t.paidAt)}` : ''}
-          </p>
-        </article>`;
-      })
-      .join('');
-
-    host.querySelectorAll('[data-slug]').forEach((card) => {
-      const task = tasks.find((t) => t.slug === card.dataset.slug);
-      card.querySelector('[data-save]').addEventListener('click', async () => {
-        say('保存中…', 'busy');
-        try {
-          await api('PATCH', `/admin/tasks/${encodeURIComponent(card.dataset.slug)}`, {
-            status: card.querySelector('[data-status]').value,
-            takerName: card.querySelector('[data-taker]').value,
-            deliverableUrl: card.querySelector('[data-deliverable]').value,
-            note: card.querySelector('[data-note]').value,
-          });
-          say('已保存', 'ok');
-          await load();
-        } catch (error) {
-          say(error.message);
-        }
-      });
-      if (task.source !== 'web') return;
-      card.querySelector('[data-edit]').addEventListener('click', () => toggleEditor(card, task));
-      card.querySelector('[data-toggle-listed]').addEventListener('click', () =>
-        patchTask(task.slug, { listed: !task.listed }, task.listed ? '已下架' : '已重新上架'),
-      );
-      card.querySelector('[data-export]').addEventListener('click', () => exportMarkdown(task));
-    });
-  }
-
-  async function patchTask(slug, body, okText) {
-    say('保存中…', 'busy');
-    try {
-      await api('PATCH', `/admin/tasks/${encodeURIComponent(slug)}`, body);
-      say(okText, 'ok');
-      await load();
-    } catch (error) {
-      say(error.message);
-    }
-  }
-
-  // 编辑正文：正文有可能几千字，列表接口不带它，点开时才单独取一次
-  async function toggleEditor(card, task) {
-    const box = card.querySelector('[data-edit-box]');
-    if (!box.hidden) {
-      box.hidden = true;
-      box.innerHTML = '';
-      return;
-    }
-    box.hidden = false;
-    box.innerHTML = '<p class="atw-empty">读取正文…</p>';
-    let detail;
-    try {
-      detail = await api('GET', `/tasks/${encodeURIComponent(task.slug)}`);
-    } catch (error) {
-      box.innerHTML = `<p class="atw-empty">${escapeHtml(error.message)}</p>`;
-      return;
-    }
-    const t = detail.task;
-    box.innerHTML = `<form class="atw-form" data-edit-form>
-      <label><span>标题</span><input name="title" maxlength="80" required value="${escapeHtml(t.title)}" /></label>
-      <label><span>一句话摘要</span><textarea name="summary" rows="2" maxlength="200" required>${escapeHtml(
-        t.summary,
-      )}</textarea></label>
-      <div class="ad-new-row">
-        <label><span>报酬</span><input name="fee" maxlength="40" value="${escapeHtml(t.fee)}" /></label>
-        <label><span>截止日期</span><input name="deadline" type="date" value="${escapeHtml(t.deadline)}" /></label>
-        <label><span>发布日期</span><input name="publishedAt" type="date" value="${escapeHtml(
-          t.publishedAt,
-        )}" /></label>
-      </div>
-      <label><span>正文<i>markdown</i></span><textarea name="body" rows="16" maxlength="20000" required>${escapeHtml(
-        detail.body,
-      )}</textarea></label>
-      <div class="ad-new-actions">
-        <button class="atw-primary" type="submit">保存正文</button>
-        <button class="atw-ghost" type="button" data-cancel>收起</button>
-      </div>
-      <p class="atw-msg" data-edit-msg role="status"></p>
-    </form>`;
-
-    box.querySelector('[data-cancel]').addEventListener('click', () => {
-      box.hidden = true;
-      box.innerHTML = '';
-    });
-    box.querySelector('[data-edit-form]').addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const data = new FormData(event.target);
-      tell('[data-edit-msg]', '保存中…', 'busy');
-      try {
-        await api('PATCH', `/admin/tasks/${encodeURIComponent(task.slug)}`, {
-          title: data.get('title'),
-          summary: data.get('summary'),
-          fee: data.get('fee'),
-          deadline: data.get('deadline'),
-          publishedAt: data.get('publishedAt'),
-          body: data.get('body'),
-        });
-        say('正文已更新', 'ok');
-        await load();
-      } catch (error) {
-        tell('[data-edit-msg]', error.message, 'error');
-      }
-    });
-  }
-
-  // 导出成 src/data/tasks/ 里那种 md：站内发的任务想长期沉淀进 git 时走这条
-  async function exportMarkdown(task) {
-    say('导出中…', 'busy');
-    try {
-      const { task: t, body } = await api('GET', `/tasks/${encodeURIComponent(task.slug)}`);
-      // 双引号标量：JSON 的转义规则是 YAML 双引号形式的子集，直接借来用
-      const yaml = (value) => JSON.stringify(String(value ?? ''));
-      const front = [
-        '---',
-        `title: ${yaml(t.title)}`,
-        `summary: ${yaml(t.summary)}`,
-        `date: ${t.publishedAt}`,
-        ...(t.deadline ? [`deadline: ${t.deadline}`] : []),
-        ...(t.fee ? [`fee: ${yaml(t.fee)}`] : []),
-        `status: ${t.status}`,
-        ...(t.taker ? [`taker: ${yaml(t.taker)}`] : []),
-        '---',
-        '',
-        '',
-      ];
-      const blob = new Blob([`${front.join('\n')}${body.trim()}\n`], {
-        type: 'text/markdown;charset=utf-8',
-      });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `${t.publishedAt}-${t.slug}.md`;
-      link.click();
-      URL.revokeObjectURL(link.href);
-      say('已导出，放进 src/data/tasks/ 提交即可（同步后由 md 接管）', 'ok');
-    } catch (error) {
-      say(error.message);
-    }
-  }
-
-  function renderUsers(users) {
-    const host = document.querySelector('[data-users]');
-    host.innerHTML = users
-      .map(
-        (u) => `<article class="ad-user" data-user-id="${escapeHtml(u.id)}">
-          <div>
-            <p class="ad-user-name"><b>${escapeHtml(u.display_name)}</b> @${escapeHtml(u.username)}${
-              u.role === 'admin' ? ' · 发布方' : ''
-            }${u.status === 'suspended' ? ' · 已停用' : ''}</p>
-            <p class="ad-user-meta">${escapeHtml(u.email)}${
-              u.contact ? ` · ${escapeHtml(u.contact)}` : ''
-            }${u.payee ? ` · 收款 ${escapeHtml(u.payee)}` : ''}</p>
-          </div>
-          <div class="ad-user-actions">
-            <button class="atw-ghost" type="button" data-reset-link ${
-              u.status === 'active' ? '' : 'disabled'
-            }>重置链接</button>
-            <button class="atw-ghost" type="button" data-toggle-role>${
-              u.role === 'admin' ? '降为成员' : '设为发布方'
-            }</button>
-            <button class="atw-ghost" type="button" data-toggle-status>${
-              u.status === 'active' ? '停用' : '恢复'
-            }</button>
-          </div>
-          <p class="ad-reset-out" data-reset-out hidden></p>
-        </article>`,
-      )
-      .join('');
-
-    host.querySelectorAll('[data-user-id]').forEach((card) => {
-      const user = users.find((u) => u.id === card.dataset.userId);
-      card.querySelector('[data-toggle-role]').addEventListener('click', () =>
-        patchUser(user.id, { role: user.role === 'admin' ? 'member' : 'admin', status: user.status }),
-      );
-      card.querySelector('[data-toggle-status]').addEventListener('click', () =>
-        patchUser(user.id, { role: user.role, status: user.status === 'active' ? 'suspended' : 'active' }),
-      );
-      // 人工兜底：邮箱收不到信、或者压根没配发信通道时，生成一次性链接自己发给对方
-      card.querySelector('[data-reset-link]').addEventListener('click', async (event) => {
-        const out = card.querySelector('[data-reset-out]');
-        event.target.disabled = true;
-        out.hidden = false;
-        out.textContent = '生成中…';
-        try {
-          const { url: link, expiresAt } = await api('POST', `/admin/users/${user.id}/reset-link`);
-          out.innerHTML = `<code>${escapeHtml(link)}</code>
-            <span class="ad-reset-hint">${formatDateTime(expiresAt)} 前有效，只能用一次，发给本人就行。</span>`;
-          // 生成完立刻选中，方便一把复制走
-          const range = document.createRange();
-          range.selectNodeContents(out.querySelector('code'));
-          const selection = window.getSelection();
-          selection.removeAllRanges();
-          selection.addRange(range);
-        } catch (error) {
-          out.textContent = error.message;
-        } finally {
-          event.target.disabled = false;
-        }
-      });
-    });
-  }
-
-  function renderLogs(logs) {
-    const host = document.querySelector('[data-logs]');
-    host.innerHTML = logs.length
-      ? `<ul class="ad-logs">${logs
-          .slice(0, 40)
-          .map(
-            (l) => `<li>
-              <span>${formatDate(l.created_at)}</span>
-              <span>${escapeHtml(l.actor_name || '—')}</span>
-              <span>${escapeHtml(l.action)}</span>
-              <span>${escapeHtml(l.target_id || '')}</span>
-            </li>`,
-          )
-          .join('')}</ul>`
-      : '<p class="atw-empty">还没有操作记录。</p>';
-  }
-
-  async function decide(claimId, action, note) {
-    say('处理中…', 'busy');
-    try {
-      await api('POST', `/admin/claims/${encodeURIComponent(claimId)}/${action}`, { note });
-      say(action === 'accept' ? '已定人' : '已标记落选', 'ok');
-      await load();
-    } catch (error) {
-      say(error.message);
-    }
-  }
-
-  async function patchUser(id, body) {
-    say('更新中…', 'busy');
-    try {
-      await api('PATCH', `/admin/users/${encodeURIComponent(id)}`, body);
-      say('已更新', 'ok');
-      await load();
-    } catch (error) {
-      say(error.message);
-    }
-  }
-
-  // 站内新建任务书 ----------------------------------------------------------
-
-  // 模板照着 src/data/tasks/ 里那几份的骨架来：发任务时最容易漏的就是账号开销、
-  // 对标参考和打款说明，先摆在这儿，删比想起来容易。
-  const TASK_TEMPLATE = `## 零、一句话总结
-
-（做什么、什么时候交、多少钱，一句话说完）
-
-## 一、任务类型与交付标准
-
-本任务属**工具评测类教程**。正文结构、标题命名、分享权限等格式要求，一律以站内规范为准：
-
-- [教程类任务规范 →](../spec/)
-
-## 二、具体要求
-
-01
-
-02
-
-## 三、账号与开销
-
-制作本教程所需的会员 / 账号由发布方提供，全程零自付开销。
-
-## 四、时间要求
-
-**成品最晚交付时间（DDL）：**
-
-## 五、对标参考
-
-- **标杆范例（请务必先读）：**
-
-## 六、交付流程
-
-1. 完整教程文档
-2. 对应的原图 / 配图文件
-3. 按规范上传至钉钉总知识库
-
-分享文档链接前，务必把权限打开到「互联网上获得链接的人可阅读」。
-
-## 七、付款说明
-
-**薪酬：** （税前）
-
-**转账方式：** 由跳蛛直接微信转账
-
-**税：** 5%（固定）
-
-**打款时间：** 每月 15 号左右集中打款
-`;
-
-  const newForm = document.querySelector('[data-new-task]');
-  const previewOut = document.querySelector('[data-preview-out]');
-
-  // 发布日期按浏览器所在时区取，服务器在香港但发布方不一定
-  function today() {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
-      now.getDate(),
-    ).padStart(2, '0')}`;
-  }
-
-  newForm.querySelector('[name="publishedAt"]').value = today();
-
-  newForm.querySelector('[data-template]').addEventListener('click', () => {
-    const body = newForm.querySelector('[name="body"]');
-    if (body.value.trim()) {
-      sayNew('正文里已经写了东西，先清空再填模板');
-      return;
-    }
-    body.value = TASK_TEMPLATE;
-    sayNew('模板填好了，按小节改就行', 'ok');
-  });
-
-  newForm.querySelector('[data-preview]').addEventListener('click', () => {
-    if (!previewOut.hidden) {
-      previewOut.hidden = true;
-      return;
-    }
-    previewOut.innerHTML = renderMarkdown(newForm.querySelector('[name="body"]').value);
-    previewOut.hidden = false;
-  });
-
-  newForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const data = new FormData(newForm);
-    sayNew('发布中…', 'busy');
-    try {
-      const { task } = await api('POST', '/admin/tasks', {
-        title: data.get('title'),
-        summary: data.get('summary'),
-        fee: data.get('fee'),
-        deadline: data.get('deadline'),
-        publishedAt: data.get('publishedAt'),
-        slug: data.get('slug'),
-        body: data.get('body'),
-      });
-      newForm.reset();
-      newForm.querySelector('[name="publishedAt"]').value = today();
-      previewOut.hidden = true;
-      sayNew(`已发布：${task.title}（链接后缀 ${task.slug}），列表页刷新即可看到`, 'ok');
-      await load();
-    } catch (error) {
-      sayNew(error.message);
-    }
-  });
-
-  document.querySelector('[data-sync]').addEventListener('click', async () => {
-    say('同步中…', 'busy');
-    try {
-      const { sync } = await api('POST', '/admin/tasks/sync');
-      say(
-        `同步完成：新增 ${sync.created}、刷新 ${sync.updated}、下架 ${sync.delisted}` +
-          (sync.adopted ? `，其中 ${sync.adopted} 份改由 md 接管` : ''),
-        'ok',
-      );
-      await load();
-    } catch (error) {
-      say(error.message);
-    }
-  });
-
-  async function load() {
-    const [overview, users, logs] = await Promise.all([
-      api('GET', '/admin/overview'),
-      api('GET', '/admin/users'),
-      api('GET', '/admin/audit-logs').catch(() => ({ logs: [] })),
-    ]);
-    renderPending(overview.pendingClaims);
-    renderTasks(overview.tasks);
-    renderUsers(users.users);
-    renderLogs(logs.logs);
+      .join('')}<p class="ad-note">去<a href="${url('admin/claims/')}">待处理申请</a>里定人。</p>`;
   }
 
   async function boot() {
-    if (!getToken()) {
-      gate.innerHTML = `这页要用发布方账号登录。<a href="${escapeHtml(
-        loginUrl(location.pathname),
-      )}">去登录 →</a>`;
-      return;
-    }
-    const user = await refreshUser();
-    if (!user) {
-      gate.innerHTML = `登录已过期。<a href="${escapeHtml(
-        loginUrl(location.pathname),
-      )}">重新登录 →</a>`;
-      return;
-    }
-    if (user.role !== 'admin') {
-      gate.innerHTML = `这页只对发布方开放。你的认领记录在<a href="${url(
-        'account/',
-      )}">个人中心</a>；要换个账号进来，去<a href="${escapeHtml(
-        loginUrl(location.pathname, { add: true }),
-      )}">登录页</a>。`;
-      return;
-    }
-    gate.hidden = true;
-    consoleView.hidden = false;
+    if (!(await bootAdmin())) return;
     try {
-      await load();
+      const overview = await loadOverview();
+      renderStats(overview);
+      renderRecent(overview);
     } catch (error) {
       say(error.message);
     }
@@ -611,25 +73,3 @@ const base = import.meta.env.BASE_URL;
 
   boot();
 </script>
-
-<style>
-  .admin-page { max-width: 56rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
-  .ad-head {
-    display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; justify-content: space-between;
-    border-bottom: 2px solid var(--ink); padding-bottom: 1.2rem; margin-bottom: 1.6rem;
-  }
-  .ad-kicker {
-    margin: 0 0 .3rem; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--accent);
-  }
-  .ad-head h1 { font-family: var(--serif); font-size: 2rem; margin: 0; }
-  .ad-head-actions { display: flex; gap: .5rem; }
-  .ad-gate { color: var(--ink-soft); font-size: .9rem; }
-  .ad-block { margin: 2.6rem 0 0; }
-  .ad-block h2 {
-    font-family: var(--serif); font-size: 1.15rem; margin: 0 0 .3rem;
-    padding-bottom: .4rem; border-bottom: 1px solid var(--line);
-  }
-  .ad-block h2 span { font-family: var(--sans); font-size: .8rem; color: var(--accent); }
-  .ad-note { margin: .5rem 0 1rem; font-size: .82rem; line-height: 1.7; color: var(--ink-soft); }
-  .ad-note code { font-size: .95em; background: var(--paper-3); padding: .1em .35em; border-radius: .25em; }
-</style>

@@ -47,6 +47,17 @@ function apply(cards, tasks) {
         label.textContent = (TASK_STATUS_LABEL[live.status] || live.status) + taker;
         label.className = `tc-status is-${live.status}`;
       }
+      // 报酬可能被调过（报销、加急费），构建时那个数只是初值
+      const meta = card.querySelector('.tc-meta');
+      if (meta && live.fee) {
+        let fee = card.querySelector('.tc-fee');
+        if (!fee) {
+          fee = document.createElement('span');
+          fee.className = 'tc-fee';
+          meta.prepend(fee);
+        }
+        fee.textContent = live.fee;
+      }
       const queue = card.querySelector('[data-queue]');
       if (queue) {
         // 招募中才提申请人数：定了人之后再显示就是多余信息

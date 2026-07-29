@@ -1,0 +1,158 @@
+---
+// 新建任务书：在站里直接发一份，不用改 markdown、不用等构建。
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="新建任务书" current="new">
+  <section class="ad-block">
+    <h2>新建任务书</h2>
+    <p class="ad-note">
+      填完提交就出现在任务书列表。正文按 markdown 写——<code>## 标题</code>、列表、
+      <code>&gt; 引用</code>、<code>**粗体**</code>、<code>[文字](链接)</code>、
+      <code>![图](图片链接)</code>都认。
+      想让它长期沉淀进 git，发完到「任务」板块点「导出 md」，把文件放进
+      <code>src/data/tasks/</code> 提交即可，下一轮同步 md 会自动接管这份任务（认领记录不丢）。
+    </p>
+    <form class="atw-form" data-new-task>
+      <label><span>标题</span><input name="title" maxlength="80" required /></label>
+      <label>
+        <span>一句话摘要<i>列表卡片上就显示这句</i></span>
+        <textarea name="summary" rows="2" maxlength="200" required></textarea>
+      </label>
+      <div class="ad-new-row">
+        <label><span>报酬<i>照写，如 150 元（税前）</i></span><input name="fee" maxlength="40" /></label>
+        <label><span>截止日期</span><input name="deadline" type="date" /></label>
+        <label><span>发布日期</span><input name="publishedAt" type="date" /></label>
+      </div>
+      <label>
+        <span>链接后缀<i>留空自动生成；小写字母、数字与连字符</i></span>
+        <input name="slug" maxlength="60" placeholder="ojo-review" />
+      </label>
+      <label><span>正文<i>markdown</i></span><textarea name="body" rows="14" maxlength="20000" required></textarea></label>
+      <div class="ad-new-actions">
+        <button class="atw-primary" type="submit">发布任务书</button>
+        <button class="atw-ghost" type="button" data-template>填入模板</button>
+        <button class="atw-ghost" type="button" data-preview>预览正文</button>
+      </div>
+      <p class="atw-msg" data-new-msg role="status"></p>
+    </form>
+    <div class="prose ad-preview" data-preview-out hidden></div>
+  </section>
+</AdminLayout>
+
+<script>
+  import { api, escapeHtml, url } from '../../../scripts/account-core.js';
+  import { renderMarkdown } from '../../../scripts/mini-markdown.js';
+  import { bootAdmin, tell } from '../../../scripts/admin-core.js';
+
+  const sayNew = (text, tone = 'error') => tell('[data-new-msg]', text, tone);
+
+  // 模板照着 src/data/tasks/ 里那几份的骨架来：发任务时最容易漏的就是账号开销、
+  // 对标参考和打款说明，先摆在这儿，删比想起来容易。
+  const TASK_TEMPLATE = `## 零、一句话总结
+
+（做什么、什么时候交、多少钱，一句话说完）
+
+## 一、任务类型与交付标准
+
+本任务属**工具评测类教程**。正文结构、标题命名、分享权限等格式要求，一律以站内规范为准：
+
+- [教程类任务规范 →](../spec/)
+
+## 二、具体要求
+
+01
+
+02
+
+## 三、账号与开销
+
+制作本教程所需的会员 / 账号由发布方提供，全程零自付开销。
+
+## 四、时间要求
+
+**成品最晚交付时间（DDL）：**
+
+## 五、对标参考
+
+- **标杆范例（请务必先读）：**
+
+## 六、交付流程
+
+1. 完整教程文档
+2. 对应的原图 / 配图文件
+3. 按规范上传至钉钉总知识库
+
+分享文档链接前，务必把权限打开到「互联网上获得链接的人可阅读」。
+
+## 七、付款说明
+
+**薪酬：** （税前）
+
+**转账方式：** 由跳蛛直接微信转账
+
+**税：** 5%（固定）
+
+**打款时间：** 每月 15 号左右集中打款
+`;
+
+  const form = document.querySelector('[data-new-task]');
+  const previewOut = document.querySelector('[data-preview-out]');
+
+  // 发布日期按浏览器所在时区取，服务器在香港但发布方不一定
+  function today() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
+      now.getDate(),
+    ).padStart(2, '0')}`;
+  }
+
+  form.querySelector('[name="publishedAt"]').value = today();
+
+  form.querySelector('[data-template]').addEventListener('click', () => {
+    const body = form.querySelector('[name="body"]');
+    if (body.value.trim()) {
+      sayNew('正文里已经写了东西，先清空再填模板');
+      return;
+    }
+    body.value = TASK_TEMPLATE;
+    sayNew('模板填好了，按小节改就行', 'ok');
+  });
+
+  form.querySelector('[data-preview]').addEventListener('click', () => {
+    if (!previewOut.hidden) {
+      previewOut.hidden = true;
+      return;
+    }
+    previewOut.innerHTML = renderMarkdown(form.querySelector('[name="body"]').value);
+    previewOut.hidden = false;
+  });
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    sayNew('发布中…', 'busy');
+    try {
+      const { task } = await api('POST', '/admin/tasks', {
+        title: data.get('title'),
+        summary: data.get('summary'),
+        fee: data.get('fee'),
+        deadline: data.get('deadline'),
+        publishedAt: data.get('publishedAt'),
+        slug: data.get('slug'),
+        body: data.get('body'),
+      });
+      form.reset();
+      form.querySelector('[name="publishedAt"]').value = today();
+      previewOut.hidden = true;
+      const link = url(`tasks/detail/?slug=${encodeURIComponent(task.slug)}`);
+      document.querySelector('[data-new-msg]').innerHTML =
+        `已发布：${escapeHtml(task.title)} · <a href="${escapeHtml(link)}">去看看 →</a>`;
+      document.querySelector('[data-new-msg]').dataset.tone = 'ok';
+    } catch (error) {
+      sayNew(error.message);
+    }
+  });
+
+  bootAdmin();
+</script>

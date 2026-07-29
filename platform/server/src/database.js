@@ -90,6 +90,10 @@ CREATE TABLE IF NOT EXISTS tasks (
   source TEXT NOT NULL DEFAULT 'md' CHECK (source IN ('md', 'web')),
   -- 只有 source='web' 用得上：markdown 正文。md 任务书的正文归静态页面，这里留空。
   body TEXT NOT NULL DEFAULT '',
+  -- 报酬调整：定了人之后临时加钱（报销会员费、加急费）是常事，改 md 既慢又会被同步覆盖。
+  -- 这两个字段属于运行时状态，同步一律不碰；空串表示没调过，按 fee 结。
+  fee_override TEXT NOT NULL DEFAULT '',
+  fee_note TEXT NOT NULL DEFAULT '',
   seed_status TEXT NOT NULL DEFAULT 'open',
   seed_taker TEXT NOT NULL DEFAULT '',
   status TEXT NOT NULL DEFAULT 'open'
@@ -169,6 +173,10 @@ function migrate(db) {
   }
   if (!columns.has("body")) {
     db.exec("ALTER TABLE tasks ADD COLUMN body TEXT NOT NULL DEFAULT ''");
+  }
+  if (!columns.has("fee_override")) {
+    db.exec("ALTER TABLE tasks ADD COLUMN fee_override TEXT NOT NULL DEFAULT ''");
+    db.exec("ALTER TABLE tasks ADD COLUMN fee_note TEXT NOT NULL DEFAULT ''");
   }
 }
 
@@ -604,7 +612,9 @@ export function createDatabase(config) {
     listClaimsByUser(userId) {
       return db
         .prepare(
-          `SELECT c.*, t.title AS task_title, t.status AS task_status, t.fee AS task_fee,
+          `SELECT c.*, t.title AS task_title, t.status AS task_status,
+                  -- 调过价就按调整后的报酬显示，「我的认领」里看到的必须是真要结的那个数
+                  COALESCE(NULLIF(t.fee_override, ''), t.fee) AS task_fee,
                   t.deadline AS task_deadline
            FROM claims c JOIN tasks t ON t.slug = c.task_slug
            WHERE c.user_id = ? ORDER BY c.created_at DESC`,

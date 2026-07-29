@@ -475,6 +475,56 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .atw-claim-meta, .atw-claim-note { margin: 0; font-size: .82rem; color: var(--ink-soft); }
 .atw-claim-note { margin-top: .3rem; }
 
+/* 管理台的页面骨架。拆成多页之后由 layouts/AdminLayout.astro 渲染，
+   板块内容是各页 slot 进来的——组件的 scoped 样式管不到 slot，所以这一段也得全局。 */
+.admin-page { max-width: 56rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+.ad-head {
+  display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; justify-content: space-between;
+  border-bottom: 2px solid var(--ink); padding-bottom: 1.2rem; margin-bottom: 1rem;
+}
+.ad-kicker {
+  margin: 0 0 .3rem; font-size: .7rem; letter-spacing: .22em; text-transform: uppercase; color: var(--accent);
+}
+.ad-head h1 { font-family: var(--serif); font-size: 2rem; margin: 0; }
+.ad-head-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+/* 板块导航：分页之后这是主要的走动方式，做成一排细标签，当前页描粗 */
+.ad-nav {
+  display: flex; flex-wrap: wrap; gap: .3rem .5rem; margin: 0 0 1.6rem;
+  font-family: var(--sans); font-size: .84rem;
+}
+.ad-nav a {
+  padding: .3rem .8rem; border-radius: 999px; color: var(--ink-soft);
+  border: 1px solid transparent;
+}
+.ad-nav a:hover { color: var(--ink); background: var(--paper-2); text-decoration: none; }
+.ad-nav a[aria-current="page"] {
+  color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: var(--accent-soft);
+}
+.ad-gate { color: var(--ink-soft); font-size: .9rem; }
+.ad-block { margin: 2.6rem 0 0; }
+.ad-block:first-child { margin-top: 1.4rem; }
+.ad-block h2 {
+  font-family: var(--serif); font-size: 1.15rem; margin: 0 0 .3rem;
+  padding-bottom: .4rem; border-bottom: 1px solid var(--line);
+}
+.ad-block h2 span { font-family: var(--sans); font-size: .8rem; color: var(--accent); }
+.ad-note { margin: .5rem 0 1rem; font-size: .82rem; line-height: 1.7; color: var(--ink-soft); }
+.ad-note code { font-size: .95em; background: var(--paper-3); padding: .1em .35em; border-radius: .25em; }
+
+/* 概览页的数字卡：一眼看出哪儿堆着事 */
+.ad-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .8rem; margin: 1.4rem 0 0; }
+.ad-stat {
+  padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2);
+}
+.ad-stat b {
+  display: block; font-family: var(--serif); font-size: 1.9rem; line-height: 1.1;
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.ad-stat span { font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); }
+.ad-stat.is-hot b, .ad-stat.is-hot span { color: var(--accent); }
+.ad-stat:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); text-decoration: none; }
+
 /* 管理台：卡片与行内编辑控件（同样由 JS 注入，必须全局） */
 .ad-claim, .ad-task, .ad-user {
   padding: 1rem 1.1rem; margin: 0 0 .8rem;
@@ -506,9 +556,18 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .ad-new-row { display: flex; flex-wrap: wrap; gap: 1rem; }
 .ad-new-row label { flex: 1 1 10rem; }
 .ad-new-actions { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
-.ad-task-edit {
+.ad-task-edit, .ad-fee-box {
   margin-top: .9rem; padding-top: .9rem; border-top: 1px dashed var(--line);
 }
+/* 调整报酬：改的是钱，当前值、改成多少、为什么，三样都要摆在眼前 */
+.ad-fee-now { margin: 0 0 .8rem; font-size: .86rem; color: var(--ink-soft); }
+.ad-fee-now b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.ad-fee-now span { font-size: .78rem; }
+.ad-fee-preview {
+  margin: .2rem 0 0; font-family: var(--sans); font-size: .88rem; color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.ad-fee-preview[data-tone="error"] { color: #d0342c; }
 /* 正文预览：借 .prose 的排印，但它是整页宽度的版心，这里要收回卡片里 */
 .ad-preview {
   max-width: none; margin: 1rem 0 0; padding: 1rem 1.3rem 1.4rem;

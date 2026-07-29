@@ -1,0 +1,108 @@
+---
+// 账号：改角色、停用/恢复、生成一次性重置链接。
+import AdminLayout from '../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="账号" current="users">
+  <section class="ad-block">
+    <h2>账号 <span data-user-count></span></h2>
+    <p class="ad-note">
+      「重置链接」是人工兜底：邮箱收不到信、或者压根没配发信通道时，生成一条一次性链接自己发给本人。
+    </p>
+    <div data-users><p class="atw-empty">加载中…</p></div>
+  </section>
+</AdminLayout>
+
+<script>
+  import { api, escapeHtml, formatDateTime } from '../../scripts/account-core.js';
+  import { bootAdmin, say } from '../../scripts/admin-core.js';
+
+  function renderUsers(users) {
+    document.querySelector('[data-user-count]').textContent = users.length ? `· ${users.length}` : '';
+    const host = document.querySelector('[data-users]');
+    host.innerHTML = users
+      .map(
+        (u) => `<article class="ad-user" data-user-id="${escapeHtml(u.id)}">
+          <div>
+            <p class="ad-user-name"><b>${escapeHtml(u.display_name)}</b> @${escapeHtml(u.username)}${
+              u.role === 'admin' ? ' · 发布方' : ''
+            }${u.status === 'suspended' ? ' · 已停用' : ''}</p>
+            <p class="ad-user-meta">${escapeHtml(u.email)}${
+              u.contact ? ` · ${escapeHtml(u.contact)}` : ''
+            }${u.payee ? ` · 收款 ${escapeHtml(u.payee)}` : ''}</p>
+          </div>
+          <div class="ad-user-actions">
+            <button class="atw-ghost" type="button" data-reset-link ${
+              u.status === 'active' ? '' : 'disabled'
+            }>重置链接</button>
+            <button class="atw-ghost" type="button" data-toggle-role>${
+              u.role === 'admin' ? '降为成员' : '设为发布方'
+            }</button>
+            <button class="atw-ghost" type="button" data-toggle-status>${
+              u.status === 'active' ? '停用' : '恢复'
+            }</button>
+          </div>
+          <p class="ad-reset-out" data-reset-out hidden></p>
+        </article>`,
+      )
+      .join('');
+
+    host.querySelectorAll('[data-user-id]').forEach((card) => {
+      const user = users.find((u) => u.id === card.dataset.userId);
+      card.querySelector('[data-toggle-role]').addEventListener('click', () =>
+        patchUser(user.id, { role: user.role === 'admin' ? 'member' : 'admin', status: user.status }),
+      );
+      card.querySelector('[data-toggle-status]').addEventListener('click', () =>
+        patchUser(user.id, { role: user.role, status: user.status === 'active' ? 'suspended' : 'active' }),
+      );
+      card.querySelector('[data-reset-link]').addEventListener('click', async (event) => {
+        const out = card.querySelector('[data-reset-out]');
+        event.target.disabled = true;
+        out.hidden = false;
+        out.textContent = '生成中…';
+        try {
+          const { url: link, expiresAt } = await api('POST', `/admin/users/${user.id}/reset-link`);
+          out.innerHTML = `<code>${escapeHtml(link)}</code>
+            <span class="ad-reset-hint">${formatDateTime(expiresAt)} 前有效，只能用一次，发给本人就行。</span>`;
+          // 生成完立刻选中，方便一把复制走
+          const range = document.createRange();
+          range.selectNodeContents(out.querySelector('code'));
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } catch (error) {
+          out.textContent = error.message;
+        } finally {
+          event.target.disabled = false;
+        }
+      });
+    });
+  }
+
+  async function patchUser(id, body) {
+    say('更新中…', 'busy');
+    try {
+      await api('PATCH', `/admin/users/${encodeURIComponent(id)}`, body);
+      say('已更新', 'ok');
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  async function load() {
+    const { users } = await api('GET', '/admin/users');
+    renderUsers(users);
+  }
+
+  async function boot() {
+    if (!(await bootAdmin())) return;
+    try {
+      await load();
+    } catch (error) {
+      say(error.message);
+    }
+  }
+
+  boot();
+</script>
