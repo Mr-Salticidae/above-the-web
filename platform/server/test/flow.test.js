@@ -249,6 +249,147 @@ test("再次同步清单不会覆盖运行时状态", async () => {
   assert.equal(admin.payload.tasks.find((t) => t.slug === "demo-open").fee, "500 元");
 });
 
+// ---------- 站内新建任务书 ----------
+
+let webSlug = "";
+
+test("站内新建：发布方在管理台发任务，不经 md 也不等构建", async () => {
+  const denied = await call("POST", "/api/admin/tasks", {
+    token: memberToken,
+    body: { title: "普通成员发的任务", summary: "不该成功", body: "正文" },
+  });
+  assert.equal(denied.status, 403);
+
+  const missing = await call("POST", "/api/admin/tasks", {
+    token: adminToken,
+    body: { title: "缺正文", summary: "只有摘要" },
+  });
+  assert.equal(missing.status, 422);
+  assert.equal(missing.payload.error, "FIELD_REQUIRED");
+
+  const created = await call("POST", "/api/admin/tasks", {
+    token: adminToken,
+    body: {
+      title: "站内新建的评测任务",
+      summary: "在管理台直接写出来的任务书",
+      fee: "200 元（税前）",
+      deadline: "2026-08-20",
+      publishedAt: "2026-07-29",
+      body: "## 一、要求\n\n照着规范写。",
+    },
+  });
+  assert.equal(created.status, 201);
+  assert.equal(created.payload.task.status, "open");
+  assert.equal(created.payload.task.source, "web");
+  webSlug = created.payload.task.slug;
+  // 中文标题推不出 ascii slug，退回 task-日期
+  assert.match(webSlug, /^task-20260729/);
+
+  // 公开列表里立刻就有，正文类字段一并带出来，前端好拼卡片
+  const listed = await call("GET", "/api/tasks");
+  const card = listed.payload.tasks.find((t) => t.slug === webSlug);
+  assert.equal(card.title, "站内新建的评测任务");
+  assert.equal(card.fee, "200 元（税前）");
+  assert.equal(card.deadline, "2026-08-20");
+
+  const detail = await call("GET", `/api/tasks/${webSlug}`);
+  assert.equal(detail.payload.body, "## 一、要求\n\n照着规范写。");
+  assert.equal(detail.payload.events[0].to, "open"); // 新建那一刻就记了一条
+});
+
+test("站内新建的任务书能被认领，走的还是同一条流转", async () => {
+  const claim = await call("POST", `/api/tasks/${webSlug}/claim`, {
+    token: memberToken,
+    body: { pitch: "我来做这个", contact: "微信 spider-demo" },
+  });
+  assert.equal(claim.status, 201);
+  assert.equal(claim.payload.claim.status, "pending");
+});
+
+test("改正文只对站内新建的开放；md 那份挡在门外", async () => {
+  const edited = await call("PATCH", `/api/admin/tasks/${webSlug}`, {
+    token: adminToken,
+    body: { title: "站内新建的评测任务（改过标题）", fee: "260 元（税前）" },
+  });
+  assert.equal(edited.status, 200);
+  assert.equal(edited.payload.task.title, "站内新建的评测任务（改过标题）");
+
+  const fromMarkdown = await call("PATCH", "/api/admin/tasks/demo-open", {
+    token: adminToken,
+    body: { title: "想在管理台改 md 的标题" },
+  });
+  assert.equal(fromMarkdown.status, 409);
+  assert.equal(fromMarkdown.payload.error, "TASK_FROM_MARKDOWN");
+
+  const badDate = await call("PATCH", `/api/admin/tasks/${webSlug}`, {
+    token: adminToken,
+    body: { deadline: "8月20日" },
+  });
+  assert.equal(badDate.status, 422);
+});
+
+test("下架：列表和详情都收走，管理台还看得到", async () => {
+  const off = await call("PATCH", `/api/admin/tasks/${webSlug}`, {
+    token: adminToken,
+    body: { listed: false },
+  });
+  assert.equal(off.status, 200);
+
+  const listed = await call("GET", "/api/tasks");
+  assert.equal(listed.payload.tasks.some((t) => t.slug === webSlug), false);
+  assert.equal((await call("GET", `/api/tasks/${webSlug}`)).status, 404);
+  // 发布方自己还能看——下架后总得能再看一眼
+  assert.equal((await call("GET", `/api/tasks/${webSlug}`, { token: adminToken })).status, 200);
+
+  const admin = await call("GET", "/api/admin/overview", { token: adminToken });
+  assert.equal(admin.payload.tasks.find((t) => t.slug === webSlug).listed, false);
+
+  await call("PATCH", `/api/admin/tasks/${webSlug}`, { token: adminToken, body: { listed: true } });
+});
+
+test("同步不碰站内新建的任务，md 补上同名任务书后由 md 接管", async () => {
+  const before = taskSync.runOnce();
+  assert.equal(before.delisted, 0); // 清单里没有它，但它不是 md 来的，不该被下架
+  const stillThere = await call("GET", "/api/tasks");
+  assert.ok(stillThere.payload.tasks.some((t) => t.slug === webSlug));
+
+  // 把这份任务书补进 git（管理台导出 md → 提交），下一次同步 md 就该接管正文
+  fs.writeFileSync(
+    manifestPath,
+    JSON.stringify({
+      tasks: [
+        {
+          slug: "demo-open",
+          title: "示例任务（标题改过了）",
+          summary: "用来跑测试的任务书",
+          date: "2026-07-01",
+          fee: "500 元",
+          status: "closed",
+        },
+        {
+          slug: webSlug,
+          title: "站内新建的评测任务（md 版）",
+          summary: "已经提进 git 的那份",
+          date: "2026-07-29",
+          fee: "260 元（税前）",
+          status: "open",
+        },
+      ],
+    }),
+  );
+  const after = taskSync.runOnce();
+  assert.equal(after.adopted, 1);
+
+  const detail = await call("GET", `/api/tasks/${webSlug}`);
+  assert.equal(detail.payload.task.source, "md");
+  assert.equal(detail.payload.task.title, "站内新建的评测任务（md 版）");
+  assert.equal(detail.payload.body, ""); // 正文让位给静态页面
+
+  // 换了来源，认领记录一条都不能丢
+  const claims = await call("GET", `/api/admin/tasks/${webSlug}/claims`, { token: adminToken });
+  assert.equal(claims.payload.claims.length, 1);
+});
+
 // ---------- 多会话：切换账号与退出登录 ----------
 
 let switcherA = "";

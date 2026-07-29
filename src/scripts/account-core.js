@@ -323,6 +323,16 @@ export function formatDate(value) {
   ).padStart(2, '0')}`;
 }
 
+// YYYY-MM-DD 的展示形态，和构建期 lib/news.mjs 的 formatDate 保持一致——
+// 站内新建的任务卡片是 JS 拼的，落在 md 卡片旁边，日期不能长两个样
+export function formatDayLabel(text) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(text || ''));
+  if (!match) return String(text || '');
+  const [y, m, d] = match.slice(1).map(Number);
+  const week = '日一二三四五六'[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+  return `${y} 年 ${m} 月 ${d} 日 · 周${week}`;
+}
+
 export function formatDateTime(value) {
   if (!value) return '';
   const date = new Date(Number(value));

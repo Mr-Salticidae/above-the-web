@@ -1,4 +1,5 @@
 import http from "node:http";
+import { randomUUID } from "node:crypto";
 import { createDatabase, TASK_STATUSES, ROLES } from "./database.js";
 import { createTaskSync } from "./task-sync.js";
 import { createMailer, passwordResetMail } from "./mailer.js";
@@ -109,6 +110,58 @@ function validateRegistration(body) {
   return { username, displayName, email, password };
 }
 
+// 任务书的正文类字段。站内新建时全走这里，长度上限对着页面排版定，
+// 不是安全边界（安全边界是 JSON_LIMIT_BYTES），是「写超了页面就难看了」的提醒。
+const TASK_FIELD_LIMITS = { title: 80, summary: 200, fee: 40, body: 20000 };
+
+function taskText(value, field, { required = false } = {}) {
+  const text = clean(value);
+  if (!text && required) {
+    throw new HttpError(422, "FIELD_REQUIRED", `请填写${
+      { title: "标题", summary: "一句话摘要", body: "任务书正文" }[field] || field
+    }`);
+  }
+  if (text.length > TASK_FIELD_LIMITS[field]) {
+    throw new HttpError(422, "FIELD_TOO_LONG", `这一项最长 ${TASK_FIELD_LIMITS[field]} 个字符`);
+  }
+  return text;
+}
+
+function dateText(value, { fallback = "" } = {}) {
+  const text = clean(value);
+  if (!text) return fallback;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(text) || Number.isNaN(Date.parse(text))) {
+    throw new HttpError(422, "INVALID_DATE", "日期格式为 YYYY-MM-DD");
+  }
+  return text;
+}
+
+// 这几个 slug 是任务书板块自己的页面，被任务占了会撞路由
+const RESERVED_SLUGS = new Set(["index", "spec", "detail", "new", "api"]);
+
+function normalizeSlug(value) {
+  return clean(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, "-")
+    .replace(/-{2,}/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 60);
+}
+
+// 没填链接后缀就从标题推一个。中文标题推不出 ascii，退回 task-日期-随机四位——
+// 链接不好看总比让发布方为了发个任务先起英文名强。
+function deriveSlug(database, { slug, title, publishedAt }) {
+  const wanted = normalizeSlug(slug) || normalizeSlug(title);
+  const base = wanted || `task-${publishedAt.replace(/-/g, "")}`;
+  const taken = (candidate) => RESERVED_SLUGS.has(candidate) || database.taskExists(candidate);
+  if (!taken(base)) return base;
+  for (let n = 2; n <= 9; n += 1) {
+    const candidate = `${base}-${n}`;
+    if (!taken(candidate)) return candidate;
+  }
+  return `${base}-${randomUUID().slice(0, 4)}`;
+}
+
 function httpsUrl(value, { allowEmpty = false } = {}) {
   const url = clean(value);
   if (!url) {
@@ -122,9 +175,17 @@ function httpsUrl(value, { allowEmpty = false } = {}) {
 }
 
 // 对外可见的任务状态。联系方式、申请者名单这类信息一律不进这个视图。
+// 标题、报酬这些正文类字段也带上：md 任务书的静态页面上本来就印着，
+// 而站内新建的任务书整张卡片都要靠它们在前端拼出来。
 function publicTask(row) {
   return {
     slug: row.slug,
+    source: row.source || "md",
+    title: row.title || "",
+    summary: row.summary || "",
+    fee: row.fee || "",
+    deadline: row.deadline || "",
+    publishedAt: row.published_at || "",
     status: row.status,
     taker: row.taker_display_name || row.taker_name || "",
     takerUserId: row.taker_user_id || null,
@@ -558,8 +619,15 @@ export function createApplication(config, log = console, deps = {}) {
         const slug = decodeURIComponent(taskMatch[1]);
         const task = taskOrThrow(slug);
         const viewer = optionalAuth(request);
+        // 下架的站内任务书连页面也一并收走（md 那份的正文在静态站上，藏不住也不用藏）。
+        // 发布方例外——下架后还要能自己看一眼再决定上不上。
+        if (task.source === "web" && !task.listed && viewer?.role !== "admin") {
+          throw new HttpError(404, "TASK_NOT_FOUND", "任务不存在");
+        }
         reply(200, {
           task: publicTask(task),
+          // 站内新建的任务书正文在库里，页面要靠它渲染；md 那份归静态页面，这里给空串
+          body: task.source === "web" ? task.body : "",
           events: database.listTaskEvents(slug).map((e) => ({
             id: e.id,
             from: e.from_status,
@@ -682,10 +750,6 @@ export function createApplication(config, log = console, deps = {}) {
         reply(200, {
           tasks: database.listTasks({ includeUnlisted: true }).map((t) => ({
             ...publicTask(t),
-            title: t.title,
-            fee: t.fee,
-            deadline: t.deadline,
-            publishedAt: t.published_at,
             seedStatus: t.seed_status,
             note: t.note,
           })),
@@ -774,6 +838,50 @@ export function createApplication(config, log = console, deps = {}) {
         return;
       }
 
+      // 站内新建任务书。发布方在管理台写完就生效——不用改 markdown，也不用等一轮构建。
+      // 正文存库，详情页走 /tasks/detail/?slug=。想让它长期沉淀进 git，
+      // 在管理台导出成 md 提交即可，下一次同步 md 会自动接管这份任务。
+      if (route === "POST /api/admin/tasks") {
+        const { user: admin } = requireAdmin(request);
+        const body = await readJson(request);
+        const title = taskText(body.title, "title", { required: true });
+        const summary = taskText(body.summary, "summary", { required: true });
+        const content = taskText(body.body, "body", { required: true });
+        const fee = taskText(body.fee, "fee");
+        // 发布日期由前端按本地时区送来，漏送才退回服务器当天
+        const publishedAt = dateText(body.publishedAt, {
+          fallback: new Date().toISOString().slice(0, 10),
+        });
+        const deadline = dateText(body.deadline);
+        const slug = deriveSlug(database, { slug: body.slug, title, publishedAt });
+
+        const task = database.createWebTask({
+          slug,
+          title,
+          summary,
+          fee,
+          deadline,
+          publishedAt,
+          body: content,
+        });
+        database.createTaskEvent({
+          taskSlug: slug,
+          actorUserId: admin.id,
+          fromStatus: null,
+          toStatus: "open",
+          note: "在站内发布",
+        });
+        database.createAuditLog({
+          actorUserId: admin.id,
+          action: "task.create",
+          targetType: "task",
+          targetId: slug,
+          details: { title },
+        });
+        reply(201, { task: publicTask(task) });
+        return;
+      }
+
       const adminTaskMatch = url.pathname.match(/^\/api\/admin\/tasks\/([^/]+)$/);
       if (request.method === "PATCH" && adminTaskMatch) {
         const { user: admin } = requireAdmin(request);
@@ -792,6 +900,31 @@ export function createApplication(config, log = console, deps = {}) {
           extra.deliverable_url = httpsUrl(body.deliverableUrl, { allowEmpty: true });
         }
         if (body.note !== undefined) extra.note = note;
+
+        // 正文类字段只有站内新建的任务书能在这儿改。md 那份的真相源是 git——
+        // 在管理台改了也会被下一次同步覆盖回去，与其埋这个坑不如当场说清楚。
+        const CONTENT_KEYS = ["title", "summary", "fee", "deadline", "publishedAt", "body", "listed"];
+        if (CONTENT_KEYS.some((key) => body[key] !== undefined)) {
+          if (task.source !== "web") {
+            throw new HttpError(
+              409,
+              "TASK_FROM_MARKDOWN",
+              "这份任务书的正文归 src/data/tasks/*.md 管，改完 push 就生效",
+            );
+          }
+          if (body.title !== undefined) extra.title = taskText(body.title, "title", { required: true });
+          if (body.summary !== undefined) {
+            extra.summary = taskText(body.summary, "summary", { required: true });
+          }
+          if (body.body !== undefined) extra.body = taskText(body.body, "body", { required: true });
+          if (body.fee !== undefined) extra.fee = taskText(body.fee, "fee");
+          if (body.deadline !== undefined) extra.deadline = dateText(body.deadline);
+          if (body.publishedAt !== undefined) {
+            extra.published_at = dateText(body.publishedAt, { fallback: task.published_at });
+          }
+          // 下架：页面不再展示，但认领与打款记录都还在，随时能再上架
+          if (body.listed !== undefined) extra.listed = body.listed ? 1 : 0;
+        }
 
         let updated;
         if (body.status !== undefined && body.status !== task.status) {

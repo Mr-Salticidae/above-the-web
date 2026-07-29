@@ -271,62 +271,8 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
   .es-sub { margin: 0; max-width: 30rem; font-size: .9rem; line-height: 1.75; color: var(--ink-soft); }
   .es-link { margin-top: .5rem; font-family: var(--sans); font-size: .88rem; font-weight: 600; color: var(--accent); }
 
-  .task-card {
-    display: block; padding: 1.4rem 1.6rem 1.5rem; color: var(--ink);
-    border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2);
-    transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, border-color .2s ease;
-  }
-  .task-card:hover {
-    transform: translateY(-3px); text-decoration: none;
-    box-shadow: 0 16px 40px -16px rgba(var(--shadow), .5);
-    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
-  }
-  .tc-top { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .55rem; }
-  .tc-status {
-    font-family: var(--sans); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
-    border-radius: 999px; padding: .18em .7em; white-space: nowrap;
-    color: var(--ink-soft); border: 1px solid var(--line);
-  }
-  .tc-status.is-open { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: var(--accent-soft); }
-  .tc-status.is-taken { background: var(--paper-3); text-transform: none; }
-  .tc-status.is-done { text-transform: none; }
-  .tc-date { font-family: var(--sans); font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-  .task-card h2 { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; margin: 0 0 .4rem; }
-  .tc-summary { margin: 0 0 .9rem; font-size: .92rem; line-height: 1.8; color: var(--ink-soft); }
-  .tc-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.2rem; }
-  .tc-fee { font-family: var(--sans); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
-  .tc-deadline { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-  .tc-queue { font-family: var(--sans); font-size: .78rem; color: var(--ink-soft); }
-  .tc-cta { margin-left: auto; font-size: .84rem; font-weight: 600; color: var(--accent); }
-
-  /* 进行中：已被接取、正在做的任务，卡片体但比招募中收敛（中性色、不抢眼） */
-  .task-card.is-taken { background: var(--paper); }
-  .task-card.is-taken:hover { border-color: color-mix(in srgb, var(--ink) 22%, var(--line)); }
-  .task-card.is-taken .tc-cta { color: var(--ink-soft); }
-
-  /* 已收官：同一份卡片 DOM 压成细线目录体（与快讯归档同构），
-     这样卡片在分组之间搬运时不需要重建结构，只是换了个容器。 */
+  /* 已收官分组把卡片压成细线目录体，容器这一句留在页面里；
+     卡片本体（.task-card / .tc-*，含归档态）在 global.css——
+     站内新建的任务卡片由 tasks-live.js 运行时拼出来，作用域化的样式套不上它。 */
   .archive .group-list { gap: 0; }
-  .archive .task-card {
-    display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: baseline;
-    padding: .95rem .4rem; border: 0; border-bottom: 1px solid var(--line);
-    border-radius: 10px; background: transparent; transition: background .15s ease;
-  }
-  .archive .task-card:hover { transform: none; box-shadow: none; background: var(--accent-soft); }
-  .archive .task-card:last-child { border-bottom: 0; }
-  .archive .tc-top, .archive .tc-meta { display: contents; }
-  .archive .tc-summary, .archive .tc-date, .archive .tc-deadline,
-  .archive .tc-queue, .archive .tc-cta { display: none; }
-  .archive .tc-status {
-    border: 0; background: transparent; padding: 0; letter-spacing: .1em;
-    font-size: .72rem; color: var(--ink-soft);
-  }
-  .archive .task-card h2 {
-    font-size: .98rem; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .archive .tc-fee { font-size: .78rem; font-weight: 400; color: var(--ink-soft); white-space: nowrap; }
-  @media (max-width: 640px) {
-    .archive .task-card { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .15rem .8rem; }
-    .archive .task-card h2 { grid-column: 1 / -1; white-space: normal; }
-  }
 </style>

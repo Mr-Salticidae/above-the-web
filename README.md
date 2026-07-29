@@ -35,9 +35,10 @@ npm run dev        # 自动 sync 内容后启动 dev server
 读站不需要账号——快讯、笔记、Prompt 大师、玩具一律不拦。**只有认领任务书要登录**，
 因为那头连着报酬和打款，得能把人对上。
 
-任务书正文仍写在 `src/data/tasks/*.md`（push 即发布），但状态归数据库：认领、定人、
-交付、打款在站内点，页面实时生效，不用改 markdown 重新构建。服务代码、状态机、
-部署与运维都在 [platform/README.md](platform/README.md)。
+任务书可以写在 `src/data/tasks/*.md`（push 即发布），也可以在管理台「新建任务书」里直接发——
+后者正文存数据库、页面走 `/tasks/detail/?slug=`，随时能导出成 md 提进 git 交还给静态站。
+状态一律归数据库：认领、定人、交付、打款在站内点，页面实时生效，不用重新构建。
+服务代码、状态机、两种任务书的分工、部署与运维都在 [platform/README.md](platform/README.md)。
 
 登录（`/account/login/`）与注册（`/account/register/`）各自成页，`/account/` 是登录后的个人中心。
 顶栏账号菜单里可以切换账号、退出登录——本机能同时留几个账号，切换不用重输密码；

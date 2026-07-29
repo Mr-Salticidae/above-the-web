@@ -12,6 +12,8 @@ import { hashPassword } from "./security.js";
 export const TASK_STATUSES = ["open", "taken", "done", "closed"];
 export const CLAIM_STATUSES = ["pending", "accepted", "rejected", "withdrawn"];
 export const ROLES = ["admin", "member"];
+// 任务书从哪来：md = git 里的 markdown（构建期渲染成静态页），web = 发布方在站内新建（正文存库）
+export const TASK_SOURCES = ["md", "web"];
 
 const SCHEMA = `
 PRAGMA journal_mode = WAL;
@@ -75,6 +77,9 @@ CREATE INDEX IF NOT EXISTS audit_logs_created_idx ON audit_logs (created_at DESC
 
 -- 任务：正文和固定元数据来自 git 里的 markdown（每次同步覆盖 seed_ 字段），
 -- 状态与流转归数据库。两个源头各管各的，谁也不覆盖谁。
+--
+-- 例外是站内新建的任务书（source='web'）：发布方在管理台直接写，正文也存在库里，
+-- 不进 git、不参与构建。同步一律绕开这类行，否则清单里没有它就会被当成「md 删了」下架。
 CREATE TABLE IF NOT EXISTS tasks (
   slug TEXT PRIMARY KEY,
   title TEXT NOT NULL DEFAULT '',
@@ -82,6 +87,9 @@ CREATE TABLE IF NOT EXISTS tasks (
   fee TEXT NOT NULL DEFAULT '',
   deadline TEXT NOT NULL DEFAULT '',
   published_at TEXT NOT NULL DEFAULT '',
+  source TEXT NOT NULL DEFAULT 'md' CHECK (source IN ('md', 'web')),
+  -- 只有 source='web' 用得上：markdown 正文。md 任务书的正文归静态页面，这里留空。
+  body TEXT NOT NULL DEFAULT '',
   seed_status TEXT NOT NULL DEFAULT 'open',
   seed_taker TEXT NOT NULL DEFAULT '',
   status TEXT NOT NULL DEFAULT 'open'
@@ -152,10 +160,23 @@ const PUBLIC_USER_COLUMNS =
 // 对其他用户可见的部分：联系方式与收款信息不出现在任何公开列表里
 const SAFE_USER_COLUMNS = "id, username, display_name, role, status, bio, created_at";
 
+// CREATE TABLE IF NOT EXISTS 只管建新表，线上那份老库不会因此长出新列。
+// 加字段时在这里补一句 ALTER，重启即生效，不用停机导库。
+function migrate(db) {
+  const columns = new Set(db.prepare("PRAGMA table_info(tasks)").all().map((c) => c.name));
+  if (!columns.has("source")) {
+    db.exec("ALTER TABLE tasks ADD COLUMN source TEXT NOT NULL DEFAULT 'md'");
+  }
+  if (!columns.has("body")) {
+    db.exec("ALTER TABLE tasks ADD COLUMN body TEXT NOT NULL DEFAULT ''");
+  }
+}
+
 export function createDatabase(config) {
   fs.mkdirSync(path.dirname(config.dbPath), { recursive: true });
   const db = new DatabaseSync(config.dbPath);
   db.exec(SCHEMA);
+  migrate(db);
 
   const now = () => Date.now();
 
@@ -390,16 +411,20 @@ export function createDatabase(config) {
       const seen = new Set();
       let created = 0;
       let updated = 0;
+      let adopted = 0;
 
       const insert = db.prepare(
         `INSERT INTO tasks (slug, title, summary, fee, deadline, published_at,
                             seed_status, seed_taker, status, taker_name, deliverable_url,
-                            listed, created_at, updated_at, synced_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?)`,
+                            source, listed, created_at, updated_at, synced_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'md', 1, ?, ?, ?)`,
       );
+      // source='md' + body='' 是「md 接管」：站内新建的任务书一旦补进了 git，
+      // 正文以 md 为准，库里那份草稿退位（认领、打款这些运行时记录照旧不动）。
       const update = db.prepare(
         `UPDATE tasks SET title = ?, summary = ?, fee = ?, deadline = ?, published_at = ?,
-                          seed_status = ?, seed_taker = ?, listed = 1, synced_at = ?
+                          seed_status = ?, seed_taker = ?, source = 'md', body = '',
+                          listed = 1, synced_at = ?
          WHERE slug = ?`,
       );
 
@@ -407,7 +432,7 @@ export function createDatabase(config) {
         const slug = String(entry.slug || "").trim();
         if (!slug) continue;
         seen.add(slug);
-        const existing = db.prepare("SELECT slug FROM tasks WHERE slug = ?").get(slug);
+        const existing = db.prepare("SELECT slug, source FROM tasks WHERE slug = ?").get(slug);
         const title = String(entry.title || "");
         const summary = String(entry.summary || "");
         const fee = String(entry.fee || "");
@@ -419,6 +444,7 @@ export function createDatabase(config) {
         if (existing) {
           update.run(title, summary, fee, deadline, publishedAt, seedStatus, seedTaker, ts, slug);
           updated += 1;
+          if (existing.source === "web") adopted += 1;
         } else {
           insert.run(
             slug, title, summary, fee, deadline, publishedAt,
@@ -429,16 +455,37 @@ export function createDatabase(config) {
         }
       }
 
-      // md 里已经删掉的任务：下架但保留记录，认领与打款历史不能凭空消失
+      // md 里已经删掉的任务：下架但保留记录，认领与打款历史不能凭空消失。
+      // 站内新建的（source='web'）本来就不在清单里，一律不参与这一步。
       let delisted = 0;
       if (seen.size) {
         const placeholders = Array.from(seen, () => "?").join(",");
         const result = db
-          .prepare(`UPDATE tasks SET listed = 0 WHERE listed = 1 AND slug NOT IN (${placeholders})`)
+          .prepare(
+            `UPDATE tasks SET listed = 0
+             WHERE listed = 1 AND source = 'md' AND slug NOT IN (${placeholders})`,
+          )
           .run(...seen);
         delisted = result.changes;
       }
-      return { created, updated, delisted, total: seen.size };
+      return { created, updated, adopted, delisted, total: seen.size };
+    },
+
+    // 站内新建：发布方在管理台写完就生效，不进 git、不等构建。
+    // 状态一律从 open 起步——发任务的那一刻就是开始招募。
+    createWebTask({ slug, title, summary, fee, deadline, publishedAt, body }) {
+      const ts = now();
+      db.prepare(
+        `INSERT INTO tasks (slug, title, summary, fee, deadline, published_at,
+                            source, body, seed_status, seed_taker, status,
+                            listed, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, 'web', ?, 'open', '', 'open', 1, ?, ?)`,
+      ).run(slug, title, summary, fee, deadline, publishedAt, body, ts, ts);
+      return api.findTask(slug);
+    },
+
+    taskExists(slug) {
+      return Boolean(db.prepare("SELECT 1 AS ok FROM tasks WHERE slug = ?").get(slug));
     },
 
     listTasks({ includeUnlisted = false } = {}) {

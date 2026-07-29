@@ -1,0 +1,47 @@
+---
+// 站内新建的任务书详情页。
+//
+// md 任务书各有一张构建期渲染的静态页（/tasks/<slug>/）；发布方在管理台直接写的那种
+// 构建时并不存在，于是留这一页当通用容器：?slug= 指到哪份就读哪份，正文、状态、
+// 认领面板全在运行时装配。头部的几个空壳节点是有意留在模板里的——
+// Astro 的 scoped 样式只认服务端渲染出来的元素，JS 新建的节点套不上。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<BaseLayout title="任务书" description="站内发布的合作任务" noindex>
+  <article class="prose task-prose" data-task-detail data-dynamic data-slug="" hidden>
+    <p class="crumb"><a href={`${base}/tasks/`}>任务书</a> / <span data-crumb-status></span></p>
+    <h1 data-task-title></h1>
+    <div class="task-meta">
+      <span class="tm-status" data-status-label></span>
+      <span class="tm-item" data-meta-fee hidden>报酬 <b></b></span>
+      <span class="tm-item" data-meta-deadline hidden>截止 <b></b></span>
+      <span class="tm-item" data-meta-published hidden>发布 <b></b></span>
+    </div>
+    <div data-task-body></div>
+
+    <section class="claim-panel" data-claim-panel hidden></section>
+    <section class="timeline" data-timeline hidden></section>
+
+    <p class="back"><a href={`${base}/tasks/`}>← 返回全部任务书</a></p>
+  </article>
+
+  <div class="task-stub" data-task-stub>
+    <p data-stub-text>正在读取任务书…</p>
+    <p><a href={`${base}/tasks/`}>← 返回全部任务书</a></p>
+  </div>
+</BaseLayout>
+
+<script>
+  import { hydrateTaskDetail } from '../../scripts/task-detail.js';
+  hydrateTaskDetail();
+</script>
+
+<style>
+  .task-stub {
+    max-width: var(--max); margin: 0 auto; padding: 4rem 1.5rem 6rem;
+    font-family: var(--sans); font-size: .92rem; color: var(--ink-soft);
+  }
+  .task-stub p { margin: 0 0 .8rem; }
+</style>

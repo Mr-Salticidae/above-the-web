@@ -1,10 +1,13 @@
 // 任务详情页：状态注水 + 认领 / 交付面板 + 时间线。
-// 页面正文（要求、对标素材、报酬说明）仍是构建期渲染的 markdown，这里只接管
-// 「这份任务现在到哪一步了、我能做什么」这部分。
+//
+// md 任务书（/tasks/<slug>/）的正文是构建期渲染好的，这里只接管「这份任务现在到哪一步了、
+// 我能做什么」。站内新建的任务书（/tasks/detail/?slug=）构建时还不存在，页面是个空壳，
+// 标题、报酬、正文也一并在这里装配——data-dynamic 就是这两种页面的分岔口。
 import {
   api,
   escapeHtml,
   formatDate,
+  formatDayLabel,
   getCachedUser,
   getToken,
   loginUrl,
@@ -13,6 +16,7 @@ import {
   TASK_STATUS_LABEL,
   url,
 } from './account-core.js';
+import { renderMarkdown } from './mini-markdown.js';
 
 const STATUS_CLASS = { open: 'is-open', taken: 'is-taken', done: 'is-done', closed: 'is-closed' };
 
@@ -23,9 +27,23 @@ function html(strings, ...values) {
 export async function hydrateTaskDetail() {
   const root = document.querySelector('[data-task-detail]');
   if (!root) return;
-  const slug = root.dataset.slug;
+  const dynamic = root.hasAttribute('data-dynamic');
+  const slug = dynamic
+    ? String(new URLSearchParams(location.search).get('slug') || '')
+    : root.dataset.slug;
   const panel = root.querySelector('[data-claim-panel]');
   const timeline = root.querySelector('[data-timeline]');
+  const stub = document.querySelector('[data-stub-text]');
+
+  // 空壳页面没读到任务就只剩这一句话，得说清楚是哪种「没有」
+  function stop(text) {
+    if (stub) stub.textContent = text;
+  }
+
+  if (dynamic && !slug) {
+    stop('这个链接少了任务编号，从任务书列表进来吧。');
+    return;
+  }
 
   let user = getCachedUser();
   if (getToken()) user = (await refreshUser()) || user;
@@ -33,12 +51,45 @@ export async function hydrateTaskDetail() {
   let data;
   try {
     data = await api('GET', `/tasks/${encodeURIComponent(slug)}`);
-  } catch {
-    // 服务不可用：正文照读，只是没有实时状态和认领入口
+  } catch (error) {
+    // 静态页面的正文照读，只是没有实时状态和认领入口；空壳页面则整页无从渲染
+    if (dynamic) {
+      stop(
+        error.status === 404
+          ? '这份任务书不存在，或者已经被发布方下架了。'
+          : '暂时读不到这份任务书，稍后再试。',
+      );
+    }
     return;
   }
 
+  if (dynamic) renderHead(data);
   render(data);
+
+  // 空壳页面的一次性装配：标题、报酬、正文。之后的状态刷新走 render()，两种页面一个走法。
+  function renderHead({ task, body }) {
+    document.title = task.title ? `${task.title} · 蛛网之上` : document.title;
+    const title = root.querySelector('[data-task-title]');
+    if (title) title.textContent = task.title || '任务书';
+
+    const fill = (selector, text) => {
+      const node = root.querySelector(selector);
+      if (!node) return;
+      node.hidden = !text;
+      const slot = node.querySelector('b');
+      if (slot) slot.textContent = text;
+    };
+    fill('[data-meta-fee]', task.fee);
+    fill('[data-meta-deadline]', formatDayLabel(task.deadline));
+    fill('[data-meta-published]', formatDayLabel(task.publishedAt));
+
+    const article = root.querySelector('[data-task-body]');
+    if (article) article.innerHTML = renderMarkdown(body);
+
+    root.hidden = false;
+    const shell = document.querySelector('[data-task-stub]');
+    if (shell) shell.hidden = true;
+  }
 
   function render({ task, events, deliveries, myClaim }) {
     // 状态标签
@@ -123,7 +174,8 @@ export async function hydrateTaskDetail() {
 
     // 招募中：未登录先去登录，登录后按申请状态给不同的动作
     if (!user) {
-      const next = location.pathname;
+      // 带上 query：站内新建的任务书全靠 ?slug= 认人，登录回来才不会落到空页面
+      const next = location.pathname + location.search;
       panel.innerHTML = html`
         <h2 class="cp-title">认领这份任务</h2>
         <p class="cp-note">认领需要登录——任务连着报酬和打款，得能把人对上。读站不需要账号。</p>

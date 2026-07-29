@@ -325,6 +325,92 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .atw-msg[data-tone="ok"] { color: var(--accent); }
 .atw-empty { color: var(--ink-soft); font-size: .88rem; }
 
+/* 任务书列表的卡片。站内新建的任务书构建时并不存在，卡片由 tasks-live.js 运行时拼出来，
+   和 md 的卡片并排落在同一个分组里——所以这一段不能作用域化，否则新卡片一身白。
+   分组容器（.group / .group-list / 空状态）仍归 tasks/index.astro。 */
+.task-card {
+  display: block; padding: 1.4rem 1.6rem 1.5rem; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2);
+  transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, border-color .2s ease;
+}
+.task-card:hover {
+  transform: translateY(-3px); text-decoration: none;
+  box-shadow: 0 16px 40px -16px rgba(var(--shadow), .5);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+}
+.tc-top { display: flex; align-items: baseline; gap: .8rem; margin-bottom: .55rem; }
+.tc-status {
+  font-family: var(--sans); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase;
+  border-radius: 999px; padding: .18em .7em; white-space: nowrap;
+  color: var(--ink-soft); border: 1px solid var(--line);
+}
+.tc-status.is-open {
+  color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: var(--accent-soft);
+}
+.tc-status.is-taken { background: var(--paper-3); text-transform: none; }
+.tc-status.is-done { text-transform: none; }
+.tc-date { font-family: var(--sans); font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.task-card h2 { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; margin: 0 0 .4rem; }
+.tc-summary { margin: 0 0 .9rem; font-size: .92rem; line-height: 1.8; color: var(--ink-soft); }
+.tc-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.2rem; }
+.tc-fee { font-family: var(--sans); font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; }
+.tc-deadline { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.tc-queue { font-family: var(--sans); font-size: .78rem; color: var(--ink-soft); }
+.tc-cta { margin-left: auto; font-size: .84rem; font-weight: 600; color: var(--accent); }
+
+/* 进行中：已被接取、正在做的任务，卡片体但比招募中收敛（中性色、不抢眼） */
+.task-card.is-taken { background: var(--paper); }
+.task-card.is-taken:hover { border-color: color-mix(in srgb, var(--ink) 22%, var(--line)); }
+.task-card.is-taken .tc-cta { color: var(--ink-soft); }
+
+/* 已收官：同一份卡片 DOM 压成细线目录体（与快讯归档同构），
+   这样卡片在分组之间搬运时不需要重建结构，只是换了个容器。 */
+.archive .task-card {
+  display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: baseline;
+  padding: .95rem .4rem; border: 0; border-bottom: 1px solid var(--line);
+  border-radius: 10px; background: transparent; transition: background .15s ease;
+}
+.archive .task-card:hover { transform: none; box-shadow: none; background: var(--accent-soft); }
+.archive .task-card:last-child { border-bottom: 0; }
+.archive .tc-top, .archive .tc-meta { display: contents; }
+.archive .tc-summary, .archive .tc-date, .archive .tc-deadline,
+.archive .tc-queue, .archive .tc-cta { display: none; }
+.archive .tc-status {
+  border: 0; background: transparent; padding: 0; letter-spacing: .1em;
+  font-size: .72rem; color: var(--ink-soft);
+}
+.archive .task-card h2 {
+  font-size: .98rem; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.archive .tc-fee { font-size: .78rem; font-weight: 400; color: var(--ink-soft); white-space: nowrap; }
+@media (max-width: 640px) {
+  .archive .task-card { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .15rem .8rem; }
+  .archive .task-card h2 { grid-column: 1 / -1; white-space: normal; }
+}
+
+/* 任务详情页的头部。两张详情页共用：md 那份走 /tasks/<slug>/（构建期渲染），
+   站内新建的走 /tasks/detail/?slug=（运行时装配）——样式作用域化就只剩一张页面能用。 */
+.task-prose .crumb { font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); margin: 0 0 1rem; }
+.task-prose h1 { margin-top: 0; }
+.task-prose .task-meta {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem 1.4rem;
+  padding: .9rem 0 1.1rem; margin: 0 0 1.4rem; border-bottom: 2px solid var(--ink);
+  font-family: var(--sans); font-size: .86rem; color: var(--ink-soft);
+}
+.task-prose .task-meta b { color: var(--ink); font-variant-numeric: tabular-nums; font-weight: 600; }
+.task-prose .tm-status {
+  font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+  border-radius: 999px; padding: .18em .7em; white-space: nowrap;
+  color: var(--ink-soft); border: 1px solid var(--line);
+}
+.task-prose .tm-status.is-open {
+  color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: var(--accent-soft);
+}
+.task-prose .tm-status.is-taken { text-transform: none; }
+.task-prose .back { margin-top: 3rem; font-family: var(--sans); font-size: .88rem; }
+
 /* 任务详情页的认领 / 交付面板 */
 .claim-panel {
   margin: 3rem 0 0; padding: 1.4rem 1.6rem 1.6rem;
@@ -415,6 +501,21 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .ad-task-row select { flex: 0 0 auto; min-width: 8.5rem; }
 .ad-task-stamp { margin: .6rem 0 0; font-size: .76rem; color: var(--ink-soft); }
+
+/* 新建 / 编辑任务书：一行摆得下的短字段并排，正文与预览各占整幅 */
+.ad-new-row { display: flex; flex-wrap: wrap; gap: 1rem; }
+.ad-new-row label { flex: 1 1 10rem; }
+.ad-new-actions { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.ad-task-edit {
+  margin-top: .9rem; padding-top: .9rem; border-top: 1px dashed var(--line);
+}
+/* 正文预览：借 .prose 的排印，但它是整页宽度的版心，这里要收回卡片里 */
+.ad-preview {
+  max-width: none; margin: 1rem 0 0; padding: 1rem 1.3rem 1.4rem;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2);
+}
+.ad-preview > :first-child { margin-top: 0; }
+.ad-preview h2 { font-size: 1.25rem; margin-top: 1.6em; }
 .ad-user { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; justify-content: space-between; }
 /* 管理台生成的一次性重置链接：长，得能整段选中复制 */
 .ad-reset-out { flex-basis: 100%; margin: .2rem 0 0; font-size: .78rem; color: var(--ink-soft); }
