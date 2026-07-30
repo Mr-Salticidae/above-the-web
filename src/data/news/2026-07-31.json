@@ -1,0 +1,86 @@
+{
+  "date": "2026-07-31",
+  "headline": "谷歌发布 Lyria 3.5 音乐模型，GPT-5.6 大幅降价引发价格战",
+  "items": [
+    {
+      "title": "Google 发布 Lyria 3.5 音乐模型",
+      "summary": "Google DeepMind 在 Google Flow Music 中发布 Lyria 3.5，提升了音乐性、歌词和人声表现，并提供更多创意控制能力。这是最新的音乐生成模型迭代，进一步降低了高质量音乐创作的门槛。",
+      "category": "模型",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/were-launching-lyria-35-in-google-flow-music-with-advances-across-musicality-lyrics-vocals-and-creative-control",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 大幅降低 GPT-5.6 Luna 和 Terra 价格",
+      "summary": "OpenAI 宣布 GPT-5.6 Luna 降价 80%、Terra 降价 20%。公司表示其顶级模型 Sol 帮助提高了基础设施效率，但来自廉价中国提供商和微软自有 MAI 模型的价格压力也可能是原因之一。API 成本进一步下降。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/advancing-the-price-performance-frontier-with-gpt-5-6",
+      "featured": true
+    },
+    {
+      "title": "OpenAI GPT-5.6 降价 80%",
+      "summary": "OpenAI 将 GPT-5.6 Luna 价格下调 80%，Terra 下调 20%。OpenAI 称是其旗舰模型 Sol 提高了自身基础设施效率从而实现了降价。但分析师认为，来自中国低价提供商及微软自家 MAI 模型的压力也是重要因素。竞争态势进一步加剧。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-goes-full-china-pricing-mode-with-an-80-percent-cut-to-its-most-affordable-gpt-5-6-model",
+      "featured": false
+    },
+    {
+      "title": "Microsoft AI 押注小型专用模型",
+      "summary": "Microsoft AI 首席执行官 Mustafa Suleyman 表示，公司正转向小型专用模型而非昂贵的通用模型。其 MAI-Cyber-1-Flash 模型在特定基准测试中表现优异且成本仅为竞品的一半。竞争正从单一模型转向编排软件层面的较量。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/microsoft-ai-bets-on-cheap-specialist-models-instead-of-chasing-the-frontier",
+      "featured": false
+    },
+    {
+      "title": "研究称大模型存在根本性安全缺陷",
+      "summary": "在 ICML 会议上发表的一篇论文指出，由于大语言模型工作原理的根本缺陷，完全防御黑客攻击是不可能的。这一发现对 AI 技术的安全性具有重大影响，表明仅靠模型层面的安全改进无法解决所有问题。",
+      "category": "研究",
+      "source": "MIT Technology Review",
+      "url": "https://www.technologyreview.com/2026/07/30/1140927/a-fundamental-flaw-leaves-llms-vulnerable-to-attack",
+      "featured": false
+    },
+    {
+      "title": "MCP 新规范解决企业采用障碍",
+      "summary": "Model Context Protocol (MCP) 发布新规范，旨在解决阻碍企业采用的主要障碍，并引入政策确保功能不会被突然移除。该协议有助于 AI 代理与外部工具和数据的标准化连接，对企业级 AI 应用具有重要意义。",
+      "category": "工具",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/07/with-a-stateless-makeover-new-mcp-spec-targets-enterprise-scale",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 声称 GPT-5.6 Sol 在 ARC-AGI-3 上超越 Opus 5",
+      "summary": "OpenAI 称 GPT-5.6 Sol 在 ARC-AGI-3 上得分 38.3%，超过 Anthropic 的 Opus 5。但这一成绩依赖 OpenAI 自己的 API 功能而非官方测试环境，后者得分仅为 7.8%。ARC Prize 声称其测试环境是中立的，但可能使用了过时的 API。基准测试争议持续。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-claims-gpt-5-6-sol-beats-opus-5-on-arc-agi-3-with-its-latest-api-and-two-additional-settings",
+      "featured": false
+    },
+    {
+      "title": "设计师发布能'投毒'AI 的免费字体",
+      "summary": "Type designers 发布了一款名为 ShieldFont 的免费字体，包含六种字重，旨在污染未经授权的 AI 训练数据。这为创作者提供了一种抵抗 AI 爬取其风格的新工具，反映了 AI 与原创作者之间日益紧张的关系。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/design/fonts-typography/type-designers-have-created-a-free-font-that-poisons-ai",
+      "featured": false
+    },
+    {
+      "title": "LinkedIn 推出'疑似 AI 内容'举报按钮",
+      "summary": "LinkedIn 正在引入一个标记'疑似 AI slop'的举报选项，以应对平台上大量低质量 AI 生成内容。该平台还将把自身的 AI 写作功能替换为校对工具。这标志着平台开始重视 AI 生成内容泛滥的问题。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/973384/linkedin-seems-like-ai-slop-button",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 发现漏洞速度超过微软修复速度",
+      "summary": "Anthropic 的研究人员发现漏洞的速度超过了微软能够修补的速度，微软正在加紧修复黑客可能利用的漏洞。这表明 AI 安全研究正在推动传统软件安全的改进，但也暴露了安全防御的持续挑战。",
+      "category": "行业",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/security/2026/07/anthropic-is-finding-bugs-faster-than-microsoft-can-fix-them",
+      "featured": false
+    }
+  ]
+}
