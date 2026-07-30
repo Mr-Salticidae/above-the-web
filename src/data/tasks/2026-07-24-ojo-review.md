@@ -4,13 +4,29 @@ summary: 测评 AI 工具 OJO 并产出一篇「工具评测类」教程，按�
 date: 2026-07-24
 deadline: 2026-07-27
 fee: 150 元（税前）
-status: taken
+status: done
 taker: Jane
+deliverable: https://pcnokxio0sk9.feishu.cn/wiki/HiyIwa2nPiuMhGk69CLcgSq3nhd
+delivered: 2026-07-30
+exemplar: 评测类
+exemplar_note: 完整跑通 OJO 的核心能力，每一步都配图并在图上标出操作位置，总结落到具体结论——评测类三节体例执行得最规范的一篇。
 ---
 
 ## 零、一句话总结
 
 测评 AI 工具 **OJO**，产出一篇符合站内规范的「工具评测类」教程，成品最晚于下周一（7 月 27 日）早 9:30 前交付，费用 150 元（税前）。
+
+## 交付情况
+
+**状态：已完工交付。**
+
+- 承接人：Jane
+- 交付时间：2026 年 7 月 30 日
+- 成稿链接：[OJO 测评教程 →](https://pcnokxio0sk9.feishu.cn/wiki/HiyIwa2nPiuMhGk69CLcgSq3nhd)
+
+> **本篇已收录为教程类标杆范例**（评测类），一并列入[教程类任务规范](../spec/)的「AI 工具评测类教程」一节，后续评测类任务可对标此稿。
+
+以下为原任务书内容，存档备查。
 
 ## 一、任务类型与交付标准
 
