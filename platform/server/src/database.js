@@ -429,9 +429,14 @@ export function createDatabase(config) {
       );
       // source='md' + body='' 是「md 接管」：站内新建的任务书一旦补进了 git，
       // 正文以 md 为准，库里那份草稿退位（认领、打款这些运行时记录照旧不动）。
+      //
+      // deliverable_url 只在库里还空着时回填：库里那条可能是承接人提交的、
+      // 或发布方在管理台填的，都比 md 新，不能被覆盖；反过来 md 里补了成稿链接、
+      // 库里却没有（同步早于补链接）时，也不该让链接永远进不来。
       const update = db.prepare(
         `UPDATE tasks SET title = ?, summary = ?, fee = ?, deadline = ?, published_at = ?,
                           seed_status = ?, seed_taker = ?, source = 'md', body = '',
+                          deliverable_url = CASE WHEN deliverable_url = '' THEN ? ELSE deliverable_url END,
                           listed = 1, synced_at = ?
          WHERE slug = ?`,
       );
@@ -450,7 +455,10 @@ export function createDatabase(config) {
         const seedTaker = String(entry.taker || "");
 
         if (existing) {
-          update.run(title, summary, fee, deadline, publishedAt, seedStatus, seedTaker, ts, slug);
+          update.run(
+            title, summary, fee, deadline, publishedAt, seedStatus, seedTaker,
+            String(entry.deliverable || ""), ts, slug,
+          );
           updated += 1;
           if (existing.source === "web") adopted += 1;
         } else {

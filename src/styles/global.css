@@ -445,6 +445,17 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
   background: var(--accent-soft);
 }
 .task-prose .tm-status.is-taken { text-transform: none; }
+/* 成稿：任务收尾后最要紧的一条信息，摆在正文之前做成一行 callout。
+   两张详情页共用，所以样式留在全局——运行时新建的节点套不上 scoped 样式。 */
+.task-prose .task-deliverable {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .8rem;
+  margin: 0 0 1.6rem; padding: .7rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--line));
+  border-radius: 10px; background: var(--accent-soft);
+  font-family: var(--sans); font-size: .88rem;
+}
+.task-prose .task-deliverable b { color: var(--ink); font-weight: 600; }
+.task-prose .task-deliverable a { font-weight: 600; color: var(--accent); }
 .task-prose .back { margin-top: 3rem; font-family: var(--sans); font-size: .88rem; }
 
 /* 任务详情页的认领 / 交付面板 */

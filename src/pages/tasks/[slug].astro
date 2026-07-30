@@ -37,6 +37,12 @@ const statusLabel = isOpen
       <span class="tm-item">发布 <b>{formatDate(task.data.date)}</b></span>
     </div>
     <p class="fee-note" data-fee-note hidden></p>
+    {/* 成稿链接：md 里的 deliverable 只是初值，运行时以数据库为准——
+        承接人在站内提交的、或发布方在管理台填的那一条，见 task-detail.js */}
+    <p class="task-deliverable" data-deliverable hidden={!task.data.deliverable}>
+      <b>成稿</b>
+      <a data-deliverable-link href={task.data.deliverable ?? '#'} target="_blank" rel="noopener">读成稿 →</a>
+    </p>
     <Content />
 
     <section class="claim-panel" data-claim-panel hidden></section>

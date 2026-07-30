@@ -102,8 +102,20 @@ export async function hydrateTaskDetail() {
     if (crumb) crumb.textContent = TASK_STATUS_LABEL[task.status] || task.status;
 
     renderFee(task);
+    renderDeliverable(task);
     renderTimeline(events, deliveries, task);
     renderPanel(task, myClaim);
+  }
+
+  // 成稿链接以数据库为准：承接人在站内提交的，或发布方在管理台直接填的（历史任务、
+  // 线下交付的那批都走这条）。md 里的 deliverable 只是首次入库的初值——
+  // 库里为空就是「还没有成稿」，构建期渲染的那条也要收回去。
+  function renderDeliverable(task) {
+    const box = root.querySelector('[data-deliverable]');
+    if (!box) return;
+    const link = box.querySelector('[data-deliverable-link]');
+    box.hidden = !task.deliverableUrl;
+    if (link && task.deliverableUrl) link.href = task.deliverableUrl;
   }
 
   // 报酬以数据库为准：发布方可能在站内调过（报销会员费、加急费），

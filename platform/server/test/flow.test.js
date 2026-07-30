@@ -440,6 +440,58 @@ test("撤销调整：回到任务书里写的那个数", async () => {
   assert.equal(again.payload.events.length, detail.payload.events.length);
 });
 
+// ---------- 成稿链接 ----------
+
+test("成稿链接：库里没有就从 md 回填，已经有的不被覆盖", async () => {
+  // demo-open 的成稿是承接人在站内提交的（https://example.com/post/1），
+  // webSlug 那份库里还空着——md 里给两份都写上链接，只有后者该被填进去
+  fs.writeFileSync(
+    manifestPath,
+    JSON.stringify({
+      tasks: [
+        {
+          slug: "demo-open",
+          title: "示例任务（标题改过了）",
+          summary: "用来跑测试的任务书",
+          date: "2026-07-01",
+          fee: "500 元",
+          status: "closed",
+          deliverable: "https://example.com/md-version",
+        },
+        {
+          slug: webSlug,
+          title: "站内新建的评测任务（md 版）",
+          summary: "已经提进 git 的那份",
+          date: "2026-07-29",
+          fee: "260 元（税前）",
+          status: "open",
+          deliverable: "https://example.com/from-md",
+        },
+      ],
+    }),
+  );
+  taskSync.runOnce();
+
+  const submitted = await call("GET", "/api/tasks/demo-open");
+  assert.equal(submitted.payload.task.deliverableUrl, "https://example.com/post/1");
+
+  const backfilled = await call("GET", `/api/tasks/${webSlug}`);
+  assert.equal(backfilled.payload.task.deliverableUrl, "https://example.com/from-md");
+});
+
+test("成稿链接：发布方在管理台填的，同步之后也留着", async () => {
+  const set = await call("PATCH", `/api/admin/tasks/${webSlug}`, {
+    token: adminToken,
+    body: { deliverableUrl: "https://example.com/admin-filled" },
+  });
+  assert.equal(set.status, 200);
+  assert.equal(set.payload.task.deliverableUrl, "https://example.com/admin-filled");
+
+  taskSync.runOnce();
+  const after = await call("GET", `/api/tasks/${webSlug}`);
+  assert.equal(after.payload.task.deliverableUrl, "https://example.com/admin-filled");
+});
+
 // ---------- 多会话：切换账号与退出登录 ----------
 
 let switcherA = "";
