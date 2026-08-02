@@ -1,0 +1,70 @@
+{
+  "date": "2026-08-03",
+  "headline": "Claude Opus 5 实现 prompt-to-3D 游戏原型，AI agent 安全与版权争议升温",
+  "items": [
+    {
+      "title": "Claude Opus 5 可从单条 prompt 生成完整 3D 游戏",
+      "summary": "Anthropic 发布 Claude Opus 5 的 prompt-to-game 能力，仅需一条 prompt 即可生成含几何、纹理、物理甚至音乐的完整 3D 游戏，包括 FPS、卡丁车和类 Minecraft 项目，全部在浏览器中运行。与 GPT-5.6 Sol 和 Kimi K3 对比中细节表现显著领先。这意味着单人原型开发的门槛被进一步拉低。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-opus-5-pushes-prompt-to-game-ai-from-rough-color-blocks-to-full-3d-prototypes-with-physics-and-music",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 推出 Presence 让 AI agent 投入企业生产",
+      "summary": "OpenAI 发布企业级产品 Presence，面向客服和内部工作流，与现有 Workspace Agents 的区别在于支持对外部署，复杂场景由 OpenAI 自家工程师介入。对想用 AI agent 接单或跑自动化工作流的创作者而言，大厂开始提供可落地的托管方案。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-presence-wants-to-make-ai-agents-production-ready-for-businesses",
+      "featured": true
+    },
+    {
+      "title": "Sam Altman 呼吁行业主动控制 AI 发展速度",
+      "summary": "在最新一期 Equity 播客中，Sam Altman 敦促行业「控制 AI 开发节奏」。这是 OpenAI CEO 在监管压力和 agent 事故频发的背景下首次公开表态放缓立场。对创作者而言，放缓意味着短期工具升级节奏可能趋稳，但合规要求会同步抬高。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/02/sam-altman-and-ais-decel-debate",
+      "featured": false
+    },
+    {
+      "title": "Meta AI 用记忆 agent 防止长任务跑偏",
+      "summary": "Meta AI 引入独立「记忆教练」agent 为主 agent 维护结构化记忆库，判断何时提醒、何时静默，在两个基准测试中分数最多提升 8.3 个百分点。这为需要长时间推理和多步生成的创作流程（如长视频脚本、复杂交互项目）提供了更稳定的执行方案。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/meta-ai-uses-a-second-ai-agent-as-a-memory-coach-to-keep-long-tasks-on-track",
+      "featured": false
+    },
+    {
+      "title": "AI 编码 agent 提速科研代码 60 倍但科学判断靠人",
+      "summary": "OpenAI 与学术机构的实测显示，编码 agent 能把遗留科研软件的现代化速度提升最高 60 倍，但系统「雄辩、令人信服，却容易自信地犯错」，科学正确性仍依赖人工核验。对创作者而言，AI 写的代码可以跑，但结果仍要自己把关。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-coding-agents-can-modernize-research-software-but-cant-judge-if-the-science-is-right",
+      "featured": false
+    },
+    {
+      "title": "安全研究员演示 Word 文档劫持 Copilot 的蠕虫攻击",
+      "summary": "一名安全研究员构建了藏在 Word 文档里的自我复制蠕虫，通过不可见 prompt injection 劫持 Microsoft Copilot 并扩散到新文件。微软确认问题存在，但在 144 天、两次修复尝试后仍未解决。创作者若用 Copilot 处理外部来文档，需警惕供应链式 prompt injection 风险。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/a-security-researcher-built-a-self-spreading-worm-that-hides-inside-word-docs-and-hijacks-microsoft-copilot",
+      "featured": false
+    },
+    {
+      "title": "xAI 阻止明尼苏达州「nudify」应用禁令被驳回",
+      "summary": "明尼苏达州针对可「脱衣」图像应用的禁令继续生效，法官驳回了 xAI 的封锁请求。此案标志着地方政府开始以立法方式限制生成式 AI 的滥用，图像生成创作者需注意合规边界和潜在的平台审核收紧。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/01/judge-denies-xais-request-to-block-minnesota-ban-on-nudify-apps",
+      "featured": false
+    },
+    {
+      "title": "史上最大 AI 版权赔偿案创作者真能受益吗",
+      "summary": "一起金额高达 15 亿美元的 AI 版权和解案引发关注，但细则条款对个体创作者的保护并不如金额乍看之下那么乐观。对艺术家和提示词工程师而言，赔偿数字不等于实际分成，需关注后续分配机制和判例走向。",
+      "category": "政策",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/what-does-the-biggest-ai-copyright-payout-in-history-actually-change-for-creatives",
+      "featured": false
+    }
+  ]
+}
