@@ -91,8 +91,14 @@ markdown 里的 `status` / `taker` 只在任务第一次入库时当初值用。
 各家专有参数的口子，里面的东西原样并进请求体：
 
 ```bash
-ATW_AI_EXTRA_JSON={"enable_thinking":false}
+ATW_AI_EXTRA_JSON='{"enable_thinking":false}'
 ```
+
+**外面那层单引号不能省**（2026-08-03 踩过）：systemd 读 `EnvironmentFile` 只在
+「整个值被引号包住」时才剥引号，裸写 `{"a":false}` 它原样保留，看着完全正常；
+可本地开发按上面那样 `. ./.env` 时，POSIX shell 会把里面的双引号吃掉，
+变成 `{a:false}`，`JSON.parse` 失败后**静默退回 `{}`**——思考没关掉、正文写不完，
+而配置文件看上去一个字都没错。加单引号两种读法才一致。
 
 实测差别很直观：不关，一个三字段的小请求就烧掉 235 个 reasoning token；关掉之后
 reasoning 归零，951 token 写完整整八小节、1483 字的任务书正文。

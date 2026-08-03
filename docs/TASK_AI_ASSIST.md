@@ -105,7 +105,7 @@ ATW_AI_MODEL=qwen3.8-max
 ATW_AI_TIMEOUT_MS=90000
 ATW_AI_MAX_TOKENS=4096
 ATW_AI_HOURLY_LIMIT=30
-ATW_AI_EXTRA_JSON={"enable_thinking":false}
+ATW_AI_EXTRA_JSON='{"enable_thinking":false}'
 ```
 
 换供应商只改 `BASE_URL` / `MODEL`，前提是对方支持 `response_format.json_schema`——
@@ -129,6 +129,13 @@ ATW_AI_EXTRA_JSON={"enable_thinking":false}
 
 真被截断时（`finish_reason=length`）现在回的是「这次写太长了没写完，把话说短一点再试，
 或者手填」，日志里带上 usage 方便排查。
+
+**那层单引号不能省。** systemd 读 `EnvironmentFile` 只在「整个值被引号包住」时才剥引号，
+裸写 `{"enable_thinking":false}` 它原样保留、看着完全正常；可本地开发 `. ./.env` 时，
+POSIX shell 会把里面的双引号吃掉，变成 `{enable_thinking:false}`，`JSON.parse` 失败后
+**静默退回 `{}`**——思考没关掉、正文写不完，而配置文件看上去一个字都没错。
+上线当天就是这么发现的：`/proc/<pid>/environ` 里是对的，`. ./.env` 出来的是错的。
+加单引号两种读法才一致。
 
 ### 换供应商时先探一次
 

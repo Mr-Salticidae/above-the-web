@@ -307,8 +307,11 @@ test("各家自己的参数原样并进请求体，配置写坏了当没填", as
   await make('{"enable_thinking":false}').complete(args);
   assert.equal(seen[0].enable_thinking, false);
 
-  // 写坏的 JSON、以及数组这种不是对象的，都当没填——配置写错不该把服务带崩
-  await make("{这不是 JSON").complete(args);
+  // 写坏的 JSON、以及数组这种不是对象的，都当没填——配置写错不该把服务带崩。
+  // 第一种正是 .env 里漏了外层单引号、被 POSIX shell 吃掉双引号之后的样子
+  // （2026-08-03 上线当天踩的），这里当成非法值退回 {} 是对的：宁可不带这个参数，
+  // 也不能把 {enable_thinking:false} 这种东西塞进请求体。
+  await make("{enable_thinking:false}").complete(args);
   assert.equal("enable_thinking" in seen[1], false);
   await make("[1,2,3]").complete(args);
   assert.equal(Array.isArray(seen[2]) || "0" in seen[2], false);
