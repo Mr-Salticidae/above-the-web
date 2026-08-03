@@ -88,6 +88,9 @@ export function createAssistant(config, log = console) {
               type: "json_schema",
               json_schema: { name: schemaName, strict: true, schema },
             },
+            // 各家自己的参数（千问的 enable_thinking 这类）。放最后是故意的：
+            // 这是运维手上的逃生口，填了就以它为准，否则遇到新参数又得改代码。
+            ...settings.extra,
           }),
           signal: AbortSignal.timeout(settings.timeoutMs),
         });
@@ -109,8 +112,18 @@ export function createAssistant(config, log = console) {
         );
       }
 
-      const message = payload?.choices?.[0]?.message;
-      const text = typeof message?.content === "string" ? message.content : "";
+      const choice = payload?.choices?.[0];
+      // 额度写满了会把 JSON 截在半截，再去 parse 只会报「格式不对」，
+      // 让人以为是模型犯浑，其实是 max_tokens 不够——这种时候要说人话。
+      // 思考型模型尤其容易撞上：reasoning 也算在 completion 里，正文还没开始写就没额度了。
+      if (choice?.finish_reason === "length") {
+        throw new AssistError(
+          "AI_TRUNCATED",
+          "这次写太长了没写完，把话说短一点再试，或者手填",
+          `finish_reason=length, usage=${JSON.stringify(payload?.usage || {})}`,
+        );
+      }
+      const text = typeof choice?.message?.content === "string" ? choice.message.content : "";
       return { data: parseJsonLoose(text), usage: payload?.usage || null };
     },
   };

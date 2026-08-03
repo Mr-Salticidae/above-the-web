@@ -11,6 +11,18 @@ function truthy(value, fallback = false) {
   return ["1", "true", "yes", "on"].includes(raw);
 }
 
+// 环境变量里的一小段 JSON 对象。写坏了就当没填——配置写错不该让服务起不来。
+function jsonObject(value) {
+  const raw = String(value ?? "").trim();
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
 function list(value, fallback) {
   const items = String(value ?? "")
     .split(",")
@@ -63,8 +75,14 @@ export function getConfig(env = process.env) {
     // 手填那条路一点没变。和发信一样：宁可降级，也不要因为漏配环境变量把功能走死。
     ai: {
       apiKey: String(env.ATW_AI_API_KEY || "").trim(),
-      baseUrl: String(env.ATW_AI_BASE_URL || "https://api.ofox.ai/v1").replace(/\/+$/, ""),
-      model: String(env.ATW_AI_MODEL || "claude-fable-5").trim(),
+      baseUrl: String(env.ATW_AI_BASE_URL || "https://dashscope.aliyuncs.com/compatible-mode/v1")
+        .replace(/\/+$/, ""),
+      model: String(env.ATW_AI_MODEL || "qwen3.8-max").trim(),
+      // 各家自己的参数，原样并进请求体。留这个口子是因为「换供应商只改两个环境变量」
+      // 这句话得站得住：思考开关、top_p 这类东西各家名字都不一样，不该为它们改代码。
+      // 2026-08-03 线上填的是 {"enable_thinking":false}——千问默认开思考，
+      // 填表这种活儿把 token 全烧在 reasoning 上，正文反而写不完。
+      extra: jsonObject(env.ATW_AI_EXTRA_JSON),
       // 任务书正文能写到两三千字，给足生成时间；超时就回「手填也能发」
       timeoutMs: positiveInteger(env.ATW_AI_TIMEOUT_MS, 90_000),
       maxTokens: positiveInteger(env.ATW_AI_MAX_TOKENS, 4096),

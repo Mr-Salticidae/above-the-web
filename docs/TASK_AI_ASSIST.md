@@ -96,19 +96,52 @@
 
 ## 怎么配
 
-服务器 `.env`：
+服务器 `.env`（线上现值）：
 
 ```bash
 ATW_AI_API_KEY=            # 留空 = 不开这个功能，页面上看不出少了什么
-ATW_AI_BASE_URL=https://api.ofox.ai/v1
-ATW_AI_MODEL=claude-fable-5
+ATW_AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+ATW_AI_MODEL=qwen3.8-max
 ATW_AI_TIMEOUT_MS=90000
 ATW_AI_MAX_TOKENS=4096
 ATW_AI_HOURLY_LIMIT=30
+ATW_AI_EXTRA_JSON={"enable_thinking":false}
 ```
 
 换供应商只改 `BASE_URL` / `MODEL`，前提是对方支持 `response_format.json_schema`——
 不支持的话模型会返回散文，结构化字段解析不出来。
+
+### 思考型模型要关思考（2026-08-03 踩过）
+
+千问默认开思考，而 reasoning token 是算在 `max_tokens` 里的。填表这种活儿不需要长考，
+不关的话额度全烧在思考上，正文反而写不完——写到一半被截断，回来是半截 JSON，
+用户看到的是一句莫名其妙的「格式不对」。
+
+`ATW_AI_EXTRA_JSON` 就是留给这类各家专有参数的口子，里面的东西原样并进请求体。
+放在请求体最后，填了就以它为准——这是运维手上的逃生口，不然遇到新参数又得改代码。
+
+实测（`qwen3.8-max`）：
+
+| | reasoning_tokens | completion_tokens | 结果 |
+| --- | --- | --- | --- |
+| 默认（开思考） | 235 | 285 | 三个字段的小请求就快撑满 300 额度 |
+| `enable_thinking:false` | 0 | 951 | 完整八小节、1483 字正文，4096 绰绰有余 |
+
+真被截断时（`finish_reason=length`）现在回的是「这次写太长了没写完，把话说短一点再试，
+或者手填」，日志里带上 usage 方便排查。
+
+### 换供应商时先探一次
+
+别直接改 `.env` 重启碰运气，先拿 key 打两枪（这次就是靠这个发现 key 不是 ofox 的）：
+
+```bash
+# 1. 这把 key 能用哪些模型 —— 免费，还能拿到准确的模型 id
+curl -s $BASE/models -H "Authorization: Bearer $KEY"
+
+# 2. 支不支持 json_schema、思考烧多少 token —— 看返回的 usage 和 finish_reason
+curl -s -X POST $BASE/chat/completions -H "Authorization: Bearer $KEY" \
+  -H "Content-Type: application/json" -d '{"model":"...","response_format":{"type":"json_schema",...}}'
+```
 
 ## 自测记录（2026-08-03）
 
@@ -120,3 +153,17 @@ ATW_AI_HOURLY_LIMIT=30
   AI 框渲染、例句填充、按钮在「拟一份 / 再改一版」之间改口、字段填充与清洗结果、
   「还缺什么」列表、草稿离开再回来、清空后不再冒出来、提交后草稿退休、未登录不摆 AI 框。
 - 昼夜两套皮肤与 390px 手机宽度都截图看过，排版没塌。
+- 上线后拿真 key 对千问打了两枪：`/models` 确认模型 id 为 `qwen3.8-max`，
+  `chat/completions` 确认 `json_schema` 可用、`enable_thinking:false` 被接受且 reasoning 归零。
+
+## 踩过的坑
+
+**别把没验证过的 key 直接配上去。** 第一次拿到 key 时按「站里在用 ofox」的惯性配成了
+`api.ofox.ai`，重启后 `/meta` 的 `aiAssist` 老老实实变成 `true`——功能看着是开了，
+可上游一调就是 `401 Invalid or expired API key`。那把 key 其实是千问的。
+
+这和 README 里 Resend 那条是同一个坑：**页面说功能开着、真调却必失败，比没有这个功能更糟**。
+所以发现 401 之后第一件事是把 key 注掉让它退回隐身，再去查，而不是留着一个点了必挂的按钮。
+
+配 AI 通道的顺序应该是：先拿 key 探 `/models` 确认能用哪些模型 → 再探一次真实的
+结构化输出调用看 `usage` 和 `finish_reason` → 最后才写进 `.env` 重启。

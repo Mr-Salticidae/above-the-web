@@ -6,6 +6,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import http from "node:http";
 import os from "node:os";
 import path from "node:path";
 import { getConfig } from "../src/config.js";
@@ -275,6 +276,84 @@ test("一小时点太多次就歇着，手填不受影响", async () => {
     body: { pitch: "我自己手写的自荐", contact: "微信 taker-secret-01" },
   });
   assert.equal(claim.status, 201);
+});
+
+// 下面两条不走假助手，验的是 assist.js 自己拼请求、读响应那一段。
+// 上游换成一个本地假服务器，形状和真的一样。
+test("各家自己的参数原样并进请求体，配置写坏了当没填", async () => {
+  const { createAssistant } = await import("../src/assist.js");
+  const seen = [];
+  const upstream = http.createServer((request, response) => {
+    let raw = "";
+    request.on("data", (chunk) => (raw += chunk));
+    request.on("end", () => {
+      seen.push(JSON.parse(raw));
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(
+        JSON.stringify({ choices: [{ finish_reason: "stop", message: { content: '{"ok":1}' } }] }),
+      );
+    });
+  });
+  await new Promise((resolve) => upstream.listen(0, "127.0.0.1", resolve));
+  const base = `http://127.0.0.1:${upstream.address().port}/v1`;
+
+  const make = (extraJson) =>
+    createAssistant(
+      getConfig({ ATW_AI_API_KEY: "k", ATW_AI_BASE_URL: base, ATW_AI_MODEL: "m", ATW_AI_EXTRA_JSON: extraJson }),
+      silent,
+    );
+  const args = { system: "s", prompt: "p", schema: { type: "object" }, schemaName: "n" };
+
+  await make('{"enable_thinking":false}').complete(args);
+  assert.equal(seen[0].enable_thinking, false);
+
+  // 写坏的 JSON、以及数组这种不是对象的，都当没填——配置写错不该把服务带崩
+  await make("{这不是 JSON").complete(args);
+  assert.equal("enable_thinking" in seen[1], false);
+  await make("[1,2,3]").complete(args);
+  assert.equal(Array.isArray(seen[2]) || "0" in seen[2], false);
+  assert.equal(seen[2].model, "m");
+
+  upstream.close();
+});
+
+test("额度写满被截断时说人话，不报「格式不对」", async () => {
+  const { createAssistant, AssistError: Err } = await import("../src/assist.js");
+  const upstream = http.createServer((request, response) => {
+    request.on("data", () => {});
+    request.on("end", () => {
+      response.writeHead(200, { "Content-Type": "application/json" });
+      response.end(
+        JSON.stringify({
+          // 半截 JSON：正文写到一半没额度了
+          choices: [{ finish_reason: "length", message: { content: '{"title":"OJO 工具评' } }],
+          usage: { completion_tokens: 4096, completion_tokens_details: { reasoning_tokens: 3800 } },
+        }),
+      );
+    });
+  });
+  await new Promise((resolve) => upstream.listen(0, "127.0.0.1", resolve));
+
+  const assist = createAssistant(
+    getConfig({
+      ATW_AI_API_KEY: "k",
+      ATW_AI_BASE_URL: `http://127.0.0.1:${upstream.address().port}/v1`,
+      ATW_AI_MODEL: "m",
+    }),
+    silent,
+  );
+  await assert.rejects(
+    () => assist.complete({ system: "s", prompt: "p", schema: { type: "object" }, schemaName: "n" }),
+    (error) => {
+      assert.ok(error instanceof Err);
+      assert.equal(error.code, "AI_TRUNCATED");
+      assert.match(error.message, /手填/);
+      // 排查得看得到实际烧了多少 token，尤其是思考型模型
+      assert.match(error.detail, /reasoning_tokens/);
+      return true;
+    },
+  );
+  upstream.close();
 });
 
 test("没配 key 的站点：aiAssist 为假，接口 503，草稿一条也生不出来", async () => {

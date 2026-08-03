@@ -81,6 +81,24 @@ markdown 里的 `status` / `taker` 只在任务第一次入库时当初值用。
 `scripts/news-compose.mjs` 一个路子——搜集和校验都是确定性工作，模型只做判断与改写，
 一次请求就够，不开 agentic loop。实现在 `src/assist.js`，零第三方依赖。
 
+线上接的是**千问 3.8 Max**（阿里云百炼的 OpenAI 兼容端点
+`https://dashscope.aliyuncs.com/compatible-mode/v1`）。换别家只改 `ATW_AI_BASE_URL` /
+`ATW_AI_MODEL`，前提是对方支持 `response_format.json_schema`——不支持的话模型会回散文，
+结构化字段解析不出来。
+
+**思考型模型记得关思考**（2026-08-03 踩过）：千问默认开着，reasoning 也算在 `max_tokens` 里，
+填表这种活儿会把额度全烧在思考上、正文反而写不完。`ATW_AI_EXTRA_JSON` 是留给这类
+各家专有参数的口子，里面的东西原样并进请求体：
+
+```bash
+ATW_AI_EXTRA_JSON={"enable_thinking":false}
+```
+
+实测差别很直观：不关，一个三字段的小请求就烧掉 235 个 reasoning token；关掉之后
+reasoning 归零，951 token 写完整整八小节、1483 字的任务书正文。
+真被额度截断时（`finish_reason=length`）回的是「这次写太长了没写完，把话说短一点再试」，
+而不是让人以为模型犯浑的「格式不对」。
+
 **没配 `ATW_AI_API_KEY` 就当它不存在**：`/meta` 的 `aiAssist` 变 `false`，
 页面上连按钮都不摆出来，手填那条路一点没变——和发信通道一个道理，宁可降级也不因为漏配就 500。
 模型那头出岔子回 502 加一句「手填也能发」，对方的原话只进日志。
@@ -233,10 +251,13 @@ npx astro preview --port 4321
 
 前端在 localhost 下会自动把 API 指向 `http://127.0.0.1:3200/api`（见 `src/scripts/account-core.js`）。
 
-**想在本地看 AI 帮手**，起服务时多带三个环境变量即可（不填 key 页面上就没有这块）：
+**想在本地看 AI 帮手**，起服务时多带几个环境变量即可（不填 key 页面上就没有这块）：
 
 ```bash
-ATW_AI_API_KEY=... ATW_AI_BASE_URL=https://api.ofox.ai/v1 ATW_AI_MODEL=claude-fable-5
+ATW_AI_API_KEY=... \
+ATW_AI_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1 \
+ATW_AI_MODEL=qwen3.8-max \
+ATW_AI_EXTRA_JSON='{"enable_thinking":false}'
 ```
 
 不想花钱又要走通整条路，把 `ATW_AI_BASE_URL` 指到一个自己写的假上游就行——
