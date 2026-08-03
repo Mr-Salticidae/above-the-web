@@ -1,0 +1,4 @@
+# 随站分发的可执行文件（public/*/download/*.exe）必须按二进制入库。
+# 本机 git 工作区是 CRLF（core.autocrlf=true），一旦被当成文本做行尾转换，
+# 下载下来的 exe 会直接损坏无法运行。
+*.exe binary
