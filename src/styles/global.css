@@ -495,6 +495,65 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 .claim-panel .cp-msg[data-tone="error"] { color: #d0342c; }
 .claim-panel .cp-msg[data-tone="ok"] { color: var(--accent); }
 
+/* AI 帮手的「说人话」框。管理台新建任务书和任务详情页的认领面板共用一套——
+   同一个动作（说人话 → 它帮你填 → 你过一眼再改）不该在两处长成两个样。
+   摆在表单上方、样式比表单更收敛：它是入口，不是主角，手填那条路一点没挡。 */
+.ai-box {
+  margin: 0 0 1.4rem; padding: 1rem 1.1rem 1.1rem;
+  border: 1px dashed color-mix(in srgb, var(--accent) 42%, var(--line));
+  border-radius: 12px; background: var(--accent-soft);
+  font-family: var(--sans);
+}
+.ai-box .ai-lead {
+  display: flex; flex-wrap: wrap; gap: .5rem; align-items: baseline;
+  margin: 0 0 .7rem; font-size: .86rem; line-height: 1.7; color: var(--ink);
+}
+.ai-box .ai-tag {
+  flex: 0 0 auto; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
+  padding: .15em .6em; border-radius: 999px; background: var(--accent); color: #fff;
+}
+.ai-box .ai-input {
+  font: inherit; font-size: .9rem; line-height: 1.7; width: 100%; resize: vertical;
+  padding: .55rem .7rem; border: 1px solid var(--line); border-radius: .4rem;
+  background: var(--paper); color: var(--ink);
+}
+.ai-box .ai-input:focus-visible { border-color: var(--accent); }
+.ai-box .ai-examples {
+  display: flex; flex-wrap: wrap; gap: .4rem; align-items: center;
+  margin: .6rem 0 0; font-size: .78rem; color: var(--ink-soft);
+}
+.ai-box .ai-chip {
+  font: inherit; font-size: .76rem; cursor: pointer; padding: .2rem .7rem;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--paper); color: var(--ink-soft);
+}
+.ai-box .ai-chip:hover { border-color: var(--accent); color: var(--accent); }
+.ai-box .ai-actions { display: flex; flex-wrap: wrap; gap: .7rem; align-items: center; margin-top: .8rem; }
+.ai-box .ai-run {
+  font: inherit; font-size: .86rem; cursor: pointer; padding: .4rem 1.1rem;
+  border-radius: 999px; border: 1px solid var(--accent); background: var(--accent); color: #fff;
+}
+.ai-box .ai-run:hover { filter: brightness(1.08); }
+.ai-box .ai-run:disabled { cursor: progress; opacity: .6; filter: none; }
+.ai-box .ai-msg { font-size: .8rem; color: var(--ink-soft); }
+.ai-box .ai-msg[data-tone="error"] { color: #d0342c; }
+.ai-box .ai-msg[data-tone="ok"] { color: var(--accent); }
+.ai-box .ai-hint { margin: .6rem 0 0; font-size: .76rem; line-height: 1.7; color: var(--ink-soft); }
+.ai-box .ai-hint b { color: var(--ink); font-weight: 600; }
+/* AI 说「这几处你还得自己补」——写在框里而不是弹出来，人回头填的时候还看得见 */
+.ai-box .ai-missing {
+  margin: .7rem 0 0; padding: .6rem .8rem .6rem 1.9rem; list-style: disc;
+  border-radius: .4rem; background: var(--paper); font-size: .8rem; line-height: 1.8; color: var(--ink-soft);
+}
+
+/* 「上次没写完的草稿恢复了」。不问就恢复，但得说清是几时的东西，并留一条退路 */
+.cp-restored, .ad-restored {
+  margin: 0 0 1rem; font-family: var(--sans); font-size: .8rem; color: var(--ink-soft);
+}
+.atw-linkish {
+  font: inherit; cursor: pointer; padding: 0; border: 0; background: none;
+  color: var(--accent); text-decoration: underline; text-underline-offset: .2em;
+}
+
 /* 流转记录 */
 .timeline { margin: 2.4rem 0 0; }
 .timeline .tl-title {

@@ -3,6 +3,16 @@ import { randomUUID } from "node:crypto";
 import { createDatabase, TASK_STATUSES, ROLES } from "./database.js";
 import { createTaskSync } from "./task-sync.js";
 import { createMailer, passwordResetMail } from "./mailer.js";
+import {
+  AssistError,
+  buildClaimPitchPrompt,
+  buildTaskDraftPrompt,
+  CLAIM_PITCH_SCHEMA,
+  CLAIM_PITCH_SYSTEM,
+  createAssistant,
+  TASK_DRAFT_SCHEMA,
+  TASK_DRAFT_SYSTEM,
+} from "./assist.js";
 import { createSessionToken, hashPassword, hashToken, verifyPassword } from "./security.js";
 
 const JSON_LIMIT_BYTES = 256 * 1024;
@@ -13,6 +23,11 @@ const authAttempts = new Map();
 // 同一个账号一小时内最多发几封重置信。挡的是「拿别人注册过的邮箱刷他收件箱」。
 const RESET_WINDOW_MS = 60 * 60 * 1000;
 const RESET_MAX_PER_WINDOW = 3;
+
+// AI 辅助的按账号配额。挡的是「不满意就再点一次」点上头——这两个接口都要登录，
+// 真正的门在账号那一层，这里只是别让一个人把一天的额度点完。
+const AI_WINDOW_MS = 60 * 60 * 1000;
+const aiCalls = new Map();
 
 class HttpError extends Error {
   constructor(status, code, message) {
@@ -90,6 +105,44 @@ function checkAuthRateLimit(request) {
 
 function clearAuthFailures(request) {
   authAttempts.delete(clientAddress(request));
+}
+
+function checkAiQuota(userId, limit) {
+  const nowTs = Date.now();
+  // 过期的窗口顺手扫掉，这张表不该随注册人数一直长
+  if (aiCalls.size > 500) {
+    for (const [key, value] of aiCalls) {
+      if (nowTs - value.startedAt > AI_WINDOW_MS) aiCalls.delete(key);
+    }
+  }
+  const record = aiCalls.get(userId);
+  if (!record || nowTs - record.startedAt > AI_WINDOW_MS) {
+    aiCalls.set(userId, { startedAt: nowTs, count: 1 });
+    return;
+  }
+  record.count += 1;
+  if (record.count > limit) {
+    throw new HttpError(429, "AI_QUOTA", "AI 辅助这一小时用得有点猛，歇会儿再来——手填不受影响");
+  }
+}
+
+// 模型给的东西一律当草稿：截到字段上限、日期不合法就丢、列表限长。
+// 「模型说了什么」和「什么能落进表单」是两件事。
+function draftText(value, limit) {
+  return clean(value).slice(0, limit);
+}
+
+function draftDate(value) {
+  const text = clean(value);
+  return /^\d{4}-\d{2}-\d{2}$/.test(text) && !Number.isNaN(Date.parse(text)) ? text : "";
+}
+
+function draftList(value, { maxItems = 5, maxLength = 120 } = {}) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => clean(item).slice(0, maxLength))
+    .filter(Boolean)
+    .slice(0, maxItems);
 }
 
 function validateRegistration(body) {
@@ -225,6 +278,8 @@ export function createApplication(config, log = console, deps = {}) {
   const taskSync = createTaskSync(config, database, log);
   // 测试里换成假的发信器，就能验证「发了什么信」而不真发出去
   const mailer = deps.mailer ?? createMailer(config, log);
+  // 同理：测试里换成假的助手，就能验证「送进模型的是什么、拿回来的怎么洗」而不真花钱
+  const assistant = deps.assistant ?? createAssistant(config, log);
 
   // 开一张一次性重置票。旧的没用过的一并作废，同一时间只留一个有效链接。
   function issuePasswordReset(user, { channel = "email", issuedBy = null } = {}) {
@@ -318,6 +373,8 @@ export function createApplication(config, log = console, deps = {}) {
           // 没有发信通道时前端把「忘记密码」改成「找站长人工发链接」的说法
           selfServiceReset: mailer.enabled,
           resetTtlMinutes: config.resetTtlMinutes,
+          // 没配 AI 通道时前端连按钮都不摆出来，页面上看不出少了什么，手填照旧
+          aiAssist: assistant.enabled,
           taskStatuses: TASK_STATUSES,
           roles: ROLES,
         });
@@ -746,6 +803,128 @@ export function createApplication(config, log = console, deps = {}) {
         return;
       }
 
+      // ---------- AI 辅助填写 ----------
+      //
+      // 两条：发布方说一句大白话出一份任务书草稿，申请者说一句大白话出一份自荐说明。
+      // 都只产草稿——结果回到页面的表单里，人过一眼、改完再自己提交。
+      // **没有任何一条路径让模型直接写库**，所以这两个接口不记流转记录，只记审计。
+
+      const requireAssistant = () => {
+        if (!assistant.enabled) {
+          throw new HttpError(503, "AI_DISABLED", "这个站点没有开启 AI 辅助，手填即可");
+        }
+      };
+
+      if (route === "POST /api/ai/task-draft") {
+        const { user: admin } = requireAdmin(request);
+        requireAssistant();
+        const body = await readJson(request);
+        const idea = clean(body.input);
+        if (idea.length < 4) {
+          throw new HttpError(422, "INPUT_TOO_SHORT", "至少说一句：做什么、什么时候交、多少钱");
+        }
+        if (idea.length > 2000) throw new HttpError(422, "FIELD_TOO_LONG", "这段话最长 2000 字符");
+        // 配额扣在真要叫模型之前：填错了字段不该算一次
+        checkAiQuota(admin.id, config.ai.hourlyLimit);
+        // 今天由前端按本地时区送来（服务器在香港，发布方不一定），漏送才退回服务器当天。
+        // 「下周五」要换算成日期，这个基准错了整份草稿的时间都是错的。
+        const today = dateText(body.today, { fallback: new Date().toISOString().slice(0, 10) });
+
+        // 已经填了一半再叫 AI，是「照这句话改」而不是「重写一份」
+        const source = body.current && typeof body.current === "object" ? body.current : null;
+        const current = source
+          ? {
+              title: draftText(source.title, TASK_FIELD_LIMITS.title),
+              summary: draftText(source.summary, TASK_FIELD_LIMITS.summary),
+              fee: draftText(source.fee, TASK_FIELD_LIMITS.fee),
+              deadline: draftDate(source.deadline),
+              slug: normalizeSlug(source.slug),
+              body: draftText(source.body, TASK_FIELD_LIMITS.body),
+            }
+          : null;
+        const hasCurrent = current && Object.values(current).some(Boolean);
+
+        const { data } = await assistant.complete({
+          system: TASK_DRAFT_SYSTEM,
+          prompt: buildTaskDraftPrompt({ idea, today, current: hasCurrent ? current : null }),
+          schema: TASK_DRAFT_SCHEMA,
+          schemaName: "task_draft",
+        });
+
+        database.createAuditLog({
+          actorUserId: admin.id,
+          action: "ai.task_draft",
+          targetType: "task",
+          details: { model: assistant.model, revise: Boolean(hasCurrent) },
+        });
+        reply(200, {
+          draft: {
+            title: draftText(data.title, TASK_FIELD_LIMITS.title),
+            summary: draftText(data.summary, TASK_FIELD_LIMITS.summary),
+            fee: draftText(data.fee, TASK_FIELD_LIMITS.fee),
+            deadline: draftDate(data.deadline),
+            // 模型给的后缀不一定合法，按站内那套规则重新洗一遍；洗空了让 deriveSlug 兜底
+            slug: normalizeSlug(data.slug),
+            body: draftText(data.body, TASK_FIELD_LIMITS.body),
+          },
+          missing: draftList(data.missing, { maxItems: 5 }),
+        });
+        return;
+      }
+
+      if (route === "POST /api/ai/claim-pitch") {
+        const { user } = authenticate(request);
+        requireAssistant();
+        const body = await readJson(request);
+        const slug = clean(body.slug);
+        const task = taskOrThrow(slug);
+        if (task.status !== "open") {
+          throw new HttpError(409, "TASK_NOT_OPEN", "这份任务已经不在招募中了");
+        }
+        const idea = clean(body.input);
+        if (idea.length < 4) {
+          throw new HttpError(422, "INPUT_TOO_SHORT", "至少说一句：你打算怎么做、做过什么");
+        }
+        if (idea.length > 2000) throw new HttpError(422, "FIELD_TOO_LONG", "这段话最长 2000 字符");
+        checkAiQuota(user.id, config.ai.hourlyLimit);
+
+        // 送进模型的只有任务书本身、他的公开资料和他自己写的这段话。
+        // contact / payee / email 一概不带——那几项只有本人和发布方看得到（见 README「隐私边界」），
+        // 送去第三方推理服务就破了这条线，而且写自荐说明也根本用不上。
+        const { data } = await assistant.complete({
+          system: CLAIM_PITCH_SYSTEM,
+          prompt: buildClaimPitchPrompt({
+            idea,
+            task: {
+              title: task.title,
+              summary: task.summary,
+              // 现在到底结多少，和页面上看到的一致
+              fee: task.fee_override || task.fee,
+              deadline: task.deadline,
+            },
+            // 站内新建的任务书正文就在库里；md 那批靠同步从清单捎来的节选
+            outline: task.source === "web" ? task.body : task.outline,
+            applicant: { displayName: user.display_name, bio: user.bio },
+          }),
+          schema: CLAIM_PITCH_SCHEMA,
+          schemaName: "claim_pitch",
+        });
+
+        database.createAuditLog({
+          actorUserId: user.id,
+          action: "ai.claim_pitch",
+          targetType: "task",
+          targetId: slug,
+          details: { model: assistant.model },
+        });
+        reply(200, {
+          // 认领接口那边的上限是 1000，这里就按 1000 截，别让人拿到一段提交不上去的稿
+          pitch: draftText(data.pitch, 1000),
+          missing: draftList(data.missing, { maxItems: 4 }),
+        });
+        return;
+      }
+
       // ---------- 管理台 ----------
 
       if (route === "GET /api/admin/overview") {
@@ -1077,6 +1256,13 @@ export function createApplication(config, log = console, deps = {}) {
     } catch (error) {
       if (error instanceof HttpError) {
         sendJson(response, error.status, { error: error.code, message: error.message }, config, request);
+        return;
+      }
+      // 模型那头出岔子不是这个服务坏了，也不该让用户看见对方的原话（里面可能带用量、账号信息）。
+      // 502 + 一句「手填也能发」，细节只进日志。
+      if (error instanceof AssistError) {
+        log.error(`[atw-platform] AI 辅助失败：${error.code} ${error.detail || error.message}`);
+        sendJson(response, 502, { error: error.code, message: error.message }, config, request);
         return;
       }
       log.error("[atw-platform] 未处理的异常", error);
