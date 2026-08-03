@@ -1,5 +1,8 @@
 ---
 // 新建任务书：在站里直接发一份，不用改 markdown、不用等构建。
+//
+// 主路径是「说人话」：把要做什么、什么时候交、多少钱说一句，AI 把七节骨架填出来，
+// 发布方逐项过一眼再发。下面那些字段一个没少——AI 只是先把它们填上，改不改都随意。
 import AdminLayout from '../../../layouts/AdminLayout.astro';
 ---
 
@@ -13,6 +16,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       想让它长期沉淀进 git，发完到「任务」板块点「导出 md」，把文件放进
       <code>src/data/tasks/</code> 提交即可，下一轮同步 md 会自动接管这份任务（认领记录不丢）。
     </p>
+
+    <div data-ai-host hidden></div>
+    <p class="ad-restored" data-restored hidden></p>
+
     <form class="atw-form" data-new-task>
       <label><span>标题</span><input name="title" maxlength="80" required /></label>
       <label>
@@ -33,6 +40,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         <button class="atw-primary" type="submit">发布任务书</button>
         <button class="atw-ghost" type="button" data-template>填入模板</button>
         <button class="atw-ghost" type="button" data-preview>预览正文</button>
+        <button class="atw-ghost" type="button" data-clear>清空重来</button>
       </div>
       <p class="atw-msg" data-new-msg role="status"></p>
     </form>
@@ -44,6 +52,16 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
   import { api, escapeHtml, url } from '../../../scripts/account-core.js';
   import { renderMarkdown } from '../../../scripts/mini-markdown.js';
   import { bootAdmin, tell } from '../../../scripts/admin-core.js';
+  import {
+    aiAssistEnabled,
+    autosave,
+    clearDraft,
+    draftAgeLabel,
+    draftTask,
+    mountAssistBox,
+    readDraft,
+    today,
+  } from '../../../scripts/ai-assist.js';
 
   const sayNew = (text, tone = 'error') => tell('[data-new-msg]', text, tone);
 
@@ -96,26 +114,61 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 **打款时间：** 每月 15 号左右集中打款
 `;
 
+  // 说人话的例句。照着这个粒度说就够了——工具、交什么、什么时候、多少钱。
+  const EXAMPLES = [
+    '找人写一篇 OJO 的工具评测教程，8 月 20 号前交，150 元税前，会员我出',
+    '想要一支 30 秒的 AI 短片做板块片头，月底前，报酬 300',
+    '招人整理一份 Midjourney 角色一致性的实操教程，下周五截止，200 元',
+  ];
+
+  const DRAFT_KEY = 'admin-new-task';
+  const FIELDS = ['title', 'summary', 'fee', 'deadline', 'publishedAt', 'slug', 'body'];
+  // 发布日期是页面自己填上的，不算「人写过东西」。少了这一层，
+  // 打开页面什么都没干也会存下一条草稿，下次进来平白冒出「恢复了未发完的草稿」。
+  const TYPED = FIELDS.filter((name) => name !== 'publishedAt');
+
   const form = document.querySelector('[data-new-task]');
   const previewOut = document.querySelector('[data-preview-out]');
-
-  // 发布日期按浏览器所在时区取，服务器在香港但发布方不一定
-  function today() {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(
-      now.getDate(),
-    ).padStart(2, '0')}`;
-  }
+  const restored = document.querySelector('[data-restored]');
+  const field = (name) => form.querySelector(`[name="${name}"]`);
 
   form.querySelector('[name="publishedAt"]').value = today();
 
+  const store = autosave(form, DRAFT_KEY, FIELDS);
+
+  // 表单现在的样子。交给 AI 时用它做「在此基础上改」的底稿，判空也用它。
+  const snapshot = () => Object.fromEntries(FIELDS.map((name) => [name, field(name).value.trim()]));
+  const hasContent = () => TYPED.some((name) => field(name).value.trim());
+
+  function resetForm() {
+    form.reset();
+    field('publishedAt').value = today();
+    previewOut.hidden = true;
+    restored.hidden = true;
+    clearDraft(DRAFT_KEY);
+  }
+
+  // 上次没发完的草稿：不问就恢复，但把「这是几时的东西」和退路一起摆出来。
+  // 悄悄恢复会让人以为自己刚才填过；弹窗问一句又太吵。
+  const saved = readDraft(DRAFT_KEY);
+  if (saved && !TYPED.some((name) => saved.value[name])) clearDraft(DRAFT_KEY);
+  else if (saved) {
+    for (const [name, value] of Object.entries(saved.value)) {
+      if (field(name) && value) field(name).value = value;
+    }
+    restored.hidden = false;
+    restored.innerHTML = `已恢复${escapeHtml(draftAgeLabel(saved.savedAt))}没发完的草稿。 <button type="button" class="atw-linkish" data-drop-draft>不要，清空</button>`;
+    restored.querySelector('[data-drop-draft]').addEventListener('click', resetForm);
+  }
+
   form.querySelector('[data-template]').addEventListener('click', () => {
-    const body = form.querySelector('[name="body"]');
+    const body = field('body');
     if (body.value.trim()) {
       sayNew('正文里已经写了东西，先清空再填模板');
       return;
     }
     body.value = TASK_TEMPLATE;
+    store.flush();
     sayNew('模板填好了，按小节改就行', 'ok');
   });
 
@@ -124,9 +177,55 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
       previewOut.hidden = true;
       return;
     }
-    previewOut.innerHTML = renderMarkdown(form.querySelector('[name="body"]').value);
+    previewOut.innerHTML = renderMarkdown(field('body').value);
     previewOut.hidden = false;
   });
+
+  form.querySelector('[data-clear]').addEventListener('click', () => {
+    if (hasContent() && !confirm('表单里写的东西会全部清掉，确定？')) return;
+    resetForm();
+    sayNew('清空了', 'ok');
+  });
+
+  // AI 帮手 ---------------------------------------------------------------
+  // 没配 AI 通道时这一块整个不渲染：页面看不出少了什么，手填一路照旧。
+  async function mountAssist() {
+    if (!(await aiAssistEnabled())) return;
+    const host = document.querySelector('[data-ai-host]');
+    host.hidden = false;
+    const box = mountAssistBox(host, {
+      lead: '把这份任务用大白话说一句——做什么、什么时候交、多少钱，剩下的它来搭。',
+      placeholder:
+        '例：找人写一篇 OJO 的工具评测教程，8 月 20 号前交，150 元税前，会员我出。\n（Ctrl / ⌘ + Enter 直接跑）',
+      examples: EXAMPLES,
+      actionLabel: '帮我拟一份 →',
+      hint: '出来的是草稿，直接落进下面的表单。<b>它没有的信息一律不编</b>——缺什么会在这儿列出来提醒你补。',
+      async run(text, ui) {
+        const current = hasContent() ? snapshot() : null;
+        const { draft, missing } = await draftTask({ input: text, today: today(), current });
+        // 只覆盖 AI 真给了值的字段：它留空的地方（比如没提报酬）不该把你手填的抹掉
+        for (const [name, value] of Object.entries(draft)) {
+          if (field(name) && value) field(name).value = value;
+        }
+        store.flush();
+        restored.hidden = true;
+        ui.showMissing(missing);
+        ui.say(
+          missing.length
+            ? '填好了，下面几处还得你补一句'
+            : '填好了，逐项过一眼再发布',
+          'ok',
+        );
+        ui.setAction('按这段话再改一版 →');
+        sayNew('');
+      },
+    });
+    // 表单里已经有东西时，按钮的说法要跟着变——这时候点它是「改」不是「重写」
+    const syncAction = () =>
+      box.setAction(hasContent() ? '按这段话再改一版 →' : '帮我拟一份 →');
+    form.addEventListener('input', syncAction);
+    syncAction();
+  }
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -142,9 +241,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
         slug: data.get('slug'),
         body: data.get('body'),
       });
-      form.reset();
-      form.querySelector('[name="publishedAt"]').value = today();
-      previewOut.hidden = true;
+      resetForm();
       const link = url(`tasks/detail/?slug=${encodeURIComponent(task.slug)}`);
       document.querySelector('[data-new-msg]').innerHTML =
         `已发布：${escapeHtml(task.title)} · <a href="${escapeHtml(link)}">去看看 →</a>`;
@@ -154,5 +251,10 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
     }
   });
 
-  bootAdmin();
+  async function boot() {
+    if (!(await bootAdmin())) return;
+    await mountAssist();
+  }
+
+  boot();
 </script>

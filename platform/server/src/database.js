@@ -90,6 +90,10 @@ CREATE TABLE IF NOT EXISTS tasks (
   source TEXT NOT NULL DEFAULT 'md' CHECK (source IN ('md', 'web')),
   -- 只有 source='web' 用得上：markdown 正文。md 任务书的正文归静态页面，这里留空。
   body TEXT NOT NULL DEFAULT '',
+  -- md 任务书正文的纯文本节选，由同步从清单里带过来（见 src/pages/tasks/index.json.js）。
+  -- 服务端本身读不到 git 里的正文，但 AI 辅助写自荐说明时得知道这活儿到底要干什么，
+  -- 所以清单里捎一段。只读不改，也不对外发布——公开接口里没有这个字段。
+  outline TEXT NOT NULL DEFAULT '',
   -- 报酬调整：定了人之后临时加钱（报销会员费、加急费）是常事，改 md 既慢又会被同步覆盖。
   -- 这两个字段属于运行时状态，同步一律不碰；空串表示没调过，按 fee 结。
   fee_override TEXT NOT NULL DEFAULT '',
@@ -177,6 +181,9 @@ function migrate(db) {
   if (!columns.has("fee_override")) {
     db.exec("ALTER TABLE tasks ADD COLUMN fee_override TEXT NOT NULL DEFAULT ''");
     db.exec("ALTER TABLE tasks ADD COLUMN fee_note TEXT NOT NULL DEFAULT ''");
+  }
+  if (!columns.has("outline")) {
+    db.exec("ALTER TABLE tasks ADD COLUMN outline TEXT NOT NULL DEFAULT ''");
   }
 }
 
@@ -423,9 +430,9 @@ export function createDatabase(config) {
 
       const insert = db.prepare(
         `INSERT INTO tasks (slug, title, summary, fee, deadline, published_at,
-                            seed_status, seed_taker, status, taker_name, deliverable_url,
+                            seed_status, seed_taker, status, taker_name, deliverable_url, outline,
                             source, listed, created_at, updated_at, synced_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'md', 1, ?, ?, ?)`,
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'md', 1, ?, ?, ?)`,
       );
       // source='md' + body='' 是「md 接管」：站内新建的任务书一旦补进了 git，
       // 正文以 md 为准，库里那份草稿退位（认领、打款这些运行时记录照旧不动）。
@@ -437,7 +444,7 @@ export function createDatabase(config) {
         `UPDATE tasks SET title = ?, summary = ?, fee = ?, deadline = ?, published_at = ?,
                           seed_status = ?, seed_taker = ?, source = 'md', body = '',
                           deliverable_url = CASE WHEN deliverable_url = '' THEN ? ELSE deliverable_url END,
-                          listed = 1, synced_at = ?
+                          outline = ?, listed = 1, synced_at = ?
          WHERE slug = ?`,
       );
 
@@ -445,7 +452,7 @@ export function createDatabase(config) {
         const slug = String(entry.slug || "").trim();
         if (!slug) continue;
         seen.add(slug);
-        const existing = db.prepare("SELECT slug, source FROM tasks WHERE slug = ?").get(slug);
+        const existing = db.prepare("SELECT slug, source, outline FROM tasks WHERE slug = ?").get(slug);
         const title = String(entry.title || "");
         const summary = String(entry.summary || "");
         const fee = String(entry.fee || "");
@@ -453,11 +460,13 @@ export function createDatabase(config) {
         const publishedAt = String(entry.date || "");
         const seedStatus = TASK_STATUSES.includes(entry.status) ? entry.status : "open";
         const seedTaker = String(entry.taker || "");
+        // 正文节选：清单里有就更新，没有（老版本构建产物）就别把已有的抹成空
+        const outline = String(entry.outline || "");
 
         if (existing) {
           update.run(
             title, summary, fee, deadline, publishedAt, seedStatus, seedTaker,
-            String(entry.deliverable || ""), ts, slug,
+            String(entry.deliverable || ""), outline || existing.outline || "", ts, slug,
           );
           updated += 1;
           if (existing.source === "web") adopted += 1;
@@ -465,7 +474,7 @@ export function createDatabase(config) {
           insert.run(
             slug, title, summary, fee, deadline, publishedAt,
             seedStatus, seedTaker, seedStatus, seedTaker,
-            String(entry.deliverable || ""), ts, ts, ts,
+            String(entry.deliverable || ""), outline, ts, ts, ts,
           );
           created += 1;
         }

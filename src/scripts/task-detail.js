@@ -17,8 +17,34 @@ import {
   url,
 } from './account-core.js';
 import { renderMarkdown } from './mini-markdown.js';
+import {
+  aiAssistEnabled,
+  autosave,
+  clearDraft,
+  draftAgeLabel,
+  draftPitch,
+  mountAssistBox,
+  readDraft,
+} from './ai-assist.js';
 
 const STATUS_CLASS = { open: 'is-open', taken: 'is-taken', done: 'is-done', closed: 'is-closed' };
+
+// 认领面板里那个「说人话」框的例句。给的是带括号的骨架而不是编好的履历——
+// 一键填进去就能提交的假经历，发布方一问就穿帮，比空着还糟。
+const PITCH_EXAMPLES = [
+  {
+    label: '思路 + 作品 + 排期',
+    text: '我打算这么做：（两句话说清怎么做）。做过的同类：（贴一个链接）。（几号）前能交。',
+  },
+  {
+    label: '这工具我熟',
+    text: '这个工具我用了（多久），平时拿它做（什么）。这次想（怎么做），（几号）前能交。',
+  },
+  {
+    label: '第一次接，但想做',
+    text: '之前没接过这类，但我做过（相关的什么）。愿意先出一版（什么）给你看，行再往下做。',
+  },
+];
 
 function html(strings, ...values) {
   return strings.reduce((out, part, i) => out + part + (i < values.length ? values[i] : ''), '');
@@ -45,7 +71,13 @@ export async function hydrateTaskDetail() {
     return;
   }
 
+  // 认领草稿按任务存：这一份写到一半跑去看别的任务，回来还在
+  const draftKey = `claim:${slug}`;
+
+  // AI 帮手开没开，和任务数据一起取——面板不该为这个多等一个来回。
+  // 没登录就不问：那会儿面板上只有一个登录按钮，问了也用不上。
   let user = getCachedUser();
+  const aiReady = getToken() ? aiAssistEnabled().catch(() => false) : Promise.resolve(false);
   if (getToken()) user = (await refreshUser()) || user;
 
   let data;
@@ -62,6 +94,8 @@ export async function hydrateTaskDetail() {
     }
     return;
   }
+
+  const aiOn = await aiReady;
 
   if (dynamic) renderHead(data);
   render(data);
@@ -231,6 +265,10 @@ export async function hydrateTaskDetail() {
     }
 
     const rejected = myClaim && myClaim.status === 'rejected';
+    // 上次没写完的：撤回过、登录过期过、手滑关了页面——都不该让人从头再写一遍。
+    // 只认自荐说明：联系方式是资料里自动带出来的，光有它不叫「写了一半」。
+    const stored = readDraft(draftKey);
+    const saved = stored?.value.pitch ? stored : null;
     panel.innerHTML = html`
       <h2 class="cp-title">认领这份任务</h2>
       ${rejected
@@ -238,19 +276,66 @@ export async function hydrateTaskDetail() {
             myClaim.decideNote ? `：${escapeHtml(myClaim.decideNote)}` : ''
           }。改一改再报一次也行。</p>`
         : html`<p class="cp-note">写清楚你打算怎么做、做过什么同类的东西。发布方定人后会直接联系你。</p>`}
+      <div data-ai-host hidden></div>
+      ${saved
+        ? html`<p class="cp-restored">已恢复${escapeHtml(
+            draftAgeLabel(saved.savedAt),
+          )}写了一半的内容。 <button type="button" class="atw-linkish" data-drop-draft>不要，清空</button></p>`
+        : ''}
       <form class="cp-form" data-claim>
         <label>
           <span>自荐说明<i>你的思路、相关作品链接</i></span>
-          <textarea name="pitch" rows="4" maxlength="1000"></textarea>
+          <textarea name="pitch" rows="4" maxlength="1000">${escapeHtml(
+            saved?.value.pitch || '',
+          )}</textarea>
         </label>
         <label>
           <span>联系方式<i>微信号 / QQ / 邮箱</i></span>
-          <input name="contact" maxlength="120" value="${escapeHtml(user.contact || '')}" required />
+          <input name="contact" maxlength="120" value="${escapeHtml(
+            saved?.value.contact || user.contact || '',
+          )}" required />
         </label>
         <button class="cp-primary" type="submit">提交认领申请</button>
         <p class="cp-msg" data-cp-msg role="status"></p>
       </form>`;
-    panel.querySelector('[data-claim]').addEventListener('submit', submitClaim);
+
+    const form = panel.querySelector('[data-claim]');
+    form.addEventListener('submit', submitClaim);
+    autosave(form, draftKey, ['pitch', 'contact']);
+    panel.querySelector('[data-drop-draft]')?.addEventListener('click', () => {
+      form.querySelector('[name="pitch"]').value = '';
+      clearDraft(draftKey);
+      panel.querySelector('.cp-restored').hidden = true;
+    });
+
+    if (aiOn) mountPitchAssist(form);
+  }
+
+  // 空白的自荐框最劝退——不知道写什么、怕写得不像样，人就走了。
+  // 这个框只要一句大白话，AI 照着任务书把它整理成发布方好读的三段：怎么做、做过什么、什么时候交。
+  // **它只用你说过的事实**：没提到的经历不会替你编，只会在下面提醒你补一句。
+  function mountPitchAssist(form) {
+    const host = panel.querySelector('[data-ai-host]');
+    if (!host) return;
+    host.hidden = false;
+    mountAssistBox(host, {
+      lead: '用大白话说说你想怎么做、做过什么，它帮你理成一段自荐。',
+      placeholder:
+        '例：这个工具我用过一阵，打算按「装—用—坑」三段来写，之前做过两期类似教程。下周三前能交。\n（Ctrl / ⌘ + Enter 直接跑）',
+      examples: PITCH_EXAMPLES,
+      examplesLead: '不知道从哪说起？点一句，把括号换成你的实际情况：',
+      actionLabel: '帮我理一理 →',
+      hint: '理完落进下面的框，发之前自己再读一遍。<b>你没说过的经历它不会替你编</b>——缺什么会列在这儿。',
+      async run(text, ui) {
+        const { pitch, missing } = await draftPitch({ slug, input: text });
+        const field = form.querySelector('[name="pitch"]');
+        field.value = pitch;
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+        ui.showMissing(missing);
+        ui.say(missing.length ? '理好了，下面几处补一句更稳' : '理好了，读一遍再提交', 'ok');
+        ui.setAction('换个说法再理一版 →');
+      },
+    });
   }
 
   function say(text, tone = 'error') {
@@ -275,6 +360,8 @@ export async function hydrateTaskDetail() {
         pitch: form.get('pitch'),
         contact: form.get('contact'),
       });
+      // 提交上去了，本机这份草稿就该退休——留着只会在下次打开时冒出来吓人一跳
+      clearDraft(draftKey);
       await reload();
     } catch (error) {
       say(error.message);

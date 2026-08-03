@@ -57,6 +57,22 @@ export function getConfig(env = process.env) {
     // 重置令牌有效期。短一点更安全，长一点更宽容——1 小时是常见折中。
     resetTtlMinutes: positiveInteger(env.ATW_RESET_TTL_MINUTES, 60),
 
+    // AI 辅助填写：发布方说一句大白话出一份任务书草稿，接单的说一句大白话出一份自荐说明。
+    // 走 OpenAI 兼容协议（默认 ofox 中转），和 scripts/news-compose.mjs 一个路子。
+    // 没配 key 就是「没有 AI 通道」——/api/meta 的 aiAssist 变 false，页面上连按钮都不摆，
+    // 手填那条路一点没变。和发信一样：宁可降级，也不要因为漏配环境变量把功能走死。
+    ai: {
+      apiKey: String(env.ATW_AI_API_KEY || "").trim(),
+      baseUrl: String(env.ATW_AI_BASE_URL || "https://api.ofox.ai/v1").replace(/\/+$/, ""),
+      model: String(env.ATW_AI_MODEL || "claude-fable-5").trim(),
+      // 任务书正文能写到两三千字，给足生成时间；超时就回「手填也能发」
+      timeoutMs: positiveInteger(env.ATW_AI_TIMEOUT_MS, 90_000),
+      maxTokens: positiveInteger(env.ATW_AI_MAX_TOKENS, 4096),
+      // 每个账号每小时最多叫几次。挡的是「不满意就再点一次」点上头，不是防攻击——
+      // 这两个接口都要登录，真正的门在账号那一层。
+      hourlyLimit: positiveInteger(env.ATW_AI_HOURLY_LIMIT, 30),
+    },
+
     // 全站开放注册：读站不需要账号，只有认领任务要登录。留邀请码开关是为了
     // 万一被刷号时能临时收口，平时留空。
     inviteCode: String(env.ATW_INVITE_CODE || "").trim(),
