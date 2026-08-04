@@ -16,32 +16,30 @@ const archive = issues.slice(1);
   description="每日更新的 AIGC 领域新闻精选：模型发布、创作工具更新、行业动态，为创作者划重点。"
 >
   <div class="news-page">
-    <header class="masthead">
-      <p class="masthead-kicker">Daily Briefing for Creators</p>
+    <header class="masthead is-plate">
+      <img class="plate-mark" src={`${base}/favicon.svg`} alt="" width="26" height="26" />
+      <p class="masthead-kicker">每天早晨自动搜集 · 宁缺毋滥，只划重点</p>
       <h1>AIGC 快讯</h1>
-      <p class="masthead-sub">AIGC DAILY</p>
-      <p class="masthead-desc">
-        每天早晨自动搜集过去 24 小时 AIGC 领域值得创作者关注的新闻——模型发布、工具更新、行业动向，
-        每条附来源直达。宁缺毋滥，只划重点。
-      </p>
+      <p class="masthead-sub">AIGC Daily Briefing</p>
     </header>
 
     {latest ? (
-      <section class="latest">
-        <NewsIssue issue={latest} />
-      </section>
+      <NewsIssue issue={latest} />
     ) : (
       <p class="empty">第一期正在路上，明早 9:30 见。</p>
     )}
 
     {archive.length > 0 && (
       <section class="archive">
-        <h2 class="archive-label">往期 <span>Archive</span></h2>
+        <h2 class="block-label">往期 <span>Back Issues</span></h2>
+        <div class="archive-head">
+          <span>期号</span><span>日期</span><span>本期提要</span><span>条数</span>
+        </div>
         <ol class="archive-list">
           {archive.map((it) => (
             <li>
               <a href={`${base}/news/${it.date}/`}>
-                <span class="a-no">第 {it.no} 期</span>
+                <span class="a-no">NO.{it.no}</span>
                 <span class="a-date">{formatDate(it.date)}</span>
                 <span class="a-headline">{it.headline}</span>
                 <span class="a-count">{it.items.length} 条</span>
@@ -51,47 +49,93 @@ const archive = issues.slice(1);
         </ol>
       </section>
     )}
+
+    <footer class="news-colophon">
+      <p class="cl-mark">蛛网之上 · ABOVE THE WEB</p>
+      <p>
+        每天早晨自动搜集过去 24 小时 AIGC 领域值得创作者关注的新闻——模型发布、工具更新、行业动向，
+        每条附来源直达。宁缺毋滥，只划重点。
+      </p>
+    </footer>
   </div>
 </BaseLayout>
 
 <style>
-  .news-page { max-width: 52rem; margin: 0 auto; padding: 3.2rem 1.5rem 6rem; }
-
-  /* 刊头：居中排印，衬线大字 + 字距英文刊名，杂志封面式 */
-  /* 刊头样式在 global.css：快讯 / 任务书 / 笔记三页共用 */
-
-  .latest { margin: 0 0 3.4rem; }
+  /* 杂志版式要更宽的版心：主栏 + 速览两栏 */
+  .news-page { max-width: 74rem; margin: 0 auto; padding: 2.4rem 1.75rem 5rem; }
   .empty { text-align: center; color: var(--ink-soft); padding: 3rem 0 4rem; }
 
-  /* 往期归档：细线目录体 */
-  .archive-label {
-    display: flex; align-items: baseline; gap: .55rem;
-    font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .4rem;
-    padding-top: .85rem; border-top: 2px solid var(--ink); color: var(--ink);
+  /* 刊头的杂志变体：上墨线 + 品牌标记 + 更大刊名，紧接 NewsIssue 的刊眉行形成双线夹持。
+     基础 .masthead 样式仍来自 global.css（任务书 / 笔记两页不受影响）。 */
+  .masthead.is-plate {
+    text-align: center; border-top: 2px solid var(--ink); border-bottom: 0;
+    padding: 1.15rem 0 0; margin: 0;
   }
-  .archive-label span {
-    font-family: var(--sans); font-weight: 400; font-size: .68rem;
-    letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
+  .plate-mark { display: block; width: 26px; height: 26px; margin: 0 auto .55rem; opacity: .9; }
+  .masthead.is-plate .masthead-kicker { margin: 0 0 .35rem; letter-spacing: .3em; text-transform: none; }
+  .masthead.is-plate h1 {
+    margin: 0 0 .5rem; font-size: clamp(2.9rem, 7vw, 4.4rem);
+    line-height: 1; letter-spacing: .06em; text-shadow: none;
   }
+  .masthead.is-plate .masthead-sub { margin: 0; font-size: .66rem; color: var(--ink-soft); }
+
+  /* 往期：四列索引表（期号 / 日期 / 提要 / 条数） */
+  .archive { margin-top: 3.4rem; border-top: 2px solid var(--ink); padding-top: 1.1rem; }
+  .block-label {
+    display: flex; align-items: baseline; gap: .6rem; margin: 0 0 .2rem;
+    font-family: var(--serif); font-size: 1.02rem; font-weight: 700;
+    letter-spacing: .08em; color: var(--ink);
+  }
+  .block-label span {
+    font-family: var(--sans); font-weight: 400; font-size: .63rem;
+    letter-spacing: .24em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .block-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
   .archive-list { list-style: none; margin: 0; padding: 0; }
-  .archive-list li { border-bottom: 1px solid var(--line); }
-  .archive-list li:last-child { border-bottom: none; }
-  .archive-list a {
-    display: grid; grid-template-columns: auto auto 1fr auto; gap: 1rem; align-items: baseline;
-    padding: .95rem .4rem; border-radius: 10px; color: var(--ink);
-    transition: background .15s ease;
+  .archive-head, .archive-list a {
+    display: grid; grid-template-columns: 4.5rem 8.5rem 1fr 3.5rem; gap: 1.25rem;
+    align-items: baseline; padding: .9rem .1rem; border-top: 1px solid var(--line);
+    color: var(--ink); font-variant-numeric: tabular-nums;
   }
-  .archive-list a:hover { background: var(--accent-soft); text-decoration: none; }
-  .a-no { font-family: var(--sans); font-size: .74rem; letter-spacing: .1em; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .a-date { font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .a-headline {
-    font-family: var(--serif); font-size: .98rem;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  .archive-head {
+    border-top: 0; padding: .2rem .1rem .55rem; font-family: var(--sans);
+    font-size: .62rem; letter-spacing: .2em; color: var(--ink-soft);
   }
-  .a-count { font-family: var(--sans); font-size: .74rem; color: var(--ink-soft); white-space: nowrap; }
-  @media (max-width: 640px) {
-    .archive-list a { grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: .15rem .8rem; }
-    .a-headline { grid-column: 1 / -1; white-space: normal; }
-    .a-count { display: none; }
+  .archive-list a:hover { text-decoration: none; }
+  .archive-list a:hover .a-headline {
+    color: var(--accent); text-decoration: underline;
+    text-decoration-thickness: 1px; text-underline-offset: .2em;
+  }
+  .a-no {
+    font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .06em;
+    color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .a-date {
+    font-family: var(--sans); font-size: .8rem; color: var(--ink-soft);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .a-headline { font-family: var(--serif); font-size: 1rem; line-height: 1.5; }
+  .a-count {
+    font-family: var(--sans); font-size: .76rem; color: var(--ink-soft);
+    text-align: right; white-space: nowrap;
+  }
+
+  /* 版块版权页 */
+  .news-colophon {
+    margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 1.2rem;
+    display: grid; gap: .6rem; justify-items: center; text-align: center;
+  }
+  .news-colophon p {
+    margin: 0; max-width: 40rem; font-family: var(--sans);
+    font-size: .82rem; line-height: 1.8; color: var(--ink-soft);
+  }
+  .news-colophon .cl-mark { font-size: .64rem; letter-spacing: .3em; white-space: nowrap; }
+
+  @media (max-width: 620px) {
+    .archive-head, .archive-list a { grid-template-columns: 4.5rem 1fr; gap: .3rem .9rem; }
+    .a-headline { grid-column: 1 / -1; }
+    /* 提要与条数在窄屏各自换行/隐藏，对应的表头也一并去掉，免得挤在期号那一列 */
+    .a-count, .archive-head span:nth-child(3), .archive-head span:last-child { display: none; }
   }
 </style>
