@@ -1,0 +1,70 @@
+{
+  "date": "2026-08-05",
+  "headline": "AI音乐与电影创作工具落地，开源模型安全缺口引行业关注",
+  "items": [
+    {
+      "title": "Spotify联手Merlin推出AI翻唱工具，艺术家可获报酬",
+      "summary": "Spotify宣布与代表超过3万家独立厂牌的Merlin合作，扩展其AI混音与翻唱产品。该付费工具允许粉丝为参与艺术家的歌曲生成AI翻唱和混音，艺术家可选择加入并获得报酬。这为音乐人开辟了AI衍生内容变现的新路径。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/04/spotify-adds-merlin-to-its-ai-music-remix-and-covers-effort",
+      "featured": true
+    },
+    {
+      "title": "Autodesk推3D编辑器和画布，强化AI电影制作控制",
+      "summary": "Autodesk发布Flow Studio的3D Editor + Canvas功能，旨在解决AI电影制作中只能依赖简单提示、缺乏精细控制的问题。创作者可对生成内容进行三维空间调整，让AI视频创作更可控。这降低了高质量AI影视内容的制作门槛。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/3d/autodesk-tackles-ai-filmmakings-biggest-problem-with-3d-control",
+      "featured": true
+    },
+    {
+      "title": "GitHub Copilot CLI焕新：选项卡界面与免配置设置",
+      "summary": "GitHub Copilot CLI重新设计终端UI，新增选项卡式界面与无需配置文件的工具设置。开发者可以更高效地管理多任务，减少环境配置负担。AI辅助编程的交互体验得到明显改善。",
+      "category": "工具",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/wybFeXucFGaobN7wQjev",
+      "featured": false
+    },
+    {
+      "title": "OpenAI发布GPT-Live实时语音模型，支持连续对话",
+      "summary": "OpenAI推出GPT-Live实时语音交互系统，采用无轮次语音模型与低延迟架构，实现连续、自然的语音对话。该模型可应用于语音助手、音频内容创作等场景。语音AI的交互流畅度迈上新台阶。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/continuous-voice-interaction-with-gpt-live",
+      "featured": false
+    },
+    {
+      "title": "Hugging Face开源LFM2.5-2.6B模型，本地部署agent",
+      "summary": "Hugging Face发布轻量级模型LFM2.5-2.6B，专为本地部署agent设计，可在端侧运行AI代理。该模型让开发者和创作者无需云端依赖即可构建智能应用。本地AI agent的普及获得新选择。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/LiquidAI/lfm2-5-2-6b",
+      "featured": false
+    },
+    {
+      "title": "硅谷分歧推迟美国对华开源AI模型禁令",
+      "summary": "据纽约时报报道，白宫原计划对中国开源AI模型实施制裁与云禁令，因硅谷巨头意见相左而暂时搁置，最终决定预计9月前做出。OpenAI、Anthropic支持限制，Nvidia、Google、Meta则反对。这一走向将直接影响国内创作者能否继续使用相关开源模型。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/silicon-valleys-rift-over-open-source-pushes-back-contemplated-white-house-bans-on-chinese-ai",
+      "featured": false
+    },
+    {
+      "title": "SaferAI报告：开源模型安全缺口仍存",
+      "summary": "SaferAI最新报告指出，Z.ai的开源模型GLM-5.2能力已接近前沿，但缺乏关键的安全缓解措施。随着开源模型快速迭代，治理与安全保障可能再度滞后。创作者在采用此类模型时需自行评估合规与伦理风险。",
+      "category": "研究",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/04/open-weight-ai-models-are-catching-up-to-the-frontier-the-safety-gap-remains",
+      "featured": false
+    },
+    {
+      "title": "普利策奖首披露AI使用，写作编辑仍被禁止",
+      "summary": "2026年普利创纪录有8项获奖作品披露使用了AI，如《华尔街日报》和美联社主要用LLM加速文档检索。普利策管理员明确表示，AI仍不得用于故事写作和编辑。这为专业写作中AI的使用划定了清晰边界。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/this-years-pulitzer-prizes-saw-a-record-number-of-winners-disclose-ai-use",
+      "featured": false
+    }
+  ]
+}
