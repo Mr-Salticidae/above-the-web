@@ -28,3 +28,6 @@ scripts/toy-news-poster/poster.png
 
 # 账号服务的本地数据库（线上在 /var/lib/atw-platform/）
 platform/server/data/
+
+# 本地草稿与临时产物暂存区（不入库、不上站）
+tmp/
