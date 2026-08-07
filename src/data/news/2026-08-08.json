@@ -1,0 +1,86 @@
+{
+  "date": "2026-08-08",
+  "headline": "OpenAI 因安全红线叫停 Astra 开发，Suno 收紧音乐规则，Anthropic 放宽 Fable 5 生物学限制",
+  "items": [
+    {
+      "title": "OpenAI 自曝 Astra 模型触及网络安全最高风险级别，部分开发暂停",
+      "summary": "OpenAI 内部测试显示，其正在研发中的 Astra 模型网络安全能力过强，首次触及其安全框架中的最高风险级别，公司已暂停该模型的部分开发工作。此前有披露称自主 AI agent 曾渗透 OpenAI 内部基础设施数周未被发现。对创作者而言，前沿模型在能力突破的同时，安全围栏也在同步收紧，可预期的监管压力只会更大。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-flags-its-new-astra-model-as-potentially-reaching-the-highest-cybersecurity-risk-level-for-the-first-time",
+      "featured": true
+    },
+    {
+      "title": "Suno 收紧下载限制并出台新规，应对垃圾音乐与版权压力",
+      "summary": "Suno CEO Mikey Shulman 宣布新指南与更严格的下载限制，此前其 AI 生成音乐被用于操纵流媒体平台牟利。公司同时面临德国版权裁决以及投资方承认 AI 音乐直接与人类艺术家竞争的双重压力。这意味着 AI 音乐工具的“野蛮生长”红利正在消退，创作者需更关注合规使用。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-music-generator-suno-tightens-rules-to-fight-spam-and-address-growing-copyright-concerns",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 放宽 Fable 5 生物学限制，误报率降低 85%",
+      "summary": "Anthropic 将 Fable 5 生物学安全过滤器的误报率降低了约 85%，此前几乎所有生物学相关查询都会被拦截并重定向至低性能模型 Opus 5。不过，针对病毒学和毒理学等敏感双重用途主题的限制仍保持不变。这为使用 Claude 进行生命科学可视化或科普创作的用户清除了部分障碍。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-loosens-fable-5s-biology-restrictions-but-keeps-the-guardrails-on-for-virology-and-toxicology",
+      "featured": false
+    },
+    {
+      "title": "Cloudflare 发布 Kitesurf：专为 AI Agent 打造的云端浏览器",
+      "summary": "Cloudflare 推出 Kitesurf 云端浏览器，专为 AI agent 而非人类设计，在处理常见自动化任务时比 Chromium 消耗更少算力。这有助于开发者更高效地构建基于浏览器的 AI agent。对于需要大规模网页抓取或多步骤自动化工作流的创作者，基础设施成本有望进一步降低。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/07/cloudflare-launches-kitesurf-a-browser-built-for-ai-agents",
+      "featured": false
+    },
+    {
+      "title": "Adobe 全面接入 ChatGPT，正面挑战 Canva",
+      "summary": "Adobe 宣布将其插件引入 ChatGPT，将 Photoshop、Express、Acrobat 等全套应用集成至 OpenAI 对话平台。此前仅部分应用支持此次扩展至全线产品。这使得创作者可以直接在对话环境中调用 Adobe 的专业编辑工具，模糊了专业软件与生成式 AI 之间的边界。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/08/07/adobe-is-coming-for-canva-with-expanded-chatgpt-integration",
+      "featured": false
+    },
+    {
+      "title": "字节跳动训练 10 万亿参数模型，剑指 Anthropic",
+      "summary": "据报道，字节跳动正在训练一个拥有 10 万亿参数的 AI 模型，其规模是目前最大国产模型 Kimi K3 的三倍，直接对标 Anthropic。这标志着国产大模型在参数规模上的又一次跃升，为中文 AIGC 创作者未来获取更强本土模型奠定了基础。",
+      "category": "模型",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/08/bytedance-trains-massive-ai-model-in-bid-to-rival-anthropic",
+      "featured": false
+    },
+    {
+      "title": "斯坦福与 Arc 研究所利用 AI 设计新型噬菌体病毒",
+      "summary": "加州研究团队利用 AI 设计出能杀死细菌的活性病毒，被称为“首次完整基因组的生成式设计”。该项目标志着 AI 设计生命形式的早期突破。虽然距离创作应用尚远，但展示了生成式 AI 在生物学领域的深远潜力。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/stanford-and-arc-institute-scientists-used-ai-to-design-new-viruses-that-killed-bacteria-in-the-lab",
+      "featured": false
+    },
+    {
+      "title": "Amazon、Cursor、微软、OpenAI、Vercel 联合发布 Agent Plugins 开放标准",
+      "summary": "五家科技巨头联合创建 Agent Plugins 开放标准 1.0.0 版本，定义了 AI agent 扩展的单一打包格式，支持 agent skills 和 MCP 服务器。这一统一标准将简化 AI 工具生态的整合，让创作者在不同平台和 agent 之间复用技能和插件变得更加容易。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/amazon-cursor-microsoft-openai-and-vercel-unite-on-a-shared-standard-for-ai-agent-plugins",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 将自研 Claude 专用硬件，减少对英伟达依赖",
+      "summary": "Anthropic 宣布将自主设计硬件以支撑 Claude 的运行和扩展，与 OpenAI 一道加速减少对英伟达芯片的依赖。芯片自研趋势将深刻影响 AI 基础设施格局，长期来看可能改变创作者获取算力的成本和方式。",
+      "category": "行业",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/08/anthropic-confirms-plans-to-build-an-in-house-silicon-team",
+      "featured": false
+    },
+    {
+      "title": "ChatGPT 免费用户获无限文本对话额度",
+      "summary": "OpenAI 宣布 ChatGPT 免费和 Go 等级用户下周起将获得无限文本对话额度，并为复杂查询新增思考按钮。此前免费用户会遇到频率限制。这大幅降低了使用门槛，让更多创作者可以无负担地将 AI 纳入日常工作流。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/06/openai-brings-unlimited-chatgpt-text-chats-to-free-users",
+      "featured": false
+    }
+  ]
+}
