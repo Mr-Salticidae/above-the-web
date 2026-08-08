@@ -1,0 +1,62 @@
+{
+  "date": "2026-08-09",
+  "headline": "xAI 发布 Imagine Image 2.0 图像模型，Claude Code 默认开启自动化模式",
+  "items": [
+    {
+      "title": "xAI 发布 Imagine Image 2.0，Arena 评测仅次于 GPT-Image-2",
+      "summary": "xAI 为 Grok 推出 Imagine Image 2.0 图像生成模型，在 Arena 基准测试中排名第二，仅次于 OpenAI 的 GPT-Image-2。新版本引入 Magic Wand 局部编辑与 Multi-Ref 多参考编辑功能，并支持预设模板。这意味着创作者在 Grok 平台也能获得接近主流模型的图像生成与编辑能力。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/xais-imagine-image-2-0-lands-just-behind-openais-gpt-image-2-in-arena-benchmarks",
+      "featured": true
+    },
+    {
+      "title": "Claude Code 8 月 14 日起默认开启 Auto Mode",
+      "summary": "Anthropic 将于 8 月 14 日把 Claude Code 的 Auto Mode 设为 Pro、Max 和 Team 计划的默认模式。官方测试显示该模式识别危险命令的准确率为 89%，远高于人类审核员的 13.6%。对使用 Claude Code 的开发者而言，工作重心将从写代码进一步转向监控 AI 输出。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-sets-claude-code-to-auto-mode-by-default-to-protect-developers-from-bad-approvals",
+      "featured": true
+    },
+    {
+      "title": "研究显示 AI 短篇小说评分反超人类，得知来源后骤降",
+      "summary": "一项超过 2500 人参与的研究表明，读者无法区分 ChatGPT 生成的短篇小说与人类作品，且 AI 文本评分更高；但一旦告知作品来自机器，评分立刻下滑。这反映出当前 AI 写作已达相当水准，同时也暴露了创作者面临的偏见困境。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/readers-rate-ai-generated-short-stories-higher-than-human-ones-until-they-learn-a-machine-wrote-them",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 收购演示工具 NextSlide，团队将并入 ChatGPT",
+      "summary": "OpenAI 收购了初创公司 NextSlide，后者团队已加入 ChatGPT 产品线。NextSlide 专注于 AI 辅助演示文稿制作，这意味着 ChatGPT 未来可能进一步整合幻灯片生成能力，对需要制作视觉化内容的创作者是好消息。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/08/openai-acquires-presentation-startup-nextslide",
+      "featured": false
+    },
+    {
+      "title": "研究显示 AI Agent 单次任务能耗约为简单对话的 600 倍",
+      "summary": "气候科学家 Zeke Hausfather 跟踪了八周 Claude Code 的使用数据：共消耗 32 亿 token、约 170 度电。单次 agent 提示的能耗约为普通 AI 对话的 600 倍，揭示了 Google 和 OpenAI 公开的低能耗数据与 agent 使用现实之间的巨大差距。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-agents-use-roughly-600-times-more-energy-than-a-simple-chat-prompt",
+      "featured": false
+    },
+    {
+      "title": "DeepSeek 宣布涨价，Meta 新模型打出更低定价",
+      "summary": "DeepSeek 计划上调服务价格，而 Meta 随即推出新模型，以更低定价和少量数据授权为条件争夺用户。模型价格战持续升级，创作者在选择推理服务时有了更多性价比选项，但也需要关注不同厂商的条款差异。",
+      "category": "行业",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/5DEAabOIcvRrEMhAbCyz",
+      "featured": false
+    },
+    {
+      "title": "蚂蚁开源 Avernet，为多智能体协作提供底层框架",
+      "summary": "蚂蚁集团开源 Avernet 多智能体协作框架，内部已在 12 个业务线跑通，任务完成率超过 90%。该框架旨在解决多 Agent 之间'找不到、对齐难'的协作问题，为开发者提供了搭建复杂 AI 工作流的基础设施。",
+      "category": "工具",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/iNvHOsahsYFYaE9ImZBV",
+      "featured": false
+    }
+  ]
+}
