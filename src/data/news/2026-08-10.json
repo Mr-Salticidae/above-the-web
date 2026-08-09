@@ -1,0 +1,46 @@
+{
+  "date": "2026-08-10",
+  "headline": "AIGC 工具与基础设施加速进化：Claude Code 与 WeatherNext 开源成焦点",
+  "items": [
+    {
+      "title": "Claude Code 即将默认开启 Auto Mode",
+      "summary": "Anthropic 宣布 Claude Code 的 Auto Mode 将默认启用，该模式下 AI 自主完成代码任务所需的人类监督将进一步减少。这是继会话间通信功能后，Anthropic 在编程工具自动化上的又一重要推进。对使用 Claude Code 辅助工作流开发的创作者而言，意味着更低的操作门槛。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/09/anthropic-is-turning-claude-codes-auto-mode-on-by-default",
+      "featured": true
+    },
+    {
+      "title": "Claude Code 会话可跨终端共享上下文",
+      "summary": "Claude Code 现在允许不同实例在 macOS 和 Linux 上互相发送消息、共享洞察并检查彼此状态。这项更新使并行开发工作流中的多会话协作更加顺畅。对于依赖复杂开发环境的创作者，这简化了多任务处理的复杂性。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-code-sessions-can-now-talk-to-each-other-and-share-context-across-terminals",
+      "featured": false
+    },
+    {
+      "title": "Google 发布 DiffusionGemma 文本扩散模型",
+      "summary": "Google DeepMind 将 Gemma 4 改造为 DiffusionGemma 扩散模型，仅需原训练成本不到 10% 的预算。该模型可并行生成 256 个 token，速度约 1500 token/秒，但推理任务上质量仍落后于自回归原型。为文本生成效率提供了新思路，但成熟度有待观察。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/googles-diffusiongemma-proves-you-dont-need-to-train-from-scratch-to-build-a-text-diffusion-model",
+      "featured": false
+    },
+    {
+      "title": "DeepMind 开源 WeatherNext 提升飓风预测能力",
+      "summary": "DeepMind 开源 WeatherNext 模型，能利用较低分辨率天气数据更准确预测热带气旋。Ars Technica 报道该成果令气象学家感到惊讶。开源气象 AI 模型为气候相关数据的可视化创作提供了新的可靠数据源。",
+      "category": "研究",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/science/2026/08/deepminds-hurricane-model-bought-forecasters-an-extra-day",
+      "featured": false
+    },
+    {
+      "title": "Square Enix AI 争议促创作者记录创作过程",
+      "summary": "在 Square Enix 等公司使用 AI 引发的争议中，有观点指出保留草图、草稿可能是证明作品为人类创作的唯一方式。这一讨论触及了 AI 时代创作者如何自证清白的根本问题，对独立创作者尤为重要。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/ai-art/the-square-enix-ai-fiasco-convinces-me-we-all-need-to-start-documenting-our-creative-process",
+      "featured": false
+    }
+  ]
+}
