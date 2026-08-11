@@ -1,0 +1,70 @@
+{
+  "date": "2026-08-12",
+  "headline": "Gemini 月活破 10 亿，Nvidia 开源 3.6B 高速模型领跑效率赛道",
+  "items": [
+    {
+      "title": "Gemini 月活突破 10 亿，Google 史上增长最快",
+      "summary": "Google 首席执行官 Sundar Pichai 确认 Gemini 月活用户突破 10 亿，成为 Google 有史以来用户增长最快的产品。该里程碑紧随 ChatGPT 破 10 亿之后，标志着 AI 助手从早期采用迈向主流大众。对创作者而言，AI 助手正成为新一代分发与交互的核心入口。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/978113/chatgpt-gemini-1-billion-users",
+      "featured": true
+    },
+    {
+      "title": "Nvidia 开源 Nemotron 3.5 Lightning，速度优先",
+      "summary": "Nvidia 发布开源模型 Nemotron 3.5 Lightning，其活跃参数仅 36 亿，在 Intelligence Index 上持平 OpenAI 的 gpt-oss-120b，速度接近 670 tokens/秒，定位效率优先。这对需要在本地或边缘端部署快速推理的创作者是个明确信号。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nvidias-open-weight-nemotron-3-5-lightning-prioritizes-speed-over-maximum-intelligence",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 将为所有 Claude 输出添加不可见水印",
+      "summary": "Anthropic 宣布自 2026 年 8 月起，在全球范围内为 Claude 生成的文本嵌入不可见水印，并为文件添加 C2PA 标准的数字签名来源元数据。该标记人眼不可见，旨在满足欧洲 AI 透明度法规，并向第三方开放检测工具。创作者使用 Claude 生成内容时，其作品将自动携带可溯源标记。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/11/anthropic-says-it-will-watermark-text-generated-by-its-ai-models",
+      "featured": false
+    },
+    {
+      "title": "Spotify 将标注 AI Persona 艺人并排除推荐",
+      "summary": "Spotify 推出“AI Persona”标签，用于标识非真实个人的 AI 生成艺人档案，并默认将其音乐从编辑、算法及个性化推荐中排除，9 月中旬开始推出。允许艺人自行披露是否为 AI。这直接影响 AI 音乐创作者在主流流媒体平台的自然流量分发。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/11/spotify-will-label-ai-persona-profiles-and-exclude-their-music-from-recommendations",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 推出 GPT-5.6-Cyber 安全模型",
+      "summary": "OpenAI 发布针对网络安全专项训练的 GPT-5.6-Cyber 模型，可回答 98.5% 此前被拦截的安全查询，并发现两个此前未知的 Chrome 漏洞。该模型通过 Daybreak Red 向授权安全人员开放。虽然偏向安全研究，但其对复杂漏洞推理的展示也预示了下一代 Agent 模型的推理深度。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-launches-gpt-5-6-cyber-to-help-defenders-find-vulnerabilities-before-attackers-do",
+      "featured": false
+    },
+    {
+      "title": "ChatGPT 桌面应用上线 Linux",
+      "summary": "OpenAI 正式发布 Linux 桌面版 ChatGPT 应用，补齐了此前在 Windows 和 macOS 之外的关键缺口。Linux 原生支持对使用该系统进行开发的创作者和开发者而言是实打实的效率提升。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/11/openai-launches-chatgpt-desktop-app-for-linux",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 模型在黎曼假设上取得进展",
+      "summary": "Anthropic 透露其模型在悬而未决 150 多年的数学难题——黎曼假设上取得了意想不到的进展。虽然并未彻底解决该问题，但模型所展示的深度推理能力引发了学术界对 AI 辅助数学研究潜力的广泛讨论。这预示着 AI 工具可能在更深层研究任务中成为创作者和学者的协作伙伴。",
+      "category": "研究",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/11/an-unreleased-anthropic-model-made-progress-on-one-of-maths-biggest-unsolved-problems",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 开始在 ChatGPT 中测试广告",
+      "summary": "OpenAI 宣布在 ChatGPT 中测试广告以支持免费访问，承诺清晰标注、答案独立、严格隐私保护及用户控制。免费 AI 服务寻找商业化路径，对创作者的潜在影响在于未来内容可能进入新的分发语境。",
+      "category": "行业",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/testing-ads-in-chatgpt",
+      "featured": false
+    }
+  ]
+}
