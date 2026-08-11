@@ -2,46 +2,70 @@
 const base = import.meta.env.BASE_URL;
 ---
 
-<section class="kb-chat" data-kb-chat data-base={base} aria-labelledby="kb-chat-title">
-  <div class="kb-chat-head">
-    <div>
-      <p class="kb-chat-kicker"><span aria-hidden="true">✦</span> AI 查询</p>
-      <h2 id="kb-chat-title">问问知识库</h2>
-      <p>先检索站内笔记，再依据原文回答；每条结论都能回到出处。</p>
-    </div>
-    <button class="kb-chat-reset" type="button" data-kb-reset hidden>新对话</button>
-  </div>
+<section class="kb-chat" data-kb-chat data-base={base} data-open="false">
+  <button
+    class="kb-chat-launcher"
+    type="button"
+    data-kb-launcher
+    aria-expanded="false"
+    aria-controls="kb-chat-dialog"
+  >
+    <span class="kb-chat-launcher-icon" aria-hidden="true">✦</span>
+    <span class="kb-chat-launcher-label">问知识库</span>
+  </button>
 
-  <div class="kb-chat-thread" data-kb-thread aria-live="polite" aria-label="知识库对话">
-    <div class="kb-chat-message is-assistant">
-      <div class="kb-chat-avatar" aria-hidden="true">蛛</div>
-      <div class="kb-chat-bubble">
-        <p>你可以直接问一个具体问题。我会先从已发布的笔记里找依据，再给你一份带来源的回答。</p>
+  <div
+    class="kb-chat-panel"
+    id="kb-chat-dialog"
+    data-kb-panel
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="kb-chat-title"
+    hidden
+  >
+    <div class="kb-chat-head">
+      <div>
+        <p class="kb-chat-kicker"><span aria-hidden="true">✦</span> AI 查询</p>
+        <h2 id="kb-chat-title">问问知识库</h2>
+        <p>依据已发布笔记回答，结论可回到原文。</p>
+      </div>
+      <div class="kb-chat-head-actions">
+        <button class="kb-chat-reset" type="button" data-kb-reset hidden>新对话</button>
+        <button class="kb-chat-close" type="button" data-kb-close aria-label="关闭知识库对话">×</button>
       </div>
     </div>
-  </div>
 
-  <div class="kb-chat-starters" data-kb-starters aria-label="示例问题">
-    <button type="button">怎样保持 Midjourney 角色一致性？</button>
-    <button type="button">做 AI 短片时，故事结构怎么搭？</button>
-    <button type="button">Prompt 常见的失败原因有哪些？</button>
-  </div>
+    <div class="kb-chat-thread" data-kb-thread aria-live="polite" aria-label="知识库对话">
+      <div class="kb-chat-message is-assistant">
+        <div class="kb-chat-avatar" aria-hidden="true">蛛</div>
+        <div class="kb-chat-bubble">
+          <p>你可以直接问一个具体问题。我会先从已发布的笔记里找依据，再给你一份带来源的回答。</p>
+        </div>
+      </div>
+    </div>
 
-  <form class="kb-chat-form" data-kb-form>
-    <label class="sr-only" for="kb-chat-input">向知识库提问</label>
-    <textarea
-      id="kb-chat-input"
-      data-kb-input
-      rows="2"
-      maxlength="1000"
-      placeholder="比如：MJ 角色一致性最该先锁定什么？"
-    ></textarea>
-    <button class="kb-chat-send" type="submit" data-kb-send aria-label="发送问题">
-      <span>发送</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14-7-4 14-3-6-7-1Z"/><path d="m12 13 7-8"/></svg>
-    </button>
-  </form>
-  <p class="kb-chat-note" data-kb-note>登录后可用 · 回答只依据已发布笔记，重要结论请打开原文核对</p>
+    <div class="kb-chat-starters" data-kb-starters aria-label="示例问题">
+      <button type="button">怎样保持 Midjourney 角色一致性？</button>
+      <button type="button">做 AI 短片时，故事结构怎么搭？</button>
+      <button type="button">Prompt 常见的失败原因有哪些？</button>
+    </div>
+
+    <form class="kb-chat-form" data-kb-form>
+      <label class="sr-only" for="kb-chat-input">向知识库提问</label>
+      <textarea
+        id="kb-chat-input"
+        data-kb-input
+        rows="2"
+        maxlength="1000"
+        placeholder="比如：MJ 角色一致性最该先锁定什么？"
+      ></textarea>
+      <button class="kb-chat-send" type="submit" data-kb-send aria-label="发送问题">
+        <span>发送</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14-7-4 14-3-6-7-1Z"/><path d="m12 13 7-8"/></svg>
+      </button>
+    </form>
+    <p class="kb-chat-note" data-kb-note>登录后可用 · 重要结论请打开原文核对</p>
+  </div>
 </section>
 
 <script>

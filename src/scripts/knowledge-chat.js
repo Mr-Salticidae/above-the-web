@@ -255,6 +255,9 @@ export function initKnowledgeChat(root) {
   root.dataset.ready = 'true';
 
   const base = root.dataset.base || '/';
+  const launcher = root.querySelector('[data-kb-launcher]');
+  const panel = root.querySelector('[data-kb-panel]');
+  const close = root.querySelector('[data-kb-close]');
   const form = root.querySelector('[data-kb-form]');
   const input = root.querySelector('[data-kb-input]');
   const send = root.querySelector('[data-kb-send]');
@@ -266,6 +269,20 @@ export function initKnowledgeChat(root) {
   const history = [];
   let busy = false;
   let enabled = true;
+
+  const setOpen = (value, { restoreFocus = true } = {}) => {
+    const open = Boolean(value);
+    panel.hidden = !open;
+    root.dataset.open = String(open);
+    launcher.setAttribute('aria-expanded', String(open));
+    document.documentElement.classList.toggle('kb-chat-open', open);
+
+    if (open) {
+      requestAnimationFrame(() => input.focus());
+    } else if (restoreFocus) {
+      launcher.focus();
+    }
+  };
 
   const setBusy = (value) => {
     busy = value;
@@ -343,10 +360,15 @@ export function initKnowledgeChat(root) {
       });
     } finally {
       setBusy(false);
-      input.focus();
+      if (root.dataset.open === 'true') input.focus();
     }
   };
 
+  launcher.addEventListener('click', () => setOpen(true));
+  close.addEventListener('click', () => setOpen(false));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && root.dataset.open === 'true') setOpen(false);
+  });
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     submitQuestion();
@@ -384,7 +406,10 @@ export function initKnowledgeChat(root) {
   if (getToken()) {
     try {
       const pending = sessionStorage.getItem(PENDING_KEY);
-      if (pending) input.value = pending.slice(0, 1000);
+      if (pending) {
+        input.value = pending.slice(0, 1000);
+        setOpen(true, { restoreFocus: false });
+      }
     } catch {}
   }
 
