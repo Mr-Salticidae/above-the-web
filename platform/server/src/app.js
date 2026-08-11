@@ -6,10 +6,13 @@ import { createMailer, passwordResetMail } from "./mailer.js";
 import {
   AssistError,
   buildClaimPitchPrompt,
+  buildKnowledgeChatPrompt,
   buildTaskDraftPrompt,
   CLAIM_PITCH_SCHEMA,
   CLAIM_PITCH_SYSTEM,
   createAssistant,
+  KNOWLEDGE_CHAT_SCHEMA,
+  KNOWLEDGE_CHAT_SYSTEM,
   TASK_DRAFT_SCHEMA,
   TASK_DRAFT_SYSTEM,
 } from "./assist.js";
@@ -107,7 +110,7 @@ function clearAuthFailures(request) {
   authAttempts.delete(clientAddress(request));
 }
 
-function checkAiQuota(userId, limit) {
+function checkAiQuota(userId, limit, message = "AI 辅助这一小时用得有点猛，歇会儿再来——手填不受影响") {
   const nowTs = Date.now();
   // 过期的窗口顺手扫掉，这张表不该随注册人数一直长
   if (aiCalls.size > 500) {
@@ -122,7 +125,7 @@ function checkAiQuota(userId, limit) {
   }
   record.count += 1;
   if (record.count > limit) {
-    throw new HttpError(429, "AI_QUOTA", "AI 辅助这一小时用得有点猛，歇会儿再来——手填不受影响");
+    throw new HttpError(429, "AI_QUOTA", message);
   }
 }
 
@@ -143,6 +146,60 @@ function draftList(value, { maxItems = 5, maxLength = 120 } = {}) {
     .map((item) => clean(item).slice(0, maxLength))
     .filter(Boolean)
     .slice(0, maxItems);
+}
+
+// 知识库问答的上下文来自浏览器刚刚检索到的公开页面。客户端传来的东西仍一律当不可信输入：
+// 只收站内路径、短标题和有限长度的正文片段，编号由服务端重新排，不让模型看到任意 URL。
+function internalPath(value) {
+  const text = clean(value);
+  if (!text.startsWith("/") || text.startsWith("//") || text.includes("\\")) return "";
+  if (/[\u0000-\u001f]/.test(text)) return "";
+  return text.slice(0, 500);
+}
+
+function knowledgeSources(value) {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set();
+  const sources = [];
+  for (const candidate of value) {
+    if (!candidate || typeof candidate !== "object") continue;
+    const url = internalPath(candidate.url);
+    const title = draftText(candidate.title, 120);
+    const category = draftText(candidate.category, 80);
+    const excerpt = draftText(candidate.excerpt, 3200);
+    if (!url || !title || excerpt.length < 20 || seen.has(url)) continue;
+    seen.add(url);
+    sources.push({ id: sources.length + 1, url, title, category, excerpt });
+    if (sources.length >= 6) break;
+  }
+  return sources;
+}
+
+function knowledgeHistory(value) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .filter((message) => message && ["user", "assistant"].includes(message.role))
+    .map((message) => ({ role: message.role, content: draftText(message.content, 2000) }))
+    .filter((message) => message.content)
+    .slice(-8);
+}
+
+function knowledgeAnswer(value, sourceCount) {
+  return draftText(value, 5000).replace(/\[(\d{1,3})\]/g, (whole, raw) => {
+    const id = Number(raw);
+    return id >= 1 && id <= sourceCount ? `[${id}]` : "";
+  });
+}
+
+function knowledgeSourceIds(answer, claimed, sourceCount) {
+  const ids = [];
+  const add = (value) => {
+    const id = Number(value);
+    if (Number.isInteger(id) && id >= 1 && id <= sourceCount && !ids.includes(id)) ids.push(id);
+  };
+  for (const match of answer.matchAll(/\[(\d{1,3})\]/g)) add(match[1]);
+  if (Array.isArray(claimed)) claimed.forEach(add);
+  return ids.slice(0, sourceCount);
 }
 
 function validateRegistration(body) {
@@ -375,6 +432,7 @@ export function createApplication(config, log = console, deps = {}) {
           resetTtlMinutes: config.resetTtlMinutes,
           // 没配 AI 通道时前端连按钮都不摆出来，页面上看不出少了什么，手填照旧
           aiAssist: assistant.enabled,
+          knowledgeChat: assistant.enabled,
           taskStatuses: TASK_STATUSES,
           roles: ROLES,
         });
@@ -921,6 +979,51 @@ export function createApplication(config, log = console, deps = {}) {
           // 认领接口那边的上限是 1000，这里就按 1000 截，别让人拿到一段提交不上去的稿
           pitch: draftText(data.pitch, 1000),
           missing: draftList(data.missing, { maxItems: 4 }),
+        });
+        return;
+      }
+
+      if (route === "POST /api/ai/kb-chat") {
+        const { user } = authenticate(request);
+        requireAssistant();
+        const body = await readJson(request);
+        const question = clean(body.question);
+        if (question.length < 2) throw new HttpError(422, "INPUT_TOO_SHORT", "请把问题说得再具体一点");
+        if (question.length > 1000) throw new HttpError(422, "FIELD_TOO_LONG", "问题最长 1000 个字符");
+
+        const sources = knowledgeSources(body.sources);
+        if (!sources.length) {
+          throw new HttpError(422, "NO_KNOWLEDGE_SOURCES", "没有找到可供回答的站内笔记，请换个关键词");
+        }
+        const history = knowledgeHistory(body.history);
+        checkAiQuota(user.id, config.ai.hourlyLimit, "AI 查询这一小时用得有点猛，歇会儿再来");
+
+        const { data } = await assistant.complete({
+          system: KNOWLEDGE_CHAT_SYSTEM,
+          prompt: buildKnowledgeChatPrompt({ question, history, sources }),
+          schema: KNOWLEDGE_CHAT_SCHEMA,
+          schemaName: "knowledge_chat",
+          purpose: "knowledge_chat",
+        });
+        const answer = knowledgeAnswer(data.answer, sources.length);
+        if (!answer) throw new AssistError("AI_EMPTY", "AI 这次没有整理出答案，请换个问法再试");
+        const sourceIds = knowledgeSourceIds(answer, data.sourceIds, sources.length);
+
+        database.createAuditLog({
+          actorUserId: user.id,
+          action: "ai.knowledge_chat",
+          targetType: "knowledge_base",
+          details: {
+            model: assistant.model,
+            sources: sources.length,
+            historyTurns: history.length,
+            questionLength: question.length,
+          },
+        });
+        reply(200, {
+          answer,
+          sourceIds,
+          followUps: draftList(data.followUps, { maxItems: 3, maxLength: 80 }),
         });
         return;
       }

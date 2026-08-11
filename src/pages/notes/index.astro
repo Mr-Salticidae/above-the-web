@@ -6,6 +6,7 @@
 // 首页只留七个栏目入口。`?cat=` 带栏目名进来会直接选中对应筛选。
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import KnowledgeChat from '../../components/KnowledgeChat.astro';
 import { href } from '../../lib/notes.mjs';
 import { groupNotes } from '../../lib/note-groups.mjs';
 
@@ -27,6 +28,7 @@ const catCounts = counts;
         这里是小站最初的样子，目前 {total} 篇。
       </p>
     </header>
+    <KnowledgeChat />
   </div>
 
   <div class="explore">

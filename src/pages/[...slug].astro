@@ -20,8 +20,8 @@ const tags = getTags(note);
 ---
 
 <BaseLayout title={title} description={getExcerpt(note, 120)}>
-  <article class="prose">
-    <p class="meta">{category}</p>
+  <article class="prose" data-pagefind-filter="type:note">
+    <p class="meta" data-pagefind-meta="category">{category}</p>
     <Content />
     {tags.length > 0 && (
       <div class="tags">

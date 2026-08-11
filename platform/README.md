@@ -76,7 +76,10 @@ markdown 里的 `status` / `taker` 只在任务第一次入库时当初值用。
 - **每个账号每小时 30 次**（`ATW_AI_HOURLY_LIMIT`）。挡的是「不满意就再点一次」点上头，
   超了只堵 AI 这个入口，手填和提交一点不受影响。
 
-接口两条，都要登录：`POST /api/ai/task-draft`（仅发布方）、`POST /api/ai/claim-pitch`（登录即可）。
+接口都要登录：`POST /api/ai/task-draft`（仅发布方）、`POST /api/ai/claim-pitch`（登录即可），
+以及 `POST /api/ai/kb-chat`（登录即可）。知识库查询先由浏览器用 Pagefind 检索公开笔记，
+只把本轮命中的少量正文片段交给模型；回答里的 `[1]` 等编号会回链到原文。来源不足时明确说不知道，
+不让模型用站外常识补齐。
 走 OpenAI 兼容协议的单次结构化输出调用（`response_format.json_schema`），和
 `scripts/news-compose.mjs` 一个路子——搜集和校验都是确定性工作，模型只做判断与改写，
 一次请求就够，不开 agentic loop。实现在 `src/assist.js`，零第三方依赖。
@@ -105,8 +108,8 @@ reasoning 归零，951 token 写完整整八小节、1483 字的任务书正文�
 真被额度截断时（`finish_reason=length`）回的是「这次写太长了没写完，把话说短一点再试」，
 而不是让人以为模型犯浑的「格式不对」。
 
-**没配 `ATW_AI_API_KEY` 就当它不存在**：`/meta` 的 `aiAssist` 变 `false`，
-页面上连按钮都不摆出来，手填那条路一点没变——和发信通道一个道理，宁可降级也不因为漏配就 500。
+**没配 `ATW_AI_API_KEY` 就当它不存在**：`/meta` 的 `aiAssist` / `knowledgeChat` 变 `false`，
+任务页保留手填，知识库页退回普通全文搜索——和发信通道一个道理，宁可降级也不因为漏配就 500。
 模型那头出岔子回 502 加一句「手填也能发」，对方的原话只进日志。
 
 顺带把「写到一半没了」这件事也堵上：新建任务书和认领申请的输入都随手存在本机

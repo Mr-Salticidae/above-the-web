@@ -9,6 +9,7 @@
 - **Astro**（静态站，SSG）+ 自有 `remark-wikilink` 插件渲染 Obsidian 双链
 - 内容源：构建时浅克隆 `knowledge-base`，仅取 v1 精选目录（见 `src/lib/kb.mjs` 的 `SELECTED`）
 - 搜索：Pagefind（静态全文，零后端）
+- 知识库 AI 查询：Pagefind 先找相关笔记，登录用户再通过站内 AI 通道获得带原文引用的多轮回答
 - 部署：GitHub Pages + Actions
 - 账号与任务流转：`platform/`（Node + node:sqlite，跑在香港服务器，见下）
 
