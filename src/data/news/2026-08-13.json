@@ -1,0 +1,62 @@
+{
+  "date": "2026-08-13",
+  "headline": "视觉模型与编码模型密集更新，AI内容训练与版权争议升温",
+  "items": [
+    {
+      "title": "Hugging Face 发布 LFM2.5-VL-3B 视觉模型",
+      "summary": "Liquid Foundation Models 团队发布 LFM2.5-VL-3B，面向边缘设备提供更快推理速度，支持图像与视频理解任务。该模型专为资源受限场景优化，方便创作者在本地或移动端部署视觉AI工作流。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/LiquidAI/lfm2-5-vl-3b",
+      "featured": true
+    },
+    {
+      "title": "Grok 4.6 性能匹敌 OpenAI 且价格更低",
+      "summary": "xAI 的 Grok 4.6 在 Artificial Analysis 智能指数上获得 61 分，追平 GPT-5.6 Sol，仅落后 Claude Opus 5。在智能体任务中，完成复杂工作流所需步数约为后者一半，价格低超 60%。创作者可以更低代价调用接近前沿的推理与代理能力。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/spacexais-grok-4-6-matches-openais-best-model-and-undercuts-it-on-price",
+      "featured": true
+    },
+    {
+      "title": "Nvidia Nemotron 4 剑指万亿参数",
+      "summary": "Nvidia 正在研发开源权重模型 Nemotron 4，目标规模达一万亿参数。该参数级已被中国实验室率先触及，反映出大模型竞赛正持续推高规模上限。创作者未来或能直接获取更强开源基座。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nvidias-nemotron-4-aims-for-one-trillion-parameters-a-scale-chinese-labs-already-surpassed",
+      "featured": false
+    },
+    {
+      "title": "Amazon 默认用 Twitch 直播训练 AI",
+      "summary": "Twitch 宣布用户的直播、录像、剪辑、聊天等内容可能被用于未来生成式 AI 模型训练，用户需主动选择退出。CPO 称如果采用 opt-in 机制，几乎无人会同意。这给直播与内容创作者的数据控制权敲响警钟。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/12/amazon-will-train-on-twitch-streamers-content-by-default-unless-they-opt-out",
+      "featured": false
+    },
+    {
+      "title": "D’Addario 承认宣传视频使用 Suno AI 音乐",
+      "summary": "乐器品牌 D’Addario 在长时间否认后，终于承认近期宣传视频中部分音乐由 Suno 生成。该事件持续发酵，为音乐与营销行业使用AI生成内容提供了关于披露与版权的典型案例。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/978982/daddario-guitar-ai-music-suno",
+      "featured": false
+    },
+    {
+      "title": "iPhone 将可验证照片非 deepfake",
+      "summary": "iOS 27 beta 5 出现“Apple Reference Image”系统代码，可在拍摄时将溯源元数据嵌入 iPhone 照片，供用户证明图像来源。这为创作者提供了一种对抗深度伪造和内容盗用的可信验证途径。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/977921/apple-reference-image-iphone-metadata",
+      "featured": false
+    },
+    {
+      "title": "Mistral 提供欧盟数据处理选项",
+      "summary": "Mistral 开始允许客户将 AI 请求路由至欧洲或美国服务器，并出售高峰时段优先队列访问。两项服务均需额外费用，且区域路由未覆盖所有功能。欧洲创作者的数据驻留选择更加灵活，但需付出成本。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/mistral-now-offers-eu-data-processing-and-priority-access-but-both-come-with-important-limits",
+      "featured": false
+    }
+  ]
+}
