@@ -1,0 +1,70 @@
+{
+  "date": "2026-08-14",
+  "headline": "Suno Studio 2.0 推进 AI 音乐制作，OpenAI 与 Google 竞速模型速度与成本",
+  "items": [
+    {
+      "title": "Suno Studio 2.0 上线对话式制作功能，支持无限制 MIDI 与 32 位导出",
+      "summary": "Suno 推出 Studio 2.0，面向 Premier 订阅用户增加文本聊天创建乐器和插件功能，并无限制支持 MIDI 导入与 32 位导出，旨在将 AI 音乐平台升级为完整的数字音频工作站。但无限导出与近期平台设置的下载上限存在冲突。对音乐创作者而言，工作流已更接近专业 DAW，但需留意生成物的分发政策。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/suno-studio-2-0s-new-chat-feature-lets-you-talk-to-your-daw-like-its-a-bandmate",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 推出 GPT-5.6 Sol Ultrafast 模式，速度最高提升 14 倍",
+      "summary": "OpenAI 发布 API 服务层级 Ultrafast，基于 Cerebras 硬件加速，使 GPT-5.6 Sol 输出速度最高提升至 14 倍，达到每秒 750 token。该模式面向需要快速迭代的企业用户。对从事 AI 辅助写作、代码生成和批量内容生产的创作者，等待时间将大幅缩短。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/previewing-ultrafast",
+      "featured": true
+    },
+    {
+      "title": "Google 发布 Gemini 3.7 Flash，编程能力提升且价格砍半",
+      "summary": "Google 仅在三周后就推出 Gemini 3.7 Flash，定位为编程与 AI Agent 的主力工作模型。官方基准显示，其半价条件下即可超越 Claude Sonnet 5 和 GPT-5.6 Terra。对于依赖 AI 辅助编程和内容生成的创作者，新模型提供了一个更高性价比的选择。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/gemini-3-7-flash-lands-with-coding-gains-and-undercuts-its-three-week-old-predecessors-price-by-50",
+      "featured": false
+    },
+    {
+      "title": "DeepSeek 发布 V4 Pro 正式版，开源 Harness agent 工具并上调 API 价格",
+      "summary": "DeepSeek 将旗舰模型 V4-Pro 脱离测试阶段，并以 MIT 许可开源其 agent 软件 Harness v0.1。与此同时，API 价格上调，缓存命中费用涨至现价六倍。开发者获得更强模型能力的同时，需要为频繁读取相同文件的 agent 工作流承担显著更高的成本。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/deepseek-launches-an-improved-v4-pro-model-raises-api-prices-and-makes-its-agent-software-open-source",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 将 Claude Cowork 嵌入 Chrome 扩展侧边栏",
+      "summary": "Anthropic 将其协作工具 Claude Cowork 直接集成到 Chrome 扩展的侧边栏中，并带来技能和插件支持。这使得用户无需切换界面即可在浏览器中调用 AI 代理完成研究和内容处理任务，有助于提升网页端创作和办公的连续体验。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-brings-claude-cowork-to-its-chrome-extension-adding-skills-and-plugins-to-the-browser",
+      "featured": false
+    },
+    {
+      "title": "Vercel 发布 AI 优先语言 Zero，代码面向机器而非人类",
+      "summary": "Vercel 推出专为 AI 编程设计的新语言 Zero，强调代码写给 AI 而非人类阅读。该语言旨在简化 AI 生成、解析和维护代码的过程，对探索 AI 原生工作流的开发者具有参考价值，但生态成熟度仍需观察。",
+      "category": "工具",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/KEq5kQG53vxPd0bXCY7y",
+      "featured": false
+    },
+    {
+      "title": "研究人员实现从 LLM 输出近乎完美地逆向原始提示词",
+      "summary": "IIT Bombay 与 Adobe 研究团队构建了一种逆语言模型方法，无需访问模型权重即可从输出文本近乎完美地重建原始提示词。这对依赖专有系统提示词的企业构成严重安全警示，也意味着创作者精心设计的提示可能被轻易提取。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/researchers-can-now-reverse-engineer-llm-prompts-from-output-text-with-near-perfect-accuracy",
+      "featured": false
+    },
+    {
+      "title": "ShieldFont 字体问世，可在不影响阅读下毒害 AI 训练数据",
+      "summary": "一种名为 ShieldFont 的新型字体通过干扰文本渲染来破坏 AI 抓取的数据，同时保持对人类的可读性。这为内容创作者提供了一种技术手段，用以阻止其作品被用于模型无偿训练，可能影响 AI 爬虫的抓取效率。",
+      "category": "研究",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/08/new-font-turns-ordinary-webpages-into-nonsense-for-ai-scrapers",
+      "featured": false
+    }
+  ]
+}
