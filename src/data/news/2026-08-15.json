@@ -1,0 +1,62 @@
+{
+  "date": "2026-08-15",
+  "headline": "Google 放宽生成内容水印，主流模型水印策略分化加剧",
+  "items": [
+    {
+      "title": "Google 允许用户关闭 Gemini 生成内容的可见水印",
+      "summary": "Google 更新 Gemini 及 Flow 视频生成工具，用户可在设置中手动关闭生成图片、视频和音乐右下角的“火花”标识。但用于识别 AI 生成的不可见底层标记不受影响。此举让创作者在分享成品时拥有更多控制权，但也引发对 AI 内容识别标准不一的讨论。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/14/google-will-now-allow-users-to-remove-visible-watermark-from-its-ai-generations",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 发布 Claude 文本水印检测 API",
+      "summary": "Anthropic 将推出第三方水印检测接口，基于 Google 的 SynthID 技术，通过微调词选随机性嵌入标记，不影响文本质量。不过，该技术对事实密集型文本、代码及重度改写场景存在局限。这意味着 AI 文本的检测标准正逐步走向行业开放。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-announces-watermark-detection-api-that-will-let-third-parties-detect-claudes-ai-texts",
+      "featured": true
+    },
+    {
+      "title": "阿里通义千问开源 Qwen 3.8，主打本地与 Agent 场景",
+      "summary": "阿里 Qwen 团队发布 270 亿参数的 Qwen 3.8 开源模型，原生支持 26.2 万 token 上下文，并在编程和办公任务上超越更大的 Qwen 3.7 Plus。采用 Apache 2.0 许可，目标直指本地部署和 Agent 应用开发者。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/alibabas-qwen-team-releases-qwen-3-8-models-with-open-weights-under-the-apache-2-0-license",
+      "featured": false
+    },
+    {
+      "title": "智谱发布 GLM-5.3，宣称最强开源编程模型",
+      "summary": "智谱 AI 推出 GLM-5.3，通过仅靠后训练实现性能 50% 跃升，并展示在 269 个项目中找出 2436 个漏洞的安全能力。模型权重计划两周内开源，对构建自动化编程工作流的创作者具有较高参考价值。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/zhipu-ai-releases-glm-5-3-claims-its-the-strongest-open-weights-coding-model",
+      "featured": false
+    },
+    {
+      "title": "苹果与阿里合作为中国市场定制训练 AI 模型",
+      "summary": "苹果与阿里巴巴合作，利用阿里技术支持为中国市场专门训练定制大语言模型。这种罕见的跨境合作方式凸显了不同市场环境下 AI 模型本地化落地的路径差异。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/980160/apple-intelligence-china-custom-ai-model-alibaba",
+      "featured": false
+    },
+    {
+      "title": "Suno Studio 2.0 向专业 DAW 靠拢，支持 MIDI 导入",
+      "summary": "Suno 发布 Studio 2.0，重点新增 MIDI 支持，并升级使其更接近数字音频工作站。这回应了创作者对精细控制的需求，让 AI 音乐生成的后期编辑流程更贴近传统制作习惯。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/979345/suno-studio-2-0-midi-chatbot-custom-effects",
+      "featured": false
+    },
+    {
+      "title": "Writer 发布 GLM 微调模型，主打低成本部署",
+      "summary": "Writer 基于开源的 GLM-5.2 进行后训练微调，推出新系统，旨在以更低成本提供可立即部署的能力。这为企业级用户降低 AI 落地门槛提供了新选项。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/13/writer-introduces-new-ai-model-and-upgraded-harness-to-contain-token-costs",
+      "featured": false
+    }
+  ]
+}
