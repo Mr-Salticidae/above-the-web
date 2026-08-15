@@ -1,0 +1,70 @@
+{
+  "date": "2026-08-16",
+  "headline": "本日重点：Meta 开源本地大模型 Glimmer，SpaceX 收购 Cursor 尘埃落定，AI 编程与设计工具格局生变。",
+  "items": [
+    {
+      "title": "Meta 开源本地可运行的 Glimmer 模型",
+      "summary": "Meta 本周发布开放权重模型 Glimmer，允许开发者和创作者在自有硬件上直接下载运行，无需依赖闭源 API。该模型面向本地部署和 Agent 场景，与闭源 Muse Spark 形成互补。创作者可以更自由地在本地调用大模型进行内容生成，但实际能力仍需实践验证。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/video/does-mark-zuckerberg-really-believe-ai-is-for-everyone",
+      "featured": true
+    },
+    {
+      "title": "SpaceX 完成收购 Cursor，AI 编程工具并入 SpaceX",
+      "summary": "SpaceX 正式完成对 AI 编程工具 Cursor 的收购，Cursor 成为 SpaceX 旗下产品。Cursor 此前在 AI 代码生成领域广受欢迎，此次收购可能影响其后续产品定位与开发节奏。AI 编程创作者需关注 SpaceX 是否会将 Cursor 能力与自身业务深度结合。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/15/spacex-officially-closes-its-cursor-acquisition",
+      "featured": true
+    },
+    {
+      "title": "Adobe 与 ChatGPT 实现直连，设计工作流打通",
+      "summary": "用户现在可以直接在 ChatGPT 中调用 Adobe 的设计工具，实现跨应用交互。这为设计师提供了通过自然语言快速启动和编辑项目的通道，可能改变传统 GUI 工作流。创作者需留意此类集成是否真正提升效率，而非徒增复杂度。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/design/you-can-now-plug-adobe-straight-into-chatgpt-but-should-you",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 与 Anthropic 价格战升级，中国对手追赶",
+      "summary": "随着中国 AI 竞争对手持续逼近，OpenAI 与 Anthropic 相继推出低价模型，价格战白热化。Nvidia 对 OpenAI 的担保规模也遭投资者打压而大幅缩水。依赖 API 的创作者有望迎来成本下降，但需关注模型能力与服务质量的平衡。",
+      "category": "行业",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/08/openai-and-anthropic-in-price-war-as-chinese-ai-rivals-gain-ground",
+      "featured": false
+    },
+    {
+      "title": "AI 生成图书占亚马逊自出版两成，挤压真人作者收入",
+      "summary": "研究发现，AI 生成图书已占亚马逊自出版目录的 20%，却仅贡献 12% 的销售额，且导致真人作者在多品类中单书收入下滑。这为版权诉讼提供了关键市场损害证据。海量 AI 内容涌入正扭曲文字创作的市场生态，变现难度或将进一步加大。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-generated-books-are-flooding-amazon-and-tanking-sales-for-human-authors",
+      "featured": false
+    },
+    {
+      "title": "反 AI 摄影平台 Cara 遭恶意爬取，创作者社区震动",
+      "summary": "一款以“反 AI 爬取”为卖点的图片社交平台 Cara 被技术人员完整爬取并公开炫耀，该平台原本被摄影师视为保护版权的避风港。事件表明，号称免疫 AI 抓取的平台也可能存在漏洞。创作者需重新评估数字资产的存放风险，依赖单一平台并不安全。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/08/14/tech-bro-scrapes-anti-ai-photo-app-cara-then-gloats-about-it",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 推出 Computer History，将操作记录接入 ChatGPT 记忆",
+      "summary": "OpenAI 为 Mac 推出 Computer History 功能，将点击、按键和应用切换记录存储为本地 Markdown 文件，供 ChatGPT 和 Codex 搜索调用。数据默认本地保存但未加密，进入对话的内容可能被用于训练。这为创作者提供了可追溯的工作流记忆，但隐私风险同样存在。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openais-computer-history-turns-your-clicks-and-keystrokes-into-a-searchable-chatgpt-memory-timeline",
+      "featured": false
+    },
+    {
+      "title": "Hugging Face 发布 2026 夏季开源模型观察报告",
+      "summary": "Hugging Face 发布夏季开源模型现状观察，梳理近期模型发布与生态趋势。报告涵盖性能、许可、应用等多维度信息。创作者可借此快速了解开源模型的最新进展，为工具选型提供参考。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/state-of-open-models-summer-2026",
+      "featured": false
+    }
+  ]
+}
