@@ -280,14 +280,14 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .kb-chat-message:last-child { margin-bottom: 0; }
 .kb-chat-message.is-user { justify-content: flex-end; }
 .kb-chat-avatar {
-  display: grid; place-items: center; flex: 0 0 2rem; width: 2rem; height: 2rem;
+  display: grid; place-items: center; flex: 0 0 2.4rem; width: 2.4rem; height: 2.4rem;
   border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--line)); border-radius: 50%;
   color: var(--accent); background: var(--paper-2); font-family: var(--serif); font-size: .78rem; font-weight: 700;
   box-shadow: 0 6px 18px -12px rgba(var(--shadow), .5);
   object-fit: cover;
 }
 .kb-chat-bubble {
-  max-width: calc(100% - 2.45rem); padding: .7rem .8rem;
+  max-width: calc(100% - 3.1rem); padding: .7rem .8rem;
   border: 1px solid var(--line); border-radius: 4px 14px 14px 14px;
   background: var(--paper-2); color: var(--ink); font-size: .84rem; line-height: 1.68;
 }
@@ -395,7 +395,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .kb-chat-head { padding: .9rem .9rem .8rem; }
   .kb-chat-head > div:first-child > p:last-child { font-size: .68rem; }
   .kb-chat-thread { padding: .85rem; }
-  .kb-chat-bubble { max-width: calc(100% - 2.4rem); font-size: .84rem; }
+  .kb-chat-bubble { max-width: calc(100% - 3.1rem); font-size: .84rem; }
   .kb-chat-message.is-user .kb-chat-bubble { max-width: 88%; }
   .kb-chat-starters { padding: .65rem .7rem .1rem; }
   .kb-chat-form { padding: .6rem .65rem .45rem; }
