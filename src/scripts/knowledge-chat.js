@@ -244,9 +244,13 @@ function userMessage(thread, text) {
 function loadingMessage(thread) {
   const message = document.createElement('div');
   message.className = 'kb-chat-message is-assistant is-loading';
+  // 沙漏动画纯 CSS：上半堆沙渐少、中流沙、下半堆沙渐满，一轮结束整体翻转 180° 无缝续播。
   message.innerHTML = `
     <div class="kb-chat-avatar" aria-hidden="true">蛛</div>
-    <div class="kb-chat-bubble"><span></span><span></span><span></span><em>正在翻笔记</em></div>`;
+    <div class="kb-chat-bubble">
+      <span class="kb-hourglass" aria-hidden="true"><i class="hg-top"></i><i class="hg-stream"></i><i class="hg-bottom"></i></span>
+      <em>正在翻笔记</em>
+    </div>`;
   thread.append(message);
   scrollThread(thread);
   return message;
