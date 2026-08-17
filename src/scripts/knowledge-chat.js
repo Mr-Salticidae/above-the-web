@@ -5,6 +5,7 @@
 // 模型只负责「依据片段回答」，来源选择、URL 和数量都由代码兜住。
 import { api, escapeHtml, getCachedUser, getToken, url } from './account-core.js';
 import { siteMeta } from './ai-assist.js';
+import { searchPagefindNotes } from '../lib/knowledge-search.mjs';
 
 const MAX_RESULTS = 6;
 const MAX_SOURCE_CHARS = 3200;
@@ -120,15 +121,16 @@ function retrievalQuery(question, history) {
 async function retrieveSources(base, question, history) {
   const pagefind = await loadPagefind(base);
   const query = retrievalQuery(question, history);
-  let search = await pagefind.search(query, { filters: { type: 'note' } });
+  const filters = { type: 'note' };
+  let hits = await searchPagefindNotes(pagefind, query, { filters, limit: MAX_RESULTS });
 
   // 多轮里的短追问可能让组合查询变严，退回只搜上一轮主题。
-  if (!search.results.length && query !== question) {
+  if (!hits.length && query !== question) {
     const previous = [...history].reverse().find((message) => message.role === 'user')?.content || question;
-    search = await pagefind.search(previous, { filters: { type: 'note' } });
+    hits = await searchPagefindNotes(pagefind, previous, { filters, limit: MAX_RESULTS });
   }
 
-  const results = await Promise.all(search.results.slice(0, MAX_RESULTS).map((item) => item.data()));
+  const results = await Promise.all(hits.slice(0, MAX_RESULTS).map((item) => item.data()));
   return Promise.all(results.map(hydrateResult));
 }
 

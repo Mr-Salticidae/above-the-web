@@ -28,6 +28,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm test               # 知识库检索放宽等纯逻辑单元测试，挂了就不出包
       - run: npm run build          # sync(克隆 knowledge-base) + astro build + pagefind
       - uses: actions/upload-pages-artifact@v5
         with:
