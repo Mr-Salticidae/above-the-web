@@ -284,6 +284,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--line)); border-radius: 50%;
   color: var(--accent); background: var(--paper-2); font-family: var(--serif); font-size: .78rem; font-weight: 700;
   box-shadow: 0 6px 18px -12px rgba(var(--shadow), .5);
+  object-fit: cover;
 }
 .kb-chat-bubble {
   max-width: calc(100% - 2.45rem); padding: .7rem .8rem;

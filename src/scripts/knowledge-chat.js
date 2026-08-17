@@ -187,10 +187,30 @@ function scrollThread(thread) {
   requestAnimationFrame(() => thread.scrollTo({ top: thread.scrollHeight, behavior: 'smooth' }));
 }
 
-function assistantMessage(thread, { answer, sources = [], followUps = [], tone = '' }) {
+// 生成助手头像：有 src 就用 <img>，加载失败降级回圆形「蛛」文字，零 src 也直接文字。
+function buildAvatar(avatarSrc) {
+  const fallback = () => {
+    const div = document.createElement('div');
+    div.className = 'kb-chat-avatar';
+    div.setAttribute('aria-hidden', 'true');
+    div.textContent = '蛛';
+    return div;
+  };
+  if (!avatarSrc) return fallback();
+  const img = document.createElement('img');
+  img.className = 'kb-chat-avatar';
+  img.alt = '';
+  img.loading = 'lazy';
+  img.decoding = 'async';
+  img.addEventListener('error', () => { img.replaceWith(fallback()); }, { once: true });
+  img.src = avatarSrc;
+  return img;
+}
+
+function assistantMessage(thread, { answer, sources = [], followUps = [], tone = '', avatarSrc = '' }) {
   const message = document.createElement('div');
   message.className = `kb-chat-message is-assistant${tone ? ` is-${tone}` : ''}`;
-  message.innerHTML = '<div class="kb-chat-avatar" aria-hidden="true">蛛</div>';
+  message.append(buildAvatar(avatarSrc));
 
   const bubble = document.createElement('div');
   bubble.className = 'kb-chat-bubble';
@@ -241,16 +261,17 @@ function userMessage(thread, text) {
   scrollThread(thread);
 }
 
-function loadingMessage(thread) {
+function loadingMessage(thread, avatarSrc) {
   const message = document.createElement('div');
   message.className = 'kb-chat-message is-assistant is-loading';
   // 沙漏动画纯 CSS：上半堆沙渐少、中流沙、下半堆沙渐满，一轮结束整体翻转 180° 无缝续播。
-  message.innerHTML = `
-    <div class="kb-chat-avatar" aria-hidden="true">蛛</div>
-    <div class="kb-chat-bubble">
-      <span class="kb-hourglass" aria-hidden="true"><i class="hg-top"></i><i class="hg-stream"></i><i class="hg-bottom"></i></span>
-      <em>正在翻笔记</em>
-    </div>`;
+  const bubble = document.createElement('div');
+  bubble.className = 'kb-chat-bubble';
+  bubble.innerHTML = `
+    <span class="kb-hourglass" aria-hidden="true"><i class="hg-top"></i><i class="hg-stream"></i><i class="hg-bottom"></i></span>
+    <em>正在翻笔记</em>`;
+  message.append(buildAvatar(avatarSrc));
+  message.append(bubble);
   thread.append(message);
   scrollThread(thread);
   return message;
@@ -261,6 +282,7 @@ export function initKnowledgeChat(root) {
   root.dataset.ready = 'true';
 
   const base = root.dataset.base || '/';
+  const avatarSrc = root.dataset.assistantAvatar || '';
   const launcher = root.querySelector('[data-kb-launcher]');
   const panel = root.querySelector('[data-kb-panel]');
   const close = root.querySelector('[data-kb-close]');
@@ -314,6 +336,7 @@ export function initKnowledgeChat(root) {
       assistantMessage(thread, {
         answer: '这项查询会调用 AI，需要先登录。',
         tone: 'notice',
+        avatarSrc,
       });
       const bubble = thread.lastElementChild?.querySelector('.kb-chat-bubble');
       if (bubble) {
@@ -326,7 +349,7 @@ export function initKnowledgeChat(root) {
       return;
     }
 
-    const loader = loadingMessage(thread);
+    const loader = loadingMessage(thread, avatarSrc);
     setBusy(true);
     try {
       const sources = await retrieveSources(base, question, history);
@@ -335,6 +358,7 @@ export function initKnowledgeChat(root) {
         assistantMessage(thread, {
           answer: '已发布的笔记里暂时没有找到足够接近的内容。可以换一个更具体的关键词，或用右上角全文搜索直接找原文。',
           tone: 'notice',
+          avatarSrc,
         });
         return;
       }
@@ -352,6 +376,7 @@ export function initKnowledgeChat(root) {
         answer: payload.answer,
         sources: usedSources.length ? usedSources : sources.slice(0, 3),
         followUps: payload.followUps || [],
+        avatarSrc,
       });
       history.push({ role: 'user', content: question }, { role: 'assistant', content: payload.answer });
       if (history.length > HISTORY_LIMIT) history.splice(0, history.length - HISTORY_LIMIT);
@@ -363,6 +388,7 @@ export function initKnowledgeChat(root) {
           ? '全文索引还没有准备好。正式构建后即可查询；现在仍可使用右上角的普通搜索。'
           : error.message || '这次没有查到结果，稍后再试。',
         tone: 'error',
+        avatarSrc,
       });
     } finally {
       setBusy(false);
