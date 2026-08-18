@@ -1,0 +1,54 @@
+{
+  "date": "2026-08-19",
+  "headline": "OpenAI 因安全风险暂缓模型发布，Claude Code 支持终端生成 UI",
+  "items": [
+    {
+      "title": "Claude Code 新增 /design 命令支持终端生成 UI",
+      "summary": "Anthropic 为 Claude Code 推出 /design 命令，开发者可在终端内直接生成匹配现有代码风格的 UI 设计稿。该功能将视觉设计流程前置到编码阶段，减少了设计与开发工具间的切换成本。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-code-gets-a-design-command-that-lets-developers-create-ui-mockups-right-in-the-terminal",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 因网络安全风险暂缓 Astra 模型发布",
+      "summary": "OpenAI 宣布调整前沿模型开发节奏，因即将推出的 Astra 模型可能具备关键网络攻击能力而加强安全监控与对齐措施。这意味着高能力模型的上线周期或将延长，创作者需适应更严格的安全审查常态。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/pacing-model-development-cyber-capabilities",
+      "featured": true
+    },
+    {
+      "title": "ByteDance 与好莱坞达成 AI 视频版权协议",
+      "summary": "ByteDance 与美国电影协会（MPA）签署协议，旨在加强其 AI 视频和图像模型的版权保护机制。此举为 AI 视频创作者使用相关模型提供了更明确的合规参考，有助于降低商用法律风险。",
+      "category": "政策",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/08/18/bytedance-and-hollywood-reach-agreement-over-ai-video-ip-rights",
+      "featured": false
+    },
+    {
+      "title": "研究指 AI 压缩上下文时易丢失用户指令",
+      "summary": "Penn State 研究发现 AI 系统在压缩长对话时平均会丢弃 83% 的用户规则约束，并提出基于 Qwen3.5-9B 的插件模块以保留超 90% 的限制条件。这对依赖复杂提示词进行连续创作的 AIGC 工作流具有直接参考价值。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-systems-quietly-drop-user-instructions-when-they-compress-context",
+      "featured": false
+    },
+    {
+      "title": "新基准测试评估 AI Agent 搜索 API 性能",
+      "summary": "Artificial Analysis 发布 Search Index 基准，从质量、成本和速度三个维度评测 AI Agent 搜索 API，Parallel、Exa 等服务商在使用 GPT-5.6 Luna 测试中表现领先。该榜单为构建 AI 自动化创作管线时的检索组件选型提供了量化依据。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/new-benchmark-ranks-search-apis-for-ai-agents-on-quality-cost-and-speed",
+      "featured": false
+    },
+    {
+      "title": "Robin Williams 家属接管账号抵制 AI 滥用",
+      "summary": "已故演员 Robin Williams 的子女重新接管其 Instagram 账号，将其打造为反对 AI 滥用肖像权的安全空间。这一行动再次凸显了 AI 生成内容在名人肖像与伦理边界上的争议，提醒创作者注意素材使用的合规性。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/981644/robin-williams-instagram-account-ai",
+      "featured": false
+    }
+  ]
+}
