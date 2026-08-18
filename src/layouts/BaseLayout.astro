@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Search from '../components/Search.astro';
 import AccountMenu from '../components/AccountMenu.astro';
+import MusicPlayer from '../components/MusicPlayer.astro';
 const { title, description, noindex } = Astro.props;
 const base = import.meta.env.BASE_URL;
 // TOY_NEWS=1：为 B 站 Toy 打「AIGC 快讯」独立包（见 scripts/build-toy-news.mjs）。
@@ -51,6 +52,7 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
         <div class="header-actions">
           <a class="meta series-link" href={nav('notes/')}>笔记</a>
           <a class="meta series-link" href={`${base}news/`}>AIGC 快讯</a>
+          <a class="meta series-link" href={`${base}music/`}>音乐</a>
           <a class="meta series-link" href={nav('prompt-master/')}>Prompt 大师</a>
           <a class="meta series-link" href={nav('tasks/')}>任务书</a>
           {!TOY && <Search />}
@@ -74,12 +76,16 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
       <nav class="footer-nav" aria-label="页脚导航">
         <a href={nav('notes/')}>笔记</a>
         <a href={`${base}news/`}>AIGC 快讯</a>
+        <a href={`${base}music/`}>音乐</a>
         <a href={nav('prompt-master/')}>Prompt 大师</a>
         <a href={nav('tasks/')}>任务书</a>
         <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a>
       </nav>
       <p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>
     </footer>
+
+    {/* 全局音乐播放器：曲库为空时整体隐藏（TOY 独立包不带） */}
+    {!TOY && <MusicPlayer />}
 
     <script is:inline>
       (() => {

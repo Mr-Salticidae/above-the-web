@@ -414,6 +414,120 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   .kb-chat-note { padding: 0 .75rem .55rem; text-align: left; }
 }
 
+/* 音乐播放器（全局底部常驻；曲库为空时整个 .mp 保持 hidden） */
+.mp { position: fixed; inset: auto 0 0 0; z-index: 60; font-family: var(--sans); }
+html.music-on body { padding-bottom: 4.6rem; } /* 播放条不遮正文 */
+.mp-bar {
+  display: flex; align-items: center; gap: .8rem; max-width: 72rem; margin: 0 auto;
+  padding: .55rem 1rem; background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px); border-top: 1px solid var(--line);
+}
+.mp-cover {
+  display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; overflow: hidden;
+  border-radius: 8px; border: 1px solid var(--line); background: var(--paper-2);
+  color: var(--ink-soft); font-size: 1rem;
+}
+.mp-cover img { width: 100%; height: 100%; object-fit: cover; }
+.mp.is-playing .mp-cover img { animation: mp-pulse 3s ease-in-out infinite; }
+.mp-info { min-width: 0; flex: 0 1 11rem; }
+.mp-info b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .82rem; }
+.mp-info small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ink-soft); font-size: .68rem; }
+.mp-controls { display: flex; align-items: center; gap: .25rem; }
+.mp-btn {
+  display: grid; place-items: center; width: 2rem; height: 2rem; padding: 0; cursor: pointer;
+  border: 0; border-radius: 50%; background: transparent; color: var(--ink);
+}
+.mp-btn:hover { background: var(--paper-2); color: var(--accent); }
+.mp-btn svg { width: 1.1rem; height: 1.1rem; }
+.mp-play { width: 2.5rem; height: 2.5rem; background: var(--ink); color: var(--paper); }
+.mp-play:hover { background: var(--accent); color: #fff; }
+.mp-play svg { width: 1.25rem; height: 1.25rem; }
+.mp-progress { flex: 1 1 auto; display: flex; align-items: center; gap: .5rem; min-width: 0; }
+.mp-time { flex: none; font-variant-numeric: tabular-nums; font-size: .66rem; color: var(--ink-soft); }
+.mp-progress input, .mp-volume input { accent-color: var(--accent); height: 1rem; cursor: pointer; }
+.mp-progress input { flex: 1 1 auto; min-width: 3rem; }
+.mp-extras { display: flex; align-items: center; gap: .35rem; }
+.mp-volume { display: flex; align-items: center; gap: .3rem; }
+.mp-volume svg { width: .95rem; height: .95rem; color: var(--ink-soft); }
+.mp-volume input { width: 4.2rem; }
+.mp-mode { position: relative; }
+.mp-mode[data-mode='order'] { color: var(--ink-soft); }
+.mp-mode[data-mode='single'], .mp-mode[data-mode='shuffle'] { color: var(--accent); }
+.mp-mode[data-mode='single']::after,
+.mp-mode[data-mode='shuffle']::after {
+  content: ''; position: absolute; right: .18rem; bottom: .22rem;
+  width: .32rem; height: .32rem; border-radius: 50%; background: var(--accent);
+}
+.mp-drawer {
+  position: absolute; right: 1rem; bottom: calc(100% + .4rem); width: min(21rem, calc(100vw - 2rem));
+  max-height: min(24rem, 60vh); display: flex; flex-direction: column; overflow: hidden;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 18px 44px -18px rgba(var(--shadow), .45);
+}
+.mp-drawer-head {
+  display: flex; justify-content: space-between; align-items: center; flex: none;
+  padding: .6rem .85rem; border-bottom: 1px solid var(--line);
+  font-size: .78rem; color: var(--ink-soft);
+}
+.mp-drawer-head em { font-style: normal; color: var(--accent); font-weight: 700; }
+.mp-drawer-head button { border: 0; background: none; font-size: 1rem; cursor: pointer; color: var(--ink-soft); padding: 0 .2rem; }
+.mp-list { flex: 1; overflow-y: auto; margin: 0; padding: .3rem 0; list-style: none; }
+.mp-list li {
+  display: flex; align-items: center; gap: .6rem; padding: .5rem .85rem; cursor: pointer;
+  font-size: .8rem;
+}
+.mp-list li:hover { background: var(--paper-2); }
+.mp-list li.is-current { color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.mp-list .mp-num { flex: none; font-variant-numeric: tabular-nums; font-size: .66rem; color: var(--ink-soft); }
+.mp-list li.is-current .mp-num { color: var(--accent); }
+.mp-list .mp-meta { flex: 1; min-width: 0; }
+.mp-list .mp-meta b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+.mp-list .mp-meta small { color: var(--ink-soft); font-size: .66rem; }
+.mp-list .mp-dur { flex: none; font-variant-numeric: tabular-nums; font-size: .66rem; color: var(--ink-soft); }
+@keyframes mp-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+@media (prefers-reduced-motion: reduce) { .mp.is-playing .mp-cover img { animation: none; } }
+@media (max-width: 620px) {
+  html.music-on body { padding-bottom: 8.6rem; }
+  .mp-bar { flex-wrap: wrap; gap: .5rem .6rem; padding: .55rem .75rem; }
+  .mp-info { flex: 1 1 calc(50% - 3rem); order: 1; }
+  .mp-controls { order: 2; margin-left: auto; }
+  .mp-extras { order: 3; }
+  .mp-mode, .mp-volume { display: none; }
+  .mp-progress { order: 4; flex-basis: 100%; }
+}
+
+/* 音乐板块页 */
+.music-page { max-width: 62rem; margin: 0 auto; padding: 0 1.25rem 3rem; }
+.music-empty {
+  padding: 3rem 1.5rem; text-align: center; color: var(--ink-soft);
+  border: 1px dashed var(--line); border-radius: 14px; background: var(--paper-2);
+}
+.music-empty p { margin: .3rem 0; }
+.music-empty .meta { font-size: .78rem; }
+.music-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1.1rem;
+  margin: 1.5rem 0 0; padding: 0; list-style: none;
+}
+.music-card { display: flex; flex-direction: column; gap: .55rem; }
+.music-cover {
+  position: relative; aspect-ratio: 1; width: 100%; padding: 0; cursor: pointer; overflow: hidden;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--paper-2);
+}
+.music-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.music-cover-fallback {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 2rem; color: var(--ink-soft);
+}
+.music-cover-play {
+  position: absolute; inset: 0; display: grid; place-items: center; opacity: 0;
+  background: color-mix(in srgb, var(--ink) 38%, transparent); color: #fff; transition: opacity .15s;
+}
+.music-cover-play svg { width: 2rem; height: 2rem; }
+.music-cover:hover .music-cover-play, .music-cover:focus-visible .music-cover-play { opacity: 1; }
+.music-meta b { display: block; font-size: .84rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.music-meta small { color: var(--ink-soft); font-size: .68rem; }
+.music-meta p { margin: .25rem 0 0; font-size: .72rem; color: var(--ink-soft); }
+
 /* 滚动渐现（scripts/reveal.js 挂上 html.rv-on 后才生效，保证无 JS 时内容不被藏起） */
 html.rv-on .rv { opacity: 0; }
 html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }

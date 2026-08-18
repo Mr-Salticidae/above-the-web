@@ -1,0 +1,62 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="mp" data-mp hidden data-base={base}>
+  <audio crossorigin="anonymous" preload="metadata"></audio>
+
+  <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表">
+    <div class="mp-drawer-head">
+      <span>播放列表 · <em data-mp-count></em> 首</span>
+      <button type="button" data-mp-close aria-label="收起播放列表">×</button>
+    </div>
+    <ol class="mp-list" data-mp-list></ol>
+  </aside>
+
+  <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器">
+    <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div>
+    <div class="mp-info">
+      <b class="mp-title" data-mp-title>未在播放</b>
+      <small class="mp-artist" data-mp-artist></small>
+    </div>
+
+    <div class="mp-controls">
+      <button class="mp-btn" type="button" data-mp-prev aria-label="上一首">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"/></svg>
+      </button>
+      <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"/></svg>
+      </button>
+      <button class="mp-btn" type="button" data-mp-next aria-label="下一首">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"/></svg>
+      </button>
+    </div>
+
+    <div class="mp-progress">
+      <span class="mp-time" data-mp-cur>0:00</span>
+      <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度" />
+      <span class="mp-time" data-mp-dur>0:00</span>
+    </div>
+
+    <div class="mp-extras">
+      <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M17 2l4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+        </svg>
+      </button>
+      <div class="mp-volume">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/></svg>
+        <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量" />
+      </div>
+      <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initMusicPlayer } from '../scripts/music-player.js';
+
+  document.querySelectorAll('[data-mp]').forEach((element) => initMusicPlayer(element));
+</script>

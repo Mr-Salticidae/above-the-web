@@ -1,0 +1,74 @@
+---
+// 音乐 · Music —— 跳蛛先生制作的音乐曲库（Suno 等 AI 协作作品）。
+//
+// 音频文件不在 git：存香港服务器 /music/ 静态目录（scripts/upload-music.mjs 上传），
+// 曲目元数据在 src/data/music/manifest.json，构建期导出 /music/playlist.json 给全局播放器。
+// 页面卡片点播放 → window 事件 atw-music-play 交给全局播放器接管（底部播放条）。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import manifest from '../../data/music/manifest.json';
+
+const ORIGIN = 'https://tiaozhuxiansheng.com/music';
+const tracks = (manifest.tracks || []).map((t, i) => ({
+  id: t.id || `track-${i + 1}`,
+  title: t.title || '未命名',
+  artist: t.artist || '跳蛛',
+  cover: t.cover ? `${ORIGIN}/covers/${encodeURIComponent(t.cover)}` : null,
+  duration: Number(t.duration) || 0,
+  note: t.note || '',
+}));
+const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+---
+
+<BaseLayout
+  title="音乐"
+  description="跳蛛先生制作的音乐——AI 协作创作的歌曲与纯音乐作品集。"
+>
+  <div class="music-page">
+    <header class="masthead">
+      <p class="masthead-kicker">Made by Spider</p>
+      <h1>音乐</h1>
+      <p class="masthead-sub">Music</p>
+      <p class="masthead-desc">
+        自己做的歌——AI 协作时代的创作实验，曲曲都是真是反馈的迭代。
+        {tracks.length ? `目前 ${tracks.length} 首，点一首听听。` : '曲库筹备中，敬请期待。'}
+      </p>
+    </header>
+
+    {tracks.length === 0 ? (
+      <div class="music-empty">
+        <p>曲库还在筹备中。</p>
+        <p class="meta">作品归档完成后会自动出现在这里。</p>
+      </div>
+    ) : (
+      <ol class="music-grid">
+        {tracks.map((t, i) => (
+          <li class="music-card" data-track={i}>
+            <button class="music-cover" type="button" data-play={i} aria-label={`播放 ${t.title}`}>
+              {t.cover ? (
+                <img src={t.cover} alt="" loading="lazy" />
+              ) : (
+                <span class="music-cover-fallback" aria-hidden="true">♪</span>
+              )}
+              <span class="music-cover-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.2v13.6L19 12z"/></svg>
+              </span>
+            </button>
+            <div class="music-meta">
+              <b>{t.title}</b>
+              <small>{t.artist}{t.duration ? ` · ${fmt(t.duration)}` : ''}</small>
+              {t.note && <p>{t.note}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    )}
+  </div>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll('[data-play]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('atw-music-play', { detail: { index: Number(btn.dataset.play) } }));
+    });
+  });
+</script>

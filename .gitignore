@@ -31,3 +31,6 @@ platform/server/data/
 
 # 本地草稿与临时产物暂存区（不入库、不上站）
 tmp/
+
+# 音乐曲库（音频不进 git，走 scripts/upload-music.mjs 上服务器 /music/）
+music-library/
