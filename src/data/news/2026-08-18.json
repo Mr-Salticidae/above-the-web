@@ -1,0 +1,54 @@
+{
+  "date": "2026-08-18",
+  "headline": "AI 视频产业走出 Sora 阴影，Stripe 拟 70 亿美元收购 OpenRouter",
+  "items": [
+    {
+      "title": "AI 视频市场复苏，从技术演示走向影视工业",
+      "summary": "The Decoder 报道 AI 视频制作公司已进驻好莱坞，利用实时背景等工具降低制片成本，Netflix 已在三成作品中使用 AI 技术。Higgsfield 估值达 54 亿美元，标志着该领域正从早期技术验证转向成熟的商业产业链。对视频创作者而言，AI 辅助制作流程已具备实际落地价值。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-video-market-has-bounced-back-from-soras-false-start",
+      "featured": true
+    },
+    {
+      "title": "Stripe 拟超 70 亿美元收购 AI 网关 OpenRouter",
+      "summary": "据 Bloomberg 报道，Stripe 正洽谈以超 70 亿美元收购 AI 模型聚合平台 OpenRouter，后者提供 400 多个模型的统一 API 访问且拥有 800 万用户。此次收购若达成，将显著整合 AI 应用的支付与模型调用基础设施。依赖多模型切换的 AIGC 开发者需关注后续 API 策略变动。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/stripe-is-reportedly-acquiring-ai-startup-openrouter-for-more-than-7-billion",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 详解 Claude 文本水印技术原理",
+      "summary": "为符合欧盟 AI 透明度法规，Anthropic 确认 Claude 采用 Google DeepMind 开源的 SynthID-Text 方案，通过调整词汇概率嵌入不可见水印。该技术旨在平衡合规检测与文本质量，但批评者担忧可能影响写作自然度。使用 Claude 进行严肃写作的创作者需留意生成内容的潜在风格变化。",
+      "category": "模型",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/980869/anthropic-claude-watermarks-synthid-text-system",
+      "featured": false
+    },
+    {
+      "title": "Amazon 被曝销毁珍稀书籍以获取 AI 训练数据",
+      "summary": "TechCrunch 披露 Amazon 大量购入并扫描珍稀纸质书用于 LLM 训练，随后销毁原件，因这类未数字化文本对模型具有独特价值。此举引发了关于文化遗产保护与 AI 数据采集伦理的争议。从事 AI 写作或研究的创作者应意识到高质量语料获取背后的法律与道德风险。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/17/amazon-once-an-online-bookseller-is-destroying-rare-books-to-train-ai-models",
+      "featured": false
+    },
+    {
+      "title": "数学家指出 LLM 擅长计算但缺乏创造性直觉",
+      "summary": "Timothy Gowers 等顶尖数学家评价称，大语言模型能熟练组合已知方法，但在产生真正新颖的数学思想方面仍缺乏直觉。这揭示了当前 LLM 在逻辑推理与原创性上的本质边界。AI 辅助创作时，人类仍需承担核心创意构思与验证工作。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/top-mathematicians-say-llms-are-strong-calculators-but-poor-creative-thinkers",
+      "featured": false
+    },
+    {
+      "title": "AI 艺术促使数字创作者重新接纳不完美",
+      "summary": "Creative Bloq 观察到，面对 AI 生成图像的高度平滑与同质化，数字艺术家开始刻意在作品中保留瑕疵与手工感。这种趋势反映了创作者通过强调「人味」来建立差异化风格的应对策略。在人机协作时代，独特的个人审美缺陷反而可能成为核心竞争力。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/art/digital-art/ai-art-is-making-digital-artists-embrace-imperfections-heres-how",
+      "featured": false
+    }
+  ]
+}
