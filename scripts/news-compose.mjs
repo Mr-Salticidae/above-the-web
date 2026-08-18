@@ -197,6 +197,12 @@ async function main() {
   console.error(`[news-compose] 模型 ${MODEL} @ ${API_BASE}，候选 ${candidates.length} 条，prompt ≈ ${Math.round(prompt.length / 3.2)} tokens`);
 
   let res;
+  // 各家专有参数注入口（如千问的 enable_thinking:false，不关思考 reasoning 会烧光 max_tokens）
+  let extra = {};
+  if (process.env.NEWS_API_EXTRA_JSON) {
+    try { extra = JSON.parse(process.env.NEWS_API_EXTRA_JSON); }
+    catch { console.error('[news-compose] NEWS_API_EXTRA_JSON 不是合法 JSON，已忽略'); }
+  }
   try {
     res = await fetch(`${API_BASE}/chat/completions`, {
       method: 'POST',
@@ -209,6 +215,7 @@ async function main() {
           type: 'json_schema',
           json_schema: { name: 'daily_issue', strict: true, schema: SCHEMA },
         },
+        ...extra,
       }),
       signal: AbortSignal.timeout(300000), // 推理模型可能思考较久
     });

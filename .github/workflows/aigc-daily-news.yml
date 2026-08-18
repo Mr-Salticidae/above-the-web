@@ -1,6 +1,6 @@
 # AIGC 每日快讯：云端定时搜集新闻并更新 /news/ 板块。
 # 每天早晨自动运行（多个错峰 cron 互为重试），不依赖本地电脑开机。
-# 需要仓库 secret：LONGCAT_API_KEY。
+# 需要仓库 secret：DASHSCOPE_API_KEY（阿里云百炼，模型 qwen3.8-max）。
 #
 # 执行方式：两个脚本，不再用 claude-code-action 的 agentic loop。
 #   1. news-fetch.mjs   —— 纯 Node 抓多个 RSS 源，产出候选列表（零 API 成本）
@@ -78,9 +78,11 @@ jobs:
         id: compose
         if: steps.check.outputs.exists == 'false'
         env:
-          NEWS_API_KEY: ${{ secrets.LONGCAT_API_KEY }}
-          NEWS_API_BASE: https://api.longcat.chat/openai/v1
-          NEWS_MODEL: LongCat-2.0
+          NEWS_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
+          NEWS_API_BASE: https://dashscope.aliyuncs.com/compatible-mode/v1
+          NEWS_MODEL: qwen3.8-max
+          # 千问是思考型模型，必须关思考：reasoning 算在 max_tokens 里，不关会把额度烧在思考上正文写不完（2026-08-03 踩过）
+          NEWS_API_EXTRA_JSON: '{"enable_thinking":false}'
         run: |
           set +e
           node scripts/news-compose.mjs \
