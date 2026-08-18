@@ -284,8 +284,18 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   border: 1px solid color-mix(in srgb, var(--ink-soft) 28%, var(--line)); border-radius: 50%;
   color: var(--ink-soft); background: var(--paper-2); font-family: var(--serif); font-size: .62rem; font-weight: 700;
   box-shadow: 0 1px 3px -1px rgba(var(--shadow), .25);
-  object-fit: cover;
+  object-fit: cover; cursor: zoom-in;
 }
+/* 头像高清预览浮层：fixed 挂在 body，不进聊天滚动区，避免被 overflow 裁剪 */
+.kb-chat-avatar-pop {
+  position: fixed; z-index: 80; width: 13.75rem; display: block;
+  border-radius: 14px; border: 1px solid var(--line);
+  box-shadow: 0 18px 44px -18px rgba(var(--shadow), .55);
+  opacity: 0; transform: translateY(.4rem) scale(.97); transform-origin: left bottom;
+  transition: opacity .16s ease, transform .16s ease;
+  pointer-events: none;
+}
+.kb-chat-avatar-pop.is-visible { opacity: 1; transform: none; }
 .kb-chat-bubble {
   max-width: calc(100% - 2.3rem); padding: .7rem .8rem;
   border: 1px solid var(--line); border-radius: 4px 14px 14px 14px;

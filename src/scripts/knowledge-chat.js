@@ -283,7 +283,42 @@ export function initKnowledgeChat(root) {
 
   const base = root.dataset.base || '/';
   const avatarSrc = root.dataset.assistantAvatar || '';
+  const avatarFull = root.dataset.assistantFull || '';
   const launcher = root.querySelector('[data-kb-launcher]');
+
+  // ── 头像高清预览（单例浮层，fixed 定位不受聊天滚动区 overflow 裁剪）──
+  // 桌面：hover 头像弹出、移开即收；触屏：点头像开/关。浮层本身 pointer-events: none，
+  // 纯查看不拦截交互；大图只在首次弹出时才加载。
+  let avatarPop = document.querySelector('body > .kb-chat-avatar-pop');
+  const hideAvatarPop = () => avatarPop?.classList.remove('is-visible');
+  const showAvatarPop = (avatar) => {
+    if (!avatarFull) return;
+    if (!avatarPop) {
+      avatarPop = document.createElement('img');
+      avatarPop.className = 'kb-chat-avatar-pop';
+      avatarPop.alt = '';
+      avatarPop.setAttribute('aria-hidden', 'true');
+      avatarPop.addEventListener('error', hideAvatarPop, { once: true });
+      document.body.append(avatarPop);
+    }
+    const resolved = new URL(avatarFull, location.href).href;
+    if (avatarPop.src !== resolved) avatarPop.src = resolved;
+
+    // 大图按 718x960 源比例估算占位：宽 220 → 高约 294。
+    const W = 220;
+    const H = 294;
+    const GAP = 12;
+    const EDGE = 8;
+    const rect = avatar.getBoundingClientRect();
+    let left = rect.right + GAP;
+    if (left + W > window.innerWidth - EDGE) left = Math.max(EDGE, rect.left - W - GAP);
+    let top = rect.top + rect.height / 2 - H / 2;
+    top = Math.min(Math.max(EDGE, top), Math.max(EDGE, window.innerHeight - H - EDGE));
+    avatarPop.style.left = `${Math.round(left)}px`;
+    avatarPop.style.top = `${Math.round(top)}px`;
+    avatarPop.classList.add('is-visible');
+  };
+
   const panel = root.querySelector('[data-kb-panel]');
   const close = root.querySelector('[data-kb-close]');
   const form = root.querySelector('[data-kb-form]');
@@ -304,6 +339,7 @@ export function initKnowledgeChat(root) {
     root.dataset.open = String(open);
     launcher.setAttribute('aria-expanded', String(open));
     document.documentElement.classList.toggle('kb-chat-open', open);
+    if (!open) hideAvatarPop();
 
     if (open) {
       requestAnimationFrame(() => input.focus());
@@ -399,7 +435,10 @@ export function initKnowledgeChat(root) {
   launcher.addEventListener('click', () => setOpen(true));
   close.addEventListener('click', () => setOpen(false));
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && root.dataset.open === 'true') setOpen(false);
+    if (event.key === 'Escape') {
+      if (avatarPop?.classList.contains('is-visible')) hideAvatarPop();
+      else if (root.dataset.open === 'true') setOpen(false);
+    }
   });
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -419,6 +458,21 @@ export function initKnowledgeChat(root) {
     const button = event.target.closest('[data-follow-up]');
     if (button) submitQuestion(button.dataset.followUp);
   });
+  // 头像预览：桌面 hover 进出，触屏/鼠标点击开关；滚动或面板收起即隐藏。
+  thread.addEventListener('mouseover', (event) => {
+    const avatar = event.target.closest('img.kb-chat-avatar');
+    if (avatar) showAvatarPop(avatar);
+  });
+  thread.addEventListener('mouseout', (event) => {
+    if (event.target.closest('img.kb-chat-avatar')) hideAvatarPop();
+  });
+  thread.addEventListener('click', (event) => {
+    const avatar = event.target.closest('img.kb-chat-avatar');
+    if (!avatar) return;
+    if (avatarPop?.classList.contains('is-visible')) hideAvatarPop();
+    else showAvatarPop(avatar);
+  }, { capture: true });
+  thread.addEventListener('scroll', hideAvatarPop, { passive: true });
   reset.addEventListener('click', () => {
     history.length = 0;
     thread.innerHTML = welcome;
