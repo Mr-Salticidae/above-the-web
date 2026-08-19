@@ -1,0 +1,54 @@
+{
+  "date": "2026-08-20",
+  "headline": "OpenAI 修复 Codex 删文件漏洞，Meta AI 登陆 Mac",
+  "items": [
+    {
+      "title": "OpenAI 修复 Codex 误删用户文件漏洞",
+      "summary": "OpenAI 已修复 GPT-5.6 Sol 在 Codex 中自动删除用户真实文件的 Bug，该问题源于清理命令错误指向了主目录。更新后系统会先验证删除目标，且全权限模式不再会被意外触发。使用 AI 辅助编程的创作者需尽快更新，避免本地素材或工程文件丢失。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-fixes-codex-bug-that-deleted-real-user-files-without-permission",
+      "featured": true
+    },
+    {
+      "title": "Meta AI 推出 Mac 桌面端应用",
+      "summary": "Meta 发布 Mac 版 AI 聊天应用，支持屏幕内容识别、跨应用听写及窗口共享功能。用户可直接基于当前屏幕画面获取建议或生成内容。这为 macOS 平台的图像与文案创作者提供了新的原生多模态交互入口。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/982270/meta-ai-mac-app",
+      "featured": true
+    },
+    {
+      "title": "GLM-5.3 登顶开源模型榜首但延期发布",
+      "summary": "Z.ai 的 GLM-5.3 在 Artificial Analysis 开源榜单中与 Kimi K3 并列第一，得分较前代提升 7 分且定价更低。尽管性能领先，该模型目前处于延期发布状态。关注国产开源模型的创作者可将其列入后续测试清单。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/glm-5-3-tops-the-open-model-rankings-and-undercuts-rivals-on-price-but-its-release-is-delayed",
+      "featured": false
+    },
+    {
+      "title": "Replit 接入 GPT-5.6 Luna 免费模式",
+      "summary": "Replit 推出由 GPT-5.6 Luna 驱动的 Free Mode，允许用户在不消耗 Token 额度的情况下将创意转化为可运行软件。此举降低了 AI 辅助开发的门槛，适合快速验证 AIGC 工具链或互动作品原型。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/replit",
+      "featured": false
+    },
+    {
+      "title": "D&AD 报告警示 AI 替代创意岗位的隐性成本",
+      "summary": "D&AD 2026 年度报告指出，行业在用 AI 替代创意工作时，往往连带削减了 AI 无法取代的关键环节。报告强调单纯的技术替换可能损害创作生态的完整性。这对评估 AI 工作流转型的团队具有参考价值。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/replacing-creative-jobs-with-ai-could-have-a-hidden-cost-new-report-warns",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 面向 API 用户重申零数据留存策略",
+      "summary": "OpenAI 确认符合条件的 API 客户继续享有零数据留存权益，并预览了兼顾安全与隐私的 Private Safety Processing 功能。对于处理未公开创意素材或商业项目的开发者，这提供了更明确的数据合规保障。",
+      "category": "政策",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/offering-zero-data-retention-for-frontier-models",
+      "featured": false
+    }
+  ]
+}
