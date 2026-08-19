@@ -12,6 +12,19 @@
 //   cta      可选；卡片底部按钮文案，默认 '开始游玩 →'（下载型作品可改成 '了解 · 下载 →'）
 export const games = [
   {
+    // 安装包约 82MB，和 desk-pond 同一条路：deploy.yml 从 livelink 最新 Release 抓包，
+    // 随 dist rsync 到香港服务器（不入 git、不进 Pages 产物），页面链接固定为稳定文件名。
+    title: 'LiveLink · 直播弹幕助手',
+    tagline: '把弹幕和礼物，变成会说话、会动、会玩的现场',
+    desc: '给非技术主播朋友的 B 站直播间桌面助手：自动欢迎、关键词回复、礼物感谢与屏幕特效、TTS 语音与弹幕朗读、可钉住穿透的弹幕悬浮窗、OBS 弹幕板与观众端主题、SuperChat 横幅，以及抽奖 / 投票 / 赛马 / 养宠 / 弹幕点歌台。双击安装，填直播间号，OBS 里加一个浏览器源就能用，不写代码也不装环境。',
+    tags: ['直播工具', 'B 站', 'vibe coding'],
+    path: '/livelink/',
+    status: '免费下载 · Windows',
+    emoji: '📺',
+    accent: '#7a5af0',
+    cta: '了解 · 下载 →',
+  },
+  {
     // 朋友 X-nian 贡献的蒙眼剪辑法字幕环节升级包（v1.6 英文格式 + v1.0 中文分词合并版）。
     // exe 仅 22KB，直接入库随 dist 走，Pages 与香港服务器都能直连下载（不同于 desk-pond 的百兆安装包）。
     title: 'TK 中英文字幕转换器',

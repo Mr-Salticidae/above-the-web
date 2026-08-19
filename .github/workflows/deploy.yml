@@ -73,6 +73,20 @@ jobs:
           test -n "$asset_url"
           curl -fL "$asset_url" -o dist/desk-pond/download/DeskPond-Windows.exe
           ls -la dist/desk-pond/download/
+      # LiveLink（B 站直播弹幕助手）同理：安装包约 82MB，走服务器直连下载，
+      # 稳定文件名 LiveLink-Setup.exe，/livelink/ 落地页链接不随版本变动。
+      - name: 拉取 livelink 最新 Release 安装包到 dist
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p dist/livelink/download
+          asset_url=$(curl -sL -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/Mr-Salticidae/livelink/releases/latest \
+            | grep -o '"browser_download_url": *"[^"]*\.exe"' | head -1 | sed -E 's/.*"(https[^"]+)".*/\1/')
+          echo "下载: $asset_url"
+          test -n "$asset_url"
+          curl -fL "$asset_url" -o dist/livelink/download/LiveLink-Setup.exe
+          ls -la dist/livelink/download/
       # 《镜像自我·人生预演》手机报告页镜像到 /mlr/：github.io 在大陆移动网络常不可达，
       # BW 展台扫码链路改走本域名（展台 config.json 的 reportBase 指向 /mlr/）。
       # 产物源头仍是 preview 仓库（主仓 deploy-preview.ps1 推送），这里只做镜像，
