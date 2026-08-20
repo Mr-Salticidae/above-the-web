@@ -1,0 +1,62 @@
+{
+  "date": "2026-08-21",
+  "headline": "Adobe Firefly 上线音频生成，Anthropic 最强模型仅供内部使用",
+  "items": [
+    {
+      "title": "Adobe Firefly 上线 AI 音频生成工具",
+      "summary": "Adobe Firefly 正式开放 Generate Music、Generate Speech 和 Generate Sound Effects 三项功能，支持生成免版税的音乐、旁白及音效用于视频项目。平台同步接入 Google Gemini Omni Flash 模型。视频创作者现可在 Adobe 生态内一站式完成视听素材的 AI 生成。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/adobe-firefly-adds-ai-audio-tools-and-googles-gemini-omni-flash",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 最强模型 Model 2 仅限内部使用",
+      "summary": "The Decoder 报道称 Anthropic 正内部测试代号为 Model 2 的新模型，其能力超过所有公开版 Claude，但暂不对外发布。此举或意味着厂商在前沿模型商用化上趋于审慎，创作者短期内仍需依赖现有版本进行工作流搭建。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-uses-an-unpublished-ai-model-called-model-2-internally",
+      "featured": true
+    },
+    {
+      "title": "Meta AI 游戏创作应用 Pocket 在美上线",
+      "summary": "Meta 将实验性 AI 应用 Pocket 向美国用户开放，该工具允许用户通过自然语言描述生成并分享交互式游戏。此前该产品已在巴西完成测试。这为 AI 辅助互动内容创作提供了新的低门槛入口。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/20/meta-brings-pocket-an-app-that-lets-you-vibe-code-and-share-games-to-us-users",
+      "featured": false
+    },
+    {
+      "title": "研究指安全对齐限制 LLM 文本表现力",
+      "summary": "Pangram CTO Bradley Emi 指出，LLM 文本风格趋同并非能力不足，而是后训练安全护栏压缩了表达范围；未受约束的基础模型其实具备更多样的写作风格。这对依赖 AI 辅助写作的创作者具有参考价值，提示可通过调整模型选择来规避同质化问题。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/llms-could-write-like-humans-but-post-training-guardrails-make-their-text-detectable",
+      "featured": false
+    },
+    {
+      "title": "Slack 推出协作式 Vibe-Coding 频道",
+      "summary": "Slack 新增 Slack Code 功能，支持团队在专属频道中与 AI Agent 协同编程，并提供代码变更对比与 HTML 预览。该功能旨在减少跨工具切换，让 AI 辅助开发更紧密地嵌入日常沟通流。适合使用 AI 进行原型设计或脚本编写的创作者关注。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/982628/slack-code-vibe-coding-channels-launch",
+      "featured": false
+    },
+    {
+      "title": "研究显示三成新网页含 AI 生成痕迹",
+      "summary": "一项新研究发现，自 ChatGPT 发布以来，约三分之一的互联网新页面显示出 AI 撰写或编辑的特征。这表明 AI 已深度介入内容生产环节，创作者需更加重视原创性与人工校验以维持内容辨识度。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/20/a-third-of-webpages-published-since-chatgpts-launch-show-signs-of-ai-authorship-study-finds",
+      "featured": false
+    },
+    {
+      "title": "Richard Sutton 称合成数据是扩展误区",
+      "summary": "图灵奖得主 Richard Sutton 表示，用合成数据扩展大模型是重大错误，因模拟无法覆盖真实世界的复杂性，人类专家反而成为瓶颈。他主张 Agent 应通过持续经验学习而非依赖冻结模型。这一观点对依赖合成数据微调的创作模型路线提出警示。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ki-pioneer-sutton-calls-synthetic-data-a-big-mistake-in-the-face-of-an-infinitely-complex-world",
+      "featured": false
+    }
+  ]
+}
