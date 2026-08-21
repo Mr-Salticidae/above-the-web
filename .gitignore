@@ -15,6 +15,7 @@ kb-content/
 public/prompt-master/
 
 # 系统与编辑器噪声
+.workbuddy/
 .DS_Store
 Thumbs.db
 *.log
