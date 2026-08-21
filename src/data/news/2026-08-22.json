@@ -1,0 +1,62 @@
+{
+  "date": "2026-08-22",
+  "headline": "GPT-Image-2 支持透明背景，DeepSeek 发布实验性视觉模型",
+  "items": [
+    {
+      "title": "GPT-Image-2 API 新增原生透明背景生成",
+      "summary": "OpenAI 在 GPT-Image-2 API 中预览透明背景生成功能，alpha 通道在生成阶段直接嵌入而非后期抠图。开发者通过单一参数即可激活该特性。这对需要免抠素材的图像创作者和设计工作流而言，可显著减少后处理步骤。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openais-gpt-image-2-can-now-generate-images-without-a-background",
+      "featured": true
+    },
+    {
+      "title": "DeepSeek 发布实验性多模态视觉模型",
+      "summary": "DeepSeek 推出 V4-Flash-Vision-Exp 实验模型，在原有文本能力基础上增加图像理解功能。在其自研多模态 Agent 基准测试中，该模型表现接近甚至部分超越 Opus 4.8。这为需要轻量级多模态能力的开发者提供了新的开源选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/deepseek-releases-experimental-flash-vision-model-that-rivals-opus-4-8-on-agent-benchmarks",
+      "featured": true
+    },
+    {
+      "title": "MiniMax Design 接入 Adobe 与 Canva 生态",
+      "summary": "视频生成工具 MiniMax Design 开始集成至 Adobe 和 Canva 等主流设计平台，标志着 AI 视频生成正从独立应用走向嵌入式工作流。创作者可在熟悉的设计环境中直接调用生成能力，降低跨工具切换成本。",
+      "category": "工具",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/7FAcAhVUw89VJNwuOwrc",
+      "featured": false
+    },
+    {
+      "title": "Meta 开源支持视觉与工具调用的智能体模型",
+      "summary": "Meta 开源了一款支持本地运行、具备视觉理解和工具调用能力的智能体模型。该模型面向端侧部署场景，允许开发者在离线或隐私敏感环境中构建多模态 Agent。对探索本地化 AIGC 应用的创作者具有参考价值。",
+      "category": "模型",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/aGfkSN1YlmLrUQMPea9L",
+      "featured": false
+    },
+    {
+      "title": "LinkedIn AI 低质内容标记按钮点击破百万",
+      "summary": "LinkedIn 于 7 月底上线的「Seems like AI slop」按钮已被超过 100 万次点击，用于标记疑似 AI 生成的低质量内容。这一数据反映出专业社区对 AI 生成内容的审慎态度。创作者在社交平台发布 AIGC 作品时需注意内容质量与透明度。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/983502/linkedin-ai-slop-button-one-million-people-message",
+      "featured": false
+    },
+    {
+      "title": "YouTube 创作者因推广 AI 视频工具遭质疑",
+      "summary": "多位知名影视类 YouTuber 近期发布 Higgsfield Seedance 2.5 演示视频后引发观众批评，被指过度美化 AI 视频生成能力。事件凸显了内容创作者在商业合作与技术真实性之间的张力。AIGC 推广需平衡技术展示与受众信任。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/983181/matti-haapoja-sam-kold-kolder-higgsfield-seedance-backlash",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 调整企业客户数据留存政策",
+      "summary": "在企业用户反馈压力下，Anthropic 放宽了数据存储策略，允许企业客户自行保留数据。此举回应了此前关于训练数据使用的争议。对使用 Claude 进行敏感创作的团队而言，数据控制权得到进一步明确。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-changes-data-retention-policy-after-enterprise-pushback",
+      "featured": false
+    }
+  ]
+}
