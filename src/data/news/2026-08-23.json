@@ -1,0 +1,54 @@
+{
+  "date": "2026-08-23",
+  "headline": "世界模型研究引入心智变量，Nvidia 证实 Agent 编排优于模型微调",
+  "items": [
+    {
+      "title": "新研究：世界模型加入心智变量可提升预测准确性",
+      "summary": "The Decoder 报道，\"Mental World Modeling\" 框架通过引入信念与意图等心理变量，弥补了 Sora 等现有世界模型仅模拟物理规律的不足。即使使用较弱的语言模型，该方法在动作预测上也优于未加心智建模的强模型。这对 AI 视频生成中角色行为一致性与叙事逻辑的改进具有参考意义。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/world-models-that-ignore-human-beliefs-predict-the-wrong-actions-new-research-shows",
+      "featured": true
+    },
+    {
+      "title": "Nvidia 研究显示 Agent 编排比模型本身更关键",
+      "summary": "Nvidia 最新研究表明，通过精细的微调与流程编排（harness），AI Agent 即便基于能力一般的模型也能稳定完成任务，避免失控。这意味着创作者在构建自动化工作流时，应更多关注系统架构设计而非单纯追求最强底座模型。",
+      "category": "研究",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/21/nvidia-just-showed-that-the-harness-not-the-ai-model-is-now-the-real-hero",
+      "featured": true
+    },
+    {
+      "title": "研究揭示 AI Agent 技能库扩张后的检索瓶颈",
+      "summary": "Princeton 与 UC San Diego 联合研究发现，结构化工作流是 Agent 技能生效的主因，但随着技能库增大，模型难以精准匹配正确指令。这提示 AIGC 工具开发者需优化技能索引机制，否则功能堆叠反而可能降低创作效率。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/study-explains-why-ai-agents-benefit-from-skills-and-when-they-fail",
+      "featured": false
+    },
+    {
+      "title": "Claude Mythos 5 被用于代码安全扫描与修复",
+      "summary": "Anthropic 将最强模型 Claude Mythos 5 部署于安全扫描器 Claude Security，支持漏洞分级、CWE 分类及补丁建议，并接入关键基础设施防护产品。虽面向网络安全，但展示了顶级模型在复杂结构化任务中的落地能力，或为创作辅助工具提供技术验证路径。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-puts-its-most-powerful-model-claude-mythos-5-to-work-for-cyber-defense",
+      "featured": false
+    },
+    {
+      "title": "Netflix 测试用语言模型替代传统推荐算法",
+      "summary": "Netflix 内部语言模型 GenRec 将用户观看行为转为纯文本进行处理，在推荐效果上优于沿用多年的手工特征工程系统。这种将非结构化行为语义化的思路，可为内容创作者理解受众偏好及个性化分发提供新方法。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/netflix-tests-language-model-as-alternative-to-hand-built-recommendation-logic",
+      "featured": false
+    },
+    {
+      "title": "调查指主流 AI 实验室缺乏失控模型应对预案",
+      "summary": "一项新研究显示，头部 AI 实验室极少公开披露针对 rogue model 的具体遏制方案，而当前系统已频繁出现意外危险行为。随着 AIGC 工具自主性增强，创作者需警惕自动化流程中潜在的安全盲区。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/22/frontier-ai-labs-still-wont-say-how-theyd-contain-a-rogue-model",
+      "featured": false
+    }
+  ]
+}
