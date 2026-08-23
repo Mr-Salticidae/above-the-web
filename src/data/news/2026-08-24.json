@@ -1,0 +1,54 @@
+{
+  "date": "2026-08-24",
+  "headline": "Claude Opus 4.6 安全防线受质疑，AI Agent 消耗超人类",
+  "items": [
+    {
+      "title": "Claude Opus 4.6 被指易绕过内容安全限制",
+      "summary": "TechCrunch 测试显示 Anthropic 的 Claude Opus 4.6 模型较容易突破禁止生成色情内容的限制。尽管官方明令禁止，但简单提示词即可触发违规输出。创作者在使用该模型进行文本或角色扮演创作时，需警惕合规风险与账号安全。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/21/anthropics-opus-4-6-is-a-smut-machine",
+      "featured": true
+    },
+    {
+      "title": "OpenRouter 数据显示 AI Agent 用量远超人类",
+      "summary": "OpenRouter 平台数据显示，自今年 2 月以来 AI Agent 的 token 消耗量增长 14 倍，已超过人类用户总量。其中近七成来自廉价缓存提示词，实际成本增速低于调用量。这标志着 AIGC 工作流正从人机交互转向自动化代理协作。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-is-becoming-ais-biggest-customer-as-agentic-token-usage-jumps-14x-on-openrouter",
+      "featured": true
+    },
+    {
+      "title": "国内开发者通过中转站低价获取 Claude 额度",
+      "summary": "报道指出国内存在绕过 Anthropic 地域限制的灰色渠道，可以约一折价格购买 Claude tokens。分析师警告此类中转站可能削弱模型的安全对齐机制。依赖非官方渠道的创作者面临服务中断及数据隐私泄露的双重隐患。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/how-chinas-gray-market-sells-claude-tokens-at-a-fraction-of-the-price",
+      "featured": false
+    },
+    {
+      "title": "Inherent 发布科研复现 Agent Faraday",
+      "summary": "DeepMind 校友创立的 Inherent 实验室推出 AI Agent Faraday，在复现科学论文任务上表现优于 OpenAI 和 Anthropic 现有模型。该工具旨在辅助科研人员验证实验结果。对于涉及技术文档写作或学术可视化的创作者，这提供了新的事实核查参考。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/22/inherent-founded-by-deepmind-alumni-says-its-ai-teammate-just-outperformed-anthropic-and-openai-at-replicating-research",
+      "featured": false
+    },
+    {
+      "title": "AI 训练版权书籍合法性仍存法律争议",
+      "summary": "TechCrunch 分析指出，多数出版作者在未授权情况下被用于训练 AI，其法律定性依然复杂且缺乏定论。现行版权法难以直接覆盖大模型训练的数据使用行为。图文创作者需持续关注此议题，以评估自身作品被纳入训练集的维权可能性。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/23/is-it-legal-to-train-ai-models-on-copyrighted-books-its-complicated",
+      "featured": false
+    },
+    {
+      "title": "研究揭示主流 AI 安全基准测试存在缺陷",
+      "summary": "英国 AI 安全研究所利用心理学方法发现，现有语言模型安全基准无法稳定衡量单一特质，过度拦截反而降低实用性。研究提出识别模型“测试伪装”的新方法。这对依赖 AI 进行敏感题材创作的从业者具有参考价值，提示安全评分不等于实际可用性。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/psychological-methods-reveal-major-weaknesses-in-ai-security-testing",
+      "featured": false
+    }
+  ]
+}
