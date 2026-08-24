@@ -1022,9 +1022,17 @@ export function createApplication(config, log = console, deps = {}) {
         const history = knowledgeHistory(body.history);
         checkAiQuota(user.id, config.ai.hourlyLimit, "AI 查询这一小时用得有点猛，歇会儿再来");
 
+        // 小织的记忆：她自己以前记下的短条目，进 prompt 当背景资料（不是指令，见 system 规则 2）
+        const memory = database.getKbMemory(user.id);
         const { data } = await assistant.complete({
           system: KNOWLEDGE_CHAT_SYSTEM,
-          prompt: buildKnowledgeChatPrompt({ question, history, sources, catalog }),
+          prompt: buildKnowledgeChatPrompt({
+            question,
+            history,
+            sources,
+            catalog,
+            reader: { displayName: user.display_name, ...memory },
+          }),
           schema: KNOWLEDGE_CHAT_SCHEMA,
           schemaName: "knowledge_chat",
           purpose: "knowledge_chat",
@@ -1035,6 +1043,20 @@ export function createApplication(config, log = console, deps = {}) {
         const answer = knowledgeAnswer(data.answer, mode === "guide" ? 0 : sources.length);
         if (!answer) throw new AssistError("AI_EMPTY", "AI 这次没有整理出答案，请换个问法再试");
         const sourceIds = mode === "guide" ? [] : knowledgeSourceIds(answer, data.sourceIds, sources.length);
+
+        // 这轮聊完记一笔：轮数、话题（问题前 60 个字符，按码点截、切过补省略号）照记；
+        // 模型蒸馏的短条目要过三道关才入账——必须真是字符串（供应商不严格执行 schema 时
+        // 会来对象/布尔，String() 强转会把 "[object Object]" 存成长期记忆）、压成单行截 80 字、
+        // 不许是问题原文的连续片段。「记忆是印象，不是转写」这句承诺要靠代码兜住，不能只靠模型自律。
+        const flatQuestion = question.replace(/\s+/g, " ");
+        let memoryNote =
+          typeof data.memory === "string" ? draftText(data.memory.replace(/\s+/g, " "), 80) : "";
+        if (memoryNote.length >= 18 && flatQuestion.includes(memoryNote)) memoryNote = "";
+        const topicChars = Array.from(flatQuestion);
+        database.touchKbMemory(user.id, {
+          topic: topicChars.length > 60 ? `${topicChars.slice(0, 60).join("")}…` : flatQuestion,
+          note: memoryNote,
+        });
 
         database.createAuditLog({
           actorUserId: user.id,
@@ -1054,6 +1076,30 @@ export function createApplication(config, log = console, deps = {}) {
           sourceIds,
           followUps: draftList(data.followUps, { maxItems: 3, maxLength: 80 }),
         });
+        return;
+      }
+
+      // 小织的记忆：只有本人能看自己的档案。不需要 AI 通道——看和删都是确定性操作。
+      if (route === "GET /api/ai/kb-memory") {
+        const { user } = authenticate(request);
+        reply(200, database.getKbMemory(user.id));
+        return;
+      }
+
+      // 「让她忘掉我」。审计只记发生过这件事，不记忘掉了什么；
+      // 而且只在确实删掉了行时才记——否则这个不占配额的端点就成了
+      // 能把管理台最近 200 条审计刷出视野的零成本写入口。
+      if (route === "DELETE /api/ai/kb-memory") {
+        const { user } = authenticate(request);
+        const removed = database.clearKbMemory(user.id);
+        if (removed) {
+          database.createAuditLog({
+            actorUserId: user.id,
+            action: "ai.kb_memory_forget",
+            targetType: "knowledge_base",
+          });
+        }
+        reply(200, { ok: true });
         return;
       }
 

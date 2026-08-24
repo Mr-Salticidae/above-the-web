@@ -3,7 +3,7 @@
 // 检索留在静态站：Pagefind 先把问题缩到最相关的几篇笔记，浏览器再读取这些公开页面的正文片段。
 // 服务端只收到本轮需要的少量公开上下文，不需要再维护第二份知识库或向量数据库。
 // 模型只负责「依据片段回答」，来源选择、URL 和数量都由代码兜住。
-import { api, escapeHtml, getCachedUser, getToken, url } from './account-core.js';
+import { api, displayNameOf, escapeHtml, getCachedUser, getToken, url } from './account-core.js';
 import { siteMeta } from './ai-assist.js';
 import { searchPagefindNotes } from '../lib/knowledge-search.mjs';
 
@@ -336,6 +336,9 @@ export function initKnowledgeChat(root) {
     const popImage = avatarPop.querySelector('img');
     const resolved = new URL(avatarFull, location.href).href;
     if (popImage.src !== resolved) popImage.src = resolved;
+    // 名片行跟着记忆走：聊过几轮就写几轮，Galgame 的好感度就藏在这一行里
+    avatarPop.querySelector('figcaption').textContent =
+      memory?.meetCount > 0 ? `小织 · 知识库的织网人 · 和你聊过 ${memory.meetCount} 轮` : '小织 · 知识库的织网人';
 
     // 大图按 718x960 源比例估算占位：宽 220 → 高约 294，加名片行约 322。
     const W = 220;
@@ -365,6 +368,169 @@ export function initKnowledgeChat(root) {
   const history = [];
   let busy = false;
   let enabled = true;
+
+  // ── 小织的记忆（Galgame 式回头客档案）──
+  // 服务端一人一份：见面次数、上次话题、她自己记下的短条目。这里只负责取来
+  // 拼问候语和名片，不在本机存副本；旧服务端没有这个端点时静默当成没有记忆。
+  let memory = null;
+  const fetchMemory = async () => {
+    if (!getToken()) {
+      memory = null;
+      return;
+    }
+    try {
+      memory = await api('GET', '/ai/kb-memory');
+    } catch {
+      memory = null;
+    }
+  };
+
+  // 截断一律按码点数，别把 emoji 或扩展区汉字拦腰切成「�」；切过就补省略号
+  const clipChars = (text, limit) => {
+    const chars = Array.from(String(text || ''));
+    return chars.length > limit ? `${chars.slice(0, limit).join('')}…` : String(text || '');
+  };
+
+  // 问候语模板：随机挑一句，按「隔了多久、上次聊什么」换口味。她的台词，不是系统提示。
+  // 昵称是服务端原样行的 display_name（snake_case），走 displayNameOf 兜底；
+  // 空昵称时连同前后的逗号一起省掉，别渲染出「回来啦，。」这种破句。
+  const greetingText = () => {
+    const name = displayNameOf(getCachedUser());
+    const called = name ? `，${name}` : '';
+    const topic = clipChars(memory.lastTopic, 24);
+    const days = memory.lastSeenAt ? Math.floor((Date.now() - memory.lastSeenAt) / 86400000) : 0;
+    const pick = (list) => list[Math.floor(Math.random() * list.length)];
+    if (days >= 30) {
+      return pick([
+        `好久不见${called}。丝线我都还留着——${topic ? `上次你在琢磨「${topic}」，` : ''}这次带了什么来？`,
+        `${name ? `${name}，` : ''}隔了这么久还记得回来。网上落了点灰，你的问题倒一根没丢。从哪儿接着说？`,
+      ]);
+    }
+    if (topic) {
+      return pick([
+        `回来啦${called}。上次我们聊到「${topic}」，后来有进展吗？`,
+        `又见面了。「${topic}」那件事我还记着——接着往下问，还是带了新问题来？`,
+        `${name ? `${name}，` : ''}欢迎回来。要接着聊「${topic}」，还是这次换根线头？`,
+      ]);
+    }
+    return pick([
+      `回来啦${called}。这次想查点什么？`,
+      `又见面了${called}。网上新添了些丝线，想从哪儿看起？`,
+    ]);
+  };
+
+  // 回头客的欢迎语换成她的问候，并挂上「记得什么 / 忘掉我」两个入口。
+  // 只在对话还没开始时动第一条气泡，聊到一半绝不插嘴。
+  const personalizeWelcome = () => {
+    if (!memory || history.length || busy) return;
+    const first = thread.querySelector('.kb-chat-message.is-assistant .kb-chat-bubble');
+    if (!first) return;
+    const paragraph = first.querySelector('p');
+    if (!(memory.meetCount > 0)) {
+      // 已登录的初见用户：默认欢迎语里那句「登录后……」不该再对着登录的人说
+      if (paragraph) {
+        paragraph.textContent = paragraph.textContent.replace('登录后，聊过的事我会记得。', '聊过的事，我会记得。');
+      }
+      return;
+    }
+    if (paragraph) paragraph.textContent = greetingText();
+    if (!first.querySelector('[data-kb-mem]')) {
+      const box = document.createElement('div');
+      box.className = 'kb-chat-followups kb-chat-mem-actions';
+      const show = document.createElement('button');
+      show.type = 'button';
+      show.dataset.kbMem = 'show';
+      show.textContent = '你都记得什么？';
+      const forget = document.createElement('button');
+      forget.type = 'button';
+      forget.dataset.kbMem = 'forget';
+      forget.textContent = '把我忘掉吧';
+      box.append(show, forget);
+      first.append(box);
+    }
+  };
+
+  // 登出后卸妆：个性化问候和记忆按钮都不该留给下一位访客看
+  const depersonalizeWelcome = () => {
+    thread.querySelectorAll('.kb-chat-mem-actions').forEach((box) => box.remove());
+    if (!history.length && !busy) thread.innerHTML = welcome;
+  };
+
+  const memoryDate = (ts) => {
+    const date = new Date(Number(ts) || 0);
+    return date.getTime() > 0 ? date.toLocaleDateString('zh-CN') : '';
+  };
+
+  const showMemoryMessage = async () => {
+    await fetchMemory();
+    if (!memory) return;
+    if (!(memory.meetCount > 0)) {
+      assistantMessage(thread, {
+        answer: '现在的你，对我来说还是张新面孔——值得写下来的事还不多，多聊几次就有了。',
+        tone: 'notice',
+        avatarSrc,
+      });
+      return;
+    }
+    const lines = [
+      `我们聊过 ${memory.meetCount} 轮${memory.lastTopic ? `，最近一次你在问「${memory.lastTopic}」` : ''}。`,
+    ];
+    if (memory.notes?.length) {
+      lines.push('我记下的都在这儿：');
+      memory.notes.forEach((entry) => {
+        const day = memoryDate(entry.t);
+        lines.push(`- ${day ? `${day}：` : ''}${entry.note}`);
+      });
+    } else {
+      lines.push('值得写下来的事还不多——多聊几次就有了。');
+    }
+    lines.push('这份记忆只有你自己看得到，想让我忘掉就说一声。');
+    assistantMessage(thread, { answer: lines.join('\n'), tone: 'notice', avatarSrc });
+  };
+
+  const confirmForget = () => {
+    // 已经有一个确认还没答，不再叠一个
+    if (thread.querySelector('[data-kb-mem="forget-yes"]')) return;
+    const message = assistantMessage(thread, {
+      answer: '真的要我把这些都忘掉吗？松开的线头，我可接不回来。',
+      tone: 'notice',
+      avatarSrc,
+    });
+    const bubble = message.querySelector('.kb-chat-bubble');
+    const box = document.createElement('div');
+    box.className = 'kb-chat-followups kb-chat-mem-actions';
+    const yes = document.createElement('button');
+    yes.type = 'button';
+    yes.dataset.kbMem = 'forget-yes';
+    yes.textContent = '都忘掉';
+    const no = document.createElement('button');
+    no.type = 'button';
+    no.dataset.kbMem = 'forget-no';
+    no.textContent = '算了，留着';
+    box.append(yes, no);
+    bubble.append(box);
+  };
+
+  const doForget = async (box) => {
+    box?.remove();
+    try {
+      await api('DELETE', '/ai/kb-memory');
+      memory = { meetCount: 0, lastSeenAt: null, lastTopic: '', notes: [] };
+      // 忘完就收干净：欢迎气泡上的记忆入口和残留的确认框都不该再在——
+      // 刚说完「初次见面」，转头还挂着「你都记得什么？」就穿帮了
+      thread.querySelectorAll('.kb-chat-mem-actions').forEach((entry) => entry.remove());
+      assistantMessage(thread, {
+        answer: '……好，线头都松开了。那现在这样，就算我们初次见面——你好，我是小织。',
+        avatarSrc,
+      });
+    } catch (error) {
+      assistantMessage(thread, {
+        answer: error.message || '这次没删成，稍后再试。',
+        tone: 'error',
+        avatarSrc,
+      });
+    }
+  };
 
   const setOpen = (value, { restoreFocus = true } = {}) => {
     const open = Boolean(value);
@@ -451,6 +617,12 @@ export function initKnowledgeChat(root) {
       });
       history.push({ role: 'user', content: question }, { role: 'assistant', content: payload.answer });
       if (history.length > HISTORY_LIMIT) history.splice(0, history.length - HISTORY_LIMIT);
+      // 本机的记忆跟着走一格，名片计数不用等下次刷新；短条目以服务端为准，看时现取
+      if (memory) {
+        memory.meetCount += 1;
+        memory.lastTopic = clipChars(question.replace(/\s+/g, ' '), 60);
+        memory.lastSeenAt = Date.now();
+      }
     } catch (error) {
       loader.remove();
       const localIndexMissing = error instanceof TypeError && /import|module|fetch/i.test(error.message || '');
@@ -493,6 +665,20 @@ export function initKnowledgeChat(root) {
     const button = event.target.closest('[data-follow-up]');
     if (button) submitQuestion(button.dataset.followUp);
   });
+  // 记忆入口：看她记得什么 / 让她忘掉（带一句确认对白，忘了就接不回来）。
+  // 问答在途时一律不响应：这会儿删了记忆，等在途那轮落库又会把它复活，承诺就成空话了。
+  thread.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-kb-mem]');
+    if (!button || busy) return;
+    const kind = button.dataset.kbMem;
+    if (kind === 'show') showMemoryMessage();
+    else if (kind === 'forget') confirmForget();
+    else if (kind === 'forget-yes') doForget(button.closest('.kb-chat-mem-actions'));
+    else if (kind === 'forget-no') {
+      button.closest('.kb-chat-mem-actions')?.remove();
+      assistantMessage(thread, { answer: '那就都先留着。想问什么，接着来。', avatarSrc });
+    }
+  });
   // 头像预览：桌面 hover 进出，触屏/鼠标点击开关；滚动或面板收起即隐藏。
   thread.addEventListener('mouseover', (event) => {
     const avatar = event.target.closest('img.kb-chat-avatar');
@@ -515,6 +701,8 @@ export function initKnowledgeChat(root) {
     reset.hidden = true;
     input.value = '';
     input.focus();
+    // 新对话回到欢迎语，但她还是认得你
+    personalizeWelcome();
   });
 
   const updateLoginNote = () => {
@@ -522,8 +710,18 @@ export function initKnowledgeChat(root) {
       ? '已登录 · 查笔记只依据已发布笔记，重要结论请打开原文核对'
       : '登录后可用 · 查笔记只依据已发布笔记，重要结论请打开原文核对';
   };
+  const syncMemory = () => fetchMemory().then(personalizeWelcome);
   updateLoginNote();
-  window.addEventListener('atw-auth', updateLoginNote);
+  if (getToken()) syncMemory();
+  window.addEventListener('atw-auth', () => {
+    updateLoginNote();
+    if (getToken()) {
+      syncMemory();
+    } else {
+      memory = null;
+      depersonalizeWelcome();
+    }
+  });
   if (getToken()) {
     try {
       const pending = sessionStorage.getItem(PENDING_KEY);

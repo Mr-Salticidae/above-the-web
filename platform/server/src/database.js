@@ -161,6 +161,18 @@ CREATE TABLE IF NOT EXISTS task_events (
 );
 
 CREATE INDEX IF NOT EXISTS task_events_task_idx ON task_events (task_slug, created_at);
+
+-- 小织的记忆：知识库小助手的回头客档案，一人一行。
+-- 存的是蒸馏后的短条目（模型每轮至多一句、80 字、最多 12 条）和最近话题，不存问答原文。
+-- 本人可看（GET /api/ai/kb-memory）、可清（DELETE 同路径），删号级联删。
+CREATE TABLE IF NOT EXISTS kb_memory (
+  user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  meet_count INTEGER NOT NULL DEFAULT 0,
+  last_seen_at INTEGER,
+  last_topic TEXT NOT NULL DEFAULT '',
+  notes_json TEXT NOT NULL DEFAULT '[]',
+  updated_at INTEGER NOT NULL
+);
 `;
 
 const PUBLIC_USER_COLUMNS =
@@ -415,6 +427,51 @@ export function createDatabase(config) {
            ORDER BY a.created_at DESC LIMIT ?`,
         )
         .all(limit);
+    },
+
+    // ---------- 小织的记忆 ----------
+
+    getKbMemory(userId) {
+      const row = db.prepare("SELECT * FROM kb_memory WHERE user_id = ?").get(userId);
+      if (!row) return { meetCount: 0, lastSeenAt: null, lastTopic: "", notes: [] };
+      let notes = [];
+      try {
+        const parsed = JSON.parse(row.notes_json);
+        // 只认 {t, note} 形状的条目：note 必须是非空字符串，否则 prompt 里会漏出 undefined
+        if (Array.isArray(parsed)) {
+          notes = parsed.filter((entry) => entry && typeof entry.note === "string" && entry.note);
+        }
+      } catch {
+        /* 存坏了就当没有，别让一行脏数据把问答一起带崩 */
+      }
+      return {
+        meetCount: row.meet_count,
+        lastSeenAt: row.last_seen_at,
+        lastTopic: row.last_topic,
+        notes,
+      };
+    },
+
+    // 每轮成功的问答记一笔：次数 +1、话题刷新；note 有内容才入账，
+    // 和上一条一模一样的不重复记（模型爱把同一件事翻来覆去地说）。
+    // note 的长度与单行清洗归调用方（app.js），这里只管收和裁条数。
+    touchKbMemory(userId, { topic = "", note = "" } = {}) {
+      const current = api.getKbMemory(userId);
+      const notes = [...current.notes];
+      if (note && note !== notes[notes.length - 1]?.note) {
+        notes.push({ t: now(), note });
+        while (notes.length > 12) notes.shift();
+      }
+      const ts = now();
+      db.prepare(
+        `INSERT OR REPLACE INTO kb_memory (user_id, meet_count, last_seen_at, last_topic, notes_json, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+      ).run(userId, current.meetCount + 1, ts, topic || current.lastTopic, JSON.stringify(notes), ts);
+    },
+
+    // 返回是否真的删掉了行：调用方据此决定要不要记审计（无行的 no-op 不留痕）
+    clearKbMemory(userId) {
+      return db.prepare("DELETE FROM kb_memory WHERE user_id = ?").run(userId).changes > 0;
     },
 
     // ---------- 任务 ----------

@@ -83,6 +83,8 @@ markdown 里的 `status` / `taker` 只在任务第一次入库时当初值用。
 或检索零命中时接手——不硬答、不编来源，帮读者把问题问清楚（详见
 `docs/KNOWLEDGE_BASE_AI_QUERY.md` 与角色卡 `docs/KB_ASSISTANT_PERSONA.md`）。
 两种方式都不让模型用站外常识替笔记回答。
+登录用户另有一份可看可删的记忆档案（`kb_memory` 表：问答轮数、上次话题、蒸馏短条目，
+不存问答原文），`GET/DELETE /api/ai/kb-memory` 只要登录、不占 AI 配额。
 走 OpenAI 兼容协议的单次结构化输出调用（`response_format.json_schema`），和
 `scripts/news-compose.mjs` 一个路子——搜集和校验都是确定性工作，模型只做判断与改写，
 一次请求就够，不开 agentic loop。实现在 `src/assist.js`，零第三方依赖。

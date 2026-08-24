@@ -435,6 +435,193 @@ test("知识库问答：零命中的助产请求也扣配额，打满就 429，�
   assert.equal(calls.length, 0);
 });
 
+test("小织的记忆：聊过会记下、下一轮进 prompt、看得到也忘得掉", async () => {
+  // 前面 reader02 已经聊过 3 轮——记忆该跟着长到 3
+  const grown = await call("GET", "/api/ai/kb-memory", { token: readerToken });
+  assert.equal(grown.status, 200);
+  assert.equal(grown.payload.meetCount, 3);
+  assert.ok(grown.payload.lastTopic.length > 0);
+
+  // 独立账号从头走一遍完整生命周期（3 次问答正好贴着测试配额上限）
+  const fresh = await call("POST", "/api/auth/register", {
+    body: {
+      username: "reader05",
+      displayName: "做角色 IP 的人",
+      email: "reader05@test.local",
+      password: "reader-password-5",
+    },
+  });
+  assert.equal(fresh.status, 201);
+  const token = fresh.payload.token;
+  const SOURCE = {
+    title: "角色锚点的四层结构",
+    url: "/character-anchor/",
+    excerpt: "先锁轮廓，再锁服装与道具。脸部精度不是第一优先级。",
+  };
+
+  // 第 1 轮：prompt 里是初次见面；模型说值得记一笔（还带着换行的脏格式）
+  calls.length = 0;
+  nextReply = {
+    mode: "answer",
+    answer: "先锁轮廓 [1]。",
+    sourceIds: [1],
+    followUps: [],
+    memory: "在做角色 IP，\n卡在角色一致性",
+  };
+  let response = await call("POST", "/api/ai/kb-chat", {
+    token,
+    body: { question: "角色一致性先锁什么？", sources: [SOURCE] },
+  });
+  assert.equal(response.status, 200);
+  assert.match(calls[0].prompt, /你对这位读者的记忆/);
+  assert.match(calls[0].prompt, /做角色 IP 的人/); // 称呼用昵称
+  assert.match(calls[0].prompt, /第 1 轮问答/);
+  assert.match(calls[0].prompt, /初次见面/);
+
+  // 第 2 轮：上一轮的记忆进了 prompt；一模一样的 memory 不重复入账
+  calls.length = 0;
+  nextReply = {
+    mode: "answer",
+    answer: "再锁服装 [1]。",
+    sourceIds: [1],
+    followUps: [],
+    memory: "在做角色 IP， 卡在角色一致性",
+  };
+  response = await call("POST", "/api/ai/kb-chat", {
+    token,
+    body: { question: "那服装锚点怎么写？", sources: [SOURCE] },
+  });
+  assert.equal(response.status, 200);
+  assert.match(calls[0].prompt, /第 2 轮问答/);
+  assert.match(calls[0].prompt, /上次聊到「角色一致性先锁什么？」/);
+  assert.match(calls[0].prompt, /在做角色 IP， 卡在角色一致性/); // 换行压成空格后入账
+  assert.ok(!calls[0].prompt.includes("IP，\n卡在"));
+
+  // 看得到：短条目只有一条（重复没入账），档案里是话题和印象，不是问答转写
+  const seen = await call("GET", "/api/ai/kb-memory", { token });
+  assert.equal(seen.payload.meetCount, 2);
+  assert.equal(seen.payload.notes.length, 1);
+  assert.equal(seen.payload.notes[0].note, "在做角色 IP， 卡在角色一致性");
+  assert.equal(seen.payload.lastTopic, "那服装锚点怎么写？");
+
+  // 忘得掉：删完归零，审计记下「忘了」但不记忘掉了什么
+  const wiped = await call("DELETE", "/api/ai/kb-memory", { token });
+  assert.equal(wiped.status, 200);
+  const forgetLogs = database
+    .listAuditLogs()
+    .filter((entry) => entry.action === "ai.kb_memory_forget" && entry.actor_user_id === fresh.payload.user.id);
+  assert.equal(forgetLogs.length, 1);
+  assert.ok(!forgetLogs[0].details_json.includes("角色一致性")); // 不记忘掉了什么
+  const after = await call("GET", "/api/ai/kb-memory", { token });
+  assert.equal(after.payload.meetCount, 0);
+  assert.deepEqual(after.payload.notes, []);
+
+  // 档案已空时再删是 no-op：不该多出一条审计——这个不占配额的端点不能变成刷审计的口子
+  const wipedAgain = await call("DELETE", "/api/ai/kb-memory", { token });
+  assert.equal(wipedAgain.status, 200);
+  assert.equal(
+    database
+      .listAuditLogs()
+      .filter((entry) => entry.action === "ai.kb_memory_forget" && entry.actor_user_id === fresh.payload.user.id)
+      .length,
+    1,
+  );
+
+  // 下一轮 prompt 回到初次见面；这轮 memory 留空，聊完档案里也只有轮数和话题
+  calls.length = 0;
+  nextReply = { mode: "answer", answer: "先锁轮廓 [1]。", sourceIds: [1], followUps: [], memory: "" };
+  response = await call("POST", "/api/ai/kb-chat", {
+    token,
+    body: { question: "角色一致性先锁什么？", sources: [SOURCE] },
+  });
+  assert.equal(response.status, 200);
+  assert.match(calls[0].prompt, /第 1 轮问答/);
+  const restarted = await call("GET", "/api/ai/kb-memory", { token });
+  assert.equal(restarted.payload.meetCount, 1);
+  assert.deepEqual(restarted.payload.notes, []);
+});
+
+test("小织的记忆：模型照抄问题原文进 memory 会被丢弃，类型不对也不入账", async () => {
+  const copycat = await call("POST", "/api/auth/register", {
+    body: {
+      username: "reader06",
+      displayName: "爱粘贴的人",
+      email: "reader06@test.local",
+      password: "reader-password-6",
+    },
+  });
+  assert.equal(copycat.status, 201);
+  const token = copycat.payload.token;
+  const question = "我想给我的角色 IP 做一套跨场景的一致性视觉方案，从哪篇笔记看起？";
+  const SOURCE = {
+    title: "角色锚点的四层结构",
+    url: "/character-anchor/",
+    excerpt: "先锁轮廓，再锁服装与道具。脸部精度不是第一优先级。",
+  };
+
+  // memory 是问题原文的连续片段（≥18 字）→ 丢弃；记忆是印象，不是转写
+  nextReply = {
+    mode: "answer",
+    answer: "从角色锚点那篇看起 [1]。",
+    sourceIds: [1],
+    followUps: [],
+    memory: "想给我的角色 IP 做一套跨场景的一致性视觉方案",
+  };
+  let response = await call("POST", "/api/ai/kb-chat", { token, body: { question, sources: [SOURCE] } });
+  assert.equal(response.status, 200);
+  let seen = await call("GET", "/api/ai/kb-memory", { token });
+  assert.deepEqual(seen.payload.notes, []);
+
+  // memory 不是字符串（供应商不严格执行 schema）→ 不能把 "[object Object]" 存成长期记忆
+  nextReply = {
+    mode: "answer",
+    answer: "先看轮廓层 [1]。",
+    sourceIds: [1],
+    followUps: [],
+    memory: { note: "整个对象混进来了" },
+  };
+  response = await call("POST", "/api/ai/kb-chat", { token, body: { question, sources: [SOURCE] } });
+  assert.equal(response.status, 200);
+  seen = await call("GET", "/api/ai/kb-memory", { token });
+  assert.equal(seen.payload.meetCount, 2);
+  assert.deepEqual(seen.payload.notes, []);
+});
+
+test("小织的记忆（库层）：note 留空只走轮数，条目裁 12 条掐头留新", () => {
+  // 直接造一个用户行，别蹭 HTTP 配额
+  const unitUser = database.createUser({
+    username: "kbmemunit",
+    displayName: "库层测试",
+    email: "kbmemunit@test.local",
+    passwordHash: "x",
+  });
+
+  // note 为空：notes 原样、轮数 +1、话题刷新
+  database.touchKbMemory(unitUser.id, { topic: "第一话", note: "第一条印象" });
+  database.touchKbMemory(unitUser.id, { topic: "第二话", note: "" });
+  let memory = database.getKbMemory(unitUser.id);
+  assert.equal(memory.meetCount, 2);
+  assert.equal(memory.lastTopic, "第二话");
+  assert.equal(memory.notes.length, 1);
+  assert.equal(memory.notes[0].note, "第一条印象");
+
+  // 再灌 13 条互不相同的：总量该停在 12，掐头（最老的先走）、留新（最新在末尾）
+  for (let i = 1; i <= 13; i += 1) {
+    database.touchKbMemory(unitUser.id, { topic: `第${i}话`, note: `印象${i}` });
+  }
+  memory = database.getKbMemory(unitUser.id);
+  assert.equal(memory.notes.length, 12);
+  assert.equal(memory.notes[0].note, "印象2"); // 「第一条印象」和「印象1」被挤掉了
+  assert.equal(memory.notes[11].note, "印象13");
+});
+
+test("小织的记忆：不登录看不到，也删不动", async () => {
+  const seen = await call("GET", "/api/ai/kb-memory");
+  assert.equal(seen.status, 401);
+  const wiped = await call("DELETE", "/api/ai/kb-memory");
+  assert.equal(wiped.status, 401);
+});
+
 test("自荐说明：模型写超了也不会给出一段提交不上去的稿", async () => {
   nextReply = { pitch: "字".repeat(3000), missing: [] };
   const { payload } = await call("POST", "/api/ai/claim-pitch", {
