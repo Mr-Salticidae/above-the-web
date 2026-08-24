@@ -70,6 +70,7 @@ test('合并多组结果时每组保底一席，余额按语义强弱顺序分�
 });
 
 // 全库 100 篇的假索引：filters() 报各栏目篇数，search() 按 table 给结果。
+// table 的值可以是数组（正文笔记与索引页不分），也可以是 { note, index } 两档。
 function fakePagefind(table, { total = 100 } = {}) {
   const calls = [];
   return {
@@ -77,9 +78,13 @@ function fakePagefind(table, { total = 100 } = {}) {
     async filters() {
       return { type: { note: total } };
     },
-    async search(query) {
-      calls.push(query);
-      return { results: table[query] || [] };
+    async search(query, { filters } = {}) {
+      calls.push(filters?.kind ? `${query}#${filters.kind}` : query);
+      const entry = table[query];
+      if (!entry) return { results: [] };
+      if (Array.isArray(entry)) return { results: entry };
+      // kind:note 只给正文笔记；不带 kind 时正文笔记与索引页一起返回
+      return { results: filters?.kind === 'note' ? entry.note || [] : [...(entry.note || []), ...(entry.index || [])] };
     },
   };
 }
@@ -90,10 +95,10 @@ test('检索以关键词为主，整句不参与', async () => {
   const pagefind = fakePagefind({ 角色一致性: [role], Midjourney: [broad] });
 
   assert.deepEqual(
-    await searchPagefindNotes(pagefind, '怎样保持 Midjourney 角色一致性？'),
+    await searchPagefindNotes(pagefind, '怎样保持 Midjourney 角色一致性？', { limit: 2 }),
     [role, broad],
   );
-  assert.deepEqual(pagefind.calls, ['角色一致性', 'Midjourney']);
+  assert.deepEqual(pagefind.calls, ['角色一致性#note', 'Midjourney#note']);
 });
 
 // 2026-08-24 实测：整句召回的是覆盖面广的长文档（索引页、大杂烩复盘），
@@ -106,8 +111,8 @@ test('关键词全部落空时才回退整句', async () => {
     await searchPagefindNotes(pagefind, '知识库里关于 sref 的笔记有哪些'),
     [fallback],
   );
-  // 先试 sref，落空了才拿整句碰运气
-  assert.deepEqual(pagefind.calls, ['sref', '知识库里关于 sref 的笔记有哪些']);
+  // 先试 sref（正文笔记 → 放开），都落空了才拿整句碰运气
+  assert.deepEqual(pagefind.calls, ['sref#note', 'sref', '知识库里关于 sref 的笔记有哪些']);
 });
 
 // 「音乐生成」命中全库 43%、「Suno」只占 12%，按词长排却是前者在先，一口气吃掉五个名额。
@@ -123,7 +128,47 @@ test('命中过全库三成的泛词垫到最后再分名额', async () => {
     ['s1', 'g0', 's2', 'g1'],
   );
   // 泛词仍参与（排序本身有信息量），只是不再第一个挑
-  assert.deepEqual(pagefind.calls, ['音乐生成', 'Suno']);
+  assert.deepEqual(pagefind.calls, ['音乐生成#note', 'Suno#note']);
+});
+
+// 栏目索引页一篇装着几十上百个别的笔记的标题，什么词都沾一点。
+test('正文笔记够用时，索引页一条都不占名额', async () => {
+  const pagefind = fakePagefind({
+    Skill: { note: [{ id: 'n1' }, { id: 'n2' }, { id: 'n3' }], index: [{ id: 'idx' }] },
+  });
+  await primeNoteTotal(pagefind);
+
+  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3 });
+  assert.deepEqual(hits.map((hit) => hit.id), ['n1', 'n2', 'n3']);
+  assert.deepEqual(pagefind.calls, ['Skill#note']); // 一轮就够，没去放开第二轮
+});
+
+test('正文笔记凑不满时，索引页来补位', async () => {
+  const pagefind = fakePagefind({
+    Skill: { note: [{ id: 'n1' }, { id: 'n2' }], index: [{ id: 'idx' }] },
+  });
+  await primeNoteTotal(pagefind);
+
+  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3 });
+  assert.deepEqual(hits.map((hit) => hit.id), ['n1', 'n2', 'idx']);
+});
+
+test('老索引没有 kind 这个过滤条件时，回到原来的行为', async () => {
+  const pagefind = {
+    calls: [],
+    async filters() {
+      return { type: { note: 100 } };
+    },
+    async search(query, { filters } = {}) {
+      this.calls.push(query);
+      if (filters?.kind) return { results: [] }; // 老索引不认 kind，带上就什么都搜不到
+      return { results: query === 'Skill' ? [{ id: 'a' }, { id: 'b' }] : [] };
+    },
+  };
+  await primeNoteTotal(pagefind);
+
+  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3 });
+  assert.deepEqual(hits.map((hit) => hit.id), ['a', 'b']);
 });
 
 // 总数只是一层优化，取它的那次调用线上要一两秒——绝不该让提问的人等它

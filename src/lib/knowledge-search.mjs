@@ -122,6 +122,25 @@ function demoteGenericGroups(groups, total) {
   return [...specific, ...generic];
 }
 
+function searchGroups(pagefind, queries, filters) {
+  return Promise.all(
+    queries.map((item) => Promise.resolve(pagefind.search(item, { filters })).then((r) => r.results)),
+  );
+}
+
+// 用后备结果把名额补满，已经选中的不重复收
+function topUpHits(hits, extra, limit) {
+  const seen = new Set(hits.map((hit) => String(hit?.id || '')));
+  for (const hit of extra) {
+    if (hits.length >= limit) break;
+    const id = String(hit?.id || '');
+    if (!id || seen.has(id)) continue;
+    seen.add(id);
+    hits.push(hit);
+  }
+  return hits;
+}
+
 export async function searchPagefindNotes(pagefind, query, { filters = { type: 'note' }, limit = 6 } = {}) {
   // 关键词检索是主力，整句只当兜底。实测整句对自然语言问句系统性失准：
   // 问句被切成许多词，覆盖面广的长文档（索引页、大杂烩复盘）因为凑齐了更多词而胜出，
@@ -129,12 +148,18 @@ export async function searchPagefindNotes(pagefind, query, { filters = { type: '
   const relaxedQueries = buildRelaxedSearchQueries(query);
   // 没预热过就顺手起一次（仍然不等它），下一轮提问就能用上
   primeNoteTotal(pagefind, filters);
-  const groups = await Promise.all(
-    relaxedQueries.map((item) => Promise.resolve(pagefind.search(item, { filters })).then((r) => r.results)),
-  );
+  const pick = (groups) => mergeSearchHitGroups(demoteGenericGroups(groups, totalEntry(pagefind).value), limit);
 
-  const ranked = demoteGenericGroups(groups, totalEntry(pagefind).value);
-  if (ranked.some((group) => group?.length)) return mergeSearchHitGroups(ranked, limit);
+  // 先只看正文笔记。栏目索引页一篇装着几十上百个别的笔记的标题，因此什么词都沾一点，
+  // 混进来就挤掉真正讲这件事的那篇（`kind` 由笔记页在构建期标注，见 src/pages/[...slug].astro）。
+  const hits = pick(await searchGroups(pagefind, relaxedQueries, { ...filters, kind: 'note' }));
+
+  // 正文笔记凑不满才放开，让索引页来补位——它虽然稀，总比空着强。
+  // 老索引没有 kind 这个过滤条件时上一步会全空，也从这里回到原来的行为。
+  if (hits.length < limit) {
+    topUpHits(hits, pick(await searchGroups(pagefind, relaxedQueries, filters)), limit);
+  }
+  if (hits.length) return hits;
 
   // 关键词一条都没命中，才轮到整句碰运气
   const strict = await pagefind.search(query, { filters });

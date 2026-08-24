@@ -45,6 +45,17 @@ export function getTags(note) {
   return Array.isArray(note.data?.tags) ? note.data.tags : [];
 }
 
+// 栏目索引页（`04_方法论与洞察索引.md`、`SKILL_INDEX.md` 这类）：正文几乎全是别的笔记的标题，
+// 一篇就装着几十上百个内链，因此什么词都沾一点。当导航看很好，当问答依据却会挤掉
+// 真正讲这件事的笔记，所以在检索里要能把它们认出来。
+// 判据落在文件名而不是 frontmatter：kb-content 是同步进来的外部仓库，不该要求它为本站加标记。
+// 以「索引」结尾或名为 *_INDEX 才算，`dws块级插入_index语义陷阱…_v1` 这种不受影响。
+const INDEX_STEM_RE = /(?:索引|(?:^|[_-])INDEX)$/i;
+
+export function isIndexNote(note) {
+  return INDEX_STEM_RE.test(getStem(note));
+}
+
 // 取正文首段非标题文本作摘要
 export function getExcerpt(note, max = 90) {
   const body = note.body || '';

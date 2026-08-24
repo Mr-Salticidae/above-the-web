@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getTitle, getCategory, getTags, getExcerpt, buildBacklinks, href } from '../lib/notes.mjs';
+import { getTitle, getCategory, getTags, getExcerpt, buildBacklinks, href, isIndexNote } from '../lib/notes.mjs';
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes');
@@ -17,11 +17,16 @@ const { Content } = await render(note);
 const title = getTitle(note);
 const category = getCategory(note);
 const tags = getTags(note);
+// kind 让 AI 查询能把栏目索引页排到正文笔记后面（见 src/lib/knowledge-search.mjs）；
+// 右上角的普通全文搜索不看这个过滤条件，索引页照样能搜到。
+const kind = isIndexNote(note) ? 'index' : 'note';
 ---
 
 <BaseLayout title={title} description={getExcerpt(note, 120)}>
   <article class="prose" data-pagefind-filter="type:note">
-    <p class="meta" data-pagefind-meta="category">{category}</p>
+    {/* 一个 data-pagefind-filter 属性只能放一个过滤条件——写成 "type:note, kind:note"
+        会被整条当成 type 的值（连 type=note 都匹配不上），所以 kind 另挂一个元素。 */}
+    <p class="meta" data-pagefind-meta="category" data-pagefind-filter={`kind:${kind}`}>{category}</p>
     <Content />
     {tags.length > 0 && (
       <div class="tags">
