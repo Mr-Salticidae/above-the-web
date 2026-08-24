@@ -51,6 +51,15 @@ test('容器词剥完只剩框架时，认工具名而不是退回噪音', () =>
   assert.deepEqual(buildRelaxedSearchQueries('知识库里关于 sref 的笔记有哪些'), ['sref']);
 });
 
+// 只剥「知识库」会留下「里讲工作流」这种谁也不是的词，它命中率低、看着还挺精准，
+// 召回却远不如「工作流」——容器词后面粘着的方位词和动词要一起剥。
+test('容器词后面粘的方位词和动词一起剥掉', () => {
+  assert.deepEqual(buildRelaxedSearchQueries('知识库里讲工作流的笔记有哪些'), ['工作流']);
+  assert.deepEqual(buildRelaxedSearchQueries('这个笔记里讲的东西'), ['东西']);
+  // 别把正经词吃掉：「笔记的整理方法」剥完该剩「整理方法」
+  assert.deepEqual(buildRelaxedSearchQueries('笔记的整理方法'), ['整理方法']);
+});
+
 test('整句都是框架且没有工具名时，仍退回原始词块兜底', () => {
   // 剥到一个词都不剩又没有工具名可认，只能拿原话去搜——总比一条候选查询都没有强
   assert.deepEqual(buildRelaxedSearchQueries('这个知识库里有什么'), ['这个知识库']);
@@ -116,9 +125,9 @@ test('关键词全部落空时才回退整句', async () => {
 });
 
 // 「音乐生成」命中全库 43%、「Suno」只占 12%，按词长排却是前者在先，一口气吃掉五个名额。
-test('命中过全库三成的泛词垫到最后再分名额', async () => {
+test('命中过全库四成的泛词垫到最后再分名额', async () => {
   const suno = [{ id: 's1' }, { id: 's2' }];
-  const generic = new Array(40).fill(null).map((_, i) => ({ id: `g${i}` }));
+  const generic = new Array(45).fill(null).map((_, i) => ({ id: `g${i}` }));
   const pagefind = fakePagefind({ 音乐生成: generic, Suno: suno });
   await primeNoteTotal(pagefind);
 
@@ -129,6 +138,18 @@ test('命中过全库三成的泛词垫到最后再分名额', async () => {
   );
   // 泛词仍参与（排序本身有信息量），只是不再第一个挑
   assert.deepEqual(pagefind.calls, ['音乐生成#note', 'Suno#note']);
+});
+
+// 「Skill 是怎么用的？」拆出来是「用的」（命中 90%）和「Skill」（31%）：两个都不算精准词时，
+// 命中少的那个更像个正经词，该它先挑。
+test('几条查询都泛时，命中少的先挑', async () => {
+  const vague = new Array(90).fill(null).map((_, i) => ({ id: `v${i}` }));
+  const skill = new Array(50).fill(null).map((_, i) => ({ id: `s${i}` }));
+  const pagefind = fakePagefind({ 用的: vague, Skill: skill });
+  await primeNoteTotal(pagefind);
+
+  const hits = await searchPagefindNotes(pagefind, 'Skill 是怎么用的？', { limit: 2 });
+  assert.deepEqual(hits.map((hit) => hit.id), ['s0', 'v0']);
 });
 
 // 栏目索引页一篇装着几十上百个别的笔记的标题，什么词都沾一点。
