@@ -13,6 +13,11 @@ test('自然语言问题会降级为核心中文概念和工具名', () => {
   );
 });
 
+test('词块末尾的「的」不进检索词', () => {
+  // 「音乐生成的」这种尾巴带「的」的块直接拿去搜，读起来也不像个词
+  assert.deepEqual(buildRelaxedSearchQueries('库里有没有讲 Suno 音乐生成的笔记？'), ['音乐生成', 'Suno']);
+});
+
 test('示例问题能剥掉口语成分', () => {
   assert.deepEqual(
     buildRelaxedSearchQueries('做 AI 短片时，故事结构怎么搭？'),
@@ -37,7 +42,7 @@ test('多个英文技术词优先尝试组合，再分别放宽', () => {
 test('问句里描述容器的词不参与检索', () => {
   assert.deepEqual(
     buildRelaxedSearchQueries('这个知识库里有哪些关于 Midjourney prompt 技巧的笔记？'),
-    ['技巧的', 'Midjourney prompt', 'Midjourney', 'prompt'],
+    ['技巧', 'Midjourney prompt', 'Midjourney', 'prompt'],
   );
 });
 
@@ -63,60 +68,72 @@ test('合并多组结果时每组保底一席，余额按语义强弱顺序分�
   assert.deepEqual(mergeSearchHitGroups([[role], [broad, role]], 3), [role, broad]);
 });
 
-test('完整问句为零时会实际执行放宽检索', async () => {
-  const role = { id: 'role' };
-  const broad = { id: 'broad' };
+// 全库 100 篇的假索引：null 查询报总数，其余按 table 给结果。
+function fakePagefind(table, { total = 100 } = {}) {
   const calls = [];
-  const pagefind = {
+  return {
+    calls,
     async search(query) {
+      if (query === null) return { results: new Array(total).fill({ id: 'any' }) };
       calls.push(query);
-      return {
-        results: query === '角色一致性' ? [role] : query === 'Midjourney' ? [broad] : [],
-      };
+      return { results: table[query] || [] };
     },
   };
+}
+
+test('检索以关键词为主，整句不参与', async () => {
+  const role = { id: 'role' };
+  const broad = { id: 'broad' };
+  const pagefind = fakePagefind({ 角色一致性: [role], Midjourney: [broad] });
 
   assert.deepEqual(
     await searchPagefindNotes(pagefind, '怎样保持 Midjourney 角色一致性？'),
     [role, broad],
   );
-  assert.deepEqual(calls, [
-    '怎样保持 Midjourney 角色一致性？',
-    '角色一致性',
-    'Midjourney',
-  ]);
+  assert.deepEqual(pagefind.calls, ['角色一致性', 'Midjourney']);
 });
 
-// 整句偶尔会擦中一两篇索引页，旧实现就此短路，读者得到的是「只找到一篇索引」。
-test('整句只擦中一两条时也补一轮放宽，strict 结果仍排最前', async () => {
-  const indexPage = { id: 'index-page' };
-  const srefA = { id: 'sref-a' };
-  const srefB = { id: 'sref-b' };
-  const calls = [];
-  const pagefind = {
-    async search(query) {
-      calls.push(query);
-      return { results: query === 'sref' ? [srefA, srefB] : query.includes('知识库') ? [indexPage] : [] };
-    },
-  };
+// 2026-08-24 实测：整句召回的是覆盖面广的长文档（索引页、大杂烩复盘），
+// 「库里有没有讲 Suno 音乐生成的笔记」整句六条里没有一条讲 Suno。整句只配当兜底。
+test('关键词全部落空时才回退整句', async () => {
+  const fallback = { id: 'fallback' };
+  const pagefind = fakePagefind({ '知识库里关于 sref 的笔记有哪些': [fallback] });
 
   assert.deepEqual(
     await searchPagefindNotes(pagefind, '知识库里关于 sref 的笔记有哪些'),
-    [indexPage, srefA, srefB],
+    [fallback],
   );
-  assert.deepEqual(calls, ['知识库里关于 sref 的笔记有哪些', 'sref']);
+  // 先试 sref，落空了才拿整句碰运气
+  assert.deepEqual(pagefind.calls, ['sref', '知识库里关于 sref 的笔记有哪些']);
 });
 
-test('整句命中够多时不再放宽，省掉多余检索', async () => {
-  const hits = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
-  const calls = [];
+// 「音乐生成」命中全库 43%、「Suno」只占 12%，按词长排却是前者在先，一口气吃掉五个名额。
+test('命中过全库三成的泛词垫到最后再分名额', async () => {
+  const suno = [{ id: 's1' }, { id: 's2' }];
+  const generic = new Array(40).fill(null).map((_, i) => ({ id: `g${i}` }));
+  const pagefind = fakePagefind({ 音乐生成: generic, Suno: suno });
+
+  const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 4 });
+  assert.deepEqual(
+    hits.map((hit) => hit.id),
+    ['s1', 'g0', 's2', 'g1'],
+  );
+  // 泛词仍参与（排序本身有信息量），只是不再第一个挑
+  assert.deepEqual(pagefind.calls, ['音乐生成', 'Suno']);
+});
+
+test('拿不到全库总数时不做降级，退回原有顺序', async () => {
+  const generic = [{ id: 'g1' }, { id: 'g2' }];
+  const narrow = [{ id: 'n1' }];
   const pagefind = {
+    calls: [],
     async search(query) {
-      calls.push(query);
-      return { results: hits };
+      if (query === null) throw new Error('不支持空查询');
+      this.calls.push(query);
+      return { results: query === '音乐生成' ? generic : query === 'Suno' ? narrow : [] };
     },
   };
 
-  assert.deepEqual(await searchPagefindNotes(pagefind, '角色一致性怎么锁'), hits);
-  assert.equal(calls.length, 1);
+  const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 3 });
+  assert.deepEqual(hits.map((hit) => hit.id), ['g1', 'n1', 'g2']);
 });

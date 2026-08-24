@@ -8,10 +8,13 @@ const FILLER_RE = /(?:请问|请帮我|帮我|我想知道|想知道|想了解|�
 // 这些词偏偏是本库的强索引词（库里就有讲知识库沉淀与分发的笔记），不剥掉的话，
 // 「这个知识库里有哪些关于 Midjourney 的笔记」会被它们带去知识库维护那一堆，真正的 Midjourney 反而挤不进来。
 const META_RE = /(?:这个|这些|那个|那些|这里|那里|本站|站内|库里|知识库|笔记|文章|文档|资料|内容|里面|关于|有没有|没有|哪些|什么|一些|以及|说说)/g;
-const TRAILING_CONTEXT_RE = /(?:的时候|方面|过程中|时|中|里|上|下)$/;
-// strict 命中少于这个数就补一轮放宽：整句偶尔会擦中一两篇索引页就此短路，
-// 「知识库里关于 sref 的笔记」只捞回一篇「方法论与洞察索引」正是这么来的。
-const MIN_STRICT_HITS = 3;
+const TRAILING_CONTEXT_RE = /(?:的时候|方面|过程中|的|时|中|里|上|下)$/;
+// 命中超过全库这个比例的查询没有区分度，把它垫到最后再分名额。
+// 实测（442 篇笔记）：「音乐生成」190 篇 43%、「prompt」「AI」442 篇 100%，
+// 而「角色一致性」85 篇 19%、「Suno」54 篇 12%、「技巧」24 篇 5%。
+// 问 Suno 时「音乐生成」按词长排在前面，一口气吃掉五个名额，Suno 只剩一个——就是这么来的。
+// 垫后而不是丢掉：泛词的命中排序本身仍有信息量（搜 prompt 的第一条正是 Prompt Master Skill）。
+const GENERIC_HIT_RATIO = 0.3;
 
 function uniquePush(output, seen, value) {
   const clean = String(value || '').replace(/\s+/g, ' ').trim();
@@ -77,15 +80,47 @@ export function mergeSearchHitGroups(groups, limit = 6) {
   return output;
 }
 
-export async function searchPagefindNotes(pagefind, query, { filters = { type: 'note' }, limit = 6 } = {}) {
-  const strict = await pagefind.search(query, { filters });
-  if (strict.results.length >= MIN_STRICT_HITS) return strict.results.slice(0, limit);
+// 全库笔记数，用来判断一条查询泛不泛。按 pagefind 实例缓存：一次会话问一次就够，
+// 拿不到（旧版本不支持空查询等）就返回 0，调用方会跳过泛词降级，回到原来的顺序。
+const noteTotals = new WeakMap();
 
-  // 整句命中太少（含零命中）时补一轮放宽。strict 的结果仍排在最前——
-  // 它是唯一按完整问句排过序的一组，只是数量不够，不该被放宽结果盖掉。
+function countAllNotes(pagefind, filters) {
+  if (!noteTotals.has(pagefind)) {
+    noteTotals.set(
+      pagefind,
+      Promise.resolve(pagefind.search(null, { filters }))
+        .then((result) => result?.results?.length || 0)
+        .catch(() => 0),
+    );
+  }
+  return noteTotals.get(pagefind);
+}
+
+// 泛到没有区分度的查询垫到最后，其余保持原有的语义强弱顺序（稳定，不打乱同档次的相对次序）。
+function demoteGenericGroups(groups, total) {
+  if (!total) return groups;
+  const specific = [];
+  const generic = [];
+  for (const group of groups) {
+    ((group?.length || 0) / total > GENERIC_HIT_RATIO ? generic : specific).push(group);
+  }
+  return [...specific, ...generic];
+}
+
+export async function searchPagefindNotes(pagefind, query, { filters = { type: 'note' }, limit = 6 } = {}) {
+  // 关键词检索是主力，整句只当兜底。实测整句对自然语言问句系统性失准：
+  // 问句被切成许多词，覆盖面广的长文档（索引页、大杂烩复盘）因为凑齐了更多词而胜出，
+  // 真正的关键词被稀释——「库里有没有讲 Suno 音乐生成的笔记」整句召回六篇，没有一篇讲 Suno。
   const relaxedQueries = buildRelaxedSearchQueries(query);
-  const relaxed = await Promise.all(
-    relaxedQueries.map((item) => pagefind.search(item, { filters })),
-  );
-  return mergeSearchHitGroups([strict.results, ...relaxed.map((item) => item.results)], limit);
+  const [total, ...groups] = await Promise.all([
+    countAllNotes(pagefind, filters),
+    ...relaxedQueries.map((item) => Promise.resolve(pagefind.search(item, { filters })).then((r) => r.results)),
+  ]);
+
+  const ranked = demoteGenericGroups(groups, total);
+  if (ranked.some((group) => group?.length)) return mergeSearchHitGroups(ranked, limit);
+
+  // 关键词一条都没命中，才轮到整句碰运气
+  const strict = await pagefind.search(query, { filters });
+  return strict.results.slice(0, limit);
 }
