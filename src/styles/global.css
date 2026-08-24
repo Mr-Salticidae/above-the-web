@@ -288,12 +288,17 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 /* 头像高清预览浮层：fixed 挂在 body，不进聊天滚动区，避免被 overflow 裁剪 */
 .kb-chat-avatar-pop {
-  position: fixed; z-index: 80; width: 13.75rem; display: block;
-  border-radius: 14px; border: 1px solid var(--line);
+  position: fixed; z-index: 80; width: 13.75rem; display: block; margin: 0; overflow: hidden;
+  border-radius: 14px; border: 1px solid var(--line); background: var(--paper-2);
   box-shadow: 0 18px 44px -18px rgba(var(--shadow), .55);
   opacity: 0; transform: translateY(.4rem) scale(.97); transform-origin: left bottom;
   transition: opacity .16s ease, transform .16s ease;
   pointer-events: none;
+}
+.kb-chat-avatar-pop img { display: block; width: 100%; }
+.kb-chat-avatar-pop figcaption {
+  padding: .42rem .65rem; font-size: .7rem; line-height: 1.4; color: var(--ink-soft);
+  border-top: 1px solid var(--line);
 }
 .kb-chat-avatar-pop.is-visible { opacity: 1; transform: none; }
 .kb-chat-bubble {
@@ -313,6 +318,11 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .kb-chat-message.is-notice .kb-chat-bubble { border-style: dashed; color: var(--ink-soft); }
 .kb-chat-message.is-error .kb-chat-bubble { border-color: color-mix(in srgb, #d0342c 42%, var(--line)); }
+/* 助产（guide）回复：小织不引用来源、只负责把问题接生出来，气泡带一道 accent 线以示区分 */
+.kb-chat-message.is-guide .kb-chat-bubble {
+  border-left: 3px solid color-mix(in srgb, var(--accent) 62%, var(--line));
+  background: color-mix(in srgb, var(--accent-soft) 30%, var(--paper-2));
+}
 .kb-chat-citation {
   display: inline-flex; vertical-align: .12em; margin: 0 .06em; padding: 0 .28em;
   border-radius: 999px; background: var(--accent-soft); color: var(--accent);
@@ -327,6 +337,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .kb-chat-sources a b { flex: none; color: var(--accent); }
 .kb-chat-followups { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+.kb-chat-followups-label { flex: 0 0 100%; color: var(--ink-soft); font-size: .72rem; }
 .kb-chat-followups button, .kb-chat-starters button {
   cursor: pointer; border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
   border-radius: 999px; background: color-mix(in srgb, var(--accent-soft) 58%, var(--paper-2));

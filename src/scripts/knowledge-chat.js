@@ -84,7 +84,7 @@ function passageFromText(text, result) {
   return windows.join('\n\n……\n\n').slice(0, MAX_SOURCE_CHARS);
 }
 
-async function hydrateResult(result, index) {
+async function hydrateResult(result) {
   const rawUrl = String(result.url || '');
   const absolute = new URL(rawUrl, location.href);
   let articleText = '';
@@ -104,12 +104,27 @@ async function hydrateResult(result, index) {
   }
 
   return {
-    id: index + 1,
     title: plainText(result.meta?.title || '未命名笔记').slice(0, 120),
     category: category.slice(0, 80),
     url: `${absolute.pathname}${absolute.search}${absolute.hash}`,
     excerpt: passageFromText(articleText, result),
   };
+}
+
+// 编号要和服务端 knowledgeSources 的清洗结果对得上：那边会丢掉摘要不足 20 字符、
+// URL 重复或形如 // 开头的条目并从 1 重新编号。这边先按同一套规则筛一遍再编号，
+// 否则模型标的 [2] 会被前端链接到本地顺位的另一篇笔记。
+function numberSources(hydrated) {
+  const seen = new Set();
+  const sources = [];
+  for (const item of hydrated) {
+    if (!item.title || item.excerpt.length < 20) continue;
+    if (!item.url.startsWith('/') || item.url.startsWith('//') || seen.has(item.url)) continue;
+    seen.add(item.url);
+    sources.push({ ...item, id: sources.length + 1 });
+    if (sources.length >= MAX_RESULTS) break;
+  }
+  return sources;
 }
 
 function retrievalQuery(question, history) {
@@ -131,7 +146,8 @@ async function retrieveSources(base, question, history) {
   }
 
   const results = await Promise.all(hits.slice(0, MAX_RESULTS).map((item) => item.data()));
-  return Promise.all(results.map(hydrateResult));
+  const hydrated = await Promise.all(results.map(hydrateResult));
+  return numberSources(hydrated);
 }
 
 function appendTextWithCitations(container, text, sources) {
@@ -207,7 +223,7 @@ function buildAvatar(avatarSrc) {
   return img;
 }
 
-function assistantMessage(thread, { answer, sources = [], followUps = [], tone = '', avatarSrc = '' }) {
+function assistantMessage(thread, { answer, sources = [], followUps = [], tone = '', avatarSrc = '', followLabel = '' }) {
   const message = document.createElement('div');
   message.className = `kb-chat-message is-assistant${tone ? ` is-${tone}` : ''}`;
   message.append(buildAvatar(avatarSrc));
@@ -234,6 +250,12 @@ function assistantMessage(thread, { answer, sources = [], followUps = [], tone =
   if (followUps.length) {
     const followBox = document.createElement('div');
     followBox.className = 'kb-chat-followups';
+    if (followLabel) {
+      const label = document.createElement('span');
+      label.className = 'kb-chat-followups-label';
+      label.textContent = followLabel;
+      followBox.append(label);
+    }
     followUps.forEach((question) => {
       const button = document.createElement('button');
       button.type = 'button';
@@ -284,29 +306,40 @@ export function initKnowledgeChat(root) {
   const base = root.dataset.base || '/';
   const avatarSrc = root.dataset.assistantAvatar || '';
   const avatarFull = root.dataset.assistantFull || '';
+  // 栏目地图：构建期固化在组件的 data 属性里，助产模式随请求带给服务端供小织指路。
+  let catalog = [];
+  try {
+    const parsed = JSON.parse(root.dataset.kbCatalog || '[]');
+    if (Array.isArray(parsed)) catalog = parsed;
+  } catch {}
   const launcher = root.querySelector('[data-kb-launcher]');
 
   // ── 头像高清预览（单例浮层，fixed 定位不受聊天滚动区 overflow 裁剪）──
   // 桌面：hover 头像弹出、移开即收；触屏：点头像开/关。浮层本身 pointer-events: none，
-  // 纯查看不拦截交互；大图只在首次弹出时才加载。
+  // 纯查看不拦截交互；大图只在首次弹出时才加载。图下带一行她的名片，算迷你角色卡。
   let avatarPop = document.querySelector('body > .kb-chat-avatar-pop');
   const hideAvatarPop = () => avatarPop?.classList.remove('is-visible');
   const showAvatarPop = (avatar) => {
     if (!avatarFull) return;
     if (!avatarPop) {
-      avatarPop = document.createElement('img');
+      avatarPop = document.createElement('figure');
       avatarPop.className = 'kb-chat-avatar-pop';
-      avatarPop.alt = '';
       avatarPop.setAttribute('aria-hidden', 'true');
-      avatarPop.addEventListener('error', hideAvatarPop, { once: true });
+      const image = document.createElement('img');
+      image.alt = '';
+      image.addEventListener('error', hideAvatarPop, { once: true });
+      const caption = document.createElement('figcaption');
+      caption.textContent = '小织 · 知识库的织网人';
+      avatarPop.append(image, caption);
       document.body.append(avatarPop);
     }
+    const popImage = avatarPop.querySelector('img');
     const resolved = new URL(avatarFull, location.href).href;
-    if (avatarPop.src !== resolved) avatarPop.src = resolved;
+    if (popImage.src !== resolved) popImage.src = resolved;
 
-    // 大图按 718x960 源比例估算占位：宽 220 → 高约 294。
+    // 大图按 718x960 源比例估算占位：宽 220 → 高约 294，加名片行约 322。
     const W = 220;
-    const H = 294;
+    const H = 322;
     const GAP = 12;
     const EDGE = 8;
     const rect = avatar.getBoundingClientRect();
@@ -389,29 +422,31 @@ export function initKnowledgeChat(root) {
     setBusy(true);
     try {
       const sources = await retrieveSources(base, question, history);
+      // 零命中不再本地打住：这正是助产该接手的时刻——把问题连同栏目地图交给小织，
+      // 由她引导读者把想问的东西问清楚（服务端会强制走 guide 模式）。
       if (!sources.length) {
-        loader.remove();
-        assistantMessage(thread, {
-          answer: '已发布的笔记里暂时没有找到足够接近的内容。可以换一个更具体的关键词，或用右上角全文搜索直接找原文。',
-          tone: 'notice',
-          avatarSrc,
-        });
-        return;
+        const label = loader.querySelector('em');
+        if (label) label.textContent = '正在理线头';
       }
 
       const payload = await api('POST', '/ai/kb-chat', {
         question,
         history: history.slice(-HISTORY_LIMIT),
         sources,
+        catalog,
       });
       try { sessionStorage.removeItem(PENDING_KEY); } catch {}
       loader.remove();
+      const isGuide = payload.mode === 'guide';
       const usedIds = new Set((payload.sourceIds || []).map(Number));
       const usedSources = sources.filter((source) => usedIds.has(source.id));
       assistantMessage(thread, {
         answer: payload.answer,
-        sources: usedSources.length ? usedSources : sources.slice(0, 3),
+        // 助产回复不是依据来源写的，挂参考笔记框反而误导；查笔记回复保持原样。
+        sources: isGuide ? [] : usedSources.length ? usedSources : sources.slice(0, 3),
         followUps: payload.followUps || [],
+        tone: isGuide ? 'guide' : '',
+        followLabel: isGuide && (payload.followUps || []).length ? '试试这样问：' : '',
         avatarSrc,
       });
       history.push({ role: 'user', content: question }, { role: 'assistant', content: payload.answer });
@@ -484,8 +519,8 @@ export function initKnowledgeChat(root) {
 
   const updateLoginNote = () => {
     note.textContent = getCachedUser()
-      ? '已登录 · 回答只依据已发布笔记，重要结论请打开原文核对'
-      : '登录后可用 · 回答只依据已发布笔记，重要结论请打开原文核对';
+      ? '已登录 · 查笔记只依据已发布笔记，重要结论请打开原文核对'
+      : '登录后可用 · 查笔记只依据已发布笔记，重要结论请打开原文核对';
   };
   updateLoginNote();
   window.addEventListener('atw-auth', updateLoginNote);

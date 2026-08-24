@@ -1,10 +1,27 @@
 ---
+// 小助手「小织」：查笔记 + 助产式引导，角色卡见 docs/KB_ASSISTANT_PERSONA.md。
+// 栏目地图在构建期就固化进 data 属性——助产模式指路要靠它，运行时不多打一个请求。
+import { getCollection } from 'astro:content';
+import { groupNotes } from '../lib/note-groups.mjs';
+
 const base = import.meta.env.BASE_URL;
 const assistantAvatar = `${base}kb-assistant-4.webp`;
 const assistantFull = `${base}kb-assistant-full.webp`;
+const { groups } = groupNotes(await getCollection('notes'));
+const catalog = groups
+  .filter((group) => group.count > 0)
+  .map((group) => ({ name: group.cat, desc: group.desc, count: group.count }));
 ---
 
-<section class="kb-chat" data-kb-chat data-base={base} data-open="false" data-assistant-avatar={assistantAvatar} data-assistant-full={assistantFull}>
+<section
+  class="kb-chat"
+  data-kb-chat
+  data-base={base}
+  data-open="false"
+  data-assistant-avatar={assistantAvatar}
+  data-assistant-full={assistantFull}
+  data-kb-catalog={JSON.stringify(catalog)}
+>
   <button
     class="kb-chat-launcher"
     type="button"
@@ -28,8 +45,8 @@ const assistantFull = `${base}kb-assistant-full.webp`;
     <div class="kb-chat-head">
       <div>
         <p class="kb-chat-kicker"><span aria-hidden="true">✦</span> AI 查询</p>
-        <h2 id="kb-chat-title">问问知识库</h2>
-        <p>依据已发布笔记回答，结论可回到原文。</p>
+        <h2 id="kb-chat-title">问问小织</h2>
+        <p>查笔记给带来源的回答；问题还没成形，先帮你把它问清楚。</p>
       </div>
       <div class="kb-chat-head-actions">
         <button class="kb-chat-reset" type="button" data-kb-reset hidden>新对话</button>
@@ -41,7 +58,7 @@ const assistantFull = `${base}kb-assistant-full.webp`;
       <div class="kb-chat-message is-assistant">
         <img class="kb-chat-avatar" src={assistantAvatar} alt="" loading="lazy" decoding="async" />
         <div class="kb-chat-bubble">
-          <p>你可以直接问一个具体问题。我会先从已发布的笔记里找依据，再给你一份带来源的回答。</p>
+          <p>我是小织，这座知识库的织网人。有具体问题就直接问，我从已发布的笔记里找依据，给你带来源的回答；还没想清楚要问什么，也可以先把困惑说给我听。</p>
         </div>
       </div>
     </div>
@@ -50,6 +67,7 @@ const assistantFull = `${base}kb-assistant-full.webp`;
       <button type="button">怎样保持 Midjourney 角色一致性？</button>
       <button type="button">做 AI 短片时，故事结构怎么搭？</button>
       <button type="button">Prompt 常见的失败原因有哪些？</button>
+      <button type="button">我想入门 AI 创作，不知道从哪开始</button>
     </div>
 
     <form class="kb-chat-form" data-kb-form>
@@ -66,7 +84,7 @@ const assistantFull = `${base}kb-assistant-full.webp`;
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 14-7-4 14-3-6-7-1Z"/><path d="m12 13 7-8"/></svg>
       </button>
     </form>
-    <p class="kb-chat-note" data-kb-note>登录后可用 · 重要结论请打开原文核对</p>
+    <p class="kb-chat-note" data-kb-note>登录后可用 · 查笔记只依据已发布笔记，重要结论请打开原文核对</p>
   </div>
 </section>
 

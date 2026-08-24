@@ -175,6 +175,28 @@ function knowledgeSources(value) {
   return sources;
 }
 
+// 栏目地图是构建期就公开在 /notes/ 页面上的东西，但经浏览器转手就一律当不可信输入：
+// 条数、名字、简介、篇数全部重新洗一遍，只给模型看有限长度的短字符串。
+function knowledgeCatalog(value) {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set();
+  const catalog = [];
+  // 换行、制表这类结构性字符先压成单个空格：栏目名是要拼进 prompt 列表行里的，
+  // 让它带着换行进去就能伪造出额外的行甚至 markdown 标题。
+  const singleLine = (text, limit) => draftText(String(text ?? "").replace(/\s+/g, " "), limit);
+  for (const candidate of value) {
+    if (!candidate || typeof candidate !== "object") continue;
+    const name = singleLine(candidate.name, 40);
+    const desc = singleLine(candidate.desc, 100);
+    const count = Number(candidate.count);
+    if (!name || seen.has(name)) continue;
+    seen.add(name);
+    catalog.push({ name, desc, count: Number.isInteger(count) && count >= 0 && count <= 9999 ? count : 0 });
+    if (catalog.length >= 10) break;
+  }
+  return catalog;
+}
+
 function knowledgeHistory(value) {
   if (!Array.isArray(value)) return [];
   return value
@@ -185,9 +207,11 @@ function knowledgeHistory(value) {
 }
 
 function knowledgeAnswer(value, sourceCount) {
-  return draftText(value, 5000).replace(/\[(\d{1,3})\]/g, (whole, raw) => {
+  // 越界编号连同它前面的空格一起删：「挑工具 [1]。」剥完该是「挑工具。」，
+  // 不能留下悬空空格；合法编号原样保留，连前面的空格也不动。
+  return draftText(value, 5000).replace(/([ \t]*)\[(\d{1,3})\]/g, (whole, gap, raw) => {
     const id = Number(raw);
-    return id >= 1 && id <= sourceCount ? `[${id}]` : "";
+    return id >= 1 && id <= sourceCount ? `${gap}[${id}]` : "";
   });
 }
 
@@ -991,23 +1015,26 @@ export function createApplication(config, log = console, deps = {}) {
         if (question.length < 2) throw new HttpError(422, "INPUT_TOO_SHORT", "请把问题说得再具体一点");
         if (question.length > 1000) throw new HttpError(422, "FIELD_TOO_LONG", "问题最长 1000 个字符");
 
+        // 检索零命中不再打回：这正是助产（guide）该接手的时刻——帮读者把问题问清楚，
+        // 而不是丢一句「换个关键词」。登录 + 每小时配额照旧，接口没有因此变成公开的闲聊口。
         const sources = knowledgeSources(body.sources);
-        if (!sources.length) {
-          throw new HttpError(422, "NO_KNOWLEDGE_SOURCES", "没有找到可供回答的站内笔记，请换个关键词");
-        }
+        const catalog = knowledgeCatalog(body.catalog);
         const history = knowledgeHistory(body.history);
         checkAiQuota(user.id, config.ai.hourlyLimit, "AI 查询这一小时用得有点猛，歇会儿再来");
 
         const { data } = await assistant.complete({
           system: KNOWLEDGE_CHAT_SYSTEM,
-          prompt: buildKnowledgeChatPrompt({ question, history, sources }),
+          prompt: buildKnowledgeChatPrompt({ question, history, sources, catalog }),
           schema: KNOWLEDGE_CHAT_SCHEMA,
           schemaName: "knowledge_chat",
           purpose: "knowledge_chat",
         });
-        const answer = knowledgeAnswer(data.answer, sources.length);
+        // mode 归模型判断，但服务端有一票否决：没有来源就不可能有带引用的回答，一律按助产收。
+        // guide 模式把 sourceCount 按 0 算，knowledgeAnswer 会顺手剥掉模型漏写的 [n] 编号。
+        const mode = !sources.length || data.mode === "guide" ? "guide" : "answer";
+        const answer = knowledgeAnswer(data.answer, mode === "guide" ? 0 : sources.length);
         if (!answer) throw new AssistError("AI_EMPTY", "AI 这次没有整理出答案，请换个问法再试");
-        const sourceIds = knowledgeSourceIds(answer, data.sourceIds, sources.length);
+        const sourceIds = mode === "guide" ? [] : knowledgeSourceIds(answer, data.sourceIds, sources.length);
 
         database.createAuditLog({
           actorUserId: user.id,
@@ -1015,12 +1042,14 @@ export function createApplication(config, log = console, deps = {}) {
           targetType: "knowledge_base",
           details: {
             model: assistant.model,
+            mode,
             sources: sources.length,
             historyTurns: history.length,
             questionLength: question.length,
           },
         });
         reply(200, {
+          mode,
           answer,
           sourceIds,
           followUps: draftList(data.followUps, { maxItems: 3, maxLength: 80 }),

@@ -78,8 +78,11 @@ markdown 里的 `status` / `taker` 只在任务第一次入库时当初值用。
 
 接口都要登录：`POST /api/ai/task-draft`（仅发布方）、`POST /api/ai/claim-pitch`（登录即可），
 以及 `POST /api/ai/kb-chat`（登录即可）。知识库查询先由浏览器用 Pagefind 检索公开笔记，
-只把本轮命中的少量正文片段交给模型；回答里的 `[1]` 等编号会回链到原文。来源不足时明确说不知道，
-不让模型用站外常识补齐。
+只把本轮命中的少量正文片段和栏目地图交给模型；回答分两种工作方式（`mode`）：
+查笔记（`answer`）依据片段作答，`[1]` 等编号会回链到原文；助产（`guide`）在问题还没成形
+或检索零命中时接手——不硬答、不编来源，帮读者把问题问清楚（详见
+`docs/KNOWLEDGE_BASE_AI_QUERY.md` 与角色卡 `docs/KB_ASSISTANT_PERSONA.md`）。
+两种方式都不让模型用站外常识替笔记回答。
 走 OpenAI 兼容协议的单次结构化输出调用（`response_format.json_schema`），和
 `scripts/news-compose.mjs` 一个路子——搜集和校验都是确定性工作，模型只做判断与改写，
 一次请求就够，不开 agentic loop。实现在 `src/assist.js`，零第三方依赖。
