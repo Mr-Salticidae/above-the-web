@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import {
   buildRelaxedSearchQueries,
   mergeSearchHitGroups,
-  primeNoteTotal,
   searchPagefindNotes,
 } from '../src/lib/knowledge-search.mjs';
 
@@ -78,15 +77,14 @@ test('合并多组结果时每组保底一席，余额按语义强弱顺序分�
   assert.deepEqual(mergeSearchHitGroups([[role], [broad, role]], 3), [role, broad]);
 });
 
-// 全库 100 篇的假索引：filters() 报各栏目篇数，search() 按 table 给结果。
-// table 的值可以是数组（正文笔记与索引页不分），也可以是 { note, index } 两档。
-function fakePagefind(table, { total = 100 } = {}) {
+// 假索引：table 的值可以是数组（正文笔记与索引页不分），也可以是 { note, index } 两档。
+// 全库篇数由调用方传 total（真实站点从构建期注入的栏目篇数求和而来）。
+const TOTAL = 100;
+
+function fakePagefind(table) {
   const calls = [];
   return {
     calls,
-    async filters() {
-      return { type: { note: total } };
-    },
     async search(query, { filters } = {}) {
       calls.push(filters?.kind ? `${query}#${filters.kind}` : query);
       const entry = table[query];
@@ -104,7 +102,7 @@ test('检索以关键词为主，整句不参与', async () => {
   const pagefind = fakePagefind({ 角色一致性: [role], Midjourney: [broad] });
 
   assert.deepEqual(
-    await searchPagefindNotes(pagefind, '怎样保持 Midjourney 角色一致性？', { limit: 2 }),
+    await searchPagefindNotes(pagefind, '怎样保持 Midjourney 角色一致性？', { limit: 2, total: TOTAL }),
     [role, broad],
   );
   assert.deepEqual(pagefind.calls, ['角色一致性#note', 'Midjourney#note']);
@@ -117,7 +115,7 @@ test('关键词全部落空时才回退整句', async () => {
   const pagefind = fakePagefind({ '知识库里关于 sref 的笔记有哪些': [fallback] });
 
   assert.deepEqual(
-    await searchPagefindNotes(pagefind, '知识库里关于 sref 的笔记有哪些'),
+    await searchPagefindNotes(pagefind, '知识库里关于 sref 的笔记有哪些', { total: TOTAL }),
     [fallback],
   );
   // 先试 sref（正文笔记 → 放开），都落空了才拿整句碰运气
@@ -129,9 +127,8 @@ test('命中过全库四成的泛词垫到最后再分名额', async () => {
   const suno = [{ id: 's1' }, { id: 's2' }];
   const generic = new Array(45).fill(null).map((_, i) => ({ id: `g${i}` }));
   const pagefind = fakePagefind({ 音乐生成: generic, Suno: suno });
-  await primeNoteTotal(pagefind);
 
-  const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 4 });
+  const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 4, total: TOTAL });
   assert.deepEqual(
     hits.map((hit) => hit.id),
     ['s1', 'g0', 's2', 'g1'],
@@ -146,9 +143,8 @@ test('几条查询都泛时，命中少的先挑', async () => {
   const vague = new Array(90).fill(null).map((_, i) => ({ id: `v${i}` }));
   const skill = new Array(50).fill(null).map((_, i) => ({ id: `s${i}` }));
   const pagefind = fakePagefind({ 用的: vague, Skill: skill });
-  await primeNoteTotal(pagefind);
 
-  const hits = await searchPagefindNotes(pagefind, 'Skill 是怎么用的？', { limit: 2 });
+  const hits = await searchPagefindNotes(pagefind, 'Skill 是怎么用的？', { limit: 2, total: TOTAL });
   assert.deepEqual(hits.map((hit) => hit.id), ['s0', 'v0']);
 });
 
@@ -157,9 +153,8 @@ test('正文笔记够用时，索引页一条都不占名额', async () => {
   const pagefind = fakePagefind({
     Skill: { note: [{ id: 'n1' }, { id: 'n2' }, { id: 'n3' }], index: [{ id: 'idx' }] },
   });
-  await primeNoteTotal(pagefind);
 
-  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3 });
+  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3, total: TOTAL });
   assert.deepEqual(hits.map((hit) => hit.id), ['n1', 'n2', 'n3']);
   assert.deepEqual(pagefind.calls, ['Skill#note']); // 一轮就够，没去放开第二轮
 });
@@ -168,9 +163,8 @@ test('正文笔记凑不满时，索引页来补位', async () => {
   const pagefind = fakePagefind({
     Skill: { note: [{ id: 'n1' }, { id: 'n2' }], index: [{ id: 'idx' }] },
   });
-  await primeNoteTotal(pagefind);
 
-  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3 });
+  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3, total: TOTAL });
   assert.deepEqual(hits.map((hit) => hit.id), ['n1', 'n2', 'idx']);
 });
 
@@ -186,50 +180,17 @@ test('老索引没有 kind 这个过滤条件时，回到原来的行为', async
       return { results: query === 'Skill' ? [{ id: 'a' }, { id: 'b' }] : [] };
     },
   };
-  await primeNoteTotal(pagefind);
 
-  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3 });
+  const hits = await searchPagefindNotes(pagefind, 'Skill 怎么用？', { limit: 3, total: TOTAL });
   assert.deepEqual(hits.map((hit) => hit.id), ['a', 'b']);
 });
 
-// 总数只是一层优化，取它的那次调用线上要一两秒——绝不该让提问的人等它
-test('总数还没预热好就照常检索，只是先不降级', async () => {
-  const generic = [{ id: 'g1' }, { id: 'g2' }];
+// 全库篇数拿不到（老页面没注入、栏目地图为空）时，这层降级直接跳过，检索照常
+test('没有全库篇数就不做降级，退回原有顺序', async () => {
+  const generic = new Array(90).fill(null).map((_, i) => ({ id: `g${i}` }));
   const narrow = [{ id: 'n1' }];
-  let resolveFilters = null;
-  const pagefind = {
-    calls: [],
-    filters() {
-      return new Promise((resolve) => {
-        resolveFilters = () => resolve({ type: { note: 100 } });
-      });
-    },
-    async search(query) {
-      this.calls.push(query);
-      return { results: query === '音乐生成' ? generic : query === 'Suno' ? narrow : [] };
-    },
-  };
+  const pagefind = fakePagefind({ 音乐生成: generic, Suno: narrow });
 
   const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 3 });
-  assert.deepEqual(hits.map((hit) => hit.id), ['g1', 'n1', 'g2']);
-  assert.equal(typeof resolveFilters, 'function'); // 预热确实起了，只是没等
-});
-
-test('取总数失败就一直不降级，检索照常', async () => {
-  const generic = [{ id: 'g1' }, { id: 'g2' }];
-  const narrow = [{ id: 'n1' }];
-  const pagefind = {
-    calls: [],
-    async filters() {
-      throw new Error('这个版本没有 filters()');
-    },
-    async search(query) {
-      this.calls.push(query);
-      return { results: query === '音乐生成' ? generic : query === 'Suno' ? narrow : [] };
-    },
-  };
-  await primeNoteTotal(pagefind);
-
-  const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 3 });
-  assert.deepEqual(hits.map((hit) => hit.id), ['g1', 'n1', 'g2']);
+  assert.deepEqual(hits.map((hit) => hit.id), ['g0', 'n1', 'g1']);
 });

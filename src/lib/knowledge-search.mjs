@@ -84,38 +84,10 @@ export function mergeSearchHitGroups(groups, limit = 6) {
   return output;
 }
 
-// 全库笔记数，用来判断一条查询泛不泛。按 pagefind 实例缓存，一次会话取一次。
-const noteTotals = new WeakMap();
-
-function totalEntry(pagefind) {
-  let entry = noteTotals.get(pagefind);
-  if (!entry) {
-    entry = { value: 0, promise: null };
-    noteTotals.set(pagefind, entry);
-  }
-  return entry;
-}
-
-// 预热总数。走 `filters()` 而不是空查询：前者只读过滤索引，后者要把全库文档索引拉下来——
-// 线上实测 1.7s 对 6.0s，同样都得到 442。
-// 面板一打开就在后台跑，等用户敲完问题通常早就好了；**检索绝不等它**，
-// 没就绪就当拿不到（0），跳过泛词降级即可，宁可少一层优化也不让人干等。
-export function primeNoteTotal(pagefind, filters = { type: 'note' }) {
-  const entry = totalEntry(pagefind);
-  if (entry.promise) return entry.promise;
-  const [key, value] = Object.entries(filters)[0] || [];
-  entry.promise = Promise.resolve()
-    .then(() => pagefind.filters())
-    .then((all) => {
-      entry.value = Number(all?.[key]?.[value]) || 0;
-    })
-    .catch(() => {
-      entry.value = 0;
-    });
-  return entry.promise;
-}
-
 // 泛到没有区分度的查询垫到最后，其余保持原有的语义强弱顺序（稳定，不打乱同档次的相对次序）。
+// total 是全库笔记数，由调用方给：这个数构建期就知道（栏目篇数一加就是），
+// 没必要在浏览器里现查——`pagefind.filters()` 线上要 1.7 秒，空查询更要 6 秒，
+// 而读者点开面板就提问时它还没就绪，第一个问题就享受不到这层降级。给 0 即跳过降级。
 function demoteGenericGroups(groups, total) {
   if (!total) return groups;
   const specific = [];
@@ -147,14 +119,12 @@ function topUpHits(hits, extra, limit) {
   return hits;
 }
 
-export async function searchPagefindNotes(pagefind, query, { filters = { type: 'note' }, limit = 6 } = {}) {
+export async function searchPagefindNotes(pagefind, query, { filters = { type: 'note' }, limit = 6, total = 0 } = {}) {
   // 关键词检索是主力，整句只当兜底。实测整句对自然语言问句系统性失准：
   // 问句被切成许多词，覆盖面广的长文档（索引页、大杂烩复盘）因为凑齐了更多词而胜出，
   // 真正的关键词被稀释——「库里有没有讲 Suno 音乐生成的笔记」整句召回六篇，没有一篇讲 Suno。
   const relaxedQueries = buildRelaxedSearchQueries(query);
-  // 没预热过就顺手起一次（仍然不等它），下一轮提问就能用上
-  primeNoteTotal(pagefind, filters);
-  const pick = (groups) => mergeSearchHitGroups(demoteGenericGroups(groups, totalEntry(pagefind).value), limit);
+  const pick = (groups) => mergeSearchHitGroups(demoteGenericGroups(groups, total), limit);
 
   // 先只看正文笔记。栏目索引页一篇装着几十上百个别的笔记的标题，因此什么词都沾一点，
   // 混进来就挤掉真正讲这件事的那篇（`kind` 由笔记页在构建期标注，见 src/pages/[...slug].astro）。

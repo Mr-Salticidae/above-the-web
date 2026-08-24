@@ -5,7 +5,7 @@
 // 模型只负责「依据片段回答」，来源选择、URL 和数量都由代码兜住。
 import { api, displayNameOf, escapeHtml, getCachedUser, getToken, url } from './account-core.js';
 import { siteMeta } from './ai-assist.js';
-import { primeNoteTotal, searchPagefindNotes } from '../lib/knowledge-search.mjs';
+import { searchPagefindNotes } from '../lib/knowledge-search.mjs';
 
 const MAX_RESULTS = 6;
 const MAX_SOURCE_CHARS = 3200;
@@ -133,16 +133,17 @@ function retrievalQuery(question, history) {
   return `${previous} ${question}`.slice(0, 1200);
 }
 
-async function retrieveSources(base, question, history) {
+async function retrieveSources(base, question, history, total) {
   const pagefind = await loadPagefind(base);
   const query = retrievalQuery(question, history);
   const filters = { type: 'note' };
-  let hits = await searchPagefindNotes(pagefind, query, { filters, limit: MAX_RESULTS });
+  const options = { filters, limit: MAX_RESULTS, total };
+  let hits = await searchPagefindNotes(pagefind, query, options);
 
   // 多轮里的短追问可能让组合查询变严，退回只搜上一轮主题。
   if (!hits.length && query !== question) {
     const previous = [...history].reverse().find((message) => message.role === 'user')?.content || question;
-    hits = await searchPagefindNotes(pagefind, previous, { filters, limit: MAX_RESULTS });
+    hits = await searchPagefindNotes(pagefind, previous, options);
   }
 
   const results = await Promise.all(hits.slice(0, MAX_RESULTS).map((item) => item.data()));
@@ -312,6 +313,9 @@ export function initKnowledgeChat(root) {
     const parsed = JSON.parse(root.dataset.kbCatalog || '[]');
     if (Array.isArray(parsed)) catalog = parsed;
   } catch {}
+  // 全库笔记数：栏目篇数一加就是，构建期的准数。检索靠它判断一条查询泛不泛，
+  // 不必在浏览器里现查（`pagefind.filters()` 线上要 1.7 秒，读者点开就问时根本赶不上）。
+  const noteTotal = catalog.reduce((sum, entry) => sum + (Number(entry?.count) || 0), 0);
   const launcher = root.querySelector('[data-kb-launcher]');
 
   // ── 头像高清预览（单例浮层，fixed 定位不受聊天滚动区 overflow 裁剪）──
@@ -532,12 +536,10 @@ export function initKnowledgeChat(root) {
     }
   };
 
-  // 面板一打开就在后台把索引和全库笔记数拉起来。点开「问知识库」的人多半要问，
+  // 面板一打开就在后台把索引拉起来。点开「问知识库」的人多半要问，
   // 提前几秒开始加载，等他敲完问题就省掉了这段等待；失败也只是回到「提问时再加载」。
   const prewarm = () => {
-    loadPagefind(base)
-      .then((pagefind) => primeNoteTotal(pagefind, { type: 'note' }))
-      .catch(() => {});
+    loadPagefind(base).catch(() => {});
   };
 
   const setOpen = (value, { restoreFocus = true } = {}) => {
@@ -596,7 +598,7 @@ export function initKnowledgeChat(root) {
     const loader = loadingMessage(thread, avatarSrc);
     setBusy(true);
     try {
-      const sources = await retrieveSources(base, question, history);
+      const sources = await retrieveSources(base, question, history, noteTotal);
       // 零命中不再本地打住：这正是助产该接手的时刻——把问题连同栏目地图交给小织，
       // 由她引导读者把想问的东西问清楚（服务端会强制走 guide 模式）。
       if (!sources.length) {
