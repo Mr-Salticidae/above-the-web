@@ -5,7 +5,7 @@
 // 模型只负责「依据片段回答」，来源选择、URL 和数量都由代码兜住。
 import { api, displayNameOf, escapeHtml, getCachedUser, getToken, url } from './account-core.js';
 import { siteMeta } from './ai-assist.js';
-import { searchPagefindNotes } from '../lib/knowledge-search.mjs';
+import { primeNoteTotal, searchPagefindNotes } from '../lib/knowledge-search.mjs';
 
 const MAX_RESULTS = 6;
 const MAX_SOURCE_CHARS = 3200;
@@ -532,6 +532,14 @@ export function initKnowledgeChat(root) {
     }
   };
 
+  // 面板一打开就在后台把索引和全库笔记数拉起来。点开「问知识库」的人多半要问，
+  // 提前几秒开始加载，等他敲完问题就省掉了这段等待；失败也只是回到「提问时再加载」。
+  const prewarm = () => {
+    loadPagefind(base)
+      .then((pagefind) => primeNoteTotal(pagefind, { type: 'note' }))
+      .catch(() => {});
+  };
+
   const setOpen = (value, { restoreFocus = true } = {}) => {
     const open = Boolean(value);
     panel.hidden = !open;
@@ -541,6 +549,7 @@ export function initKnowledgeChat(root) {
     if (!open) hideAvatarPop();
 
     if (open) {
+      prewarm();
       requestAnimationFrame(() => input.focus());
     } else if (restoreFocus) {
       launcher.focus();

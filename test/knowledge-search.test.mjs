@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   buildRelaxedSearchQueries,
   mergeSearchHitGroups,
+  primeNoteTotal,
   searchPagefindNotes,
 } from '../src/lib/knowledge-search.mjs';
 
@@ -68,13 +69,15 @@ test('合并多组结果时每组保底一席，余额按语义强弱顺序分�
   assert.deepEqual(mergeSearchHitGroups([[role], [broad, role]], 3), [role, broad]);
 });
 
-// 全库 100 篇的假索引：null 查询报总数，其余按 table 给结果。
+// 全库 100 篇的假索引：filters() 报各栏目篇数，search() 按 table 给结果。
 function fakePagefind(table, { total = 100 } = {}) {
   const calls = [];
   return {
     calls,
+    async filters() {
+      return { type: { note: total } };
+    },
     async search(query) {
-      if (query === null) return { results: new Array(total).fill({ id: 'any' }) };
       calls.push(query);
       return { results: table[query] || [] };
     },
@@ -112,6 +115,7 @@ test('命中过全库三成的泛词垫到最后再分名额', async () => {
   const suno = [{ id: 's1' }, { id: 's2' }];
   const generic = new Array(40).fill(null).map((_, i) => ({ id: `g${i}` }));
   const pagefind = fakePagefind({ 音乐生成: generic, Suno: suno });
+  await primeNoteTotal(pagefind);
 
   const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 4 });
   assert.deepEqual(
@@ -122,17 +126,43 @@ test('命中过全库三成的泛词垫到最后再分名额', async () => {
   assert.deepEqual(pagefind.calls, ['音乐生成', 'Suno']);
 });
 
-test('拿不到全库总数时不做降级，退回原有顺序', async () => {
+// 总数只是一层优化，取它的那次调用线上要一两秒——绝不该让提问的人等它
+test('总数还没预热好就照常检索，只是先不降级', async () => {
   const generic = [{ id: 'g1' }, { id: 'g2' }];
   const narrow = [{ id: 'n1' }];
+  let resolveFilters = null;
   const pagefind = {
     calls: [],
+    filters() {
+      return new Promise((resolve) => {
+        resolveFilters = () => resolve({ type: { note: 100 } });
+      });
+    },
     async search(query) {
-      if (query === null) throw new Error('不支持空查询');
       this.calls.push(query);
       return { results: query === '音乐生成' ? generic : query === 'Suno' ? narrow : [] };
     },
   };
+
+  const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 3 });
+  assert.deepEqual(hits.map((hit) => hit.id), ['g1', 'n1', 'g2']);
+  assert.equal(typeof resolveFilters, 'function'); // 预热确实起了，只是没等
+});
+
+test('取总数失败就一直不降级，检索照常', async () => {
+  const generic = [{ id: 'g1' }, { id: 'g2' }];
+  const narrow = [{ id: 'n1' }];
+  const pagefind = {
+    calls: [],
+    async filters() {
+      throw new Error('这个版本没有 filters()');
+    },
+    async search(query) {
+      this.calls.push(query);
+      return { results: query === '音乐生成' ? generic : query === 'Suno' ? narrow : [] };
+    },
+  };
+  await primeNoteTotal(pagefind);
 
   const hits = await searchPagefindNotes(pagefind, '库里有没有讲 Suno 音乐生成的笔记？', { limit: 3 });
   assert.deepEqual(hits.map((hit) => hit.id), ['g1', 'n1', 'g2']);

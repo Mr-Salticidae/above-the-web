@@ -80,20 +80,35 @@ export function mergeSearchHitGroups(groups, limit = 6) {
   return output;
 }
 
-// 全库笔记数，用来判断一条查询泛不泛。按 pagefind 实例缓存：一次会话问一次就够，
-// 拿不到（旧版本不支持空查询等）就返回 0，调用方会跳过泛词降级，回到原来的顺序。
+// 全库笔记数，用来判断一条查询泛不泛。按 pagefind 实例缓存，一次会话取一次。
 const noteTotals = new WeakMap();
 
-function countAllNotes(pagefind, filters) {
-  if (!noteTotals.has(pagefind)) {
-    noteTotals.set(
-      pagefind,
-      Promise.resolve(pagefind.search(null, { filters }))
-        .then((result) => result?.results?.length || 0)
-        .catch(() => 0),
-    );
+function totalEntry(pagefind) {
+  let entry = noteTotals.get(pagefind);
+  if (!entry) {
+    entry = { value: 0, promise: null };
+    noteTotals.set(pagefind, entry);
   }
-  return noteTotals.get(pagefind);
+  return entry;
+}
+
+// 预热总数。走 `filters()` 而不是空查询：前者只读过滤索引，后者要把全库文档索引拉下来——
+// 线上实测 1.7s 对 6.0s，同样都得到 442。
+// 面板一打开就在后台跑，等用户敲完问题通常早就好了；**检索绝不等它**，
+// 没就绪就当拿不到（0），跳过泛词降级即可，宁可少一层优化也不让人干等。
+export function primeNoteTotal(pagefind, filters = { type: 'note' }) {
+  const entry = totalEntry(pagefind);
+  if (entry.promise) return entry.promise;
+  const [key, value] = Object.entries(filters)[0] || [];
+  entry.promise = Promise.resolve()
+    .then(() => pagefind.filters())
+    .then((all) => {
+      entry.value = Number(all?.[key]?.[value]) || 0;
+    })
+    .catch(() => {
+      entry.value = 0;
+    });
+  return entry.promise;
 }
 
 // 泛到没有区分度的查询垫到最后，其余保持原有的语义强弱顺序（稳定，不打乱同档次的相对次序）。
@@ -112,12 +127,13 @@ export async function searchPagefindNotes(pagefind, query, { filters = { type: '
   // 问句被切成许多词，覆盖面广的长文档（索引页、大杂烩复盘）因为凑齐了更多词而胜出，
   // 真正的关键词被稀释——「库里有没有讲 Suno 音乐生成的笔记」整句召回六篇，没有一篇讲 Suno。
   const relaxedQueries = buildRelaxedSearchQueries(query);
-  const [total, ...groups] = await Promise.all([
-    countAllNotes(pagefind, filters),
-    ...relaxedQueries.map((item) => Promise.resolve(pagefind.search(item, { filters })).then((r) => r.results)),
-  ]);
+  // 没预热过就顺手起一次（仍然不等它），下一轮提问就能用上
+  primeNoteTotal(pagefind, filters);
+  const groups = await Promise.all(
+    relaxedQueries.map((item) => Promise.resolve(pagefind.search(item, { filters })).then((r) => r.results)),
+  );
 
-  const ranked = demoteGenericGroups(groups, total);
+  const ranked = demoteGenericGroups(groups, totalEntry(pagefind).value);
   if (ranked.some((group) => group?.length)) return mergeSearchHitGroups(ranked, limit);
 
   // 关键词一条都没命中，才轮到整句碰运气
