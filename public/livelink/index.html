@@ -128,6 +128,8 @@
   .whatsnew p{color:var(--ink-soft); font-size:.95rem;}
   .whatsnew .item + .item{margin-top:18px; padding-top:18px; border-top:1px solid var(--line);}
   .whatsnew .more{margin-top:20px; font-size:.9rem; color:var(--ink-faint);}
+  .whatsnew code{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.88em; color:var(--violet);
+    background:color-mix(in srgb, var(--violet) 10%, transparent); border-radius:5px; padding:1px 5px;}
 
   /* Download */
   .dl{background:var(--paper-2); border:1px solid var(--line); border-radius:24px; padding:32px; box-shadow:var(--shadow); text-align:center;}
@@ -179,7 +181,7 @@
     <img class="ico" src="./assets/icon.png" alt="LiveLink 图标" width="100" height="100">
     <div class="htxt">
       <div class="eyebrow">B 站直播 · 免费开源</div>
-      <h1>LiveLink <span class="ver">v1.8.2</span></h1>
+      <h1>LiveLink <span class="ver">v1.9.0</span></h1>
       <div class="tagline">把直播间的弹幕和礼物，变成会说话、会动、会玩的现场。</div>
       <p class="sub">给非技术主播朋友的桌面助手。双击安装，填直播间号，点「开始」，OBS 里加一个浏览器源——不写代码，不装环境，不开命令行。</p>
       <div class="cta-row">
@@ -227,24 +229,24 @@
   </section>
 
   <section>
-    <h2>这一版修了什么 <span class="en">/ v1.8.2</span></h2>
-    <p class="lead">v1.8.2 是补丁版，只动了「DeepSeek AI 智能回复」这一个页面：Key 明明粘进去了，点「保存并测试」却弹「请先填写 API Key」。其它功能照旧，覆盖安装即可，直播间配置和已有规则都会保留。</p>
+    <h2>这一版新增了什么 <span class="en">/ v1.9.0</span></h2>
+    <p class="lead">欢迎语可以写很多句了：一行一句，每次有人进房随机挑一句说。只有一句的欢迎，观众看三次就知道那是台机器；八句轮着来，才像屋里坐着个活人。</p>
     <div class="whatsnew">
       <div class="item">
-        <h3><em>一</em>保存失败了，错误却被吞掉</h3>
-        <p>点「保存并测试」，保存那步万一失败，程序把错误咽了下去、照样往下测试。测试当然读不到 Key，于是报一句「请先填写 API Key」——真正的失败原因被这句话顶掉了。现在保存失败就停在原地，把真正的原因留在屏幕上。</p>
+        <h3><em>一</em>一行一句，随机挑一句说</h3>
+        <p>去「规则」页打开欢迎规则，在模板框里一行写一句，想写多少句写多少句，保存就行。每次有人进房从里面随机挑一句念、同时显示在 OBS 上。想更皮、更像你自己说话的调调，往里加行就是。</p>
       </div>
       <div class="item">
-        <h3><em>二</em>开关和 Key 都只认页面底部那一个「保存」</h3>
-        <p>弹幕朗读页的开关是点完当场存盘的，AI 回复页却不是：开关打开、Key 粘好，其实一个字都没写进配置。现在开关点完当场存盘，Key 输入框旁边也补了「保存 Key」按钮，框里有没保存的内容会直接提醒。</p>
+        <h3><em>二</em>耳朵和画面不会各说各的</h3>
+        <p>TTS 念的和 OBS 上显示的，永远是对应的那一句——不会出现"听到『哟，张三』、画面上却写着『张三，坐』"。</p>
       </div>
       <div class="item">
-        <h3><em>三</em>到底存没存上，页面自己也不知道</h3>
-        <p>配置文件被杀毒软件锁住、或者装在只读目录时，写入未必真的落盘，页面却一路显示「保存成功」。现在写完立刻读回来核对，对不上就报错并告诉你配置文件在哪；页面同时显示打码后的 Key（sk-012••••••cdef），一眼能确认存进去的是不是自己那一把。</p>
+        <h3><em>三</em>一句话照顾两种人</h3>
+        <p>新增 <code>{guardName}</code>（普通观众是空的、舰长会变成「舰长」）、<code>{medalLevel}</code>、<code>{medalName}</code> 三个占位符。所以一句「{guardName}{uname}到了」就够了：路人进来念"张三到了"，舰长进来念"舰长张三到了"，不用为舰长单开一条规则。这些占位符在礼物、SC 的模板里同样能用。</p>
       </div>
       <div class="item">
-        <h3><em>顺带</em>粘贴带进来的脏字符与看不懂的报错</h3>
-        <p>从网页或聊天窗口复制 Key 常常连换行、全角空格、零宽字符一起带进来，留在 Key 里会让请求直接失败、报一句完全看不懂的英文——现在一律清干净。DeepSeek 的报错也改成说人话：Key 不对、余额不足、被限流、对方服务器故障、超时、被代理挡住，分开讲，每种都告诉你下一步该干嘛。</p>
+        <h3><em>四</em>升级时不会动你改过的话</h3>
+        <p>欢迎语你没改过，自动换成新的八句默认语料，开关和冷却保持你现在的设置；你改过哪怕一个字，就一个字都不动——那是你要的话，软件不该替你改回去。</p>
       </div>
       <p class="more">完整更新说明见 <a href="https://github.com/Mr-Salticidae/livelink/releases/latest" target="_blank" rel="noopener">GitHub Releases</a>。</p>
     </div>
