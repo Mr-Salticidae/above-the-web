@@ -33,7 +33,7 @@ const tracks = mp3s.map((file) => {
   const m = stem.match(/^(.+?)\s*-\s*(.+)$/);
   const guessed = {
     id: stem.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-').replace(/^-+|-+$/g, '') || stem,
-    artist: m ? m[1].trim() : '跳蛛',
+    artist: m ? m[1].trim() : '跳蛛先生',
     title: (m ? m[2] : stem).trim(),
   };
   const cover = COVER_EXTS.map((e) => stem + e).find((c) => fs.existsSync(path.join(COVERS, c)));

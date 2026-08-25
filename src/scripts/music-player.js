@@ -134,9 +134,10 @@ function togglePlay(force) {
 
 function syncPlayUI() {
   els.play.setAttribute('aria-label', state.playing ? '暂停' : '播放');
-  els.playIcon.innerHTML = state.playing
-    ? '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>'
-    : '<path d="M8 5.2v13.6L19 12z"/>';
+  // 拿到的是 <path> 本身，只能改 d；给 path 塞 innerHTML 在 SVG 里不生效（图标会一直停在播放三角）
+  els.playIcon.setAttribute('d', state.playing
+    ? 'M7 5h3.5v14H7zM13.5 5H17v14h-3.5z'
+    : 'M8 5.2v13.6L19 12z');
   els.bar.classList.toggle('is-playing', state.playing);
   document.documentElement.classList.toggle('music-on', true);
 }

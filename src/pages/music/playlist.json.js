@@ -10,7 +10,7 @@ export async function GET() {
   const tracks = (manifest.tracks || []).map((t, i) => ({
     id: t.id || `track-${i + 1}`,
     title: t.title || '未命名',
-    artist: t.artist || '跳蛛',
+    artist: t.artist || '跳蛛先生',
     audio: `${ORIGIN}/audio/${encodeURIComponent(t.audio)}`,
     cover: t.cover ? `${ORIGIN}/covers/${encodeURIComponent(t.cover)}` : null,
     duration: Number(t.duration) || 0,
