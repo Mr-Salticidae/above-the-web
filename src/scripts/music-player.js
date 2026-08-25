@@ -18,6 +18,7 @@ const state = {
 
 const els = {};
 let audio = null;
+let baseTitle = ''; // 本页原标题，播放时在前面挂「▶ 歌名 ·」，停了原样还回去
 
 const fmt = (s) => {
   if (!Number.isFinite(s) || s < 0) s = 0;
@@ -99,7 +100,12 @@ function renderNow() {
   els.list.querySelectorAll('[data-idx]').forEach((li) => {
     li.classList.toggle('is-current', Number(li.dataset.idx) === state.index);
   });
-  document.title = state.playing ? `▶ ${t.title} · 蛛网之上` : document.title.replace(/^▶ [^·]+ · /, '');
+  syncTitle();
+}
+
+function syncTitle() {
+  const t = track();
+  document.title = state.playing && t ? `▶ ${t.title} · ${baseTitle}` : baseTitle;
 }
 
 function playAt(i, { autoplay = true } = {}) {
@@ -140,6 +146,7 @@ function syncPlayUI() {
     : 'M8 5.2v13.6L19 12z');
   els.bar.classList.toggle('is-playing', state.playing);
   document.documentElement.classList.toggle('music-on', true);
+  syncTitle(); // 播放态变了标题也跟着变，不只在切歌时更新
 }
 
 function syncModeUI() {
@@ -212,6 +219,7 @@ function bind() {
 export function initMusicPlayer(root) {
   if (!root || root.dataset.ready === 'true') return;
   root.dataset.ready = 'true';
+  baseTitle = document.title; // 静态站切页整页重载，每页各记各的
 
   els.bar = root.querySelector('[data-mp-bar]');
   els.play = root.querySelector('[data-mp-play]');
