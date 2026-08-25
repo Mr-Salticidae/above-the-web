@@ -35,3 +35,6 @@ tmp/
 
 # 音乐曲库（音频不进 git，走 scripts/upload-music.mjs 上服务器 /music/）
 music-library/
+
+# 曲库本体不进 git，走 scripts/upload-music.mjs 传到服务器（见 platform/deploy/nginx-music.conf）
+music-library/

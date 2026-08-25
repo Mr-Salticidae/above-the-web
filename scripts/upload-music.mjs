@@ -25,8 +25,21 @@ function uploadDir(sub) {
   const files = fs.readdirSync(dir).filter((f) => !f.startsWith('.'));
   if (!files.length) return 0;
   sh(`ssh -o ConnectTimeout=10 ${HOST} "mkdir -p ${REMOTE}/${sub}"`);
-  sh(`scp -o ConnectTimeout=10 "${dir}/." ${HOST}:${REMOTE}/${sub}/`);
-  return files.length;
+  // ⚠️ 不能用 `scp "dir/."`：那是 Linux/macOS 的写法，Windows 上的 scp 会报
+  //    「is not a regular file」直接失败。逐个文件传，两边都能跑。
+  const args = files.map((f) => `"${path.join(dir, f)}"`).join(' ');
+  sh(`scp -o ConnectTimeout=10 ${args} ${HOST}:${REMOTE}/${sub}/`);
+
+  // ⚠️ 传完必须回查服务器，不能按「我发了几个」报数。
+  //    2026-08-25 首次上传时封面 scp 没报错、脚本照样回显「封面 1 个」，
+  //    而服务器上 covers/ 是空的——发出去不等于收到了。
+  const remote = sh(`ssh -o ConnectTimeout=10 ${HOST} "ls -1 ${REMOTE}/${sub} 2>/dev/null"`)
+    .split(String.fromCharCode(10)).map((x) => x.trim()).filter(Boolean);
+  const missing = files.filter((f) => !remote.includes(f));
+  if (missing.length) {
+    console.error(`[music-upload] ⚠️ ${sub}/ 有 ${missing.length} 个没落地：${missing.join(', ')}`);
+  }
+  return files.length - missing.length;
 }
 
 if (!fs.existsSync(LIB)) {
