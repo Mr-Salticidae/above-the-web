@@ -1,0 +1,62 @@
+{
+  "date": "2026-08-26",
+  "headline": "Stability AI 获新融资，Claude 支持跨会话记忆",
+  "items": [
+    {
+      "title": "Stability AI 完成 7600 万美元新融资",
+      "summary": "Stable Diffusion 开发商 Stability AI 宣布获得 7600 万美元新一轮融资，累计融资额达 2.32 亿美元。此次注资有望缓解其此前的财务压力，保障开源图像生成模型的持续迭代与社区维护。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/25/stability-ai-maker-of-image-generator-stable-diffusion-raises-76-million-in-fresh-funding",
+      "featured": true
+    },
+    {
+      "title": "Claude Cowork 新增跨会话共享记忆",
+      "summary": "Anthropic 为 Claude 推出跨聊天与 Cowork 的共享记忆功能，用户无需在每次对话中重复输入项目背景或个人偏好。该更新减少了长周期创作任务中的上下文重置成本，提升协作连贯性。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/25/claude-cowork-finally-remembers-what-you-told-the-app-in-chat",
+      "featured": true
+    },
+    {
+      "title": "Meta 付费 Agent Hatch 即将上线",
+      "summary": "Meta 计划在未来数周内推出付费 AI Agent Hatch，并将于 10 月发布新模型 Watermelon。此举标志着 Meta 正从免费基础模型转向面向专业创作者的增值服务模式。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/metas-paid-ai-agent-hatch-launches-soon-with-a-new-model-called-watermelon-due-in-october",
+      "featured": false
+    },
+    {
+      "title": "Gamma 收购设计初创公司 Lica",
+      "summary": "AI 演示文稿工具 Gamma 收购了 Accel 支持的设计初创公司 Lica，后者联合创始人将加入 Gamma 新组建的研究团队。此次收购旨在增强 Gamma 在设计自动化与视觉生成方面的底层能力。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/25/gamma-acquires-accel-backed-design-startup-lica",
+      "featured": false
+    },
+    {
+      "title": "4-bit 量化模型性能反超全精度原版",
+      "summary": "Hugging Face 发布 Quantization-Aware Healing 技术，使压缩后的 4-bit 模型在基准测试中优于其全精度原始版本。该技术为本地部署高质量图像或文本生成模型提供了更低显存门槛的新路径。",
+      "category": "研究",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/MultiverseComputingCAI/quantization-aware-healing",
+      "featured": false
+    },
+    {
+      "title": "AI 生成民间平面设计引发审美争议",
+      "summary": "Creative Bloq 报道指出，AI 批量生成的民间风格平面设计因缺乏文化语境而产生怪诞视觉效果，引发公众对本土设计生态被侵蚀的担忧。这提醒创作者在使用 AI 时需审慎处理地域性视觉符号。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/ai-art/ai-is-killing-folk-graphic-design-and-the-resulting-lovecraftian-horrors-are-making-people-want-to-never-eat-out-again",
+      "featured": false
+    },
+    {
+      "title": "Gradio 推出 AI 工作流可视化编排",
+      "summary": "Hugging Face 发布 Gradio 新功能，支持通过连线方式构建、运行和部署 AI 工作流。该更新降低了多模态创作管线的搭建门槛，便于创作者快速原型验证图像、音频等复合生成流程。",
+      "category": "工具",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/gradio-workflow-guide",
+      "featured": false
+    }
+  ]
+}
