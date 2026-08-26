@@ -22,7 +22,9 @@ const newsHref = NEWS_ENTRY;
 // 栏目导航、GitHub、页脚导航与许可行一律不渲染，站名也只回子站自己的根
 // （NEWS_SITE 构建下 base 是哨兵，产出后被改写成 /）。
 const brandHref = TOY ? HOME : base;
-const siteName = '蛛网之上';
+// 子站是挂在 GenJi 名下发给学员的，页眉、页脚与标签页标题都用他们那边的署名，
+// 英文副标题「Above the Web」是个人站的，一并不出。
+const siteName = NEWS_SITE ? 'GenJi是真想教会你' : '蛛网之上';
 const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先生的个人站`;
 ---
 
@@ -60,8 +62,8 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     <header class="site-header">
       <div class="bar">
         <a class="brand" href={brandHref} {...(TOY ? { target: '_blank', rel: 'noopener' } : {})}>
-          蛛网之上
-          <small>Above the Web</small>
+          {siteName}
+          {!NEWS_SITE && <small>Above the Web</small>}
         </a>
         <div class="header-actions">
           {!NEWS_SITE && (
@@ -89,7 +91,7 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     </main>
 
     <footer class="site-footer">
-      <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>
+      <p class="footer-brand">{siteName} {!NEWS_SITE && <span>Above the Web</span>}</p>
       {!NEWS_SITE && (
         <>
           <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p>
