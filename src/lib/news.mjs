@@ -31,6 +31,11 @@ export const NEWS_SITE_ORIGIN = 'https://news.tiaozhuxiansheng.com';
 // date 省略时给板块首页（子域名根）
 export const canonicalUrl = (date) => (date ? `${NEWS_SITE_ORIGIN}/${date}/` : `${NEWS_SITE_ORIGIN}/`);
 
+// 站内各处的「快讯」入口——导航、页脚、首页速览——一律送去子站，别再落到主站 /news/。
+// 主站那份不删（老链接照样打得开，canonical 已指向子站），只是不再从站内往那儿导流。
+// 例外是子站自己的导航：指回自己的根即可，见 BaseLayout 的 newsHref。
+export const NEWS_ENTRY = `${NEWS_SITE_ORIGIN}/`;
+
 // 读取全部期刊，按日期倒序（最新在前）。单个文件损坏时跳过并告警，不阻断构建。
 export function getIssues() {
   if (!fs.existsSync(DIR)) return [];

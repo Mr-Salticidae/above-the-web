@@ -5,7 +5,7 @@ import SpiderWeb from '../components/SpiderWeb.astro';
 import { groupNotes } from '../lib/note-groups.mjs';
 import { games } from '../data/games.js';
 import { getEpisodes, getLatestEpisodes } from '../lib/prompt-master.mjs';
-import { getLatestIssue, formatDate } from '../lib/news.mjs';
+import { getLatestIssue, formatDate, NEWS_ENTRY } from '../lib/news.mjs';
 
 // base-aware 链接：兼容 GitHub Pages 子路径与自定义域名根路径
 const gamesBase = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -17,8 +17,8 @@ const seriesTotal = getEpisodes().length;
 const latestEpisodes = getLatestEpisodes(4);
 const coverSrc = (e) => seriesBase + encodeURI(e.folder) + '/' + encodeURI(e.cover);
 
-// 「AIGC 快讯」：首页速览最新一期的头部条目，入口进 /news/
-const newsBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/news/';
+// 「AIGC 快讯」：首页速览最新一期的头部条目，入口进子站 news.tiaozhuxiansheng.com
+const newsBase = NEWS_ENTRY;
 const latestNews = getLatestIssue();
 const newsPeek = latestNews ? latestNews.items.slice(0, 4) : [];
 

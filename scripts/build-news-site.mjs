@@ -105,5 +105,32 @@ if (!home.includes(`<link rel="canonical" href="${ORIGIN}/">`)) {
   throw new Error('首页缺少指向子域名的 canonical，检查 src/lib/news.mjs 的 NEWS_SITE_ORIGIN');
 }
 
+// 兜底自检 3：子站是直接发给外部学员的，产物里不许出现通往个人站/个人仓库的链接。
+// 快讯条目指向外部新闻源是正常的（含 github.com 上的项目），只拦自家那几个落点。
+// BaseLayout 里靠 NEWS_SITE 分支把导航摘干净，这条守卫防的是日后有人改回来而没人发现。
+const OWN_HOSTS = new Set([
+  'tiaozhuxiansheng.com', 'www.tiaozhuxiansheng.com',
+  'tiaozhuxiansheng.cn', 'www.tiaozhuxiansheng.cn',
+  'mr-salticidae.github.io',
+]);
+const isOwnLink = (href) => {
+  let u;
+  try { u = new URL(href, ORIGIN); } catch { return false; }
+  if (OWN_HOSTS.has(u.host)) return true;
+  // 个人仓库（github.com/Mr-Salticidae/…）也算自家落点，别人的 GitHub 项目不算
+  return u.host === 'github.com' && u.pathname.toLowerCase().startsWith('/mr-salticidae/');
+};
+const leaked = [];
+for (const f of textFiles) {
+  for (const m of fs.readFileSync(f, 'utf8').matchAll(/(?:href|src)="([^"]+)"/g)) {
+    if (isOwnLink(m[1])) leaked.push(`${path.relative(OUT_DIR, f)} → ${m[1]}`);
+  }
+}
+if (leaked.length) {
+  const list = [...new Set(leaked)];
+  for (const x of list) console.error(`  ${x}`);
+  throw new Error(`子站产物里有 ${list.length} 处通往个人站的链接（见上），隔离被破坏`);
+}
+
 fs.rmSync(BUILD_DIR, { recursive: true, force: true });
-console.log(`[news-site] 完成：${OUT_DIR}（首页 + ${issues} 期归档 + ${assets.size} 个资源）`);
+console.log(`[news-site] 完成：${OUT_DIR}（首页 + ${issues} 期归档 + ${assets.size} 个资源，无外泄链接）`);

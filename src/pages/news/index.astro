@@ -6,6 +6,9 @@ import NewsIssue from '../../components/NewsIssue.astro';
 import { getIssues, formatDate, canonicalUrl } from '../../lib/news.mjs';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// 子站构建（NEWS_SITE=1）里全站页脚已被摘成只剩一行站名，版块版权页再挂一次
+// 「蛛网之上 · ABOVE THE WEB」就成了连着两遍，这里让位给页脚。
+const NEWS_SITE = process.env.NEWS_SITE === '1';
 const issues = getIssues();
 const latest = issues[0] || null;
 const archive = issues.slice(1);
@@ -52,7 +55,7 @@ const archive = issues.slice(1);
     )}
 
     <footer class="news-colophon">
-      <p class="cl-mark">蛛网之上 · ABOVE THE WEB</p>
+      {!NEWS_SITE && <p class="cl-mark">蛛网之上 · ABOVE THE WEB</p>}
       <p>
         每天早晨自动搜集过去 24 小时 AIGC 领域值得创作者关注的新闻——模型发布、工具更新、行业动向，
         每条附来源直达。宁缺毋滥，只划重点。
