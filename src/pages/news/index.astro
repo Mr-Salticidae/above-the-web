@@ -3,7 +3,7 @@
 // 首页展示最新一期全文 + 往期归档索引；每期归档页在 /news/[date]/。
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import NewsIssue from '../../components/NewsIssue.astro';
-import { getIssues, formatDate } from '../../lib/news.mjs';
+import { getIssues, formatDate, canonicalUrl } from '../../lib/news.mjs';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const issues = getIssues();
@@ -14,6 +14,7 @@ const archive = issues.slice(1);
 <BaseLayout
   title="AIGC 快讯"
   description="每日更新的 AIGC 领域新闻精选：模型发布、创作工具更新、行业动态，为创作者划重点。"
+  canonical={canonicalUrl()}
 >
   <div class="news-page">
     <header class="masthead is-plate">

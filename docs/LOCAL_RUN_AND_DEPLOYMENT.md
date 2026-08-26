@@ -186,6 +186,34 @@ GitHub 仓库必须配置 Actions Secret：
 
 服务器侧需要预先配置 nginx，使 `tiaozhuxiansheng.com` 的站点根目录指向 `/var/www/tiaozhuxiansheng/`，并将 `/api/` 反向代理到 `127.0.0.1:3200`。
 
+### 6.3 「AIGC 快讯」子域名
+
+同一工作流还会执行 `node scripts/build-news-site.mjs`，把快讯板块单独打成以子域名根为 base 的产物 `dist-news/`，并 `rsync` 到同一台服务器的独立目录：
+
+```text
+43.128.2.172:/var/www/atw-news/
+```
+
+该目录与主站 `/var/www/tiaozhuxiansheng/` 互不重叠，两处 `rsync --delete` 各自只清自己那份。
+
+站点地址：
+
+```text
+https://news.tiaozhuxiansheng.com/
+```
+
+服务器侧需要一次性配置（CI 不代劳，见 `platform/deploy/nginx-news.conf` 的头部说明）：
+
+1. DNS 添加 A 记录 `news` → `43.128.2.172`，并确认解析已生效；
+2. 将 `platform/deploy/nginx-news.conf` 写入 `/etc/nginx/sites-available/` 并软链到 `sites-enabled/`；
+3. 运行 `certbot --nginx -d news.tiaozhuxiansheng.com --agree-tos -m <邮箱> --redirect` 申请证书。
+
+主站 `/news/` 与 Pages 镜像继续保留，页面 canonical 统一指向子域名。本地验证打包结果：
+
+```powershell
+node scripts/build-news-site.mjs
+```
+
 ## 7. API 服务部署
 
 API 的自动部署工作流位于 `.github/workflows/deploy-platform.yml`。以下情况会触发：

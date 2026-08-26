@@ -2,7 +2,7 @@
 // AIGC 快讯归档单期页：/news/2026-07-02/。含前后期导航。
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import NewsIssue from '../../components/NewsIssue.astro';
-import { getIssues, formatDate } from '../../lib/news.mjs';
+import { getIssues, formatDate, canonicalUrl } from '../../lib/news.mjs';
 
 export function getStaticPaths() {
   const issues = getIssues();
@@ -20,6 +20,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 <BaseLayout
   title={`AIGC 快讯 第 ${issue.no} 期 · ${issue.date}`}
   description={issue.headline || `AIGC 快讯 ${issue.date}：${issue.items.length} 条 AIGC 领域新闻精选。`}
+  canonical={canonicalUrl(issue.date)}
 >
   <div class="news-page">
     <nav class="crumb">

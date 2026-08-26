@@ -58,6 +58,11 @@ jobs:
         env:
           BASE_PATH: /
           SITE_URL: https://tiaozhuxiansheng.com
+      # 「AIGC 快讯」子站：同一份 src/data/news，另打一份以子域名根路径为 base 的产物。
+      # 主站 /news/ 保留不动，只是 canonical 指向子域名，权重归到一处。
+      # nginx 与证书在服务器上一次性配好（platform/deploy/nginx-news.conf），CI 只同步产物。
+      - name: 打「AIGC 快讯」子站独立包
+        run: node scripts/build-news-site.mjs
       # 从 desk-pond 最新 Release 抓 Windows 安装包，随 dist 一起 rsync 到香港服务器，
       # 让主页能国内直连直接下载（不入 git、不进 Pages 产物——Pages 单文件 100MB 上限）。
       # 统一命名为稳定文件名，主页链接无需随版本改动；每次部署自动同步到最新版。
@@ -108,11 +113,13 @@ jobs:
           mkdir -p dist/typhoon-eye
           cp -a /tmp/typhoon-eye/. dist/typhoon-eye/
 
-      - name: Rsync dist 到香港服务器
+      - name: Rsync dist / dist-news 到香港服务器
         run: |
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H 43.128.2.172 >> ~/.ssh/known_hosts 2>/dev/null
           rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" dist/ root@43.128.2.172:/var/www/tiaozhuxiansheng/
-          ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@43.128.2.172 'chown -R www-data:www-data /var/www/tiaozhuxiansheng'
+          # 快讯子站是独立 root，跟主站目录互不干扰（各自的 --delete 都只清自己那份）
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" dist-news/ root@43.128.2.172:/var/www/atw-news/
+          ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@43.128.2.172 'chown -R www-data:www-data /var/www/tiaozhuxiansheng /var/www/atw-news'

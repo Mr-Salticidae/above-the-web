@@ -11,6 +11,9 @@
 - 搜索：Pagefind（静态全文，零后端）
 - 知识库 AI 查询：Pagefind 先找相关笔记，登录用户再通过站内 AI 通道获得带原文引用的多轮回答
 - 部署：GitHub Pages + Actions
+- 「AIGC 快讯」另有子域名 `news.tiaozhuxiansheng.com`：同一份 `src/data/news/`，由
+  `scripts/build-news-site.mjs` 另打一份以子域名根为 base 的产物。主站 `/news/` 保留不动，
+  只把 canonical 指向子域名，同一期不会被当成重复内容
 - 账号与任务流转：`platform/`（Node + node:sqlite，跑在香港服务器，见下）
 
 ## 本地开发

@@ -3,13 +3,18 @@ import '../styles/global.css';
 import Search from '../components/Search.astro';
 import AccountMenu from '../components/AccountMenu.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
-const { title, description, noindex } = Astro.props;
+const { title, description, noindex, canonical } = Astro.props;
 const base = import.meta.env.BASE_URL;
-// TOY_NEWS=1：为 B 站 Toy 打「AIGC 快讯」独立包（见 scripts/build-toy-news.mjs）。
-// 包里只有快讯，其余栏目/搜索索引都不在包内，导航一律改成指向线上站的绝对地址，避免包内 404。
+// 两种「只带快讯」的独立构建：包里只有快讯，其余栏目、搜索索引、账号 API 都不在包内，
+// 导航一律改成指向线上主站的绝对地址，避免包内 404。
+//   TOY_NEWS=1  —— B 站 Toy 包（scripts/build-toy-news.mjs）
+//   NEWS_SITE=1 —— 快讯子域名 news.tiaozhuxiansheng.com（scripts/build-news-site.mjs）
 const TOY = process.env.TOY_NEWS === '1';
-const HOME = 'https://mr-salticidae.github.io/above-the-web/';
-const nav = (path) => (TOY ? `${HOME}${path}` : `${base}${path}`);
+const NEWS_SITE = process.env.NEWS_SITE === '1';
+const STANDALONE = TOY || NEWS_SITE;
+// Toy 包沿用 Pages 镜像地址；快讯子域名回主站根域（同一台服务器，国内直连）
+const HOME = TOY ? 'https://mr-salticidae.github.io/above-the-web/' : 'https://tiaozhuxiansheng.com/';
+const nav = (path) => (STANDALONE ? `${HOME}${path}` : `${base}${path}`);
 const siteName = '蛛网之上';
 const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先生的个人站`;
 ---
@@ -22,12 +27,14 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     <title>{pageTitle}</title>
     {description && <meta name="description" content={description} />}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {/* 同一份内容可能同时出现在主站、Pages 镜像与子域名下，由页面指定唯一规范地址 */}
+    {canonical && <link rel="canonical" href={canonical} />}
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href={`${base}favicon.svg`} />
     {/* 账号与任务状态走同域的 /api/（香港服务器上的 atw-platform）；
         Pages 镜像等其它来源在 account-core.js 里回落到主域，见那里的注释 */}
     <meta name="atw-base" content={base} />
-    {!TOY && import.meta.env.PUBLIC_ATW_API && (
+    {!STANDALONE && import.meta.env.PUBLIC_ATW_API && (
       <meta name="atw-api" content={import.meta.env.PUBLIC_ATW_API} />
     )}
     {/* 默认亮屏；读取用户上次选择，避免主题闪烁 */}
@@ -45,18 +52,18 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
   <body>
     <header class="site-header">
       <div class="bar">
-        <a class="brand" href={TOY ? HOME : base} {...(TOY ? { target: '_blank', rel: 'noopener' } : {})}>
+        <a class="brand" href={STANDALONE ? HOME : base} {...(TOY ? { target: '_blank', rel: 'noopener' } : {})}>
           蛛网之上
           <small>Above the Web</small>
         </a>
         <div class="header-actions">
           <a class="meta series-link" href={nav('notes/')}>笔记</a>
           <a class="meta series-link" href={`${base}news/`}>AIGC 快讯</a>
-          <a class="meta series-link" href={`${base}music/`}>音乐</a>
+          <a class="meta series-link" href={nav('music/')}>音乐</a>
           <a class="meta series-link" href={nav('prompt-master/')}>Prompt 大师</a>
           <a class="meta series-link" href={nav('tasks/')}>任务书</a>
-          {!TOY && <Search />}
-          {!TOY && <AccountMenu />}
+          {!STANDALONE && <Search />}
+          {!STANDALONE && <AccountMenu />}
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题">
             <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
             <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
@@ -76,7 +83,7 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
       <nav class="footer-nav" aria-label="页脚导航">
         <a href={nav('notes/')}>笔记</a>
         <a href={`${base}news/`}>AIGC 快讯</a>
-        <a href={`${base}music/`}>音乐</a>
+        <a href={nav('music/')}>音乐</a>
         <a href={nav('prompt-master/')}>Prompt 大师</a>
         <a href={nav('tasks/')}>任务书</a>
         <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a>
@@ -84,8 +91,8 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
       <p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>
     </footer>
 
-    {/* 全局音乐播放器：曲库为空时整体隐藏（TOY 独立包不带） */}
-    {!TOY && <MusicPlayer />}
+    {/* 全局音乐播放器：曲库为空时整体隐藏（独立包不带——音频在主站域名下） */}
+    {!STANDALONE && <MusicPlayer />}
 
     <script is:inline>
       (() => {

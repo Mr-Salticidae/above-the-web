@@ -24,6 +24,13 @@ const DATE_RE = /^(\d{4}-\d{2}-\d{2})\.json$/;
 
 export const CATEGORIES = ['模型', '工具', '行业', '研究', '政策'];
 
+// 快讯的规范地址：板块另有独立子域名（产物见 scripts/build-news-site.mjs，
+// nginx 见 platform/deploy/nginx-news.conf）。同一期在主站 /news/、Pages 镜像、
+// Toy 包里都打得开，canonical 一律指向子域名这一份，避免被当成重复内容。
+export const NEWS_SITE_ORIGIN = 'https://news.tiaozhuxiansheng.com';
+// date 省略时给板块首页（子域名根）
+export const canonicalUrl = (date) => (date ? `${NEWS_SITE_ORIGIN}/${date}/` : `${NEWS_SITE_ORIGIN}/`);
+
 // 读取全部期刊，按日期倒序（最新在前）。单个文件损坏时跳过并告警，不阻断构建。
 export function getIssues() {
   if (!fs.existsSync(DIR)) return [];
