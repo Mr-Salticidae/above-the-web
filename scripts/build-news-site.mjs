@@ -15,7 +15,7 @@
 //   index.html            最新一期 + 往期索引（子域名根）
 //   2026-08-26/index.html 每期归档页
 //   _astro/*              仅快讯页真正引用到的样式/脚本
-//   favicon.svg
+//   genji-mark.png        GenJi 的圆标，兼作标签页图标与刊头小标记
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -84,7 +84,8 @@ for (const rel of assets) {
     fs.copyFileSync(src, dest);
   }
 }
-fs.copyFileSync(path.join(BUILD_DIR, 'favicon.svg'), path.join(OUT_DIR, 'favicon.svg'));
+// 图标只搬 GenJi 那枚圆标；个人站的 favicon.svg（蛛网图案）不进子站，理由同下面第 3 条
+fs.copyFileSync(path.join(BUILD_DIR, 'genji-mark.png'), path.join(OUT_DIR, 'genji-mark.png'));
 
 const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
   const p = path.join(dir, e.name);
@@ -139,6 +140,14 @@ if (leaked.length) {
   const list = [...new Set(leaked)];
   for (const x of list) console.error(`  ${x}`);
   throw new Error(`子站产物里有 ${list.length} 处通往个人站的链接（见上），隔离被破坏`);
+}
+
+// 个人站的 favicon.svg（蛛网图案）同样是自家标识，子站改用 GenJi 的圆标 genji-mark.png。
+// 这条单列，是因为它走相对路径，上面那条按 host 判的守卫看不见它。
+const faviconRefs = textFiles.filter((f) => fs.readFileSync(f, 'utf8').includes('favicon.svg'));
+if (faviconRefs.length) {
+  const list = faviconRefs.map((f) => path.relative(OUT_DIR, f));
+  throw new Error(`子站产物里仍引用个人站的 favicon.svg：\n  ${list.join('\n  ')}`);
 }
 
 fs.rmSync(BUILD_DIR, { recursive: true, force: true });

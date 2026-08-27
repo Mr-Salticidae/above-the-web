@@ -40,7 +40,8 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     {/* 同一份内容可能同时出现在主站、Pages 镜像与子域名下，由页面指定唯一规范地址 */}
     {canonical && <link rel="canonical" href={canonical} />}
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" href={`${base}favicon.svg`} />
+    {/* 子站挂在 GenJi 名下，标签页图标用他们的圆标，个人站那枚蛛网 favicon 不带过去 */}
+    <link rel="icon" href={`${base}${NEWS_SITE ? 'genji-mark.png' : 'favicon.svg'}`} />
     {/* 账号与任务状态走同域的 /api/（香港服务器上的 atw-platform）；
         Pages 镜像等其它来源在 account-core.js 里回落到主域，见那里的注释 */}
     <meta name="atw-base" content={base} />
