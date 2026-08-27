@@ -208,7 +208,10 @@ https://news.tiaozhuxiansheng.com/
 2. 将 `platform/deploy/nginx-news.conf` 写入 `/etc/nginx/sites-available/` 并软链到 `sites-enabled/`；
 3. 运行 `certbot --nginx -d news.tiaozhuxiansheng.com --agree-tos -m <邮箱> --redirect` 申请证书。
 
-主站 `/news/` 与 Pages 镜像继续保留，页面 canonical 统一指向子域名。本地验证打包结果：
+主站 `/news/` 是原件，样子和导航都不变，站内入口也仍落在它身上；子站只是发给 GenJi 学员的
+另一份。两份正文一致，搜索引擎只收原件——主站与 Pages 镜像的 canonical 自指主站 `/news/`，
+子站整站 `noindex`（子站不 canonical 回指主站，是为了不在产物里留下个人站地址）。
+本地验证打包结果：
 
 ```powershell
 node scripts/build-news-site.mjs

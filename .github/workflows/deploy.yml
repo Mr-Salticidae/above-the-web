@@ -58,8 +58,9 @@ jobs:
         env:
           BASE_PATH: /
           SITE_URL: https://tiaozhuxiansheng.com
-      # 「AIGC 快讯」子站：同一份 src/data/news，另打一份以子域名根路径为 base 的产物。
-      # 主站 /news/ 保留不动，只是 canonical 指向子域名，权重归到一处。
+      # 「AIGC 快讯」子站：同一份 src/data/news，另打一份以子域名根路径为 base 的产物，
+      # 发给 GenJi 的学员。主站 /news/ 是原件，导航与站内入口一概不动；
+      # 两份正文一致，搜索引擎只收原件（主站 canonical 自指，子站整站 noindex）。
       # nginx 与证书在服务器上一次性配好（platform/deploy/nginx-news.conf），CI 只同步产物。
       - name: 打「AIGC 快讯」子站独立包
         run: node scripts/build-news-site.mjs

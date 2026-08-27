@@ -3,7 +3,6 @@ import '../styles/global.css';
 import Search from '../components/Search.astro';
 import AccountMenu from '../components/AccountMenu.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
-import { NEWS_ENTRY } from '../lib/news.mjs';
 const { title, description, noindex, canonical } = Astro.props;
 const base = import.meta.env.BASE_URL;
 // 两种「只带快讯」的独立构建：包里只有快讯，其余栏目、搜索索引、账号 API 都不在包内，
@@ -16,8 +15,9 @@ const STANDALONE = TOY || NEWS_SITE;
 // Toy 包沿用 Pages 镜像地址；快讯子域名回主站根域（同一台服务器，国内直连）
 const HOME = TOY ? 'https://mr-salticidae.github.io/above-the-web/' : 'https://tiaozhuxiansheng.com/';
 const nav = (path) => (STANDALONE ? `${HOME}${path}` : `${base}${path}`);
-// 快讯已独立成子站，站内入口不再走 ${base}news/
-const newsHref = NEWS_ENTRY;
+// 快讯一式两份，站内入口始终落在本站自己的 /news/，不往子站跳
+//（Toy 包里 base 是哨兵，产出后改写成相对路径，同样指向包内那份）。
+const newsHref = `${base}news/`;
 // 子站是直接发给外部学员的，除快讯本身外不留任何通往个人站的入口：
 // 栏目导航、GitHub、页脚导航与许可行一律不渲染，站名也只回子站自己的根
 // （NEWS_SITE 构建下 base 是哨兵，产出后被改写成 /）。
@@ -35,7 +35,8 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     {description && <meta name="description" content={description} />}
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {/* 子站是主站 /news/ 的副本、正文一字不差，规范地址认主站那份，这边整站不收录 */}
+    {(noindex || NEWS_SITE) && <meta name="robots" content="noindex, nofollow" />}
     {/* 同一份内容可能同时出现在主站、Pages 镜像与子域名下，由页面指定唯一规范地址 */}
     {canonical && <link rel="canonical" href={canonical} />}
     <meta name="generator" content={Astro.generator} />

@@ -98,8 +98,17 @@ if (leftovers.length) {
   throw new Error(`以下产物仍残留哨兵 base，需扩展改写规则：\n  ${leftovers.join('\n  ')}`);
 }
 
-// 兜底自检 2：canonical 必须指向子域名自己——主站 /news/ 靠它把权重让给这里，
-// 要是常量被改歪，两边互指或指丢，SEO 上比不加还糟。
+// 兜底自检 2：快讯一式两份，正文一字不差，搜索引擎只该收录主站 /news/ 那件原件。
+// 子站靠整站 noindex 退出排名（不用 canonical 回指主站——那会把个人站地址写进产物，
+// 与下面第 3 条的对外隔离直接冲突）。少一页没盖上，两份就开始互相抢排名。
+const missingNoindex = textFiles
+  .filter((f) => f.endsWith('.html'))
+  .filter((f) => !/<meta name="robots" content="noindex[^"]*"/.test(fs.readFileSync(f, 'utf8')));
+if (missingNoindex.length) {
+  throw new Error(`以下子站页面没有 noindex，会和主站 /news/ 抢排名：\n  ${missingNoindex.join('\n  ')}`);
+}
+
+// canonical 则必须自指子域名：既然主站那份也自指，两边各说各的，不会互指或指丢。
 const home = fs.readFileSync(path.join(OUT_DIR, 'index.html'), 'utf8');
 if (!home.includes(`<link rel="canonical" href="${ORIGIN}/">`)) {
   throw new Error('首页缺少指向子域名的 canonical，检查 src/lib/news.mjs 的 NEWS_SITE_ORIGIN');

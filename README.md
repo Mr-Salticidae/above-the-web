@@ -11,9 +11,11 @@
 - 搜索：Pagefind（静态全文，零后端）
 - 知识库 AI 查询：Pagefind 先找相关笔记，登录用户再通过站内 AI 通道获得带原文引用的多轮回答
 - 部署：GitHub Pages + Actions
-- 「AIGC 快讯」另有子域名 `news.tiaozhuxiansheng.com`：同一份 `src/data/news/`，由
-  `scripts/build-news-site.mjs` 另打一份以子域名根为 base 的产物。主站 `/news/` 保留不动，
-  只把 canonical 指向子域名，同一期不会被当成重复内容
+- 「AIGC 快讯」一式两份：主站 `/news/` 是原件（署名「蛛网之上」、带全站导航与搜索，
+  站内入口都落在这里）；子域名 `news.tiaozhuxiansheng.com` 是发给 GenJi 学员的独立副本
+  （同一份 `src/data/news/`，由 `scripts/build-news-site.mjs` 以子域名根为 base 另打一份，
+  署名换成 GenJi 那边、不留任何通往个人站的入口）。两份正文一致，搜索引擎只收原件：
+  主站 canonical 自指，子站整站 `noindex`
 - 账号与任务流转：`platform/`（Node + node:sqlite，跑在香港服务器，见下）
 
 ## 本地开发

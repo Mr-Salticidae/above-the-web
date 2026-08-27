@@ -24,17 +24,25 @@ const DATE_RE = /^(\d{4}-\d{2}-\d{2})\.json$/;
 
 export const CATEGORIES = ['模型', '工具', '行业', '研究', '政策'];
 
-// 快讯的规范地址：板块另有独立子域名（产物见 scripts/build-news-site.mjs，
-// nginx 见 platform/deploy/nginx-news.conf）。同一期在主站 /news/、Pages 镜像、
-// Toy 包里都打得开，canonical 一律指向子域名这一份，避免被当成重复内容。
+// 快讯一式两份，互不干扰：
+//   · 主站 /news/ ——「蛛网之上」的原件。页眉页脚、栏目导航、搜索、播放器一应俱全，
+//     站内各处的「AIGC 快讯」入口（顶栏、页脚、首页速览）都落在这里，不往外跳。
+//   · news.tiaozhuxiansheng.com —— 发给 GenJi 学员的独立副本（产物见
+//     scripts/build-news-site.mjs，nginx 见 platform/deploy/nginx-news.conf），
+//     署名换成他们那边，且不留任何通往个人站的入口。
+//
+// 两份正文一字不差，搜索引擎只该收录一份。规范地址认主站这件原件，子站整站 noindex
+// （见 BaseLayout）。子站不用 canonical 回指主站，是因为那会在产物里留下个人站地址，
+// 与它的对外隔离冲突——noindex 一样能避免重复内容，且不泄露。
 export const NEWS_SITE_ORIGIN = 'https://news.tiaozhuxiansheng.com';
-// date 省略时给板块首页（子域名根）
-export const canonicalUrl = (date) => (date ? `${NEWS_SITE_ORIGIN}/${date}/` : `${NEWS_SITE_ORIGIN}/`);
+const MAIN_SITE_ORIGIN = 'https://tiaozhuxiansheng.com';
 
-// 站内各处的「快讯」入口——导航、页脚、首页速览——一律送去子站，别再落到主站 /news/。
-// 主站那份不删（老链接照样打得开，canonical 已指向子站），只是不再从站内往那儿导流。
-// 例外是子站自己的导航：指回自己的根即可，见 BaseLayout 的 newsHref。
-export const NEWS_ENTRY = `${NEWS_SITE_ORIGIN}/`;
+// 子站构建（NEWS_SITE=1）自指其根；其余构建（主站、Pages 镜像、Toy 包）一律指主站原件。
+// date 省略时给板块首页。
+const NEWS_SITE_BUILD = process.env.NEWS_SITE === '1';
+export const canonicalUrl = (date) => (NEWS_SITE_BUILD
+  ? `${NEWS_SITE_ORIGIN}/${date ? `${date}/` : ''}`
+  : `${MAIN_SITE_ORIGIN}/news/${date ? `${date}/` : ''}`);
 
 // 读取全部期刊，按日期倒序（最新在前）。单个文件损坏时跳过并告警，不阻断构建。
 export function getIssues() {
