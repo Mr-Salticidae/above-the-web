@@ -1,0 +1,54 @@
+{
+  "date": "2026-08-28",
+  "headline": "Gemini Omni 1.1 Flash 优化视频生成，Adobe Photoshop 整合 AI 编辑界面",
+  "items": [
+    {
+      "title": "Gemini Omni 1.1 Flash 支持更长视频扩展与低成本草稿模式",
+      "summary": "Google 更新 Gemini Omni 1.1 Flash 视频模型，场景扩展时长从 1 秒增至 10 秒，最长可达 40 秒。新增 360p 草稿模式，速度提升 60% 且成本降低三分之二。视频创作者可借此以更低试错成本完成长镜头生成与迭代。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/googles-gemini-omni-1-1-flash-makes-ai-video-generation-cheaper-and-more-flexible",
+      "featured": true
+    },
+    {
+      "title": "Photoshop 推出 AI Assisted Editor 整合生成式工具栏",
+      "summary": "Adobe 在 Photoshop Beta 版中上线 AI Assisted Editor 视图，将提示词编辑、背景移除、图像扩展等 AI 功能集中至单一工具栏。此举简化了生成式工作流入口，减少创作者在不同面板间切换的操作损耗。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/985491/adobe-photoshop-ai-assisted-editor-markup",
+      "featured": true
+    },
+    {
+      "title": "Claude Cowork 桌面端内置浏览器支持 Agent 自主操作",
+      "summary": "Anthropic 为 Claude Cowork 桌面应用集成内置浏览器，允许 AI Agent 在受控环境中直接执行网页交互任务。这减少了对外部插件的依赖，为需要自动化采集素材或验证内容的创作者提供更稳定的原生环境。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-cowork-now-runs-its-own-browser-inside-the-desktop-app",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 发布硬件标准接口让 Agent 控制物理设备",
+      "summary": "Anthropic 推出标准化驱动接口，旨在让 AI Agent 能与各类物理设备及彼此进行通信。该标准为软硬件交互提供通用协议，有助于创作者探索 AI 控制实体装置、灯光或机械结构的跨界创作项目。",
+      "category": "行业",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/08/anthropics-new-hardware-standard-lets-ai-agents-control-the-physical-world",
+      "featured": false
+    },
+    {
+      "title": "Gemini Notebook 支持导入书籍生成播客与信息图",
+      "summary": "Google Gemini Notebook 新增 Expert Intelligence 功能，可直接关联 Google Play Books 中的已购书籍进行问答。系统能基于书籍内容自动生成学习计划、信息图及 AI 播客，为内容创作者提供高效的深度阅读转化路径。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/985567/google-gemini-notebook-expert-sources-books",
+      "featured": false
+    },
+    {
+      "title": "Hugging Face 开源机器人 Microduck 开启预售",
+      "summary": "Hugging Face 联合 Pollen Robotics 推出开源双足机器人 Microduck，售价 399 美元，支持通过强化学习自定义行为。这款小型硬件为 AI 创作者提供了低门槛的实体交互实验平台，预计 2026 年底前发货。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/27/hugging-face-is-selling-a-cute-399-open-source-duck-robot-microduck",
+      "featured": false
+    }
+  ]
+}
