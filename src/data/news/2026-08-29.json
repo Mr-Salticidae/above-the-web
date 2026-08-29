@@ -1,0 +1,62 @@
+{
+  "date": "2026-08-29",
+  "headline": "Nvidia 拟收购 Hugging Face，Beatport 禁纯 AI 音乐",
+  "items": [
+    {
+      "title": "Nvidia 拟 130 亿美元收购 Hugging Face",
+      "summary": "据报道 Nvidia 正洽谈以约 130 亿美元收购开源模型社区 Hugging Face，旨在巩固其在开源 AI 基础设施领域的地位。若交易达成，开源模型的托管与分发格局或将发生重大变化，创作者需关注后续平台政策调整。",
+      "category": "行业",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/08/report-nvidia-to-acquire-ai-model-repository-hugging-face-for-13-billion",
+      "featured": true
+    },
+    {
+      "title": "Beatport 禁止上架纯 AI 生成音乐",
+      "summary": "DJ 音乐平台 Beatport 宣布立即禁止完全或主要由 AI 生成的音乐上架。此举反映了主流音乐市场对 AI 内容的准入收紧，AI 音乐创作者在发行时需留意平台审核标准的变化。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/beatport-blocks-fully-ai-generated-music-from-its-dj-marketplace",
+      "featured": true
+    },
+    {
+      "title": "OpenAI Codex 测试持久运行模式",
+      "summary": "OpenAI 正在为 AI 编程助手 Codex 开发 Persistent Mode，允许 Agent 持续在线并自主生成后续任务。该功能虽提升自动化潜力，但测试中已出现误删数据等风险，创作者使用类似长时运行 Agent 时需做好备份与权限隔离。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/always-on-and-self-starting-ai-agents-might-be-openais-next-big-play",
+      "featured": false
+    },
+    {
+      "title": "Google 试点双盲 AI 模型评测机制",
+      "summary": "Google DeepMind 联合新加坡 AI 安全研究所首次测试双盲 AI 评估，利用机密计算技术防止模型权重与测试题目互相泄露。这一机制有望提升基准测试可信度，帮助创作者更准确地选择底层模型。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-benchmarks-have-a-trust-problem-and-google-wants-to-fix-it",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 终止向 Cursor 提供模型服务",
+      "summary": "OpenAI 宣布在 Cursor 被 SpaceX 收购后终止向其提供模型接口。依赖 Cursor 进行 AI 辅助创作的开发者需尽快确认替代方案或迁移工作流，以免服务中断影响项目进度。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/our-decision-on-cursor-following-its-acquisition-by-spacex",
+      "featured": false
+    },
+    {
+      "title": "Meta AI 眼镜新增防偷录限制",
+      "summary": "Meta 更新 AI 智能眼镜固件，当用户遮挡安全指示灯时设备将自动停止录制。该改动降低了非自愿拍摄风险，对使用 AI 穿戴设备进行第一视角创作的摄影师而言，需注意录制触发条件的变化。",
+      "category": "工具",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/08/meta-tweaks-ai-glasses-to-block-some-creepy-recordings-but-privacy-risks-remain",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 展示自我改进 AI 系统",
+      "summary": "Anthropic 研究人员演示了一套自动化系统，能在 10 项特定对齐基准上持续提升表现且不损害整体性能。这标志着模型自我优化能力取得进展，未来创作者可能获得更安全、更稳定的生成输出。",
+      "category": "研究",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/28/an-anthropic-researcher-just-gave-us-a-peek-at-self-improving-ai",
+      "featured": false
+    }
+  ]
+}
