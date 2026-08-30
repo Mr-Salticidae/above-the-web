@@ -1,0 +1,54 @@
+{
+  "date": "2026-08-30",
+  "headline": "LAION 开源千万小时视频数据集，国内短剧 AI 替代率超九成",
+  "items": [
+    {
+      "title": "LAION 开源千万小时视频数据集",
+      "summary": "LAION 发布 Big Video Dataset (BVD)，包含 8000 万条视频、1000 万小时素材及 5500 万条自动描述片段。基于该数据集训练的模型在基准测试中超越 InternVid，且其采集依据 2024 年汉堡法院裁决在非商业研究场景下具备法律抗辩空间。为视频生成模型训练与学术研究提供了新的大规模开放资源。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/laion-drops-massive-open-video-dataset-with-10-million-hours-of-footage-for-ai-research",
+      "featured": true
+    },
+    {
+      "title": "中国 Q1 短剧 95% 由 AI 生成",
+      "summary": "据 Financial Times 报道，2026 年第一季度中国发布的 12.8 万部短剧中，95% 为 AI 生成内容。部分演员被迫授权肖像与声音后遭解雇，相关劳动纠纷数量快速上升。AIGC 在影视制作端的规模化应用正加速重塑从业者权益与行业用工结构。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-generated-videos-are-already-displacing-actors-and-livestreamers-across-chinas-entertainment-industry",
+      "featured": true
+    },
+    {
+      "title": "Google WikiSkill 赋予 Agent 持久记忆",
+      "summary": "Google Research 推出 WikiSkill 框架，使 AI Agent 能以类 Wiki 结构记录成败经验并持续优化后续表现。测试显示，搭载该框架的小参数模型可匹配未搭载的大模型性能。有助于创作者构建更稳定、少重复犯错的自动化工作流。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-gives-ai-agents-their-own-wiki-so-they-can-learn-from-mistakes-and-successes",
+      "featured": false
+    },
+    {
+      "title": "Sony 等起诉 Anthropic 索赔版权侵权",
+      "summary": "Sony Music 与 Warner Chappell 在美国加州北区法院起诉 Anthropic，指控其非法使用数万部受版权保护作品，单部作品最高索赔 15 万美元，移除版权标识另罚 2.5 万美元。此次诉讼聚焦盗版与元数据剥离行为，可能进一步收紧大模型训练数据的合规边界。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/986438/sony-music-warner-chappell-anthropic-lawsuit-copyright",
+      "featured": false
+    },
+    {
+      "title": "音乐人自发追踪 AI 洗歌侵权行为",
+      "summary": "随着音频生成工具能力增强，大量算法衍生自人类作品的 AI 音乐充斥网络，部分发布者否认使用 AI。音乐人群体正主动调查此类隐蔽侵权行为。AI 音乐创作者需注意来源透明度，避免陷入版权争议与社区信任危机。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/985866/h4rris-nihil-young-edm-suno-ai",
+      "featured": false
+    },
+    {
+      "title": "Nvidia DLSS 5 AI 滤镜效果引争议",
+      "summary": "泄露的 DLSS 5 AI 滤镜在《最终幻想7》等游戏中导致角色面部特征严重失真，被用户评价为「令人不安」。该技术虽旨在提升画质，但过度干预风格化美术资产可能破坏原作视觉一致性。图像与游戏创作者需警惕 AI 后处理对艺术表达的副作用。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/3d/unsettling-nvidias-dlss-5-controversial-ai-filter-has-leaked-and-gamers-are-horrified",
+      "featured": false
+    }
+  ]
+}
