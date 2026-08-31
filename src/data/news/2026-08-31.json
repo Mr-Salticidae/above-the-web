@@ -1,0 +1,46 @@
+{
+  "date": "2026-08-31",
+  "headline": "AI Agent 缺乏时间感知，Claude Code 用量调整引关注",
+  "items": [
+    {
+      "title": "研究称 AI Agent 缺乏时间感知且高估耗时",
+      "summary": "新研究显示 Claude Code 和 Codex 等编程助手无法准确感知时间，预估任务时长偏差最高达十倍，且对自身工作质量评分虚高。这意味着在长链路自主任务中，创作者仍需保持人工监督以防进度失控。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-agents-have-no-sense-of-time-and-are-not-aware-of-it",
+      "featured": true
+    },
+    {
+      "title": "Claude Code 永久额度上调但实际可用量缩减",
+      "summary": "Anthropic 宣布 Claude Code 每周使用上限永久增加 25%，但随着 50% 临时加成于 9 月 14 日到期，实际可用量较此前减少约 17%。官方承诺提供更透明的用量控制，依赖该工具进行高强度开发的创作者需重新规划工作流。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-claude-code-limit-change-is-a-raise-on-paper-but-a-cut-in-practice",
+      "featured": true
+    },
+    {
+      "title": "YouTube 未像 Apple Spotify 那样严控 AI 内容",
+      "summary": "分析指出 YouTube 未能有效遏制低质 AI 生成内容泛滥，根本原因在于其广告驱动的商业模型与订阅制平台存在差异。这对坚持原创的 AIGC 创作者而言，意味着在该平台获取流量可能面临更严重的劣币驱逐良币问题。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/if-apple-and-spotify-are-cracking-down-on-ai-slop-why-cant-youtube-i-think-i-know-the-answer",
+      "featured": false
+    },
+    {
+      "title": "实验证实 AI 最易伪造高分所需的技能",
+      "summary": "一项涉及千余名学生的实验表明，GPT-4o 能使营销作业成绩提升近一个等级，但未验证学生是否真正掌握知识。这提醒教育及培训领域的 AIGC 应用者，需警惕 AI 辅助带来的能力评估失真风险。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/the-skills-that-earn-top-grades-are-the-ones-ai-can-fake-best",
+      "featured": false
+    },
+    {
+      "title": "员工评价显示对 AI 正面情绪大幅下滑",
+      "summary": "Glassdoor 数据分析显示，自 2019 年以来员工对 AI 的正面评价从 81% 降至 43%，强制部署、监控及不切实际的生产力预期成为主要不满来源。AIGC 团队管理者在引入新工具时，应重视一线创作者的实际体验与心理负担。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-sentiment-is-turning-sour-as-employee-reviews-reveal-growing-frustration-across-the-workforce",
+      "featured": false
+    }
+  ]
+}
