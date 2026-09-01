@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-01",
+  "headline": "Instagram 限流未标 AI 账号，OpenAI 广告营收破十亿",
+  "items": [
+    {
+      "title": "Instagram 限流未标注 AI 生成账号",
+      "summary": "Instagram 将「AI creator」标签更名为「AI-generated profile」，并对未主动声明的 AI 虚拟人账号实施流量限制。平台承认用户已难以区分真人与 AI 内容，此举旨在强制提高透明度。依赖 AI 虚拟博主进行内容分发的创作者需尽快合规标注，避免曝光受损。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/986593/instagram-addresses-fake-ai-profile-slop",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 广告业务年化收入达 10 亿美元",
+      "summary": "OpenAI 宣布 ChatGPT 广告业务年化收入已达 10 亿美元，并计划通过广告收益支持免费及低价版本在全球范围内的普及。这标志着大模型厂商正式跑通广告变现模式。对创作者而言，未来在 ChatGPT 生态内的内容分发可能面临商业化信息的干扰或新机会。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-says-its-chatgpt-ad-business-hits-a-1-billion-annual-run-rate",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 等采购数万台 Mac 训练 Agent",
+      "summary": "据 The Information 报道，OpenAI 和 Anthropic 正大量采购 Mac mini 与 Mac Studio，用于训练计算机使用（computer-use）类 Agent。Apple 硬件因适配桌面环境交互成为训练首选，部分高配机型已售罄。这意味着 AI 视频与自动化工作流的落地正加速向真实操作系统环境迁移。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-and-rival-ai-labs-are-buying-tens-of-thousands-of-mac-minis-to-train-computer-use-agents",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 试点按结果付费定价模式",
+      "summary": "OpenAI 开始向部分大客户推行「按效果付费」模式，仅在 AI 成功完成任务后收费，Salesforce、Adobe 等也在探索类似机制。该模式试图解决 AI 产出价值归属争议。对于将 AI 嵌入生产流的创作者，未来工具成本或与交付质量直接挂钩。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-starts-charging-some-customers-only-when-its-ai-actually-works",
+      "featured": false
+    },
+    {
+      "title": "Clipto 获 1500 万美元融资估值 2.5 亿",
+      "summary": "AI 视频搜索初创公司 Clipto 完成新一轮 1500 万美元融资，估值达 2.5 亿美元，ARR 已达 1500 万美元并实现盈利。其产品支持对 TB 级视频素材进行语义检索。为视频创作者管理海量原始素材提供了新的智能化解决方案。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/08/31/three-year-old-ai-media-search-startup-clipto-hits-a-250m-valuation",
+      "featured": false
+    },
+    {
+      "title": "ChatGPT 被欧盟列为超大型搜索引擎",
+      "summary": "欧盟委员会首次将 ChatGPT 纳入《数字服务法》监管，认定其为月活超 4500 万的超大型搜索引擎。OpenAI 需在 2026 年底前提交风险评估、透明度报告及广告档案。面向欧洲用户的 AIGC 应用开发者需关注后续合规要求对数据使用和推荐逻辑的影响。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/chatgpt-now-faces-stricter-eu-oversight-as-a-very-large-search-engine",
+      "featured": false
+    },
+    {
+      "title": "AI MediaKit 重塑短剧出海全链路",
+      "summary": "InfoQ 报道了 AI MediaKit 在短剧制作与出海环节的应用实践，覆盖从脚本生成、画面制作到多语言本地化的全流程。该工具链旨在降低跨文化内容生产成本。为国内 AIGC 视频团队拓展海外市场提供了可参考的工程化路径。",
+      "category": "工具",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/L7P7cA3UMXXQJcBfyHuJ",
+      "featured": false
+    }
+  ]
+}
