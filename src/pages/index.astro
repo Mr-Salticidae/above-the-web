@@ -32,6 +32,9 @@ const openTaskCount = allTasks.filter((t) => t.data.status === 'open').length;
 const notesBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/notes/';
 const { groups, total } = groupNotes(await getCollection('notes'));
 
+// 「关于」：hero 文案末尾的一个小入口，落在 /about/
+const aboutHref = import.meta.env.BASE_URL.replace(/\/$/, '') + '/about/';
+
 // 左侧浮动版块索引：首页各版块的锚点目录
 const toc = [
   { id: 'top', label: '首页' },
@@ -79,6 +82,7 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
         和 <span class="count-up" id="hero-count" data-target={total}>{total}</span> 篇仍在生长的笔记。
         欢迎随便逛。
       </p>
+      <a class="hero-about" href={aboutHref}>关于这个站 →</a>
     </div>
   </section>
 
@@ -295,6 +299,14 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
 </script>
 
 <style>
+  /* hero 末尾的「关于这个站」小入口：刊眉同款字距，压得比正文轻 */
+  .hero-about {
+    display: inline-block; margin-top: 1.4rem; font-family: var(--sans); font-size: .8rem;
+    letter-spacing: .18em; color: var(--ink-soft); border-bottom: 1px solid var(--line);
+    padding-bottom: .15rem; transition: color .15s ease, border-color .15s ease;
+  }
+  .hero-about:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+
   /* 左侧浮动版块索引 —— 圆点导航，hover 展开标签，滚动高亮当前版块 */
   .toc {
     position: fixed; left: 1.1rem; top: 50%; transform: translateY(-50%);

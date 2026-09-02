@@ -1,0 +1,352 @@
+---
+// 关于 · About —— 一页说清这个站是谁做的、放了什么、按什么规矩做、怎么做出来的。
+//
+// 板块数字全部构建期从各数据源现算（笔记集合 / 快讯 JSON / Prompt 大师画廊 / games.js /
+// 音乐 manifest / 任务书集合），页面随每次构建刷新，不用手改。
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { groupNotes } from '../../lib/note-groups.mjs';
+import { getIssues } from '../../lib/news.mjs';
+import { getEpisodes } from '../../lib/prompt-master.mjs';
+import { games } from '../../data/games.js';
+import manifest from '../../data/music/manifest.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const { total: noteTotal } = groupNotes(await getCollection('notes'));
+const issues = getIssues();
+const episodes = getEpisodes();
+const tracks = manifest.tracks || [];
+const tasks = await getCollection('tasks');
+
+// 构建日期（北京时间），页脚署「本页随构建更新」
+const builtOn = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Shanghai' }).format(new Date());
+
+// 站上有什么：一栏一张卡，数字实时
+const sections = [
+  {
+    href: `${base}/notes/`, label: 'Notes', title: '笔记',
+    count: noteTotal, unit: '篇',
+    desc: '方法论、prompt 模板、sref 与参数档案。自动同步自公开知识库，篇篇希望做到可复用。',
+  },
+  {
+    href: `${base}/news/`, label: 'AIGC Daily', title: 'AIGC 快讯',
+    count: issues.length, unit: '期',
+    desc: '每天早晨自动搜集过去 24 小时的模型发布、工具更新与行业动向，每条附来源直达。',
+  },
+  {
+    href: `${base}/prompt-master/`, label: 'Prompt Master', title: '成为 Prompt 大师',
+    count: episodes.length, unit: '期',
+    desc: '面向 AIGC 小白的 prompt 拆解连载：每期一个 battle 主题，讲清难在哪、怎么破题。',
+  },
+  {
+    href: `${base}/#plays`, label: 'Plays', title: '可玩',
+    count: games.length, unit: '件',
+    desc: '在浏览器里直接打开就玩、或免费下载带走的小作品。用 vibe coding 做的，国内直连。',
+  },
+  {
+    href: `${base}/music/`, label: 'Music', title: '音乐',
+    count: tracks.length, unit: '首',
+    desc: 'AI 协作时代的创作实验，自己做的歌。全站底部有播放器，边逛边听。',
+  },
+  {
+    href: `${base}/tasks/`, label: 'Commissions', title: '任务书',
+    count: tasks.length, unit: '份',
+    desc: '对外发布的合作任务：要求、对标素材、时间与报酬一次写清。认领需要登录。',
+  },
+];
+
+// 时间线：只记版块级的节点，日常迭代不入
+const timeline = [
+  ['2026-05-02', '知识库建立', '在 Obsidian 里立下一份创作知识库，原则是「少即是多 · 用即更新 · 不写废话」。这是本站的前身。'],
+  ['2026-06-24', '站点上线', 'Astro 静态站 + 双链渲染 + 自动同步 + 昼夜主题，一天内搭起管线。同日「反诈柜台」进「可玩」，成为第一件作品。'],
+  ['2026-06-25', '「成为 Prompt 大师」并入', 'prompt 拆解连载成为独立版块，首页开始有了杂志式的分栏。'],
+  ['2026-07-02', '「AIGC 快讯」创刊', '一天一期，次日起交给云端定时任务每早自动更新，本机不开机也照出。'],
+  ['2026-07-09', '「镜像自我 · 人生预演」上线', 'BILIBILI WORLD 展台作品的在线版，镜像到国内直连。此后「风眼」「朱元璋 K 线人生」陆续进「可玩」。'],
+  ['2026-07-20', '「任务书」起刊', '对外发布合作任务，要求与报酬写在明面上。'],
+  ['2026-07-27', '「协作板块」开张', '带学员做项目的内部空间，当前进行中的是第三届瓦卡奖（VACAT）AI 叙事短片带教。'],
+  ['2026-07-28', '账号系统', '任务认领与流转彻底动态化。读站依旧不需要账号。'],
+  ['2026-07-29', '笔记独立成页', '三百多篇笔记搬出首页，首页只留栏目入口，进站第一眼不再是一面卡片墙。'],
+  ['2026-08-03', '说人话就能发任务、接任务', '任务书与自荐表单各接一个 AI 帮手：一句大白话，它先填好草稿，人再过一眼。'],
+  ['2026-08-11', '知识库 AI 查询', '先全文检索找到原文，再让模型只在命中的公开片段上作答，每条结论可回到笔记核对。'],
+  ['2026-08-18', '「音乐」板块与全站播放器', '一周后第一首歌《雨里旧信》归档。'],
+  ['2026-08-24', '「小织」立角色', '查笔记小助手有了名字、性格和 Galgame 式的回头客记忆；问题还没成形时，她先帮你把它接生出来。'],
+  ['2026-08-26', '快讯子站上线', 'news.tiaozhuxiansheng.com：同一份快讯的对外副本，发给 GenJi 的学员，署名与入口都做了隔离。'],
+];
+
+// 这站怎么做的：一行一件，左名右注
+const colophon = [
+  ['框架', 'Astro 5 静态生成，页面里没有前端框架。Obsidian 的 [[双链]] 由自写的 remark 插件在构建期解析成站内链接。'],
+  ['内容', '构建时浅克隆 knowledge-base 与 becoming-a-prompt-master 两个公开仓库，按栏目白名单进站；快讯一天一份 JSON 存在本仓库。'],
+  ['搜索', 'Pagefind 静态全文索引，随产物一起发布，没有后端。'],
+  ['排版', '宋体标题配无衬线正文，全部走系统字体、不下载 webfont。昼夜双皮肤，首页那张蛛网是 canvas 现画的。'],
+  ['自动化', 'GitHub Actions 每早抓取 RSS 候选，再用一次结构化调用选稿写摘要；单次成本约一毛钱。站点每 6 小时兜底重建一次。'],
+  ['部署', '同一次构建出三份产物：GitHub Pages 镜像、香港服务器（国内主入口）、快讯子站。'],
+  ['账号', 'Node + node:sqlite 的一个小服务，只管登录、认领与流转；读站的部分完全静态。'],
+  ['AI 的位置', '小作品多是 vibe coding；快讯选稿、任务书草稿、小织答疑各接一个模型。判断与取舍留给人。'],
+];
+---
+
+<BaseLayout
+  title="关于"
+  description="蛛网之上是跳蛛先生的个人站：AIGC 创作笔记、每日快讯、prompt 拆解连载、可玩小作品与音乐。这页说清它是谁做的、放了什么、按什么规矩做、怎么做出来的。"
+>
+  <div class="about-page">
+    <header class="masthead">
+      <p class="masthead-kicker">About This Site</p>
+      <h1>关于</h1>
+      <p class="masthead-sub">Above the Web</p>
+      <p class="masthead-desc">
+        一页说清这个站是谁做的、放了什么、按什么规矩做、怎么做出来的，以及哪些可以拿去用。
+      </p>
+    </header>
+
+    <section class="about-sec" id="who">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>01</i>Who</p>
+        <h2>这是谁的站</h2>
+      </header>
+      <div class="prose-block">
+        <p>
+          <b>跳蛛先生</b>，GitHub 上叫 Mr-Salticidae。做 AI 图像、视频与音乐的创作者，也带学员做项目。
+          2026 年 5 月起，把每次创作探索里「学到了什么」沉淀成一份公开的知识库；6 月底把它搬上网，
+          这就是「蛛网之上」最初的样子。此后两个月，它长出了每天更新的快讯、一期期 prompt 拆解、
+          几件能直接上手玩的小作品、对外的任务书，和自己做的歌。
+        </p>
+        <p>
+          跳蛛是不结网捕食的蜘蛛，靠一双好眼睛和一跃。站名里的「网」是互联网的网：
+          把值得留下的，都织在这张网上。
+        </p>
+      </div>
+    </section>
+
+    <section class="about-sec" id="map">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>02</i>What's Here</p>
+        <h2>站上有什么</h2>
+        <p class="sec-desc">六个版块，数字随每次构建实时更新。</p>
+      </header>
+      <div class="map-grid">
+        {sections.map((s) => (
+          <a class="map-card" href={s.href}>
+            <span class="mc-label">{s.label}</span>
+            <h3>{s.title}</h3>
+            <span class="mc-count"><b>{s.count}</b> {s.unit}</span>
+            <p>{s.desc}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="about-sec" id="rules">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>03</i>Principles</p>
+        <h2>这站的几条规矩</h2>
+      </header>
+      <ol class="rules">
+        <li>
+          <b>读站不需要账号。</b>快讯、笔记、Prompt 大师、可玩、音乐一律不拦。只有认领任务书要登录，
+          因为那头连着报酬和打款，得能把人对上。
+        </li>
+        <li>
+          <b>不埋统计脚本，不放广告。</b>页面里没有任何第三方追踪；你来过、看了什么，站长不知道，也不想知道。
+        </li>
+        <li>
+          <b>宁缺毋滥。</b>快讯每天只留值得创作者看的那几条，凑数的不发；笔记只收有 insight 的发现，
+          产出本身不归档。
+        </li>
+        <li>
+          <b>记录过程，不只晒结果。</b>Prompt 大师每期讲清「难在哪、怎么破题」；获奖图和翻车都写复盘，
+          放在笔记里。
+        </li>
+        <li>
+          <b>网上没有的丝，不凭空织。</b>站内的 AI 查笔记只依据已发布的笔记作答，每条结论带来源；
+          资料不足就直说，不用站外常识补齐。
+        </li>
+        <li>
+          <b>内容开源，源码公开。</b>知识库与站点代码都在 GitHub，出了问题可以直接看到是怎么修的。
+        </li>
+      </ol>
+    </section>
+
+    <section class="about-sec" id="timeline">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>04</i>Timeline</p>
+        <h2>它是怎么长到今天的</h2>
+        <p class="sec-desc">只记版块级的节点。日常修修补补都在提交记录里，这里不列。</p>
+      </header>
+      <ol class="timeline">
+        {timeline.map(([date, title, note]) => (
+          <li>
+            <time datetime={date}>{date.replace(/^2026-/, '').replace('-', ' / ')}</time>
+            <div>
+              <h3>{title}</h3>
+              <p>{note}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="about-sec" id="colophon">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>05</i>Colophon</p>
+        <h2>这站怎么做的</h2>
+        <p class="sec-desc">
+          全部踩坑都记在笔记的<a href={`${base}/notes/?cat=${encodeURIComponent('平台工程')}`}>「平台工程」</a>栏目，
+          源码在 <a href="https://github.com/Mr-Salticidae/above-the-web" target="_blank" rel="noopener">GitHub ↗</a>。
+        </p>
+      </header>
+      <dl class="colophon">
+        {colophon.map(([k, v]) => (
+          <div class="cl-row">
+            <dt>{k}</dt>
+            <dd>{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="about-sec" id="license">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>06</i>License</p>
+        <h2>哪些可以拿去用</h2>
+      </header>
+      <ul class="license">
+        <li>
+          <b>笔记</b>遵循
+          <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a>：
+          可以转载、改写、用在教学里，署名并保留仓库链接，不用于商业。
+        </li>
+        <li>
+          <b>快讯</b>每条都附来源直达，摘要是站内编辑。转载摘要注明「蛛网之上」即可；原文的版权归各来源。
+        </li>
+        <li>
+          <b>可玩</b>作品各有自己的说明页，在线的随便玩，下载的免费。
+        </li>
+        <li>
+          <b>站点源码</b>公开在
+          <a href="https://github.com/Mr-Salticidae/above-the-web" target="_blank" rel="noopener">GitHub</a>，
+          想照着搭一个可以先从 README 看起。
+        </li>
+      </ul>
+    </section>
+
+    <section class="about-sec" id="contact">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>07</i>Contact</p>
+        <h2>找我</h2>
+      </header>
+      <ul class="contact">
+        <li>
+          <span class="ct-k">代码与知识库</span>
+          <a href="https://github.com/Mr-Salticidae" target="_blank" rel="noopener">github.com/Mr-Salticidae ↗</a>
+        </li>
+        <li>
+          <span class="ct-k">合作</span>
+          <span><a href={`${base}/tasks/`}>任务书</a>是入口：看到合适的就认领，站内会把人对上。</span>
+        </li>
+        <li>
+          <span class="ct-k">带教与协作</span>
+          <span>进行中的项目在首页<a href={`${base}/#collab`}>「协作板块」</a>，需要邀请码。</span>
+        </li>
+      </ul>
+    </section>
+
+    <footer class="about-foot">
+      <p>本页随每次构建更新 · 最近一次 {builtOn}</p>
+    </footer>
+  </div>
+</BaseLayout>
+
+<script>
+  import { revealOnScroll } from '../../scripts/reveal.js';
+  revealOnScroll('.about-sec .sec-head, .prose-block, .map-card, .rules li, .timeline li, .cl-row, .license li, .contact li');
+</script>
+
+<style>
+  .about-page { max-width: 56rem; margin: 0 auto; padding: 2.4rem 1.5rem 5rem; }
+  .about-sec { padding: 2.6rem 0 0; }
+
+  /* 正文段：与 .prose 同一口径的字号，但版心跟随本页 */
+  .prose-block { max-width: 46rem; }
+  .prose-block p { margin: 0 0 1em; font-size: 1.04rem; line-height: 1.95; }
+  .prose-block p:last-child { margin-bottom: 0; }
+
+  /* 站上有什么：六张入口卡，和首页笔记栏目卡同一种质感 */
+  .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); gap: 1rem; }
+  .map-card {
+    display: flex; flex-direction: column; padding: 1.15rem 1.25rem 1.3rem; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 14px; background: var(--paper-2);
+    transition: transform .2s cubic-bezier(.2,.7,.3,1), box-shadow .2s ease, border-color .2s ease;
+  }
+  .map-card:hover {
+    transform: translateY(-4px); text-decoration: none;
+    box-shadow: 0 14px 34px -14px rgba(var(--shadow), .45);
+    border-color: color-mix(in srgb, var(--accent) 50%, var(--line));
+  }
+  .mc-label { font-family: var(--sans); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+  .map-card h3 { font-family: var(--serif); font-size: 1.12rem; margin: .25rem 0 .3rem; }
+  .mc-count { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .mc-count b { font-family: var(--serif); font-size: 1.55rem; font-weight: 700; color: var(--ink); margin-right: .1em; line-height: 1; }
+  .map-card p { margin: .65rem 0 0; font-size: .84rem; line-height: 1.7; color: var(--ink-soft); }
+
+  /* 规矩：编号用衬线大字压在左侧 */
+  .rules { list-style: none; margin: 0; padding: 0; counter-reset: rule; max-width: 46rem; }
+  .rules li {
+    position: relative; padding: .95rem 0 .95rem 3.1rem; border-top: 1px solid var(--line);
+    font-size: .98rem; line-height: 1.85; color: var(--ink-soft); counter-increment: rule;
+  }
+  .rules li:last-child { border-bottom: 1px solid var(--line); }
+  .rules li::before {
+    content: counter(rule, decimal-leading-zero); position: absolute; left: 0; top: .95rem;
+    font-family: var(--serif); font-size: 1.35rem; font-weight: 700; line-height: 1.35; color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .rules b { color: var(--ink); }
+
+  /* 时间线：左侧日期列 + 竖线圆点 */
+  .timeline { list-style: none; margin: 0; padding: 0; max-width: 46rem; }
+  .timeline li { display: grid; grid-template-columns: 5.2rem 1fr; gap: 1.2rem; position: relative; padding: 0 0 1.5rem 0; }
+  .timeline li::before {
+    content: ""; position: absolute; left: calc(5.2rem - .6rem); top: .55rem; bottom: -.4rem; width: 1px;
+    background: var(--line);
+  }
+  .timeline li:last-child::before { display: none; }
+  .timeline li::after {
+    content: ""; position: absolute; left: calc(5.2rem - .6rem - 3px); top: .45rem; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 0 3px var(--paper);
+  }
+  .timeline time {
+    font-family: var(--sans); font-size: .76rem; letter-spacing: .08em; color: var(--ink-soft);
+    font-variant-numeric: tabular-nums; padding-top: .18rem; padding-right: 1.3rem; text-align: right;
+  }
+  .timeline h3 { font-family: var(--serif); font-size: 1.04rem; margin: 0 0 .2rem; color: var(--ink); }
+  .timeline p { margin: 0; font-size: .88rem; line-height: 1.75; color: var(--ink-soft); }
+
+  /* 制作说明：两栏定义列表 */
+  .colophon { margin: 0; max-width: 46rem; }
+  .cl-row { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .8rem 0; border-top: 1px solid var(--line); }
+  .cl-row:last-child { border-bottom: 1px solid var(--line); }
+  .colophon dt { font-family: var(--sans); font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); padding-top: .2rem; }
+  .colophon dd { margin: 0; font-size: .92rem; line-height: 1.8; color: var(--ink-soft); }
+
+  /* 许可与联系：紧凑列表 */
+  .license, .contact { list-style: none; margin: 0; padding: 0; max-width: 46rem; }
+  .license li { padding: .55rem 0; font-size: .95rem; line-height: 1.8; color: var(--ink-soft); }
+  .license b { color: var(--ink); }
+  .contact li { display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .7rem 0; border-top: 1px solid var(--line); font-size: .95rem; line-height: 1.75; color: var(--ink-soft); }
+  .contact li:last-child { border-bottom: 1px solid var(--line); }
+  .ct-k { font-family: var(--sans); font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); padding-top: .25rem; }
+
+  .about-foot { margin-top: 3.2rem; text-align: center; font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .about-foot p { margin: 0; }
+
+  @media (max-width: 560px) {
+    .timeline li { grid-template-columns: 1fr; gap: .2rem; padding-left: 1.2rem; }
+    .timeline li::before { left: 3px; }
+    .timeline li::after { left: 0; }
+    .timeline time { text-align: left; padding: 0; }
+    .cl-row, .contact li { grid-template-columns: 1fr; gap: .2rem; }
+  }
+</style>

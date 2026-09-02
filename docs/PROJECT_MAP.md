@@ -1,4 +1,4 @@
-最后更新：2026-08-03
+最后更新：2026-09-02
 
 # 项目页面地图
 
@@ -11,6 +11,9 @@
 | `/` | `src/pages/index.astro` | 网站首页，聚合 AIGC 快讯、Prompt 大师系列、可玩内容、任务书、协作板块和笔记栏目入口。 |
 | `/[...slug]/` | `src/pages/[...slug].astro` | 笔记内容动态路由；构建时从 `notes` 内容集合为每篇笔记生成详情页，并展示标签和反向链接。实际路由由笔记 ID 决定。 |
 | `/notes/` | `src/pages/notes/index.astro` | 全部笔记的索引页，支持按栏目和子栏目筛选。 |
+| `/about/` | `src/pages/about/index.astro` | 关于页：站长与站点定位、六个版块入口（构建期实时计数）、站点规矩、版块时间线、制作说明、许可与联系方式。 |
+| `/music/` | `src/pages/music/index.astro` | 音乐板块：曲库列表，点播放交给全站底部播放器。 |
+| `/music/playlist.json` | `src/pages/music/playlist.json.js` | 构建期从曲目 manifest 导出的播放列表 JSON，供全站播放器读取，不是面向访客的页面。 |
 | `/news/` | `src/pages/news/index.astro` | AIGC 快讯首页，展示最新一期全文及往期归档。 |
 | `/news/[date]/` | `src/pages/news/[date].astro` | AIGC 快讯单期归档页，按日期生成，并提供前后期导航。 |
 | `/tasks/` | `src/pages/tasks/index.astro` | 对外合作任务列表，按招募中、进行中、已收官分组，并展示教程标杆。 |
