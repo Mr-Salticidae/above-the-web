@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-03",
+  "headline": "World Labs 发布 3D 世界模型 Atlas，美司法部支持 AI 训练合理使用",
+  "items": [
+    {
+      "title": "World Labs 发布 Atlas 3D 世界模型",
+      "summary": "World Labs 推出 Atlas 模型，可从少量照片生成、重建并模拟 3D 场景，所有输入均锚定在三维空间而非平面序列。该模型还能在纯仿真环境中生成机器人训练数据。为 3D 内容创作者提供了从图像到可交互世界的新工作流。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/world-labs-unveils-atlas-a-single-ai-model-that-generates-reconstructs-and-simulates-3d-worlds-from-just-a-few-photos",
+      "featured": true
+    },
+    {
+      "title": "美司法部支持 AI 训练构成合理使用",
+      "summary": "在《纽约时报》诉 OpenAI 版权案中，美国司法部提交法庭文件主张使用受版权文本训练 AI 属于合理使用。这一立场与美国版权局此前报告相左，且该局负责人在报告发布后不久被解职。该表态可能为 AIGC 创作者使用受版权素材提供更明确的法律预期。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/us-department-of-justice-backs-fair-use-for-ai-training-in-landmark-copyright-case",
+      "featured": true
+    },
+    {
+      "title": "Gemini 3.8 Flash 推理增强但成本上升",
+      "summary": "Google 发布 Gemini 3.8 Flash，在部分 Agent 编码基准上追平 Claude Opus 5，单价与前代相同。但因推理步骤增加导致输出 token 消耗高出约 30%，实际使用成本可能上升。创作者需权衡性能提升与预算变化。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/gemini-3-8-flash-is-googles-third-budget-model-in-six-weeks-while-frontier-models-remain-mia",
+      "featured": false
+    },
+    {
+      "title": "Caira 相机内置生成式视频编辑",
+      "summary": "Camera Intelligence 推出 Caira 无反相机，是首款内置生成式视频编辑功能的 Micro Four Thirds 系统。用户可在拍摄端直接调用 AI 进行视频生成与修改。将 AIGC 能力嵌入硬件采集环节，缩短从拍摄到成片的流程。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/02/caira-is-the-first-mirrorless-camera-system-with-built-in-ai-video-editing",
+      "featured": false
+    },
+    {
+      "title": "OpenAI Astra 被列为首个关键级模型",
+      "summary": "OpenAI 将即将发布的 Astra 模型评定为首个具备「关键」网络安全能力的系统，采用循环深度架构突破顺序推理限制。但研究人员指出其思维链更难监控，安全机制有效性存疑。创作者应关注该模型对复杂任务处理能力与安全边界的同步变化。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-calls-astra-its-most-dangerous-model-yet-watching-what-it-does-is-only-getting-harder",
+      "featured": false
+    },
+    {
+      "title": "Google Pics 以提示词替代传统设计",
+      "summary": "Google 推出 Pics 工具进入创意软件市场，主打通过自然语言提示完成图像创建与编辑，区别于 Canva 和 Adobe 的传统交互范式。该工具基于 Nano Banana 模型构建。为习惯提示词工作流的 AIGC 创作者提供新的轻量化创作入口。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/01/googles-answer-to-canva-is-an-ai-tool-where-you-prompt-instead-of-design",
+      "featured": false
+    },
+    {
+      "title": "纽约市禁止中小学生课堂使用 AI",
+      "summary": "纽约市长宣布 2026-2027 学年起禁止幼儿园至八年级学生在课堂使用 AI，影响约 60 万公立学校学生。该禁令伴随数字设备使用限制一同实施。从事教育类 AIGC 内容创作的从业者需调整目标受众与合规策略。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/policy/988228/nyc-ai-restrictions-in-schools-chatbot-ban",
+      "featured": false
+    }
+  ]
+}
