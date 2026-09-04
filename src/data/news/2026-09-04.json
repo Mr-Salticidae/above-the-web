@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-04",
+  "headline": "Nvidia 收购 Hugging Face，Meta Muse Spark 低价入局",
+  "items": [
+    {
+      "title": "Nvidia 129 亿美元收购 Hugging Face",
+      "summary": "Nvidia 宣布以约 129 亿美元收购开源 AI 平台 Hugging Face，后者托管超 300 万模型并被 1800 万开发者使用。CEO 黄仁勋承诺保持平台开放与硬件中立，但此举意味着开源生态核心枢纽将纳入芯片巨头体系。对依赖 HF 分发模型和数据的创作者而言，需关注后续运营策略变化。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nvidia-buys-the-front-door-to-open-ai-as-closed-labs-increasingly-design-their-own-silicon",
+      "featured": true
+    },
+    {
+      "title": "Meta Muse Spark 1.3 发布，单价仅 $0.55",
+      "summary": "Meta 推出 Muse Spark 1.3，在 Agent 基准测试中进步显著，单任务成本降至 0.55 美元，低于同级别竞品。该模型专为编码与 Agent 任务设计，虽综合性能仍略逊于 Claude Fable 5.1，但性价比突出。为预算敏感的 AI 应用开发者提供了新的低成本选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/meta-closes-in-on-the-top-with-muse-spark-1-3-and-undercuts-rivals-on-price",
+      "featured": true
+    },
+    {
+      "title": "Meta 付费换取 Muse Spark 用户数据",
+      "summary": "Meta 为 Muse Spark 用户提供平均约 95% 的折扣，条件是共享提示词与模型输出用于未来模型训练。此举旨在加速 Agent 模型迭代，同时降低早期使用者门槛。创作者在享受低价时需权衡数据隐私与贡献意愿。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/03/meta-is-paying-to-peek-at-how-you-use-their-latest-ai-model",
+      "featured": false
+    },
+    {
+      "title": "Nvidia PAIR 工具整合闲置电脑做本地推理",
+      "summary": "Nvidia 发布免费开源软件 Personal AI Router（PAIR），可将家庭多台电脑联网组成个人 AI 推理集群，支持 Ollama 和 LM Studio 等工具。该方案无需额外硬件，利用现有设备提升本地模型运行效率。适合希望在本地部署大模型且注重隐私的创作者。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/989435/nvidia-pair-personal-ai-router-home-local-llm-compute-tool-rtx-macbook",
+      "featured": false
+    },
+    {
+      "title": "ArtStation 反 AI 措施引发社区争议",
+      "summary": "ArtStation 采取措施限制 AI 生成内容，但未明确界定判定标准与执行细则，导致部分艺术家质疑其有效性。平台面临如何平衡原创保护与技术现实的难题。对 AI 图像创作者而言，需留意该平台审核政策变动对作品展示的影响。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/art/digital-art/artstation-is-finally-taking-action-against-ai-art-but-theres-one-question-it-doesnt-want-to-answer",
+      "featured": false
+    },
+    {
+      "title": "Pangram AI 检测分数被滥用于公开羞辱",
+      "summary": "AI 文本检测工具 Pangram 的高分常被误读为“纯 AI 生成”，导致基于大量原创研究的内容遭不当指责。检测工具无法区分辅助写作与完全生成，高分不等于缺乏人类思考。提醒创作者理性看待检测结果，避免将其作为内容真实性的唯一依据。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/pangrams-biggest-flaw-is-users-turning-its-scores-into-public-shaming",
+      "featured": false
+    }
+  ]
+}
