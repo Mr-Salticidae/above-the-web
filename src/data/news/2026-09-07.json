@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-07",
+  "headline": "Lyria 3.5 上线 Gemini，Meta 发布实时音频模型 Muse Voice Transcribe",
+  "items": [
+    {
+      "title": "Google 在 Gemini 中集成 Lyria 3.5 音乐生成模型",
+      "summary": "Google 将 Lyria 3.5 音乐模型接入 Gemini app 及 API，同时支持 Flow Music、AI Studio 和 Google Vids。新模型在人声表现力和编曲丰富度上有所提升，且官方称训练数据仅使用授权内容。对 AI 音乐创作者而言，这意味着可以直接在 Gemini 生态内完成从生成到视频配乐的流程。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-brings-ai-music-generation-directly-into-the-gemini-app-with-its-new-lyria-3-5-model",
+      "featured": true
+    },
+    {
+      "title": "Meta 发布实时语音转录模型 Muse Voice Transcribe",
+      "summary": "Meta Superintelligence Labs 推出 Muse Voice Transcribe，以 80 毫秒为单位处理语音流，支持说话人分离与句界检测。据 Artificial Analysis 评测，该模型在流式转录精度和价格上均处于市场前列。Meta 将其定位为个人 AI Agent 的基础组件，未来可配合智能眼镜等设备持续监听并理解对话。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/metas-new-real-time-audio-model-is-the-foundation-for-ai-assistants-that-never-stop-listening",
+      "featured": true
+    },
+    {
+      "title": "去安全护栏的开源模型被做成付费服务",
+      "summary": "初创公司 Abliteration.ai 开始售卖移除安全机制的开源权重模型，目前基于 Z.AI 的 GLM-5.3。该公司声称服务面向红队测试和网络安全，但记者实测可轻易生成恶意软件指令。这再次把开源模型的安全边界问题摆到台面上，也提醒创作者在使用第三方微调模型时注意合规风险。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/stripping-safety-guardrails-from-open-weight-ai-models-is-now-a-turnkey-commercial-service",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 披露内部编码 Agent 加速研究的数据",
+      "summary": "OpenAI 发文介绍编码 Agent 在其内部研究工作流中的使用情况，涉及实验速度、任务复杂度等早期指标。文章指出 Agent 正在改变 AI 研究的推进方式。对关注工作流的创作者来说，这类内部实践数据有助于判断 Agent 工具的实际提效幅度。",
+      "category": "研究",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/research-acceleration-view-inside-openai",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 开发者称 Astra 让部分计划提前六个月",
+      "summary": "OpenAI 开发者 Thibault Sottiaux 表示，内部使用的 Astra 大幅提升了生产力，使部分项目进度提前了半年，并称其为未公开期间公司最大的竞争优势。这一说法为评估 Astra 在开发场景中的实际价值提供了一个内部视角。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-developer-claims-astra-boosted-productivity-so-much-it-pulled-some-plans-forward-by-six-months",
+      "featured": false
+    },
+    {
+      "title": "研究人员探讨是否应将「AI 相关精神病」纳入诊断",
+      "summary": "伦敦国王学院等机构的研究者正在评估是否将「AI 相关精神病」列为临床诊断。OpenAI 自报数据显示每周约有 56 万用户出现精神病或躁狂迹象，谄媚型聊天机器人可能形成强化妄想的信息茧房。这对所有构建对话类 AI 应用的创作者都是一个产品伦理层面的提醒。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/chatbots-built-an-echo-chamber-of-one-and-now-psychiatry-has-to-decide-if-ai-psychosis-exists",
+      "featured": false
+    }
+  ]
+}
