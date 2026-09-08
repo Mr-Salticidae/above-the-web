@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-08",
+  "headline": "NVIDIA 与 Adobe 推本地 AI Agent，GPT-6 Astra 无干预通关 Portal",
+  "items": [
+    {
+      "title": "NVIDIA 与 Adobe 在 Photoshop 中引入本地 AI Agent",
+      "summary": "NVIDIA 推出 RTX Spark，将本地 AI Agent 集成至 Photoshop。Creative Bloq 报道认为创作者可对此保持谨慎乐观。对图像创作者而言，这意味着部分生成与编辑工作流有望脱离云端、在本地完成。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/can-nvidia-and-adobe-work-together-to-get-creatives-to-actually-like-ai",
+      "featured": true
+    },
+    {
+      "title": "NVIDIA 展示 RTX Spark 半帧视频生成技术",
+      "summary": "NVIDIA 在 IFA 上展示了 RTX Spark 的半帧（half-frame）AI 视频生成技术。报道指出该技术有潜力，但也存在尚未解答的问题，创作者应保持关注而非盲目乐观。这为本地 AI 视频处理提供了一种新思路。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/i-saw-nvidias-new-ai-video-tool-why-rtx-sparks-half-frame-trick-might-actually-matter-and-why-creatives-are-right-to-be-wary",
+      "featured": true
+    },
+    {
+      "title": "GPT-6 Astra 在无人干预下约 24 小时通关 Portal",
+      "summary": "开发者 cozyblaze 在 GitHub 开源了代码与文档，展示 GPT-6 Astra 在设定初始目标后，无需人类帮助于约 24 小时内通关解谜游戏 Portal。开发者评价 Astra 是「我们能得到的最差模型」。这为测试大模型长程规划与多步执行能力提供了新参考。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/gpt-6-astra-beat-portal-start-to-finish-without-human-help-in-under-24-hours",
+      "featured": false
+    },
+    {
+      "title": "ChatGPT 网页流量份额回升至 55.5%",
+      "summary": "Similarweb 数据显示，ChatGPT 网页端流量份额回升至 55.5%，但较去年同期的 73.3% 明显下降；同期 Gemini 份额翻倍，Claude 增长近五倍。该统计不含移动端与桌面客户端。多模型竞争加剧意味着创作者的工具选择正在变宽。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/chatgpt-claws-back-web-traffic-share-to-55-5-percent-as-geminis-brief-comeback-fades",
+      "featured": false
+    },
+    {
+      "title": "快看漫画重做 AI 时代的内容产品",
+      "summary": "成立 12 年的快看漫画正在围绕 AI 重构其内容产品体系。具体细节候选线索未展开，但漫画平台主动调整产品形态，反映出 AI 正从辅助工具转变为内容生产流程的一部分。这对漫画与插画创作者的工作流可能有直接影响。",
+      "category": "行业",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/kAHvBCLrI3sdMyONOveM",
+      "featured": false
+    },
+    {
+      "title": "PetaPixel 讨论 AI 生图泛滥下的摄影真实性",
+      "summary": "PetaPixel 文章以餐厅 Facebook 主页使用劣质 AI 生成食物图片为例，讨论了「摄影反正都是假的」这一论调。文中指出这类图片光泽过度、质感失真，容易被识别。当 AI 图像被低质量滥用时，反而会提高受众对真实摄影作品的辨识度需求。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/06/apparently-photography-is-all-fake-anyway",
+      "featured": false
+    }
+  ]
+}
