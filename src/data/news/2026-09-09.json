@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-09",
+  "headline": "OpenAI 更新图像模型并新增草图生成功能，Adobe 在 Premiere 中整合生成式媒体工具",
+  "items": [
+    {
+      "title": "OpenAI 发布 ChatGPT Images 2.5 及草图生成功能",
+      "summary": "OpenAI 发布 ChatGPT Images 2.5，并新增 Sketch 功能，用户可直接在对话框内绘制草图作为提示词引导 AI 生图。该功能支持将粗略涂鸦结合文字描述转化为更精细的图像。对习惯用草图沟通视觉意图的创作者而言，这提供了一种比纯文本更直观的控制方式。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-chatgpt-images-2-5",
+      "featured": true
+    },
+    {
+      "title": "Adobe 在 Premiere 中上线 Generative Media 工具",
+      "summary": "Adobe 调整了 Premiere 中 AI 生成工具的交互方式，推出新的 Generative Media 面板，让剪辑师无需离开时间线即可直接生成视频、音效、音乐和环境音。底层生成模型并非全新，核心变化在于工作流整合。这意味着音视频创作者可以在剪辑流程中更顺畅地调用 AI 素材。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/991133/adobe-is-trying-to-make-its-ai-generators-idiot-proof-in-premiere",
+      "featured": true
+    },
+    {
+      "title": "ChatGPT 新增 Sketch 功能，支持涂鸦转图像",
+      "summary": "配合 ChatGPT Images 2.5 的发布，OpenAI 推出了名为 Sketch 的新功能。用户可以直接在 ChatGPT 界面中手绘简单图形，再附加文字说明来指定画面细节和风格。这一功能降低了视觉构思的门槛，适合需要快速验证画面构图的图像创作者。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/991727/openai-chatgpt-images-2-5-sketch",
+      "featured": false
+    },
+    {
+      "title": "Cohere 发布 Parse 5，支持复杂文档多模态提取",
+      "summary": "Cohere 发布了文档解析模型 Parse 5，能够从包含图文混排的复杂文档中高效提取多模态信息。对于需要处理参考资料、提取视觉元素或整理图文素材的创作者来说，这类工具可以简化前期资料整理的流程。",
+      "category": "工具",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/C8WbrpalJEjLfSh2xJJj",
+      "featured": false
+    },
+    {
+      "title": "黑客通过盗取 Claude 订阅账户消耗 Token",
+      "summary": "TechCrunch 报道，有黑客正在窃取 Claude 订阅用户的账户凭证以消耗其 Token 额度。此前有用户发现账户在未使用时仍在产生消耗，Anthropic 随后向用户发出了安全警告。依赖 API 或订阅服务进行日常创作的 AIGC 从业者需留意账户异常活动。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/08/hackers-are-stealing-claude-tokens-from-subscribers",
+      "featured": false
+    },
+    {
+      "title": "部分 Anthropic 高级订阅用户提起集体诉讼",
+      "summary": "The Verge 报道，一些 Anthropic 的高级订阅用户发起集体诉讼，指控公司误导他们购买高价套餐，实际获得的权益低于预期。Anthropic 方面表示重度用户是其业务核心，但双方对订阅价值的认知存在分歧。这提醒高频使用 AI 工具的创作者关注服务商的实际条款与承诺差异。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/990313/anthropic-class-action-lawsuit-pricing-subscription-plans",
+      "featured": false
+    },
+    {
+      "title": "AI 生成的创意简报可能降低品牌匹配效率",
+      "summary": "Creative Bloq 刊文指出，越来越多品牌方使用 AI 撰写创意简报（brief）寻找设计机构，但这种标准化文本反而让设计机构难以判断项目是否契合自身风格。文章认为，AI 简报正在消除过去那种基于独特性建立的合作机会。这对依靠接单生存的 AIGC 创作者和设计团队具有参考价值。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/design/branding/your-ai-written-brief-might-wreck-your-brands-chances-of-finding-the-right-creatives",
+      "featured": false
+    }
+  ]
+}
