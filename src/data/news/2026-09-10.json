@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-10",
+  "headline": "Suno 联合唱片公司发布 v6，Prime Video 上线 AI 口型匹配",
+  "items": [
+    {
+      "title": "Suno 联合三大唱片公司发布 v6 音乐模型",
+      "summary": "Suno 发布 v6 音乐生成模型，由 Warner Music Group、BMG 和 Believe 参与共建，旧版模型将全部下线。新模型支持通过文本指令局部修改歌曲，也支持图文音频多模态输入生成。这是 Suno 首次使用唱片业授权数据从头训练，对 AI 音乐创作者而言，生成内容的版权合规性有了明确依据。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/suno-launches-v6-music-models-built-with-warner-bmg-and-believe",
+      "featured": true
+    },
+    {
+      "title": "Prime Video 上线 AI 配音口型匹配功能",
+      "summary": "Amazon Prime Video 推出 AI 驱动的口型同步功能，可将演员嘴部动作与人工配音音轨对齐。目前仅在德语剧集《Maxton Hall》的英语配音版中可用，后续会扩展至更多片源。这项技术为影视译制和本地化创作提供了新的后期处理思路。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/991809/amazon-prime-video-ai-lip-sync-dubbing",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 发布 GPT-6 Astra 企业级模型",
+      "summary": "OpenAI 推出面向商业场景的 GPT-6 Astra，强化了高级推理、计算机操作以及写作与设计判断能力。该模型定位为工作流中的核心智能体，适合需要复杂任务编排的企业用户。对于依赖大模型进行文案或设计辅助的创作者，其输出质量值得跟进测试。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/gpt-6-astra-next-generation-work",
+      "featured": false
+    },
+    {
+      "title": "DeepMind 用 AI 逐帧重现一段七十年爱情故事",
+      "summary": "Google DeepMind 与电影人合作推出短片《Love, Rendered》，利用 AI 技术逐帧重建了一对伴侣未被影像记录的过往。该项目展示了生成式 AI 在叙事类影像创作中的应用潜力，为独立短片制作提供了一种新的视觉素材构建方式。",
+      "category": "研究",
+      "source": "Google",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/love-rendered-film",
+      "featured": false
+    },
+    {
+      "title": "iPhone 18 Pro 新增 Reference Image 防伪功能",
+      "summary": "Apple 宣布 iPhone 18 Pro 系列将搭载「Reference Image」功能，利用新传感器对每个像素进行签名，以证明照片未经 AI 篡改。在 AI 生图日益普及的背景下，这为摄影师和纪实创作者提供了一种硬件级的真实性背书。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/992766/apple-iphone-18-pro-reference-image",
+      "featured": false
+    },
+    {
+      "title": "Hugging Face 推出 ML Intern 对话式实验助手",
+      "summary": "Hugging Face 在其聊天界面中内置了「ML Intern」AI 助手，用户无需机器学习专业知识即可通过对话运行实验。该工具降低了模型测试和微调的门槛，方便创作者快速验证不同参数对生成效果的影响。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/hugging-faces-new-ml-intern-lets-anyone-run-machine-learning-experiments-through-a-simple-chat",
+      "featured": false
+    },
+    {
+      "title": "Shopify 开源 Gisting 技术压缩系统提示词",
+      "summary": "Shopify 推出 Gisting 技术，将大语言模型的长系统提示词压缩为主旨词元（gist tokens），以降低上下文占用。对于日常编写复杂提示词的 AI 写作者和 Agent 开发者，这一方法有助于在有限窗口内保留核心指令信息。",
+      "category": "研究",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/WlJkEfJxMgaK9o91ow2Z",
+      "featured": false
+    }
+  ]
+}
