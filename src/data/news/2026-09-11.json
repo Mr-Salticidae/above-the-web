@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-11",
+  "headline": "环球音乐联手 ElevenLabs 推 AI 音乐平台，OpenAI 因 Astra 需求暂停 Pro 订阅",
+  "items": [
+    {
+      "title": "环球音乐与 ElevenLabs 合作推出 AI 音乐创作平台",
+      "summary": "Universal Music Group 与 ElevenLabs 达成多年授权协议，将推出一个 AI 驱动的音乐平台。用户可以使用其版权曲库进行歌曲混音、Mashup 和二次创作。这是主流唱片公司首次以官方授权形式向创作者开放曲库用于 AI 生成，为音乐创作者提供了合规的素材来源。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/993465/universal-music-elevenlabs-ai",
+      "featured": true
+    },
+    {
+      "title": "导演 Danny Boyle 承认在新片中用 AI 让照片动起来",
+      "summary": "导演 Danny Boyle 公开表示，他在最新电影《Ink》中使用了生成式 AI 来制作照片动画效果。在影视行业对 AI 使用仍较为敏感的当下，知名导演主动披露这一做法并不多见。这为影像创作者提供了一个观察 AI 辅助叙事实际落地方式的案例。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/10/director-danny-boyle-says-he-used-ai-to-animate-photos-in-latest-film-ink",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 因 Astra 算力压力暂停 Pro 订阅注册",
+      "summary": "OpenAI 宣布暂时停止 Pro 订阅的新用户注册，原因是该层级对系统资源的消耗最大，需要时间扩充容量。Pro 订阅此前主要面向重度使用者提供更高用量上限。对于依赖高并发调用进行创作的 AIGC 作者而言，短期内可能面临更严格的用量限制。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/10/openai-puts-pro-subscriptions-on-hold-due-to-astra-demand",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 发布 GPT-Live-1 API，支持全双工语音对话",
+      "summary": "GPT-Live-1 是一个面向开发者的全双工语音模型 API，支持同时收听与说话，交互性测试得分从前代的 45.4% 提升至 80.1%。定价为每分钟 0.05 美元，并支持自定义音色和电话接入。适合音频内容创作者或开发者构建更自然的实时语音交互应用。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-gpt-live-1-in-the-api",
+      "featured": false
+    },
+    {
+      "title": "DeepSeek 发布 V4.1-Flash，KV Cache 内存降至四分之一",
+      "summary": "DeepSeek 推出多模态模型 V4.1-Flash，总参数 552B，但每个 token 仅激活 16B 参数，并将 KV Cache 内存需求压缩至前代的四分之一。该模型采用 MIT 许可证开源，在编码基准上接近 Opus 5 水平。更低的显存占用意味着本地部署 Agent 工作流的门槛进一步降低。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/new-deepseek-model-v4-1-flash-cuts-memory-needs-for-ai-agents",
+      "featured": false
+    },
+    {
+      "title": "评测显示 Claude Fable 5.1 的文风比前代更平实冗长",
+      "summary": "Arena.ai 通过分析数万条基准测试回复，对比了 Claude Fable 5 到 Fable 5.1 的写作风格变化。结果显示 Fable 5.1 的语言更少承担修辞功能，表述更直白但也更冗长。对于习惯使用 Claude 进行文本创作的作者，可能需要调整提示词以控制输出篇幅。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-fable-5-1s-language-is-less-load-bearing-than-its-predecessors",
+      "featured": false
+    },
+    {
+      "title": "Pocket FM 营收翻倍，93% 音频内容由 AI 生成",
+      "summary": "印度音频平台 Pocket FM 年化营收达到 5 亿美元，其中 99% 的新增内容由 AI 生产，使内容制作成本降低约 80 倍。该平台证明了 AI 在规模化音频内容生产上的商业可行性，也为有声书和播客创作者展示了 AI 辅助量产的成本结构参考。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/10/indias-pocket-fm-doubles-revenue-run-rate-to-500m-as-ai-powers-93-of-audio-content",
+      "featured": false
+    }
+  ]
+}
