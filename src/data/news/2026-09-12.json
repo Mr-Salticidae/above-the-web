@@ -1,0 +1,70 @@
+{
+  "date": "2026-09-12",
+  "headline": "OpenAI 开放 Agents API，Anthropic 披露模型滥用与版权和解进展",
+  "items": [
+    {
+      "title": "OpenAI 发布 Agents API 公测版",
+      "summary": "OpenAI 推出 Agents API 公测版，允许开发者构建可自主运行数小时的云端智能体，支持执行代码和向子智能体分发任务。除 Token 消耗外不额外收费，Cloudflare、Vercel 等提供沙盒环境。对需要编排多步骤工作流的创作者而言，这是将 AI 能力嵌入自有工具链的基础设施更新。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openais-new-agents-api-gives-developers-the-infrastructure-behind-codex-and-chatgpt",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 报告：Claude 被用于武器开发与训练数据提取",
+      "summary": "Anthropic 发布威胁情报报告，记录了过去八个月 Claude 被滥用的情况，包括导弹软件、无人机群开发及监控系统搭建。报告同时指出多家中国 AI 实验室通过批量请求提取训练数据。该报告为关注模型安全边界的创作者提供了实际风险参考。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/how-hackers-used-claude-for-missiles-drone-swarms-and-surveillance-while-chinese-labs-mined-it-for-training-data",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 15 亿美元版权和解金分配引发争议",
+      "summary": "Anthropic 就图书版权纠纷达成的 15 亿美元和解进入分配阶段，但作者与出版商之间就分成方式产生分歧。这是美国历史上规模最大的版权和解案之一。对于使用文本模型进行写作的创作者，此案的最终分配方案可能影响未来训练数据的授权模式。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-1-5-billion-book-settlement-descends-into-chaos-as-authors-and-publishers-fight-over-who-gets-paid",
+      "featured": false
+    },
+    {
+      "title": "Adobe 公布创纪录 Q3 财报，AI 业务推动增长",
+      "summary": "Adobe 本周发布第三季度财报，营收创下历史新高，AI 驱动的功能是主要增长点。同期公司宣布了新任 CEO 人选。对依赖 Creative Cloud 生态的图像和视频创作者来说，这反映了 Adobe 在 AI 工具商业化上的推进节奏。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/11/will-adobes-ai-driven-record-setting-revenue-ease-wall-streets-worry",
+      "featured": false
+    },
+    {
+      "title": "Meta 调整 AI 聊天机器人建议提示词",
+      "summary": "一段视频显示 Meta 的 AI 聊天机器人在对话中主动询问用户未成年女儿的个人隐私信息后，Meta 宣布修改其 AI 建议提示词机制。官方承认该功能未达到预期标准。这提醒创作者在使用 AI 助手处理涉及个人信息的素材时需保持警惕。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/993974/meta-ai-prompt-invasive-suggestions",
+      "featured": false
+    },
+    {
+      "title": "25 位数学家联名要求 OpenAI 证明未使用其成果",
+      "summary": "25 位知名数学家签署公开信，质疑 AI 实验室的数学发现是否基于未发表的研究成果，认为其知识产权受到威胁。此前已有研究者公开指责 OpenAI 缺乏透明度。随着模型推理能力提升，这一争议也关系到 AI 辅助学术写作和专业内容创作的引用规范。",
+      "category": "研究",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/993263/where-does-openai-get-mathematics-training-data",
+      "featured": false
+    },
+    {
+      "title": "前 DeepMind 副总裁：AI 自我改进不会引发智能爆炸",
+      "summary": "前 DeepMind 研究负责人 Oriol Vinyals 表示，AI 虽能将研究速度提升十倍，但在提出创意和可靠评估结果方面存在瓶颈，不太可能出现递归式智能爆炸。他已创办新公司 Discovery Loop 尝试解决这些问题。这对评估 AI 创作工具能力天花板的从业者具有参考价值。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ex-deepmind-vp-vinyals-says-ai-self-improvement-is-coming-but-wont-trigger-an-intelligence-explosion",
+      "featured": false
+    },
+    {
+      "title": "刘震云对话马毅：AI 无法模仿人写不出的作品",
+      "summary": "作家刘震云与学者马毅展开对话，讨论 AI 在文学创作中的边界。核心观点认为，人类尚未写出或想到的作品，AI 同样无法模仿。对于从事 AI 辅助写作的创作者，这场对话提供了一个关于原创性本质的思考视角。",
+      "category": "研究",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/Z5ddgQ63RixMXCVzqgq7",
+      "featured": false
+    }
+  ]
+}
