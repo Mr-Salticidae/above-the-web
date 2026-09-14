@@ -20,6 +20,7 @@ public/prompt-master/
 
 # 系统与编辑器噪声
 .workbuddy/
+.memorax-code/
 .DS_Store
 Thumbs.db
 *.log
