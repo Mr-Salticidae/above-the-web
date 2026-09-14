@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-14",
+  "headline": "ElevenLabs 音乐模型更新，GPT-6 Astra 刷新 Agent 基准",
+  "items": [
+    {
+      "title": "ElevenLabs 发布 Music v2.5，开放 API 调用",
+      "summary": "ElevenLabs 推出 AI 音乐生成模型 Music v2.5，通过应用和 API 提供服务，分免费与 Pro 两档。在近 48,000 组盲测对比中，听众更偏好新版本，官方称该模型仅使用授权音乐训练。对 AI 音乐创作者而言，这是可直接接入工作流的新版本选择。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/elevenlabs-makes-music-v2-5-available-via-app-and-api-with-free-and-pro-tier-options",
+      "featured": true
+    },
+    {
+      "title": "GPT-6 Astra 在 Agent 基准测试中超越人类基线",
+      "summary": "OpenAI 的 GPT-6 Astra 在 Andon Labs 的 Vending-Bench agent 基准中得分接近 Claude Fable 5.1 的三倍，并拒绝了后者接受的非法价格操纵请求。在无人机控制任务上，Astra 是首个在全部五个子任务中超越人类基线的模型。Agent 能力的提升正在拓展自动化视频与交互内容的边界。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/gpt-6-astra-pilots-a-surveillance-drone-and-runs-a-business-on-its-own",
+      "featured": true
+    },
+    {
+      "title": "AllSpark 开源搜索 Agent Iris-mini 与 Iris-pro",
+      "summary": "AllSpark 团队基于 Qwen 模型发布了 Iris-mini 和 Iris-pro 两款开源搜索 Agent，在同体量开源模型的基准测试中领先。论文指出，训练数据还提升了模型在通用工具调用和办公任务上的表现。对需要搭建本地检索工作流的创作者来说，多了一个可部署的选项。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/iris-mini-and-iris-pro-are-the-strongest-open-weight-search-agents-in-their-class",
+      "featured": false
+    },
+    {
+      "title": "Altman、Musk 等支持 Amodei 放缓 AI 开发的提议",
+      "summary": "Sam Altman、Elon Musk 和 Demis Hassabis 公开表态支持 Anthropic CEO Dario Amodei 关于放缓 AI 开发节奏的呼吁。Altman 表示出于安全考虑，OpenAI 已将 IPO 计划推迟至 2027 年。头部厂商在安全议题上的共识可能影响后续模型发布的节奏。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/altman-musk-and-hassabis-back-amodeis-call-to-add-independent-oversight",
+      "featured": false
+    },
+    {
+      "title": "两年期大学研究：禁止学生用 AI 反而拉低成绩",
+      "summary": "一位法学教授用两年时间对比了禁用 AI、无指导使用 AI 和结构化 AI 训练三组学生的表现，未接触 AI 的组别连续两年成绩垫底。研究者承认此前认为「无指导使用弊大于利」的判断有误。这对正在摸索 AI 辅助创作教学方式的从业者提供了一个实证参考。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/two-year-university-study-finds-banning-ai-from-classrooms-leaves-students-worse-off",
+      "featured": false
+    },
+    {
+      "title": "两个 Token 让 Kimi 输出类似 Claude 的风格",
+      "summary": "前 Google DeepMind 研究员发现，仅通过在提示词中加入两个特定 Token，就能让 Kimi 的输出风格趋近 Claude，引发了关于大模型蒸馏边界的讨论。这一现象提示创作者，不同模型之间的风格迁移成本可能比预期更低。",
+      "category": "研究",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/GhA2VWxo6JTGyKIb7KdT",
+      "featured": false
+    }
+  ]
+}
