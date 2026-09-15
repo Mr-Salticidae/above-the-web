@@ -43,6 +43,12 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
         )}
       </p>
       <p class="masthead-login">认领任务需要登录（要对接人和打款）；只读站的话不用管账号。</p>
+      <nav class="task-publisher-actions" aria-label="发布方快捷入口">
+        <a class="atw-primary" href={`${base}/admin/tasks/new/`}>＋ 新建任务书</a>
+        <a class="atw-ghost" href={`${base}/admin/tasks/`}>管理任务</a>
+        <a class="atw-ghost" href={`${base}/admin/tasks/monthly/`}>月度统计与对账</a>
+        <span>发布方账号登录后使用</span>
+      </nav>
     </header>
 
     <section class="group open-group" data-group="open" hidden={groups.open.length === 0}>

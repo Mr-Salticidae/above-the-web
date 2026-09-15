@@ -1,0 +1,111 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+---
+
+<AdminLayout title="月度产出统计" current="monthly">
+  <button class="atw-ghost" data-refresh slot="actions">刷新数据</button>
+  <section class="ad-block">
+    <h2>月度对账与审核</h2>
+    <p class="ad-note">按北京时间（UTC+8）归月，每份任务计 1 项产出，包含已下架任务。交付不代表验收通过；报酬为当前约定金额，不代表银行实付或历史金额快照。</p>
+    <form class="ad-task-row" data-filters>
+      <label>月份 <input type="month" data-month required /></label>
+      <label>统计口径 <select data-basis><option value="delivery">按交付月</option><option value="payment">按打款月</option></select></label>
+      <label>承接人 <select data-taker><option value="">全部承接人</option></select></label>
+      <button class="atw-ghost" type="button" data-csv disabled>导出 CSV 对账单</button>
+    </form>
+    <p class="ad-note">仅明确的人民币总额参与金额合计；区间、单价、附加费用等标为待核实。手填承接人按同名合并，账号按 ID 区分。</p>
+    <p class="ad-note" data-stamp role="status"></p>
+    <div data-report aria-live="polite"><p class="atw-empty">加载中…</p></div>
+  </section>
+</AdminLayout>
+
+<script>
+  import { bootAdmin, loadOverview, say, taskHref } from '../../../scripts/admin-core.js';
+  import { escapeHtml as esc, TASK_STATUS_LABEL } from '../../../scripts/account-core.js';
+  import { accountingDate, monthlyReport, reportCsv, takerKey } from '../../../lib/task-monthly.mjs';
+
+  const $ = (s) => document.querySelector(s);
+  let tasks = [];
+  let report = null;
+  const money = (cents) => `¥${(cents / 100).toFixed(2)}`;
+  $('[data-month]').value = accountingDate(Date.now()).slice(0, 7);
+
+  function table(rows) {
+    if (!rows.length) return '<p class="atw-empty">没有符合条件的记录。</p>';
+    return `<div class="monthly-scroll" tabindex="0" role="region" aria-label="任务明细"><table class="monthly-table"><thead><tr><th>任务 / 承接人</th><th>当前状态</th><th>约定报酬</th><th>交付 / 打款</th><th>成稿</th><th>核实事项</th></tr></thead><tbody>${rows.map(t => `<tr>
+      <td><a href="${taskHref(t)}">${esc(t.title || t.slug)}</a><br>${esc(t.taker || '未填写')}<small>${esc(t.takerUserId || '手填承接人')}${t.listed ? '' : ' · 已下架'}</small></td>
+      <td>${esc(TASK_STATUS_LABEL[t.status] || t.status)}</td>
+      <td>${esc(t.fee || '未填写')}<small>${esc(t.feeNote || '')}</small></td>
+      <td>${accountingDate(t.deliveredAt) || '缺少交付日期'}<br>${accountingDate(t.paidAt) || '无打款日期'}</td>
+      <td>${/^https?:\/\//.test(t.deliverableUrl || '') ? `<a href="${esc(t.deliverableUrl)}" target="_blank" rel="noopener noreferrer">查看成稿 ↗</a>` : '—'}</td>
+      <td>${esc(t.issues.join('；') || '—')}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+
+  function render() {
+    report = null;
+    $('[data-csv]').disabled = true;
+    try {
+      report = monthlyReport(tasks, { month: $('[data-month]').value, basis: $('[data-basis]').value, taker: $('[data-taker]').value });
+      const t = report.totals;
+      $('[data-report]').innerHTML = `<div class="ad-stats">${[
+        [t.count, '本月任务数'], [money(t.cents), '可识别约定金额'], [t.unknown, '金额待核实'], [t.closed, '当前已结款'], [t.review, '本月需核实'],
+      ].map(([n, label]) => `<div class="ad-stat"><b>${n}</b><span>${label}</span></div>`).join('')}</div>
+      <h3>承接人汇总</h3>${report.groups.length ? `<ul>${report.groups.map(g => `<li>${esc(g.name)}${g.key.startsWith('user:') ? `（账号 ${esc(g.key.slice(5))}）` : '（手填）'}：${g.count} 项 · ${money(g.cents)}${g.unknown ? ` · ${g.unknown} 项金额待核实` : ''}</li>`).join('')}</ul>` : '<p class="atw-empty">本月暂无记录，可切换月份或统计口径。</p>'}
+      <h3>本月任务明细</h3>${table(report.rows)}
+      <h3>日期缺失 · ${report.undated.length} 项</h3><p class="ad-note">以下记录无法确定归属月份，未计入本月合计；跨月份保留供核查，也会随 CSV 导出。请核对原始交付、打款凭证，勿将发布日期当作完成日期。</p>${table(report.undated)}`;
+      $('[data-csv]').disabled = false;
+      say('');
+    } catch (error) {
+      $('[data-report]').textContent = error.message;
+    }
+  }
+
+  async function load() {
+    report = null;
+    $('[data-csv]').disabled = true;
+    $('[data-refresh]').disabled = true;
+    $('[data-filters]').querySelectorAll('input, select').forEach(el => el.disabled = true);
+    $('[data-report]').textContent = '加载中…';
+    $('[data-stamp]').textContent = '';
+    try {
+      ({ tasks } = await loadOverview());
+      const selected = $('[data-taker]').value;
+      const people = new Map(tasks.map(t => [takerKey(t), `${t.taker || '未填写'}${t.takerUserId ? `（账号 ${t.takerUserId}）` : '（手填）'}`]));
+      $('[data-taker]').innerHTML = '<option value="">全部承接人</option>' + [...people].map(([key, label]) => `<option value="${esc(key)}">${esc(label)}</option>`).join('');
+      if (people.has(selected)) $('[data-taker]').value = selected;
+      render();
+      $('[data-stamp]').textContent = `数据读取于 ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}（北京时间）；导出后可留存本次核查快照。`;
+    } catch (error) {
+      tasks = [];
+      $('[data-report]').textContent = '读取失败，请点击刷新数据重试。';
+      say(error.message);
+    } finally {
+      $('[data-refresh]').disabled = false;
+      if (report) $('[data-filters]').querySelectorAll('input, select').forEach(el => el.disabled = false);
+    }
+  }
+  $('[data-filters]').addEventListener('submit', e => e.preventDefault());
+  $('[data-filters]').addEventListener('change', render);
+  $('[data-refresh]').addEventListener('click', load);
+  $('[data-csv]').addEventListener('click', () => {
+    if (!report) return;
+    const href = URL.createObjectURL(new Blob([reportCsv(report)], { type: 'text/csv;charset=utf-8' }));
+    const a = document.createElement('a');
+    a.href = href;
+    a.download = `任务书对账_${report.month}_${report.basis === 'delivery' ? '交付月' : '打款月'}.csv`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(href), 1000);
+  });
+  async function boot() {
+    try { if (await bootAdmin()) await load(); } catch (error) { say(error.message); }
+  }
+  boot();
+</script>
+
+<style is:global>
+  .monthly-scroll { overflow-x: auto; margin: 1rem 0 2rem; }
+  .monthly-table { border-collapse: collapse; width: 100%; min-width: 760px; font-family: var(--sans); font-size: .85rem; }
+  .monthly-table th, .monthly-table td { padding: .8rem; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .monthly-table td { overflow-wrap: anywhere; }
+  .monthly-table small { display: block; color: var(--ink-soft); }
+</style>

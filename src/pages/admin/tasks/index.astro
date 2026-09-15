@@ -4,6 +4,7 @@ import AdminLayout from '../../../layouts/AdminLayout.astro';
 ---
 
 <AdminLayout title="任务" current="tasks">
+  <a class="atw-ghost" href={`${import.meta.env.BASE_URL}admin/tasks/monthly/`} slot="actions">月度统计与对账</a>
   <button class="atw-ghost" type="button" data-sync slot="actions">同步任务清单</button>
 
   <section class="ad-block">

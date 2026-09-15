@@ -949,6 +949,12 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 .ad-note code { font-size: .95em; background: var(--paper-3); padding: .1em .35em; border-radius: .25em; }
 
 /* 概览页的数字卡：一眼看出哪儿堆着事 */
+.task-publisher-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: 1.5rem; text-align: left; }
+.task-publisher-actions span { color: var(--ink-soft); font-family: var(--sans); font-size: .8rem; }
+@media (max-width: 540px) {
+  .task-publisher-actions .atw-primary { width: 100%; text-align: center; }
+  .task-publisher-actions span { width: 100%; }
+}
 .ad-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: .8rem; margin: 1.4rem 0 0; }
 .ad-stat {
   padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2);

@@ -15,6 +15,7 @@ const NAV = [
   { key: 'home', label: '概览', href: 'admin/' },
   { key: 'claims', label: '待处理申请', href: 'admin/claims/' },
   { key: 'tasks', label: '任务', href: 'admin/tasks/' },
+  { key: 'monthly', label: '月度统计', href: 'admin/tasks/monthly/' },
   { key: 'new', label: '新建任务书', href: 'admin/tasks/new/' },
   { key: 'users', label: '账号', href: 'admin/users/' },
   { key: 'logs', label: '操作记录', href: 'admin/logs/' },
@@ -29,6 +30,7 @@ const NAV = [
         <h1>{title}</h1>
       </div>
       <div class="ad-head-actions">
+        {current !== 'new' && <a class="atw-primary" href={`${base}admin/tasks/new/`}>＋ 新建任务书</a>}
         <slot name="actions" />
         <a class="atw-ghost" href={`${base}account/`}>个人中心</a>
       </div>
