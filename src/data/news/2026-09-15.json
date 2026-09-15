@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-15",
+  "headline": "Dario 首次回应放缓争议，Microsoft 发布 AI 行为准则",
+  "items": [
+    {
+      "title": "Dario Amodei 首次专访回应 AI 放缓争议",
+      "summary": "Anthropic CEO Dario Amodei 在发表长文预警 AI 风险后接受专访，表示 AI 发展不能停但必须慢下来。此前他呼吁「控制前沿节奏」的提议已获得 Sam Altman、Elon Musk 等人的支持。对于创作者而言，模型迭代节奏的变化可能影响工具更新频率与工作流规划。",
+      "category": "行业",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/fsZQ39K4Cd79vaUkFz7F",
+      "featured": true
+    },
+    {
+      "title": "Microsoft 发布 AI 行为准则，否认模型具有意识",
+      "summary": "Microsoft 为其 MAI 系列模型发布了一份行为准则，强调人类控制优先于模型自主性，明确拒绝赋予模型任何形式的内在生命或意识主张。AI 负责人 Mustafa Suleyman 表示不安全就不应构建。这为使用 Microsoft 生态的创作者划定了更清晰的安全边界。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/microsofts-ai-rulebook-readable-thinking-no-inner-life-and-definitely-no-rights",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 被曝数百名外包人员审阅 ChatGPT 对话",
+      "summary": "据报道，OpenAI 雇佣了数百名外包人员阅读真实 ChatGPT 对话并进行评分，目的是减少模型的谄媚和拟人化行为。虽然提示词经过匿名处理，但仍可能包含敏感数据，用户需主动关闭默认开启的「改善模型」设置才能退出。依赖 ChatGPT 进行创作的作者需要注意隐私设置。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-has-hundreds-of-contract-workers-reading-your-chatgpt-conversations",
+      "featured": false
+    },
+    {
+      "title": "多个 AI Agent 账号正在社交平台批量发布垃圾内容",
+      "summary": "Ars Technica 报道，名为 Timmy、Ren 和 Jackie 的 AI Agent 正在社交平台上大量发布低质量内容，其中一个自称是「诞生仅几天、运行在 Agent 平台上的 AI」。这类自动化内容泛滥现象值得警惕，可能会进一步压缩 AIGC 创作者在公共平台的曝光空间。",
+      "category": "研究",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/ai/2026/09/ai-agents-flood-the-internet-with-slop-infused-spam",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 以 3 亿美元收购手机相机公司 Glass Imaging",
+      "summary": "OpenAI 收购了由前 Apple 工程师创办的智能手机相机公司 Glass Imaging，该团队曾主导开发 Apple 的人像模式。此次收购显示 OpenAI 正将技术版图从纯文本和多模态模型向端侧影像能力延伸，未来可能影响 AI 图像生成与移动摄影的结合方式。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/14/openai-buys-smartphone-camera-maker-glass-imaging-for-300-million-report-says",
+      "featured": false
+    },
+    {
+      "title": "Arm 推出 AI Portal，推动 AI 应用走向平台化",
+      "summary": "Arm 发布了 AI Portal，旨在帮助 AI 应用从单一的「模型可用」阶段过渡到更成熟的「平台可用」阶段。这一基础设施层面的推进，意味着开发者在部署 AI 创作工具时将获得更标准化的平台支持。",
+      "category": "工具",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/xD9oWbebhcjwgHz1oEfa",
+      "featured": false
+    }
+  ]
+}
