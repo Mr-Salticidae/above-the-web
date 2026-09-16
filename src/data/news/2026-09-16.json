@@ -1,0 +1,70 @@
+{
+  "date": "2026-09-16",
+  "headline": "Gemini 3.8 Live 发布，Apple 新版 Siri 上线，AI 安全争议持续",
+  "items": [
+    {
+      "title": "Google DeepMind 发布 Gemini 3.8 Live 语音模型",
+      "summary": "Google DeepMind 推出 Gemini 3.8 Live 及 Extended Thinking 两个新音频模型，在 Artificial Analysis speech-to-speech 排行榜上取得领先。其定价为每小时语音对话 1.38 美元，显著低于 OpenAI 的 GPT-Live-1，但后者因支持全双工在自然度上仍有优势。对需要集成实时语音交互的创作者和开发者而言，多了一个成本更低的选项。",
+      "category": "模型",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/introducing-gemini-3-8-live-and-3-8-live-extended-thinking",
+      "featured": true
+    },
+    {
+      "title": "Apple 基于 Gemini 重构的 Siri 随 iOS 27 上线",
+      "summary": "Apple 正式推送 iOS 27 与 macOS Golden Gate 27，内置基于 Google Gemini 模型重构的 Siri AI，部分计算在设备端完成，部分通过 Private Cloud Compute 处理。早期测试者反馈多步请求和屏幕上下文理解有明显改善，但仍存在幻觉和个人上下文缺失问题。该功能暂不在欧盟地区提供。依赖 Apple 生态进行内容创作的作者可以开始评估新版 Siri 的实际工作流表现。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/apple-brings-a-fully-revamped-siri-built-on-googles-gemini-but-not-to-the-eu",
+      "featured": true
+    },
+    {
+      "title": "Autodesk CEO：AI 对动画和 VFX 的冲击已在发生",
+      "summary": "Autodesk CEO Andrew Anagnost 表示，相比远期生存风险，AI 对创意行业的即时影响更值得关注，尤其是在动画和视觉特效领域。他呼吁为 AI 设置护栏，以应对正在发生的行业变化。对从事相关领域的 AIGC 创作者来说，这意味着工作流程的调整已是进行时。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/ai-might-kill-humanity-in-10-years-but-autodesks-ceo-sees-a-more-immediate-threat-to-artists",
+      "featured": false
+    },
+    {
+      "title": "Canva 推出 ProSuite，Affinity 3.3 更新 RAW 处理",
+      "summary": "Canva 发布 ProSuite，将旗下 Affinity、Cavalry、Flourish、Leonardo 等专业设计工具整合并新增 100 项功能。其中免费使用的 Affinity 更新至 3.3 版本，重点强化了 RAW 照片处理能力。对于同时使用多个创作工具的图像创作者，这次整合可能简化跨应用的工作流程。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/15/affinity-3-3-powers-up-the-free-apps-raw-photo-processing",
+      "featured": false
+    },
+    {
+      "title": "WhatsApp Business 开放 MCP Server，支持 AI Agent 接入",
+      "summary": "Meta 为 WhatsApp Business 推出 MCP server，允许开发者使用 Claude、Cursor、Codex、ChatGPT 等 AI 编程 Agent 自动化处理配置、消息模板、测试和故障排查。这降低了在 WhatsApp 上部署 AI 客服或通知系统的门槛，适合需要将作品分发或客户沟通自动化的独立创作者。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/15/meta-now-lets-ai-agents-handle-the-boring-parts-of-whatsapp-business-setup",
+      "featured": false
+    },
+    {
+      "title": "美法官裁定持有 AI 生成 CSAM 受宪法保护引争议",
+      "summary": "得克萨斯州一名摄影师宣布不再于社交媒体或个人网站发布可识别的儿童照片。起因是联邦法官裁定，美国宪法第一修正案保护个人持有 AI 生成的儿童性虐待材料（CSAM）的权利。这一裁决引发了创作者群体对肖像权和 AI 生成内容法律边界的担忧。",
+      "category": "政策",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/15/photographer-stops-posting-kids-photos-after-judge-rules-ai-child-sex-abuse-images-are-protected",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 日志存储策略引发企业客户信任危机",
+      "summary": "Anthropic 宣布将其旗舰模型 Fable 的使用日志存储 30 天后，Palantir、Nvidia 和 Booz Allen Hamilton 等公司撤回了对敏感业务的使用。尽管 OpenAI 和 Anthropic 均承诺不用企业数据训练模型，但日志保留时长仍触及信任底线。使用 API 构建创作工具的开发者需重新审视服务商的数据留存条款。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-labs-have-a-data-trust-problem-that-their-policies-havent-solved",
+      "featured": false
+    },
+    {
+      "title": "业内质疑头部厂商放缓 AI 开发实为限制竞争",
+      "summary": "OpenAI、Anthropic 和 Google 提出放缓前沿 AI 开发节奏后，Cohere CEO Aidan Gomez 公开批评此举本质上是排挤竞争对手的「卡特尔」行为，白宫方面也表示反对。围绕 AI 发展速度的博弈仍在继续，这可能直接影响创作者获取新一代模型的节奏。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/not-everyone-is-convinced-that-big-ais-proposed-development-slowdown-is-really-about-safety",
+      "featured": false
+    }
+  ]
+}
