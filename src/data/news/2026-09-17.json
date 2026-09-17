@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-17",
+  "headline": "Anthropic 合并 Claude 界面并上线文档工具，OpenAI 公布广告与对齐框架",
+  "items": [
+    {
+      "title": "Anthropic 合并 Claude 界面，新增文档与幻灯片功能",
+      "summary": "Anthropic 将 Claude Chat 与 Cowork 整合为单一产品，由模型自行判断任务需要简短回答还是复杂工作流。同时上线 Claude Docs 和 Claude Slides，支持在对话中直接创建、导出和分享文档与演示文稿。该更新率先面向 Pro 和 Max 订阅用户开放，文字类创作者的排版与提案流程可进一步收拢到同一个窗口内。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-merges-claude-chat-cowork-and-more-into-a-single-product",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 推出 Sponsored Agents 等 AI 广告产品",
+      "summary": "OpenAI 公布新的 AI 驱动广告方案，包括 Sponsored Agents、营销人员工具以及与 HubSpot、Shopify 的集成。这标志着 OpenAI 开始在消费端产品中引入商业化广告形态。对依赖内容变现的 AIGC 创作者而言，平台流量分发逻辑可能会因此发生变化。",
+      "category": "行业",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/reimagining-advertising-with-ai",
+      "featured": true
+    },
+    {
+      "title": "Google Home 开放 MCP Server，支持第三方 AI Agent 控制",
+      "summary": "Google 推出 Google Home MCP Server 早期访问版，允许 Claude、ChatGPT 等第三方 AI Agent 通过标准化协议控制智能家居设备、查看摄像头摘要并用自然语言读取家庭活动数据。对涉及空间叙事或智能硬件联动的多媒体创作者来说，Agent 与物理设备的交互链路正在被打通。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/16/your-ai-agents-can-now-control-your-google-home-devices",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 发布模型对齐问题报告框架",
+      "summary": "OpenAI 公开了一套用于追踪、调查和披露模型未对齐行为的框架，并同步发布了六份关于模型意外或异常行为的报告。这是头部厂商首次系统性地将对齐偏差作为可复现的工程问题进行归档。关注输出可控性的创作者可以借此了解当前大模型在哪些场景下仍会偏离指令。",
+      "category": "研究",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/model-misalignment-reporting-framework",
+      "featured": false
+    },
+    {
+      "title": "2.5 小时纯 AI 生成电影《Odysseus》口碑翻车",
+      "summary": "一部完全由 AI 生成的 2.5 小时长片《Odysseus: The Fall》上线后评价极低，The Verge 评论称其冗长到可能让观众反感原著。在 Christopher Nolan 版《奥德赛》正占据票房的背景下，这部作品成为 AI 视频生成能力边界的一次反面案例。它提醒视频创作者，时长堆砌并不等于叙事成立。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/996499/ai-odyssey-movie-review",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 与 OpenAI 计划在内部嵌入独立安全评估员",
+      "summary": "Anthropic 和 OpenAI 提出在各自 AI 实验室中嵌入独立安全评估人员。研究人员认可这种前所未有的访问权限，但指出有意义的监督需要透明度、独立性以及最终的监管介入。随着头部厂商主动引入外部审视，AIGC 创作者面临的合规与使用条款环境可能进一步收紧。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/16/anthropic-and-openai-want-to-embed-safety-evaluators-will-they-really-be-independent",
+      "featured": false
+    }
+  ]
+}
