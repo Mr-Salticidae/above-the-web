@@ -1,0 +1,70 @@
+{
+  "date": "2026-09-18",
+  "headline": "Claude Code 上线并行 Agent，OpenAI 收购图像处理公司",
+  "items": [
+    {
+      "title": "Claude Code 上线 Projects，支持云端多 Agent 并行协作",
+      "summary": "Anthropic 重构了 Claude Code 的 Projects 功能，用户可在同一项目下运行多个 Agent。各线程共享记忆、目标与文件库，由协调器分配任务并独立提交 pull request 和运行测试。该 beta 功能目前面向部分 Pro 和 Max 订阅者开放，为需要批量处理代码或文本任务的创作者提供了新的自动化工作流参考。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/997134/anthropic-claude-code-projects",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 以 3 亿美元收购图像处理公司 Glass Imaging",
+      "summary": "据《华尔街日报》报道，OpenAI 已完成对照片处理公司 Glass Imaging 的收购，交易金额为 3 亿美元。此举表明 OpenAI 正将图像计算与处理能力纳入自身技术栈，后续可能会直接影响其图像生成与编辑模型的表现。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/17/openai-reportedly-buys-photo-processing-company-glass-imaging-for-300-million",
+      "featured": true
+    },
+    {
+      "title": "阶跃发布 StepAudio 3 系列，覆盖语音交互与音乐创作",
+      "summary": "阶跃推出全新语音大模型 StepAudio 3 系列，能力涵盖语音识别、生成、实时交互及音乐创作。这是国内厂商在音频生成领域的又一次产品更新，为 AI 音乐创作者和播客制作者提供了新的国产模型选项。",
+      "category": "模型",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/paoGkkFVHV3gbhG3GEdC",
+      "featured": false
+    },
+    {
+      "title": "Pinterest 测试 Restyle 功能，用 AI 重新设计房间照片",
+      "summary": "Pinterest 正在测试名为 Restyle 的 AI 功能，允许用户在真实房间照片中可视化替换家具、装饰和照明等元素。该功能旨在将用户保存的灵感图直接转化为可落地的方案，对室内设计与视觉创作者有一定实用价值。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/17/pinterest-teases-a-new-restyle-feature-that-lets-you-redesign-your-room-with-ai",
+      "featured": false
+    },
+    {
+      "title": "Meta 监督委员会要求移除 Facebook 上的 Deepfake 视频",
+      "summary": "Meta 监督委员会已下令公司从 Facebook 上移除两个 AI 生成的视频，并呼吁采取更强有力的措施应对 deepfake 内容的传播。随着平台收紧对 AI 生成视频的审核尺度，视频创作者在分发此类内容时需留意合规风险。",
+      "category": "政策",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/17/metas-oversight-board-orders-the-company-to-remove-deepfake-videos-from-facebook",
+      "featured": false
+    },
+    {
+      "title": "Autodesk：AI 应给艺术家留出实验时间而非单纯提速",
+      "summary": "Autodesk 媒体与娱乐部门执行副总裁 Diana Colella 表示，AI 的价值在于释放创意探索的时间，而不仅是提高内容产出速度。这一表态延续了该公司近期对 AI 辅助创作边界的讨论，强调工具应服务于创作过程本身。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/3d/autodesk-says-ai-should-give-artists-time-to-experiment-not-make-them-work-twice-as-fast",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 开发者：盲目堆叠 AI Agent 会浪费 Token 且无质量提升",
+      "summary": "OpenAI Codex 开发者 Eric Provencher 指出，运行超过两个并行子 Agent 通常会消耗大量 Token 却不改善结果，因为 Agent 之间缺乏信任会导致重复校验。他以一个动用 1393 个 Agent 花费 2 万美元 Token 的 Python 重构项目为例说明这一问题，提醒创作者在设计 Agent 工作流时注意控制规模。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-agent-swarms-are-a-massive-waste-of-tokens-with-zero-quality-gain-says-openai-codex-developer",
+      "featured": false
+    },
+    {
+      "title": "法庭文件披露微软内部曾称 AI 数据抓取为「史上最大劳动盗窃」",
+      "summary": "新解封的法庭文件显示，微软曾在内部将 OpenAI 的数据处理方式称为「盗窃」，两家公司均抓取了付费墙后的媒体内容来构建数据集。这揭示了头部厂商在训练数据来源上的内部争议，也再次提醒依赖版权素材的 AIGC 创作者关注底层数据的合规性。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/17/microsoft-exec-called-ai-scraping-the-largest-theft-of-labor-in-human-history-new-unredacted-filings-reveal",
+      "featured": false
+    }
+  ]
+}
