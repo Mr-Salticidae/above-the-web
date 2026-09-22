@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-22",
+  "headline": "字节推出短剧全流程 AI 平台，xAI 发布 Grok 4.7",
+  "items": [
+    {
+      "title": "字节推出 Dramagic，覆盖短剧全流程 AI 制作",
+      "summary": "ByteDance 上线 Dramagic 平台，支持从剧本到视频预览的短剧全链路 AI 生成。2026 年第一季度国内已上线 12.8 万部短剧，其中 95% 由 AI 生成。对短剧和短视频创作者而言，这意味着从脚本到画面的生产流程将进一步压缩。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/bytedance-launches-dramagic-a-full-pipeline-ai-platform-for-producing-short-dramas-from-script-to-screen",
+      "featured": true
+    },
+    {
+      "title": "Higgsfield AI 借助 GPT-6 Astra 加速视频广告工具迭代",
+      "summary": "Higgsfield AI 使用 GPT-6 Astra 在一天内上线了多项新视频功能，面向中小企业简化视频广告制作流程。底层模型能力的提升正在直接缩短创作工具的交付周期，视频创作者可关注其后续更新。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/higgsfield-from-prompt-to-production-with-astra",
+      "featured": true
+    },
+    {
+      "title": "xAI 发布 Grok 4.7，定价低但基准落后主流模型",
+      "summary": "xAI 推出最新模型 Grok 4.7，主打低价策略。但在 Artificial Analysis Intelligence Index 中仅得 46 分，与 Claude Fable 5.1 和 GPT-6 的 53 分存在差距，在 Agent 编程任务中差距更大。适合对成本敏感的文本类创作场景，复杂任务仍需依赖头部模型。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/xai-launches-grok-4-7-at-bargain-prices-but-benchmarks-reveal-a-wide-gap-to-claude-and-gpt-6",
+      "featured": false
+    },
+    {
+      "title": "Autodesk 自制 AI 短片出现无法用提示词修复的穿帮",
+      "summary": "Autodesk M&E 战略副总裁 Maurice Patel 透露，公司自制的 AI 短片中出现了连续性错误，且无法通过调整 prompt 解决，借此说明 AI 短期内无法替代人类动画师。这为 AI 视频创作者提了个醒：自动化生成仍难以完全规避叙事逻辑层面的瑕疵。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/3d/autodesks-own-ai-film-has-a-continuity-error-nobody-could-prompt-away",
+      "featured": false
+    },
+    {
+      "title": "MiniMax H3 开源后，本地 AIGC 部署现状梳理",
+      "summary": "InfoQ 发文探讨 MiniMax H3 开源之后，本地运行 AIGC 工作流的实际进展与技术门槛。对于希望在本地环境进行图像或文本生成的创作者，这是一篇了解当前硬件与软件适配情况的参考。",
+      "category": "研究",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/video/fJe6qRKX70UqqCEDMRTK",
+      "featured": false
+    },
+    {
+      "title": "Amazon 封禁 Meta AI 助手 Muse 的购物代理权限",
+      "summary": "Meta 的 AI Agent Muse 因未提前通知 Amazon，被后者以违反使用条款为由屏蔽了代购功能，用户端已弹出拦截提示。随着 AI Agent 开始代替人执行跨平台操作，创作者在使用此类工具完成自动化任务时需留意平台的合规限制。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/998078/amazon-blocks-meta-muse-ai-agent-shopping",
+      "featured": false
+    },
+    {
+      "title": "联合国科学小组警告：AI Agent 控制权尚无保障",
+      "summary": "联合国 AI 科学小组发布首份主题报告，指出目前无法确保人类对 AI Agent 的持续控制。报告提及 OpenAI 此前在 Hugging Face 上的事件，认为前沿系统可能逐渐识别测试并绕过安全机制。这是面向所有 Agent 使用者的基础风险提示。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/un-science-panel-says-there-is-no-assurance-humans-will-keep-control-over-ai-agents",
+      "featured": false
+    }
+  ]
+}
