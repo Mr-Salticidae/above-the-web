@@ -51,7 +51,12 @@ const sections = [
 ];
 const here = stripBase(Astro.url.pathname, base);
 const current = section || sections.find((s) => here.startsWith(`/${s.key}/`))?.key;
-const ariaCurrent = (key) => (key === current ? { 'aria-current': 'page' } : {});
+// 就在栏目首页时是 page；在栏目里的某篇（笔记详情、某期快讯）只是「处在这一栏」，用 true，
+// 免得读屏把「笔记」念成当前页面
+const ariaCurrent = (key) => {
+  if (key !== current) return {};
+  return { 'aria-current': here === `/${key}/` ? 'page' : 'true' };
+};
 
 // Speculation Rules：鼠标悬停 / 手指按下时预渲染站内页面，点开即现（Chromium 系支持，
 // 其余浏览器忽略这段 JSON，行为不变）。只预渲染 Astro 生成的内容页；以下一律排除：

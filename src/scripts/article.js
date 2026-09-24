@@ -36,7 +36,11 @@ function headingAnchors(root) {
     const a = document.createElement('a');
     a.className = 'h-anchor';
     a.href = `#${encodeURIComponent(h.id)}`;
-    a.setAttribute('aria-label', `复制「${h.textContent.trim()}」这一节的链接`);
+    // 锚点在标题元素里面，给它 aria-label 会并进标题的可访问名称，读屏的标题列表里每条都念两遍。
+    // 所以对辅助技术整个隐藏：本节链接另有目录可达，这枚 # 只是给鼠标用户的快捷方式。
+    a.setAttribute('aria-hidden', 'true');
+    a.tabIndex = -1;
+    a.title = '复制本节链接';
     a.textContent = '#';
     a.addEventListener('click', async (e) => {
       e.preventDefault();
