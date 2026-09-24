@@ -1,0 +1,59 @@
+name: 主站 nginx 配置（手动）
+
+# 把 platform/deploy/nginx-site-static.conf 接进主站 nginx 用的一次性工具，只能手动触发。
+#   inspect：只读。打印主站 server 块、nginx 版本与相关全局设置，什么都不改。
+#   （apply 模式在看过现有配置、确认改动之后再加。）
+# 仓库是公开的，Actions 日志人人可见：只打印主站那一个 server 块，
+# 并把疑似含凭据的行打码后再输出。
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'inspect = 只读查看'
+        required: true
+        default: inspect
+        type: choice
+        options: [inspect]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nginx-site
+  cancel-in-progress: false
+
+jobs:
+  nginx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 只读查看主站 nginx 配置
+        if: inputs.mode == 'inspect'
+        env:
+          HOST: 43.128.2.172
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@"$HOST" 'bash -s' <<'REMOTE'
+          set -u
+          redact() { sed -E 's/((pass(word)?|secret|token|api[_-]?key|auth_basic_user_file|private)[^;]*)/[已打码]/Ig'; }
+          echo "=== nginx 版本 ==="; nginx -v 2>&1
+          echo "=== 配置自检 ==="; nginx -t 2>&1 | tail -2
+          echo "=== sites-enabled ==="; ls -l /etc/nginx/sites-enabled/ /etc/nginx/conf.d/ 2>&1
+          echo "=== 含主站域名的配置文件 ==="
+          files=$(grep -lE 'server_name[^;]*(tiaozhuxiansheng\.com|[[:space:]]_[[:space:];])' /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf 2>/dev/null | xargs -r readlink -f | sort -u)
+          echo "$files"
+          for f in $files; do
+            echo; echo "=== $f ==="
+            redact < "$f"
+          done
+          echo; echo "=== nginx.conf 里的 gzip / include 设置 ==="
+          grep -nE 'gzip|include' /etc/nginx/nginx.conf | redact
+          echo "=== mime.types 是否认 webmanifest ==="
+          grep -n webmanifest /etc/nginx/mime.types || echo "（无）"
+          echo "=== 部署片段是否已在服务器上 ==="
+          ls -l /opt/atw-platform/deploy/nginx-site-static.conf 2>&1
+          echo "=== 站点根目录是否有 404.html / manifest ==="
+          ls -l /var/www/tiaozhuxiansheng/404.html /var/www/tiaozhuxiansheng/manifest.webmanifest 2>&1
+          REMOTE
