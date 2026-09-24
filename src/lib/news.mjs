@@ -18,6 +18,7 @@
 // }
 import fs from 'node:fs';
 import path from 'node:path';
+import { CANONICAL_ORIGIN } from './site.mjs';
 
 const DIR = path.join('src', 'data', 'news');
 const DATE_RE = /^(\d{4}-\d{2}-\d{2})\.json$/;
@@ -35,7 +36,7 @@ export const CATEGORIES = ['模型', '工具', '行业', '研究', '政策'];
 // （见 BaseLayout）。子站不用 canonical 回指主站，是因为那会在产物里留下个人站地址，
 // 与它的对外隔离冲突——noindex 一样能避免重复内容，且不泄露。
 export const NEWS_SITE_ORIGIN = 'https://news.tiaozhuxiansheng.com';
-const MAIN_SITE_ORIGIN = 'https://tiaozhuxiansheng.com';
+const MAIN_SITE_ORIGIN = CANONICAL_ORIGIN;
 
 // 子站构建（NEWS_SITE=1）自指其根；其余构建（主站、Pages 镜像、Toy 包）一律指主站原件。
 // date 省略时给板块首页。

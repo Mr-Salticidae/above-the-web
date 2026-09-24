@@ -15,6 +15,7 @@
   --shadow: 30, 24, 60;
   color-scheme: light;
   --max: 46rem;
+  --header-h: 5.4rem;       /* 吸顶顶栏的高度：二级吸顶条、锚点跳转的留白都以它为准（运行时实测覆盖） */
   --serif: "Songti SC", "Noto Serif SC", Georgia, "Times New Roman", serif;
   --sans: "PingFang SC", "Noto Sans SC", -apple-system, "Segoe UI", system-ui, sans-serif;
 }
@@ -116,6 +117,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .footer-line { margin: 0 0 1.2rem; }
 .footer-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: .4rem 1.5rem; margin: 0 0 1.2rem; font-size: .82rem; }
 .footer-meta { margin: 0; font-size: .76rem; opacity: .85; }
+.footer-subscribe { margin: 0 0 .7rem; font-size: .78rem; }
 
 /* 顶栏右侧操作区 + 搜索 */
 .header-actions { display: flex; align-items: center; gap: 1rem; }
@@ -131,7 +133,23 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-family: var(--sans); font-size: .68rem; color: var(--ink-soft);
   border: 1px solid var(--line); border-radius: 4px; padding: .05em .35em; background: var(--paper);
 }
-@media (max-width: 560px) { .search-trigger span, .search-trigger kbd { display: none; } .gh-link, .series-link { display: none; } }
+/* 栏目导航：桌面挂在顶栏右侧；窄屏不再整排藏掉，而是换到第二行横向滑动 */
+.site-nav { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
+.site-nav a[aria-current="page"], .footer-nav a[aria-current="page"] {
+  color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px; text-underline-offset: .45em;
+}
+@media (max-width: 1080px) { .gh-link { display: none; } }
+@media (max-width: 560px) { .search-trigger span, .search-trigger kbd { display: none; } }
+@media (max-width: 860px) {
+  .site-header .bar { flex-wrap: wrap; row-gap: .3rem; padding-bottom: .5rem; }
+  .site-nav {
+    order: 3; flex: 1 0 100%; margin: 0 -1.5rem; padding: .15rem 1.5rem .1rem; gap: 1.3rem;
+    overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+    mask-image: linear-gradient(90deg, #000 88%, transparent);
+  }
+  .site-nav::-webkit-scrollbar { display: none; }
+}
 
 /* 搜索弹窗 */
 .search-modal {
@@ -579,7 +597,7 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 :root[data-theme="dark"] .theme-toggle .i-moon { display: none; }
 
 /* 分类筛选条（两级：栏目 + 子类） */
-.explore { position: sticky; top: 3.85rem; z-index: 15;
+.explore { position: sticky; top: var(--header-h); z-index: 15;
   background: color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter: saturate(1.3) blur(10px);
   border-bottom: 1px solid var(--line); }
 .chips { max-width: 72rem; margin: 0 auto; padding: .85rem 1.5rem .55rem; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
@@ -1284,3 +1302,171 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 @media (max-width: 440px) {
   .acct[data-state="signed-in"] .acct-name { display: none; }
 }
+
+/* ============================================================
+   架构升级（2026-09）：导航过渡、无障碍、文章页阅读体验
+   说明见 docs/SITE_ARCHITECTURE_UPGRADE.md
+   ============================================================ */
+
+/* 吸顶顶栏的实际高度由 BaseLayout 里的脚本实测写回 --header-h；这里是无 JS 时的近似值 */
+:root { --header-h: 5.4rem; }
+@media (max-width: 860px) { :root { --header-h: 6.9rem; } }
+
+/* 锚点跳转（目录、标题链接、#main）别被吸顶顶栏盖住 */
+:target, h2[id], h3[id], h4[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
+
+/* 跳到正文：只在键盘聚焦时出现 */
+.skip-link {
+  position: fixed; top: .6rem; left: .6rem; z-index: 100;
+  padding: .5rem .9rem; border-radius: 8px;
+  background: var(--ink); color: var(--paper); font-size: .85rem;
+  transform: translateY(-160%); transition: transform .15s ease;
+}
+.skip-link:focus-visible { transform: none; text-decoration: none; }
+main:focus { outline: none; }
+
+/* 跨文档视图过渡：MPA 原生的页面切换动画，零 JS。
+   不支持的浏览器照常整页跳转；顶栏与播放条各自命名，切页时原地不动，只有正文淡入淡出。 */
+@view-transition { navigation: auto; }
+.site-header { view-transition-name: site-header; }
+.mp { view-transition-name: music-player; }
+::view-transition-old(root) { animation: vt-fade-out .16s ease both; }
+::view-transition-new(root) { animation: vt-fade-in .26s ease both; }
+@keyframes vt-fade-out { to { opacity: 0; } }
+@keyframes vt-fade-in { from { opacity: 0; transform: translateY(6px); } }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+/* ---------- 阅读进度条：CSS 滚动驱动动画，零 JS；不支持的浏览器不显示 ---------- */
+.reading-progress { display: none; }
+@supports (animation-timeline: scroll()) {
+  .reading-progress {
+    display: block; position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 30;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    transform-origin: 0 50%; transform: scaleX(0);
+    animation: reading-progress linear both; animation-timeline: scroll(root block);
+    pointer-events: none;
+  }
+}
+@keyframes reading-progress { to { transform: scaleX(1); } }
+
+/* ---------- 笔记文章页：正文 + 右侧吸顶目录 ---------- */
+.note-layout { max-width: var(--max); margin: 0 auto; }
+.note-layout .prose { padding-bottom: 2.5rem; }
+@media (min-width: 1180px) {
+  .note-layout.has-toc {
+    max-width: none; display: grid; justify-content: center; column-gap: 3.5rem;
+    grid-template-columns: minmax(0, var(--max)) 14.5rem;
+    grid-template-areas: "article toc" "after toc";
+  }
+  .note-layout.has-toc > .prose { grid-area: article; margin: 0; }
+  .note-layout.has-toc > .note-after { grid-area: after; }
+  .note-layout.has-toc > .toc-rail { grid-area: toc; }
+  .note-layout.has-toc .toc-inline { display: none; }
+}
+
+/* 刊眉：栏目面包屑 + 日期 / 阅读时长 */
+.note-head {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .35rem 1.2rem;
+  margin: 0 0 1.2rem; padding-bottom: .75rem; border-bottom: 1px solid var(--line);
+  font-family: var(--sans); font-size: .8rem; color: var(--ink-soft);
+}
+.crumbs { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem; letter-spacing: .04em; }
+.crumbs a { color: var(--ink-soft); }
+.crumbs a:hover { color: var(--accent); }
+.crumbs span[aria-hidden] { opacity: .5; }
+.prose .note-meta { display: flex; flex-wrap: wrap; gap: .2rem 1rem; margin: 0; font-size: .8rem; font-variant-numeric: tabular-nums; }
+.note-meta time { color: var(--ink); }
+
+/* 窄屏：刊眉下一枚折叠目录（收起时只是一颗小胶囊，不挡标题） */
+.toc-inline { margin: -.3rem 0 1.4rem; font-family: var(--sans); }
+.toc-inline summary {
+  display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; list-style: none;
+  padding: .3rem .85rem; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--paper-2); font-size: .8rem; color: var(--ink-soft);
+}
+.toc-inline summary::-webkit-details-marker { display: none; }
+.toc-inline summary::before { content: "☰"; font-size: .75rem; }
+.toc-inline[open] summary { color: var(--ink); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.toc-inline summary i { font-style: normal; font-size: .74rem; opacity: .8; }
+.toc-inline ol {
+  list-style: none; margin: .6rem 0 0; padding: .8rem 1rem; display: grid; gap: .3rem;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--paper-2);
+}
+.prose .toc-inline li { font-size: .86rem; line-height: 1.55; }
+.toc-inline li.d3 { padding-left: 1em; }
+.toc-inline a { color: var(--ink-soft); }
+.toc-inline a:hover { color: var(--accent); }
+
+/* 宽屏：右侧吸顶目录，滚动时高亮当前小节 */
+.toc-rail { display: none; }
+@media (min-width: 1180px) {
+  .toc-rail {
+    display: block; position: sticky; top: calc(var(--header-h) + 1.2rem); align-self: start;
+    max-height: calc(100vh - var(--header-h) - 2.4rem); overflow-y: auto; overscroll-behavior: contain;
+    margin-top: 2rem; padding: 0 .4rem 1rem 0; font-family: var(--sans); scrollbar-width: thin;
+  }
+}
+.toc-rail-title { margin: 0 0 .7rem; font-size: .66rem; letter-spacing: .26em; color: var(--ink-soft); }
+.toc-rail ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--line); }
+.toc-rail li { margin: 0; }
+.toc-rail a {
+  display: block; margin-left: -1px; padding: .28rem 0 .28rem .85rem; border-left: 2px solid transparent;
+  font-size: .8rem; line-height: 1.5; color: var(--ink-soft);
+  transition: color .15s ease, border-color .15s ease;
+}
+.toc-rail li.d3 a { padding-left: 1.7rem; font-size: .77rem; }
+.toc-rail a:hover { color: var(--ink); text-decoration: none; }
+.toc-rail a[aria-current] { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.toc-top { display: inline-block; margin-top: .9rem; font-size: .76rem; color: var(--ink-soft); }
+
+/* 标题锚点：悬停出现，点一下复制本节链接 */
+.h-anchor {
+  margin-left: .4em; font-family: var(--sans); font-weight: 400; color: var(--ink-soft);
+  opacity: 0; transition: opacity .15s ease;
+}
+.h-anchor:hover { text-decoration: none; color: var(--accent); }
+.prose h2:hover .h-anchor, .prose h3:hover .h-anchor, .prose h4:hover .h-anchor, .h-anchor:focus-visible { opacity: .85; }
+@media (hover: none) { .h-anchor { opacity: .4; } }
+
+/* 代码块：Shiki 双主题（配色写在 --shiki-light / --shiki-dark 变量里，按站内主题取用）+ 复制按钮 */
+pre.astro-code, .prose pre.astro-code {
+  background-color: var(--shiki-light-bg); color: var(--shiki-light);
+  border: 1px solid var(--line);
+}
+pre.astro-code span { color: var(--shiki-light); }
+:root[data-theme="dark"] pre.astro-code, :root[data-theme="dark"] .prose pre.astro-code {
+  background-color: var(--shiki-dark-bg); color: var(--shiki-dark);
+}
+:root[data-theme="dark"] pre.astro-code span { color: var(--shiki-dark); }
+.code-block { position: relative; margin: 1.2em 0; }
+/* 顶部留一条窄带给语言标记与复制按钮，长行代码不会从它们底下穿过 */
+.code-block pre { margin: 0; padding-top: 2.3rem; }
+.code-copy, .code-lang { position: absolute; top: .5rem; right: .55rem; font-family: var(--sans); }
+.code-copy {
+  font-size: .72rem; padding: .22rem .6rem; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--paper-2); color: var(--ink-soft);
+  opacity: 0; transition: opacity .15s ease, color .15s ease;
+}
+.code-copy:hover { color: var(--accent); }
+.code-lang {
+  font-size: .66rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+  opacity: .75; pointer-events: none; transition: opacity .15s ease; padding-top: .2rem;
+}
+.code-block:hover .code-copy, .code-copy:focus-visible { opacity: 1; }
+.code-block:hover .code-lang, .code-block:focus-within .code-lang { opacity: 0; }
+@media (hover: none) { .code-copy { opacity: 1; } .code-lang { display: none; } }
+
+/* 文末修订信息 */
+.note-foot { margin-top: 2.6rem; padding-top: 1rem; border-top: 1px solid var(--line); font-family: var(--sans); color: var(--ink-soft); }
+.prose .note-foot p { margin: .25rem 0; font-size: .8rem; }
+.note-foot a { color: var(--ink-soft); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.note-foot a:hover { color: var(--accent); }
+
+/* 文末：反向链接 + 接着读 */
+.note-after { display: grid; gap: 2.4rem; padding: 0 1.5rem 4.5rem; }
+.note-after .backlinks { max-width: none; margin: 0; padding: 1.5rem 0 0; }
+.related { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+.related h2 { font-family: var(--serif); font-size: 1.1rem; margin: 0 0 1rem; }
+.related .cards { grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }

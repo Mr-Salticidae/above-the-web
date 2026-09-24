@@ -1,4 +1,4 @@
-最后更新：2026-09-02
+最后更新：2026-09-24
 
 # 项目页面地图
 
@@ -9,13 +9,15 @@
 | 路由 | 源文件路径 | 用途 |
 | --- | --- | --- |
 | `/` | `src/pages/index.astro` | 网站首页，聚合 AIGC 快讯、Prompt 大师系列、可玩内容、任务书、协作板块和笔记栏目入口。 |
-| `/[...slug]/` | `src/pages/[...slug].astro` | 笔记内容动态路由；构建时从 `notes` 内容集合为每篇笔记生成详情页，并展示标签和反向链接。实际路由由笔记 ID 决定。 |
-| `/notes/` | `src/pages/notes/index.astro` | 全部笔记的索引页，支持按栏目和子栏目筛选。 |
+| `/[...slug]/` | `src/pages/[...slug].astro` | 笔记内容动态路由；构建时从 `notes` 内容集合为每篇笔记生成详情页：栏目面包屑、发布/更新日期、阅读时长、吸顶目录、标签、修订历史、反向链接与相关笔记。实际路由由笔记 ID 决定。 |
+| `/notes/` | `src/pages/notes/index.astro` | 全部笔记的索引页：顶部「最近更新」，支持按栏目和子栏目筛选。 |
+| `/notes/rss.xml` | `src/pages/notes/rss.xml.js` | 笔记 RSS：最近发布的 30 篇，带全文。 |
 | `/about/` | `src/pages/about/index.astro` | 关于页：站长与站点定位、六个版块入口（构建期实时计数）、站点规矩、版块时间线、制作说明、许可与联系方式。 |
 | `/music/` | `src/pages/music/index.astro` | 音乐板块：曲库列表，点播放交给全站底部播放器。 |
 | `/music/playlist.json` | `src/pages/music/playlist.json.js` | 构建期从曲目 manifest 导出的播放列表 JSON，供全站播放器读取，不是面向访客的页面。 |
 | `/news/` | `src/pages/news/index.astro` | AIGC 快讯首页，展示最新一期全文及往期归档。 |
 | `/news/[date]/` | `src/pages/news/[date].astro` | AIGC 快讯单期归档页，按日期生成，并提供前后期导航。 |
+| `/news/rss.xml` | `src/pages/news/rss.xml.js` | AIGC 快讯 RSS：最近 30 期，一期一条。 |
 | `/tasks/` | `src/pages/tasks/index.astro` | 对外合作任务列表，按招募中、进行中、已收官分组，并展示教程标杆。 |
 | `/tasks/[slug]/` | `src/pages/tasks/[slug].astro` | Markdown 任务书详情动态路由；构建时从 `tasks` 内容集合按任务 ID 生成页面。 |
 | `/tasks/detail/` | `src/pages/tasks/detail.astro` | 站内新建任务的通用详情容器，通过 `?slug=` 在运行时读取并装配任务内容。 |
@@ -32,6 +34,13 @@
 | `/admin/tasks/` | `src/pages/admin/tasks/index.astro` | 管理全部任务的状态、报酬、正文、上下架和 Markdown 导出。 |
 | `/admin/tasks/new/` | `src/pages/admin/tasks/new.astro` | 在管理台直接新建任务书，支持说人话交给 AI 拟草稿、Markdown 正文预览与本机草稿留存。 |
 | `/admin/users/` | `src/pages/admin/users.astro` | 管理用户角色与启停状态，并可生成一次性密码重置链接。 |
+| `/404.html` | `src/pages/404.astro` | 自定义 404：站内搜索入口与最近更新的笔记。主站 nginx 需配 `error_page 404 /404.html;`。 |
+| `/rss.xml` | `src/pages/rss.xml.js` | 全站 RSS：笔记与快讯按时间混排，最近 40 条。 |
+| `/feed.json` | `src/pages/feed.json.js` | 全站 JSON Feed 1.1，与 `/rss.xml` 同一批条目。 |
+| `/sitemap.xml` | `src/integrations/sitemap.mjs` | 构建后生成：按各页自己声明的 noindex / canonical / 修改时间登记，外加 `public/` 顶层落地页。 |
+| `/robots.txt` | `src/pages/robots.txt.js` | 爬虫规则：全站开放，仅挡 `/api/`，指向 sitemap。 |
+| `/llms.txt` | `src/pages/llms.txt.js` | 给大模型的站点导读：版块介绍、每篇笔记一行摘要、最近快讯。 |
+| `/manifest.webmanifest` | `src/pages/manifest.webmanifest.js` | PWA 清单：站名、图标与配色，随 base 自适应。 |
 
 ## 技术框架
 
@@ -40,3 +49,5 @@
 - 内容系统：Astro Content Collections（笔记与任务书）
 - 搜索：Pagefind（在生产构建后为 `dist` 生成静态搜索索引）
 - 渲染方式：以构建期静态生成为主，账户、任务状态和管理台等功能由浏览器端脚本连接后端 API 动态加载
+- 分发层：`src/components/SEO.astro` 统一输出规范地址（默认回指主站）、Open Graph 与 JSON-LD；Sitemap、Feed、robots、llms.txt、manifest 均在构建期生成，零新增依赖
+- 导航：跨文档 View Transitions 与 Speculation Rules 预渲染，详见 `docs/SITE_ARCHITECTURE_UPGRADE.md`

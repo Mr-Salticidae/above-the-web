@@ -7,11 +7,23 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import KnowledgeChat from '../../components/KnowledgeChat.astro';
-import { href } from '../../lib/notes.mjs';
+import { href, getTitle, getCategory, getExcerpt, getDates, isIndexNote } from '../../lib/notes.mjs';
 import { groupNotes } from '../../lib/note-groups.mjs';
+import { dayOf } from '../../lib/note-dates.mjs';
 
-const { cats, counts, groups, subsByCat, total } = groupNotes(await getCollection('notes'));
+const allNotes = await getCollection('notes');
+const { cats, counts, groups, subsByCat, total } = groupNotes(allNotes);
 const catCounts = counts;
+
+// 最近更新：按 git 里最后一次改动排（见 lib/note-dates.mjs），栏目索引页不算
+const RECENT = 6;
+const recent = allNotes
+  .filter((n) => !isIndexNote(n))
+  .map((n) => ({ id: n.id, title: getTitle(n), cat: getCategory(n), excerpt: getExcerpt(n, 60), ...getDates(n) }))
+  .filter((n) => n.updated)
+  .sort((a, b) => b.updated.localeCompare(a.updated))
+  .slice(0, RECENT);
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout
@@ -29,6 +41,24 @@ const catCounts = counts;
       </p>
     </header>
   </div>
+
+  {recent.length > 0 && (
+    <section class="recent-notes" id="recent" aria-labelledby="recent-title">
+      <div class="recent-head">
+        <h2 id="recent-title">最近更新</h2>
+        <a class="recent-rss" href={`${base}notes/rss.xml`}>RSS 订阅</a>
+      </div>
+      <div class="cards">
+        {recent.map((n) => (
+          <a class="card" href={href(n.id)}>
+            <span class="card-cat">{n.cat}<span class="sub"> · <time datetime={n.updated}>{dayOf(n.updated)}</time></span></span>
+            <h3>{n.title}</h3>
+            <p>{n.excerpt}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
 
   <div class="explore">
     <div class="chips" id="chips">
@@ -147,9 +177,13 @@ const catCounts = counts;
     });
   }
 
+  const recentBlock = document.getElementById('recent');
+
   function selectCat(chip, { scroll = true } = {}) {
     chips.forEach((c) => c.classList.toggle('is-active', c === chip));
     activeCat = chip.dataset.cat;
+    // 「最近更新」是全库视角，选定某个栏目时收起，免得混着别的栏目
+    if (recentBlock) recentBlock.hidden = activeCat !== '*';
     activeSub = '*';
     renderSubBar(activeCat);
     apply();
@@ -172,4 +206,10 @@ const catCounts = counts;
 
 <style>
   .notes-page { max-width: 72rem; margin: 0 auto; padding: 3.2rem 1.5rem 0; }
+  .recent-notes { max-width: 72rem; margin: 0 auto 2.4rem; padding: 0 1.5rem; }
+  .recent-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 1rem; }
+  .recent-head h2 { margin: 0; font-family: var(--serif); font-size: 1.2rem; letter-spacing: .04em; }
+  .recent-rss { font-size: .8rem; color: var(--ink-soft); }
+  .recent-rss:hover { color: var(--accent); }
+  .recent-notes time { font-variant-numeric: tabular-nums; }
 </style>

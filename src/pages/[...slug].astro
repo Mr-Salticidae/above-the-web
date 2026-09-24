@@ -1,48 +1,184 @@
 ---
+// 笔记详情页。版式对标一线技术博客的文章页：
+//   刊眉（栏目面包屑 + 发布/更新日期 + 阅读时长）→ 正文 → 标签 → 修订信息
+//   宽屏右侧吸顶目录（滚动高亮当前小节），窄屏正文前一个可折叠目录
+//   文末：链接到这里的笔记（反向链接）+ 相关笔记（标签 / 子栏目 / 内链打分，见 lib/related.mjs）
+// 标题锚点、代码块复制按钮由 scripts/article.js 在浏览器里补上，无 JS 时正文照常可读。
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getTitle, getCategory, getTags, getExcerpt, buildBacklinks, href, isIndexNote } from '../lib/notes.mjs';
+import {
+  getTitle, getCategory, getSubCategory, getTags, getExcerpt, getDates, getRelPath,
+  buildBacklinks, buildOutlinks, href, isIndexNote,
+} from '../lib/notes.mjs';
+import { dayOf } from '../lib/note-dates.mjs';
+import { readingStats, formatCount } from '../lib/reading.mjs';
+import { relatedNotes } from '../lib/related.mjs';
+import { KB_REPO, KB_BRANCH, canonicalUrl } from '../lib/site.mjs';
+import { articleLd, breadcrumbLd } from '../lib/structured-data.mjs';
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes');
   const backlinks = buildBacklinks(notes);
+  const outlinks = buildOutlinks(notes);
+  const related = relatedNotes(notes.map((n) => ({
+    id: n.id,
+    cat: getCategory(n),
+    sub: getSubCategory(n),
+    tags: getTags(n),
+    outlinks: outlinks.get(n.id),
+    backlinks: new Set((backlinks.get(n.id) || []).map((b) => b.slug)),
+    // 栏目索引页是导航页，不当「相关阅读」推
+    skip: isIndexNote(n),
+  })));
+  const card = new Map(notes.map((n) => [n.id, { slug: n.id, title: getTitle(n), excerpt: getExcerpt(n, 70), cat: getCategory(n) }]));
   return notes.map((note) => ({
     params: { slug: note.id },
-    props: { note, backlinks: backlinks.get(note.id) || [] },
+    props: {
+      note,
+      backlinks: backlinks.get(note.id) || [],
+      related: (related.get(note.id) || []).map((id) => card.get(id)),
+    },
   }));
 }
 
-const { note, backlinks } = Astro.props;
-const { Content } = await render(note);
+const { note, backlinks, related } = Astro.props;
+const { Content, headings } = await render(note);
 const title = getTitle(note);
 const category = getCategory(note);
+const sub = getSubCategory(note);
 const tags = getTags(note);
+const description = getExcerpt(note, 120);
+const { published, updated } = getDates(note);
+const stats = readingStats(note.body);
 // kind 让 AI 查询能把栏目索引页排到正文笔记后面（见 src/lib/knowledge-search.mjs）；
 // 右上角的普通全文搜索不看这个过滤条件，索引页照样能搜到。
 const kind = isIndexNote(note) ? 'index' : 'note';
+// 知识库几乎每篇都以一级标题开头；少数没有的（README / SKILL 这类）由页面补一个，保证每页都有 h1
+const hasH1 = headings.some((h) => h.depth === 1);
+// 目录只收二、三级标题，太少就不出（三个以下的小节一眼就看完了）
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const showToc = toc.length >= 3;
+
+const base = import.meta.env.BASE_URL;
+const notesHref = `${base}notes/`;
+const catHref = `${notesHref}?cat=${encodeURIComponent(category)}`;
+const rel = getRelPath(note);
+const sourceHref = `${KB_REPO}/blob/${KB_BRANCH}/${encodeURI(rel)}`;
+const historyHref = `${KB_REPO}/commits/${KB_BRANCH}/${encodeURI(rel)}`;
+const showUpdated = updated && dayOf(updated) !== dayOf(published);
+
+const url = canonicalUrl(`/${note.id}/`);
+const ld = [
+  articleLd({ url, title, description, published, updated, section: category, tags }),
+  breadcrumbLd([
+    { name: '笔记', url: canonicalUrl('/notes/') },
+    { name: category, url: `${canonicalUrl('/notes/')}?cat=${encodeURIComponent(category)}` },
+    { name: title, url },
+  ]),
+];
 ---
 
-<BaseLayout title={title} description={getExcerpt(note, 120)}>
-  <article class="prose" data-pagefind-filter="type:note">
-    {/* 一个 data-pagefind-filter 属性只能放一个过滤条件——写成 "type:note, kind:note"
-        会被整条当成 type 的值（连 type=note 都匹配不上），所以 kind 另挂一个元素。 */}
-    <p class="meta" data-pagefind-meta="category" data-pagefind-filter={`kind:${kind}`}>{category}</p>
-    <Content />
-    {tags.length > 0 && (
-      <div class="tags">
-        {tags.map((t) => <span class="tag">{t}</span>)}
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  article={{ published, updated, section: category, tags }}
+  ld={ld}
+  section="notes"
+>
+  <div class="reading-progress" aria-hidden="true"></div>
+
+  <div class:list={['note-layout', { 'has-toc': showToc }]}>
+    <article class="prose note" data-pagefind-filter="type:note">
+      <header class="note-head" data-pagefind-ignore>
+        <nav class="crumbs" aria-label="面包屑">
+          <a href={notesHref}>笔记</a>
+          <span aria-hidden="true">/</span>
+          {/* 一个 data-pagefind-filter 属性只能放一个过滤条件——写成 "type:note, kind:note"
+              会被整条当成 type 的值（连 type=note 都匹配不上），所以 kind 另挂一个元素。
+              data-pagefind-ignore 只挡正文索引，meta 与 filter 照样采集。 */}
+          <a href={catHref} data-pagefind-meta="category" data-pagefind-filter={`kind:${kind}`}>{category}</a>
+          {sub && <><span aria-hidden="true">/</span><span>{sub}</span></>}
+        </nav>
+        <p class="note-meta">
+          {published && <span>发布于 <time datetime={published}>{dayOf(published)}</time></span>}
+          {showUpdated && <span>更新于 <time datetime={updated}>{dayOf(updated)}</time></span>}
+          <span>约 {stats.minutes} 分钟读完 · {formatCount(stats.count)} 字</span>
+        </p>
+      </header>
+
+      {!hasH1 && <h1>{title}</h1>}
+
+      {showToc && (
+        <details class="toc-inline" data-pagefind-ignore>
+          <summary>本文目录 <i>{toc.length} 节</i></summary>
+          <ol>
+            {toc.map((h) => <li class={`d${h.depth}`}><a href={`#${h.slug}`}>{h.text}</a></li>)}
+          </ol>
+        </details>
+      )}
+
+      <Content />
+
+      {tags.length > 0 && (
+        <div class="tags">
+          {tags.map((t) => <span class="tag">{t}</span>)}
+        </div>
+      )}
+
+      <footer class="note-foot" data-pagefind-ignore>
+        <p>
+          {updated && <>最后修订 <time datetime={updated}>{dayOf(updated)}</time> · </>}
+          <a href={sourceHref} target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+          · <a href={historyHref} target="_blank" rel="noopener">修订历史 ↗</a>
+        </p>
+        <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p>
+      </footer>
+    </article>
+
+    {(backlinks.length > 0 || related.length > 0) && (
+      <div class="note-after" data-pagefind-ignore>
+        {backlinks.length > 0 && (
+          <nav class="backlinks" aria-label="反向链接">
+            <h2>← 链接到这里的笔记</h2>
+            <ul>
+              {backlinks.map((b) => (
+                <li><a href={href(b.slug)}>{b.title}</a></li>
+              ))}
+            </ul>
+          </nav>
+        )}
+        {related.length > 0 && (
+          <nav class="related" aria-label="相关笔记">
+            <h2>接着读</h2>
+            <div class="cards">
+              {related.map((r) => (
+                <a class="card" href={href(r.slug)}>
+                  <span class="card-cat">{r.cat}</span>
+                  <h3>{r.title}</h3>
+                  {r.excerpt && <p>{r.excerpt}</p>}
+                </a>
+              ))}
+            </div>
+          </nav>
+        )}
       </div>
     )}
-  </article>
 
-  {backlinks.length > 0 && (
-    <nav class="backlinks">
-      <h2>← 链接到这里的笔记</h2>
-      <ul>
-        {backlinks.map((b) => (
-          <li><a href={href(b.slug)}>{b.title}</a></li>
-        ))}
-      </ul>
-    </nav>
-  )}
+    {showToc && (
+      <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore>
+        <p class="toc-rail-title">本文目录</p>
+        <ol>
+          {toc.map((h) => <li class={`d${h.depth}`}><a href={`#${h.slug}`} data-toc-link={h.slug}>{h.text}</a></li>)}
+        </ol>
+        <a class="toc-top" href="#main">↑ 回到顶部</a>
+      </aside>
+    )}
+  </div>
+
 </BaseLayout>
+
+<script>
+  import { enhanceArticle } from '../scripts/article.js';
+  enhanceArticle(document.querySelector('.prose.note'));
+</script>

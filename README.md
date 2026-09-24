@@ -36,7 +36,7 @@
 
 | 版块 | 路径 | 内容从哪来 | 一句话 |
 | --- | --- | --- | --- |
-| 笔记 | `/notes/` | 构建时浅克隆 [knowledge-base](https://github.com/Mr-Salticidae/knowledge-base)，按 `src/lib/kb.mjs` 的 `SELECTED` 白名单发布 7 个栏目 | 方法论、prompt 模板、sref 与参数档案；Obsidian `[[双链]]` 渲染成站内链接，带反向链接 |
+| 笔记 | `/notes/` | 构建时部分克隆 [knowledge-base](https://github.com/Mr-Salticidae/knowledge-base)，按 `src/lib/kb.mjs` 的 `SELECTED` 白名单发布 7 个栏目 | 方法论、prompt 模板、sref 与参数档案；Obsidian `[[双链]]` 渲染成站内链接，带反向链接 |
 | AIGC 快讯 | `/news/` | `src/data/news/YYYY-MM-DD.json`，GitHub Actions 每早自动生成 | 一天一期，每条附来源直达；另打一份发给学员的子站 |
 | 成为 Prompt 大师 | `/prompt-master/` | 构建时镜像 [becoming-a-prompt-master](https://github.com/Mr-Salticidae/becoming-a-prompt-master) 进 `public/` | 面向小白的 prompt 拆解连载，每期一个 battle 主题 |
 | 可玩 | 首页 `#plays` | `src/data/games.js` + `public/<作品>/` 落地页 | vibe coding 小作品：在线可玩，或免费下载的 Windows 小工具 |
@@ -44,16 +44,16 @@
 | 任务书 | `/tasks/` | `src/data/tasks/*.md`，或管理台直接新建；状态归数据库 | 对外合作任务，认领需登录 |
 | 关于 | `/about/` | 页面本身；六个版块的计数构建期现算 | 站长、规矩、时间线、制作说明、许可与联系方式 |
 
-站内还有 Pagefind 全文搜索、知识库 AI 查询（查笔记小助手「小织」）、账号中心与管理台。完整路由表见 [docs/PROJECT_MAP.md](docs/PROJECT_MAP.md)。
+站内还有 Pagefind 全文搜索、知识库 AI 查询（查笔记小助手「小织」）、账号中心与管理台。订阅走 [RSS](https://tiaozhuxiansheng.com/rss.xml) / [JSON Feed](https://tiaozhuxiansheng.com/feed.json)，也可以分栏订阅笔记或快讯。完整路由表见 [docs/PROJECT_MAP.md](docs/PROJECT_MAP.md)。
 
 ## 架构一览
 
 ```mermaid
 flowchart LR
-  KB[("knowledge-base")] -->|浅克隆| SYNC["npm run sync"]
+  KB[("knowledge-base")] -->|部分克隆 + 导出日期| SYNC["npm run sync"]
   PM[("becoming-a-prompt-master")] -->|镜像进 public/| SYNC
   CRON["Actions 每早定时<br/>news-fetch → news-compose"] --> NEWS["src/data/news/*.json"]
-  SYNC --> BUILD["astro build + pagefind"]
+  SYNC --> BUILD["astro build + pagefind<br/>+ sitemap / feeds / llms.txt"]
   NEWS --> BUILD
   BUILD --> PAGES["GitHub Pages 镜像<br/>base = /above-the-web"]
   BUILD --> HK["香港服务器<br/>tiaozhuxiansheng.com"]
@@ -63,7 +63,10 @@ flowchart LR
 ```
 
 - **静态主站**：Astro 5 文件系统路由 + Content Collections（笔记、任务书）。`remark-wikilink` 在构建期把 `[[双链]]` 解析成站内链接，`remark-safe-images` 先把破损图片中性化。
-- **搜索**：Pagefind 在构建后为 `dist/` 生成静态索引，零后端。
+- **内容时间线**：同步时从知识库 git 历史导出每篇笔记的发布 / 更新日期（文件名日期优先），文章页、Feed、Sitemap 共用。
+- **分发层**：每页规范地址回指主站、Open Graph、JSON-LD 结构化数据；构建期生成 sitemap.xml、三份 RSS + JSON Feed、robots.txt、llms.txt 与 PWA manifest，零新增依赖。
+- **阅读与导航**：文章页吸顶目录与滚动高亮、标题锚点、Shiki 昼夜双主题代码块、阅读时长、相关笔记；跨文档 View Transitions 切页动画 + Speculation Rules 悬停预渲染。
+- **搜索**：Pagefind 在构建后为 `dist/` 生成静态索引，零后端；顶栏、页脚、播放器等站点框架不进索引。
 - **知识库 AI 查询**：Pagefind 先找相关笔记，登录用户再通过站内 AI 通道获得带原文引用的多轮回答。
 - **账号与任务流转**：`platform/`，零第三方依赖的 Node 服务，跑在香港服务器，nginx 反代到 `tiaozhuxiansheng.com/api/`。
 - **三种构建变体**：主站（默认）、`TOY_NEWS=1`（B 站 Toy 包）、`NEWS_SITE=1`（快讯子站）。后两种只带快讯，导航改指线上主站的绝对地址。
@@ -84,8 +87,8 @@ npm run dev
 | --- | --- |
 | `npm run dev` | 先 `sync` 再起 dev server，默认 `http://localhost:4321/above-the-web/` |
 | `npm run dev:nosync` | 跳过内容同步，离线也能改样式 |
-| `npm run sync` | 克隆或更新 `knowledge-base` 到 `kb-content/`、清洗 frontmatter BOM、镜像 Prompt 大师到 `public/prompt-master/`（两处都已 gitignore） |
-| `npm run build` | sync → stamp（内嵌资源按内容哈希加 `?v=`） → `astro build` → Pagefind 索引 |
+| `npm run sync` | 部分克隆或更新 `knowledge-base` 到 `kb-content/`、从 git 历史导出笔记日期到 `.cache/kb-dates.json`、清洗 frontmatter BOM、镜像 Prompt 大师到 `public/prompt-master/`（都已 gitignore） |
+| `npm run build` | sync → stamp（内嵌资源按内容哈希加 `?v=`） → `astro build`（含 sitemap / feeds / llms.txt） → Pagefind 索引 |
 | `npm run preview` | 本地预览 `dist/` |
 | `npm test` | `node --test` 纯逻辑单元测试；CI 里挂了就不出包 |
 
@@ -113,13 +116,14 @@ cd platform/server && npm run dev
 ├─ src/
 │  ├─ pages/            路由：首页、notes、news、music、tasks、account、admin、about
 │  ├─ layouts/          BaseLayout（顶栏 / 页脚 / 昼夜主题 / 三种构建变体）
-│  ├─ components/       搜索、账号菜单、播放器、快讯期刊、知识库对话、蛛网背景
-│  ├─ lib/              构建期数据层：kb / notes / news / prompt-master / remark 插件
-│  ├─ scripts/          浏览器端脚本：账号、任务注水、播放器、滚动渐现、AI 辅助
+│  ├─ components/       SEO 页头、搜索、账号菜单、播放器、快讯期刊、知识库对话、蛛网背景
+│  ├─ lib/              构建期数据层：kb / notes / news / prompt-master / remark 插件 / 日期 / feed / sitemap / 结构化数据
+│  ├─ integrations/     本地 Astro 集成（构建后生成 sitemap.xml）
+│  ├─ scripts/          浏览器端脚本：账号、任务注水、播放器、滚动渐现、AI 辅助、文章页增强
 │  ├─ data/             news/ 期刊 JSON · tasks/ 任务书 md · games.js · music/manifest.json
 │  └─ styles/global.css 设计 token 与全局样式
 ├─ public/              静态资源与可玩作品落地页（fraud-desk、desk-pond、livelink …）
-├─ scripts/             sync-content · stamp-assets · news-fetch · news-compose · build-news-site · build-toy-news · upload-music
+├─ scripts/             sync-content · stamp-assets · news-fetch · news-compose · build-news-site · build-toy-news · upload-music · make-brand-assets
 ├─ platform/            账号与任务流转服务（server/）与服务器部署脚本（deploy/）
 ├─ workers/ functions/ api-proxy/   Maieutic 对话工具的 API 代理（Cloudflare Worker / Pages Functions）
 ├─ docs/                项目文档：大写下划线命名，首行标最后更新日期
@@ -131,7 +135,7 @@ cd platform/server && npm run dev
 
 ### 笔记：自动同步自知识库
 
-`scripts/sync-content.mjs` 浅克隆 `knowledge-base`，只发布 `SELECTED` 白名单里的栏目：方法论与洞察 / prompt模板库 / sref档案 / 参数行为档案 / 视觉系统 / skill存档 / 平台工程。
+`scripts/sync-content.mjs` 以 blobless 方式部分克隆 `knowledge-base`（全量提交历史、按需取文件，体积与浅克隆相当），只发布 `SELECTED` 白名单里的栏目：方法论与洞察 / prompt模板库 / sref档案 / 参数行为档案 / 视觉系统 / skill存档 / 平台工程。同步时顺带从 git 历史导出每篇笔记的发布 / 更新日期（文件名以 `YYYY-MM-DD` 开头的以文件名为准）。
 
 站点在以下时机重建部署：本仓库 push、每 6 小时定时、手动 `workflow_dispatch`、`knowledge-base` 发来的 `repository_dispatch`（type `kb-updated`）。
 
@@ -172,6 +176,8 @@ cd platform/server && npm run dev
 
 香港 job 还会顺手镜像 `mirror-life-rehearsal-preview` 到 `/mlr/`、`typhoon-eye` 到 `/typhoon-eye/`，并抓取 desk-pond 与 livelink 的最新安装包。
 
+主站 nginx 的自定义 404、`.webmanifest` 类型与静态资源缓存策略写在 `platform/deploy/nginx-site-static.conf`，需在服务器上手动接入一次（同其他 nginx 片段）。
+
 账号服务单独走 `deploy-platform.yml`：`platform/**` 有改动就先跑流转回归测试，过了再 rsync 到 `/opt/atw-platform/` 并重启 systemd 服务。
 
 仓库需要的 secrets：
@@ -198,6 +204,7 @@ cd platform/server && npm run dev
 | 文档 | 内容 |
 | --- | --- |
 | [docs/PROJECT_MAP.md](docs/PROJECT_MAP.md) | 全站路由表与技术框架 |
+| [docs/SITE_ARCHITECTURE_UPGRADE.md](docs/SITE_ARCHITECTURE_UPGRADE.md) | 2026-09 架构升级：内容时间线、分发层、文章页、预渲染与视图过渡 |
 | [docs/LOCAL_RUN_AND_DEPLOYMENT.md](docs/LOCAL_RUN_AND_DEPLOYMENT.md) | 本地运行、构建与生产部署 |
 | [docs/KNOWLEDGE_BASE_AI_QUERY.md](docs/KNOWLEDGE_BASE_AI_QUERY.md) | 知识库 AI 查询的工作机制 |
 | [docs/KB_ASSISTANT_PERSONA.md](docs/KB_ASSISTANT_PERSONA.md) | 查笔记小助手「小织」的角色卡 |

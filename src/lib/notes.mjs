@@ -1,5 +1,6 @@
-// 集合条目的展示层工具：标题、栏目、反向链接、URL。
+// 集合条目的展示层工具：标题、栏目、日期、反向链接、URL。
 import { categoryLabel, KB_DIR } from './kb.mjs';
+import { loadGitDates, resolveNoteDates } from './note-dates.mjs';
 
 const BASE = import.meta.env.BASE_URL; // 形如 /above-the-web/
 
@@ -16,6 +17,16 @@ function relParts(note) {
   const i = fp.indexOf(marker);
   const rel = i >= 0 ? fp.slice(i + marker.length) : fp;
   return rel.split('/').filter(Boolean);
+}
+
+// 相对 kb-content 的源文件路径（04_方法论与洞察/xxx.md）——git 日期与「在 GitHub 查看」都按它
+export function getRelPath(note) {
+  return relParts(note).join('/');
+}
+
+// { published, updated }：ISO 字符串或 null，规则见 note-dates.mjs
+export function getDates(note) {
+  return resolveNoteDates(getStem(note), loadGitDates()[getRelPath(note)]);
 }
 
 // 源文件名 stem（去 .md）——wikilink 目标与标题兜底都按它匹配
@@ -94,4 +105,23 @@ export function buildBacklinks(notes) {
     }
   }
   return back;
+}
+
+// slug -> 这篇正文里 wikilink 指向的笔记 slug 集合（相关笔记打分用）
+export function buildOutlinks(notes) {
+  const stemToSlug = new Map();
+  for (const n of notes) {
+    const stem = getStem(n);
+    if (stem && !stemToSlug.has(stem)) stemToSlug.set(stem, n.id);
+  }
+  const out = new Map();
+  for (const n of notes) {
+    const set = new Set();
+    for (const m of (n.body || '').matchAll(WL)) {
+      const slug = stemToSlug.get(m[1].split('|')[0].split('#')[0].trim());
+      if (slug && slug !== n.id) set.add(slug);
+    }
+    out.set(n.id, set);
+  }
+  return out;
 }

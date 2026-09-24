@@ -1,0 +1,72 @@
+---
+// 404：蛛丝断了。给迷路的人三条回头路——搜索、最近更新的笔记、各栏目入口。
+// 主站 nginx 需配 `error_page 404 /404.html;`（见 docs/SITE_ARCHITECTURE_UPGRADE.md）；
+// GitHub Pages 会自动用产物根目录的 404.html。
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getTitle, getCategory, getDates, href, isIndexNote } from '../lib/notes.mjs';
+import { dayOf } from '../lib/note-dates.mjs';
+
+const base = import.meta.env.BASE_URL;
+const recent = (await getCollection('notes'))
+  .filter((n) => !isIndexNote(n))
+  .map((n) => ({ id: n.id, title: getTitle(n), cat: getCategory(n), updated: getDates(n).updated || '' }))
+  .sort((a, b) => b.updated.localeCompare(a.updated))
+  .slice(0, 6);
+---
+
+<BaseLayout title="页面不存在" description="这根蛛丝断了：你要找的页面不存在或已经搬家。" noindex>
+  <section class="nf">
+    <p class="nf-code">404</p>
+    <h1>这根蛛丝断了</h1>
+    <p class="nf-lede">你要找的页面不存在，或者已经搬了家——笔记换过一次短地址，早年分享出去的旧链接可能会落到这里。</p>
+    <p class="nf-actions">
+      <button class="nf-search" type="button" data-nf-search>搜一搜站内</button>
+      <a href={base}>回到首页 →</a>
+    </p>
+
+    {recent.length > 0 && (
+      <div class="nf-recent">
+        <h2>最近更新的笔记</h2>
+        <ul>
+          {recent.map((n) => (
+            <li>
+              <a href={href(n.id)}>{n.title}</a>
+              <span>{n.cat}{n.updated && ` · ${dayOf(n.updated)}`}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </section>
+</BaseLayout>
+
+<script>
+  // 借用顶栏的搜索弹窗（⌘K 同款），不另起一套
+  document.querySelector('[data-nf-search]')?.addEventListener('click', () => {
+    document.getElementById('searchOpen')?.click();
+  });
+</script>
+
+<style>
+  .nf { max-width: 40rem; margin: 0 auto; padding: 4.5rem 1.5rem 6rem; text-align: center; }
+  .nf-code {
+    margin: 0; font-family: var(--serif); font-size: clamp(4rem, 14vw, 7rem); line-height: 1;
+    letter-spacing: .12em; color: transparent;
+    background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text;
+  }
+  h1 { font-family: var(--serif); font-size: 1.7rem; margin: .8rem 0 .6rem; letter-spacing: .06em; }
+  .nf-lede { color: var(--ink-soft); margin: 0 auto; max-width: 30rem; }
+  .nf-actions { display: flex; justify-content: center; align-items: center; gap: 1.2rem; margin: 1.8rem 0 0; }
+  .nf-search {
+    font: inherit; font-size: .9rem; padding: .5rem 1.1rem; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--accent); background: var(--accent); color: #fff;
+  }
+  .nf-search:hover { filter: brightness(1.08); }
+  .nf-recent { margin-top: 3.4rem; text-align: left; border-top: 1px solid var(--line); padding-top: 1.4rem; }
+  .nf-recent h2 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .8rem; }
+  .nf-recent ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+  .nf-recent li { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; }
+  .nf-recent li span { flex: none; font-size: .76rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  @media (max-width: 560px) { .nf-recent li { flex-direction: column; gap: .1rem; } }
+</style>
