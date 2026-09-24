@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-24",
+  "headline": "Adobe 完成收购 Topaz Labs，阿里与 Google 分别更新音频和语音模型",
+  "items": [
+    {
+      "title": "Adobe 完成收购 Topaz Labs，保留独立品牌",
+      "summary": "Adobe 正式完成对 AI 图像与视频放大软件公司 Topaz Labs 的收购，并确认 Topaz 将继续作为独立品牌运营。该交易最早于六月公布。对依赖 AI 进行画质增强的图像和视频创作者而言，Topaz 的工具链短期内不会因整合而中断。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/23/adobe-completes-acquisition-of-topaz-labs-and-says-topaz-will-remain-its-own-brand",
+      "featured": true
+    },
+    {
+      "title": "Google 发布 Flash TTS，支持文本描述生成音色",
+      "summary": "Google 推出 Gemini 3.8 Flash TTS 和 Flash-Lite TTS 两款语音合成模型，支持超过 100 种语言。用户可通过文字描述从零设计新音色，也可用 30 秒音频样本克隆声音，并为单句添加舞台指示以生成双人对话。这为播客、有声书及短片配音提供了更灵活的 AI 语音方案。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/googles-new-flash-tts-models-let-you-design-ai-voices-from-scratch-using-text-descriptions",
+      "featured": true
+    },
+    {
+      "title": "阿里发布 Qwen Audio 3.1，音频 API 降价最高 95%",
+      "summary": "阿里通义千问团队发布 Qwen-Audio-3.1，包含五款覆盖语音识别（ASR）、语音合成（TTS）和实时交互的模型。新版 ASR 改进了多语言与方言识别，可自动清理语气词；TTS 支持多语种合成，API 价格最高下调 95%。成本的大幅降低有利于需要批量处理音频素材的 AIGC 工作流。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/alibaba-launches-qwen-audio-3-1-with-five-new-models-and-slashes-ai-audio-prices-by-up-to-95-percent",
+      "featured": false
+    },
+    {
+      "title": "YouTube Studio 引入脚本辅导与 Gemini 剪辑助手",
+      "summary": "YouTube 在 Creator Studio 中新增多项 AI 工具：叙事助手可分析脚本和粗剪片段，Gemini 成为 Shorts 的对话式剪辑助手，同时上线了将英语直播实时翻译为西班牙语的功能。这些工具直接嵌入创作者现有的发布流程，意在缩短从构思到成片的周期。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/youtube-adds-ai-tools-to-creator-studio-with-script-coaching-smart-thumbnails-and-gemini-editing",
+      "featured": false
+    },
+    {
+      "title": "invideo 借助 GPT-6 Astra 提升调色精度与效率",
+      "summary": "OpenAI 披露 invideo 使用 GPT-6 Astra 优化视频编辑的案例。该模型帮助 invideo 更精确地规划剪辑点，将色彩校正和调色的质量提升了三倍，并在一天内生成 50 个自定义特效。这展示了前沿模型在专业视频后期环节的实际落地能力。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/invideo-builds-with-gpt-6-astra",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 工程师解释新版 Claude 写作风格变差的原因",
+      "summary": "Anthropic 员工 Jackson Kernion 发文说明，由于近期模型训练过度侧重数学、代码以及面向其他 AI 的技术解释，导致输出文本对人类读者而言变成了「信息密度过高的堆砌」。Opus 5.5 尝试修复这一问题，但纯写作能力仍不及 Opus 4.6。这对依赖大模型进行长文写作的创作者是一个重要的选型参考。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-engineer-explains-why-claudes-writing-got-worse-although-the-model-got-smarter",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 招募 Patreon 联合创始人负责创作者产品",
+      "summary": "OpenAI 聘请 Patreon 联合创始人 Sam Yam 领导新成立的 Creator Product 部门，另有两名 Patreon 高管一同加入。该团队将为创作者开发新工具，首批成果可能在下周的 OpenAI DevDay 上亮相。这意味着 OpenAI 正将业务重心向内容创作者群体倾斜。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-hires-patreon-co-founder-sam-yam-to-lead-a-new-creator-product-division",
+      "featured": false
+    }
+  ]
+}
