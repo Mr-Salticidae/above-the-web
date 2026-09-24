@@ -1,19 +1,20 @@
 name: 主站 nginx 配置（手动）
 
-# 把 platform/deploy/nginx-site-static.conf 接进主站 nginx 用的一次性工具，只能手动触发。
+# 把 platform/deploy/nginx-site-static.conf 接进主站 nginx 的工具，只能手动触发。
 #   inspect：只读。打印主站 server 块、nginx 版本与相关全局设置，什么都不改。
-#   （apply 模式在看过现有配置、确认改动之后再加。）
-# 仓库是公开的，Actions 日志人人可见：只打印主站那一个 server 块，
-# 并把疑似含凭据的行打码后再输出。
+#   apply：  备份 → 写入 snippet 并在主站 443 server 块插入一行 include → nginx -t
+#            → 通过才 reload，不通过自动回滚；reload 后本机自检，首页不是 200 也回滚。
+#            可重复运行：include 已存在就只更新 snippet 内容。
+# 仓库是公开的，Actions 日志人人可见：只打印主站那一个 server 块，疑似含凭据的行打码。
 on:
   workflow_dispatch:
     inputs:
       mode:
-        description: 'inspect = 只读查看'
+        description: 'inspect = 只读查看；apply = 写入并 reload（失败自动回滚）'
         required: true
         default: inspect
         type: choice
-        options: [inspect]
+        options: [inspect, apply]
 
 permissions:
   contents: read
@@ -22,38 +23,90 @@ concurrency:
   group: nginx-site
   cancel-in-progress: false
 
+env:
+  HOST: 43.128.2.172
+
 jobs:
   nginx:
     runs-on: ubuntu-latest
     steps:
-      - name: 只读查看主站 nginx 配置
-        if: inputs.mode == 'inspect'
-        env:
-          HOST: 43.128.2.172
+      - uses: actions/checkout@v7
+
+      - name: 准备 SSH
         run: |
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: 只读查看主站 nginx 配置
+        if: inputs.mode == 'inspect'
+        run: |
           ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@"$HOST" 'bash -s' <<'REMOTE'
           set -u
           redact() { sed -E 's/((pass(word)?|secret|token|api[_-]?key|auth_basic_user_file|private)[^;]*)/[已打码]/Ig'; }
           echo "=== nginx 版本 ==="; nginx -v 2>&1
           echo "=== 配置自检 ==="; nginx -t 2>&1 | tail -2
           echo "=== sites-enabled ==="; ls -l /etc/nginx/sites-enabled/ /etc/nginx/conf.d/ 2>&1
-          echo "=== 含主站域名的配置文件 ==="
-          files=$(grep -lE 'server_name[^;]*(tiaozhuxiansheng\.com|[[:space:]]_[[:space:];])' /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf 2>/dev/null | xargs -r readlink -f | sort -u)
-          echo "$files"
-          for f in $files; do
-            echo; echo "=== $f ==="
-            redact < "$f"
-          done
-          echo; echo "=== nginx.conf 里的 gzip / include 设置 ==="
+          echo "=== /etc/nginx/sites-enabled/tiaozhuxiansheng ==="
+          redact < /etc/nginx/sites-enabled/tiaozhuxiansheng
+          echo "=== snippet ==="
+          cat /etc/nginx/snippets/atw-site-static.conf 2>&1
+          echo "=== nginx.conf 里的 gzip / include 设置 ==="
           grep -nE 'gzip|include' /etc/nginx/nginx.conf | redact
-          echo "=== mime.types 是否认 webmanifest ==="
-          grep -n webmanifest /etc/nginx/mime.types || echo "（无）"
-          echo "=== 部署片段是否已在服务器上 ==="
-          ls -l /opt/atw-platform/deploy/nginx-site-static.conf 2>&1
-          echo "=== 站点根目录是否有 404.html / manifest ==="
-          ls -l /var/www/tiaozhuxiansheng/404.html /var/www/tiaozhuxiansheng/manifest.webmanifest 2>&1
+          REMOTE
+
+      - name: 写入并 reload（失败自动回滚）
+        if: inputs.mode == 'apply'
+        run: |
+          scp -i ~/.ssh/id_ed25519 -o BatchMode=yes platform/deploy/nginx-site-static.conf root@"$HOST":/tmp/atw-site-static.conf
+          ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@"$HOST" 'bash -s' <<'REMOTE'
+          set -euo pipefail
+          SITE=/etc/nginx/sites-enabled/tiaozhuxiansheng
+          SNIP=/etc/nginx/snippets/atw-site-static.conf
+          NEW=/tmp/atw-site-static.conf
+          INCLUDE='include snippets/atw-site-static.conf;'
+          # 备份放在 sites-enabled 之外：留在里面会被 nginx 一并加载，变成重复的 server 块
+          BK=/root/nginx-backups; TS=$(date +%Y%m%d-%H%M%S); mkdir -p "$BK"
+          cp -a "$SITE" "$BK/tiaozhuxiansheng.$TS"
+          HAD_SNIP=0
+          if [ -f "$SNIP" ]; then cp -a "$SNIP" "$BK/atw-site-static.conf.$TS"; HAD_SNIP=1; fi
+          echo "已备份到 $BK/*.$TS"
+
+          rollback() {
+            echo "!!! 回滚到 $TS 的备份"
+            cp -a "$BK/tiaozhuxiansheng.$TS" "$SITE"
+            if [ "$HAD_SNIP" = 1 ]; then cp -a "$BK/atw-site-static.conf.$TS" "$SNIP"; else rm -f "$SNIP"; fi
+            nginx -t && systemctl reload nginx
+            echo "!!! 已回滚，线上恢复原配置"
+          }
+
+          install -m 644 "$NEW" "$SNIP"
+          if grep -qF "$INCLUDE" "$SITE"; then
+            echo "include 已存在，只更新 snippet 内容"
+          else
+            n=$(grep -c 'include snippets/pb-docs.conf;' "$SITE" || true)
+            if [ "$n" != 1 ]; then echo "锚点行 include snippets/pb-docs.conf; 出现 $n 次，不是 1 次，放弃"; rollback; exit 1; fi
+            sed -i "s#^\([[:space:]]*\)include snippets/pb-docs.conf;#&\n\1$INCLUDE#" "$SITE"
+          fi
+          echo "=== 改动 ==="; diff -u "$BK/tiaozhuxiansheng.$TS" "$SITE" || true
+
+          if ! nginx -t; then echo "nginx -t 未通过"; rollback; exit 1; fi
+          systemctl reload nginx
+          sleep 1
+
+          echo "=== 本机自检 ==="
+          C="curl -sk --resolve tiaozhuxiansheng.com:443:127.0.0.1"
+          home=$($C -o /dev/null -w '%{http_code}' https://tiaozhuxiansheng.com/)
+          echo "首页：$home"
+          if [ "$home" != 200 ]; then echo "首页异常"; rollback; exit 1; fi
+          nf_code=$($C -o /tmp/nf.html -w '%{http_code}' https://tiaozhuxiansheng.com/__atw-404-check__/)
+          grep -q '这根蛛丝断了' /tmp/nf.html && nf_page=新404页 || nf_page=非新404页
+          echo "不存在的地址：$nf_code，$nf_page"
+          echo "manifest 类型：$($C -o /dev/null -w '%{content_type}' https://tiaozhuxiansheng.com/manifest.webmanifest)"
+          css=$(ls /var/www/tiaozhuxiansheng/_astro/*.css | head -1 | xargs basename)
+          echo "CSS 压缩（$css）：$($C -H 'Accept-Encoding: gzip' -D - -o /dev/null https://tiaozhuxiansheng.com/_astro/$css | grep -i '^content-encoding' || echo '未压缩')"
+          echo "RSS 压缩：$($C -H 'Accept-Encoding: gzip' -D - -o /dev/null https://tiaozhuxiansheng.com/rss.xml | grep -i '^content-encoding' || echo '未压缩')"
+          echo "API：$($C -o /dev/null -w '%{http_code}' https://tiaozhuxiansheng.com/api/meta)"
+          rm -f "$NEW" /tmp/nf.html
           REMOTE
