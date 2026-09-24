@@ -11,16 +11,21 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
   cancel-in-progress: true
 
 jobs:
+  # GitHub Pages 镜像：构建产物直接强制推到 gh-pages 分支，由 Pages「从分支发布」。
+  # 以前走 upload-pages-artifact + deploy-pages：每次都把整份 dist（100 多 MB）存成 Actions 产物，
+  # 每 6 小时一次的定时构建很快把账号的产物存储配额挤满，之后连上传都失败。
+  # 推分支不占产物存储；gh-pages 每次都是一个孤立提交（force push），不会越积越大。
+  # 前提（一次性）：仓库 Settings → Pages → Source 选「Deploy from a branch」，分支 gh-pages / (root)。
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write        # 推 gh-pages 分支
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -30,19 +35,20 @@ jobs:
       - run: npm ci
       - run: npm test               # 知识库检索放宽等纯逻辑单元测试，挂了就不出包
       - run: npm run build          # sync(克隆 knowledge-base) + astro build + pagefind
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v5
+      - name: 发布到 gh-pages 分支
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # _astro/ 以下划线开头，Pages 默认的 Jekyll 会把它当私有目录丢掉，整站样式脚本全挂
+          touch dist/.nojekyll
+          cd dist
+          git init -q -b gh-pages
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "deploy: ${GITHUB_SHA}"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+          echo "已推送 gh-pages（$(git ls-files | wc -l) 个文件）"
 
   # 部署到香港轻量服务器（国内访问主入口，根路径 + 自定义域名）
   deploy-server:
