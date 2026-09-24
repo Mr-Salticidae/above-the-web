@@ -210,6 +210,7 @@ cd platform/server && npm run dev
 | [docs/KB_ASSISTANT_PERSONA.md](docs/KB_ASSISTANT_PERSONA.md) | 查笔记小助手「小织」的角色卡 |
 | [docs/TASK_AI_ASSIST.md](docs/TASK_AI_ASSIST.md) | 任务书 AI 辅助填写 |
 | [docs/MUSIC_PLAYER.md](docs/MUSIC_PLAYER.md) | 音乐板块与全站播放器 |
+| [docs/MUSIC_UPLOAD_HANDOFF.md](docs/MUSIC_UPLOAD_HANDOFF.md) | 没有服务器私钥时的批量上歌流程（Release 中转 + music-inbox 工作流） |
 | [platform/README.md](platform/README.md) | 账号与任务流转服务 |
 | [AGENTS.md](AGENTS.md) | 文档规范（放 `docs/`、大写下划线命名、首行标日期） |
 

@@ -1,0 +1,101 @@
+name: 音乐入库（手动）
+
+# 把 GitHub Release「music-inbox」里的音频 / 封面搬到香港服务器 /var/www/atw-music/，
+# 给没有服务器 SSH 私钥的电脑用：本机只需 `gh release upload music-inbox …`，搬运走 CI 的 HK_SSH_KEY。
+#
+#   · mp3 原样上传；wav / flac / m4a 先用 ffmpeg 转 192k mp3
+#   · jpg / jpeg / png / webp 进 covers/
+#   · 附件名请用 ASCII（如 yuwen.mp3）：GitHub 会改写 Release 附件名里的空格与非 ASCII 字符，
+#     中文歌名写在 manifest 的 title 里，audio / cover 字段填这里的 ASCII 文件名
+#   · 上传后逐个回查服务器上的文件大小，对不上就失败，不清理 Release
+#   · cleanup=true（默认）时，核对无误后删除 Release 里的附件，音频不在 GitHub 长期存放
+# 用法与交接说明见 docs/MUSIC_UPLOAD_HANDOFF.md。
+on:
+  workflow_dispatch:
+    inputs:
+      cleanup:
+        description: '落地核对无误后删除 Release 附件'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write            # 读取、清理 Release 附件
+
+concurrency:
+  group: music-inbox
+  cancel-in-progress: false
+
+env:
+  HOST: 43.128.2.172
+  TAG: music-inbox
+  REMOTE: /var/www/atw-music
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  inbox:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下载 Release 附件
+        run: |
+          mkdir -p inbox
+          gh release download "$TAG" -R "$GITHUB_REPOSITORY" -D inbox --clobber
+          ls -la inbox
+          test -n "$(ls -A inbox)" || { echo "Release $TAG 里没有附件"; exit 1; }
+
+      - name: 分拣与转码
+        run: |
+          shopt -s nullglob
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg >/dev/null; }
+          mkdir -p out/audio out/covers
+          for f in inbox/*; do
+            name=$(basename "$f"); stem="${name%.*}"; ext="${name##*.}"; ext="${ext,,}"
+            case "$ext" in
+              mp3) cp "$f" "out/audio/$name" ;;
+              wav|flac|m4a) ffmpeg -nostdin -loglevel error -i "$f" -codec:a libmp3lame -b:a 192k "out/audio/$stem.mp3"; echo "转码：$name → $stem.mp3" ;;
+              jpg|jpeg|png|webp) cp "$f" "out/covers/$name" ;;
+              *) echo "忽略：$name" ;;
+            esac
+          done
+          {
+            echo "### 入库文件"
+            echo "| 文件 | 时长（秒，填 manifest 的 duration） | 大小 |"
+            echo "| --- | --- | --- |"
+            for f in out/audio/*.mp3; do
+              d=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f" | cut -d. -f1)
+              echo "| audio/$(basename "$f") | $d | $(du -h "$f" | cut -f1) |"
+            done
+            for f in out/covers/*; do echo "| covers/$(basename "$f") | — | $(du -h "$f" | cut -f1) |"; done
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: 上传到服务器并逐个核对
+        run: |
+          shopt -s nullglob
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          SSH="ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@$HOST"
+          $SSH "mkdir -p $REMOTE/audio $REMOTE/covers"
+          bad=0
+          for sub in audio covers; do
+            files=(out/$sub/*)
+            [ ${#files[@]} -eq 0 ] && continue
+            scp -i ~/.ssh/id_ed25519 -o BatchMode=yes "${files[@]}" "root@$HOST:$REMOTE/$sub/"
+            # 发出去不等于收到了：逐个回查服务器上的字节数
+            for f in "${files[@]}"; do
+              n=$(basename "$f")
+              local_size=$(stat -c %s "$f")
+              remote_size=$($SSH "stat -c %s '$REMOTE/$sub/$n' 2>/dev/null" || echo missing)
+              if [ "$local_size" = "$remote_size" ]; then echo "✓ $sub/$n"; else echo "✗ $sub/$n 本地 $local_size / 服务器 $remote_size"; bad=1; fi
+            done
+          done
+          $SSH "chmod -R a+rX $REMOTE"
+          echo "服务器 audio/ 现有 $($SSH "ls $REMOTE/audio | wc -l") 个文件"
+          exit $bad
+
+      - name: 清理 Release 附件
+        if: inputs.cleanup
+        run: |
+          gh release view "$TAG" -R "$GITHUB_REPOSITORY" --json assets -q '.assets[].name' | while IFS= read -r a; do
+            gh release delete-asset "$TAG" "$a" -R "$GITHUB_REPOSITORY" -y && echo "已删除附件：$a"
+          done

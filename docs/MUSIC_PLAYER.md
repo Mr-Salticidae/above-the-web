@@ -11,12 +11,14 @@
 ## 素材放哪（本机）
 
 ```
-E:\above-the-web\music-library\        （已 gitignore，音频不进仓库）
+<仓库目录>\music-library\          （已 gitignore，音频不进仓库）
   ├─ audio\     mp3 文件，命名「歌名.mp3」或「艺术家 - 歌名.mp3」
   └─ covers\    封面图（可选），与音频同名 .jpg/.jpeg/.png/.webp
 ```
 
 ## 上线步骤
+
+> 电脑上没有服务器 SSH 私钥（`upload-music.mjs` 用不了）时，改走 GitHub Release 中转：见 [MUSIC_UPLOAD_HANDOFF.md](MUSIC_UPLOAD_HANDOFF.md) 与工作流 `music-inbox.yml`。
 
 歌散落在各个创作目录里时，先用收集脚本归拢到 `music-library/`：
 
