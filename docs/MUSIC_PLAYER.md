@@ -1,4 +1,4 @@
-最后更新：2026-08-18
+最后更新：2026-09-24
 
 # 音乐播放器
 
@@ -16,7 +16,20 @@ E:\above-the-web\music-library\        （已 gitignore，音频不进仓库）
   └─ covers\    封面图（可选），与音频同名 .jpg/.jpeg/.png/.webp
 ```
 
-## 上线三步
+## 上线步骤
+
+歌散落在各个创作目录里时，先用收集脚本归拢到 `music-library/`：
+
+```bash
+# 0a. 扫描：递归找音频，生成 music-library/candidates.tsv（选用 / 歌名 / 源文件 / 封面）
+node scripts/collect-music.mjs "D:\AIGC工作站"
+#     用记事本或 Excel 打开清单：不要的改成 n，歌名按需改。mp3 默认选用，
+#     wav / flac / m4a 默认不选（播放器与清单脚本只收 mp3，先转码）。
+# 0b. 收集：按清单复制进 music-library/audio 与 covers（同名图片或含 cover / 封面 的图片当封面）
+node scripts/collect-music.mjs --apply
+```
+
+然后三步上线：
 
 ```bash
 # 1. 上传音频到香港服务器（nginx /music/ 静态目录）
