@@ -173,14 +173,17 @@ Pagefind 默认索引整个 `<body>`，顶栏导航、页脚、播放器里的�
 
 ## 10. 部署侧一次性配置
 
-主站 nginx 需要手动接入 `platform/deploy/nginx-site-static.conf` 里的几段（与其他 nginx 片段同一惯例，CI 不代劳）：
+主站 nginx 的配套配置在 `platform/deploy/nginx-site-static.conf`，服务器上落在 `/etc/nginx/snippets/atw-site-static.conf`，由主站 443 server 块里紧跟 `pb-docs.conf` 的一行 `include snippets/atw-site-static.conf;` 引入。内容只有三项：
 
-1. `error_page 404 /404.html;`：启用自定义 404。GitHub Pages 会自动使用产物根目录的 `404.html`，无需配置。
-2. `.webmanifest` 的 MIME 类型：旧版 nginx 不认，会按二进制下发。
-3. `/_astro/` 长缓存：产物带内容哈希，可以放心缓存一年。
-4. 订阅源、sitemap、llms.txt 的短缓存与 gzip。
+1. `error_page 404 /404.html;`：启用自定义 404（只作用于静态文件，`/api/` 反代的 404 原样返回）。GitHub Pages 会自动使用产物根目录的 `404.html`，无需配置。
+2. `.webmanifest` 的 MIME 类型：nginx 1.24 的 `mime.types` 不认，会按二进制下发。
+3. `gzip_types`：全局只开了 `gzip on` 而没配类型，此前只压缩 HTML；补上 CSS、JS、RSS、sitemap 等文本类型。
 
-CI 无需改动：`deploy.yml` 里的 `npm test` 与 `npm run build` 自动覆盖新增的单元测试与生成步骤。
+刻意不写的：`/_astro/` 长缓存（主站 server 块已有同名 location），以及任何 `add_header`（location 一旦写了它，server 级的 `Cache-Control $cache_ctrl` 就不再继承）。
+
+写入与回滚走手动工作流 `.github/workflows/nginx-site.yml`：`inspect` 只读查看；`apply` 先备份到服务器 `/root/nginx-backups/`，写入后跑 `nginx -t`，通过才 reload，不通过或 reload 后首页不是 200 就自动回滚。可重复运行，改了片段内容再跑一次 `apply` 即可。
+
+CI 其余部分无需改动：`deploy.yml` 里的 `npm test` 与 `npm run build` 自动覆盖新增的单元测试与生成步骤。
 
 ## 11. 验证方式
 
