@@ -135,7 +135,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 /* 栏目导航：桌面挂在顶栏右侧；窄屏不再整排藏掉，而是换到第二行横向滑动 */
 .site-nav { display: flex; align-items: center; gap: 1rem; margin-left: auto; }
-.site-nav a[aria-current="page"], .footer-nav a[aria-current="page"] {
+.site-nav a[aria-current], .footer-nav a[aria-current] {
   color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent);
   text-decoration-thickness: 2px; text-underline-offset: .45em;
 }

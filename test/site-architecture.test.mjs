@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseGitLog, resolveNoteDates, dayOf } from '../src/lib/note-dates.mjs';
+import { parseGitLog, resolveNoteDates, dayOf, toBeijingIso } from '../src/lib/note-dates.mjs';
 import { readingStats, formatCount } from '../src/lib/reading.mjs';
 import { relatedNotes } from '../src/lib/related.mjs';
 import { escapeXml, renderRss, renderJsonFeed, feedHtml, sortByDateDesc } from '../src/lib/feed.mjs';
@@ -34,6 +34,17 @@ test('文件名日期优先作发布日；更新日期不早于发布日；都�
   assert.equal(resolveNoteDates('2026-06-061_x').published, null);
   assert.equal(dayOf('2026-09-20T09:35:01+08:00'), '2026-09-20');
   assert.equal(dayOf(null), '');
+});
+
+test('git 日期混着别的时区：一律折算成北京时间，日期标签与字符串排序才对', () => {
+  assert.equal(toBeijingIso('2026-06-03T22:59:27+00:00'), '2026-06-04T06:59:27+08:00');
+  assert.equal(toBeijingIso('2026-06-04T09:00:00+09:00'), '2026-06-04T08:00:00+08:00');
+  assert.equal(toBeijingIso('2026-06-04T08:00:00+08:00'), '2026-06-04T08:00:00+08:00');
+  assert.equal(toBeijingIso(''), null);
+  assert.equal(toBeijingIso('not a date'), null);
+  const d = resolveNoteDates('无日期', { created: '2026-06-03T22:59:27+00:00', updated: '2026-06-04T03:08:45+00:00' });
+  assert.equal(dayOf(d.published), '2026-06-04');
+  assert.equal(d.updated, '2026-06-04T11:08:45+08:00');
 });
 
 test('阅读统计：中文按字、英文按词，代码与链接地址不计', () => {
@@ -98,6 +109,20 @@ test('Feed：XML 转义、CDATA 拆分、控制字符剔除，JSON Feed 字段�
   assert.equal(json.items[0].id, 'https://e.com/a/');
   assert.equal(json.items[0].content_html, '<p>x ]]> y</p>');
   assert.deepEqual(sortByDateDesc([{ title: 'a', date: '2026-01-01' }, { title: 'b', date: '' }, { title: 'c', date: '2026-02-01' }]).map((i) => i.title), ['c', 'a', 'b']);
+  // 不同时区偏移按时间值比：03:08Z 比 09:00+08:00（=01:00Z）晚
+  assert.deepEqual(sortByDateDesc([
+    { title: 'early', date: '2026-06-04T09:00:00+08:00' },
+    { title: 'late', date: '2026-06-04T03:08:45+00:00' },
+  ]).map((i) => i.title), ['late', 'early']);
+});
+
+test('Feed：正文里的控制字符（知识库里真有 BEL）不许进 CDATA，否则整份 XML 作废', () => {
+  const xml = renderRss(
+    { title: '站', description: 'd', link: 'https://e.com/', feedUrl: 'https://e.com/rss.xml' },
+    [{ title: 't\u0007', link: 'https://e.com/a/', html: '<code>E:\\knowledge-base\u0007_skill</code>', summary: 's\u000B' }],
+  );
+  assert.ok(!/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/.test(xml));
+  assert.ok(xml.includes('<code>E:\\knowledge-base_skill</code>'));
 });
 
 test('Feed 正文：去掉未解析的图片占位，站内链接改主站绝对地址', () => {

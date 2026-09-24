@@ -96,8 +96,12 @@ async function hydrateResult(result) {
       const html = await response.text();
       const documentNode = new DOMParser().parseFromString(html, 'text/html');
       const article = documentNode.querySelector('article.prose');
+      const categoryNode = documentNode.querySelector('[data-pagefind-meta="category"]') || article?.querySelector('.meta');
+      category ||= cleanPageText(categoryNode?.textContent || '');
+      // 刊眉（面包屑 / 日期 / 阅读时长）、正文前的目录、文末修订信息都标了 data-pagefind-ignore：
+      // 搜索不索引它们，喂给模型的原文也不该带上，否则摘录开头先是两百来字的页面框架。
+      article?.querySelectorAll('[data-pagefind-ignore]').forEach((node) => node.remove());
       articleText = article?.innerText || article?.textContent || '';
-      category ||= cleanPageText(article?.querySelector('.meta')?.textContent || '');
     }
   } catch {
     // 单篇页面取不到时仍可退回 Pagefind 的命中摘要，别让整轮问答一起失败。

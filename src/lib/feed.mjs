@@ -6,24 +6,28 @@
 // 阅读器按 guid 去重，不会因为从两个域订阅就收到两份。
 import { CANONICAL_ORIGIN, SITE_LANG } from './site.mjs';
 
+// XML 1.0 不允许的控制字符。知识库里真有：SKILL_INDEX.md 里一段 Windows 路径
+// 「E:\knowledge-base\07_skill存档」的 \07 成了一个 BEL（\x07）。转义也好、CDATA 也好，
+// 只要漏进一个，整份 Feed 就不是合法 XML，阅读器会整份拒收。
+const XML_INVALID = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]/g;
+
 export function escapeXml(value) {
   return String(value ?? '')
+    .replace(XML_INVALID, '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-    // XML 1.0 不允许的控制字符（知识库里偶有从别处粘贴来的）直接丢掉，免得整份 Feed 解析失败
-    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+    .replace(/'/g, '&apos;');
 }
 
-// CDATA 里唯一的禁区是 "]]>"，拆成两段
-const cdata = (html) => `<![CDATA[${String(html ?? '').replaceAll(']]>', ']]]]><![CDATA[>')}]]>`;
+// CDATA 里的禁区是 "]]>"（拆成两段）与上面那些控制字符
+const cdata = (html) => `<![CDATA[${String(html ?? '').replace(XML_INVALID, '').replaceAll(']]>', ']]]]><![CDATA[>')}]]>`;
 
 // channel: { title, description, link, feedUrl }
 // item:    { title, link, date(ISO), summary, html?, categories? }
 export function renderRss(channel, items) {
-  const newest = items.reduce((m, it) => (it.date && it.date > m ? it.date : m), '');
+  const newest = items.reduce((m, it) => (it.date && (!m || Date.parse(it.date) > Date.parse(m)) ? it.date : m), '');
   const out = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">',
@@ -74,9 +78,11 @@ export function renderJsonFeed(channel, items) {
   }, null, 2) + '\n';
 }
 
-// 条目按日期倒序；没有日期的沉底（仍保留，Feed 阅读器会按抓到的时间处理）
+// 条目按时间倒序；没有日期的沉底（仍保留，Feed 阅读器会按抓到的时间处理）。
+// 按时间值比较而不是字符串：「…T03:08+00:00」比「…T09:00+08:00」晚，字典序却排在后面。
+const timeOf = (iso) => (iso ? Date.parse(iso) || 0 : 0);
 export function sortByDateDesc(items) {
-  return [...items].sort((a, b) => (b.date || '').localeCompare(a.date || '') || a.title.localeCompare(b.title, 'zh'));
+  return [...items].sort((a, b) => timeOf(b.date) - timeOf(a.date) || a.title.localeCompare(b.title, 'zh'));
 }
 
 // Content Layer 渲染好的笔记 HTML 进 Feed 前的收拾：
