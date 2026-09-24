@@ -154,7 +154,9 @@ npm ci
 npm run build
 ```
 
-随后上传 `dist/` 并部署到 GitHub Pages。仓库需要在 GitHub 的 **Settings → Pages** 中选择 **GitHub Actions** 作为发布源。
+随后把 `dist/`（补一个 `.nojekyll`）作为单个孤立提交强制推送到 `gh-pages` 分支，由 GitHub Pages 从分支发布。仓库需要在 GitHub 的 **Settings → Pages** 中把 **Source** 设为 **Deploy from a branch**，分支选 `gh-pages`、目录 `/ (root)`。
+
+不用 `upload-pages-artifact` + `deploy-pages` 的原因：每次构建都会把 100 多 MB 的 `dist/` 存成 Actions 产物，每 6 小时一次的定时构建会把账号的产物存储配额挤满，之后连上传都失败。推分支不占产物存储。
 
 Pages 地址为：
 
@@ -285,7 +287,7 @@ node --test test/*.test.js
 - API 测试全部通过；
 - `.env`、数据库、SSH 私钥等敏感文件未进入 Git；
 - GitHub Actions 所需的 `HK_SSH_KEY` 已配置；
-- GitHub Pages 发布源已设为 GitHub Actions。
+- GitHub Pages 发布源已设为 `gh-pages` 分支（Deploy from a branch）。
 
 ## 9. 常见问题
 

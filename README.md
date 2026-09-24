@@ -170,7 +170,7 @@ cd platform/server && npm run dev
 
 | 目标 | 地址 | 构建参数 | 落点 |
 | --- | --- | --- | --- |
-| GitHub Pages 镜像 | `mr-salticidae.github.io/above-the-web/` | 默认 | `actions/deploy-pages` |
+| GitHub Pages 镜像 | `mr-salticidae.github.io/above-the-web/` | 默认 | 强制推送到 `gh-pages` 分支（Pages 从分支发布） |
 | 香港服务器（国内主入口） | `tiaozhuxiansheng.com` | `BASE_PATH=/` `SITE_URL=https://tiaozhuxiansheng.com` | rsync 到 `/var/www/tiaozhuxiansheng/` |
 | 快讯子站 | `news.tiaozhuxiansheng.com` | `build-news-site.mjs` | rsync 到 `/var/www/atw-news/` |
 
