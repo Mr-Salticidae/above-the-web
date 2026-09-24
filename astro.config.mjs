@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import { remarkWikilink } from './src/lib/remark-wikilink.mjs';
 import { remarkSafeImages } from './src/lib/remark-safe-images.mjs';
 import { buildLinkMap } from './src/lib/kb.mjs';
+import sitemap from './src/integrations/sitemap.mjs';
 
 // 站点地址与 base 改为环境变量驱动，一套代码兼容两种部署目标：
 //   · GitHub Pages 项目站（默认）：根域 + /above-the-web 子路径
@@ -22,8 +23,16 @@ export default defineConfig({
   site: SITE,
   base: BASE,
   trailingSlash: 'always',
+  // sitemap.xml：构建后按产物里各页自己声明的 noindex / canonical / 修改时间生成，见 src/integrations/sitemap.mjs
+  integrations: [sitemap()],
   markdown: {
     // remarkSafeImages 先行：中性化破损/模板图片，避免后续图片解析在构建期报错
     remarkPlugins: [remarkSafeImages, [remarkWikilink, { resolve }]],
+    // 代码高亮跟随站内昼夜主题：Shiki 同时产出两套配色写进 CSS 变量，
+    // 由 global.css 按 data-theme 选用（不是按系统偏好，站内主题开关说了算）
+    shikiConfig: {
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: false,
+    },
   },
 });

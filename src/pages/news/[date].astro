@@ -3,6 +3,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import NewsIssue from '../../components/NewsIssue.astro';
 import { getIssues, formatDate, canonicalUrl } from '../../lib/news.mjs';
+import { articleLd, breadcrumbLd } from '../../lib/structured-data.mjs';
+import { canonicalUrl as siteUrl } from '../../lib/site.mjs';
 
 export function getStaticPaths() {
   const issues = getIssues();
@@ -15,12 +17,28 @@ export function getStaticPaths() {
 
 const { issue, prev, next } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+// 快讯每天早晨出刊，按北京时间 09:30 记（与 Feed 一致）
+const published = `${issue.date}T09:30:00+08:00`;
+const title = `AIGC 快讯 第 ${issue.no} 期 · ${issue.date}`;
+const description = issue.headline || `AIGC 快讯 ${issue.date}：${issue.items.length} 条 AIGC 领域新闻精选。`;
+// 结构化数据只在主站 / 镜像构建里输出（SEO.astro 在独立包里整段不渲染），这里的主站地址不会进子站
+const url = siteUrl(`/news/${issue.date}/`);
+const ld = [
+  articleLd({ type: 'NewsArticle', url, title, description, published, updated: published, section: 'AIGC 快讯' }),
+  breadcrumbLd([
+    { name: 'AIGC 快讯', url: siteUrl('/news/') },
+    { name: `第 ${issue.no} 期`, url },
+  ]),
+];
 ---
 
 <BaseLayout
-  title={`AIGC 快讯 第 ${issue.no} 期 · ${issue.date}`}
-  description={issue.headline || `AIGC 快讯 ${issue.date}：${issue.items.length} 条 AIGC 领域新闻精选。`}
+  title={title}
+  description={description}
   canonical={canonicalUrl(issue.date)}
+  type="article"
+  article={{ published, updated: published, section: 'AIGC 快讯' }}
+  ld={ld}
 >
   <div class="news-page">
     <nav class="crumb">

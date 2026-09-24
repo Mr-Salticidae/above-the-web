@@ -1,4 +1,4 @@
-最后更新：2026-07-29
+最后更新：2026-09-24
 
 # 本地运行与部署说明
 
@@ -40,9 +40,10 @@ npm run dev
 
 该命令会先运行 `npm run sync`，然后启动 Astro 开发服务器。同步过程会：
 
-1. 将公开知识库 `Mr-Salticidae/knowledge-base` 克隆或更新到 `kb-content/`；
-2. 清洗站点需要的 Markdown frontmatter；
-3. 将 `Mr-Salticidae/becoming-a-prompt-master` 同步到缓存，并镜像到 `public/prompt-master/`。
+1. 将公开知识库 `Mr-Salticidae/knowledge-base` 以部分克隆（`--filter=blob:none`）方式克隆或更新到 `kb-content/`；
+2. 从 git 历史导出每篇笔记的发布 / 更新日期到 `.cache/kb-dates.json`（旧版脚本留下的浅克隆会被自动删掉重来）；
+3. 清洗站点需要的 Markdown frontmatter；
+4. 将 `Mr-Salticidae/becoming-a-prompt-master` 同步到缓存，并镜像到 `public/prompt-master/`。
 
 启动后按终端显示的地址访问，默认通常为：
 
@@ -184,7 +185,7 @@ GitHub 仓库必须配置 Actions Secret：
 
 `GITHUB_TOKEN` 由 GitHub Actions 自动提供，用于读取 Release 资源，无需手工创建。
 
-服务器侧需要预先配置 nginx，使 `tiaozhuxiansheng.com` 的站点根目录指向 `/var/www/tiaozhuxiansheng/`，并将 `/api/` 反向代理到 `127.0.0.1:3200`。
+服务器侧需要预先配置 nginx，使 `tiaozhuxiansheng.com` 的站点根目录指向 `/var/www/tiaozhuxiansheng/`，并将 `/api/` 反向代理到 `127.0.0.1:3200`。另外把 `platform/deploy/nginx-site-static.conf` 里的几段并进同一个 server 块：自定义 404（`error_page 404 /404.html;`）、`.webmanifest` 的 MIME 类型、`/_astro/` 长缓存，以及订阅源与 sitemap 的短缓存。
 
 ### 6.3 「AIGC 快讯」子域名
 
@@ -280,6 +281,7 @@ node --test test/*.test.js
 
 - 静态构建成功，`dist/` 已生成；
 - `dist/tasks/index.json` 存在；
+- `dist/sitemap.xml`、`dist/rss.xml`、`dist/feed.json`、`dist/llms.txt`、`dist/404.html` 已生成；
 - API 测试全部通过；
 - `.env`、数据库、SSH 私钥等敏感文件未进入 Git；
 - GitHub Actions 所需的 `HK_SSH_KEY` 已配置；

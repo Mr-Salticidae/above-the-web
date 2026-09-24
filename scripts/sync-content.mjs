@@ -1,11 +1,17 @@
 // 内容同步脚本：把公开知识库 knowledge-base 拉到本地 kb-content/，
-// 并清洗 Obsidian 特性带来的解析坑（frontmatter BOM）。
-// 本地开发：增量 pull；CI：浅克隆。kb-content/ 已 gitignore。
+// 清洗 Obsidian 特性带来的解析坑（frontmatter BOM），并从 git 历史导出每篇笔记的日期。
+// 本地开发：增量 fetch；CI：首次克隆。kb-content/ 已 gitignore。
+//
+// 克隆方式是 blobless 部分克隆（--filter=blob:none）而不是 --depth 1：
+// 提交与目录树全量拿到（整个仓库才几百 KB），文件内容只按当前版本按需下载，
+// 所以体积与浅克隆几乎一样，却能 git log 出每个文件的首次提交与最后改动——
+// 笔记的「发布于 / 更新于」、Feed、Sitemap 的 lastmod 都靠它（见 src/lib/note-dates.mjs）。
 
-import { execSync } from 'node:child_process';
+import { execSync, execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { SELECTED } from '../src/lib/kb.mjs';
+import { DATES_FILE, parseGitLog } from '../src/lib/note-dates.mjs';
 
 const REPO = 'https://github.com/Mr-Salticidae/knowledge-base.git';
 const DIR = 'kb-content';
@@ -22,15 +28,44 @@ function run(cmd, opts = {}) {
   return execSync(cmd, { stdio: 'inherit', ...opts });
 }
 
+const isShallow = (dir) => {
+  try {
+    return execFileSync('git', ['-C', dir, 'rev-parse', '--is-shallow-repository'], { encoding: 'utf8' }).trim() === 'true';
+  } catch {
+    return true;
+  }
+};
+
 function ensureContent() {
-  if (fs.existsSync(path.join(DIR, '.git'))) {
-    console.log('[sync] 已存在 kb-content，执行 git pull …');
-    run(`git -C ${DIR} fetch --depth 1 origin HEAD`);
+  // 旧版脚本留下的浅克隆没有历史，导不出日期：整个删掉重来（kb-content 只是缓存）
+  if (fs.existsSync(path.join(DIR, '.git')) && !isShallow(DIR)) {
+    console.log('[sync] 已存在 kb-content，执行 git fetch …');
+    run(`git -C ${DIR} fetch --filter=blob:none origin HEAD`);
     run(`git -C ${DIR} reset --hard FETCH_HEAD`);
   } else {
     if (fs.existsSync(DIR)) fs.rmSync(DIR, { recursive: true, force: true });
-    console.log('[sync] 浅克隆 knowledge-base …');
-    run(`git clone --depth 1 ${REPO} ${DIR}`);
+    console.log('[sync] 部分克隆 knowledge-base（全量历史、按需取文件）…');
+    run(`git clone --filter=blob:none ${REPO} ${DIR}`);
+  }
+}
+
+// 从 git 历史导出「路径 → 首次提交 / 最后改动」，写到 DATES_FILE 供构建期读取。
+// --no-renames：改名检测要比对文件内容，会在部分克隆里触发逐个下载旧版本；
+// 改过名的笔记因此从改名那天算起，可以接受（文件名带日期的以文件名为准）。
+// 失败不阻断同步：没有这份文件，页面只是少显示日期。
+function exportDates() {
+  try {
+    const log = execFileSync(
+      'git',
+      ['-C', DIR, 'log', '--format=%x01%aI', '--name-only', '--no-renames', '-z', 'HEAD', '--', ...SELECTED],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 },
+    );
+    const files = parseGitLog(log);
+    fs.mkdirSync(path.dirname(DATES_FILE), { recursive: true });
+    fs.writeFileSync(DATES_FILE, JSON.stringify({ generatedAt: new Date().toISOString(), files }));
+    console.log(`[sync] 笔记日期已导出：${Object.keys(files).length} 个路径 → ${DATES_FILE}`);
+  } catch (e) {
+    console.warn(`[sync] 导出笔记日期失败（页面将退回文件名日期）：${e.message}`);
   }
 }
 
@@ -134,6 +169,7 @@ function clean() {
 }
 
 ensureContent();
+exportDates();
 clean();
 console.log('[sync] 内容就绪 →', path.resolve(DIR));
 

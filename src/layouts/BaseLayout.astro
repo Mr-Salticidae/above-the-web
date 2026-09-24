@@ -1,17 +1,30 @@
 ---
+import fs from 'node:fs';
 import '../styles/global.css';
 import Search from '../components/Search.astro';
 import AccountMenu from '../components/AccountMenu.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
-const { title, description, noindex, canonical } = Astro.props;
+import SEO from '../components/SEO.astro';
+import { TOY, NEWS_SITE, STANDALONE, SITE_NAME, SITE_TAGLINE, stripBase } from '../lib/site.mjs';
+
+const {
+  title,
+  description,
+  noindex,
+  canonical,
+  // 以下交给 SEO.astro：og:type、社交卡片图、文章时间与栏目、页面自己的 JSON-LD 节点
+  type,
+  image,
+  article,
+  ld,
+  // 顶栏高亮哪个栏目；不传时按路径推断（笔记详情页没有 /notes/ 前缀，由页面自己传）
+  section,
+} = Astro.props;
 const base = import.meta.env.BASE_URL;
 // 两种「只带快讯」的独立构建：包里只有快讯，其余栏目、搜索索引、账号 API 都不在包内，
 // 导航一律改成指向线上主站的绝对地址，避免包内 404。
 //   TOY_NEWS=1  —— B 站 Toy 包（scripts/build-toy-news.mjs）
 //   NEWS_SITE=1 —— 快讯子域名 news.tiaozhuxiansheng.com（scripts/build-news-site.mjs）
-const TOY = process.env.TOY_NEWS === '1';
-const NEWS_SITE = process.env.NEWS_SITE === '1';
-const STANDALONE = TOY || NEWS_SITE;
 // Toy 包沿用 Pages 镜像地址；快讯子域名回主站根域（同一台服务器，国内直连）
 const HOME = TOY ? 'https://mr-salticidae.github.io/above-the-web/' : 'https://tiaozhuxiansheng.com/';
 const nav = (path) => (STANDALONE ? `${HOME}${path}` : `${base}${path}`);
@@ -24,8 +37,47 @@ const newsHref = `${base}news/`;
 const brandHref = TOY ? HOME : base;
 // 子站是挂在 GenJi 名下发给学员的，页眉、页脚与标签页标题都用他们那边的署名，
 // 英文副标题「Above the Web」是个人站的，一并不出。
-const siteName = NEWS_SITE ? 'GenJi是真想教会你' : '蛛网之上';
-const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先生的个人站`;
+const siteName = NEWS_SITE ? 'GenJi是真想教会你' : SITE_NAME;
+const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · ${SITE_TAGLINE}`;
+
+// 顶栏与页脚共用一份栏目表；当前栏目挂 aria-current，读屏与样式都认它
+const sections = [
+  { key: 'notes', label: '笔记', href: nav('notes/') },
+  { key: 'news', label: 'AIGC 快讯', href: newsHref },
+  { key: 'music', label: '音乐', href: nav('music/') },
+  { key: 'prompt-master', label: 'Prompt 大师', href: nav('prompt-master/') },
+  { key: 'tasks', label: '任务书', href: nav('tasks/') },
+  { key: 'about', label: '关于', href: nav('about/') },
+];
+const here = stripBase(Astro.url.pathname, base);
+const current = section || sections.find((s) => here.startsWith(`/${s.key}/`))?.key;
+const ariaCurrent = (key) => (key === current ? { 'aria-current': 'page' } : {});
+
+// Speculation Rules：鼠标悬停 / 手指按下时预渲染站内页面，点开即现（Chromium 系支持，
+// 其余浏览器忽略这段 JSON，行为不变）。只预渲染 Astro 生成的内容页；以下一律排除：
+//   · 账号 / 管理台 / 任务书：页面一加载就调 API、读登录态，提前跑一遍没有意义还可能串状态
+//   · public/ 下的手工小作品与 Prompt 大师画廊：有的自带音频与重动画，只在真正点开时加载
+//   · 带扩展名的资源（xml / json / txt / exe …）与新窗口、下载链接
+let publicDirs = [];
+try {
+  publicDirs = fs.readdirSync('public', { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name);
+} catch {}
+const noPrerender = ['account', 'admin', 'api', 'tasks', ...publicDirs].map((d) => `${base}${d}/*`);
+const speculationRules = {
+  prerender: [
+    {
+      source: 'document',
+      where: {
+        and: [
+          { href_matches: `${base}*` },
+          { not: { href_matches: [...noPrerender, `${base}*.*`] } },
+          { not: { selector_matches: '[target=_blank], [download], [rel~=nofollow], [data-no-prerender]' } },
+        ],
+      },
+      eagerness: 'moderate',
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -37,11 +89,25 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     {description && <meta name="description" content={description} />}
     {/* 子站是主站 /news/ 的副本、正文一字不差，规范地址认主站那份，这边整站不收录 */}
     {(noindex || NEWS_SITE) && <meta name="robots" content="noindex, nofollow" />}
-    {/* 同一份内容可能同时出现在主站、Pages 镜像与子域名下，由页面指定唯一规范地址 */}
-    {canonical && <link rel="canonical" href={canonical} />}
+    {/* 规范地址：主站与 Pages 镜像由 SEO.astro 统一给出（默认回指主站同路径）；
+        独立包里 SEO.astro 不渲染，页面显式指定的（快讯子站自指）照旧在这里出 */}
+    {STANDALONE && canonical && <link rel="canonical" href={canonical} />}
     <meta name="generator" content={Astro.generator} />
+    {/* 地址栏 / 状态栏配色跟随站内昼夜主题，切换时由下方脚本同步 */}
+    <meta name="theme-color" content="#faf8f3" />
     {/* 子站挂在 GenJi 名下，标签页图标用他们的圆标，个人站那枚蛛网 favicon 不带过去 */}
     <link rel="icon" href={`${base}${NEWS_SITE ? 'genji-mark.png' : 'favicon.svg'}`} />
+    <SEO
+      title={title || pageTitle}
+      description={description}
+      canonical={canonical}
+      noindex={noindex}
+      type={type}
+      image={image}
+      article={article}
+      ld={ld}
+    />
+    {!STANDALONE && <script type="speculationrules" set:html={JSON.stringify(speculationRules)} />}
     {/* 账号与任务状态走同域的 /api/（香港服务器上的 atw-platform）；
         Pages 镜像等其它来源在 account-core.js 里回落到主域，见那里的注释 */}
     <meta name="atw-base" content={base} />
@@ -51,33 +117,33 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     {/* 默认亮屏；读取用户上次选择，避免主题闪烁 */}
     <script is:inline>
       (() => {
+        let theme = 'light';
         try {
-          const saved = localStorage.getItem('atw-theme');
-          document.documentElement.setAttribute('data-theme', saved === 'dark' ? 'dark' : 'light');
-        } catch (_) {
-          document.documentElement.setAttribute('data-theme', 'light');
-        }
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
       })();
     </script>
+    <slot name="head" />
   </head>
   <body>
-    <header class="site-header">
+    <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a>
+    <header class="site-header" data-pagefind-ignore>
       <div class="bar">
         <a class="brand" href={brandHref} {...(TOY ? { target: '_blank', rel: 'noopener' } : {})}>
           {siteName}
           {!NEWS_SITE && <small>Above the Web</small>}
         </a>
+        {!NEWS_SITE && (
+          <nav class="site-nav" aria-label="栏目">
+            {sections.map((s) => (
+              <a class="meta series-link" href={s.href} {...ariaCurrent(s.key)}>{s.label}</a>
+            ))}
+          </nav>
+        )}
         <div class="header-actions">
-          {!NEWS_SITE && (
-            <>
-              <a class="meta series-link" href={nav('notes/')}>笔记</a>
-              <a class="meta series-link" href={newsHref}>AIGC 快讯</a>
-              <a class="meta series-link" href={nav('music/')}>音乐</a>
-              <a class="meta series-link" href={nav('prompt-master/')}>Prompt 大师</a>
-              <a class="meta series-link" href={nav('tasks/')}>任务书</a>
-              <a class="meta series-link" href={nav('about/')}>关于</a>
-            </>
-          )}
           {!STANDALONE && <Search />}
           {!STANDALONE && <AccountMenu />}
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题">
@@ -89,24 +155,25 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
       </div>
     </header>
 
-    <main>
+    <main id="main" tabindex="-1">
       <slot />
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" data-pagefind-ignore>
       <p class="footer-brand">{siteName} {!NEWS_SITE && <span>Above the Web</span>}</p>
       {!NEWS_SITE && (
         <>
           <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p>
           <nav class="footer-nav" aria-label="页脚导航">
-            <a href={nav('notes/')}>笔记</a>
-            <a href={newsHref}>AIGC 快讯</a>
-            <a href={nav('music/')}>音乐</a>
-            <a href={nav('prompt-master/')}>Prompt 大师</a>
-            <a href={nav('tasks/')}>任务书</a>
-            <a href={nav('about/')}>关于</a>
+            {sections.map((s) => <a href={s.href} {...ariaCurrent(s.key)}>{s.label}</a>)}
             <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a>
           </nav>
+          {!STANDALONE && (
+            <p class="footer-subscribe">
+              订阅更新：<a href={`${base}rss.xml`}>RSS</a> · <a href={`${base}feed.json`}>JSON Feed</a>
+              · 分栏订阅 <a href={`${base}notes/rss.xml`}>笔记</a> / <a href={`${base}news/rss.xml`}>快讯</a>
+            </p>
+          )}
           <p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>
         </>
       )}
@@ -116,6 +183,18 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
     {!STANDALONE && <MusicPlayer />}
 
     <script is:inline>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script>
+
+    <script is:inline>
       (() => {
         const btn = document.getElementById('theme-toggle');
         if (!btn) return;
@@ -123,6 +202,8 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · 跳蛛先�
           const root = document.documentElement;
           const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
           root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
           try { localStorage.setItem('atw-theme', next); } catch (_) {}
           // 通知动画背景重新读取主题色
           window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
