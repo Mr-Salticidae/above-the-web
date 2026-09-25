@@ -2,8 +2,8 @@
 # 香港服务器首次安装脚本 —— 只需跑一次。之后更新走 CI（deploy-platform.yml）。
 #
 # 用法：
-#   scp -r platform root@43.128.2.172:/tmp/atw-platform
-#   ssh root@43.128.2.172 'bash /tmp/atw-platform/deploy/setup-server.sh'
+#   scp -r platform root@<服务器地址>:/tmp/atw-platform
+#   ssh root@<服务器地址> 'bash /tmp/atw-platform/deploy/setup-server.sh'
 
 set -euo pipefail
 
@@ -51,7 +51,7 @@ if [ ! -f "$APP_DIR/server/.env" ]; then
   } > "$CREDS"
   chmod 600 "$CREDS"
   echo "  ★ 初始管理员口令已写入 ${CREDS}（只有 root 能读）"
-  echo "    看一眼：ssh root@43.128.2.172 'cat ${CREDS}'"
+  echo "    看一眼：ssh root@<服务器地址> 'cat ${CREDS}'"
 else
   echo "  已存在 .env，保留不动"
 fi

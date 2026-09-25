@@ -87,9 +87,12 @@ function bearerToken(request) {
   return authorization.startsWith("Bearer ") ? authorization.slice(7).trim() : "";
 }
 
+// 限流按来源 IP 计数，只认 nginx 用 $remote_addr 覆盖写入的 X-Real-IP。
+// 不能取 X-Forwarded-For 的第一段：$proxy_add_x_forwarded_for 会保留客户端自带的值，
+// 每次请求换一个假 IP 就能绕过登录 / 注册限流。服务只监听 127.0.0.1，外部连不到这里伪造 X-Real-IP。
 function clientAddress(request) {
-  const forwarded = String(request.headers["x-forwarded-for"] || "").split(",")[0].trim();
-  return forwarded || request.socket.remoteAddress || "unknown";
+  const realIp = String(request.headers["x-real-ip"] || "").trim();
+  return realIp || request.socket.remoteAddress || "unknown";
 }
 
 function checkAuthRateLimit(request) {

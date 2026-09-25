@@ -3,7 +3,7 @@
 蛛网之上的账号系统。**读站永远不需要账号**——快讯、笔记、Prompt 大师、玩具都不拦。
 只有认领任务书要登录，因为那头连着报酬和打款，得能把人对上。
 
-线上跑在香港服务器（`43.128.2.172`）的 `/opt/atw-platform/`，nginx 反代 `tiaozhuxiansheng.com/api/`。
+线上跑在香港服务器（地址存于仓库 secret `HK_HOST`）的 `/opt/atw-platform/`，nginx 反代 `tiaozhuxiansheng.com/api/`。
 零第三方依赖，Node 22.5+ 自带的 `node:sqlite`。
 
 ## 为什么这样切
@@ -301,7 +301,7 @@ CI 里这套不过就不部署。
 `/root/atw-platform-first-run.txt`（只有 root 能读）：
 
 ```bash
-ssh root@43.128.2.172 'cat /root/atw-platform-first-run.txt'
+ssh root@<服务器地址> 'cat /root/atw-platform-first-run.txt'
 ```
 
 **只有 nginx 那一步要手动做一次**（改线上 nginx 不适合让 CI 代劳）：

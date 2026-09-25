@@ -121,12 +121,15 @@ jobs:
           cp -a /tmp/typhoon-eye/. dist/typhoon-eye/
 
       - name: Rsync dist / dist-news 到香港服务器
+        env:
+          HOST: ${{ secrets.HK_HOST }}
         run: |
+          test -n "$HOST" || { echo "::error::缺少仓库 secret HK_HOST（部署服务器地址），见 README「部署」一节"; exit 1; }
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H 43.128.2.172 >> ~/.ssh/known_hosts 2>/dev/null
-          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" dist/ root@43.128.2.172:/var/www/tiaozhuxiansheng/
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" dist/ root@"$HOST":/var/www/tiaozhuxiansheng/
           # 快讯子站是独立 root，跟主站目录互不干扰（各自的 --delete 都只清自己那份）
-          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" dist-news/ root@43.128.2.172:/var/www/atw-news/
-          ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@43.128.2.172 'chown -R www-data:www-data /var/www/tiaozhuxiansheng /var/www/atw-news'
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes" dist-news/ root@"$HOST":/var/www/atw-news/
+          ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@"$HOST" 'chown -R www-data:www-data /var/www/tiaozhuxiansheng /var/www/atw-news'

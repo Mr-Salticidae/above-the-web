@@ -85,7 +85,8 @@ jobs:
           mkdir -p "$HOME/.toy"
           printf '%s' "$TOY_SESSION" > "$HOME/.toy/session.json"
           chmod 600 "$HOME/.toy/session.json"
-          if ! toy whoami --json; then
+          # 只看登录态是否有效，不把账号信息打进日志（公开仓库的 Actions 日志人人可见）
+          if ! toy whoami --json > /dev/null; then
             echo "::error::toy 登录态失效。请在本机跑 toy login，再执行 gh secret set TOY_SESSION < ~/.toy/session.json"
             exit 1
           fi

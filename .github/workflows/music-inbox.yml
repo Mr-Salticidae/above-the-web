@@ -26,7 +26,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  HOST: 43.128.2.172
+  HOST: ${{ secrets.HK_HOST }}
   TAG: music-inbox
   REMOTE: /var/www/atw-music
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -70,6 +70,7 @@ jobs:
       - name: 上传到服务器并逐个核对
         run: |
           shopt -s nullglob
+          test -n "$HOST" || { echo "::error::缺少仓库 secret HK_HOST（部署服务器地址），见 README「部署」一节"; exit 1; }
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
