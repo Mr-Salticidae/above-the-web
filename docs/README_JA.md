@@ -133,7 +133,6 @@ cd platform/server && npm run dev
 ├─ scripts/             sync-content · stamp-assets · news-fetch · news-compose · build-news-site · build-toy-news
 │                       collect-music · upload-music · music-manifest · make-brand-assets
 ├─ platform/            アカウント・タスクサービス（server/）とサーバー用デプロイスクリプト（deploy/）
-├─ workers/ functions/ api-proxy/   Maieutic 対話ツールの API プロキシ（Cloudflare Worker / Pages Functions / Node）
 ├─ docs/                プロジェクト文書：大文字＋アンダースコアの命名、1 行目は最終更新日（この翻訳も含む）
 ├─ test/                node --test の単体テスト
 ├─ .github/workflows/   deploy · deploy-platform · aigc-daily-news · toy-news-update · music-inbox · nginx-site
