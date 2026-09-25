@@ -69,5 +69,4 @@ systemctl --no-pager --lines=10 status atw-platform || true
 echo
 echo "==> 还差最后一步：把 deploy/nginx-atw-platform.conf 的内容加进"
 echo "    tiaozhuxiansheng.com 的 server 块，然后 nginx -t && systemctl reload nginx"
-echo "    注意里面 /api/maieutic 那条精确匹配必须保留，否则 Maieutic 会 404。"
 echo "    完成后验证：curl -s https://tiaozhuxiansheng.com/api/meta"

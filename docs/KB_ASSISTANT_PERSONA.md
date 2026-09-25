@@ -1,4 +1,4 @@
-最后更新：2026-08-24
+最后更新：2026-09-25
 
 # 小织 · 查笔记小助手角色卡
 
@@ -60,7 +60,6 @@
 | 系统 prompt（人设浓缩版） | `platform/server/src/assist.js` 的 `KNOWLEDGE_CHAT_SYSTEM` |
 | 面板文案与欢迎语 | `src/components/KnowledgeChat.astro` |
 | 头像浮层名片 | `src/scripts/knowledge-chat.js`（`小织 · 知识库的织网人`） |
-| 首页 Maieutic 卡片的一句介绍 | `src/data/games.js`（「问题还没成形，她先帮你把它接生出来」） |
 | 工作机制文档 | `docs/KNOWLEDGE_BASE_AI_QUERY.md` |
 
-改人设时五处一起改，别让 prompt 里的她和页面上的她说两种话。
+改人设时四处一起改，别让 prompt 里的她和页面上的她说两种话。

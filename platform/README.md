@@ -308,9 +308,6 @@ ssh root@<服务器地址> 'cat /root/atw-platform-first-run.txt'
 把 `deploy/nginx-atw-platform.conf` 的内容加进 `tiaozhuxiansheng.com` 的 `server { }` 块，
 然后 `nginx -t && systemctl reload nginx`。
 
-⚠️ 里面 `location = /api/maieutic` 那条精确匹配必须保留——`/api/maieutic` 早就归
-`api-proxy`（127.0.0.1:3001）管，漏了它 Maieutic 会 404。
-
 验证：
 
 ```bash

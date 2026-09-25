@@ -133,7 +133,6 @@ Build-time environment variables:
 ├─ scripts/             sync-content · stamp-assets · news-fetch · news-compose · build-news-site · build-toy-news
 │                       collect-music · upload-music · music-manifest · make-brand-assets
 ├─ platform/            Account and task service (server/) and server deployment scripts (deploy/)
-├─ workers/ functions/ api-proxy/   API proxy for the Maieutic chat toy (Cloudflare Worker / Pages Functions / Node)
 ├─ docs/                Project docs: UPPER_SNAKE_CASE names, first line is the last-updated date (includes this translation)
 ├─ test/                node --test unit tests
 ├─ .github/workflows/   deploy · deploy-platform · aigc-daily-news · toy-news-update · music-inbox · nginx-site

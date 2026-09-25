@@ -18,7 +18,6 @@
 
 - 主站 `tiaozhuxiansheng.com` 与账号服务 `/api/`（登录、注册、重置密码、任务认领、管理台权限）
 - 本仓库中的构建脚本与 GitHub Actions 工作流
-- Maieutic 对话的 API 代理（`workers/`、`functions/`、`api-proxy/`）
 
 不在范围内：
 

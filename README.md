@@ -130,7 +130,6 @@ cd platform/server && npm run dev
 ├─ scripts/             sync-content · stamp-assets · news-fetch · news-compose · build-news-site · build-toy-news
 │                       collect-music · upload-music · music-manifest · make-brand-assets
 ├─ platform/            账号与任务流转服务（server/）与服务器部署脚本（deploy/）
-├─ workers/ functions/ api-proxy/   Maieutic 对话工具的 API 代理（Cloudflare Worker / Pages Functions）
 ├─ docs/                项目文档：大写下划线命名，首行标最后更新日期（含本 README 的英文、日文版）
 ├─ test/                node --test 单元测试
 ├─ .github/workflows/   deploy · deploy-platform · aigc-daily-news · toy-news-update · music-inbox · nginx-site
