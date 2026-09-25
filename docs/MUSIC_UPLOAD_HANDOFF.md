@@ -1,4 +1,4 @@
-最后更新：2026-09-24
+最后更新：2026-09-25
 
 # 交接：把本机的歌一次性上架到音乐板块
 
@@ -10,7 +10,8 @@
 
 ## 2. 你需要知道的背景
 
-- **仓库**：`Mr-Salticidae/above-the-web`（私有）。本机可能还没有克隆；旧文档里的 `E:\above-the-web` 是站长公司电脑的路径，**这台电脑上不存在**。
+- **仓库**：`Mr-Salticidae/above-the-web`（公开）。本机可能还没有克隆；旧文档里的 `E:\above-the-web` 是站长另一台电脑的路径，**这台电脑上不存在**。
+- **Release 附件是公开的**：仓库公开，`music-inbox` 里的附件在被工作流搬走之前任何人都能下载。只放已经决定上架的歌；工作流失败时附件会留着，要尽快修好重跑，或手动删掉。
 - **音频不进 git**。文件放在香港服务器 `/var/www/atw-music/audio/`、`covers/`，由 nginx 以 `https://tiaozhuxiansheng.com/music/audio/<文件名>` 提供。
 - **曲目清单进 git**：`src/data/music/manifest.json`，构建时导出成 `/music/playlist.json`。字段：
 
@@ -67,7 +68,7 @@ node scripts/collect-music.mjs "D:\AIGC工作站"
 GitHub 会改写 Release 附件名里的中文与空格，所以上传前统一改名：音频改成 `<id>.<原扩展名>`，封面改成 `<id>.<图片扩展名>`。复制到一个临时目录再改名，**不要动 `D:\AIGC工作站` 里的原文件**。
 
 ```powershell
-# Release 不存在就先建（预发布版本，仓库私有，外人看不到）
+# Release 不存在就先建（预发布版本；注意仓库公开，附件在搬走之前人人可下载）
 gh release view music-inbox -R Mr-Salticidae/above-the-web 2>$null
 if ($LASTEXITCODE -ne 0) {
   gh release create music-inbox -R Mr-Salticidae/above-the-web --prerelease --title "music-inbox" --notes "音乐入库中转，附件由 music-inbox 工作流搬走后自动清理"
@@ -85,7 +86,7 @@ gh run watch -R Mr-Salticidae/above-the-web $(gh run list -R Mr-Salticidae/above
 ```
 
 - **成功**：运行摘要里有一张表，列出每个文件和时长（秒），记下来填 `duration`。
-- **失败**：看日志里标 ✗ 的文件，修好后重新上传、重跑。失败时 Release 附件不会被清理。
+- **失败**：看日志里标 ✗ 的文件，修好后重新上传、重跑。失败时 Release 附件不会被清理，而它们对外可见——不打算马上重跑就先删：`gh release delete-asset music-inbox <文件名> -R Mr-Salticidae/above-the-web -y`。
 
 确认音频已经能访问（任意一个即可）：
 

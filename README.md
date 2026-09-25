@@ -6,10 +6,13 @@
 
 **跳蛛先生的杂志风个人站** — 笔记 · AIGC 快讯 · Prompt 拆解连载 · 可玩 · 音乐 · 任务书
 
+简体中文 · [English](docs/README_EN.md) · [日本語](docs/README_JA.md)
+
 [![Build & Deploy](https://github.com/Mr-Salticidae/above-the-web/actions/workflows/deploy.yml/badge.svg)](https://github.com/Mr-Salticidae/above-the-web/actions/workflows/deploy.yml)
 [![AIGC Daily News](https://github.com/Mr-Salticidae/above-the-web/actions/workflows/aigc-daily-news.yml/badge.svg)](https://github.com/Mr-Salticidae/above-the-web/actions/workflows/aigc-daily-news.yml)
 ![Astro 5](https://img.shields.io/badge/Astro-5-BC52EE?logo=astro&logoColor=white)
 ![Node 22](https://img.shields.io/badge/Node-22-339933?logo=node.js&logoColor=white)
+[![Code: MIT](https://img.shields.io/badge/Code-MIT-blue)](LICENSE)
 [![Content: CC BY-NC 4.0](https://img.shields.io/badge/Content-CC%20BY--NC%204.0-lightgrey)](https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md)
 
 [主站](https://tiaozhuxiansheng.com/) · [GitHub Pages 镜像](https://mr-salticidae.github.io/above-the-web/) · [快讯子站](https://news.tiaozhuxiansheng.com/) · [关于本站](https://tiaozhuxiansheng.com/about/)
@@ -91,6 +94,7 @@ npm run dev
 | `npm run build` | sync → stamp（内嵌资源按内容哈希加 `?v=`） → `astro build`（含 sitemap / feeds / llms.txt） → Pagefind 索引 |
 | `npm run preview` | 本地预览 `dist/` |
 | `npm test` | `node --test` 纯逻辑单元测试；CI 里挂了就不出包 |
+| `cd platform/server && npm test` | 账号与任务服务的流转回归（注册登录、认领交付、重置密码、限流、AI 配额）；不过就不部署 |
 
 账号、任务认领、管理台这类动态功能要另起 API：
 
@@ -123,12 +127,14 @@ cd platform/server && npm run dev
 │  ├─ data/             news/ 期刊 JSON · tasks/ 任务书 md · games.js · music/manifest.json
 │  └─ styles/global.css 设计 token 与全局样式
 ├─ public/              静态资源与可玩作品落地页（fraud-desk、desk-pond、livelink …）
-├─ scripts/             sync-content · stamp-assets · news-fetch · news-compose · build-news-site · build-toy-news · upload-music · make-brand-assets
+├─ scripts/             sync-content · stamp-assets · news-fetch · news-compose · build-news-site · build-toy-news
+│                       collect-music · upload-music · music-manifest · make-brand-assets
 ├─ platform/            账号与任务流转服务（server/）与服务器部署脚本（deploy/）
 ├─ workers/ functions/ api-proxy/   Maieutic 对话工具的 API 代理（Cloudflare Worker / Pages Functions）
-├─ docs/                项目文档：大写下划线命名，首行标最后更新日期
+├─ docs/                项目文档：大写下划线命名，首行标最后更新日期（含本 README 的英文、日文版）
 ├─ test/                node --test 单元测试
-└─ .github/workflows/   deploy · deploy-platform · aigc-daily-news · toy-news-update
+├─ .github/workflows/   deploy · deploy-platform · aigc-daily-news · toy-news-update · music-inbox · nginx-site
+└─ LICENSE              站点源码的 MIT 许可
 ```
 
 ## 内容与自动化
@@ -162,7 +168,9 @@ cd platform/server && npm run dev
 ### 可玩与音乐
 
 - 新增一件可玩作品 = 在 `src/data/games.js` 开头加一条，落地页放 `public/<slug>/`。桌面应用的安装包不进 git、不进 Pages：`deploy.yml` 从各自仓库的最新 Release 抓取，随 `dist/` 一起 rsync 到香港服务器直连下载。
-- 音乐：曲目元数据在 `src/data/music/manifest.json`，音频用 `scripts/upload-music.mjs` 传到服务器 `/music/`，构建期导出 `/music/playlist.json` 给全站播放器。
+- 音乐：曲目元数据在 `src/data/music/manifest.json`，构建期导出 `/music/playlist.json` 给全站播放器；音频不进 git，放在服务器 `/music/`。上架有两条路：
+  - 有服务器私钥的电脑：`collect-music.mjs` 从散落的创作目录把歌归拢进 `music-library/` → `upload-music.mjs` 上传并逐个回查 → `music-manifest.mjs` 生成清单初稿。
+  - 没有私钥的电脑：把音频传到 Release `music-inbox`，手动跑 `music-inbox.yml`，由 CI 转码、上传、核对并清理附件（仓库公开，附件在搬走前人人可下载，只放决定上架的歌）。
 
 ## 部署
 
@@ -176,7 +184,7 @@ cd platform/server && npm run dev
 
 香港 job 还会顺手镜像 `mirror-life-rehearsal-preview` 到 `/mlr/`、`typhoon-eye` 到 `/typhoon-eye/`，并抓取 desk-pond 与 livelink 的最新安装包。
 
-主站 nginx 的自定义 404、`.webmanifest` 类型与静态资源缓存策略写在 `platform/deploy/nginx-site-static.conf`，需在服务器上手动接入一次（同其他 nginx 片段）。
+主站 nginx 的自定义 404、`.webmanifest` 类型与 `gzip_types` 写在 `platform/deploy/nginx-site-static.conf`，用手动工作流 `nginx-site.yml` 接入：`inspect` 只读查看，`apply` 备份 → 写入 → `nginx -t` → reload，任一步失败自动回滚。
 
 账号服务单独走 `deploy-platform.yml`：`platform/**` 有改动就先跑流转回归测试，过了再 rsync 到 `/opt/atw-platform/` 并重启 systemd 服务。
 
@@ -184,6 +192,7 @@ cd platform/server && npm run dev
 
 | Secret | 用途 |
 | --- | --- |
+| `HK_HOST` | 香港服务器地址（IP 或域名）。放 secret 而不写死在工作流里，Actions 日志中自动打码；fork 后换成自己的服务器即可 |
 | `HK_SSH_KEY` | 香港服务器的部署私钥（主站、子站、账号服务共用） |
 | `DASHSCOPE_API_KEY` | 每日快讯的选稿与摘要模型 |
 | `TOY_SESSION` | B 站 Toy CLI 的登录态（`~/.toy/session.json` 原文） |
@@ -195,6 +204,7 @@ cd platform/server && npm run dev
 - 登录 `/account/login/`、注册 `/account/register/`、个人中心 `/account/`。本机可同时留几个账号，切换不用重输密码；个人中心能看登录设备、单独踢掉某一处。
 - 忘记密码走 `/account/forgot/`：一次性链接 60 分钟有效、用过即焚。发信通道未配时自动退回「管理台生成链接、站长人工发」。
 - 发任务、接任务各有一个 AI 帮手：说一句大白话，它把表单填好，人再过一眼。
+- 管理台「月度统计与对账」按交付月或打款月汇总任务数、约定金额、结款进度与承接人，可导出 CSV 对账单。
 - API 只有一套（`tiaozhuxiansheng.com/api/`）。Pages 镜像跨域也能用，只是两个域的登录态各自独立。
 
 服务代码、状态机、两种任务书的分工、部署与运维都在 [platform/README.md](platform/README.md)。
@@ -211,6 +221,9 @@ cd platform/server && npm run dev
 | [docs/TASK_AI_ASSIST.md](docs/TASK_AI_ASSIST.md) | 任务书 AI 辅助填写 |
 | [docs/MUSIC_PLAYER.md](docs/MUSIC_PLAYER.md) | 音乐板块与全站播放器 |
 | [docs/MUSIC_UPLOAD_HANDOFF.md](docs/MUSIC_UPLOAD_HANDOFF.md) | 没有服务器私钥时的批量上歌流程（Release 中转 + music-inbox 工作流） |
+| [docs/TASK_MONTHLY_REPORT.md](docs/TASK_MONTHLY_REPORT.md) | 任务书月度产出统计与对账口径 |
+| [docs/SECURITY.md](docs/SECURITY.md) | 安全策略：如何私下报告漏洞、范围与仓库侧约定 |
+| [docs/postmortem-2026-07-task-admin-home.md](docs/postmortem-2026-07-task-admin-home.md) · [docs/postmortem-2026-07-30-deliverable-link.md](docs/postmortem-2026-07-30-deliverable-link.md) | 任务系统与管理台的两份复盘 |
 | [platform/README.md](platform/README.md) | 账号与任务流转服务 |
 | [AGENTS.md](AGENTS.md) | 文档规范（放 `docs/`、大写下划线命名、首行标日期） |
 
@@ -223,8 +236,15 @@ cd platform/server && npm run dev
 - 快讯每条都附来源直达，内容版权归各原始媒体。
 - [Astro](https://astro.build/)、[Pagefind](https://pagefind.app/) 让一个人也能把静态站做得像回事。
 
+## 参与与安全
+
+- 发现 bug、想要的功能，直接开 issue；PR 提交前请跑通 `npm test` 与 `platform/server` 的测试。
+- 安全问题请不要开公开 issue，按 [docs/SECURITY.md](docs/SECURITY.md) 私下报告。
+- 想照着搭一个自己的站：fork 后把 `src/lib/site.mjs` 里的站名、作者与规范域名，`scripts/sync-content.mjs` 里的内容源仓库，以及 `src/lib/kb.mjs` 的栏目白名单换成自己的；构建时用 `SITE_URL` / `BASE_PATH` 指定部署地址，部署 secrets 换成自己的服务器。
+
 ## 许可
 
+- **站点源码**以 [MIT](LICENSE) 许可开源：代码、构建脚本、工作流、服务端都可以自由使用、修改与再分发，保留版权声明即可。
 - **笔记内容**遵循源仓库的 [CC BY-NC 4.0](https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md)：署名、非商业，转载改写请保留作者与仓库链接。
 - **快讯摘要**为站内编辑，转载注明「蛛网之上」即可；原文版权归各来源。
-- **站点源码**公开在本仓库，尚未附独立的代码许可证；要整站复用请先开 issue 打个招呼。
+- **不在 MIT 范围内**：站名与标识、「小织」形象图、音乐作品，以及 `public/` 下由他人创作的作品（如 X-nian 的字幕转换器、GenJi 的标识）。fork 时请换成你自己的素材。

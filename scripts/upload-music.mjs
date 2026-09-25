@@ -11,7 +11,8 @@ import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const HOST = 'root@43.128.2.172';
+// 服务器登录串可用 ATW_SSH_HOST 覆盖（如 root@1.2.3.4）；默认走主站域名，它的 A 记录就指向这台机器。
+const HOST = process.env.ATW_SSH_HOST || 'root@tiaozhuxiansheng.com';
 const REMOTE = '/var/www/atw-music';
 const LIB = path.resolve('music-library');
 

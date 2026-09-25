@@ -1,4 +1,4 @@
-最后更新：2026-09-24
+最后更新：2026-09-25
 
 # 本地运行与部署说明
 
@@ -176,25 +176,26 @@ BASE_PATH=/
 构建后，工作流会补充外部镜像和下载资源，再通过 `rsync` 将 `dist/` 同步到：
 
 ```text
-43.128.2.172:/var/www/tiaozhuxiansheng/
+<HK_HOST>:/var/www/tiaozhuxiansheng/
 ```
 
 GitHub 仓库必须配置 Actions Secret：
 
 | Secret | 用途 |
 | --- | --- |
+| `HK_HOST` | 香港服务器地址（IP 或域名）。用 secret 而不是写死在工作流里，Actions 日志中会自动打码 |
 | `HK_SSH_KEY` | 登录香港服务器并执行 `rsync` 的 SSH 私钥 |
 
 `GITHUB_TOKEN` 由 GitHub Actions 自动提供，用于读取 Release 资源，无需手工创建。
 
-服务器侧需要预先配置 nginx，使 `tiaozhuxiansheng.com` 的站点根目录指向 `/var/www/tiaozhuxiansheng/`，并将 `/api/` 反向代理到 `127.0.0.1:3200`。另外把 `platform/deploy/nginx-site-static.conf` 里的几段并进同一个 server 块：自定义 404（`error_page 404 /404.html;`）、`.webmanifest` 的 MIME 类型、`/_astro/` 长缓存，以及订阅源与 sitemap 的短缓存。
+服务器侧需要预先配置 nginx，使 `tiaozhuxiansheng.com` 的站点根目录指向 `/var/www/tiaozhuxiansheng/`，并将 `/api/` 反向代理到 `127.0.0.1:3200`。另外把 `platform/deploy/nginx-site-static.conf` 里的几段并进同一个 server 块：自定义 404（`error_page 404 /404.html;`）、`.webmanifest` 的 MIME 类型与 `gzip_types`；可用手动工作流 `nginx-site.yml` 的 `apply` 模式写入。
 
 ### 6.3 「AIGC 快讯」子域名
 
 同一工作流还会执行 `node scripts/build-news-site.mjs`，把快讯板块单独打成以子域名根为 base 的产物 `dist-news/`，并 `rsync` 到同一台服务器的独立目录：
 
 ```text
-43.128.2.172:/var/www/atw-news/
+<HK_HOST>:/var/www/atw-news/
 ```
 
 该目录与主站 `/var/www/tiaozhuxiansheng/` 互不重叠，两处 `rsync --delete` 各自只清自己那份。
@@ -207,7 +208,7 @@ https://news.tiaozhuxiansheng.com/
 
 服务器侧需要一次性配置（CI 不代劳，见 `platform/deploy/nginx-news.conf` 的头部说明）：
 
-1. DNS 添加 A 记录 `news` → `43.128.2.172`，并确认解析已生效；
+1. DNS 添加 A 记录 `news` → 与主站相同的服务器 IP，并确认解析已生效；
 2. 将 `platform/deploy/nginx-news.conf` 写入 `/etc/nginx/sites-available/` 并软链到 `sites-enabled/`；
 3. 运行 `certbot --nginx -d news.tiaozhuxiansheng.com --agree-tos -m <邮箱> --redirect` 申请证书。
 
@@ -235,7 +236,7 @@ cd platform/server
 node --test test/*.test.js
 ```
 
-测试通过后，工作流使用 `HK_SSH_KEY` 将 `platform/` 同步到服务器。首次部署会运行：
+测试通过后，工作流使用 `HK_HOST` 与 `HK_SSH_KEY` 将 `platform/` 同步到服务器。首次部署会运行：
 
 ```bash
 bash /tmp/atw-platform-src/deploy/setup-server.sh
@@ -286,7 +287,7 @@ node --test test/*.test.js
 - `dist/sitemap.xml`、`dist/rss.xml`、`dist/feed.json`、`dist/llms.txt`、`dist/404.html` 已生成；
 - API 测试全部通过；
 - `.env`、数据库、SSH 私钥等敏感文件未进入 Git；
-- GitHub Actions 所需的 `HK_SSH_KEY` 已配置；
+- GitHub Actions 所需的 `HK_HOST`、`HK_SSH_KEY` 已配置；
 - GitHub Pages 发布源已设为 `gh-pages` 分支（Deploy from a branch）。
 
 ## 9. 常见问题
