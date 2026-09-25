@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-25",
+  "headline": "Gemini 3.8 Live 上线数字人交互，Meta 开放 AI 游戏生成工具",
+  "items": [
+    {
+      "title": "Gemini 3.8 Live 支持实时数字人交互",
+      "summary": "Google 发布 Gemini 3.8 Live 更新，用户可在对话中观看具备唇形同步和面部表情的动画 AI 形象实时回应。该功能目前仅面向 Gemini Enterprise 客户开放。对视频与虚拟角色创作者而言，这意味着多模态交互正在从纯文本向可视化实时反馈延伸。",
+      "category": "模型",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1000328/google-gemini-ai-live-avatar-face",
+      "featured": true
+    },
+    {
+      "title": "Meta 推出 AI 游戏生成工具 Horizon Create",
+      "summary": "Meta 发布两款新开发工具：移动端应用 Horizon Create 和浏览器端应用 Horizon Studio，允许用户通过 AI 提示词直接创建游戏并发布至 Horizon 社交平台。这为互动内容创作者提供了一个无需编程基础即可快速验证玩法的生成式入口。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/games/999972/meta-horizon-create-studio-ai-games",
+      "featured": true
+    },
+    {
+      "title": "Black Forest Labs 开源机器人动作模型 FLUX 3 Action",
+      "summary": "Black Forest Labs 将 FLUX 系列扩展至机器人领域，发布开源世界动作模型 FLUX 3 Action。该模型基于摄像头画面预测机器人的下一步动作，参数量为 70 亿，在 RoboLab-120 基准上刷新纪录，推理速度较前代最优模型快近 4 倍。虽然主要面向机器人控制，但其视觉到动作的生成范式对物理模拟类创作具有参考价值。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/black-forest-labs-launches-flux-3-action-an-open-robotics-ai-model",
+      "featured": false
+    },
+    {
+      "title": "Meta Muse 新增视频化身、邮箱及 Mac 控制能力",
+      "summary": "在 Meta Connect 2026 上，Meta 为其 AI Agent Muse 增加了视频化身、专属电子邮件地址以及 Mac 系统控制权限。Muse 目前已拥有约 60 万日活用户。对于依赖 AI Agent 辅助工作流的创作者，跨设备控制和可视化反馈能力的加入意味着更完整的自动化执行链路。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/meta-gives-its-muse-ai-agent-video-avatars-email-addresses-and-mac-control",
+      "featured": false
+    },
+    {
+      "title": "工作室用 Autodesk AI 动捕完成动画交响乐短片",
+      "summary": "Flow Studio 使用 Autodesk 的 AI 驱动动捕技术制作了短片《Daughter of the Inner Stars》，将现场旁白与真人表演驱动的原创动画结合。该案例展示了 AI 动捕技术在实际动画制作管线中的落地方式，为独立动画团队提供了降低表演捕捉门槛的参考。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/art/animation/how-a-studio-created-an-impossible-animated-symphony-using-autodesks-ai-driven-mocap-tech",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 称 Claude 自主发现新酶系统",
+      "summary": "Anthropic 表示其模型 Claude 在 DNA 数据库中自主完成了大部分分析工作，发现了一个此前未知的酶系统。不过 CRISPR 领域的研究人员认为这属于常规的基因组挖掘工作。这一争议反映了当前业界对 AI 在科研中实际贡献程度的认知分歧。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-says-claude-discovered-a-new-enzyme-system-but-crispr-researchers-call-it-routine-genome-mining",
+      "featured": false
+    },
+    {
+      "title": "美国国会议员提案永久禁止超级人工智能",
+      "summary": "参议员 Bernie Sanders 和众议员 Greg Casar 于 9 月 23 日提出一项法案，提议永久禁止开发和部署人工超级智能，并计划成立新的联邦 AI 机构。这是美国立法层面首次出现针对超级智能的直接禁令提案，可能影响长期 AI 研发的政策环境。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/u-s-bill-proposes-permanent-ban-on-artificial-superintelligence-and-creation-of-new-federal-ai-agency",
+      "featured": false
+    }
+  ]
+}
