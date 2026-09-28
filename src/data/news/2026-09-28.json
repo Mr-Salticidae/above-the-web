@@ -1,0 +1,54 @@
+{
+  "date": "2026-09-28",
+  "headline": "Nvidia 开源说话人分离模型，OpenAI 称研发重心已转向 GPT-7",
+  "items": [
+    {
+      "title": "Nvidia 开源 100M 参数说话人分离模型",
+      "summary": "Nvidia 发布 Nemotron 3 Diarization，一个仅 100M 参数的免费模型，可在对话中实时识别最多八位说话人。对播客剪辑、视频字幕及多人语音素材处理来说，这是一个可直接本地部署的轻量级工具。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nvidia-drops-a-free-100m-parameter-model-that-identifies-up-to-eight-speakers-in-real-time",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 称 80% 以上研发资源投向 GPT-7 及更远",
+      "summary": "OpenAI 应用研究负责人 Boris Power 表示，公司 80% 至 90% 的研究工作已面向 GPT-7、GPT-8 及后续版本，单代际内的改进被定位为短期投入。他还提到多数用户尚未充分了解 AI 的能力边界。这意味着创作者当前使用的模型架构在短期内不会有大幅迭代。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-says-80-to-90-percent-of-its-research-already-targets-gpt-7-and-beyond",
+      "featured": true
+    },
+    {
+      "title": "研究显示 AI Agent 参与过半开发提案但决策权仍在人",
+      "summary": "一个研究团队分析了 769 条自建 AI 模型的任务日志，发现 AI agent 提供了最高 55% 的方法提案，但最终决策超过 85% 由人类做出，且三分之一的任务若没有 AI 根本不会被尝试。作者提醒，agent 活动量增加并不等于自主性提升。对用 AI 辅助创作流程的人而言，关键判断环节仍需要人工介入。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-agents-do-more-of-the-work-in-model-development-but-humans-still-make-the-decisions",
+      "featured": false
+    },
+    {
+      "title": "TechCrunch 讨论 Meta Muse 能否克服信任问题",
+      "summary": "TechCrunch 播客 Equity 讨论了 Meta 近期 AI 发布如何抢走 OpenAI 和 Anthropic 的关注度，焦点落在 Meta Muse 能否解决外界对其数据与隐私的信任疑虑上。此前几期快讯已跟进过 Muse 的用户增速与功能更新，信任问题是该产品持续运营的核心变量。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/27/can-muse-overcome-metas-trust-issues",
+      "featured": false
+    },
+    {
+      "title": "Anthropic CEO Dario Amodei 将与特朗普单独晚餐",
+      "summary": "据 TechCrunch 报道，这将是 Dario Amodei 与美国总统特朗普的首次一对一会面。在当前 AI 监管政策密集讨论的背景下，头部模型厂商与白宫的直接接触值得创作者关注，可能影响后续合规与内容审核走向。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/27/anthropics-ceo-is-about-to-have-dinner-with-president-trump",
+      "featured": false
+    },
+    {
+      "title": "Google Kotlin 版 ADK 对齐 Python 版并支持端侧 AI",
+      "summary": "InfoQ 报道，Google 的 Kotlin 版 Agent Development Kit（ADK）已实现与 Python 版的功能对齐，并新增端侧 AI 支持。这对在 Android 生态内做 AI 应用或端侧生成式交互的开发者是一个基础设施层面的进展。",
+      "category": "工具",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/sQV4EomjPP0J3hM3lyF9",
+      "featured": false
+    }
+  ]
+}
