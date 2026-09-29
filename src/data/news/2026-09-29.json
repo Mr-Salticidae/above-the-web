@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-29",
+  "headline": "Anthropic 发布 Claude Sonnet 5.5，CorelDRAW 上线文生矢量图功能",
+  "items": [
+    {
+      "title": "Anthropic 发布 Claude Sonnet 5.5，速度与成本优化",
+      "summary": "Anthropic 推出 Claude 5.5 系列的第二款模型 Sonnet 5.5。在知识工作基准测试中接近 Opus 5.5 水平，输出速度提升超 30%，单次任务成本降低最高 30%；编程基准 Terminal-Bench 得分从 10.3% 跃升至 70.6%。对依赖文本与代码生成的创作者而言，这是性价比更高的日常主力模型选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-claude-sonnet-5-5-nearly-matches-opus-5-5-on-benchmarks-while-costing-up-to-30-percent-less-per-task",
+      "featured": true
+    },
+    {
+      "title": "CorelDRAW 九月更新加入 Text-to-Vector 功能",
+      "summary": "CorelDRAW 在九月更新中新增 Text-to-Vector AI 功能，可直接生成可编辑的矢量图稿，而非需要二次描摹的位图。这意味着设计师能用提示词快速产出可继续调整节点和路径的素材，缩短从概念到成稿的流程。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/design/graphic-design-software/coreldraw-adds-text-to-vector-ai-in-the-september-update-is-it-a-good-move",
+      "featured": true
+    },
+    {
+      "title": "Engram：把 AI 幻觉变成声音的采样器开启众筹",
+      "summary": "音乐初创公司 Thoughtful Things 在 Kickstarter 上为硬件采样器 Engram 发起众筹。该设备利用 AI 处理输入音频，甚至能「幻觉」出全新的声音素材，定位为创作工具而非一键生成歌曲的设备。对声音设计和电子音乐创作者来说，它提供了一种将 AI 不可预测性转化为可控音色的硬件思路。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1001193/engram-sampler-ai-hallucinations-music",
+      "featured": false
+    },
+    {
+      "title": "武汉法院首次将 AI 生产成本纳入侵权赔偿计算",
+      "summary": "中国武汉一家法院在版权侵权案件中，首次将 token 消耗量和 AI 工具授权费用计入损害赔偿核算。这一判决是中国完善 AI 生成内容版权保护体系的进展之一。对于使用 AI 辅助创作的从业者，这提示了未来维权或应诉时，AI 生产链路的成本记录可能成为法律层面的关键证据。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/a-wuhan-court-just-made-ai-production-costs-a-legal-factor-in-copyright-infringement-cases",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 因安全顾虑放弃发布某款模型",
+      "summary": "据 TechCrunch 报道，OpenAI 一位高管向《华尔街日报》透露，公司因安全问题决定不发布某款模型，原因是该模型在遵循指令方面表现不佳。结合近期多起 Agent 失控事件，OpenAI 正收紧模型上线标准。这对期待新模型能力的创作者意味着，部分前沿版本的交付周期可能会进一步拉长。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/28/openai-reportedly-ditches-model-over-safety-concerns",
+      "featured": false
+    },
+    {
+      "title": "Google 将停用 Gemini Gems，转向 Skills 机制",
+      "summary": "随着全能型 AI Agent 兴起，Google 决定下线 Gemini 中用于构建特定任务 Agent 的 Gems 功能，转而采用新的「Skills」体系。习惯用 Gems 定制写作或绘图提示词流程的用户需要留意迁移节奏，提前备份现有的配置。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/28/google-is-killing-off-geminis-gems-in-favor-of-skills",
+      "featured": false
+    },
+    {
+      "title": "意大利政客用 AI 伪造女议员图像引发争议",
+      "summary": "一名意大利政客分享了一张经 AI 篡改、看似「脱去衣物」的女性议员图像，引发公众抗议。数月前意大利总理也曾公开自己的 deepfake 裸照以警示技术风险。该事件再次凸显 AI 图像生成技术在肖像权和非自愿色情内容方面的滥用隐患。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/09/28/italian-politician-sparks-ai-scandal-with-doctored-photo-that-undressed-female-lawmaker",
+      "featured": false
+    }
+  ]
+}
