@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-01",
+  "headline": "Gemini 4 Argon 发布、Cinema 4D 接入 AI、Photoshop Relight 引争议",
+  "items": [
+    {
+      "title": "Google 发布 Gemini 4 Argon，独立测试追平 GPT-6 Astra",
+      "summary": "Google 发布最新前沿模型 Gemini 4 Argon，定位编程与网络安全场景。独立测试显示其性能与 GPT-6 Astra 持平，但仍落后于 Claude Opus 5.5。该模型单 token 价格较低，但完成任务消耗的 token 量是 Astra 的两倍以上。目前仅部分测试者可访问，API 及付费层级稍后开放。对创作者而言，这意味着在代码辅助和工作流自动化上多了一个高性价比选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-gemini-4-argon-closes-the-gap-with-openai-and-anthropic-but-doesnt-take-a-clear-lead",
+      "featured": true
+    },
+    {
+      "title": "Cinema 4D 更新支持调用 ChatGPT 和 Claude 辅助 3D 创作",
+      "summary": "Maxon 为 Cinema 4D 引入 AI 助手功能，用户可直接在软件内调用 ChatGPT 和 Claude 来加速 3D 建模与动画制作流程。这是主流 3D DCC 工具首次深度集成大语言模型。对 3D 创作者来说，材质生成、脚本编写等环节的工作流有望进一步缩短。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/ai/you-can-now-use-chatgpt-and-claude-to-speed-up-3d-art-in-cinema-4d",
+      "featured": true
+    },
+    {
+      "title": "Photoshop 新 AI 工具 Relight 引发修图师分歧",
+      "summary": "Adobe Photoshop 上线名为 Relight 的 AI 重打光工具，社区对其评价两极分化。部分用户认为它显著提升了照片后期效率，另一部分则指出处理结果容易让画面呈现「游戏角色」般的塑料质感。对于依赖光影质感的图像创作者，这项功能需要谨慎评估适用场景。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/design/graphic-design/photoshops-newest-ai-tool-is-immediately-dividing-opinion",
+      "featured": false
+    },
+    {
+      "title": "Instagram Edits 应用新增 AI 创作助手提供发帖建议",
+      "summary": "Instagram 在其独立的 Edits 应用中上线 AI 创意助手，通过读取用户的 Instagram 账号数据，针对内容发布给出修改建议。该功能旨在帮助用户优化帖子表现。对社交媒体内容创作者而言，这提供了一个基于平台数据的即时反馈工具。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1002402/instagram-ai-edits-assistant-creators-analytics-youtube",
+      "featured": false
+    },
+    {
+      "title": "AI 语音公司 ElevenLabs 估值翻倍至 220 亿美元",
+      "summary": "AI 语音初创公司 ElevenLabs 完成一笔由 Wellington 和 T. Rowe Price 联合领投的 3 亿美元员工股权交易，公司估值达到 220 亿美元，较此前翻倍。这反映出资本市场对 AI 语音合成及克隆赛道持续看好。对于使用 AI 配音和音频生成的创作者，ElevenLabs 的资源投入可能带来更多模型能力迭代。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/30/ai-voice-startup-elevenlabs-doubles-valuation-to-22b",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 称智谱 GLM-5.3 开源权重模型安全防线易被移除",
+      "summary": "Anthropic 发布报告指出，智谱开源的 GLM-5.3 模型在构建漏洞利用方面的能力接近 Claude Mythos Preview，其较小的 Flash 版本仅需约 20.40 美元 API 成本即可生成可靠的 Chrome 攻击代码。报告同时提到该模型的安全护栏容易被剥离，解锁版本已在流传。这提醒使用开源模型的开发者需关注本地部署时的安全风险。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-says-zhipus-open-weight-glm-5-3-nearly-matches-claude-mythos-preview-at-building-exploits",
+      "featured": false
+    },
+    {
+      "title": "Reddit 因 AI 爬虫取消 RSS 并关闭公开 API",
+      "summary": "Reddit 宣布停止支持 RSS 订阅源，并结束公开 API 访问，原因是大量 AI 机器人抓取其用户生成内容。此举进一步收紧了外部获取 Reddit 数据的渠道。对于习惯从 Reddit 提取素材或训练语料的 AIGC 创作者，可用的公开数据源正在减少。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/09/30/reddit-is-killing-rss-feeds-ending-public-api-access-because-of-ai-bots",
+      "featured": false
+    }
+  ]
+}
