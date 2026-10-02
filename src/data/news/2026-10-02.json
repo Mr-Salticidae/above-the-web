@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-02",
+  "headline": "Ideogram 4.5 支持局部编辑，Tavus 实时视频 Avatar 难辨真假",
+  "items": [
+    {
+      "title": "Ideogram 发布 4.5 模型，支持图像局部编辑",
+      "summary": "Ideogram 推出新模型 Ideogram 4.5，可在修改画面指定区域的同时保持其余部分不变。该模型原生支持 2K 分辨率，单张生成成本低至 0.8 美分，Runway、Pika 和 Leonardo AI 已接入，后续计划开源权重。对图像创作者而言，局部精准修改能力将直接改变修图与迭代流程。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ideogram-says-its-new-model-can-edit-part-of-an-image-without-messing-up-the-rest",
+      "featured": true
+    },
+    {
+      "title": "Tavus 发布 Griffin，近半数测试者未认出是 AI 视频",
+      "summary": "Tavus 推出名为 Griffin 的实时视频交互模型，可同步处理面部表情、语音语调和手势。在其内部测试中，一分钟通话后 48% 的参与者认为对方是真人，而此前同类系统的最高比例仅为 2%。这意味着 AI 数字人在视频出镜场景中的可用门槛正在快速降低。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nearly-half-of-test-subjects-mistook-tavus-ai-video-avatar-for-a-real-person-on-a-one-minute-call",
+      "featured": true
+    },
+    {
+      "title": "ChatGPT 新增虚拟试穿功能，支持保存商品",
+      "summary": "OpenAI 为 ChatGPT 上线购物功能，用户可上传个人照片虚拟试穿服装和配饰，并将喜欢的商品存入收藏夹。这是文本对话模型向视觉电商场景的一次延伸，也为需要展示穿搭效果的创作者提供了一种低成本的预览思路。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/01/chatgpt-can-now-virtually-try-on-clothes-for-you",
+      "featured": false
+    },
+    {
+      "title": "研究指出 Claude Opus 5.5 写作的高频特征词",
+      "summary": "TechCrunch 梳理了 Claude Opus 5.5 的文本输出规律，发现「dependable」一词的出现频率是人类样本的 23 倍，同时该模型偏好使用「this matters」等句式。了解这些统计层面的语言指纹，有助于写作者在使用 AI 辅助时做针对性润色，避免一眼假的 AI 腔调。",
+      "category": "研究",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/01/opus-5-5-loves-to-tell-you-this-matters-and-other-ai-writing-tells",
+      "featured": false
+    },
+    {
+      "title": "Instagram 推出 AI 助手分析 Reels 并推荐选题",
+      "summary": "Instagram 正在部署新的 AI 视频助手，能够分析创作者过往 Reels 的表现数据，并据此建议下一步的内容方向。对于短视频创作者来说，这相当于在平台内嵌了一个基于自身历史数据的选题参考工具。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/01/instagram-launches-ai-assistant-that-analyzes-your-reels-and-suggests-new-ideas",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 解雇三名安全研究员",
+      "summary": "据《华尔街日报》报道，OpenAI 在内部调查后与三名安全研究员终止合作，原因是他们被发现不当处理了公司敏感信息。安全团队的人事变动往往会影响模型发布节奏与安全策略，值得持续留意。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/01/openai-cuts-ties-with-three-safety-researchers-wsj-reports",
+      "featured": false
+    },
+    {
+      "title": "Nikon 微距视频比赛冠军因涉 AI 生成被复查",
+      "summary": "Nikon Small World in Motion 比赛的获奖作品遭到科学家质疑，指其可能使用了 AI 生成技术，Nikon 官方已启动重新审查程序。这一事件再次提醒影像创作者，科学及纪实类赛事对 AI 介入的边界正变得愈发严格。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/01/nikon-re-reviewing-winner-of-small-world-in-motion-contest-after-ai-accusation",
+      "featured": false
+    }
+  ]
+}
