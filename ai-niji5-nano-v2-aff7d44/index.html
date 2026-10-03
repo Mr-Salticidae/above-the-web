@@ -1,0 +1,531 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI 形象图工作流分层 · niji5 + Nano · 蛛网之上</title><meta name="description" content="任何&#34;画风强 + 个性化要素多&#34;的 AI 形象图项目，都不可能用单一工具完成。强行让 niji 5 一次性出&#34;画风对 + 漂浮对 + 颜值对 + 道具对 + 配色对&#34;的图，就是踩工具物理上限——分层工作流（主体生成 + 后期精修）是唯一可行…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/ai-niji5-nano-v2-aff7d44/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="AI 形象图工作流分层 · niji5 + Nano"><meta property="og:description" content="任何&#34;画风强 + 个性化要素多&#34;的 AI 形象图项目，都不可能用单一工具完成。强行让 niji 5 一次性出&#34;画风对 + 漂浮对 + 颜值对 + 道具对 + 配色对&#34;的图，就是踩工具物理上限——分层工作流（主体生成 + 后期精修）是唯一可行…"><meta property="og:url" content="https://tiaozhuxiansheng.com/ai-niji5-nano-v2-aff7d44/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI 形象图工作流分层 · niji5 + Nano"><meta name="twitter:description" content="任何&#34;画风强 + 个性化要素多&#34;的 AI 形象图项目，都不可能用单一工具完成。强行让 niji 5 一次性出&#34;画风对 + 漂浮对 + 颜值对 + 道具对 + 配色对&#34;的图，就是踩工具物理上限——分层工作流（主体生成 + 后期精修）是唯一可行…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:55:33+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/核心方法论"><meta property="article:tag" content="模型/niji5"><meta property="article:tag" content="工具/Nano"><meta property="article:tag" content="工具/Midjourney"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/ai-niji5-nano-v2-aff7d44/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/ai-niji5-nano-v2-aff7d44/","url":"https://tiaozhuxiansheng.com/ai-niji5-nano-v2-aff7d44/","headline":"AI 形象图工作流分层 · niji5 + Nano","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"任何\"画风强 + 个性化要素多\"的 AI 形象图项目，都不可能用单一工具完成。强行让 niji 5 一次性出\"画风对 + 漂浮对 + 颜值对 + 道具对 + 配色对\"的图，就是踩工具物理上限——分层工作流（主体生成 + 后期精修）是唯一可行…","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:55:33+08:00","articleSection":"方法论与洞察","keywords":"类型/核心方法论, 模型/niji5, 工具/Nano, 工具/Midjourney"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"AI 形象图工作流分层 · niji5 + Nano","item":"https://tiaozhuxiansheng.com/ai-niji5-nano-v2-aff7d44/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>角色一致性与视觉签名</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 10 分钟读完 · 3,696 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>39 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#二为什么单一工具做不到">二、为什么单一工具做不到</a></li><li class="d3"><a href="#21-实测案例冠军-1-形象图">2.1 实测案例（冠军 #1 形象图）</a></li><li class="d3"><a href="#22-转折点">2.2 转折点</a></li><li class="d2"><a href="#三分层工作流终版">三、分层工作流（终版）</a></li><li class="d3"><a href="#31-三层架构">3.1 三层架构</a></li><li class="d3"><a href="#32-每一层的职责边界">3.2 每一层的职责边界</a></li><li class="d2"><a href="#四关键效率收益">四、关键效率收益</a></li><li class="d2"><a href="#五风格-dna-反推陷阱元方法论副产品">五、风格 DNA 反推陷阱（元方法论副产品）</a></li><li class="d3"><a href="#51-陷阱本质">5.1 陷阱本质</a></li><li class="d3"><a href="#52-解药">5.2 解药</a></li><li class="d3"><a href="#53-本质-vs-表象">5.3 本质 vs 表象</a></li><li class="d2"><a href="#六副会话上手任务时的-4-个必问">六、副会话上手任务时的 4 个必问</a></li><li class="d2"><a href="#七适用范围--跨项目通用">七、适用范围 · 跨项目通用</a></li><li class="d3"><a href="#71-已验证适用">7.1 已验证适用</a></li><li class="d3"><a href="#72-推测适用待验证">7.2 推测适用（待验证）</a></li><li class="d3"><a href="#73-元方法论的本质">7.3 元方法论的本质</a></li><li class="d2"><a href="#八识别工具天花板的时机关键判断">八、识别工具天花板的时机（关键判断）</a></li><li class="d3"><a href="#81-触发信号">8.1 触发信号</a></li><li class="d3"><a href="#82-不要做的已验证">8.2 不要做的（已验证）</a></li><li class="d3"><a href="#83-应该做的">8.3 应该做的</a></li><li class="d2"><a href="#九给跳蛛先生未来项目的指引">九、给跳蛛先生未来项目的指引</a></li><li class="d3"><a href="#91-启动新项目前的-4-个确认">9.1 启动新项目前的 4 个确认</a></li><li class="d3"><a href="#92-副会话启动-brief-的标准模板更新">9.2 副会话启动 brief 的标准模板更新</a></li><li class="d2"><a href="#十跨项目的分层--协作--元能力三联">十、跨项目的”分层 / 协作 / 元能力”三联</a></li><li class="d3"><a href="#101-三联结构">10.1 三联结构</a></li><li class="d3"><a href="#102-三者的关系">10.2 三者的关系</a></li><li class="d2"><a href="#十一风险与限制">十一、风险与限制</a></li><li class="d3"><a href="#111-分层工作流的成本">11.1 分层工作流的成本</a></li><li class="d3"><a href="#112-何时不适用">11.2 何时不适用</a></li><li class="d2"><a href="#十二nano-极简-prompt-原则-v2">十二、Nano 极简 prompt 原则（🆕 v2）</a></li><li class="d3"><a href="#121-实测案例精密版-vs-极简版">12.1 实测案例：精密版 vs 极简版</a></li><li class="d3"><a href="#122-深层规律nano-和-niji-5-是同款脾气">12.2 深层规律：Nano 和 niji 5 是同款脾气</a></li><li class="d3"><a href="#123-为什么精密-prompt-反而压制-nano">12.3 为什么精密 prompt 反而压制 Nano</a></li><li class="d3"><a href="#124-nano-合成极简模板推荐">12.4 Nano 合成极简模板（推荐）</a></li><li class="d3"><a href="#125-操作流程mvp-先行">12.5 操作流程（MVP 先行）</a></li><li class="d3"><a href="#126-与-prompt极简化原则_v1-的关系">12.6 与 prompt极简化原则_v1 的关系</a></li><li class="d2"><a href="#十三版本">十三、版本</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="ai-形象图工作流分层--niji5--nano">AI 形象图工作流分层 · niji5 + Nano</h1>
+<blockquote>
+<p>入档：2026-05-15（v1）/ 升级 v2：2026-05-20
+触发 v1：Prompt Battle 比赛冠军形象图项目（副会话 13 轮 niji 5 + 1 轮 Nano 后沉淀）
+触发 v2：副会话 #4 涂图儿+良伞会话验证”Nano 也吃极简 prompt”——精密 prompt 反而压制 Nano 创造性
+性质：跨项目通用工作流方法论
+关联：<a href="/above-the-web/mj-niji5-v2-1153ad3/" class="wikilink">MJ_niji5_行为档案_v2</a> / <a href="/above-the-web/llm-plan-v1-c7edaf7/" class="wikilink">LLM-plan卡点工作流_v1</a> / <a href="/above-the-web/cowork-v1-2dc55e4/" class="wikilink">Cowork协作的接口文件模式_v1</a> / <code>复盘记录/复盘笔记_涂图儿良伞_悠船niji5_Nano极简_2026-05-20</code> / <a href="/above-the-web/prompt-v1-244d8dc/" class="wikilink">prompt极简化原则_v1</a></p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>任何”画风强 + 个性化要素多”的 AI 形象图项目，都不可能用单一工具完成。强行让 niji 5 一次性出”画风对 + 漂浮对 + 颜值对 + 道具对 + 配色对”的图，就是踩工具物理上限——分层工作流（主体生成 + 后期精修）是唯一可行解。</strong></p>
+<hr>
+<h2 id="二为什么单一工具做不到">二、为什么单一工具做不到</h2>
+<h3 id="21-实测案例冠军-1-形象图">2.1 实测案例（冠军 #1 形象图）</h3>
+<p>副会话用 niji 5 试图”一次性出可用全身像”，<strong>耗了 13 轮 prompt 调试</strong>，仍然无法同时满足下面 4 项：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>要求</th><th>niji 5 能力</th><th>矛盾</th></tr></thead><tbody><tr><td>3D 渲染画风</td><td>✅ 可（用 3D 渲染词堆叠触发）</td><td>——</td></tr><tr><td>漂浮（脚不踩地）</td><td>❌ 不可（任何”漂浮”词都切到二次元立绘分支）</td><td>与画风冲突</td></tr><tr><td>颜值在线</td><td>✅ 可（半身像加颜值锚定）</td><td>但全身像下脸糊不可避免</td></tr><tr><td>黑红配色精准</td><td>⚠️ 部分可（<code>red accent</code> 会被贪婪解读到鞋上）</td><td>颜色失控</td></tr></tbody></table>
+<p><strong>4 项约束 ≥ 2 项相互矛盾时，单一工具必然失败</strong>。继续在 niji 5 内迭代 = 看起来勤奋实际无效。</p>
+<h3 id="22-转折点">2.2 转折点</h3>
+<p>副会话耗到第 13 轮时，跳蛛先生从同事处获得新思路：</p>
+<blockquote>
+<p>“用 Nano（Nano Banana / Gemini 图像编辑）做后期精修”</p>
+</blockquote>
+<p><strong>问题瞬间解决</strong>：</p>
+<ul>
+<li>niji 5 出主体（画风、服装、构图、颜值）—— 它最擅长的</li>
+<li>Nano 做精修（加麦克风、改靴款、制造漂浮、调动势）—— niji 5 物理上做不到的</li>
+</ul>
+<p><strong>这是工具能力边界的客观事实，不是 prompt 工程问题</strong>。</p>
+<hr>
+<h2 id="三分层工作流终版">三、分层工作流（终版）</h2>
+<h3 id="31-三层架构">3.1 三层架构</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>【Layer 1: niji 5 出主体】</span></span>
+<span class="line"><span>  强项：画风、服装质感、整体构图、颜值锚定</span></span>
+<span class="line"><span>  不强求：漂浮、特定道具、特定鞋款、精确配色位置</span></span>
+<span class="line"><span>  轮次预期：3-4 轮（在工作流定型后）</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>         ↓</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>【Layer 2: Nano 后期精修】</span></span>
+<span class="line"><span>  强项：加道具、改局部、制造漂浮感、调动势、调配色</span></span>
+<span class="line"><span>  轮次预期：1 轮（明确任务清单后）</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>         ↓</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>【Layer 3: PS 微调（可选）】</span></span>
+<span class="line"><span>  强项：印刷分辨率、局部颜色矫正、细节修正</span></span>
+<span class="line"><span>  耗时预期：5-10 分钟</span></span></code></pre>
+<h3 id="32-每一层的职责边界">3.2 每一层的职责边界</h3>
+<p><strong>Layer 1 · niji 5（主体生成）</strong> 应该负责：</p>
+<ul>
+<li>✅ 画风（PBR 渲染感、布料褶皱、SSS 皮肤、金属高光）</li>
+<li>✅ 主体描述（性别、发色、服装、年龄、表情）</li>
+<li>✅ 构图（半身/全身、视角、对称性）</li>
+<li>✅ 颜值锚定（半身像下）</li>
+</ul>
+<p><strong>不应该让 Layer 1 解决</strong>：</p>
+<ul>
+<li>❌ 漂浮 / 不踩地 / 无阴影（physics 类约束）</li>
+<li>❌ 特定道具的精确位置（麦克风、卡牌、剑）</li>
+<li>❌ 鞋款的精确细节（战术靴 vs 骑士靴）</li>
+<li>❌ 颜色 accent 的精确位置（红色在头发还是鞋）</li>
+<li>❌ 头发动势的精确强度</li>
+</ul>
+<p><strong>Layer 2 · Nano（后期精修）</strong> 应该负责：</p>
+<ul>
+<li>✅ 加道具：替换 / 添加手中物品</li>
+<li>✅ 改鞋款 / 服装细节</li>
+<li>✅ 制造漂浮感：脚部旋转 + 删除地面投影</li>
+<li>✅ 增强动势：头发飘动 + 服装动感</li>
+<li>✅ 强化特定颜色比例（如红色挑染加宽）</li>
+</ul>
+<p><strong>Layer 3 · PS（最终微调）</strong> 可选：</p>
+<ul>
+<li>✅ 局部颜色矫正</li>
+<li>✅ 印刷分辨率检查</li>
+<li>✅ 缺陷点的最后修正</li>
+</ul>
+<hr>
+<h2 id="四关键效率收益">四、关键效率收益</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工作流</th><th>实际耗时</th><th>备注</th></tr></thead><tbody><tr><td>单一 niji 5 强求一次性出图</td><td><strong>13 轮</strong> + 半天 + 个人精力大消耗</td><td>冠军 #1 实测</td></tr><tr><td>分层工作流（niji 5 → Nano）</td><td><strong>3-4 轮 + 1 轮 Nano</strong></td><td>冠军 #2-5 预期</td></tr></tbody></table>
+<p><strong>效率提升约 70%</strong>，更重要的是：</p>
+<ul>
+<li>✅ 减少跳蛛先生精力消耗（13 轮试错对耐心是考验）</li>
+<li>✅ 工作流可复用（5 位冠军用同一套模板，只换角色层）</li>
+<li>✅ 风格统一性更高（同一套底层渲染参数 + 同一种后期处理）</li>
+</ul>
+<hr>
+<h2 id="五风格-dna-反推陷阱元方法论副产品">五、风格 DNA 反推陷阱（元方法论副产品）</h2>
+<p>副会话在做项目时，最初基于 10 张往期作品反推 style DNA，犯了 2 处误判：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>误判</th><th>实际规律</th></tr></thead><tbody><tr><td>”几乎不直视镜头”</td><td>❌ 实际有部分直视，侧脸只是占比偏多</td></tr><tr><td>”全部漂浮 / 不踩地”</td><td>❌ 实际”漂浮”是少数派（~30%），站立/行走/裙摆吞脚才是主流</td></tr></tbody></table>
+<p><strong>两个误判的共同陷阱</strong>：把”少数派特征”过度泛化成”全局风格”。</p>
+<h3 id="51-陷阱本质">5.1 陷阱本质</h3>
+<p>反推 style DNA 时容易：</p>
+<ul>
+<li>看到”3 张漂浮 + 7 张站立”，记成”全部漂浮”</li>
+<li>看到”2 张侧脸 + 1 张直视 + 5 张俯视”，记成”几乎不直视”</li>
+</ul>
+<p><strong>原因</strong>：人脑在归纳风格时，<strong>对”显著特征”的权重远超”实际占比”</strong>。漂浮看起来比站立”特别”，于是被记成”风格”。</p>
+<h3 id="52-解药">5.2 解药</h3>
+<p><strong>多轮确认 + 量化比例</strong>：</p>
+<ol>
+<li><strong>第一次反推</strong>：列出每个维度的<strong>所有变体 + 占比</strong>（不要写”风格是 X”，要写”60% X + 30% Y + 10% Z”）</li>
+<li><strong>和用户确认</strong>：直接问”是否覆盖往期 80%+ 的作品”</li>
+<li><strong>被纠正后</strong>：重新分析具体哪几张是”主流”哪几张是”少数派”</li>
+</ol>
+<h3 id="53-本质-vs-表象">5.3 本质 vs 表象</h3>
+<p>“不踩地”的本质是 <strong>不画地面/阴影/重心明显</strong>，不是必须真腾空。</p>
+<ul>
+<li><strong>表象层</strong>：“漂浮起来”</li>
+<li><strong>本质层</strong>：“没有地面 + 没有阴影 + 视觉重心不在脚上”</li>
+</ul>
+<p>可以用走路/侧身/裙摆吞脚等替代实现”本质”，<strong>不需要真的让 niji 5 出漂浮图</strong>（反正它做不到）。</p>
+<p><strong>这条对 prompt 工程的指导</strong>：识别用户描述的”表象需求”背后的”本质需求”——后者通常有更多实现路径。</p>
+<hr>
+<h2 id="六副会话上手任务时的-4-个必问">六、副会话上手任务时的 4 个必问</h2>
+<p>副会话经过 13 轮试错沉淀出的<strong>第一原则</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>副会话接到任务时，不要立刻进入 prompt 工程，先问 4 个问题：</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>1. 这个项目是否有后期/精修工具可用？（Nano / PS / 其他）</span></span>
+<span class="line"><span>   → 决定 niji 5 是否需要"做全部"，决定工作流分层是否可能</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>2. 是否有时间压力？</span></span>
+<span class="line"><span>   → 决定能否花时间做 style DNA 反推 vs 直接进入快速迭代</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>3. 服务对象的审美标准基线是什么？</span></span>
+<span class="line"><span>   → 普通用户 vs 专业人士 vs 偶像级，决定颜值/细节投入度</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>4. 风格参考图是否包含完整尺寸要求？</span></span>
+<span class="line"><span>   → 全身 / 半身 / 头肩，决定 niji 5 是否需要扩图工作流</span></span></code></pre>
+<p><strong>第 1 个问题尤其重要</strong>——它解决了”工具能力 ≠ 项目能力”的最大盲点。</p>
+<hr>
+<h2 id="七适用范围--跨项目通用">七、适用范围 · 跨项目通用</h2>
+<p>这条方法论<strong>不只适用于”niji 5 + Nano”</strong>，更广泛适用于任何”主体生成 + 后期精修”的工具组合：</p>
+<h3 id="71-已验证适用">7.1 已验证适用</h3>
+<ul>
+<li>✅ <strong>niji 5 + Nano</strong>：Prompt Battle 冠军形象图（本案例）</li>
+<li>✅ <strong>PIL + Nano</strong>：《即时雨》MV 封面（同期同日案例，跳蛛先生最终采用同好的 Nano 重构）</li>
+</ul>
+<h3 id="72-推测适用待验证">7.2 推测适用（待验证）</h3>
+<ul>
+<li>🔄 <strong>MJ v8.1 + Nano</strong>：游戏角色立绘</li>
+<li>🔄 <strong>MJ v7 + oref + Nano</strong>：IP 系列形象（角色一致性 + 后期精修）</li>
+<li>🔄 <strong>Suno + 剪映 + Code 工具</strong>：音乐 MV 制作（实际即时雨已经走这条工作流）</li>
+<li>🔄 <strong>Whisper + LLM + MoviePy</strong>：视频卡点（即时雨案例已验证）</li>
+<li>🔄 <strong>Stable Diffusion + ControlNet + PS</strong>：批量人物形象（控制 + 精修分层）</li>
+</ul>
+<h3 id="73-元方法论的本质">7.3 元方法论的本质</h3>
+<p><strong>不要逼一个工具做全部</strong> 是一条<strong>跨工具的元原则</strong>。每个 AI 工具都有物理上限：</p>
+<ul>
+<li>niji 5 的上限是”漂浮 + 多约束 + 高颜值”同时成立</li>
+<li>MJ V8.1 的上限是”角色一致性 + 美学最大化”同时成立</li>
+<li>LLM 的上限是”语义层判断 + 精确时序计算”同时成立</li>
+</ul>
+<p><strong>识别每个工具的上限 + 用工作流分层突破</strong> = AI 协作的核心元能力。</p>
+<hr>
+<h2 id="八识别工具天花板的时机关键判断">八、识别工具天花板的时机（关键判断）</h2>
+<p>什么时候应该停止在工具 A 内迭代，开始考虑工具 B 接管？</p>
+<h3 id="81-触发信号">8.1 触发信号</h3>
+<ul>
+<li>🚨 <strong>连续 3 轮 prompt 调整后无明显提升</strong></li>
+<li>🚨 <strong>同一个错误重复出现</strong>（如 <code>red accent</code> 100% 落鞋，刷再多轮都不变）</li>
+<li>🚨 <strong>新增一个约束就破坏另一个约束</strong>（描述层过载）</li>
+<li>🚨 <strong>你开始说”再试一下运气”</strong> —— 这是<strong>最隐蔽的信号</strong>，是”看起来勤奋实际无效”的入口</li>
+</ul>
+<h3 id="82-不要做的已验证">8.2 不要做的（已验证）</h3>
+<ul>
+<li>❌ 在工具内”再刷几轮看运气”——12 张里只撞到 1-2 张例外，统计学上不会再有更好结果</li>
+<li>❌ 假设”是 prompt 不够好” —— 当工具有物理上限时，无论 prompt 多巧妙都跨不过</li>
+<li>❌ 不主动问”是否有后期工具” —— 这是副会话最深的教训</li>
+</ul>
+<h3 id="83-应该做的">8.3 应该做的</h3>
+<ul>
+<li>✅ 主动询问用户”是否有 Layer 2 / Layer 3 工具可用”</li>
+<li>✅ 如果没有 → 重新评估项目可行性，告知用户”工具上限决定项目上限”</li>
+<li>✅ 如果有 → 立刻切到分层工作流，定义每一层的职责</li>
+</ul>
+<hr>
+<h2 id="九给跳蛛先生未来项目的指引">九、给跳蛛先生未来项目的指引</h2>
+<h3 id="91-启动新项目前的-4-个确认">9.1 启动新项目前的 4 个确认</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>□ 1. 项目最终交付物是什么？（单张图 / 多张图 / 完整全身 / 半身）</span></span>
+<span class="line"><span>□ 2. Layer 1 工具用什么？（niji 5 / MJ v8.1 / SD / 其他）</span></span>
+<span class="line"><span>□ 3. Layer 2 后期工具是否可用？（Nano / PS / Photoshop AI / Krita）</span></span>
+<span class="line"><span>□ 4. 是否有 style DNA 参考？如果有，规模？（5 张以下不可靠，10+ 张可反推）</span></span></code></pre>
+<h3 id="92-副会话启动-brief-的标准模板更新">9.2 副会话启动 brief 的标准模板更新</h3>
+<p>之前的 niji 5 共创者启动 brief（<code>niji5人物形象图共创者_启动brief_2026-05-15.md</code>）应该加一条：</p>
+<blockquote>
+<p><strong>第一步主动询问：项目是否有后期/精修工具可用（Nano / PS / 其他）？</strong>
+如果有 → 明确分层职责（Layer 1 不强求做 Layer 2 能做的事）
+如果没有 → 重新评估项目可行性，跨过工具上限的事项需要降低优先级或换工具</p>
+</blockquote>
+<hr>
+<h2 id="十跨项目的分层--协作--元能力三联">十、跨项目的”分层 / 协作 / 元能力”三联</h2>
+<p>这条方法论是更高阶元能力的一部分——</p>
+<h3 id="101-三联结构">10.1 三联结构</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>方法论</th><th>案例</th></tr></thead><tbody><tr><td><strong>工具分层</strong></td><td>本档案（niji 5 + Nano）</td><td>Prompt Battle 形象图</td></tr><tr><td><strong>协作分层</strong></td><td><a href="/above-the-web/cowork-v1-2dc55e4/" class="wikilink">Cowork协作的接口文件模式_v1</a></td><td>异界气象台 / 即时雨多主体协作</td></tr><tr><td><strong>元能力识别</strong></td><td>（待沉淀）<strong>识别工具天花板的时机</strong></td><td>即时雨 LLM-plan + niji 5 形象图</td></tr></tbody></table>
+<h3 id="102-三者的关系">10.2 三者的关系</h3>
+<ul>
+<li><strong>工具分层</strong> = 物理层（不同工具做不同事）</li>
+<li><strong>协作分层</strong> = 流程层（不同主体在接口文件上协作）</li>
+<li><strong>元能力识别</strong> = 决策层（什么时候切到分层）</li>
+</ul>
+<p><strong>完整的 AI 协作工作流 = 这三层共同生效</strong>。</p>
+<hr>
+<h2 id="十一风险与限制">十一、风险与限制</h2>
+<h3 id="111-分层工作流的成本">11.1 分层工作流的成本</h3>
+<ul>
+<li>⚠️ <strong>学习成本</strong>：用户需要同时掌握 Layer 1（如 niji 5）+ Layer 2（如 Nano）两套工具</li>
+<li>⚠️ <strong>接口成本</strong>：Layer 1 → Layer 2 的中间产物（如 niji 5 出图）需要妥善保存</li>
+<li>⚠️ <strong>沟通成本</strong>：副会话需要把”Layer 2 任务清单”清晰传递给用户</li>
+</ul>
+<h3 id="112-何时不适用">11.2 何时不适用</h3>
+<ul>
+<li>❌ 单张图项目（一次性需求，不值得搭建分层工作流）</li>
+<li>❌ 用户没有 Layer 2 工具且无法获取（如某些封闭环境）</li>
+<li>❌ 极快交付项目（&#x3C; 30 分钟，分层切换成本反而高）</li>
+</ul>
+<hr>
+<h2 id="十二nano-极简-prompt-原则-v2">十二、Nano 极简 prompt 原则（🆕 v2）</h2>
+<blockquote>
+<p>入档：2026-05-20
+触发：副会话 #4 良伞 + 文鳐鱼合成阶段——Claude 的”精密 Nano prompt”（遮挡关系/位置锚点/光影统一/反向禁止全堆上）跑不出来，跳蛛先生用 <strong>两步极简 prompt</strong> 直接出成片。
+含义：v1 §三的”Layer 2: Nano 精修” 章节描述偏抽象（“靠后期工具做”），v2 把这条工作流的<strong>写法层面规律</strong>沉淀清楚。</p>
+</blockquote>
+<h3 id="121-实测案例精密版-vs-极简版">12.1 实测案例：精密版 vs 极简版</h3>
+<p><strong>Claude 之前写的”精密 Nano prompt”（失败）</strong>：</p>
+<ul>
+<li>框死遮挡关系</li>
+<li>锁定位置坐标</li>
+<li>锁定光影方向 / 边缘融合等技术参数</li>
+<li>写”严格保留 X / 不要 Y / Z 完全不变” 等条款式约束</li>
+</ul>
+<p><strong>跳蛛先生用的”极简 Nano prompt”（成功）</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Step 1: 把 {{Image 1}} {{Image 2}} 融合进一张图,</span></span>
+<span class="line"><span>        让 {{Image 2}} 中的形象漂浮在 {{Image 1}} 中的人物形象旁边,</span></span>
+<span class="line"><span>        协调二者大小比例,</span></span>
+<span class="line"><span>        同时保持画风的一致性和图片质量的一致性</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Step 2: 让角色漂浮起来,注意保持风格一致性和图片质量</span></span></code></pre>
+<p><strong>结果对比</strong>：极简版反而出了”文鳐鱼缩小成小神兽窝在良伞腰间” 的意外解，比 Claude 设计的”身后悬浮” 精密设计更动人。</p>
+<h3 id="122-深层规律nano-和-niji-5-是同款脾气">12.2 深层规律：Nano 和 niji 5 是同款脾气</h3>
+<p><a href="/above-the-web/mj-niji5-v2-1153ad3/" class="wikilink">MJ_niji5_行为档案_v2</a> §坑 2 说过 niji 5 描述层 >10 词就过载，但当时只验证了 niji 5，<strong>没把这条迁移到 Nano</strong>。本次会话证明 <strong>Nano 也吃这一套</strong>：</p>
+<ul>
+<li>核心锚点 3-4 个</li>
+<li>配上”保持一致性” 这种弹性约束</li>
+<li>不写”严格保留 / 不要做 / 反向禁止” 这些条款式约束</li>
+</ul>
+<h3 id="123-为什么精密-prompt-反而压制-nano">12.3 为什么精密 prompt 反而压制 Nano</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>精密 prompt</th><th>极简 prompt</th></tr></thead><tbody><tr><td>框死的范围</td><td>所有位置/光影/边缘</td><td>仅核心动作（融合/漂浮）</td></tr><tr><td>Nano 的发挥空间</td><td>在框内挤压</td><td>自由判断”协调”具体怎么实现</td></tr><tr><td>意外解概率</td><td>低（被框死）</td><td>高（“窝在腰间”、“缩小成小神兽” 等创造性合成）</td></tr><tr><td>用户工作量</td><td>高（要写精确条款）</td><td>低（写 3-4 句够了）</td></tr></tbody></table>
+<p>精密 prompt 是”防御性写作” —— Claude 想把所有可能出错的地方都堵死。但 Nano 这种合成模型的特点是”在弹性约束下的创造性判断”，<strong>防御性写作反而把创造性压制了</strong>。</p>
+<h3 id="124-nano-合成极简模板推荐">12.4 Nano 合成极简模板（推荐）</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Step 1: 把 {{Image 1}} {{Image 2}} 融合进一张图,</span></span>
+<span class="line"><span>        [核心关系描述,1-2 句],</span></span>
+<span class="line"><span>        协调二者大小比例,</span></span>
+<span class="line"><span>        同时保持画风的一致性和图片质量的一致性</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Step 2(可选): [二次精修,1 句],</span></span>
+<span class="line"><span>            注意保持风格一致性和图片质量</span></span></code></pre>
+<p><strong>对比要点</strong>：</p>
+<ul>
+<li>❌ 不要写”严格保留 / 不要做 / 反向禁止”</li>
+<li>❌ 不要锁定具体位置坐标（让 Nano 自己判断”协调”）</li>
+<li>❌ 不要写光影方向 / 遮挡关系 / 边缘融合等技术参数</li>
+<li>✅ 只写”做什么”（融合+漂浮）+ “保持什么”（画风/质量）</li>
+</ul>
+<h3 id="125-操作流程mvp-先行">12.5 操作流程（MVP 先行）</h3>
+<ol>
+<li><strong>先写 3-4 句极简 prompt 尝试</strong>（MVP 原则）</li>
+<li>跑出来看效果</li>
+<li>如果方向对但某个维度偏了 → 加一句具体约束（仅针对那个维度）</li>
+<li>如果方向完全跑偏 → 调整核心锚点，<strong>不要堆叠精密条款</strong></li>
+</ol>
+<p><strong>反例</strong>：Claude 在涂图儿+良伞会话里直接用”精密版” 起手，跑不出来后<strong>继续加更多条款</strong>——这是把”防御性写作”误用在了创造性合成上。</p>
+<h3 id="126-与-prompt极简化原则_v1-的关系">12.6 与 <a href="/above-the-web/prompt-v1-244d8dc/" class="wikilink">prompt极简化原则_v1</a> 的关系</h3>
+<p><code>prompt 极简化原则</code> 之前在闪电战双场（MJ 上）验证。<strong>本次会话证明 Nano 也吃同一套</strong> —— 这是<strong>跨工具验证</strong>，把”极简化” 从 MJ 限定方法论升格为生成式 AI 通用原则。</p>
+<p>更上位的元规律：<strong>生成式 AI 工具的注意力机制对超长 prompt 的执行率随长度下降</strong>。这条规律已在以下工具上验证：</p>
+<ul>
+<li>✅ MJ V7 / niji 5（<a href="/above-the-web/prompt-v1-244d8dc/" class="wikilink">prompt极简化原则_v1</a> §双场验证）</li>
+<li>✅ Nano（本档案 §十二，🆕 v2）</li>
+<li>✅ Suno v5.5（<a href="/above-the-web/suno-v5-5-v1-b2fa879/" class="wikilink">Suno_v5.5_行为规律_v1</a> 经验 5 反向版本——重要指令要重复，次要指令砍掉）</li>
+</ul>
+<p><strong><a href="/above-the-web/prompt-v1-244d8dc/" class="wikilink">prompt极简化原则_v1</a> 应同步升级为 v1.1</strong>，加入 Nano 验证 + 跨工具结论。</p>
+<hr>
+<h2 id="十三版本">十三、版本</h2>
+<ul>
+<li><strong>v1 - 2026-05-15 - 主对话 Claude 沉淀</strong>（基于副会话 niji 5 共创者 1 个冠军案例）</li>
+<li><strong>v2 - 2026-05-20 - 主对话 Claude（第二任）升级</strong>（基于副会话 #4 涂图儿+良伞会话，加 §十二 Nano 极简 prompt 原则 + 与悠船 niji 5 实测的工作流影响）</li>
+</ul>
+<p>升级触发：</p>
+<ul>
+<li>✅ v2：第二个项目（涂图儿+良伞）验证了”Nano 也吃极简”</li>
+<li>第三个项目验证 Nano 极简后，§十二 可独立成档为 Nano_合成prompt原则_v1</li>
+<li>跨工具验证（SD inpaint / 即梦 inpaint 等）后，§十二 升格为通用图像合成原则</li>
+</ul>
+<p>继承链：</p>
+<ul>
+<li>原始材料：副会话 <code>项目阶段性回执_运营经理_2026-05-15.md</code> + <code>复盘笔记_冠军1_prompt_battle形象图_2026-05-15.md</code></li>
+<li>配套档案：<a href="/above-the-web/mj-niji5-v2-1153ad3/" class="wikilink">MJ_niji5_行为档案_v2</a></li>
+<li>同期同类元方法论：<a href="/above-the-web/llm-plan-v1-c7edaf7/" class="wikilink">LLM-plan卡点工作流_v1</a>（即时雨案例）</li>
+</ul>
+<hr>
+<blockquote>
+<p>落款：
+这条方法论的真正价值不在”如何用 niji 5 + Nano”——
+而在揭示了一条 AI 协作的元原则：<strong>每个工具都有物理上限，识别上限 + 跨工具分层是必备能力</strong>。</p>
+<p>跳蛛先生 5/15 同时在两个项目（即时雨音乐卡点 + Prompt Battle 形象图）撞同款元层失败——这是”识别工具天花板”这条元能力<strong>值得独立沉淀</strong>的最强信号。
+等下个项目再撞一次，我会把”识别工具天花板的时机”作为独立元方法论入档。</p>
+</blockquote>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>所属索引:<a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/核心方法论</span><span class="tag">模型/niji5</span><span class="tag">工具/Nano</span><span class="tag">工具/Midjourney</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/01_%E8%A7%92%E8%89%B2%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E8%A7%86%E8%A7%89%E7%AD%BE%E5%90%8D/AI%E5%BD%A2%E8%B1%A1%E5%9B%BE%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%88%86%E5%B1%82_niji5+Nano_v2.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/01_%E8%A7%92%E8%89%B2%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E8%A7%86%E8%A7%89%E7%AD%BE%E5%90%8D/AI%E5%BD%A2%E8%B1%A1%E5%9B%BE%E5%B7%A5%E4%BD%9C%E6%B5%81%E5%88%86%E5%B1%82_niji5+Nano_v2.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/mj-niji5-v2-1153ad3/">MJ niji 5 · 行为档案</a></li><li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/nano-v1-0b9354f/">nano 跨场景三变量发现</a></li><li><a href="/above-the-web/nano-mj-v1-1991f0e/">双工具分工 · nano 锁脸 + MJ 摄影质感</a></li><li><a href="/above-the-web/prompt-v1-244d8dc/">prompt 极简化原则 · v1.2（跨工具多场验证版）</a></li><li><a href="/above-the-web/vs-v1-f81db28/">角色卡 vs 主办方意图 · 协作元方法论</a></li><li><a href="/above-the-web/v1-dff6dd3/">识别工具天花板的时机</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/moodboard-v1-604d1f0/"> <span class="card-cat">方法论与洞察</span> <h3>moodboard 跨题材审美迁移（人物 moodboard 当通用审美增强器）</h3> <p>一个为某题材（如美女写真）长期调校的高质量 moodboard，承载的不是内容（美女），而是创作者的审美风格基底（光影 / 质感 / hal…</p> </a><a class="card" href="/above-the-web/gptimage2-v1-e7fe63b/"> <span class="card-cat">方法论与洞察</span> <h3>GPT Image 2 锁脸的「脸占比上限」</h3> <p>- 参考图特征：温婉圆脸、蓝灰色大而圆的眼睛、气质温婉。</p> </a><a class="card" href="/above-the-web/moodboard-v1-c683401/"> <span class="card-cat">方法论与洞察</span> <h3>moodboard 拉力陷阱</h3> <p>MJ 的 moodboard 不是&quot;颜色滤镜&quot;,是&quot;视觉语义场&quot;——它会同时拉走色调 + 构图 + 主体姿态 + 氛围联想。用 moodbo…</p> </a><a class="card" href="/above-the-web/oref-v1-51c7af9/"> <span class="card-cat">方法论与洞察</span> <h3>oref 高方差律 — oref 不是不能用,是方差大</h3> <p>MJ 的 oref 锁脸不是不能用,是高方差:同一套 prompt 反复跑,有的塑料浓妆/五官异常,有的皮肤自然骨相端正。问题在方差,不在上…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#二为什么单一工具做不到" data-toc-link="二为什么单一工具做不到">二、为什么单一工具做不到</a></li><li class="d3"><a href="#21-实测案例冠军-1-形象图" data-toc-link="21-实测案例冠军-1-形象图">2.1 实测案例（冠军 #1 形象图）</a></li><li class="d3"><a href="#22-转折点" data-toc-link="22-转折点">2.2 转折点</a></li><li class="d2"><a href="#三分层工作流终版" data-toc-link="三分层工作流终版">三、分层工作流（终版）</a></li><li class="d3"><a href="#31-三层架构" data-toc-link="31-三层架构">3.1 三层架构</a></li><li class="d3"><a href="#32-每一层的职责边界" data-toc-link="32-每一层的职责边界">3.2 每一层的职责边界</a></li><li class="d2"><a href="#四关键效率收益" data-toc-link="四关键效率收益">四、关键效率收益</a></li><li class="d2"><a href="#五风格-dna-反推陷阱元方法论副产品" data-toc-link="五风格-dna-反推陷阱元方法论副产品">五、风格 DNA 反推陷阱（元方法论副产品）</a></li><li class="d3"><a href="#51-陷阱本质" data-toc-link="51-陷阱本质">5.1 陷阱本质</a></li><li class="d3"><a href="#52-解药" data-toc-link="52-解药">5.2 解药</a></li><li class="d3"><a href="#53-本质-vs-表象" data-toc-link="53-本质-vs-表象">5.3 本质 vs 表象</a></li><li class="d2"><a href="#六副会话上手任务时的-4-个必问" data-toc-link="六副会话上手任务时的-4-个必问">六、副会话上手任务时的 4 个必问</a></li><li class="d2"><a href="#七适用范围--跨项目通用" data-toc-link="七适用范围--跨项目通用">七、适用范围 · 跨项目通用</a></li><li class="d3"><a href="#71-已验证适用" data-toc-link="71-已验证适用">7.1 已验证适用</a></li><li class="d3"><a href="#72-推测适用待验证" data-toc-link="72-推测适用待验证">7.2 推测适用（待验证）</a></li><li class="d3"><a href="#73-元方法论的本质" data-toc-link="73-元方法论的本质">7.3 元方法论的本质</a></li><li class="d2"><a href="#八识别工具天花板的时机关键判断" data-toc-link="八识别工具天花板的时机关键判断">八、识别工具天花板的时机（关键判断）</a></li><li class="d3"><a href="#81-触发信号" data-toc-link="81-触发信号">8.1 触发信号</a></li><li class="d3"><a href="#82-不要做的已验证" data-toc-link="82-不要做的已验证">8.2 不要做的（已验证）</a></li><li class="d3"><a href="#83-应该做的" data-toc-link="83-应该做的">8.3 应该做的</a></li><li class="d2"><a href="#九给跳蛛先生未来项目的指引" data-toc-link="九给跳蛛先生未来项目的指引">九、给跳蛛先生未来项目的指引</a></li><li class="d3"><a href="#91-启动新项目前的-4-个确认" data-toc-link="91-启动新项目前的-4-个确认">9.1 启动新项目前的 4 个确认</a></li><li class="d3"><a href="#92-副会话启动-brief-的标准模板更新" data-toc-link="92-副会话启动-brief-的标准模板更新">9.2 副会话启动 brief 的标准模板更新</a></li><li class="d2"><a href="#十跨项目的分层--协作--元能力三联" data-toc-link="十跨项目的分层--协作--元能力三联">十、跨项目的”分层 / 协作 / 元能力”三联</a></li><li class="d3"><a href="#101-三联结构" data-toc-link="101-三联结构">10.1 三联结构</a></li><li class="d3"><a href="#102-三者的关系" data-toc-link="102-三者的关系">10.2 三者的关系</a></li><li class="d2"><a href="#十一风险与限制" data-toc-link="十一风险与限制">十一、风险与限制</a></li><li class="d3"><a href="#111-分层工作流的成本" data-toc-link="111-分层工作流的成本">11.1 分层工作流的成本</a></li><li class="d3"><a href="#112-何时不适用" data-toc-link="112-何时不适用">11.2 何时不适用</a></li><li class="d2"><a href="#十二nano-极简-prompt-原则-v2" data-toc-link="十二nano-极简-prompt-原则-v2">十二、Nano 极简 prompt 原则（🆕 v2）</a></li><li class="d3"><a href="#121-实测案例精密版-vs-极简版" data-toc-link="121-实测案例精密版-vs-极简版">12.1 实测案例：精密版 vs 极简版</a></li><li class="d3"><a href="#122-深层规律nano-和-niji-5-是同款脾气" data-toc-link="122-深层规律nano-和-niji-5-是同款脾气">12.2 深层规律：Nano 和 niji 5 是同款脾气</a></li><li class="d3"><a href="#123-为什么精密-prompt-反而压制-nano" data-toc-link="123-为什么精密-prompt-反而压制-nano">12.3 为什么精密 prompt 反而压制 Nano</a></li><li class="d3"><a href="#124-nano-合成极简模板推荐" data-toc-link="124-nano-合成极简模板推荐">12.4 Nano 合成极简模板（推荐）</a></li><li class="d3"><a href="#125-操作流程mvp-先行" data-toc-link="125-操作流程mvp-先行">12.5 操作流程（MVP 先行）</a></li><li class="d3"><a href="#126-与-prompt极简化原则_v1-的关系" data-toc-link="126-与-prompt极简化原则_v1-的关系">12.6 与 prompt极简化原则_v1 的关系</a></li><li class="d2"><a href="#十三版本" data-toc-link="十三版本">十三、版本</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

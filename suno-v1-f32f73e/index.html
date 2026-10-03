@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>用 Suno 给视频做定制 BGM —《凝视》配乐制作分享 · 蛛网之上</title><meta name="description" content="很多人听完《凝视》的 BGM 觉得很合,问我怎么做的。这篇就把整个流程分享出来,顺便把我踩过的坑也写下来。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/suno-v1-f32f73e/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="用 Suno 给视频做定制 BGM —《凝视》配乐制作分享"><meta property="og:description" content="很多人听完《凝视》的 BGM 觉得很合,问我怎么做的。这篇就把整个流程分享出来,顺便把我踩过的坑也写下来。"><meta property="og:url" content="https://tiaozhuxiansheng.com/suno-v1-f32f73e/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="用 Suno 给视频做定制 BGM —《凝视》配乐制作分享"><meta name="twitter:description" content="很多人听完《凝视》的 BGM 觉得很合,问我怎么做的。这篇就把整个流程分享出来,顺便把我踩过的坑也写下来。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/suno-v1-f32f73e/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/suno-v1-f32f73e/","url":"https://tiaozhuxiansheng.com/suno-v1-f32f73e/","headline":"用 Suno 给视频做定制 BGM —《凝视》配乐制作分享","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"很多人听完《凝视》的 BGM 觉得很合,问我怎么做的。这篇就把整个流程分享出来,顺便把我踩过的坑也写下来。","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"用 Suno 给视频做定制 BGM —《凝视》配乐制作分享","item":"https://tiaozhuxiansheng.com/suno-v1-f32f73e/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 8 分钟读完 · 2,772 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>28 节</i></summary> <ol> <li class="d2"><a href="#一写在前面--这套方法不是教程是思路">一、写在前面 — 这套方法不是”教程”,是”思路”</a></li><li class="d2"><a href="#二起点不是-suno是先想清楚视频要什么">二、起点不是 Suno,是先想清楚视频要什么</a></li><li class="d2"><a href="#三我的-prompt-全文--逐段拆解">三、我的 prompt 全文 + 逐段拆解</a></li><li class="d3"><a href="#第-1-层基础参数1-行">第 1 层:基础参数(1 行)</a></li><li class="d3"><a href="#第-2-层风格融合2-行">第 2 层:风格融合(2 行)</a></li><li class="d3"><a href="#第-3-层时间线结构3-4-行">第 3 层:时间线结构(3-4 行)</a></li><li class="d3"><a href="#第-4-层质感细节2-行">第 4 层:质感细节(2 行)</a></li><li class="d2"><a href="#四我用了多少次才出这首曲子">四、我用了多少次才出这首曲子?</a></li><li class="d2"><a href="#五suno-操作具体步骤">五、Suno 操作具体步骤</a></li><li class="d3"><a href="#step-1打开-custom-模式">Step 1:打开 Custom 模式</a></li><li class="d3"><a href="#step-2填三个字段">Step 2:填三个字段</a></li><li class="d3"><a href="#step-3勾选-instrumental">Step 3:勾选 “Instrumental”</a></li><li class="d3"><a href="#step-4点-create">Step 4:点 Create</a></li><li class="d3"><a href="#step-5挑延长">Step 5:挑+延长</a></li><li class="d2"><a href="#六得到-bgm-之后选段才是真正的工作">六、得到 BGM 之后:选段才是真正的工作</a></li><li class="d3"><a href="#用波形软件看能量曲线">用波形软件看能量曲线</a></li><li class="d3"><a href="#选段原则">选段原则</a></li><li class="d3"><a href="#具体怎么剪">具体怎么”剪”?</a></li><li class="d2"><a href="#七几个我踩过的坑">七、几个我踩过的坑</a></li><li class="d3"><a href="#坑-1在-prompt-里写中文">坑 1:在 prompt 里写中文</a></li><li class="d3"><a href="#坑-2堆砌一大堆形容词">坑 2:堆砌一大堆形容词</a></li><li class="d3"><a href="#坑-3只描述风格不描述结构">坑 3:只描述风格,不描述结构</a></li><li class="d3"><a href="#坑-4对生成结果凑合">坑 4:对生成结果”凑合”</a></li><li class="d3"><a href="#坑-5在-suno-里调整不在视频里调整">坑 5:在 Suno 里调整,不在视频里调整</a></li><li class="d2"><a href="#八一个进阶技巧replace-section">八、一个进阶技巧:Replace Section</a></li><li class="d2"><a href="#九如果你想做和凝视类似的暗调系作品">九、如果你想做和《凝视》类似的暗调系作品</a></li><li class="d2"><a href="#十最后为什么这件事值得做">十、最后:为什么这件事值得做</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="用-suno-给视频做定制-bgm-凝视配乐制作分享">用 Suno 给视频做定制 BGM —《凝视》配乐制作分享</h1>
+<blockquote>
+<p>给对Suno感兴趣的同好们 — 跳蛛先生</p>
+</blockquote>
+<p>很多人听完《凝视》的 BGM 觉得很合,问我怎么做的。这篇就把整个流程分享出来,顺便把我踩过的坑也写下来。</p>
+<p>希望对你有用。</p>
+<hr>
+<h2 id="一写在前面--这套方法不是教程是思路">一、写在前面 — 这套方法不是”教程”,是”思路”</h2>
+<p><strong>Suno 不是按按钮就能出好音乐的工具</strong>。它的核心是:你能用语言精确地描述你想要什么。所以这份文档与其说是”Suno 操作教程”,不如说是”如何把自己脑子里的音乐说出来”。</p>
+<p>会写 prompt 的人和不会写 prompt 的人,用同一个 Suno,出来的东西天差地别。差别不在 Suno,在你。</p>
+<hr>
+<h2 id="二起点不是-suno是先想清楚视频要什么">二、起点不是 Suno,是先想清楚视频要什么</h2>
+<p>我这次最深的教训是:<strong>不要打开 Suno 就开始写 prompt</strong>。</p>
+<p>我一开始就是这样做的。结果出来一堆”听起来好听但和视频对不上”的曲子,试了七八首都不对,折磨自己也折磨 Suno。</p>
+<p>正确的起点是先回答几个问题:</p>
+<p><strong>1. 视频是什么调性?</strong></p>
+<ul>
+<li>暗黑 / 治愈 / 紧张 / 浪漫 / 神秘 / 史诗 …</li>
+<li>我是”暗黑+克制+冷感”</li>
+</ul>
+<p><strong>2. 视频时长多少?用什么节奏?</strong></p>
+<ul>
+<li>抖音 15s 还是 B站 60s?</li>
+<li>快节奏(切换频繁)还是慢节奏(每个镜头都长)?</li>
+<li>我是 15s 快切</li>
+</ul>
+<p><strong>3. 视频的”能量曲线”是什么样?</strong></p>
+<ul>
+<li>一直高?一直低?先低后高?有几个高潮?</li>
+<li>我是”中等→高潮→收束”</li>
+</ul>
+<p><strong>4. 有没有需要”卡点”的关键瞬间?</strong></p>
+<ul>
+<li>比如某个角色出现、某个动作完成、某个字幕浮现</li>
+<li>我有 6 个角色入场点 + 1 个收尾爆点</li>
+</ul>
+<p><strong>这四个问题想清楚,Suno prompt 几乎就写出来了。</strong></p>
+<p>如果你跳过这一步,Suno 会给你一首”通用好听”但永远不能精确卡到你视频上的曲子。</p>
+<hr>
+<h2 id="三我的-prompt-全文--逐段拆解">三、我的 prompt 全文 + 逐段拆解</h2>
+<p>这是我最终用的完整 prompt:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Dark cinematic instrumental at 90 BPM, blending tense orchestral </span></span>
+<span class="line"><span>suspense with phonk-weighted low-end and a half-time pulse; intro </span></span>
+<span class="line"><span>starts with mechanical clockwork ticks, deep cello drones, and low </span></span>
+<span class="line"><span>brass swells, then tribal drums enter at 8 seconds and the bass </span></span>
+<span class="line"><span>drops hard at 11 seconds for a massive impact before the reverb </span></span>
+<span class="line"><span>tail fades out. Sparse opening builds into a sudden удар of drums </span></span>
+<span class="line"><span>and sub, with reversed swells and metallic ticks bridging each hit. </span></span>
+<span class="line"><span>Wide, ominous, and pressure-filled mix with huge low-end weight </span></span>
+<span class="line"><span>and crisp transient detail, low, deep cello.</span></span></code></pre>
+<p>看起来很复杂,其实是 4 个层次拼起来的。</p>
+<h3 id="第-1-层基础参数1-行">第 1 层:基础参数(1 行)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Dark cinematic instrumental at 90 BPM</span></span></code></pre>
+<p><code>Dark cinematic</code> 调性,<code>instrumental</code> 强制纯音乐,<code>90 BPM</code> 锁节奏。</p>
+<p><strong>关于 BPM 的关键认知</strong>:这是整个 prompt 里最重要的一个数字。BPM 直接决定后面剪辑节奏。</p>
+<p>我怎么定 90 BPM 的:</p>
+<ul>
+<li>视频 15 秒,要切换 7 次(6 张图 + 收尾)</li>
+<li>平均每张图 ~2 秒</li>
+<li>90 BPM 一拍 = 0.667 秒,4 拍 = 2.67 秒 ≈ 一张图的时长</li>
+<li><strong>完美匹配</strong></li>
+</ul>
+<p>如果你视频每张图想要 1 秒,那 BPM 应该是 120-140;如果每张图 4 秒,BPM 应该选 60-70。
+<strong>先有视频节奏,再决定 BGM 的 BPM</strong>。</p>
+<h3 id="第-2-层风格融合2-行">第 2 层:风格融合(2 行)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>blending tense orchestral suspense with phonk-weighted low-end </span></span>
+<span class="line"><span>and a half-time pulse</span></span></code></pre>
+<p>这是整个 prompt 的”灵魂”,描述了我想要的两种风格的混合:</p>
+<ul>
+<li><code>tense orchestral suspense</code>:紧张感的管弦乐 — 给”高级感、电影感、戏剧张力”</li>
+<li><code>phonk-weighted low-end</code>:phonk 风格的低音处理 — 给”现代感、抖音流量友好的鼓点”</li>
+<li><code>half-time pulse</code>:半拍脉冲(每两拍才打一下鼓的强拍)— 让节奏既稳定又有压迫感</li>
+</ul>
+<p><strong>为什么要混合两种风格?</strong></p>
+<p>纯古典管弦乐 → 太”高雅”,和抖音流量调性不符
+纯 phonk → 太”街头”,和我”作品集”的调性不符
+<strong>两个混合 → 高级感 + 流量友好</strong></p>
+<p>这种”风格 A meets 风格 B”是 Suno prompt 的进阶写法,比单一风格描述效果好得多。</p>
+<h3 id="第-3-层时间线结构3-4-行">第 3 层:时间线结构(3-4 行)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>intro starts with mechanical clockwork ticks, deep cello drones, </span></span>
+<span class="line"><span>and low brass swells, then tribal drums enter at 8 seconds and </span></span>
+<span class="line"><span>the bass drops hard at 11 seconds for a massive impact before </span></span>
+<span class="line"><span>the reverb tail fades out</span></span></code></pre>
+<p>这是最关键的一段——<strong>告诉 Suno 这首曲子的”时间结构”</strong>。</p>
+<p>逐段拆:</p>
+<ol>
+<li><code>intro starts with mechanical clockwork ticks</code> — 开头是机械时钟咔嗒声</li>
+<li><code>deep cello drones, and low brass swells</code> — 加入大提琴持续音和低音管乐渐进</li>
+<li><code>tribal drums enter at 8 seconds</code> — <strong>第 8 秒鼓点进入</strong></li>
+<li><code>bass drops hard at 11 seconds</code> — <strong>第 11 秒贝斯重击落下</strong></li>
+<li><code>reverb tail fades out</code> — 余韵淡出</li>
+</ol>
+<p><strong>为什么要写得这么具体?</strong></p>
+<p>如果只写 “build up and drop”,Suno 会瞎编一个时间结构,可能 build up 到 5 秒就 drop 了,可能 12 秒还没 drop。
+<strong>写明 “at 8 seconds” 和 “at 11 seconds”,Suno 会尽力按这个时间生成</strong>。</p>
+<p>这是 Suno 的一个重要能力(很多人不知道)——<strong>它能理解时间锚点</strong>。利用好这点,你能控制曲子的整体结构。</p>
+<h3 id="第-4-层质感细节2-行">第 4 层:质感细节(2 行)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Sparse opening builds into a sudden удар of drums and sub, with </span></span>
+<span class="line"><span>reversed swells and metallic ticks bridging each hit. Wide, </span></span>
+<span class="line"><span>ominous, and pressure-filled mix with huge low-end weight and </span></span>
+<span class="line"><span>crisp transient detail, low, deep cello.</span></span></code></pre>
+<p>这一层在补”质感关键词”:</p>
+<ul>
+<li><code>Sparse opening</code> — 开头要稀疏(留呼吸感)</li>
+<li><code>sudden удар of drums and sub</code> — 突然的鼓点击中(удар 是俄语”打击”,我特意用这个词,因为 Suno 训练数据里这种<strong>非英语词</strong>反而能触发更狂野的效果)</li>
+<li><code>reversed swells</code> — 反向音浪(那种”嘶——嗒!”的电影感前缀音)</li>
+<li><code>metallic ticks bridging each hit</code> — 金属咔嗒声连接每次鼓点</li>
+<li><code>Wide, ominous, and pressure-filled mix</code> — 宽阔、压迫、不祥的混音</li>
+<li><code>crisp transient detail</code> — 清晰的瞬态细节(让鼓点”打”得脆)</li>
+</ul>
+<p><strong>质感词汇是 prompt 的”味精”</strong> — 没有不致命,有了风味更足。</p>
+<hr>
+<h2 id="四我用了多少次才出这首曲子">四、我用了多少次才出这首曲子?</h2>
+<p>诚实地说:<strong>约 8-10 次生成</strong>。</p>
+<p>但<strong>前 5 次都是错误方向</strong>(我一开始没遵守”先想清楚视频要什么”这条),后面 3-5 次才是基于本文这套思路的精修。</p>
+<p>如果你按本文的思路从头开始,<strong>3-5 次基本能出满意的</strong>。</p>
+<p>迭代的具体路径:</p>
+<ol>
+<li><strong>第 1 版</strong>:风格大致对,但 BPM 不对(出来是 120 BPM)
+→ 修改:在 prompt 开头明确 <code>at 90 BPM</code></li>
+<li><strong>第 2 版</strong>:BPM 对了,但太”古典”,缺少 phonk 的现代感
+→ 修改:加入 <code>phonk-weighted low-end and a half-time pulse</code></li>
+<li><strong>第 3 版</strong>:风格对了,但开头太满,没有”留白感”
+→ 修改:加入 <code>Sparse opening</code></li>
+<li><strong>第 4 版</strong>:开头有留白了,但 drop 不够狠
+→ 修改:加入 <code>the bass drops hard at 11 seconds for a massive impact</code></li>
+<li><strong>第 5 版</strong>:基本满意,只差细节
+→ 加入 <code>metallic ticks bridging each hit</code> 和 <code>reverb tail fades out</code> 等微调</li>
+</ol>
+<p><strong>每次迭代只改 1-2 个地方,不要大动</strong>。这样你能精确知道是哪个改动起了作用。</p>
+<hr>
+<h2 id="五suno-操作具体步骤">五、Suno 操作具体步骤</h2>
+<h3 id="step-1打开-custom-模式">Step 1:打开 Custom 模式</h3>
+<p>不要用默认的 “Description” 模式。点进 “Custom” 才能精确控制。</p>
+<h3 id="step-2填三个字段">Step 2:填三个字段</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>字段</th><th>填什么</th></tr></thead><tbody><tr><td><strong>Style of Music</strong></td><td>我上面那段完整 prompt</td></tr><tr><td><strong>Title</strong></td><td>随意 — 比如 “The Gaze - Soundtrack”(只是文件名,不影响生成)</td></tr><tr><td><strong>Lyrics</strong></td><td><strong>留空</strong></td></tr></tbody></table>
+<h3 id="step-3勾选-instrumental">Step 3:勾选 “Instrumental”</h3>
+<p><strong>这是最容易漏的一步</strong>。如果不勾,Suno 会自动加歌词演唱,完全毁掉你的纯音乐。</p>
+<h3 id="step-4点-create">Step 4:点 Create</h3>
+<p>Suno 一次会生成 2 首(Suno v4 的设定)。两首都听完。</p>
+<h3 id="step-5挑延长">Step 5:挑+延长</h3>
+<p>如果有一首基本对,但只有 1 分多钟,可以用 “Extend” 功能延长——但<strong>对于 15 秒视频用,通常 1 分钟就足够选段了</strong>(我后面会讲选段)。</p>
+<p>如果两首都不对,改 prompt 里的某 1-2 个词,重新 generate。<strong>不要从零重写整个 prompt</strong>。</p>
+<hr>
+<h2 id="六得到-bgm-之后选段才是真正的工作">六、得到 BGM 之后:选段才是真正的工作</h2>
+<p>我的 BGM 总长 70 秒,但视频只用 15 秒。怎么选?</p>
+<h3 id="用波形软件看能量曲线">用波形软件看能量曲线</h3>
+<p>Suno 给你的是一个完整的曲子,有起承转合。<strong>你要做的是从中”剪”出最适合视频的 15 秒</strong>。</p>
+<p>我推荐用免费的 Audacity 看波形(任何能显示音频波形的软件都行)。波形高的地方是”高能量段”,低的地方是”安静段”。</p>
+<h3 id="选段原则">选段原则</h3>
+<ol>
+<li><strong>开头要”安静→爆发”</strong>:你的视频开头有字幕铺垫,需要 BGM 也”留白”,所以选段开头最好是低能量</li>
+<li><strong>中段要”持续高能”</strong>:你的视频中段是图片轮播,BGM 要稳住情绪</li>
+<li><strong>关键卡点要对齐</strong>:你视频里”最重要的瞬间”应该对齐 BGM 的”最强爆发”</li>
+</ol>
+<p>我最终选的是 BGM 的 9.5-24.5 秒段:开头有 2 秒左右安静,然后建立到爆发,正好覆盖 15 秒。</p>
+<h3 id="具体怎么剪">具体怎么”剪”?</h3>
+<p>如果你会 PR/AU,直接剪就行。
+如果不会,用 ffmpeg 一行命令:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">ffmpeg</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -i</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 原始BGM.wav</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -ss</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 9.5</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -t</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 15</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 输出.mp3</span></span></code></pre>
+<p><code>-ss 9.5</code> 是从 9.5 秒开始,<code>-t 15</code> 是截 15 秒长度。</p>
+<p>最后建议加 0.3 秒淡出,避免突然结束的”啪”声:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">ffmpeg</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -i</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 原始BGM.wav</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -ss</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 9.5</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -t</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 15</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -af</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "afade=t=out:st=14.7:d=0.3"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 输出.mp3</span></span></code></pre>
+<hr>
+<h2 id="七几个我踩过的坑">七、几个我踩过的坑</h2>
+<h3 id="坑-1在-prompt-里写中文">坑 1:在 prompt 里写中文</h3>
+<p>不行。Suno 对中文 prompt 的理解远不如英文。即使你描述的是”东方风格音乐”,也用英文写,比如 <code>oriental fantasy with guzheng and erhu</code>。</p>
+<h3 id="坑-2堆砌一大堆形容词">坑 2:堆砌一大堆形容词</h3>
+<p>❌ <code>dark, sad, melancholy, gloomy, depressing, eerie, haunting, mysterious...</code></p>
+<p>太多形容词会互相矛盾,Suno 反而不知道你想要什么。</p>
+<p>✅ 选 2-3 个最核心的就够,把空间留给”风格融合”和”时间结构”。</p>
+<h3 id="坑-3只描述风格不描述结构">坑 3:只描述风格,不描述结构</h3>
+<p>只写 “dark cinematic instrumental” 出来的曲子,<strong>结构是 Suno 瞎编的</strong>。可能开头就高潮、中间没起伏、结尾突然停。</p>
+<p>加上 <code>intro starts with X, then Y enters at 8 seconds, drops at 11 seconds</code> 这种<strong>时间锚点</strong>,才能控制结构。</p>
+<h3 id="坑-4对生成结果凑合">坑 4:对生成结果”凑合”</h3>
+<p>最大的诱惑是:出来一首”听着还行但不是完全对”的,你说服自己”差不多了”。</p>
+<p><strong>别凑合</strong>。每次重新生成只要 30 秒,重新写 prompt 也只要 1 分钟。多迭代 3-5 次就能精确得多。</p>
+<p>我一开始就因为”凑合”用了第 4 版 BGM 配视频,结果出来的视频音画不和,差点放弃整个项目。</p>
+<h3 id="坑-5在-suno-里调整不在视频里调整">坑 5:在 Suno 里调整,不在视频里调整</h3>
+<p>如果某段 BGM 不太对,<strong>不要去改视频去适应它</strong>。回 Suno 重新生成。</p>
+<p>视频已经是你心里那个”作品”,改它会越改越散。BGM 是你能完全控制的变量。</p>
+<hr>
+<h2 id="八一个进阶技巧replace-section">八、一个进阶技巧:Replace Section</h2>
+<p>Suno 有个被严重低估的功能叫 <strong>Replace Section</strong>(替换片段)。</p>
+<p>如果你出了一首”基本对但某一段不对”的曲子,不需要全部重做。可以:</p>
+<ol>
+<li>选中那段不对的(比如 8-15 秒)</li>
+<li>写新的 prompt 描述你想替换成什么</li>
+<li>Suno 会保留前后,只重新生成你选的这段</li>
+</ol>
+<p>这个功能让”精修”成为可能。我后期就是用这个把 drop 那段改了 2 次才到位的。</p>
+<hr>
+<h2 id="九如果你想做和凝视类似的暗调系作品">九、如果你想做和《凝视》类似的暗调系作品</h2>
+<p>直接抄我这个 prompt,只改一个词:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Dark cinematic instrumental at __90__ BPM, blending tense </span></span>
+<span class="line"><span>orchestral suspense with phonk-weighted low-end and a half-time </span></span>
+<span class="line"><span>pulse; intro starts with __mechanical clockwork ticks__, deep </span></span>
+<span class="line"><span>cello drones, and low brass swells, then tribal drums enter at </span></span>
+<span class="line"><span>8 seconds and the bass drops hard at 11 seconds for a massive </span></span>
+<span class="line"><span>impact before the reverb tail fades out.</span></span></code></pre>
+<p><strong>只改两个地方就能变出不同感觉</strong>:</p>
+<ul>
+<li><code>mechanical clockwork ticks</code> → 换成你的”开场氛围”(比如 <code>rain and distant thunder</code> / <code>whispered prayers</code> / <code>glitching radio static</code>)</li>
+<li><code>90 BPM</code> → 改成适合你视频节奏的(慢:60-75 / 快:120-140)</li>
+</ul>
+<p>风格框架保留,氛围细节定制。这样你不会出和我一样的曲子,但有相似的”质感”,同时是属于你的作品。</p>
+<hr>
+<h2 id="十最后为什么这件事值得做">十、最后:为什么这件事值得做</h2>
+<p>很多人会觉得”BGM 用现成的就行了,何必自己生成?”</p>
+<p>但用现成 BGM 你会发现:</p>
+<ul>
+<li>永远找不到时长完美匹配的(都是 3 分钟,你只要 15 秒)</li>
+<li>永远找不到鼓点完美对齐你视觉切换的</li>
+<li>永远会有版权风险</li>
+<li>永远会和别人撞曲</li>
+</ul>
+<p><strong>Suno 让 BGM 制作变成了”为单个项目量身定制”</strong>,这是几年前完全做不到的事。</p>
+<p>而且最妙的是:<strong>Suno 把”音乐人”这个职业的某些部分降低了门槛</strong>。我不是音乐人,但我能用文字精确描述”我想要什么音乐”,于是我就拥有了我想要的音乐。</p>
+<p>这种”用语言换世界”的能力,是 AI 时代真正给创作者的礼物。</p>
+<p>希望这份分享对你有用。</p>
+<p>如果做出什么作品,欢迎来找我聊聊。</p>
+<p>— 跳蛛先生</p>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>所属索引:<a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/Suno%E9%85%8D%E4%B9%90%E5%88%B6%E4%BD%9C%E5%88%86%E4%BA%AB_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/Suno%E9%85%8D%E4%B9%90%E5%88%B6%E4%BD%9C%E5%88%86%E4%BA%AB_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/suno-v5-5-v1-b2fa879/">Suno v5.5 行为规律</a></li><li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/skill-index-b155e36/">SKILL_INDEX — Skill 使用索引</a></li><li><a href="/above-the-web/2026-06-07-stay-alive-ai-mv-v1-5aba73f/">2026-06-07 Stay alive AI 音乐公益 MV 复盘</a></li><li><a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/">2026-06-09 Remotion 全片音频字幕 BGM 复盘</a></li><li><a href="/above-the-web/2026-08-24-v1-60852b9/">2026-08-24 《擦干净》从素材到动态化制片 · 全链路阶段性复盘</a></li><li><a href="/above-the-web/reference-suno-v1-02d748b/">参考曲复刻法 · reference 曲 → Suno 提示词</a></li><li><a href="/above-the-web/xremotion-v1-27cb9ce/">短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手</a></li><li><a href="/above-the-web/v1-adba543/">对话感 · 关系产生生命力</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-05-24-30-pv-v1-e4228dd/"> <span class="card-cat">方法论与洞察</span> <h3>2026-05-24｜30 项目角色 PV 发布复盘</h3> <p>项目：30伊恩・古德费罗的寓言</p> </a><a class="card" href="/above-the-web/2026-06-08-remotion-mj-seedance-v1-5120fe3/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘</h3> <p>- 验证场景:scene04repeattoskill</p> </a><a class="card" href="/above-the-web/2026-06-08-remotion-v3-v1-092ade9/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-08 Remotion 正式小片段 v3 复盘</h3> <p>- 成片 Composition:FormalClip20260608</p> </a><a class="card" href="/above-the-web/2026-06-26-pilot-0-1-v1-f82995a/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-26 反诈柜台短视频 pilot 从 0 到 1 复盘</h3> <p>- 链路打通:文稿 → ElevenLabs 自定义音色配音 → 读真实时长写 src/timing.generated.ts(音频先行)→…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一写在前面--这套方法不是教程是思路" data-toc-link="一写在前面--这套方法不是教程是思路">一、写在前面 — 这套方法不是”教程”,是”思路”</a></li><li class="d2"><a href="#二起点不是-suno是先想清楚视频要什么" data-toc-link="二起点不是-suno是先想清楚视频要什么">二、起点不是 Suno,是先想清楚视频要什么</a></li><li class="d2"><a href="#三我的-prompt-全文--逐段拆解" data-toc-link="三我的-prompt-全文--逐段拆解">三、我的 prompt 全文 + 逐段拆解</a></li><li class="d3"><a href="#第-1-层基础参数1-行" data-toc-link="第-1-层基础参数1-行">第 1 层:基础参数(1 行)</a></li><li class="d3"><a href="#第-2-层风格融合2-行" data-toc-link="第-2-层风格融合2-行">第 2 层:风格融合(2 行)</a></li><li class="d3"><a href="#第-3-层时间线结构3-4-行" data-toc-link="第-3-层时间线结构3-4-行">第 3 层:时间线结构(3-4 行)</a></li><li class="d3"><a href="#第-4-层质感细节2-行" data-toc-link="第-4-层质感细节2-行">第 4 层:质感细节(2 行)</a></li><li class="d2"><a href="#四我用了多少次才出这首曲子" data-toc-link="四我用了多少次才出这首曲子">四、我用了多少次才出这首曲子?</a></li><li class="d2"><a href="#五suno-操作具体步骤" data-toc-link="五suno-操作具体步骤">五、Suno 操作具体步骤</a></li><li class="d3"><a href="#step-1打开-custom-模式" data-toc-link="step-1打开-custom-模式">Step 1:打开 Custom 模式</a></li><li class="d3"><a href="#step-2填三个字段" data-toc-link="step-2填三个字段">Step 2:填三个字段</a></li><li class="d3"><a href="#step-3勾选-instrumental" data-toc-link="step-3勾选-instrumental">Step 3:勾选 “Instrumental”</a></li><li class="d3"><a href="#step-4点-create" data-toc-link="step-4点-create">Step 4:点 Create</a></li><li class="d3"><a href="#step-5挑延长" data-toc-link="step-5挑延长">Step 5:挑+延长</a></li><li class="d2"><a href="#六得到-bgm-之后选段才是真正的工作" data-toc-link="六得到-bgm-之后选段才是真正的工作">六、得到 BGM 之后:选段才是真正的工作</a></li><li class="d3"><a href="#用波形软件看能量曲线" data-toc-link="用波形软件看能量曲线">用波形软件看能量曲线</a></li><li class="d3"><a href="#选段原则" data-toc-link="选段原则">选段原则</a></li><li class="d3"><a href="#具体怎么剪" data-toc-link="具体怎么剪">具体怎么”剪”?</a></li><li class="d2"><a href="#七几个我踩过的坑" data-toc-link="七几个我踩过的坑">七、几个我踩过的坑</a></li><li class="d3"><a href="#坑-1在-prompt-里写中文" data-toc-link="坑-1在-prompt-里写中文">坑 1:在 prompt 里写中文</a></li><li class="d3"><a href="#坑-2堆砌一大堆形容词" data-toc-link="坑-2堆砌一大堆形容词">坑 2:堆砌一大堆形容词</a></li><li class="d3"><a href="#坑-3只描述风格不描述结构" data-toc-link="坑-3只描述风格不描述结构">坑 3:只描述风格,不描述结构</a></li><li class="d3"><a href="#坑-4对生成结果凑合" data-toc-link="坑-4对生成结果凑合">坑 4:对生成结果”凑合”</a></li><li class="d3"><a href="#坑-5在-suno-里调整不在视频里调整" data-toc-link="坑-5在-suno-里调整不在视频里调整">坑 5:在 Suno 里调整,不在视频里调整</a></li><li class="d2"><a href="#八一个进阶技巧replace-section" data-toc-link="八一个进阶技巧replace-section">八、一个进阶技巧:Replace Section</a></li><li class="d2"><a href="#九如果你想做和凝视类似的暗调系作品" data-toc-link="九如果你想做和凝视类似的暗调系作品">九、如果你想做和《凝视》类似的暗调系作品</a></li><li class="d2"><a href="#十最后为什么这件事值得做" data-toc-link="十最后为什么这件事值得做">十、最后:为什么这件事值得做</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

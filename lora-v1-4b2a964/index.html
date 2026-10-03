@@ -1,0 +1,787 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>画风 Lora 数据集策划方法论 · 蛛网之上</title><meta name="description" content="画风 Lora 的核心不是&#34;出图能力&#34;而是&#34;画风密度控制能力&#34;。MJ profile 在不同 prompt 配方下表达力差异极大，数据集策划的本质就是逼 profile 输出一致的画风密度。撞墙后第一反应不是&#34;换 profile&#34;，而是&#34;调…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/lora-v1-4b2a964/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="画风 Lora 数据集策划方法论"><meta property="og:description" content="画风 Lora 的核心不是&#34;出图能力&#34;而是&#34;画风密度控制能力&#34;。MJ profile 在不同 prompt 配方下表达力差异极大，数据集策划的本质就是逼 profile 输出一致的画风密度。撞墙后第一反应不是&#34;换 profile&#34;，而是&#34;调…"><meta property="og:url" content="https://tiaozhuxiansheng.com/lora-v1-4b2a964/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="画风 Lora 数据集策划方法论"><meta name="twitter:description" content="画风 Lora 的核心不是&#34;出图能力&#34;而是&#34;画风密度控制能力&#34;。MJ profile 在不同 prompt 配方下表达力差异极大，数据集策划的本质就是逼 profile 输出一致的画风密度。撞墙后第一反应不是&#34;换 profile&#34;，而是&#34;调…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/风格审美"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/lora-v1-4b2a964/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/lora-v1-4b2a964/","url":"https://tiaozhuxiansheng.com/lora-v1-4b2a964/","headline":"画风 Lora 数据集策划方法论","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"画风 Lora 的核心不是\"出图能力\"而是\"画风密度控制能力\"。MJ profile 在不同 prompt 配方下表达力差异极大，数据集策划的本质就是逼 profile 输出一致的画风密度。撞墙后第一反应不是\"换 profile\"，而是\"调…","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/风格审美"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"画风 Lora 数据集策划方法论","item":"https://tiaozhuxiansheng.com/lora-v1-4b2a964/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>角色一致性与视觉签名</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 15 分钟读完 · 5,439 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>39 节</i></summary> <ol> <li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#一profile-行为四规律实测沉淀">一、profile 行为四规律（实测沉淀）</a></li><li class="d3"><a href="#规律-1profile-不会漂移在合理时间内">规律 1：profile 不会漂移（在合理时间内）</a></li><li class="d3"><a href="#规律-2profile-的画风表达力--画面装饰密度">规律 2：profile 的画风表达力 ∝ 画面装饰密度</a></li><li class="d3"><a href="#规律-3profile-会被主题描述拽偏">规律 3：profile 会被主题描述拽偏</a></li><li class="d3"><a href="#规律-4profile-服从局部违抗全局">规律 4：profile 服从局部，违抗全局</a></li><li class="d2"><a href="#二数据集策划方法论">二、数据集策划方法论</a></li><li class="d3"><a href="#方法论-1构图轴--横切轴的二维结构">方法论 1：构图轴 + 横切轴的二维结构</a></li><li class="d3"><a href="#方法论-2分布配额30-40-张数据集参考">方法论 2：分布配额（30-40 张数据集参考）</a></li><li class="d3"><a href="#方法论-3用户上传--第三方筛选工作流">方法论 3：「用户上传 → 第三方筛选」工作流</a></li><li class="d3"><a href="#方法论-4严格画风一致性--可选维度填充">方法论 4：「严格画风一致性 &gt; 可选维度填充」</a></li><li class="d2"><a href="#三prompt-配方库实测可复用">三、prompt 配方库（实测可复用）</a></li><li class="d3"><a href="#通用模板锁定区--可变区">通用模板（锁定区 + 可变区）</a></li><li class="d3"><a href="#七种光照配方">七种光照配方</a></li><li class="d3"><a href="#高成功率场景配方">高成功率场景配方</a></li><li class="d3"><a href="#失败配方黑名单">失败配方黑名单</a></li><li class="d2"><a href="#四反例案例与教训">四、反例案例与教训</a></li><li class="d3"><a href="#反例-1elf-ranger-全身批次-3">反例 1：elf-ranger 全身（批次 #3）</a></li><li class="d3"><a href="#反例-2fortuneteller-中老年批次-5">反例 2：fortuneteller 中老年（批次 #5）</a></li><li class="d3"><a href="#反例-3teen-girl-少女批次-7">反例 3：teen-girl 少女（批次 #7）</a></li><li class="d2"><a href="#五关键判断节点速查">五、关键判断节点速查</a></li><li class="d2"><a href="#六实战验收the-gaze-项目结果2026-05-08">六、实战验收：THE GAZE 项目结果（2026-05-08）</a></li><li class="d3"><a href="#验收方法3-维度泛化测试">验收方法（3 维度泛化测试）</a></li><li class="d3"><a href="#关键发现-1画风信号-vs-主题信号">关键发现 1：画风信号 vs 主题信号</a></li><li class="d3"><a href="#关键发现-2epoch-选择的甜点是-6-8">关键发现 2：epoch 选择的甜点是 6-8</a></li><li class="d3"><a href="#关键发现-3训练数据画风分布决定-lora-不同-prompt-下的表现">关键发现 3：训练数据画风分布决定 Lora 不同 prompt 下的表现</a></li><li class="d3"><a href="#关键发现-4双版本发布的实操价值v1-vs-v1_soft-实测对比">关键发现 4：双版本发布的实操价值（v1 vs v1_soft 实测对比）</a></li><li class="d2"><a href="#七上线发布方法论liblibai-模型市场实战经验">七、上线发布方法论（LiblibAI 模型市场实战经验）</a></li><li class="d3"><a href="#1-六张封面图战略每张回答一个用户问题">1. 六张封面图战略（每张回答一个用户问题）</a></li><li class="d3"><a href="#2-描述字段短描述的信息密度公式">2. 描述字段（短描述）的信息密度公式</a></li><li class="d3"><a href="#3-详细介绍必须用纯文本">3. 详细介绍必须用纯文本</a></li><li class="d3"><a href="#4-关键字段填写避坑清单">4. 关键字段填写避坑清单</a></li><li class="d3"><a href="#5-权限设置项目商业化的最大决策点">5. 权限设置（项目商业化的最大决策点）</a></li><li class="d3"><a href="#6-标签tag设计">6. 标签（Tag）设计</a></li><li class="d3"><a href="#7-双版本同步发布">7. 双版本同步发布</a></li><li class="d3"><a href="#8-内容类别主体--风格--垂类--功能">8. 内容类别（主体 / 风格 / 垂类 / 功能）</a></li><li class="d3"><a href="#9-项目最终金句">9. 项目最终金句</a></li><li class="d2"><a href="#顶层金句段">顶层金句段</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="画风-lora-数据集策划方法论">画风 Lora 数据集策划方法论</h1>
+<blockquote>
+<p>项目来源：2026-05-08 「THE GAZE」画风 Lora 数据集策划全过程
+主线项目：<code>Lora_GAZE_数据集/</code>（31 张数据集 + 完整批次日志）
+入档：2026-05-08
+适用范围：用 MJ profile 生成数据 → SDXL 系底模（Illustrious-XL 优先）炼制画风 Lora</p>
+</blockquote>
+<hr>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>画风 Lora 的核心不是”出图能力”而是”画风密度控制能力”</strong>。MJ profile 在不同 prompt 配方下表达力差异极大，<strong>数据集策划的本质就是逼 profile 输出一致的画风密度</strong>。撞墙后第一反应不是”换 profile”，而是”调装饰描述权重”。</p>
+<hr>
+<h2 id="一profile-行为四规律实测沉淀">一、profile 行为四规律（实测沉淀）</h2>
+<h3 id="规律-1profile-不会漂移在合理时间内">规律 1：profile 不会漂移（在合理时间内）</h3>
+<p>只要不主动 retrain personalize，profile 数月内行为稳定。<strong>验证方式</strong>：用同一 prompt + profile 重新生成，对比与原图的画风一致性。</p>
+<p>⚠️ 风险点：如果用户在 MJ 持续点赞/降权，profile 会被被动训练出现漂移。<strong>首次接手项目第一件事</strong>：跑一次原始 prompt 验证 profile 状态。</p>
+<h3 id="规律-2profile-的画风表达力--画面装饰密度">规律 2：profile 的画风表达力 ∝ 画面装饰密度</h3>
+<p>这是<strong>最关键的发现</strong>。同一个 profile：</p>
+<ul>
+<li>在「特写人脸 + 复杂配饰」场景下 → 画风密度顶级（半厚涂金属/宝石全部炸出）</li>
+<li>在「全身 + 自然环境」场景下 → 画风被稀释，倾向走概念水彩 / 油画路线</li>
+</ul>
+<p><strong>根因</strong>：MJ 在画面没有足够”高密度装饰载体”时偷懒，会调用通用 fallback 风格，profile 的特征语言无法充分表达。</p>
+<p><strong>对应配方</strong>：往任何低密度场景的 prompt 强插入下面任意一项，逼出 profile 真实力：</p>
+<ul>
+<li><code>intricate metal armor with gold filigree</code></li>
+<li><code>gemstone-encrusted accessories</code></li>
+<li><code>ornate metal weapon with engraved patterns</code></li>
+<li><code>silk fabric with embroidered details</code></li>
+<li><code>polished gemstones, glowing crystal pendant</code></li>
+<li><code>brass lanterns / candlesticks with engraved details</code></li>
+</ul>
+<h3 id="规律-3profile-会被主题描述拽偏">规律 3：profile 会被主题描述拽偏</h3>
+<p><strong>实测的两个偏移陷阱</strong>：</p>
+<ul>
+<li><strong>「老年人物 + 皱纹」陷阱</strong>：MJ 训练数据里”deep wrinkles”绑定写实油画风，profile 压不住。表现：皮肤被厚涂化，与原画风的”简洁赛璐璐皮肤”对立。</li>
+<li><strong>「少年/少女 + 户外纯自然 + 高调日光」陷阱</strong>：触发”小清新水彩 cel-shaded”路径，profile 完全失效。</li>
+</ul>
+<p><strong>对应配方</strong>：</p>
+<ul>
+<li>老年人物：删 <code>deep wrinkles</code>，改 <code>mature face with subtle age lines</code> + 显式加 <code>smooth anime-style skin rendering, semi-realistic flat shading on face, no oil painting texture</code></li>
+<li>少儿主体：避免纯白服装 + 户外自然 + T7 高调日光的组合，改为宫殿 / 神殿 / 装饰性室内 + 高密度金属配饰</li>
+</ul>
+<h3 id="规律-4profile-服从局部违抗全局">规律 4：profile 服从局部，违抗全局</h3>
+<p><strong>生效的局部描述</strong>：</p>
+<ul>
+<li>主体特征（发色、瞳色、年龄、性别、服装颜色）✅</li>
+<li>装饰描述（金属/宝石/织物）✅</li>
+<li><code>--ar</code> 参数 ✅</li>
+<li>单点光照锚词（<code>pitch black</code>、<code>golden hour glow</code>、<code>candlelight</code>）✅</li>
+</ul>
+<p><strong>经常被忽略的全局描述</strong>：</p>
+<ul>
+<li><code>full body shot</code> / <code>head to toe</code> ⚠️ 在 9:16 + 复杂前景下经常被吞，输出 cowboy shot</li>
+<li><code>moonlight, blue hour</code> ⚠️ 与暖光载体（<code>brass lanterns</code>、<code>warm light</code>）共存时被冲淡</li>
+</ul>
+<p><strong>对应配方</strong>：</p>
+<ul>
+<li>想要真 full body：加 <code>head to toe entire body visible, character occupies central 50% of frame, wide angle composition</code>，但<strong>动态构图下放弃强求</strong>（接受 cowboy shot）</li>
+<li>想要真月光：<strong>显式删除所有暖光锚点</strong>，加 <code>pitch black night sky, full moon as only light source, no warm light sources</code></li>
+</ul>
+<hr>
+<h2 id="二数据集策划方法论">二、数据集策划方法论</h2>
+<h3 id="方法论-1构图轴--横切轴的二维结构">方法论 1：构图轴 + 横切轴的二维结构</h3>
+<p><strong>构图轴（一级目录）</strong>：极致面部特写 / 半身像 / 全身像 / 纯场景 / 多人构图 / 动作姿态</p>
+<p><strong>横切轴（元数据追踪）</strong>：主体类型、光照类型、配饰风格</p>
+<p><strong>好处</strong>：避免数据集在某一维度过度集中。例：如果只按”主体”建库，会忽视构图比例失衡；如果只按”构图”建库，会忽视主体多样性。</p>
+<h3 id="方法论-2分布配额30-40-张数据集参考">方法论 2：分布配额（30-40 张数据集参考）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类型</th><th>配额</th><th>配额逻辑</th></tr></thead><tbody><tr><td>极致面部特写</td><td>≤ 8</td><td>过多会让 Lora 学到”画风 = 特写脸”的偏见</td></tr><tr><td>半身像</td><td>8-10</td><td>训练泛化能力的核心载体</td></tr><tr><td>全身像</td><td>5-8</td><td>验证画风脱离面部特写的关键</td></tr><tr><td>纯场景</td><td>3-5</td><td>验证画风脱人能力的关键</td></tr><tr><td>多人构图</td><td>2-3</td><td>验证多主体场景画风一致性</td></tr><tr><td>动作姿态</td><td>2-3</td><td>验证动态构图画风稳定性</td></tr></tbody></table>
+<p><strong>主体硬约束</strong>：</p>
+<ul>
+<li>单一角色 ≤ 4 张（避免 Lora 记住人脸）</li>
+<li>单一构图模式 ≤ 5 张（避免画风绑定单一构图）</li>
+</ul>
+<p><strong>光照覆盖</strong>：每种光照（暖光 / 阴天 / 室内暖光 / 强逆光 / 月光蓝调 / 高调明亮）至少 3 张</p>
+<h3 id="方法论-3用户上传--第三方筛选工作流">方法论 3：「用户上传 → 第三方筛选」工作流</h3>
+<p><strong>关键洞察</strong>：作者本人筛选有主观偏好（“我最满意的”），第三方按统一标准筛选对数据集贡献度更准。</p>
+<p>工作流：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[用户] 用 MJ 模板生成 4 张 → [用户] 全部打包发审核方</span></span>
+<span class="line"><span>       → [审核方] 按画风一致性 + 数据集贡献度判断</span></span>
+<span class="line"><span>       → [审核方] 入档/淘汰 + 更新元数据</span></span>
+<span class="line"><span>       → [审核方] 反馈缺口 + 下批生成建议</span></span></code></pre>
+<p><strong>严格的一票否决项</strong>（满足任一即淘汰）：</p>
+<ul>
+<li>画风明显跑偏（皮肤过度厚涂 / 配饰失去厚涂质感 / 整体过于赛璐璐扁平）</li>
+<li>解剖严重崩坏</li>
+<li>与已入选图相似度 ≥ 80%</li>
+</ul>
+<h3 id="方法论-4严格画风一致性--可选维度填充">方法论 4：「严格画风一致性 > 可选维度填充」</h3>
+<p>当某个”可选”主体多样性（如儿童/少年）的几张图画风偏离时，<strong>宁可空缺也不入档</strong>。Lora 是在”平均”所有训练图，少 1 张多样性维度可以接受，画风污染会全局影响最终模型。</p>
+<hr>
+<h2 id="三prompt-配方库实测可复用">三、prompt 配方库（实测可复用）</h2>
+<h3 id="通用模板锁定区--可变区">通用模板（锁定区 + 可变区）</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[CONTENT_BLOCK：主体 + 装饰 + 构图 + 背景],</span></span>
+<span class="line"><span>semi-realistic style,</span></span>
+<span class="line"><span>[TONE_BLOCK：光照描述],</span></span>
+<span class="line"><span>fine brushwork texture, hand-painted brushstrokes,</span></span>
+<span class="line"><span>real coser thick application, pseudo-thick application, thick application illustration,</span></span>
+<span class="line"><span>light and shadow depiction, strong visual impact,</span></span>
+<span class="line"><span>ultra-high-definition quality, 18k resolution</span></span>
+<span class="line"><span>--profile [your profile id] --ar 9:16</span></span></code></pre>
+<h3 id="七种光照配方">七种光照配方</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>编号</th><th>关键词</th><th>注意事项</th></tr></thead><tbody><tr><td>T1</td><td><code>cold tones, cinematic lighting, dramatic chiaroscuro shadows</code></td><td>数据集”画风密度天花板”配方，配室内宫廷场景最稳</td></tr><tr><td>T2</td><td><code>warm afternoon sunlight, soft shadows</code></td><td>配室内场景（蕾丝窗帘 / 教堂彩绘玻璃）</td></tr><tr><td>T3</td><td><code>overcast diffused lighting, soft shadows</code></td><td>⚠️ profile 弱区，必须搭配高密度金属/银线刺绣救场</td></tr><tr><td>T4</td><td><code>indoor warm light, golden hour glow, soft candlelight</code></td><td>高成功率，配室内+蜡烛/吊灯</td></tr><tr><td>T5</td><td><code>dramatic backlight, golden hour sunset, intense lens flare, sun rays piercing through clouds</code></td><td>戏剧化最强</td></tr><tr><td>T6</td><td><code>pitch black night sky, full moon as only light source, no warm light sources</code></td><td><strong>必须显式删除所有暖光锚点</strong></td></tr><tr><td>T7</td><td><code>bright daylight, high key lighting, clear blue sky</code></td><td>⚠️ 风险光照，必须搭配高密度金属盔甲 + 雪山远景压住扁平化</td></tr></tbody></table>
+<h3 id="高成功率场景配方">高成功率场景配方</h3>
+<p><strong>场景 A：宫廷暗调（最强配方，画风密度天花板）</strong></p>
+<blockquote>
+<p>黑发 + 金红宝石王冠 + 暗红丝绒礼服 + 金链项链 + 红宝石坠饰 + 金权杖 + T1 cold cinematic + 室内王座厅 + 雕花烛台 + 大理石柱</p>
+</blockquote>
+<p><strong>场景 B：法师工作室（高密度装饰示范）</strong></p>
+<blockquote>
+<p>栗棕发 + 深蓝丝绸法袍 + 金线绣符文 + 银腰带 + 多戒指 + 紫宝石法杖 + T4 室内暖光 + 飘浮书 + 黄铜吊灯</p>
+</blockquote>
+<p><strong>场景 C：神社夜景（T6 月光蓝调成功配方）</strong></p>
+<blockquote>
+<p>巫女装 + 银色胸甲 + 金色凤凰刺绣 + 武士刀 + T6 + 鸟居 + 石灯笼 + 樱花飘落</p>
+</blockquote>
+<p><strong>场景 D：海边灯塔（无人物纯场景画风密度顶级）</strong></p>
+<blockquote>
+<p>黄铜灯顶 + 铁艺栏杆 + 玻璃 orbs + 雕花 + T5 强逆光 + 远景帆船 + 海鸥 + 浪花</p>
+</blockquote>
+<p><strong>场景 E：双人构图（多人配方）</strong></p>
+<blockquote>
+<p>角色色卡完全互补（hair / eye / 服装颜色全对立）+ 共享高密度装饰锚点（围棋盘、烛台等）+ T4 烛光</p>
+</blockquote>
+<h3 id="失败配方黑名单">失败配方黑名单</h3>
+<p>❌ <strong>「少儿户外水彩」陷阱</strong>：白色连衣裙 + 草地蓝天 + T7 高调日光 + 海贝壳/小元素 → 必出小清新水彩
+❌ <strong>「自然环境冷色」陷阱</strong>：户外森林 + 阴天柔光 + 简洁皮甲 → 必出概念图
+❌ <strong>「老年油画」陷阱</strong>：deep wrinkles + 写实暖光 → 必出油画</p>
+<hr>
+<h2 id="四反例案例与教训">四、反例案例与教训</h2>
+<h3 id="反例-1elf-ranger-全身批次-3">反例 1：elf-ranger 全身（批次 #3）</h3>
+<p>prompt：女精灵游侠 + 森林 + 阴天柔光 + 皮甲弓箭。
+失败原因：自然环境主导 + 配饰描述过于简洁，profile 走概念水彩路线。<strong>入选率 1/4</strong>。</p>
+<p>教训催生<strong>规律 2</strong>（画风表达力 ∝ 装饰密度）。</p>
+<h3 id="反例-2fortuneteller-中老年批次-5">反例 2：fortuneteller 中老年（批次 #5）</h3>
+<p>prompt：老年女占卜师 + deep wrinkles + 烛光 + 塔罗牌。
+失败原因：MJ 训练数据偏见拉向写实油画。<strong>入选率 1/4</strong>。</p>
+<p>教训催生<strong>规律 3</strong>（主题陷阱清单）。</p>
+<h3 id="反例-3teen-girl-少女批次-7">反例 3：teen-girl 少女（批次 #7）</h3>
+<p>prompt：少女 + 白连衣裙 + 草地蓝天 + 玻璃萤火虫罐。
+失败原因：纯白服装 + 户外自然 + T7 高调日光 = 小清新水彩温床。<strong>入选率 0/4，全部淘汰</strong>。</p>
+<p>教训催生<strong>严格画风一致性 > 可选维度填充</strong>原则。</p>
+<hr>
+<h2 id="五关键判断节点速查">五、关键判断节点速查</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>情境</th><th>第一反应</th></tr></thead><tbody><tr><td>profile 输出画风偏淡 / 像水彩</td><td>检查 prompt 装饰密度，往 CONTENT_BLOCK 强插入金属/宝石描述</td></tr><tr><td>想要 full body 但出 cowboy shot</td><td>静态构图加 <code>head to toe + central 50%</code>；动态构图放弃强求</td></tr><tr><td>月光蓝调出成日光</td><td>显式删除所有暖光锚点，加 <code>no warm light sources</code></td></tr><tr><td>老年角色出油画风</td><td>删 <code>deep wrinkles</code>，加 <code>smooth anime-style skin rendering</code></td></tr><tr><td>户外自然环境画风弱</td><td>强插入金属武器/精雕饰品/银线刺绣</td></tr><tr><td>数据集要不要加这张</td><td>检查”画风一致性”和”对当前缺口的贡献度”，缺口高优先</td></tr></tbody></table>
+<hr>
+<h2 id="六实战验收the-gaze-项目结果2026-05-08">六、实战验收：THE GAZE 项目结果（2026-05-08）</h2>
+<p>按本方法论训练的 <code>jspider_art_v1</code> Lora（31 张数据集 / Illustrious-XL v0.1 底模 / Prodigy / 12 epoch）在 3 维度泛化测试中的表现，是验证本方法论有效性的活证据。</p>
+<h3 id="验收方法3-维度泛化测试">验收方法（3 维度泛化测试）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>设计意图</th><th>评估重点</th></tr></thead><tbody><tr><td>测试 1：纯场景神殿（金线雕刻 + 黄铜灯笼）</td><td>验证画风脱人能力</td><td>半厚涂金属感是否在无人物时仍成立</td></tr><tr><td>测试 2：现代赛博朋克少女（与训练数据零主题重合）</td><td>验证 Lora 学的是画风信号还是主题信号</td><td>在题材最远的 prompt 上画风密度是否在线</td></tr><tr><td>测试 3：户外日光精灵（无密集金属载体）</td><td>验证训练数据弱区的画风延续性</td><td>与 elf-ranger / bard 那批训练样本同源的画风偏弱是否可控</td></tr></tbody></table>
+<h3 id="关键发现-1画风信号-vs-主题信号">关键发现 1：画风信号 vs 主题信号</h3>
+<p>测试 2 是整个项目的核心胜利：<strong>粉发赛博朋克少女 + 铬金属机械手 + 雨夜霓虹巷</strong> 这个主题，与 31 张训练数据<strong>完全没有重合</strong>（数据集主流是中世纪奇幻 / 神社 / 暗调凝视 / 中国服饰）。但画风密度顶级——铬金属机械手、皮夹克皮质感、铆钉链条全部炸裂。</p>
+<p>这是评估画风 Lora 训练成功最严苛的标准：</p>
+<blockquote>
+<p><strong>用主题最远的 prompt 测，画风密度仍然在线 → Lora 学到的是”画风信号”。</strong>
+<strong>反之，主题相近时画风强、主题远时画风弱 → Lora 学到的是”主题信号”，训练失败。</strong></p>
+</blockquote>
+<p>本项目通过这个标准——是数据集策划方法论的<strong>经验性证明</strong>。</p>
+<h3 id="关键发现-2epoch-选择的甜点是-6-8">关键发现 2：epoch 选择的甜点是 6-8</h3>
+<p>12 epoch / 每 2 epoch 保存的训练设置下，6 个 checkpoint 演变规律：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>epoch</th><th>状态</th></tr></thead><tbody><tr><td>2-4</td><td>画风未稳，皮肤偏写实，太早</td></tr><tr><td>6</td><td>画风成型 + 泛化能力最强 → 适合 <code>_soft</code> 备份版本</td></tr><tr><td><strong>8</strong></td><td><strong>画风密度最强 + 反差质感最稳 → 主版本（首选）⭐</strong></td></tr><tr><td>10</td><td>皮肤开始厚涂化 → 过拟合苗头</td></tr><tr><td>12</td><td>明显过拟合（具体角色脸 / 礼服款式 / 王冠款式与单张训练图高度复刻）</td></tr></tbody></table>
+<p><strong>结论</strong>：默认选 <strong>epoch 8 主版本</strong> + <strong>epoch 6 soft 版本</strong>（双版本发布）。</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>&#x3C;lora:jspider_art_v1:1.0>           ← 默认，画风最强</span></span>
+<span class="line"><span>&#x3C;lora:jspider_art_v1_soft:1.0>     ← 主体复杂时用，画风更克制</span></span>
+<span class="line"><span>&#x3C;lora:jspider_art_v1:0.7>          ← 想让画风让位给内容描述时降权</span></span></code></pre>
+<h3 id="关键发现-3训练数据画风分布决定-lora-不同-prompt-下的表现">关键发现 3：训练数据画风分布决定 Lora 不同 prompt 下的表现</h3>
+<p>测试 3（户外日光精灵）画风密度比测试 1/2 略弱——<strong>这不是 Lora 训练失败，是数据集本身的画风分布特征</strong>。训练数据里 elf-ranger / bard / 阴天柔光户外那批本身就偏意境化，Lora 忠实学到了这个分布。</p>
+<p><strong>启示</strong>：</p>
+<blockquote>
+<p><strong>如果某种场景下 Lora 画风偏弱，去看训练数据里类似场景的样本——那才是源头。</strong>
+想让某种场景的 Lora 输出更强，最有效的修正不是调训练参数，而是<strong>回头补强对应类型的训练样本</strong>。</p>
+</blockquote>
+<h3 id="关键发现-4双版本发布的实操价值v1-vs-v1_soft-实测对比">关键发现 4：双版本发布的实操价值（v1 vs v1_soft 实测对比）</h3>
+<p><code>v1</code>（epoch 8）和 <code>v1_soft</code>（epoch 6）在 3 个泛化测试 prompt 上的实测差异：</p>
+<h4 id="测试-1纯场景神殿">测试 1（纯场景神殿）</h4>
+<ul>
+<li><strong>v1</strong>：戏剧化背光 + sun rays 强 + 概念冲击力</li>
+<li><strong>v1_soft</strong>：黄铜质感更圆润，光影柔和，<strong>更像精致插画而非概念图</strong></li>
+</ul>
+<h4 id="测试-2赛博朋克少女-对比最戏剧化">测试 2（赛博朋克少女）⭐ 对比最戏剧化</h4>
+<ul>
+<li><strong>v1</strong>：发光眼睛极强 + 金属手压过主体 + 整体”画风炸裂”</li>
+<li><strong>v1_soft</strong>：金属感保留但<strong>主体清晰度大幅提升</strong>——角色脸/项链/十字架挂坠这些细节都看得清</li>
+<li><strong>关键差异</strong>：v1 是”画风让你忘了内容”，v1_soft 是”画风衬托内容”</li>
+</ul>
+<h4 id="测试-3户外日光精灵">测试 3（户外日光精灵）</h4>
+<ul>
+<li><strong>v1</strong>：偏意境化画意感强，与训练数据 elf-ranger 同源风格</li>
+<li><strong>v1_soft</strong>：更清新插画，主体立体清晰，水晶球折射柔和</li>
+</ul>
+<h4 id="双版本本质区分">双版本本质区分</h4>
+<blockquote>
+<p><strong>v1 是”画风作品”工具</strong>——让画面整体进入画风的美学。
+<strong>v1_soft 是”画风加成”工具</strong>——给画面注入画风美学但不损失主题清晰度。
+两个版本是<strong>互补</strong>关系，不是替代关系。</p>
+</blockquote>
+<h4 id="使用边界决策表">使用边界决策表</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>推荐版本</th><th>理由</th></tr></thead><tbody><tr><td>单角色像 / 想要强烈风格化</td><td><strong>v1</strong>（1.0）</td><td>画风密度顶级</td></tr><tr><td>复杂主体（多奇怪元素 / 多角色）</td><td><strong>v1_soft</strong></td><td>不会让画风强行覆盖内容描述</td></tr><tr><td>与其他风格 Lora 混用</td><td><strong>v1_soft</strong></td><td>兼容性好不抢戏</td></tr><tr><td>想要画风稍弱保留细节</td><td><strong>v1 + scale 0.7</strong></td><td>比 v1_soft 满强度更强一点点</td></tr><tr><td>极致概念冲击图</td><td><strong>v1</strong>（1.0）+ ornate/dramatic 词</td><td>主版本 + 高密度装饰词起飞</td></tr><tr><td>户外柔光 / 日常场景</td><td><strong>v1_soft</strong></td><td>v1 在低金属密度场景容易过画意</td></tr><tr><td>商业用途（主体要清晰可识别）</td><td><strong>v1_soft</strong></td><td>更稳</td></tr><tr><td>自己作品集 / 深度风格化</td><td><strong>v1</strong></td><td>更纯粹画风源头</td></tr></tbody></table>
+<h4 id="实操结论">实操结论</h4>
+<p>⚠️ <strong>只发主版本不发 soft 版本是巨大浪费</strong>——两个 checkpoint 都已经训出来了，多一个发布动作几秒钟，但实际使用场景的覆盖度差异巨大。</p>
+<p><strong>默认操作</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[训练] 12 epoch / 每 2 保存</span></span>
+<span class="line"><span>[选定] epoch 8 = 主版（jspider_art_v1）</span></span>
+<span class="line"><span>[选定] epoch 6 = soft 版（jspider_art_v1_soft）</span></span>
+<span class="line"><span>[发布] 两个都发到本地 SD 库</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[使用时] 按"主体清晰度 vs 画风强度"权衡选哪个</span></span></code></pre>
+<hr>
+<h2 id="七上线发布方法论liblibai-模型市场实战经验">七、上线发布方法论（LiblibAI 模型市场实战经验）</h2>
+<p>训练完成只是 50% 工作量，剩下 50% 是把 Lora 包装成可被陌生用户<strong>点开 → 看懂 → 下载 → 评分高</strong>的产品。</p>
+<h3 id="1-六张封面图战略每张回答一个用户问题">1. 六张封面图战略（每张回答一个用户问题）</h3>
+<p>LiblibAI 模型市场列表页用户在缩略图上只有 <strong>0.3 秒</strong> 决定要不要点进来。每张封面对应回答一个具体的用户疑问：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>序</th><th>封面类型</th><th>回答用户的问题</th></tr></thead><tbody><tr><td>1（<strong>主封面</strong>）</td><td>极致特写 + 核心主题</td><td>”这是个什么画风？“——直接还原画风识别符</td></tr><tr><td>2</td><td>全身 + 高密度装饰</td><td>”画风密度天花板长什么样？“</td></tr><tr><td>3</td><td><strong>与训练数据零主题重合</strong>（最重要）</td><td>“Lora 在我自己的题材上能用吗？“</td></tr><tr><td>4</td><td>罕见光照下的画风延续</td><td>”在我常用的光照下还行吗？“</td></tr><tr><td>5</td><td>多人构图</td><td>”多角色场景能稳吗？“</td></tr><tr><td>6</td><td>纯场景（无人物）</td><td>“能脱离人物保持画风吗？”</td></tr></tbody></table>
+<p>⚠️ <strong>关键反直觉</strong>：第 3 张（最远主题）比第 2 张（最强代表作）的转化率更高——LiblibAI 用户最在乎的不是”你 Lora 能多强”，而是”你 Lora 在我自己的题材上能不能用”。</p>
+<h3 id="2-描述字段短描述的信息密度公式">2. 描述字段（短描述）的信息密度公式</h3>
+<p>LiblibAI 描述字段限制 12 字。<strong>别浪费在通用形容词</strong>（“好看 / 高质量”），要塞进<strong>独家识别点</strong>：</p>
+<p>✅ 好的写法：<code>半厚涂金属反差·凝视画风</code></p>
+<ul>
+<li>“金属反差” 是独家</li>
+<li>“半厚涂” 是技法</li>
+<li>“凝视画风” 是品牌后缀</li>
+</ul>
+<p>❌ 差的写法：<code>高质量二次元画风Lora</code></p>
+<ul>
+<li>全是通用词，与市场上 100 个其他 Lora 撞描述</li>
+</ul>
+<h3 id="3-详细介绍必须用纯文本">3. 详细介绍必须用纯文本</h3>
+<p>LiblibAI 详情页编辑器<strong>不识别 markdown 符号</strong>（<code>#</code> 标题 / <code>**</code> 加粗 / <code>|</code> 表格 / 代码块）。这些会变成普通字符显示，破坏排版。</p>
+<p><strong>纯文本排版替代方案</strong>：</p>
+<ul>
+<li>章节分隔：用空行（双空行 = 强分隔）</li>
+<li>强调：用「」括号或大写</li>
+<li>列表：用顿号或换行</li>
+<li>代码：用单独段落 + 缩进</li>
+</ul>
+<p>详细介绍<strong>必含 6 节</strong>：</p>
+<ol>
+<li>关于系列（一句话定位）</li>
+<li>视觉特征（让用户知道画风识别符）</li>
+<li>触发词（必须放在 prompt 第一个 token 位置 + 警告）</li>
+<li>推荐 prompt 模板（让小白用户能立即上手）</li>
+<li>七种光照配方表（提升专业度信任）</li>
+<li>训练信息（底模 + 参数 + 数据集规模）</li>
+</ol>
+<h3 id="4-关键字段填写避坑清单">4. 关键字段填写避坑清单</h3>
+<h4 id="推荐-checkpoint找不到自己用的底模">「推荐 Checkpoint」找不到自己用的底模</h4>
+<p>⚠️ <strong>LiblibAI 产品 bug</strong>：模型详情页”收藏”和发布表单”我的收藏 ckpt”是<strong>两个独立列表</strong>——你收藏了模型不会自动出现在 ckpt 引用列表里。</p>
+<p><strong>应对</strong>：</p>
+<ul>
+<li>优先：去模型市场详情页找”添加到 ckpt 引用”按钮（如果有）</li>
+<li>兜底：选 LiblibAI 平台预置的「基础算法 XL」（SDXL 1.0 base），不严格匹配但兼容性最广</li>
+<li>同步：在描述里强调推荐底模名称，让用户自己找</li>
+</ul>
+<h4 id="建议权重陷阱">「建议权重」陷阱</h4>
+<p>LiblibAI 默认 <code>0.8</code>——<strong>这是妥协值，不温不火</strong>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>默认</th><th>影响</th></tr></thead><tbody><tr><td>0.8（默认）</td><td>用户第一次试用画风偏弱，留下”还行”印象，评分中庸</td></tr><tr><td><strong>1.0</strong>（推荐画风 Lora）</td><td>用户第一次出图就 wow，评分高；嫌强自己会降到 0.7</td></tr><tr><td>0.7</td><td>主体清晰度优先，画风让位</td></tr></tbody></table>
+<p><strong>画风 Lora 默认建议 1.0</strong>——让画风密度炸裂，给用户第一印象的最大惊喜值。</p>
+<h4 id="vae--高清修复全选-none">「VAE / 高清修复」全选 NONE</h4>
+<p>画风 Lora <strong>不依赖</strong> 特定 VAE 和 upscaler。强制推荐反而限制用户自由度——直接选 NONE / 勾”此版本不需要”，不强加偏见。</p>
+<h3 id="5-权限设置项目商业化的最大决策点">5. 权限设置（项目商业化的最大决策点）</h3>
+<h4 id="-生成内容可商用是默认勾选的最大陷阱">🔴 「生成内容可商用」是默认勾选的最大陷阱</h4>
+<p>LiblibAI 默认勾选这一项，多数人不假思索点过——但它意味着：</p>
+<blockquote>
+<p><strong>任何人用你 Lora 出的图，都可以商业销售。</strong></p>
+</blockquote>
+<p>如果你的 Lora 基于<strong>自己的原创作品集</strong>训练（比如本项目的 31 张 MJ 原图），勾上这项 = <strong>免费让市场上仿冒你画风的商业作品大量涌现</strong>，冲掉你自己的商业溢价。</p>
+<p><strong>正确做法</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>❌ 取消勾选「生成内容可商用」</span></span>
+<span class="line"><span>✅ 在描述末尾写："生成内容仅供个人创作 / 非商用研究使用，商用请联系作者"</span></span></code></pre>
+<p>这样：</p>
+<ul>
+<li>个人玩家能自由出图、社区分享 → 不阻碍传播</li>
+<li>商用必须找你授权 → 保留商业化主导权</li>
+<li>留下潜在收入入口</li>
+</ul>
+<h4 id="允许融合不可转售组合策略">「允许融合」+「不可转售」组合策略</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>选项</th><th>推荐</th><th>理由</th></tr></thead><tbody><tr><td>✅ 允许进行融合</td><td>勾</td><td>让社区二次创作丰富生态，融合产物受你的许可继承约束</td></tr><tr><td>❌ 允许模型转售或融合后出售</td><td><strong>不勾</strong></td><td>核心资产保护——别人融合你的 Lora 做出新 Lora 后<strong>不能拿去卖</strong></td></tr></tbody></table>
+<p>这个组合是”开放传播 + 保护核心商业权益”的折中。</p>
+<h4 id="加密-社区不友好信号">「加密」= 社区不友好信号</h4>
+<p>加密模型 = 文件不能下载、只能在 LiblibAI 平台用。<strong>绝大多数情况下选不加密</strong>——加密会被社区认为限制使用，评分大幅降低。</p>
+<p>唯一加密的合理场景：你提供付费会员独享版本。免费版本一律不加密。</p>
+<h4 id="liblibai-独家模型的流量扶持权衡">「LiblibAI 独家模型」的流量扶持权衡</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>选</th><th>收益</th><th>代价</th></tr></thead><tbody><tr><td>✅ 独家</td><td>平台流量加成（首页推荐、搜索权重）</td><td>不能在 Civitai / Tensor.art 等海外平台同步发布同款</td></tr><tr><td>❌ 非独家</td><td>多平台分发，海外受众</td><td>无 LiblibAI 流量扶持</td></tr></tbody></table>
+<p><strong>首发建议勾独家</strong>——首次发布最缺的就是流量曝光，平台扶持是关键。后续出 v2 / 衍生版本时可发非独家覆盖海外。</p>
+<h3 id="6-标签tag设计">6. 标签（Tag）设计</h3>
+<p>LiblibAI tag 是<strong>搜索 SEO 关键词</strong>，不是”自我描述”。设计原则：</p>
+<p>✅ <strong>要写</strong>（按高 → 低优先级）：</p>
+<ul>
+<li>画风技法词（半厚涂 / 厚涂 / 赛璐璐）</li>
+<li>大类入口词（二次元）</li>
+<li>系列品牌词（如本项目的”凝视画风”）</li>
+<li>美学辨识词（暗调 / 戏剧化光影）</li>
+<li>应用场景词（角色立绘 / 古风 / 概念美术）</li>
+</ul>
+<p>❌ <strong>千万不写</strong>：</p>
+<ul>
+<li>写实类（真人 / 摄影 / 三次元）→ 误导用户去错的方向</li>
+<li>控制类（修手 / 修脸 / 增强细节）→ 这是控制类 Lora 的标签</li>
+<li>主体细分（萝莉 / 御姐 / 大胸）→ 与画风 Lora 不匹配</li>
+<li>描述性形容词（高质量 / 免费 / 商用）→ 不是搜索 tag</li>
+</ul>
+<p>数量：5-10 个最佳。太多会稀释每个 tag 的搜索权重。</p>
+<h3 id="7-双版本同步发布">7. 双版本同步发布</h3>
+<p>如果你训了主版（v1）和软版（v1_soft）：</p>
+<ul>
+<li><strong>同时发到 LiblibAI</strong>——多一个版本几分钟，但覆盖的用户场景多一倍</li>
+<li>主版做主推</li>
+<li>软版作为”version 2”或独立条目都可以</li>
+<li>软版可以共用主版的封面图（减少出图工作量），但描述里说明”画风更柔和、适用场景”</li>
+</ul>
+<h3 id="8-内容类别主体--风格--垂类--功能">8. 内容类别（主体 / 风格 / 垂类 / 功能）</h3>
+<p>LiblibAI 上传时会让你选 4 个分类下拉。每个<strong>最多选 3 个</strong>避免稀释定位：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>分类</th><th>推荐选项</th></tr></thead><tbody><tr><td>主体</td><td>角色 / 人物（画风 Lora 服务对象主要是人物题材）</td></tr><tr><td>风格</td><td>二次元 + 厚涂/半厚涂 + 暗调（如有）</td></tr><tr><td>垂类</td><td>插画 / 角色设计</td></tr><tr><td>功能</td><td>风格化 / 风格迁移</td></tr></tbody></table>
+<p><strong>避雷</strong>：</p>
+<ul>
+<li>主体选”写实 / 真人” → 误导</li>
+<li>风格选”摄影 / 真人” → 误导</li>
+<li>功能选”控制类 / 修手 / 增强细节” → 不匹配</li>
+</ul>
+<h3 id="9-项目最终金句">9. 项目最终金句</h3>
+<blockquote>
+<p><strong>训练 Lora 是技术问题，发布 Lora 是产品问题。</strong></p>
+<p><strong>训练时你思考”如何让画风学到位”，发布时你必须切换到”如何让陌生用户在 0.3 秒内决定下载我”。</strong></p>
+<p><strong>6 张封面 + 12 字描述 + 1 行权限选择，决定了你这套画风的市场命运。</strong></p>
+</blockquote>
+<hr>
+<h2 id="顶层金句段">顶层金句段</h2>
+<blockquote>
+<p><em>「画风 Lora 的训练目标不是”复刻原图”，是”提取画风信号”。</em>
+<em>profile 不是稳定输出器，是”高方差表达者”——它的画风强度依赖你给它什么样的画面让它表达。</em>
+<em>数据集策划的本质，是用 prompt 配方把 profile 逼到画风密度顶峰，并在不同主题上重复这件事，让 Lora 在平均时分离出”画风信号”。」</em></p>
+</blockquote>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>主线项目：<code>{AIGC工作站}/Lora_GAZE_数据集\</code>（31 张数据集）</li>
+<li>数据集元数据：<code>{AIGC工作站}/Lora_GAZE_数据集\_meta\进度看板.md</code> / <code>筛选日志.md</code> / <code>prompts.md</code></li>
+<li>起点 prompt 模板：<code>{AIGC工作站}/Lora_GAZE_数据集\Lora数据集补图_MJ模板.md</code>（工作区根）</li>
+<li>转交文档：<code>{AIGC工作站}/Lora炼制项目转交文档.md</code>（项目背景与决策）</li>
+<li>关联方法论：<a href="/above-the-web/personalize-moodboard-v1-cccac49/" class="wikilink">personalize与moodboard分工_v1</a>（profile 在 MJ 工作流中的定位）</li>
+<li>关联档案：<a href="/above-the-web/multi-sref-v1-40b0c2e/" class="wikilink">multi_sref行为_v1</a>（同类工具行为洞察）</li>
+<li>顶层方法论：<a href="/above-the-web/v1-6b0cabf/" class="wikilink">角色一致性金字塔_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/风格审美</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/01_%E8%A7%92%E8%89%B2%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E8%A7%86%E8%A7%89%E7%AD%BE%E5%90%8D/%E7%94%BB%E9%A3%8ELora%E6%95%B0%E6%8D%AE%E9%9B%86%E7%AD%96%E5%88%92%E6%96%B9%E6%B3%95%E8%AE%BA_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/01_%E8%A7%92%E8%89%B2%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E8%A7%86%E8%A7%89%E7%AD%BE%E5%90%8D/%E7%94%BB%E9%A3%8ELora%E6%95%B0%E6%8D%AE%E9%9B%86%E7%AD%96%E5%88%92%E6%96%B9%E6%B3%95%E8%AE%BA_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/personalize-moodboard-v1-cccac49/"> <span class="card-cat">方法论与洞察</span> <h3>personalize 与 moodboard 的分工</h3> <p>personalize 是审美底盘,moodboard 是题材绑定——personalize 默认常驻,moodboard 按题材开关。</p> </a><a class="card" href="/above-the-web/v1-6b0cabf/"> <span class="card-cat">方法论与洞察</span> <h3>角色一致性金字塔(4 层结构)</h3> <p>角色一致性不是&quot;三选一&quot;,是&quot;四层金字塔&quot;——风格签名(Style Creator) / 角色身份(oref/seed/描述词) / 账号审…</p> </a><a class="card" href="/above-the-web/ip-still-here-v1-ccf566b/"> <span class="card-cat">方法论与洞察</span> <h3>跨 IP 作者签名 · 白玉兰与 still here</h3> <p>多 IP 账号需要&quot;共享签名&quot;——观众看到任意一张图 / 听到任意一段歌，能立刻识别&quot;这是同一个作者&quot;。</p> </a><a class="card" href="/above-the-web/moodboard-v1-e606d3e/"> <span class="card-cat">方法论与洞察</span> <h3>moodboard 主体位判据 · 假说</h3> <p>moodboard 的行为可能不取决于题材远近，而取决于目标画面里有没有一个「可以被它替换的主体位」。 没有主体位，它只能给风格；有主体位，…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#一profile-行为四规律实测沉淀" data-toc-link="一profile-行为四规律实测沉淀">一、profile 行为四规律（实测沉淀）</a></li><li class="d3"><a href="#规律-1profile-不会漂移在合理时间内" data-toc-link="规律-1profile-不会漂移在合理时间内">规律 1：profile 不会漂移（在合理时间内）</a></li><li class="d3"><a href="#规律-2profile-的画风表达力--画面装饰密度" data-toc-link="规律-2profile-的画风表达力--画面装饰密度">规律 2：profile 的画风表达力 ∝ 画面装饰密度</a></li><li class="d3"><a href="#规律-3profile-会被主题描述拽偏" data-toc-link="规律-3profile-会被主题描述拽偏">规律 3：profile 会被主题描述拽偏</a></li><li class="d3"><a href="#规律-4profile-服从局部违抗全局" data-toc-link="规律-4profile-服从局部违抗全局">规律 4：profile 服从局部，违抗全局</a></li><li class="d2"><a href="#二数据集策划方法论" data-toc-link="二数据集策划方法论">二、数据集策划方法论</a></li><li class="d3"><a href="#方法论-1构图轴--横切轴的二维结构" data-toc-link="方法论-1构图轴--横切轴的二维结构">方法论 1：构图轴 + 横切轴的二维结构</a></li><li class="d3"><a href="#方法论-2分布配额30-40-张数据集参考" data-toc-link="方法论-2分布配额30-40-张数据集参考">方法论 2：分布配额（30-40 张数据集参考）</a></li><li class="d3"><a href="#方法论-3用户上传--第三方筛选工作流" data-toc-link="方法论-3用户上传--第三方筛选工作流">方法论 3：「用户上传 → 第三方筛选」工作流</a></li><li class="d3"><a href="#方法论-4严格画风一致性--可选维度填充" data-toc-link="方法论-4严格画风一致性--可选维度填充">方法论 4：「严格画风一致性 &gt; 可选维度填充」</a></li><li class="d2"><a href="#三prompt-配方库实测可复用" data-toc-link="三prompt-配方库实测可复用">三、prompt 配方库（实测可复用）</a></li><li class="d3"><a href="#通用模板锁定区--可变区" data-toc-link="通用模板锁定区--可变区">通用模板（锁定区 + 可变区）</a></li><li class="d3"><a href="#七种光照配方" data-toc-link="七种光照配方">七种光照配方</a></li><li class="d3"><a href="#高成功率场景配方" data-toc-link="高成功率场景配方">高成功率场景配方</a></li><li class="d3"><a href="#失败配方黑名单" data-toc-link="失败配方黑名单">失败配方黑名单</a></li><li class="d2"><a href="#四反例案例与教训" data-toc-link="四反例案例与教训">四、反例案例与教训</a></li><li class="d3"><a href="#反例-1elf-ranger-全身批次-3" data-toc-link="反例-1elf-ranger-全身批次-3">反例 1：elf-ranger 全身（批次 #3）</a></li><li class="d3"><a href="#反例-2fortuneteller-中老年批次-5" data-toc-link="反例-2fortuneteller-中老年批次-5">反例 2：fortuneteller 中老年（批次 #5）</a></li><li class="d3"><a href="#反例-3teen-girl-少女批次-7" data-toc-link="反例-3teen-girl-少女批次-7">反例 3：teen-girl 少女（批次 #7）</a></li><li class="d2"><a href="#五关键判断节点速查" data-toc-link="五关键判断节点速查">五、关键判断节点速查</a></li><li class="d2"><a href="#六实战验收the-gaze-项目结果2026-05-08" data-toc-link="六实战验收the-gaze-项目结果2026-05-08">六、实战验收：THE GAZE 项目结果（2026-05-08）</a></li><li class="d3"><a href="#验收方法3-维度泛化测试" data-toc-link="验收方法3-维度泛化测试">验收方法（3 维度泛化测试）</a></li><li class="d3"><a href="#关键发现-1画风信号-vs-主题信号" data-toc-link="关键发现-1画风信号-vs-主题信号">关键发现 1：画风信号 vs 主题信号</a></li><li class="d3"><a href="#关键发现-2epoch-选择的甜点是-6-8" data-toc-link="关键发现-2epoch-选择的甜点是-6-8">关键发现 2：epoch 选择的甜点是 6-8</a></li><li class="d3"><a href="#关键发现-3训练数据画风分布决定-lora-不同-prompt-下的表现" data-toc-link="关键发现-3训练数据画风分布决定-lora-不同-prompt-下的表现">关键发现 3：训练数据画风分布决定 Lora 不同 prompt 下的表现</a></li><li class="d3"><a href="#关键发现-4双版本发布的实操价值v1-vs-v1_soft-实测对比" data-toc-link="关键发现-4双版本发布的实操价值v1-vs-v1_soft-实测对比">关键发现 4：双版本发布的实操价值（v1 vs v1_soft 实测对比）</a></li><li class="d2"><a href="#七上线发布方法论liblibai-模型市场实战经验" data-toc-link="七上线发布方法论liblibai-模型市场实战经验">七、上线发布方法论（LiblibAI 模型市场实战经验）</a></li><li class="d3"><a href="#1-六张封面图战略每张回答一个用户问题" data-toc-link="1-六张封面图战略每张回答一个用户问题">1. 六张封面图战略（每张回答一个用户问题）</a></li><li class="d3"><a href="#2-描述字段短描述的信息密度公式" data-toc-link="2-描述字段短描述的信息密度公式">2. 描述字段（短描述）的信息密度公式</a></li><li class="d3"><a href="#3-详细介绍必须用纯文本" data-toc-link="3-详细介绍必须用纯文本">3. 详细介绍必须用纯文本</a></li><li class="d3"><a href="#4-关键字段填写避坑清单" data-toc-link="4-关键字段填写避坑清单">4. 关键字段填写避坑清单</a></li><li class="d3"><a href="#5-权限设置项目商业化的最大决策点" data-toc-link="5-权限设置项目商业化的最大决策点">5. 权限设置（项目商业化的最大决策点）</a></li><li class="d3"><a href="#6-标签tag设计" data-toc-link="6-标签tag设计">6. 标签（Tag）设计</a></li><li class="d3"><a href="#7-双版本同步发布" data-toc-link="7-双版本同步发布">7. 双版本同步发布</a></li><li class="d3"><a href="#8-内容类别主体--风格--垂类--功能" data-toc-link="8-内容类别主体--风格--垂类--功能">8. 内容类别（主体 / 风格 / 垂类 / 功能）</a></li><li class="d3"><a href="#9-项目最终金句" data-toc-link="9-项目最终金句">9. 项目最终金句</a></li><li class="d2"><a href="#顶层金句段" data-toc-link="顶层金句段">顶层金句段</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

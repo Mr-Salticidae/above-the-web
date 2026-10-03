@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>L-cut 卡点 + xfade 时长抵消 · 蛛网之上</title><meta name="description" content="xfade dissolve 每个吃 0.4s × N 个转场 = 累计偏移。要保持 plan 卡点严格对齐人声,每段视频必须 setpts 拉长 +XFADEDURATION 来抵消,xfade offset 必须 = 切换点 - XFA…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/l-cut-xfade-v1-af75393/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="L-cut 卡点 + xfade 时长抵消"><meta property="og:description" content="xfade dissolve 每个吃 0.4s × N 个转场 = 累计偏移。要保持 plan 卡点严格对齐人声,每段视频必须 setpts 拉长 +XFADEDURATION 来抵消,xfade offset 必须 = 切换点 - XFA…"><meta property="og:url" content="https://tiaozhuxiansheng.com/l-cut-xfade-v1-af75393/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="L-cut 卡点 + xfade 时长抵消"><meta name="twitter:description" content="xfade dissolve 每个吃 0.4s × N 个转场 = 累计偏移。要保持 plan 卡点严格对齐人声,每段视频必须 setpts 拉长 +XFADEDURATION 来抵消,xfade offset 必须 = 切换点 - XFA…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-02T13:11:13+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="工程/ffmpeg"><meta property="article:tag" content="状态/已验证"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/l-cut-xfade-v1-af75393/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/l-cut-xfade-v1-af75393/","url":"https://tiaozhuxiansheng.com/l-cut-xfade-v1-af75393/","headline":"L-cut 卡点 + xfade 时长抵消","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"xfade dissolve 每个吃 0.4s × N 个转场 = 累计偏移。要保持 plan 卡点严格对齐人声,每段视频必须 setpts 拉长 +XFADEDURATION 来抵消,xfade offset 必须 = 切换点 - XFA…","datePublished":"2026-06-02T13:11:13+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 工程/ffmpeg, 状态/已验证"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"L-cut 卡点 + xfade 时长抵消","item":"https://tiaozhuxiansheng.com/l-cut-xfade-v1-af75393/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-02T13:11:13+08:00">2026-06-02</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 3 分钟读完 · 1,112 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>21 节</i></summary> <ol> <li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#问题描述">问题描述</a></li><li class="d2"><a href="#根因--xfade-的时长损失公式">根因 · xfade 的时长损失公式</a></li><li class="d2"><a href="#解决公式--v84-修复">解决公式 · v8.4 修复</a></li><li class="d3"><a href="#步骤-1--每段-setpts-拉长-xfade_duration">步骤 1 · 每段 setpts 拉长 +XFADE_DURATION</a></li><li class="d3"><a href="#步骤-2--xfade-offset--切换点---xfade2-精确居中">步骤 2 · xfade offset = 切换点 - XFADE/2 精确居中</a></li><li class="d3"><a href="#步骤-3--l-cut画面晚人声-04s">步骤 3 · L-cut(画面晚人声 0.4s)</a></li><li class="d2"><a href="#完整-ffmpeg-filter_complex-示意">完整 ffmpeg filter_complex 示意</a></li><li class="d2"><a href="#失败案例--v8--v84-三次迭代">失败案例 · v8 → v8.4 三次迭代</a></li><li class="d2"><a href="#反向陷阱">反向陷阱</a></li><li class="d3"><a href="#-陷阱-1--肉眼看看差不多就行">❌ 陷阱 1 · 「肉眼看看差不多就行」</a></li><li class="d3"><a href="#-陷阱-2--用-concat-demuxer-拼接">❌ 陷阱 2 · 「用 concat demuxer 拼接」</a></li><li class="d3"><a href="#-陷阱-3--在剪映里手动加叠化">❌ 陷阱 3 · 「在剪映里手动加叠化」</a></li><li class="d3"><a href="#-陷阱-4--让可灵视频原长不-setpts">❌ 陷阱 4 · 「让可灵视频原长,不 setpts」</a></li><li class="d2"><a href="#适用场景">适用场景</a></li><li class="d3"><a href="#已验证适用">已验证适用</a></li><li class="d3"><a href="#推测适用">推测适用</a></li><li class="d3"><a href="#不适用">不适用</a></li><li class="d2"><a href="#与llm-plan-卡点工作流的协同">与「LLM-plan 卡点工作流」的协同</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#版本">版本</a></li> </ol> </details> <h1 id="l-cut-卡点--xfade-时长抵消">L-cut 卡点 + xfade 时长抵消</h1>
+<blockquote>
+<p>入档:2026-05-19
+触发:23 项目《再少年》5/18 晚 v8.3 → v8.4 卡点累计偏移 8.8s 的工程修复
+性质:<strong>真叠化拼接的卡点工程公式——xfade dissolve 会吃时长,必须精确抵消</strong>
+关联:<a href="/above-the-web/llm-plan-v1-c7edaf7/" class="wikilink">LLM-plan卡点工作流_v1</a> / <a href="/above-the-web/v1-787da21/" class="wikilink">图片占位到视频替换的工作流_v1</a></p>
+</blockquote>
+<hr>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>xfade dissolve 每个吃 0.4s × N 个转场 = 累计偏移</strong>。要保持 plan 卡点严格对齐人声,每段视频必须 <code>setpts</code> 拉长 +XFADE_DURATION 来抵消,xfade offset 必须 = 切换点 - XFADE/2 精确居中。</p>
+<hr>
+<h2 id="问题描述">问题描述</h2>
+<p>23 项目 v8.3 拼接后:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>歌词 "春风若有怜花意"  → 应该卡在 S07a 入场</span></span>
+<span class="line"><span>实际:已经到了 S07c 中段</span></span>
+<span class="line"><span>偏移:~6 秒</span></span></code></pre>
+<p><strong>累计了 22 个 xfade × 0.4s = 8.8s 偏移</strong>,人声越到后面越对不上画面。</p>
+<hr>
+<h2 id="根因--xfade-的时长损失公式">根因 · xfade 的时长损失公式</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ffmpeg -filter_complex "[0][1]xfade=transition=dissolve:duration=0.4:offset=Toffset" ...</span></span></code></pre>
+<p>xfade 工作机制:</p>
+<ul>
+<li>输入 A:0 ~ Ta</li>
+<li>输入 B:0 ~ Tb</li>
+<li>输出:<code>Toffset + Tb</code>(B 接在 A 上但<strong>叠化 0.4s</strong>)</li>
+<li><strong>实际有效 A 长度 = Toffset + 0.4</strong></li>
+<li><strong>拼接后总时长 = Ta + Tb - 0.4</strong>(每个 xfade 吃 0.4s)</li>
+</ul>
+<p>→ <strong>N 个 xfade 累计吃 N × 0.4s</strong>——这是数学事实,不是 bug。</p>
+<hr>
+<h2 id="解决公式--v84-修复">解决公式 · v8.4 修复</h2>
+<h3 id="步骤-1--每段-setpts-拉长-xfade_duration">步骤 1 · 每段 setpts 拉长 +XFADE_DURATION</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">XFADE</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 0.4</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 原计划时长(plan v7)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">plan_durations </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">13.5</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">14.1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">14.4</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">7.1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">7.32</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11.04</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 实际可灵视频时长</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">actual_durations </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">9.4</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">14.6</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">14.1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">8.0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">7.0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11.5</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># setpts 系数</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">setpts_factor </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (plan_duration </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> XFADE</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> actual_duration</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 例:S01 plan=13.5, xfade 后期望 13.5+0.4=13.9</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">#      实际可灵 9.4s → setpts = 13.9/9.4 = 1.479x 慢放</span></span></code></pre>
+<p><strong>关键</strong>:<strong>每段加 +XFADE 长度</strong>,是为了被 xfade 吃掉 0.4s 后,剩下的恰好是 plan 时长。</p>
+<h3 id="步骤-2--xfade-offset--切换点---xfade2-精确居中">步骤 2 · xfade offset = 切换点 - XFADE/2 精确居中</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># plan 切换点(歌词卡点)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">plan_switch_times </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">13.5</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">27.6</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">42.0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">49.1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">56.42</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># xfade offset(i 从 1 开始,第 i 个 xfade)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">xfade_offset[i] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> plan_switch_times[i] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> XFADE</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> /</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 2</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 例:第 1 个 xfade(S01→S02):</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">#      切换点 13.5,offset = 13.5 - 0.2 = 13.3</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 意义:xfade 13.3~13.7 之间叠化,中点 13.5 = 卡点</span></span></code></pre>
+<p><strong>关键</strong>:offset 必须让 xfade 的<strong>中点</strong>对齐切换点——不是开始也不是结束。</p>
+<h3 id="步骤-3--l-cut画面晚人声-04s">步骤 3 · L-cut(画面晚人声 0.4s)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 音频对齐 plan 切换点</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">audio_cut_times </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> plan_switch_times</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 视频切换点 = 音频切换点 + 0.4s(画面晚于人声 0.4s 的电影手法)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">video_cut_times </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 0.4</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> for</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">in</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> plan_switch_times]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 视频 xfade offset 用 video_cut_times,音频用 audio_cut_times</span></span></code></pre>
+<p><strong>L-cut 的电影意义</strong>:<strong>音乐先于画面</strong>——人耳先听到下一句歌词,半秒后画面切换,产生「跟随感/抒情感」。</p>
+<hr>
+<h2 id="完整-ffmpeg-filter_complex-示意">完整 ffmpeg filter_complex 示意</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">ffmpeg</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  -i</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> S01a.mp4</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -i</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> S01.mp4</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -i</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> S02.mp4</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> ...</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -i</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> S16.mp4</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  -i</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> audio.wav</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  -filter_complex</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    [0:v]setpts=PTS*1.6[v0];</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    [1:v]setpts=PTS*1.375[v1];</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    [2:v]setpts=PTS*0.964[v2];</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    ...</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    [v0][v1]xfade=transition=dissolve:duration=0.4:offset=8.0[x01];</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    [x01][v2]xfade=transition=dissolve:duration=0.4:offset=13.7[x12];</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    [x12][v3]xfade=transition=dissolve:duration=0.4:offset=27.8[x23];</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    ...</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">  "</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  -map</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "[x_final]"</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -map</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "{audio_index}:a"</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  -c:v</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> libx264</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -preset</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> slow</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -crf</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 18</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  -c:a</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> aac</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -b:a</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> 192k</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">  final.mp4</span></span></code></pre>
+<p>详见:<code>05_脚本/render_v8_4_local.py</code></p>
+<hr>
+<h2 id="失败案例--v8--v84-三次迭代">失败案例 · v8 → v8.4 三次迭代</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>版本</th><th>错在哪</th><th>修复</th></tr></thead><tbody><tr><td><strong>v8.0</strong></td><td>用可灵实际时长拼,plan 时长丢失</td><td>改用 plan 时长 + setpts</td></tr><tr><td><strong>v8.2</strong></td><td>setpts 对齐 plan,但忽略了 xfade 吃时长</td><td>加 +XFADE 抵消</td></tr><tr><td><strong>v8.3</strong></td><td>修了某些段,offset 用错(用了 plan 时长累计,不是 plan_switch_times)</td><td>改用 plan_switch_times - XFADE/2</td></tr><tr><td><strong>v8.4</strong></td><td>✅ 全部修复,卡点精确对齐</td><td>✓</td></tr></tbody></table>
+<p>→ 这是<strong>3 次失败 + 1 次彻底定位</strong>才搞清的工程公式。</p>
+<hr>
+<h2 id="反向陷阱">反向陷阱</h2>
+<h3 id="-陷阱-1--肉眼看看差不多就行">❌ 陷阱 1 · 「肉眼看看差不多就行」</h3>
+<p>副会话/初学者最容易犯——觉得「差几毫秒看不出来」。
+<strong>实际</strong>:0.4s × 22 = 8.8s,<strong>人耳极其敏感</strong>,歌词与画面错半句话就破功。
+<strong>正确判断</strong>:取 5-10 个明显卡点(歌词换句/重拍),逐点测试是否对齐。</p>
+<h3 id="-陷阱-2--用-concat-demuxer-拼接">❌ 陷阱 2 · 「用 concat demuxer 拼接」</h3>
+<p>concat demuxer 不支持 xfade,只能硬切。
+<strong>正确</strong>:必须用 <code>-filter_complex</code> + xfade 链。</p>
+<h3 id="-陷阱-3--在剪映里手动加叠化">❌ 陷阱 3 · 「在剪映里手动加叠化」</h3>
+<p>剪映加的是<strong>装饰性叠化</strong>,不是 xfade dissolve 真叠化——剪映的转场效果通常额外加 0.2~0.5s,而且<strong>不吃时长</strong>(它在切换点周围”加料”而不是”叠化”)。
+两种叠化的卡点逻辑完全不同,<strong>不能混用</strong>。</p>
+<h3 id="-陷阱-4--让可灵视频原长不-setpts">❌ 陷阱 4 · 「让可灵视频原长,不 setpts」</h3>
+<p>如果可灵视频 9.4s,plan 要 13.5s,<strong>不 setpts</strong> 直接用 → 画面变快/变慢都不对,且后续卡点全错。
+<strong>必须 setpts</strong>(只能慢放或快放,不要 trim)——这是图生视频特有的工程要求。</p>
+<hr>
+<h2 id="适用场景">适用场景</h2>
+<h3 id="已验证适用">已验证适用</h3>
+<ul>
+<li>✅ AI 图生视频拼接(可灵 3.0 + ffmpeg)</li>
+<li>✅ 23+ 镜叙事 MV</li>
+<li>✅ 严格音画卡点项目</li>
+</ul>
+<h3 id="推测适用">推测适用</h3>
+<ul>
+<li>🔄 任何「多段视频 + xfade dissolve + 严格卡点」的项目</li>
+<li>🔄 商业广告 / 预告片</li>
+</ul>
+<h3 id="不适用">不适用</h3>
+<ul>
+<li>❌ 硬切(jump cut)项目——不存在累计偏移问题</li>
+<li>❌ 即兴/纪录片(节奏本身就是探索出来的,不需要严格卡点)</li>
+</ul>
+<hr>
+<h2 id="与llm-plan-卡点工作流的协同">与「LLM-plan 卡点工作流」的协同</h2>
+<p><a href="/above-the-web/llm-plan-v1-c7edaf7/" class="wikilink">LLM-plan卡点工作流_v1</a> 讲的是**「如何用 LLM 出 plan JSON」<strong>(策划层)。
+本条讲的是</strong>「拿到 plan 后,工程上如何精确实现卡点」**(实现层)。</p>
+<p>两条配对使用:</p>
+<ul>
+<li>plan 用 LLM 出 → 那篇</li>
+<li>plan 用 ffmpeg 实现 + 叠化 → 这篇</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>上位:<a href="/above-the-web/llm-plan-v1-c7edaf7/" class="wikilink">LLM-plan卡点工作流_v1</a> / <a href="/above-the-web/v1-787da21/" class="wikilink">图片占位到视频替换的工作流_v1</a></li>
+<li>项目复盘:2026-05-18_23项目再少年MV完整复盘</li>
+<li>元方法论:<a href="/above-the-web/v1-dff6dd3/" class="wikilink">识别工具天花板的时机_v1</a></li>
+<li>工具:<code>23_檐下再少年_叙事MV/05_脚本/render_v8_4_local.py</code></li>
+</ul>
+<hr>
+<h2 id="版本">版本</h2>
+<ul>
+<li><strong>v1 - 2026-05-19 - 23 项目 v8.4 修复后首次沉淀</strong></li>
+</ul>
+<p>升级触发:</p>
+<ul>
+<li>在第二个项目验证公式(下一个叙事 MV 立项后)</li>
+<li>找到其他转场类型的时长损失公式(fade/wipe/slide 等)</li>
+<li>集成成 reusable Python 函数(下一个项目能直接调用)</li>
+<li><a href="/above-the-web/v1-89b7ead/" class="wikilink">镜内切入优于拆镜_保住下游帧锚_v1</a> —— 同族:转场重叠让起点帧不是简单加法,所以镜内强调宁可切入也别拆镜</li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">工程/ffmpeg</span><span class="tag">状态/已验证</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/L-cut%E5%8D%A1%E7%82%B9+xfade%E6%97%B6%E9%95%BF%E6%8A%B5%E6%B6%88_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/L-cut%E5%8D%A1%E7%82%B9+xfade%E6%97%B6%E9%95%BF%E6%8A%B5%E6%B6%88_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-06-07-stay-alive-ai-mv-v1-5aba73f/">2026-06-07 Stay alive AI 音乐公益 MV 复盘</a></li><li><a href="/above-the-web/v1-787da21/">图片占位 → 视频替换的工作流</a></li><li><a href="/above-the-web/ai-thewindshieldwiper-v1-01329e3/">多线交叉型 AI 短片：The Windshield Wiper 案例</a></li><li><a href="/above-the-web/v1-89b7ead/">镜内切入优于拆镜：保住下游帧锚</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/mv-v1-0be1fac/"> <span class="card-cat">方法论与洞察</span> <h3>MV 卡点工具 · 画框陷阱</h3> <p>当一个看似可配置的工具反复输出&quot;不该出现的默认行为&quot;,直接看源码定位硬编码,不要在工具的 API 层反复试。23 项目的米白画框就是 mvk…</p> </a><a class="card" href="/above-the-web/2026-05-24-30-pv-v1-e4228dd/"> <span class="card-cat">方法论与洞察</span> <h3>2026-05-24｜30 项目角色 PV 发布复盘</h3> <p>项目：30伊恩・古德费罗的寓言</p> </a><a class="card" href="/above-the-web/2026-06-08-remotion-mj-seedance-v1-5120fe3/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘</h3> <p>- 验证场景:scene04repeattoskill</p> </a><a class="card" href="/above-the-web/2026-06-08-remotion-v3-v1-092ade9/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-08 Remotion 正式小片段 v3 复盘</h3> <p>- 成片 Composition:FormalClip20260608</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#问题描述" data-toc-link="问题描述">问题描述</a></li><li class="d2"><a href="#根因--xfade-的时长损失公式" data-toc-link="根因--xfade-的时长损失公式">根因 · xfade 的时长损失公式</a></li><li class="d2"><a href="#解决公式--v84-修复" data-toc-link="解决公式--v84-修复">解决公式 · v8.4 修复</a></li><li class="d3"><a href="#步骤-1--每段-setpts-拉长-xfade_duration" data-toc-link="步骤-1--每段-setpts-拉长-xfade_duration">步骤 1 · 每段 setpts 拉长 +XFADE_DURATION</a></li><li class="d3"><a href="#步骤-2--xfade-offset--切换点---xfade2-精确居中" data-toc-link="步骤-2--xfade-offset--切换点---xfade2-精确居中">步骤 2 · xfade offset = 切换点 - XFADE/2 精确居中</a></li><li class="d3"><a href="#步骤-3--l-cut画面晚人声-04s" data-toc-link="步骤-3--l-cut画面晚人声-04s">步骤 3 · L-cut(画面晚人声 0.4s)</a></li><li class="d2"><a href="#完整-ffmpeg-filter_complex-示意" data-toc-link="完整-ffmpeg-filter_complex-示意">完整 ffmpeg filter_complex 示意</a></li><li class="d2"><a href="#失败案例--v8--v84-三次迭代" data-toc-link="失败案例--v8--v84-三次迭代">失败案例 · v8 → v8.4 三次迭代</a></li><li class="d2"><a href="#反向陷阱" data-toc-link="反向陷阱">反向陷阱</a></li><li class="d3"><a href="#-陷阱-1--肉眼看看差不多就行" data-toc-link="-陷阱-1--肉眼看看差不多就行">❌ 陷阱 1 · 「肉眼看看差不多就行」</a></li><li class="d3"><a href="#-陷阱-2--用-concat-demuxer-拼接" data-toc-link="-陷阱-2--用-concat-demuxer-拼接">❌ 陷阱 2 · 「用 concat demuxer 拼接」</a></li><li class="d3"><a href="#-陷阱-3--在剪映里手动加叠化" data-toc-link="-陷阱-3--在剪映里手动加叠化">❌ 陷阱 3 · 「在剪映里手动加叠化」</a></li><li class="d3"><a href="#-陷阱-4--让可灵视频原长不-setpts" data-toc-link="-陷阱-4--让可灵视频原长不-setpts">❌ 陷阱 4 · 「让可灵视频原长,不 setpts」</a></li><li class="d2"><a href="#适用场景" data-toc-link="适用场景">适用场景</a></li><li class="d3"><a href="#已验证适用" data-toc-link="已验证适用">已验证适用</a></li><li class="d3"><a href="#推测适用" data-toc-link="推测适用">推测适用</a></li><li class="d3"><a href="#不适用" data-toc-link="不适用">不适用</a></li><li class="d2"><a href="#与llm-plan-卡点工作流的协同" data-toc-link="与llm-plan-卡点工作流的协同">与「LLM-plan 卡点工作流」的协同</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#版本" data-toc-link="版本">版本</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

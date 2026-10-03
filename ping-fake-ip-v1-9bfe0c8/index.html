@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型 · 蛛网之上</title><meta name="description" content="- 用户主诉：ping coursera.org 通，浏览器看课程极卡。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/ping-fake-ip-v1-9bfe0c8/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型"><meta property="og:description" content="- 用户主诉：ping coursera.org 通，浏览器看课程极卡。"><meta property="og:url" content="https://tiaozhuxiansheng.com/ping-fake-ip-v1-9bfe0c8/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型"><meta name="twitter:description" content="- 用户主诉：ping coursera.org 通，浏览器看课程极卡。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-27T19:32:37+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/网络排障"><meta property="article:tag" content="主题/代理链路"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/ping-fake-ip-v1-9bfe0c8/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/ping-fake-ip-v1-9bfe0c8/","url":"https://tiaozhuxiansheng.com/ping-fake-ip-v1-9bfe0c8/","headline":"ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 用户主诉：ping coursera.org 通，浏览器看课程极卡。","datePublished":"2026-07-27T19:32:37+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/网络排障, 主题/代理链路"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型","item":"https://tiaozhuxiansheng.com/ping-fake-ip-v1-9bfe0c8/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a> <span aria-hidden="true">/</span><span>账号与访问</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-27T19:32:37+08:00">2026-07-27</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 9 分钟读完 · 3,186 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>17 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d3"><a href="#症状与首轮诊断">症状与首轮诊断</a></li><li class="d3"><a href="#先排除的两个常见怀疑都不成立">先排除的两个常见怀疑（都不成立）</a></li><li class="d3"><a href="#节点评测">节点评测</a></li><li class="d3"><a href="#修复前后">修复前后</a></li><li class="d3"><a href="#三个把我带偏的工具故障">三个把我带偏的工具故障</a></li><li class="d3"><a href="#落地">落地</a></li><li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#五条可复用-insight">五条可复用 insight</a></li><li class="d3"><a href="#1-fake-ip-模式下的-ping-是自问自答-️首次">1. fake-ip 模式下的 ping 是自问自答 ⚠️首次</a></li><li class="d3"><a href="#2-延迟不等于带宽内置延迟测试选不出能看视频的节点-️首次">2. 延迟不等于带宽，内置延迟测试选不出能看视频的节点 ⚠️首次</a></li><li class="d3"><a href="#3-探针返回全-0时先怀疑探针--跨项目二次验证">3. 探针返回「全 0」时，先怀疑探针 ⭐ 跨项目二次验证</a></li><li class="d3"><a href="#4-运行态改了--配置落盘-️首次">4. 运行态改了 ≠ 配置落盘 ⚠️首次</a></li><li class="d3"><a href="#5-非-ascii-标识符遇上编码不匹配--静默走错分支-️首次">5. 非 ASCII 标识符遇上编码不匹配 = 静默走错分支 ⚠️首次</a></li><li class="d2"><a href="#顺手教训">顺手教训</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="ping-通不等于路通--fake-ip-假信号与节点带宽实测选型">ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型</h1>
+<blockquote>
+<p>入档：2026-07-27
+来源：一次「能 ping 通 coursera.org，但浏览器看课程极卡」的排障会话；本机 Windows 10 Pro + Clash Verge Rev（verge-mihomo v1.19.21，rule 模式，TUN 关闭，系统代理 127.0.0.1:7897）
+状态：已定位并修复，运行态 + 配置文件双写落地；insight 3 是 <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> 的<strong>跨项目二次验证</strong>（那篇标注「尚未跨项目二次验证」，本次补上）</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<h3 id="症状与首轮诊断">症状与首轮诊断</h3>
+<ul>
+<li>
+<p>用户主诉：<code>ping coursera.org</code> 通，浏览器看课程极卡。</p>
+</li>
+<li>
+<p>DNS 实测：<code>www.coursera.org</code> → <code>198.18.0.4</code>，<code>d3njjcbhbojbot.cloudfront.net</code>（视频 CDN）→ <code>198.18.0.6</code>，另三个域名同段。<code>dns_config.yaml</code> 确认 <code>enhanced-mode: fake-ip</code>、<code>fake-ip-range: 198.18.0.1/16</code>。</p>
+</li>
+<li>
+<p>原节点「🇯🇵 VIP1 日本01 - 三网直连【倍率2.0】」实测：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>目标</th><th>TLS 握手</th><th>首字节</th><th>吞吐</th></tr></thead><tbody><tr><td><code>www.coursera.org</code></td><td>6.36s</td><td>6.81s</td><td>60 KB/s（785KB 用了 13.0s）</td></tr><tr><td><code>api.coursera.org</code></td><td>6.80s</td><td>7.34s</td><td>—</td></tr><tr><td>视频 CDN</td><td>1.70s</td><td>2.38s</td><td>—</td></tr><tr><td>持续下行（20s 采样）</td><td>—</td><td>—</td><td>305 KB/s ≈ 2.4 Mbps</td></tr></tbody></table>
+</li>
+</ul>
+<h3 id="先排除的两个常见怀疑都不成立">先排除的两个常见怀疑（都不成立）</h3>
+<ul>
+<li><strong>不是流量超额限速</strong>：<code>profiles.yaml</code> 的 <code>extra</code> 记录 total 1.44 TB、已用 upload 547 MB + download 3.38 GB（约 3.9 GB），expire 换算为 2026-10-25。</li>
+<li><strong>不是规则配错</strong>：<code>/rules</code> 共 10540 条，<code>DomainSuffix cloudfront.net → 国外媒体</code>，而「国外媒体」组 <code>now = 国外默认</code>（跟随）；coursera.org 无专用规则，走末尾 <code>MATCH → 国外默认</code>。两条路径都汇到同一个组，改组即全覆盖，无需新增规则。</li>
+</ul>
+<h3 id="节点评测">节点评测</h3>
+<p>40 个节点，内置延迟测试 34 个可用。对延迟前 14 名逐个切换 + 实测带宽（<code>speed.cloudflare.com</code>，50 MB 上限、15 秒窗口）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>排名</th><th>带宽</th><th>延迟</th><th>节点</th></tr></thead><tbody><tr><td>1</td><td>133.33 Mbps</td><td>72ms</td><td>🇯🇵 日本03【1.0】</td></tr><tr><td>2</td><td>133.33 Mbps</td><td>92ms</td><td>🇸🇬 新加坡01【1.0】</td></tr><tr><td>3</td><td>100 Mbps</td><td>36ms</td><td>🇭🇰 香港03【1.0】</td></tr><tr><td>4</td><td>50 Mbps</td><td>126ms</td><td>🇮🇳 印度01【1.0】</td></tr><tr><td>5</td><td>40 Mbps</td><td>123ms</td><td>🇰🇷 韩国01【1.0】</td></tr><tr><td>…</td><td></td><td></td><td></td></tr><tr><td>13</td><td>5.07 Mbps</td><td>91ms</td><td>🇯🇵 日本10【0.5】</td></tr><tr><td><strong>14</strong></td><td><strong>2.72 Mbps</strong></td><td><strong>113ms</strong></td><td><strong>🇯🇵 日本01【2.0】← 原用节点</strong></td></tr></tbody></table>
+<p>对前 3 名用 Coursera 真实链路复测，香港03 全面最优（coursera.org TLS 0.203s、视频 CDN TLS 0.203s / TTFB 0.282s、api 0.843s）。定香港03。</p>
+<h3 id="修复前后">修复前后</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>日本01（原）</th><th>香港03（现）</th></tr></thead><tbody><tr><td>持续带宽</td><td>2.72 Mbps</td><td>100–133 Mbps</td></tr><tr><td>coursera.org TLS</td><td>6.36s</td><td>0.19–0.25s</td></tr><tr><td>视频 CDN TTFB</td><td>2.38s</td><td>0.27s</td></tr><tr><td>流量倍率</td><td>2.0</td><td>1.0</td></tr></tbody></table>
+<p>Coursera 720p 约需 3 Mbps —— 原节点 2.72 Mbps <strong>连 480p 都紧张</strong>，且播放器每取一个分片都要重新握手，每次干等 6 秒。</p>
+<h3 id="三个把我带偏的工具故障">三个把我带偏的工具故障</h3>
+<ol>
+<li><strong>测速全 0</strong>：首轮 14 个节点全部返回 0 Mbps，形似「所有节点都挂了」。实为探针请求 <code>bytes=209715200</code> 超出 Cloudflare 单请求上限，返回 <strong>403 + size=1</strong>。改回 50 MB 后立刻测出 17.5 MB/s。</li>
+<li><strong>切换静默失效</strong>：<code>bench.ps1</code> 里 <code>$GROUP = '国外默认'</code>，PowerShell 5.1 按 ANSI 读 UTF-8 无 BOM 的 .ps1，中文变成乱码，<code>Set-MihomoProxy</code> 切的是不存在的组。<strong>不报错</strong>，只是 <code>original node:</code> 打印为空。转成 UTF-8 with BOM 后正常。</li>
+<li><strong>chunked 解码越界</strong>：mihomo <code>/proxies</code> 走 chunked，chunk 长度是<strong>字节数</strong>，我在已 UTF-8 解码的字符串上按该长度 <code>Substring</code>，中文 1 字符 = 3 字节，直接抛 ArgumentOutOfRangeException。改成字节级去帧、最后统一解码。</li>
+</ol>
+<h3 id="落地">落地</h3>
+<ul>
+<li>运行态：<code>国外默认</code> → 香港03（经 mihomo API）。</li>
+<li>持久化：Clash Verge <strong>不会</strong>把外部 API 的改动写回磁盘，<code>profiles.yaml</code> 仍记着日本01，重启即回滚。手动改 line 47 并备份为 <code>profiles.yaml.bak-before-hk03</code>（保持原文件的无 BOM 编码）。</li>
+<li>残留风险：Verge 进程退出时有可能用内存状态覆盖该文件，已告知用户「若复发，UI 里手点一次香港03」。</li>
+</ul>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>ping 通证明不了链路可用——在 fake-ip 模式下它连出网都没发生；而选节点也不能看延迟，Clash 内置延迟测试只测握手，本次带宽垫底（2.72 Mbps）的那个节点，延迟排第 8、看起来完全正常。</strong></p>
+<h2 id="五条可复用-insight">五条可复用 insight</h2>
+<h3 id="1-fake-ip-模式下的-ping-是自问自答-️首次">1. fake-ip 模式下的 ping 是自问自答 ⚠️首次</h3>
+<p><code>enhanced-mode: fake-ip</code> 时，代理给每个域名发一个 <code>198.18.0.0/16</code> 段的<strong>本地虚拟地址</strong>，ICMP 由本机应答。所以：</p>
+<ul>
+<li>ping 任何域名都秒通、延迟接近 0；</li>
+<li>节点完全挂掉，ping 结果<strong>一模一样</strong>。</li>
+</ul>
+<p><strong>ping 通在这里不是「网络通」的证据，而是「代理接管了 DNS」的证据。</strong> 用户拿它当健康信号，恰恰因为它永远是绿的。</p>
+<p>判据：<strong>诊断信号必须打在真实链路上。</strong> 本次有效的信号是 <code>curl -w</code> 的 <code>time_appconnect</code>（TLS 握手，含代理 CONNECT 隧道 + 远端握手）和 <code>speed_download</code>。看到 <code>198.18.x.x</code> 就该知道 ping / tracert / nslookup 这一层全部失去意义。</p>
+<blockquote>
+<p>已有的 <a href="/above-the-web/chatgpt-windows-v1-8152abb/" class="wikilink">ChatGPT_Windows桌面版安装排障与账号合规边界_v1</a> 提过「fake-ip 会让 DNS 返回保留网段，这是内部映射不等于 DNS 泄露」——本篇是同一现象的另一面：它同时让<strong>所有基于 IP 的连通性测试失效</strong>。</p>
+</blockquote>
+<h3 id="2-延迟不等于带宽内置延迟测试选不出能看视频的节点-️首次">2. 延迟不等于带宽，内置延迟测试选不出能看视频的节点 ⚠️首次</h3>
+<p>Clash 的「延迟测试」测的是一次 <code>generate_204</code> 的握手往返，<strong>不测吞吐</strong>。本次两者几乎不相关：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>节点</th><th>延迟排名</th><th>带宽排名</th></tr></thead><tbody><tr><td>日本01</td><td>8 / 34</td><td><strong>14 / 14（垫底）</strong></td></tr><tr><td>日本10</td><td>5 / 34</td><td>13 / 14</td></tr><tr><td>印度01</td><td>10 / 34</td><td>4 / 14</td></tr><tr><td>香港03</td><td>1 / 34</td><td>3 / 14</td></tr></tbody></table>
+<p><strong>一个 113ms 的节点可以只有 2.72 Mbps。</strong> 如果按 Clash 面板的绿色数字选节点，日本01 排在中上游，永远不会被怀疑。</p>
+<p>判据：<strong>流媒体 / 大文件场景必须实测吞吐</strong>；延迟只用来做第一轮淘汰（筛掉超时的），不用来排序。</p>
+<h3 id="3-探针返回全-0时先怀疑探针--跨项目二次验证">3. 探针返回「全 0」时，先怀疑探针 ⭐ 跨项目二次验证</h3>
+<p>首轮 14 个节点全返回 0 Mbps。这个结果<strong>看起来是一个结论</strong>（「机场整个废了」），实际是探针自己坏了——请求 200 MB 被 Cloudflare 拒绝，403。</p>
+<p>这正是 <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> 那条律的第二次现形，且是<strong>跨项目</strong>的（上次是浏览器 UI 体检脚本，这次是网络测速脚本）：</p>
+<ul>
+<li>上次：自制判据里一个拍脑袋的箭头宽度常数，把 8 个正常元素判成缺陷；</li>
+<li>这次：探针参数超限，把 14 个正常节点判成全挂。</li>
+</ul>
+<p>两次的共同结构是：<strong>工具的输出形态很像事实</strong>（一张带数字的清单 / 一列整齐的 0），掩盖了「它根本没测成」。</p>
+<p>具体判据（本次新增的操作层）：<strong><code>0</code> 是一个危险的返回值，因为它同时可能表示「测到了，就是 0」和「压根没测」。</strong> 探针必须把区分二者的字段一起打出来——本次是 <code>%{http_code}</code> 和 <code>%{size_download}</code>：<code>code=403 size=1</code> 一眼就和 <code>code=200 size=52428800</code> 分开了。我是在把这两个字段加进 <code>-w</code> 之后，1 次调用就定位的。</p>
+<p>推论：<strong>任何返回「全部为 0 / 全部失败 / 全部相同」的批量结果，先跑一个已知good的样本自证，再信它。</strong> 全体一致的异常，通常是共因，而共因往往就在探针里。</p>
+<h3 id="4-运行态改了--配置落盘-️首次">4. 运行态改了 ≠ 配置落盘 ⚠️首次</h3>
+<p>通过 mihomo API <code>PUT /proxies/{group}</code> 切换节点，<strong>立即生效但不落盘</strong>。Clash Verge 把选择记在自己的 <code>profiles.yaml</code> 的 <code>selected</code> 字段里，外部改动它不知道，重启后按文件恢复。</p>
+<p>我是因为顺手核对了一遍 <code>profiles.yaml</code>，才发现它还写着日本01。<strong>如果只验证「现在快不快」，这次修复的寿命就是到下次重启为止</strong>——而用户不会把重启和变卡联系起来，只会觉得「上次修好了，又坏了」。</p>
+<p>判据：<strong>凡是「运行时状态」和「配置文件」两处都存着的设置，改完必须两处都看。</strong> 验证问句不是「现在生效了吗」，而是「重启后还在吗」。</p>
+<p>（同族：<a href="/above-the-web/v1-35e4706/" class="wikilink">赛事状态机到点不切换_写入方不等于推进方_v1</a> 的「有人写、有人显示，没人推进」——这里是「改了运行态、没人负责写回」。）</p>
+<h3 id="5-非-ascii-标识符遇上编码不匹配--静默走错分支-️首次">5. 非 ASCII 标识符遇上编码不匹配 = 静默走错分支 ⚠️首次</h3>
+<p>PowerShell 5.1 读 <code>.ps1</code> 默认按系统 ANSI 码页，而绝大多数工具写出的是 <strong>UTF-8 无 BOM</strong>。后果不是报错，是中文字符串静默变成乱码：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$GROUP </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> '国外默认'</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">          # 文件里是 UTF-8，PS 5.1 读成乱码</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">Set-MihomoProxy</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">Group $GROUP </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">Name $node   </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 切一个不存在的组，API 静默接受</span></span></code></pre>
+<p>于是脚本一路跑完，14 行结果整整齐齐，<strong>每一行都是错的</strong>。</p>
+<p>三条处置：</p>
+<ul>
+<li>写给 PS 5.1 执行的脚本，若含中文，必须存成 <strong>UTF-8 with BOM</strong>（<code>Out-File -Encoding utf8</code> 在 5.1 下带 BOM；<code>[IO.File]::WriteAllLines</code> 传 <code>UTF8Encoding($true)</code>）；</li>
+<li>或者<strong>让脚本本身保持纯 ASCII</strong>，中文数据从外部传入（本次候选节点名走 <code>Import-Csv -Encoding UTF8</code> 就没出问题）；</li>
+<li>命令行内联传参不受影响（走进程参数，是 UTF-8），所以「内联能跑、存成文件就错」是这个坑的典型表征。</li>
+</ul>
+<h2 id="顺手教训">顺手教训</h2>
+<ul>
+<li>
+<p><strong>Clash Verge Rev 默认不开 API 的 TCP 端口</strong>。<code>config.yaml</code> 写着 <code>external-controller: 127.0.0.1:9097</code>，但 <code>Get-NetTCPConnection</code> 显示进程只监听 <code>7897</code>；真正可用的是 <code>external-controller-pipe: \\.\pipe\verge-mihomo</code>。用 <code>NamedPipeClientStream</code> 手写 HTTP/1.1 即可打通（<code>/proxies</code> 列组、<code>PUT /proxies/{组名}</code> 切换、<code>/group/{组名}/delay</code> 批量测延迟、<code>/rules</code> 查路由）：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$pipe </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> New-Object</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> System.IO.Pipes.NamedPipeClientStream(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'.'</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'verge-mihomo'</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">,</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'InOut'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$pipe.Connect(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">5000</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$req </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "GET /proxies HTTP/1.1</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`r`n</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">Host: localhost</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`r`n</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">Authorization: Bearer &#x3C;secret></span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`r`n</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">Connection: close</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">`r`n`r`n</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$rb </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">Text.Encoding</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]::UTF8.GetBytes($req)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$pipe.Write($rb</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">,</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$rb.Length); $pipe.Flush()</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 读到流关闭 → 按 byte[] 切掉 header、按 byte[] 做 chunked 去帧 → 最后统一 UTF8.GetString</span></span></code></pre>
+<p>两个必须踩对的点：组名含中文要 <code>[uri]::EscapeDataString</code>；响应是 chunked，去帧必须在 <code>byte[]</code> 上做（见下条）。</p>
+</li>
+<li>
+<p><strong>HTTP chunked 的长度是字节数，不是字符数</strong>。凡是要按长度切分的解码，一律在 <code>byte[]</code> 上做完再统一 <code>UTF8.GetString</code>，不要在已解码的字符串上切——中文/emoji 一定越界。</p>
+</li>
+<li>
+<p><strong>先排除「便宜的怀疑」再做贵的测量</strong>。本次在跑 14 个节点的测速（约 700 MB 流量、4 分钟）之前，先花了两次只读调用排除了流量超额和规则错配。若跳过这步，测完发现是限速，全部白测。</p>
+</li>
+<li>
+<p><strong><code>curl -w</code> 的 <code>%{exitcode}</code> 在当前 curl 版本不存在</strong>，会打印 <code>unknown --write-out variable</code>。要判成败用 <code>%{http_code}</code> + <code>$LASTEXITCODE</code>。</p>
+</li>
+<li>
+<p><strong>测量方法的局限要写进结论</strong>：50 MB 上限对高速节点区分度不足（133 Mbps 意味着 3 秒下完就结束了），同一节点多次测量在 100–140 Mbps 间波动。所以「日本03 133 vs 香港03 100」这个差距<strong>不足以支撑排序</strong>，最终选香港03 靠的是 Coursera 真实链路复测，不是这张表。</p>
+</li>
+</ul>
+<h2 id="下次改进">下次改进</h2>
+<ul>
+<li>遇到「能 ping 通但慢」，第一步查 DNS 解析结果是不是 <code>198.18.x.x</code> / <code>28.0.0.x</code> 这类保留段，是则立刻放弃全部 ICMP 类判断。</li>
+<li>写批量测速 / 体检脚本时，<code>-w</code> 里默认带上能区分「失败」与「真值为 0」的字段（<code>http_code</code>、<code>size_download</code>），并先跑一个已知good样本。</li>
+<li>改代理类设置后，验证问句统一成「重启后还在吗」，而不是「现在生效了吗」。</li>
+<li>给 PS 5.1 的脚本：含中文存 BOM，或纯 ASCII + 外部传数据。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⭐ <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> —— 本篇 insight 3 是它的<strong>跨项目二次验证</strong>：那篇是 UI 体检脚本的自制判据把正常元素判成缺陷，本篇是网络测速探针的超限参数把正常节点判成全挂；本篇补上操作层判据「<code>0</code> 同时意味着『测到 0』和『没测成』，探针必须输出能区分二者的字段」</li>
+<li>⭐ <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— 本篇全程按它执行：「延迟低所以应该快」是未验证的方案，实测才发现延迟第 8 的节点带宽垫底</li>
+<li>⚠️ <a href="/above-the-web/v1-35e4706/" class="wikilink">赛事状态机到点不切换_写入方不等于推进方_v1</a> —— 同族「状态有人改、没人负责持久化」：那篇是没人在到点推进状态，本篇是没人把运行态写回配置文件</li>
+<li><a href="/above-the-web/chatgpt-windows-v1-8152abb/" class="wikilink">ChatGPT_Windows桌面版安装排障与账号合规边界_v1</a> —— 同目录、同一台机器的 Clash 环境；那篇讲 fake-ip 的保留网段不等于 DNS 泄露，本篇讲它同时让所有 ICMP 连通性测试失效</li>
+<li>⚠️ <a href="/above-the-web/openai-worker-do-v1-d6b8be3/" class="wikilink">OpenAI区域封锁与Worker就近执行陷阱_北美DO跳板_v1</a> —— 同族「出口链路决定一切」：那篇是调用方 IP 决定能否访问，本篇是出口节点带宽决定能否流畅</li>
+<li>⭐ <a href="/above-the-web/v1-6fdab0b/" class="wikilink">构建产物的脏改动不是事故_复发是归因错了的信号_v1</a> —— 次日同族案例，共同点是<strong>最方便取用的那个信号最不可信</strong>：本篇是 ping 永远绿（fake-ip 自问自答）导致误判链路健康，那篇是记忆里的归因永远在（“上次就是 Obsidian”）导致误判故障来源；那篇把这条纪律从”工具的输出”和”诊断的信号”扩到第三个信息源——<strong>你自己写下的历史结论</strong></li>
+<li><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 本篇顶部事实冻结区按它执行</li>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 平台工程区入口；本文归入「账号与访问」</li>
+<li>⚠️ <a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/" class="wikilink">2026-08-19_vpn-guard出口归属门槛与四处假绿修复_迭代复盘_v1</a> —— 直接续篇(2026-08-19):本篇立「别看延迟选节点」,那篇发现选点脚本里<strong>延迟项本身就是死代码</strong>(<code>delay</code> 存 hashtable 键、<code>Measure-Object</code> 只认 PSObject 属性,取不到极值就退化成常数,实际跑的是「带宽 80% + TLS 20%」而非文档写的 60/25/15),报错被 <code>SilentlyContinue</code> 吞掉;同篇另立「<code>hosting=false</code> 不等于住宅」与 ⭐ <a href="/above-the-web/vs-v1-a9977f1/" class="wikilink">信任资产保得住造不出_账号基线vs人群先验_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/网络排障</span><span class="tag">主题/代理链路</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/ping%E9%80%9A%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%B7%AF%E9%80%9A_fake-ip%E5%81%87%E4%BF%A1%E5%8F%B7%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B8%A6%E5%AE%BD%E5%AE%9E%E6%B5%8B%E9%80%89%E5%9E%8B_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/ping%E9%80%9A%E4%B8%8D%E7%AD%89%E4%BA%8E%E8%B7%AF%E9%80%9A_fake-ip%E5%81%87%E4%BF%A1%E5%8F%B7%E4%B8%8E%E8%8A%82%E7%82%B9%E5%B8%A6%E5%AE%BD%E5%AE%9E%E6%B5%8B%E9%80%89%E5%9E%8B_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/v1-83c88ab/">全站文字截断体检 · 检测工具本身要先被证伪</a></li><li><a href="/above-the-web/v1-c224595/">录屏假光标被打回：画出来的不算操作，与&quot;输入送达&quot;的四处假信号</a></li><li><a href="/above-the-web/v1-6fdab0b/">构建产物的脏改动不是事故 · 复发是归因错了的信号</a></li><li><a href="/above-the-web/v1-6601c25/">账号系统对标一线 · 多账号抽屉与外部通道的半开陷阱</a></li><li><a href="/above-the-web/v1-3fce0f1/">交付前实测证伪律</a></li><li><a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/">2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</a></li><li><a href="/above-the-web/2026-09-06-tun-agent-gui-v1-a8056b4/">2026-09-06 · TUN 开关状态漂移复发 · 三层真相源与 agent 起 GUI 边界 · 复盘</a></li><li><a href="/above-the-web/chatgpt-windows-v1-8152abb/">ChatGPT Windows 桌面版安装排障与账号合规边界</a></li><li><a href="/above-the-web/dns-fake-ip-dns-v1-90e0c85/">DNS 防泄露五层修复 · fake-ip 形同虚设与物理网卡 DNS 绕过</a></li><li><a href="/above-the-web/tun-codex-cli-v1-4cbeae3/">代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障</a></li><li><a href="/above-the-web/vs-v1-a9977f1/">信任资产保得住、造不出 · 账号基线 vs 人群先验</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/openai-worker-do-v1-d6b8be3/"> <span class="card-cat">平台工程</span> <h3>OpenAI 区域封锁与 Worker 就近执行陷阱 · 北美 DO 跳板</h3> <p>线上站读心&quot;全是片汤话&quot;——发布安全闸按设计剔除了 apiKey，前端落模板兜底。解法是在自有香港服务器挂同域中转代理（密钥服务器端注入）。…</p> </a><a class="card" href="/above-the-web/v1-35e4706/"> <span class="card-cat">平台工程</span> <h3>赛事状态机到点不切换 · 写入方不等于推进方</h3> <p>- 项目:PB Arena 官方赛事(报名中 → 进行中 → 出图 / 上传 / 投票 → 完赛)</p> </a><a class="card" href="/above-the-web/2026-09-17-vpn-guard-v1-06d9964/"> <span class="card-cat">平台工程</span> <h3>2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘</h3> <p>- 根目录下受 git 跟踪的文件从 30 个减到 20 个。主脚本、residential-asn.txt、webrtc-leak-tes…</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d3"><a href="#症状与首轮诊断" data-toc-link="症状与首轮诊断">症状与首轮诊断</a></li><li class="d3"><a href="#先排除的两个常见怀疑都不成立" data-toc-link="先排除的两个常见怀疑都不成立">先排除的两个常见怀疑（都不成立）</a></li><li class="d3"><a href="#节点评测" data-toc-link="节点评测">节点评测</a></li><li class="d3"><a href="#修复前后" data-toc-link="修复前后">修复前后</a></li><li class="d3"><a href="#三个把我带偏的工具故障" data-toc-link="三个把我带偏的工具故障">三个把我带偏的工具故障</a></li><li class="d3"><a href="#落地" data-toc-link="落地">落地</a></li><li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#五条可复用-insight" data-toc-link="五条可复用-insight">五条可复用 insight</a></li><li class="d3"><a href="#1-fake-ip-模式下的-ping-是自问自答-️首次" data-toc-link="1-fake-ip-模式下的-ping-是自问自答-️首次">1. fake-ip 模式下的 ping 是自问自答 ⚠️首次</a></li><li class="d3"><a href="#2-延迟不等于带宽内置延迟测试选不出能看视频的节点-️首次" data-toc-link="2-延迟不等于带宽内置延迟测试选不出能看视频的节点-️首次">2. 延迟不等于带宽，内置延迟测试选不出能看视频的节点 ⚠️首次</a></li><li class="d3"><a href="#3-探针返回全-0时先怀疑探针--跨项目二次验证" data-toc-link="3-探针返回全-0时先怀疑探针--跨项目二次验证">3. 探针返回「全 0」时，先怀疑探针 ⭐ 跨项目二次验证</a></li><li class="d3"><a href="#4-运行态改了--配置落盘-️首次" data-toc-link="4-运行态改了--配置落盘-️首次">4. 运行态改了 ≠ 配置落盘 ⚠️首次</a></li><li class="d3"><a href="#5-非-ascii-标识符遇上编码不匹配--静默走错分支-️首次" data-toc-link="5-非-ascii-标识符遇上编码不匹配--静默走错分支-️首次">5. 非 ASCII 标识符遇上编码不匹配 = 静默走错分支 ⚠️首次</a></li><li class="d2"><a href="#顺手教训" data-toc-link="顺手教训">顺手教训</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

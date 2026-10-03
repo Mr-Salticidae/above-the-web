@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MJ v8.2 行为档案 · 蛛网之上</title><meta name="description" content="v8.2 已于 2026-07-24 正式发布，调用从 --preview 转为 --v 8.2；写实人像质感较 v8.1 再上一档；异色瞳等&#34;具体色名直给&#34;类硬锁一句话即可稳定命中，配 sref 可跨批续接质感。但官方审美取向明确偏&#34;抢眼…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/mj-v8-2-v1-4cf28a0/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="MJ v8.2 行为档案"><meta property="og:description" content="v8.2 已于 2026-07-24 正式发布，调用从 --preview 转为 --v 8.2；写实人像质感较 v8.1 再上一档；异色瞳等&#34;具体色名直给&#34;类硬锁一句话即可稳定命中，配 sref 可跨批续接质感。但官方审美取向明确偏&#34;抢眼…"><meta property="og:url" content="https://tiaozhuxiansheng.com/mj-v8-2-v1-4cf28a0/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MJ v8.2 行为档案"><meta name="twitter:description" content="v8.2 已于 2026-07-24 正式发布，调用从 --preview 转为 --v 8.2；写实人像质感较 v8.1 再上一档；异色瞳等&#34;具体色名直给&#34;类硬锁一句话即可稳定命中，配 sref 可跨批续接质感。但官方审美取向明确偏&#34;抢眼…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-03T16:51:20+08:00"><meta property="article:modified_time" content="2026-09-26T08:50:48+08:00"><meta property="article:section" content="参数行为档案"><meta property="article:tag" content="类型/档案"><meta property="article:tag" content="工具/MJ"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/mj-v8-2-v1-4cf28a0/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/mj-v8-2-v1-4cf28a0/","url":"https://tiaozhuxiansheng.com/mj-v8-2-v1-4cf28a0/","headline":"MJ v8.2 行为档案","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"v8.2 已于 2026-07-24 正式发布，调用从 --preview 转为 --v 8.2；写实人像质感较 v8.1 再上一档；异色瞳等\"具体色名直给\"类硬锁一句话即可稳定命中，配 sref 可跨批续接质感。但官方审美取向明确偏\"抢眼…","datePublished":"2026-07-03T16:51:20+08:00","dateModified":"2026-09-26T08:50:48+08:00","articleSection":"参数行为档案","keywords":"类型/档案, 工具/MJ"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"参数行为档案","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88"},{"@type":"ListItem","position":3,"name":"MJ v8.2 行为档案","item":"https://tiaozhuxiansheng.com/mj-v8-2-v1-4cf28a0/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88" data-pagefind-meta="category" data-pagefind-filter="kind:note">参数行为档案</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-03T16:51:20+08:00">2026-07-03</time></span> <span>更新于 <time datetime="2026-09-26T08:50:48+08:00">2026-09-26</time></span> <span>约 14 分钟读完 · 5,241 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>25 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#调用方式-️2026-07-24-变更">调用方式 ⚠️2026-07-24 变更</a></li><li class="d2"><a href="#实测行为49-ep02--单项目样本">实测行为（49 EP02 · 单项目样本）</a></li><li class="d3"><a href="#1-写实质感-️首次">1. 写实质感 ⚠️首次</a></li><li class="d3"><a href="#2-异色瞳一句直给稳定命中-️首次66样本小">2. 异色瞳一句直给稳定命中 ⚠️首次（6/6，样本小）</a></li><li class="d3"><a href="#3-sref-跨批质感续接-️首次">3. sref 跨批质感续接 ⚠️首次</a></li><li class="d3"><a href="#4-非人像场景质感-️首次闪电战单样本--2026-07-16">4. 非人像场景质感 ⚠️首次（闪电战单样本 · 2026-07-16）</a></li><li class="d3"><a href="#5-未测项占坑">5. 未测项（占坑）</a></li><li class="d3"><a href="#6-要图标不要字--no-四词法-️首次闪电战单样本--2026-08-06">6. 要图标不要字：--no 四词法 ⚠️首次（闪电战单样本 · 2026-08-06）</a></li><li class="d3"><a href="#7-长骨架可以在无-sref-条件下锁住一致性-️首次单项目-4-张--2026-08-23">7. 长骨架可以在无 sref 条件下锁住一致性 ⚠️首次（单项目 4 张 · 2026-08-23）</a></li><li class="d3"><a href="#8-相对尺寸--位置词是弱信号-️首次同批--2026-08-23">8. 相对尺寸 / 位置词是弱信号 ⚠️首次（同批 · 2026-08-23）</a></li><li class="d3"><a href="#9-自然语言-no-与---no-参数分工不同-️首次二十八宿星官单样本--2026-08-24">9. 自然语言 no 与 --no 参数分工不同 ⚠️首次（二十八宿星官单样本 · 2026-08-24）</a></li><li class="d3"><a href="#10---profile-尾巴可把画种整体翻转明确媒介词--自然语言-no-都挡不住-️首次受控-77--2026-08-24">10. --profile 尾巴可把画种整体翻转，明确媒介词 + 自然语言 no 都挡不住 ⚠️首次（受控 7/7 · 2026-08-24）</a></li><li class="d2"><a href="#边界两码合挂未隔离翻转归-personalize-还是-moodboard-待单挂-ab--no-photorealism-参数形态未测本次是自然语言-no详见-2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1归类框架-moodboard主体位判据_假说_v1">边界：两码合挂未隔离（翻转归 personalize 还是 moodboard 待单挂 A/B）；--no photorealism 参数形态未测（本次是自然语言 no）。详见 2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1，归类框架 moodboard主体位判据_假说_v1。</a></li><li class="d3"><a href="#11-第-8-条的对策给画面内参照物首次正向验证-人像三张--2026-08-28">11. 第 8 条的对策「给画面内参照物」——首次正向验证 ✅（人像三张 · 2026-08-28）</a></li><li class="d3"><a href="#12---ar-只吃整数比小数点直接拒跑-️首次公众号封面配图--2026-08-31">12. --ar 只吃整数比，小数点直接拒跑 ⚠️首次（公众号封面配图 · 2026-08-31）</a></li><li class="d3"><a href="#13-四词法不是-100大面积纯色亮区是漏点另-mj-会随机给图套画框-️首次公众号配图-8-张--2026-08-31">13. 四词法不是 100%，大面积纯色亮区是漏点；另 MJ 会随机给图套画框 ⚠️首次（公众号配图 8 张 · 2026-08-31）</a></li><li class="d3"><a href="#14-第-10-条的同向样本cg-媒介词挡不住---profile-把人像拉成写实摄影隐形人台服装图会带出模特残留-️首次76_清月--2026-09-25">14. 第 10 条的同向样本：CG 媒介词挡不住 --profile 把人像拉成写实摄影；隐形人台服装图会带出模特残留 ⚠️首次（76_清月 · 2026-09-25）</a></li><li class="d2"><a href="#外部情报2026-07-24-正式发布非自测">外部情报（2026-07-24 正式发布，非自测）</a></li><li class="d3"><a href="#官方">官方</a></li><li class="d3"><a href="#三方假设待验证">三方（假设，待验证）</a></li><li class="d3"><a href="#由此推出的工作流变更">由此推出的工作流变更</a></li><li class="d2"><a href="#换用建议">换用建议</a></li><li class="d2"><a href="#版本">版本</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="mj-v82-行为档案">MJ v8.2 行为档案</h1>
+<blockquote>
+<p>入档：2026-07-03
+触发：49_凝视_写实重置 EP02 VESPER 开工，v8.2 首次实测（两批 11 张）
+关联：<a href="/above-the-web/mj-v8-1-oref-v1-5d5f854/" class="wikilink">MJ_v8.1_无oref_混合工作流_v1</a> / <a href="/above-the-web/v1-f9ea0de/" class="wikilink">新模型试跑_硬锁清单先行_v1</a> / <a href="/above-the-web/v1-6b0cabf/" class="wikilink">角色一致性金字塔_v1</a></p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>v8.2 已于 2026-07-24 正式发布，调用从 <code>--preview</code> 转为 <code>--v 8.2</code>；写实人像质感较 v8.1 再上一档；异色瞳等”具体色名直给”类硬锁一句话即可稳定命中，配 sref 可跨批续接质感。但官方审美取向明确偏”抢眼”，克制 / 冷调 / 近单色项目需反向压制。</strong></p>
+<hr>
+<h2 id="调用方式-️2026-07-24-变更">调用方式 ⚠️2026-07-24 变更</h2>
+<p><strong>正式发布后：prompt 末尾写 <code>--v 8.2</code>。<code>--preview</code> 是发布前的临时通道，已完成使命。</strong></p>
+<blockquote>
+<p>历史（2026-07-03 ~ 07-23 preview 期）：prompt 末尾加 <code>--preview</code> 路由到 v8.2 预览模型，实测搭配 <code>--ar 9:16 --raw --hd --preview</code>、<code>--ar 3:4 --preview --style raw</code>。本档案第 1–4 条实测行为均在此通道下取得，正式版复测前视为仍然成立。</p>
+</blockquote>
+<p>参数体系整体向后兼容：<code>--sref</code> / <code>--sw</code> / <code>--style raw</code>（<code>--raw</code>）/ <code>--no</code> / <code>--stylize</code> / <code>--chaos</code> / <code>--profile</code> 全部保留，<strong>prompt 库不需要重写</strong>。</p>
+<hr>
+<h2 id="实测行为49-ep02--单项目样本">实测行为（49 EP02 · 单项目样本）</h2>
+<h3 id="1-写实质感-️首次">1. 写实质感 ⚠️首次</h3>
+<p>老 prompt（半写实厚涂词系 <code>semi-realistic anime illustration style, painterly rendering</code>）直跑，出图质感即达”发丝级细节 + 真实皮肤过渡”，明显优于同 prompt 在旧版本的表现。<strong>质感提升不挑词系</strong>——连非写实词系都被拉高。</p>
+<h3 id="2-异色瞳一句直给稳定命中-️首次66样本小">2. 异色瞳一句直给稳定命中 ⚠️首次（6/6，样本小）</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>one cold ice-blue eye and one warm rose-pink eye</span></span></code></pre>
+<ul>
+<li>写法要点：<strong>左右 + 冷暖 + 具体色名</strong>，不写抽象单词 heterochromia</li>
+<li>单批 6/6 全中，预备的 <code>--no matching eye color, symmetrical eyes</code> 双保险未动用</li>
+<li>边界：双眼均清晰可见的近景构图下验证；侧脸 / 遮挡构图未测</li>
+<li>旧版本经验（异色瞳老大难、需负面词双保险 + 局部重绘兜底）在 v8.2 上<strong>疑似过时</strong>，待跨项目再验</li>
+</ul>
+<h3 id="3-sref-跨批质感续接-️首次">3. sref 跨批质感续接 ⚠️首次</h3>
+<p>改 prompt 变量（本次改瞳色短语）时 sref 上一批成品图，新批与旧批<strong>视觉无断裂</strong>——“修 bug 不丢手感”。分工理解：sref 管质感氛围，不管脸的一致性（锁脸仍走 <a href="/above-the-web/v1-6b0cabf/" class="wikilink">角色一致性金字塔_v1</a> 的描述锚定 / oref 路线）。</p>
+<h3 id="4-非人像场景质感-️首次闪电战单样本--2026-07-16">4. 非人像场景质感 ⚠️首次（闪电战单样本 · 2026-07-16）</h3>
+<p>「同根同源」闪电战《七步诗 · 空屋火影》：古代灶间写实场景（土墙颗粒 / 火光层次 / 蒸汽体积感 / 硬光影子）一版立住，写实底座直接撑起影子叙事的可信度。参数组合 <code>--ar 3:4 --preview --style raw</code> 可用（与本档案人像侧的 <code>--raw --hd</code> 并存，未见冲突）。影子形态指令 <code>shadows clearly shaped as ...</code> 命中但形态偏离（two little brothers → 一大一小身影），属「偏离即升级」。详见 <a href="/above-the-web/2026-07-16-v1-624b067/" class="wikilink">2026-07-16_同根同源_七步诗空屋火影高票复盘_v1</a>。</p>
+<h3 id="5-未测项占坑">5. 未测项（占坑）</h3>
+<ul>
+<li>v8.2 是否支持 oref / cref（v8.1 不支持，见 <a href="/above-the-web/mj-v8-1-oref-v1-5d5f854/" class="wikilink">MJ_v8.1_无oref_混合工作流_v1</a>）</li>
+<li><code>--stylize</code> 响应曲线（正式版下重开，44_异常值 已挂测试，见下）</li>
+<li>静物 / 特写题材的质感增益（场景已开测，见第 4 条）</li>
+<li>正式版 <code>--v 8.2</code> 与 preview 通道产出是否等价（本档案第 1–4 条需复测）</li>
+</ul>
+<h3 id="6-要图标不要字--no-四词法-️首次闪电战单样本--2026-08-06">6. 要图标不要字：<code>--no</code> 四词法 ⚠️首次（闪电战单样本 · 2026-08-06）</h3>
+<p>PB 闪电战「时间贫困」回转寿司图。需求矛盾：盘沿贴纸上要出现<strong>抽象几何图标</strong>，同时全画面零文字（日料店的招牌与菜单是高危背景）。</p>
+<p><strong>有效写法</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>--no text, letters, words, numerals</span></span></code></pre>
+<ul>
+<li>⚠️ <strong><code>logo</code> 绝不能进 <code>--no</code></strong>——会把要保留的图标贴纸一起压掉。挡字形靠 <code>text / letters / words / numerals</code> 四个词就够</li>
+<li>真品牌 logo 不点名就不会自己长出来，不需要负面词防守</li>
+<li>正向侧配合：<code>a different small round printed sticker showing a simple flat abstract geometric app-icon mark, flat solid colours, no letters no words</code> + <strong>列举 4–6 个具体形状</strong>（spiral / hexagon / triangle / sail / circle with a dot / asterisk）</li>
+</ul>
+<p><strong>结果</strong>：全图零字形崩坏（含背景菜单区）；传送带盘沿的图标造型干净、彼此不重复，<code>every icon different from the last</code> 命中。</p>
+<p><strong>结论</strong>：<strong>抽象几何图标是替代真品牌 logo 的可行路径</strong>——MJ 画不出可识别的真 logo，只会给融化的伪字形，在同行互投场上是最扣分的元素（一眼「AI 做的」+ 白送破解感）。</p>
+<p><strong>边界</strong>：写 <code>each plate rim carrying...</code>（“所有盘子”）时，MJ 只在<strong>未被遮挡的盘子</strong>上执行——堆叠盘的盘沿被遮，图标全落到了传送带上。<strong>图标位置不可控</strong>，要靠构图主动把带图标的物件放进视觉重心，否则唯一承载语义的元素会待在没人看的角落。同案复盘见 <a href="/above-the-web/v1-03d3c60/" class="wikilink">载体默认语义反噬_v1</a>。</p>
+<hr>
+<h3 id="7-长骨架可以在无-sref-条件下锁住一致性-️首次单项目-4-张--2026-08-23">7. 长骨架可以在无 sref 条件下锁住一致性 ⚠️首次（单项目 4 张 · 2026-08-23）</h3>
+<p>PB 主持控场卡四张底图。<strong>完全没挂 <code>--sref</code></strong>，四条 prompt 只共用同一句 103 词骨架、各换一句变量从句；<strong>四张各跑一个 job，零重跑零丢弃</strong>，prompt 原样粘贴。</p>
+<p>结果：<strong>装置锁住了，景观没锁住</strong>，而且和篇幅正相关——</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>骨架成分</th><th>词数</th><th>四张实测跨度</th></tr></thead><tbody><tr><td>装置（弧面 CRT + 底部控制台条）</td><td>53（占骨架 51%）</td><td>控制台顶边 <strong>10 个点</strong>（83.0–93.0%）</td></tr><tr><td>地平线</td><td>10（占 10%）</td><td>地平线 <strong>26 个点</strong>（53.0–78.9%）</td></tr></tbody></table>
+<p><strong>结论</strong>：第 3 条说的”sref 管质感氛围续接”仍然成立，但<strong>不等于一致性只能靠 sref</strong>。当骨架里”要锁的那个东西”写到材质+形状+部件+排布四层，同一句骨架本身就是锚。细化沉淀见 <a href="/above-the-web/v1-85d6168/" class="wikilink">骨架篇幅即权重_v1</a>。</p>
+<p><strong>边界（重要）</strong>：</p>
+<ul>
+<li>本次<strong>没做 A/B</strong>（没跑挂 sref 的对照组），只能说明”不挂也成立过一次”，<strong>不能说明 sref 无用</strong></li>
+<li><strong>personalization（<code>--p</code>）开关未确认</strong>，是最大的未控变量</li>
+<li>题材限定”同一装置的四种状态”；<strong>人物锁脸不适用</strong>，仍走 <a href="/above-the-web/v1-6b0cabf/" class="wikilink">角色一致性金字塔_v1</a></li>
+</ul>
+<h3 id="8-相对尺寸--位置词是弱信号-️首次同批--2026-08-23">8. 相对尺寸 / 位置词是弱信号 ⚠️首次（同批 · 2026-08-23）</h3>
+<p>同一批图里，<code>very narrow horizontal strip</code> 意图是 ≤7%，<strong>四张全出到 ~17%，且偏差方向完全一致</strong>——不是随机漂移，是 MJ 对 “narrow” 有自己稳定的理解。同句 prompt 里的 <code>across the lower third</code> 也没守住，一张跑到了 53%（画面正中）。</p>
+<p><code>narrow / thin / small / low / lower third</code> 这类<strong>相对尺寸与位置词，MJ 不按人心里的比例执行</strong>。属 <a href="/above-the-web/mj-v1-8cae35c/" class="wikilink">MJ关键属性三重锁定律_v1</a> 的跨项目新样本，把该律从”年龄 / 衣着 / 新旧”扩到了”尺寸 / 位置”。</p>
+<p><strong>修法</strong>：要么给画面内参照物（<code>no taller than one knob</code>），要么——本案的选择——<strong>出图后量，让下游排版适配，不为尺寸重 roll</strong>。</p>
+<hr>
+<h3 id="9-自然语言-no-与---no-参数分工不同-️首次二十八宿星官单样本--2026-08-24">9. 自然语言 <code>no</code> 与 <code>--no</code> 参数分工不同 ⚠️首次（二十八宿星官单样本 · 2026-08-24）</h3>
+<p>一条 prompt 末尾用<strong>自然语言</strong> <code>no phoenix, no red, no orange, no warm colors, no Western features, no photorealism, no 3D, no anime</code>（<strong>不是</strong> <code>--no</code> 参数），同一张出图里：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>自然语言 no</th><th>结果</th></tr></thead><tbody><tr><td><code>no phoenix</code></td><td>✅ <strong>命中</strong> —— 出的是鸡不是凤，尽管尾羽极凤</td></tr><tr><td><code>no red, no orange, no warm colors</code></td><td>❌ <strong>失守</strong> —— 唇是明确的橙红</td></tr></tbody></table>
+<p><strong>结论</strong>：自然语言 <code>no</code> 对<strong>物种 / 物件</strong>这类可离散命名的实体有效（MJ 读成”画鸡不画凤”的选择题），对<strong>颜色</strong>这类连续属性无效。颜色要压必须走 <code>--no</code> 参数，或用正向色卡挤占。</p>
+<p>⚠️ <strong>但这次失守是资产</strong>：那点橙红是全图唯一暖色，落在视觉焦点上，撑起整张冷调图的体温。用 <code>--no red, orange</code> 硬压掉画面会变平。见 <a href="/above-the-web/v1-ceeb9f4/" class="wikilink">默认落点的资产负债判断_v1</a>。</p>
+<p><strong>同批附带的构图结论</strong>：<strong>黑底是「辉光 / 神性」题材的总开关</strong>。白底 ＋ 平涂 ＋ <code>soft divine glow</code> 是三个互斥诉求（辉光在白底必糊、平涂拒绝渐变、神性要靠辉光），换黑底三者同时和解，背景不确定性也归零（强于任何 <code>--no busy background</code>）。</p>
+<p>⚠️ <strong>由此纠正一处易犯的连锁误判</strong>：本档「克制 / 冷调 / 近单色 / 大留白项目要反压 <code>--stylize</code>」是按<strong>画面取向</strong>判的，<strong>不是按背景颜色判的</strong>。黑底 ＋ 强辉光属于 v8.2 的<strong>顺风区</strong>（bold / 强对比），默认 <code>--stylize 100</code>、不加 <code>--style raw</code> 即可；把”白底”读成”克制”会把参数调反。</p>
+<p>来源：<a href="/above-the-web/2026-08-24-v1-2feed20/" class="wikilink">2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1</a></p>
+<hr>
+<h3 id="10---profile-尾巴可把画种整体翻转明确媒介词--自然语言-no-都挡不住-️首次受控-77--2026-08-24">10. <code>--profile</code> 尾巴可把画种整体翻转，明确媒介词 + 自然语言 no 都挡不住 ⚠️首次（受控 7/7 · 2026-08-24）</h3>
+<p>二十八宿星官 A/B：昴日鸡 prompt 逐字相同、seed 42/43 配对、都带 <code>--hd --v 8.2</code>，唯一变量 <code>--profile qwksp9b dsdxtdr</code>（personalize ＋ 美女写真 moodboard 合挂）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>组</th><th>画种</th></tr></thead><tbody><tr><td>无 profile（8 张）</td><td>中式插画 8/8 —— 与 prompt 一致</td></tr><tr><td>挂 profile（7 张）</td><td><strong>写实摄影 7/7</strong></td></tr></tbody></table>
+<p>prompt 里防守画种的全部手段——正向 <code>Chinese hand painted flat illustration, gongbi inspired fine linework, mineral pigment palette</code> ＋ 自然语言 <code>no photorealism, no 3D</code>——<strong>全数失守</strong>。同批红色像素约 7 倍（红鸡冠 / 正红唇出现），<code>no red, no orange, no warm colors</code> 被击穿得更彻底；黑底 / 主体 / 构图守住。</p>
+<p><strong>结论</strong>：profile 尾巴的拉力在<strong>媒介层</strong>强于 prompt 正文。非摄影题材（插画 / 平面 / 图解）挂写真系 profile 尾巴 = 画种直接被拖走，<strong>先摘尾巴再调词</strong>。</p>
+<h2 id="边界两码合挂未隔离翻转归-personalize-还是-moodboard-待单挂-ab--no-photorealism-参数形态未测本次是自然语言-no详见-2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1归类框架-moodboard主体位判据_假说_v1"><strong>边界</strong>：两码合挂未隔离（翻转归 personalize 还是 moodboard 待单挂 A/B）；<code>--no photorealism</code> 参数形态未测（本次是自然语言 no）。详见 <a href="/above-the-web/2026-08-24-v1-2feed20/" class="wikilink">2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1</a>，归类框架 <a href="/above-the-web/moodboard-v1-e606d3e/" class="wikilink">moodboard主体位判据_假说_v1</a>。</h2>
+<h3 id="11-第-8-条的对策给画面内参照物首次正向验证-人像三张--2026-08-28">11. 第 8 条的对策「给画面内参照物」——首次正向验证 ✅（人像三张 · 2026-08-28）</h3>
+<p>第 8 条实测相对尺寸 / 位置词是弱信号（<code>across the lower third</code> 一张跑到 53%），
+给的修法是「<strong>给画面内参照物</strong>」。本次首次正面验证：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>❌ she occupies the right third of the frame</span></span>
+<span class="line"><span>✅ she is entirely to the right of the window and does not overlap it</span></span></code></pre>
+<p><strong>三张成图全部命中</strong>，人都完整落在窗右侧、无一张与窗重叠。参照物是画面里另一个被画出来的实体（窗），
+不是抽象方位。→ 该修法从”建议”升为<strong>有正向样本</strong>。</p>
+<p><strong>同批另外三条</strong>：</p>
+<ul>
+<li>❌ <strong>空间关系句被场景几何否决</strong>。写死了四层的「光栅横切她的脸和身体」三张全部只落在墙上——
+因为同一条 prompt 里的站位句已经把人放在了光路侧面，<strong>两句话抢同一个几何，几何赢</strong>。
+单独立条见 <a href="/above-the-web/v1-570ac7a/" class="wikilink">空间关系归几何不归形容词_v1</a>（修法侧未验证）</li>
+<li>🎁 <strong>建筑构件术语有稳定的默认落点</strong>：<code>a tall old wooden window with horizontal muntin bars</code>（直棂）
+<strong>三张全部出成 louvered shutter（百叶窗）</strong>，一致，不是随机。且百叶的斜向密集光栅比原设计的横条
+层数更多、更有纵深 → 判为<strong>资产</strong>，改写成 <code>louvered shutter</code> 锁死。
+同批 <code>practice leotard</code> → 高开叉连体衣（芭蕾身份丢失）则是<strong>负债</strong>。
+推论：<strong>写建筑 / 服装构件时先跑一张看它理解成什么，再定用哪个词，别假设术语准确。</strong>
+资产负债判法见 <a href="/above-the-web/v1-ceeb9f4/" class="wikilink">默认落点的资产负债判断_v1</a></li>
+<li>✅ <strong>装扮签名跨姿势跨景别 3/3</strong>：<code>long straight jet-black hair, centre-parted, blunt-cut ends falling below the chest, worn loose</code> 在三条不同 prompt、三种姿势、三种景别下四个限定全中，
+给 <a href="/above-the-web/vs-v1-aad8c40/" class="wikilink">装扮签名vs五官精度_v1</a> 补样本</li>
+</ul>
+<p>来源：<a href="/above-the-web/2026-08-28-v1-15a7af6/" class="wikilink">2026-08-28_试身_多风格人像_首轮收口复盘_v1</a></p>
+<hr>
+<h3 id="12---ar-只吃整数比小数点直接拒跑-️首次公众号封面配图--2026-08-31">12. <code>--ar</code> 只吃整数比，小数点直接拒跑 ⚠️首次（公众号封面配图 · 2026-08-31）</h3>
+<p><code>--ar 2.35:1</code> 会被拒绝并报：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Aspect ratio should be of the format width:height</span></span></code></pre>
+<p><strong>不是比例不被支持，是写法不被解析</strong>——MJ 的 <code>--ar</code> 只接受整数对，任何带小数点的写法都过不了参数校验。改成等价整数即可：<code>--ar 235:100</code>（或约分的 <code>--ar 47:20</code>），出图尺寸完全相同。</p>
+<p>踩点场景是<strong>公众号首图</strong>（标准比例正是 2.35:1），同类高危的还有一切用”几点几比一”表述的电影画幅（1.85:1 → <code>--ar 185:100</code>、2.39:1 → <code>--ar 239:100</code>）。日常常用的 16:9 / 3:4 / 9:16 / 1:1 本来就是整数，所以这个坑只在做<strong>非标准画幅封面</strong>时才现形，平时跑图碰不到。</p>
+<p><strong>判据：凡是脑子里以「X.XX 比 1」形式记住的比例，写进 prompt 前先乘 100 化成整数对。</strong></p>
+<p>来源：<code>08_对外分发/GPT和Codex一直转圈连不上_公众号配图MJ提示词.md</code></p>
+<hr>
+<h3 id="13-四词法不是-100大面积纯色亮区是漏点另-mj-会随机给图套画框-️首次公众号配图-8-张--2026-08-31">13. 四词法不是 100%，大面积纯色亮区是漏点；另 MJ 会随机给图套画框 ⚠️首次（公众号配图 8 张 · 2026-08-31）</h3>
+<p>同一批八张图，两个与交付直接相关的发现。</p>
+<p><strong>四词法的漏点在大面积纯色亮区。</strong> 挂了第 6 条的 <code>--no text, letters, words, numerals</code>，八张里七张零字形，唯一漏网的那张，伪字形漏在<strong>整块纯白屏幕</strong>上——而其余七张都没有这么大的无内容亮区。推测：大面积纯色会诱发它「填点什么」。</p>
+<p><strong>对策不是继续加负面词，是准备后期抹除。</strong> 底是纯色时 <code>ffmpeg</code> 的 <code>delogo</code> 插值一次就干净、无接缝：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ffmpeg -i in.png -vf "delogo=x=575:y=1130:w=900:h=85" out.png</span></span></code></pre>
+<p>判据：<strong>凡 prompt 里出现「大片白屏 / 纯色墙 / 空白招牌」这类无内容亮区，就默认它可能长字，交付前放大看一眼那块区域。</strong></p>
+<p><strong>MJ 会随机给图套画框。</strong> 同批八张里有一张自带厚 132–134px 的均匀浅色外框（四边等宽），像被裱进相框，其余七张都没有。同一段骨架、同一组参数，属随机行为。带白边的图放进公众号 / 小红书正文会像截图，<strong>交付前逐张看四边，裁掉即可</strong>——用 <code>crop</code> 精确切：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>ffmpeg -i in.png -vf "crop=2680:1380:132:134" out.png</span></span></code></pre>
+<p><strong>第 8 条（相对 / 位置词是弱信号）本批第三次现形，且是新形态：「一个例外」也是弱信号。</strong> prompt 写「一排灯<strong>全部</strong>亮着同一种冷白，只有队尾<strong>一盏</strong>是暗的」，出图是<strong>亮暗交替</strong>约各占一半——MJ 把「有一盏是暗的」泛化成了「有些是暗的」，整齐性随之丢失，语义直接反了（要的是「全都看起来没问题」，出来的是「部分故障」）。</p>
+<p>修法与第 8 条同源但方向相反：那条的对策是「给参照物」，这条的对策是<strong>把例外整个删掉</strong>，让全称描述独占画面，另找元素承载那个例外要表达的信息。</p>
+<p>来源：<code>{aigc-creative-archive}/70_GPT转圈公众号配图/</code> · 提示词与修订见 <code>08_对外分发/GPT和Codex一直转圈连不上_公众号配图MJ提示词.md</code></p>
+<hr>
+<h3 id="14-第-10-条的同向样本cg-媒介词挡不住---profile-把人像拉成写实摄影隐形人台服装图会带出模特残留-️首次76_清月--2026-09-25">14. 第 10 条的同向样本：CG 媒介词挡不住 <code>--profile</code> 把人像拉成写实摄影；隐形人台服装图会带出模特残留 ⚠️首次（76_清月 · 2026-09-25）</h3>
+<p>两件事，都来自同一项目的四张资产图（全部挂 <code>--profile idsugkv ppbo4tu</code>、无 sref、<code>--hd --v 8.2</code>）。</p>
+<p><strong>① 画种被拉向写实摄影（无对照）。</strong> 身份图 A01 的 prompt 开头就是 <code>Premium Chinese 3D animated xianxia film still, high end CG render</code>，中段写了 <code>high crossed collar and gold filigree pauldrons visible</code>。出图：</p>
+<ul>
+<li>画种偏<strong>写实摄影</strong>（接近 BJD / 写真质感），不是 CG；</li>
+<li><strong>露肩、没有高领、没有袍</strong>——服装句整句没执行；</li>
+<li>银发、右眼下泪滴印、镂空冠 + 眉心珍珠这些面部与装扮签名都在。</li>
+</ul>
+<p>与第 10 条方向一致（profile 尾巴的拉力在媒介层强于正文）。但<strong>这次没有去掉 profile 的对照组</strong>，服装丢失也可能是 <code>chest up</code> 近景构图本身的取舍，所以只算同向样本、不算二次验证。
+后续处理见 <a href="/above-the-web/seedance2-5-v1-14bc5c5/" class="wikilink">Seedance2_5_行为规律_v1</a> 第四节：进视频时裁到只剩头部，视频成片是 CG 质感，照片感没带进去（结尾一个与 A01 同景别的近景除外）。</p>
+<p><strong>② 隐形人台（ghost mannequin）写法：无头无脸成立，但带出模特残留。</strong> 服装资产 A04：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>costume design asset, an ornate xianxia robe displayed on an invisible ghost mannequin with no head and no visible body, front view, the full costume visible from collar to hem, ...</span></span>
+<span class="line"><span>--no text, letters, words, numerals, people, face, head</span></span></code></pre>
+<ul>
+<li>✅ 无人、无脸、无头；高立领、镂空肩甲完全盖住双肩、过膝广袖、身后长飘带全中。</li>
+<li>❌ 领口到腰垂着几缕<strong>黑色长发</strong>；袖口旁露出一只<strong>苍白人台手</strong>。</li>
+<li>推测：<code>ghost mannequin</code> 仍会先画一个”人”再擦掉头脸，擦得不彻底。备好的补跑是 <code>--no</code> 加 <code>hair, hands</code>，<strong>未跑</strong>（作者裁定服装不进视频）。</li>
+<li>为什么这点要紧：服装图要挂进视频模型当参考，而参考图里的黑发会被照搬（Seedance 2.5 档第四节 ⭐⭐⭐）。</li>
+</ul>
+<p>来源：<a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/" class="wikilink">2026-09-26_清月_单条15秒角色PV_立项到三平台发布_复盘_v1</a></p>
+<hr>
+<h2 id="外部情报2026-07-24-正式发布非自测">外部情报（2026-07-24 正式发布，非自测）</h2>
+<blockquote>
+<p>来源分级：<strong>官方</strong>＝Midjourney 发布公告 / release notes；<strong>三方</strong>＝社区实测文章，仅作假设，未经本仓库验证。</p>
+</blockquote>
+<h3 id="官方">官方</h3>
+<ul>
+<li><strong>7/24 发布 v8.2</strong>，主打 aesthetics / image quality / personalization。原话：图会更 “creative, bold, sophisticated, edgy and fresh”，随机低质量图的概率大幅降低。</li>
+<li><strong>6/25 Draft Mode 支持 <code>--sref random</code></strong> ⚠️重要：一次出 <strong>24 张、每张一个不同的随机 sref 码</strong>，512×512，整批约 0.4 GPU 分钟。官方口径”style space 探索快 24 倍”。</li>
+<li>6/11 v8.1 转正为默认（替代 v7）；Draft Mode 于 6/16 随 v8.1 上线。</li>
+<li>官方公告<strong>未列任何参数变更</strong>。</li>
+</ul>
+<h3 id="三方假设待验证">三方（假设，待验证）</h3>
+<ul>
+<li>v8.2 比 8.1 更愿意留下<strong>强对比、非对称构图、粗粝质感</strong>。</li>
+<li><code>--style raw</code> 重要性上升——是对抗 v8.2 更强风格化的主要手段。</li>
+<li><code>--stylize</code> 需整体下调重新标定；<code>--sw</code> 可较 8.1 下调（style 匹配更准）；<code>--chaos</code> 较 8.1 低 10–20。</li>
+</ul>
+<h3 id="由此推出的工作流变更">由此推出的工作流变更</h3>
+<p><strong>1. 找锚流程改写</strong>（影响所有”先找 sref 锚再全片复用”的项目）</p>
+<p>旧：<code>--sref random</code> 跑 4–6 次，人工挑。
+新：<strong>一次 <code>--draft --sref random</code> 出 24 张</strong>，从中挑锚 → 记码 → 去掉 <code>--draft</code> 全质量复跑确认。样本量翻四倍，成本降一个数量级。</p>
+<p>边界：draft 是 512×512 低质量，<strong>只能判色调 / 构图 / 氛围，判不了细颗粒度问题</strong>（如”一点红 vs 满屏泛红”这类颜色纪律）。这类验证必须全质量跑。</p>
+<p><strong>2. 克制型项目需反向压制</strong> ⚠️</p>
+<p>v8.2 的”bold / edgy / 强对比”取向，对<strong>克制、冷调、近单色、大留白</strong>的项目是<strong>逆风</strong>——模型默认往”更抢眼”推，正好是这类项目要躲的方向。这类项目升 8.2 不能只改版本号，要同时：<code>--style raw</code> 保留、<code>--stylize</code> 主动压到默认（100）以下、<code>--sw</code> 下调。</p>
+<p>首个实践：44_异常值 风格基底（系统档案影像 / 近单色 / 红色严格配给），尾参定为 <code>--v 8.2 --style raw --stylize 50</code>、<code>--sw 150</code>。<code>--stylize 50 vs 100</code> 的对比结论回填本档案第 5 条。</p>
+<hr>
+<h2 id="换用建议">换用建议</h2>
+<ul>
+<li>写实人像项目：<strong>直接上 v8.2</strong>，老 prompt 可直跑试水，但入库前必须过角色卡硬锁清单（踩坑见 <a href="/above-the-web/v1-f9ea0de/" class="wikilink">新模型试跑_硬锁清单先行_v1</a>）</li>
+<li>需要锁脸的多镜头项目：v8.2 质感镜头 + 锁脸镜头分工的混合策略，沿用 v8.1 档案的 A/B/C 分类法</li>
+<li><strong>克制 / 冷调 / 近单色项目</strong>：升 8.2 要连带压 <code>--stylize</code>，不能只改版本号（见「外部情报 → 工作流变更 2」）</li>
+<li><strong>任何要锁 sref 锚的新项目</strong>：找锚一律先走 <code>--draft --sref random</code> 大批次，别再手动跑多轮</li>
+</ul>
+<hr>
+<h2 id="版本">版本</h2>
+<ul>
+<li>v1 - 2026-07-03 - 首测入档（49 EP02 VESPER，11 张两批）</li>
+<li>v1.1 - 2026-07-17 - 补非人像场景首测（同根同源闪电战，<code>--preview --style raw</code> 组合确认可用）</li>
+<li><strong>v1.3 - 2026-08-06 - 新增第 6 条</strong>：要图标不要字的 <code>--no</code> 四词法（<code>text/letters/words/numerals</code>，且 <code>logo</code> 不可入 <code>--no</code>），抽象几何图标替代真品牌 logo 的路径已验证；边界：图标落点不可控，只在未被遮挡的物件上执行。来源 PB 闪电战「时间贫困」，同案方法论见 <a href="/above-the-web/v1-03d3c60/" class="wikilink">载体默认语义反噬_v1</a></li>
+<li><strong>v1.2 - 2026-07-31 - 正式发布后补录</strong>：调用方式 <code>--preview</code> → <code>--v 8.2</code>；新增「外部情报」段（官方 7/24 发布口径、Draft Mode <code>--sref random</code> 24 张找锚、三方参数标定假设）；推出两条工作流变更（找锚改走 draft 大批次、克制型项目反向压 stylize）</li>
+<li><strong>v1.4 - 2026-08-23 - 新增第 7、8 条</strong>：长骨架在无 sref 条件下锁住装置一致性（篇幅与稳定度正相关，53 词→跨度 10 点 vs 10 词→跨度 26 点）；相对尺寸/位置词是弱信号（<code>very narrow</code> 四张全偏到 17%）。来源 PB 主持控场卡，母档 <a href="/above-the-web/2026-08-23-pb-v1-ad18e96/" class="wikilink">2026-08-23_PB控场卡_骨架篇幅锁装置复盘_v1</a>，方法论 <a href="/above-the-web/v1-85d6168/" class="wikilink">骨架篇幅即权重_v1</a></li>
+<li><strong>v1.5 - 2026-08-24 - 新增第 9 条</strong>：自然语言 <code>no</code> 挡得住物种、挡不住颜色（同图对照：<code>no phoenix</code> ✅ / <code>no red</code> ❌，且这次失守是资产）；黑底是辉光题材的总开关；纠正「按背景颜色判克制型」的连锁误判——反压 <code>--stylize</code> 要看画面取向不看底色。来源 <a href="/above-the-web/2026-08-24-v1-2feed20/" class="wikilink">2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1</a></li>
+<li><strong>v1.6 - 2026-08-24 晚间 - 新增第 10 条</strong>：<code>--profile</code> 尾巴（personalize＋写真 moodboard 合挂）把画种从插画整体翻转成摄影（受控 A/B 7/7），明确媒介词＋自然语言 no 全挡不住；非摄影题材先摘尾巴再调词。来源同第 9 条复盘</li>
+<li><strong>v1.7 - 2026-08-28 - 新增第 11 条</strong>：第 8 条的修法「给画面内参照物」<strong>首次正向验证</strong>（<code>she is entirely to the right of the window and does not overlap it</code> 三张全中）；同批三条附带——空间关系句被场景几何否决（光栅横切人身三张全废，立 <a href="/above-the-web/v1-570ac7a/" class="wikilink">空间关系归几何不归形容词_v1</a>）、建筑/服装构件术语有稳定默认落点（<code>muntin bars</code> → 百叶窗，判为资产并锁死；<code>practice leotard</code> → 高开叉连体衣，判为负债）、装扮签名跨姿势跨景别 3/3。来源 <a href="/above-the-web/2026-08-28-v1-15a7af6/" class="wikilink">2026-08-28_试身_多风格人像_首轮收口复盘_v1</a></li>
+<li><strong>v1.8 - 2026-09-26 - 新增第 14 条</strong>：<code>--profile</code> 尾巴把写明 CG 媒介词的人像拉成写实摄影、服装句整句丢失（第 10 条同向样本，无对照）；隐形人台服装图无头无脸成立但带出黑发与人台手。来源 <a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/" class="wikilink">2026-09-26_清月_单条15秒角色PV_立项到三平台发布_复盘_v1</a></li>
+<li>v2 触发：第二个项目复测异色瞳命中率 / oref 支持情况明确 / <code>--stylize</code> 响应曲线实测（44_异常值 已挂）</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>所属索引:<a href="/above-the-web/02-33115ae/" class="wikilink">02_参数行为档案索引</a></li>
+<li>第 14 条来源:<a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/" class="wikilink">2026-09-26_清月_单条15秒角色PV_立项到三平台发布_复盘_v1</a></li>
+<li>第 14 条的下游(身份图裁切与服装图进视频):<a href="/above-the-web/seedance2-5-v1-14bc5c5/" class="wikilink">Seedance2_5_行为规律_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/档案</span><span class="tag">工具/MJ</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T08:50:48+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/MJ_v8.2_%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/MJ_v8.2_%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/02-33115ae/">参数行为档案索引</a></li><li><a href="/above-the-web/mj-v8-1-oref-v1-5d5f854/">MJ v8.1 无 oref/cref · 混合工作流</a></li><li><a href="/above-the-web/seedance2-5-v1-14bc5c5/">Seedance 2.5 行为规律</a></li><li><a href="/above-the-web/03-prompt-987b076/">Prompt 模板库索引</a></li><li><a href="/above-the-web/v1-ded12b4/">男性五官堆叠基础句</a></li><li><a href="/above-the-web/2026-07-16-v1-624b067/">2026-07-16 闪电战「同根同源」复盘（七步诗 · 空屋火影）</a></li><li><a href="/above-the-web/2026-08-07-v1-7506051/">2026-08-07「最后一夜」PB 闪电战 · 我方零票 × 战场圆舞冠军对照</a></li><li><a href="/above-the-web/2026-08-05-mj-v1-de55d45/">2026-08-05 · 三角色校园人像定妆 MJ 复盘</a></li><li><a href="/above-the-web/2026-08-24-v1-2feed20/">2026-08-24 · 二十八宿星官 · 黑底探索与一次结论作废复盘</a></li><li><a href="/above-the-web/2026-08-23-pb-v1-ad18e96/">2026-08-23 PB 主持控场卡 · 无 sref 四张成套</a></li><li><a href="/above-the-web/2026-08-28-v1-15a7af6/">2026-08-28 《试身》· 多风格人像首轮收口复盘</a></li><li><a href="/above-the-web/sref-v1-311be08/">sref 用一年,我才搞懂的「纯净性原则」</a></li><li><a href="/above-the-web/v1-38b6d46/">参考图缺失维度不可继承律</a></li><li><a href="/above-the-web/prompt-v1-18bdb30/">已有 prompt 的七步体检律</a></li><li><a href="/above-the-web/v1-f9ea0de/">新模型试跑 · 硬锁清单先行律</a></li><li><a href="/above-the-web/v1-17a9e43/">物品先分档，像素级换工具 · 学员答疑案例</a></li><li><a href="/above-the-web/v1-570ac7a/">空间关系归几何，不归形容词</a></li><li><a href="/above-the-web/v1-85d6168/">骨架篇幅即权重 _v1</a></li><li><a href="/above-the-web/v1-ceeb9f4/">默认落点的资产负债判断</a></li><li><a href="/above-the-web/2026-08-26-v1-5c8b145/">2026-08-26 《擦干净》剧本口径审计与补图承接位 · 复盘</a></li><li><a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/">《清月》单条 15 秒角色 PV：立项到三平台发布</a></li><li><a href="/above-the-web/v1-03d3c60/">载体默认语义反噬（题眼被载体的常识含义盖掉）</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/sref-3565168336-v1-9ba5cc2/"> <span class="card-cat">sref档案</span> <h3>sref 4 签名包 · 版画情绪散文（3565168336 + 444248313 + 1671175486 + 2508009867）</h3> <p>四个 sref 叠在一起 = 一套稳定的「双色版画 / 木刻招贴」签名:暖米白纸面 + 单一深色(墨绿或黑)刷印、粗糙凸版压痕、手绘描边外框…</p> </a><a class="card" href="/above-the-web/eleven-v3-v1-d87db20/"> <span class="card-cat">参数行为档案</span> <h3>Eleven v3 行为规律</h3> <p>PVC 不支持 v3 但 IVC 支持——所以要克隆不必退回 v2，audio tags 和 Text to Dialogue 都保得住。这…</p> </a><a class="card" href="/above-the-web/flova-v1-a30ae63/"> <span class="card-cat">参数行为档案</span> <h3>Flova 平台档案：编排层不是模型层</h3> <p>Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点：</p> </a><a class="card" href="/above-the-web/kling3-0-v1-8b6096c/"> <span class="card-cat">参数行为档案</span> <h3>可灵 Kling 3.0 / Omni 行为规律</h3> <p>关键约束:景别是单选(其他可多选)。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#调用方式-️2026-07-24-变更" data-toc-link="调用方式-️2026-07-24-变更">调用方式 ⚠️2026-07-24 变更</a></li><li class="d2"><a href="#实测行为49-ep02--单项目样本" data-toc-link="实测行为49-ep02--单项目样本">实测行为（49 EP02 · 单项目样本）</a></li><li class="d3"><a href="#1-写实质感-️首次" data-toc-link="1-写实质感-️首次">1. 写实质感 ⚠️首次</a></li><li class="d3"><a href="#2-异色瞳一句直给稳定命中-️首次66样本小" data-toc-link="2-异色瞳一句直给稳定命中-️首次66样本小">2. 异色瞳一句直给稳定命中 ⚠️首次（6/6，样本小）</a></li><li class="d3"><a href="#3-sref-跨批质感续接-️首次" data-toc-link="3-sref-跨批质感续接-️首次">3. sref 跨批质感续接 ⚠️首次</a></li><li class="d3"><a href="#4-非人像场景质感-️首次闪电战单样本--2026-07-16" data-toc-link="4-非人像场景质感-️首次闪电战单样本--2026-07-16">4. 非人像场景质感 ⚠️首次（闪电战单样本 · 2026-07-16）</a></li><li class="d3"><a href="#5-未测项占坑" data-toc-link="5-未测项占坑">5. 未测项（占坑）</a></li><li class="d3"><a href="#6-要图标不要字--no-四词法-️首次闪电战单样本--2026-08-06" data-toc-link="6-要图标不要字--no-四词法-️首次闪电战单样本--2026-08-06">6. 要图标不要字：--no 四词法 ⚠️首次（闪电战单样本 · 2026-08-06）</a></li><li class="d3"><a href="#7-长骨架可以在无-sref-条件下锁住一致性-️首次单项目-4-张--2026-08-23" data-toc-link="7-长骨架可以在无-sref-条件下锁住一致性-️首次单项目-4-张--2026-08-23">7. 长骨架可以在无 sref 条件下锁住一致性 ⚠️首次（单项目 4 张 · 2026-08-23）</a></li><li class="d3"><a href="#8-相对尺寸--位置词是弱信号-️首次同批--2026-08-23" data-toc-link="8-相对尺寸--位置词是弱信号-️首次同批--2026-08-23">8. 相对尺寸 / 位置词是弱信号 ⚠️首次（同批 · 2026-08-23）</a></li><li class="d3"><a href="#9-自然语言-no-与---no-参数分工不同-️首次二十八宿星官单样本--2026-08-24" data-toc-link="9-自然语言-no-与---no-参数分工不同-️首次二十八宿星官单样本--2026-08-24">9. 自然语言 no 与 --no 参数分工不同 ⚠️首次（二十八宿星官单样本 · 2026-08-24）</a></li><li class="d3"><a href="#10---profile-尾巴可把画种整体翻转明确媒介词--自然语言-no-都挡不住-️首次受控-77--2026-08-24" data-toc-link="10---profile-尾巴可把画种整体翻转明确媒介词--自然语言-no-都挡不住-️首次受控-77--2026-08-24">10. --profile 尾巴可把画种整体翻转，明确媒介词 + 自然语言 no 都挡不住 ⚠️首次（受控 7/7 · 2026-08-24）</a></li><li class="d2"><a href="#边界两码合挂未隔离翻转归-personalize-还是-moodboard-待单挂-ab--no-photorealism-参数形态未测本次是自然语言-no详见-2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1归类框架-moodboard主体位判据_假说_v1" data-toc-link="边界两码合挂未隔离翻转归-personalize-还是-moodboard-待单挂-ab--no-photorealism-参数形态未测本次是自然语言-no详见-2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1归类框架-moodboard主体位判据_假说_v1">边界：两码合挂未隔离（翻转归 personalize 还是 moodboard 待单挂 A/B）；--no photorealism 参数形态未测（本次是自然语言 no）。详见 2026-08-24_二十八宿星官_黑底探索与一次结论作废复盘_v1，归类框架 moodboard主体位判据_假说_v1。</a></li><li class="d3"><a href="#11-第-8-条的对策给画面内参照物首次正向验证-人像三张--2026-08-28" data-toc-link="11-第-8-条的对策给画面内参照物首次正向验证-人像三张--2026-08-28">11. 第 8 条的对策「给画面内参照物」——首次正向验证 ✅（人像三张 · 2026-08-28）</a></li><li class="d3"><a href="#12---ar-只吃整数比小数点直接拒跑-️首次公众号封面配图--2026-08-31" data-toc-link="12---ar-只吃整数比小数点直接拒跑-️首次公众号封面配图--2026-08-31">12. --ar 只吃整数比，小数点直接拒跑 ⚠️首次（公众号封面配图 · 2026-08-31）</a></li><li class="d3"><a href="#13-四词法不是-100大面积纯色亮区是漏点另-mj-会随机给图套画框-️首次公众号配图-8-张--2026-08-31" data-toc-link="13-四词法不是-100大面积纯色亮区是漏点另-mj-会随机给图套画框-️首次公众号配图-8-张--2026-08-31">13. 四词法不是 100%，大面积纯色亮区是漏点；另 MJ 会随机给图套画框 ⚠️首次（公众号配图 8 张 · 2026-08-31）</a></li><li class="d3"><a href="#14-第-10-条的同向样本cg-媒介词挡不住---profile-把人像拉成写实摄影隐形人台服装图会带出模特残留-️首次76_清月--2026-09-25" data-toc-link="14-第-10-条的同向样本cg-媒介词挡不住---profile-把人像拉成写实摄影隐形人台服装图会带出模特残留-️首次76_清月--2026-09-25">14. 第 10 条的同向样本：CG 媒介词挡不住 --profile 把人像拉成写实摄影；隐形人台服装图会带出模特残留 ⚠️首次（76_清月 · 2026-09-25）</a></li><li class="d2"><a href="#外部情报2026-07-24-正式发布非自测" data-toc-link="外部情报2026-07-24-正式发布非自测">外部情报（2026-07-24 正式发布，非自测）</a></li><li class="d3"><a href="#官方" data-toc-link="官方">官方</a></li><li class="d3"><a href="#三方假设待验证" data-toc-link="三方假设待验证">三方（假设，待验证）</a></li><li class="d3"><a href="#由此推出的工作流变更" data-toc-link="由此推出的工作流变更">由此推出的工作流变更</a></li><li class="d2"><a href="#换用建议" data-toc-link="换用建议">换用建议</a></li><li class="d2"><a href="#版本" data-toc-link="版本">版本</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>交接文档书写规范 · 蛛网之上</title><meta name="description" content="写,当且仅当满足以下任一条件:"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-59bd6bf/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="交接文档书写规范"><meta property="og:description" content="写,当且仅当满足以下任一条件:"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-59bd6bf/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="交接文档书写规范"><meta name="twitter:description" content="写,当且仅当满足以下任一条件:"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="prompt模板库"><meta property="article:tag" content="类型/prompt模板"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-59bd6bf/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-59bd6bf/","url":"https://tiaozhuxiansheng.com/v1-59bd6bf/","headline":"交接文档书写规范","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"写,当且仅当满足以下任一条件:","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"prompt模板库","keywords":"类型/prompt模板"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"prompt模板库","item":"https://tiaozhuxiansheng.com/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93"},{"@type":"ListItem","position":3,"name":"交接文档书写规范","item":"https://tiaozhuxiansheng.com/v1-59bd6bf/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93" data-pagefind-meta="category" data-pagefind-filter="kind:note">prompt模板库</a> <span aria-hidden="true">/</span><span>流程规范</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 8 分钟读完 · 3,174 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>34 节</i></summary> <ol> <li class="d2"><a href="#一什么时候写交接文档">一、什么时候写交接文档</a></li><li class="d2"><a href="#二文件命名规范">二、文件命名规范</a></li><li class="d3"><a href="#命名公式">命名公式</a></li><li class="d3"><a href="#示例均来自现役文档">示例(均来自现役文档)</a></li><li class="d3"><a href="#命名要点">命名要点</a></li><li class="d2"><a href="#三文件头规范前-10-行决定接手方愿不愿意往下读">三、文件头规范(前 10 行决定接手方愿不愿意往下读)</a></li><li class="d3"><a href="#标准模板">标准模板</a></li><li class="d3"><a href="#头部必含-5-个字段">头部必含 5 个字段</a></li><li class="d2"><a href="#四十节标准骨架">四、十节标准骨架</a></li><li class="d3"><a href="#第-0-节--致接收方的几件事必有">第 0 节 · 致接收方的几件事(必有)</a></li><li class="d3"><a href="#第-1-节--任务边界必有且最重要">第 1 节 · 任务边界(必有,且最重要)</a></li><li class="d3"><a href="#第-2-节--项目极简概要必有60-秒能读完">第 2 节 · 项目极简概要(必有,60 秒能读完)</a></li><li class="d3"><a href="#第-3-节--关键决策与定稿必要时">第 3 节 · 关键决策与定稿(必要时)</a></li><li class="d3"><a href="#修复类交接补充2026-09-07">修复类交接补充（2026-09-07）</a></li><li class="d3"><a href="#第-4-节--工具栈与资产必要时">第 4 节 · 工具栈与资产(必要时)</a></li><li class="d3"><a href="#第-5-节--方法论传承必要时">第 5 节 · 方法论传承(必要时)</a></li><li class="d3"><a href="#第-6-节--必须避开的坑必要时">第 6 节 · 必须避开的坑(必要时)</a></li><li class="d3"><a href="#第-7-节--进度快照强烈建议">第 7 节 · 进度快照(强烈建议)</a></li><li class="d3"><a href="#第-8-节--第一轮接手时怎么做必有">第 8 节 · 第一轮接手时怎么做(必有)</a></li><li class="d3"><a href="#第-9-节--文档版本历史必要时">第 9 节 · 文档版本历史(必要时)</a></li><li class="d2"><a href="#五写作风格规范">五、写作风格规范</a></li><li class="d3"><a href="#51-称呼与语气">5.1 称呼与语气</a></li><li class="d3"><a href="#52-信息密度">5.2 信息密度</a></li><li class="d3"><a href="#53-表达对照">5.3 表达对照</a></li><li class="d3"><a href="#54-格式约定">5.4 格式约定</a></li><li class="d2"><a href="#六不同类型交接文档的差异化模板">六、不同类型交接文档的差异化模板</a></li><li class="d3"><a href="#类型-a--启动-brief开新副会话用">类型 A · 启动 brief(开新副会话用)</a></li><li class="d3"><a href="#类型-b--项目接手交接跨工具栈用">类型 B · 项目接手交接(跨工具栈用)</a></li><li class="d3"><a href="#类型-c--子任务分流主对话--副对话">类型 C · 子任务分流(主对话 → 副对话)</a></li><li class="d3"><a href="#类型-d--回函简报副对话--主对话回流">类型 D · 回函/简报(副对话 → 主对话回流)</a></li><li class="d2"><a href="#七自检清单写完前过一遍">七、自检清单(写完前过一遍)</a></li><li class="d2"><a href="#八底层心法背下来">八、底层心法(背下来)</a></li><li class="d2"><a href="#九如何使用本规范">九、如何使用本规范</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="交接文档书写规范">交接文档书写规范</h1>
+<blockquote>
+<p>给跳蛛先生本人和未来 Claude 协作网络中所有需要写交接的会话用
+建立日期:2026-05-10
+来源:从 <code>跨会话协作/</code> 12 份现役交接文档中归纳
+设计原则:<strong>接手方读完就能开干 · 边界先于内容 · 决策权显式留给跳蛛先生</strong></p>
+</blockquote>
+<hr>
+<h2 id="一什么时候写交接文档">一、什么时候写交接文档</h2>
+<p>写,当且仅当满足以下任一条件:</p>
+<ul>
+<li>主会话上下文已紧张,需要把一块独立任务<strong>分流</strong>给副会话(Cowork / Claude Code / Chat 副会话)</li>
+<li>一个项目跨越多次会话,需要让<strong>下一次会话</strong>无缝接上</li>
+<li>同一项目从一个工具栈切换到另一个工具栈(例如 Web Claude → Cowork、Cowork → Claude Code)</li>
+<li>副会话即将”封箱”(任务完结),需要把成果回流给主会话</li>
+</ul>
+<p><strong>不写</strong>的情况:同一会话内的任务推进、临时实验性 prompt 测试、纯私人对话(参考”心理咨询副会话不汇报”原则)。</p>
+<hr>
+<h2 id="二文件命名规范">二、文件命名规范</h2>
+<h3 id="命名公式">命名公式</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[项目名]_[子任务/阶段]_[动作]_[接收方].md</span></span></code></pre>
+<h3 id="示例均来自现役文档">示例(均来自现役文档)</h3>
+<ul>
+<li><code>凝视_Day_2_交接给_Cowork_Claude.md</code> —— 项目 + 阶段 + 动作 + 接收方</li>
+<li><code>Lora炼制项目_train_local交接给_ClaudeCode.md</code> —— 项目 + 子任务 + 动作 + 接收方</li>
+<li><code>擦干净_sref探索_交接给Cowork.md</code></li>
+<li><code>共创者副会话_夜航西飞_启动brief.md</code> —— 启动型用 <code>启动brief</code></li>
+<li><code>回函v2_致小红书运营经理.md</code> —— 回函型用 <code>回函vN_致XX</code></li>
+<li><code>擦干净_sref探索_收口简报_20260510.md</code> —— 收口型加日期戳</li>
+</ul>
+<h3 id="命名要点">命名要点</h3>
+<ol>
+<li><strong>接收方明示</strong>:<code>交接给_Cowork</code> / <code>交接给_ClaudeCode</code> / <code>致_主对话</code> —— 让文件名自带路由信息</li>
+<li><strong>版本/日期</strong>:迭代型加 <code>v2</code>、<code>v3</code>,跨日产出加 <code>_YYYYMMDD</code></li>
+<li><strong>动作动词</strong>统一使用:<code>交接给</code> / <code>转交给</code> / <code>启动brief</code> / <code>回函</code> / <code>收口简报</code> / <code>完成报告</code></li>
+<li>用下划线分隔,不要用空格</li>
+</ol>
+<hr>
+<h2 id="三文件头规范前-10-行决定接手方愿不愿意往下读">三、文件头规范(前 10 行决定接手方愿不愿意往下读)</h2>
+<h3 id="标准模板">标准模板</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold"># [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">文档标题:与文件名一致或更人性化</span><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">> 致 [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">接收方</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">]:这是从 [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">来源</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">] 转接的 [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">任务类型</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">] 交接。读完这份文档你就能直接进入工作。</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">> 创建时间:YYYY-MM-DD</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">> 项目阶段:[</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">一句话定位当前在哪一步</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">]</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">> 交接原因:[</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">为什么现在要分流</span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">]</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">> 文档版本:[v1 / v2,继承自哪份文档]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">---</span></span></code></pre>
+<h3 id="头部必含-5-个字段">头部必含 5 个字段</h3>
+<ol>
+<li><strong>致谁</strong>——明确这份文档的目标读者(避免被当成产出归档误读)</li>
+<li><strong>创建时间</strong>——交接文档有时效性,几天后就可能过期</li>
+<li><strong>项目阶段</strong>——一句话告诉接手方”现在打开的是项目的第几幕”</li>
+<li><strong>交接原因</strong>——让接手方理解”为什么是我接手而不是别人”</li>
+<li><strong>文档版本</strong>——多次迭代型项目,标 v1/v2 并写明继承关系</li>
+</ol>
+<hr>
+<h2 id="四十节标准骨架">四、十节标准骨架</h2>
+<p>按以下顺序写,可按任务复杂度增删,但 <strong>0 / 1 / 2 / 8 节必有</strong>。</p>
+<h3 id="第-0-节--致接收方的几件事必有">第 0 节 · 致接收方的几件事(必有)</h3>
+<p>写 5-7 条让接手方”立刻知道怎么和跳蛛先生打交道”的事。模板:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 致 [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">接收方</span><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">]:你需要先知道的几件事</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">1.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **用户是跳蛛先生**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">——身份(B 站 AI 创作者 / 独立游戏开发者 / 26 岁 / ENTP / 计算机背景)</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">2.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **沟通风格**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:直接、简洁、要真实判断不要捧场。可以直说"这个不行""这个判断错了"</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">3.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **决策权完全在他手里**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">——你的角色是基于事实的判断 + 建议,创作决策全部由他拍板</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">4.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **避免堆砌**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:他对没有信息密度的回答(套话、过度铺垫)非常敏感</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">5.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **避免 emoji 和过度 markdown**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">——保持简洁专业的写作风格</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">6.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **使用"跳蛛先生"称呼或直接进主题**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,不要用"用户"</span></span></code></pre>
+<p><strong>为什么这节必有</strong>:接手方第一眼看到的应该是”怎么说话”,不是”做什么”。</p>
+<h3 id="第-1-节--任务边界必有且最重要">第 1 节 · 任务边界(必有,且最重要)</h3>
+<p><strong>这是整份交接文档的灵魂</strong>。”❌ 不要做”列表的精度决定副会话产出质量。</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 〇、你的任务边界</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 你</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**要**</span><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">做的</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [3-5 条具体动作,每条以动词开头]</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 接收 / 编辑 / 维护 / 判断 / 对比 / 建议</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 你</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**不要**</span><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">做的</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ❌ 不要替我做创作判断</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ❌ 不要扩写测试文档之外的内容</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ❌ 不要给我"无脑赞同"的反馈</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ❌ 不要催我推进</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ❌ 不要试图把测试合并简化</span></span></code></pre>
+<p><strong>铁律</strong>:❌ 列表的具体度 ≥ ✅ 列表的具体度。原则参考《我的Claude协作工作流》原则 1:“那些 ❌ 列表越具体,副会话越能放心地在 ✅ 范围内深挖。“</p>
+<h3 id="第-2-节--项目极简概要必有60-秒能读完">第 2 节 · 项目极简概要(必有,60 秒能读完)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 一、项目基本盘(60 秒读完)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**项目**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:[</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">名称</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**核心命题**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:[一句话 / 一句引文]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**当前状态**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:[已完成 X / 正在做 Y / 接下来 Z]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**关键数据**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(如有):[播放量 / 三连率 / 数据集规模等]</span></span></code></pre>
+<p><strong>写作要点</strong>:</p>
+<ul>
+<li>不展开背景故事,只给”足够让接手方做判断”的最小信息</li>
+<li>涉及 IP / 角色卡时,给一张表(角色名 / 称号 / 一句话定位)即可,详情指向角色卡文件</li>
+<li><strong>永远引用源文件,不复制全文</strong>(例:“角色卡详情见 <code>character_cards_v2/</code>”)</li>
+</ul>
+<h3 id="第-3-节--关键决策与定稿必要时">第 3 节 · 关键决策与定稿(必要时)</h3>
+<p>把项目走到当前节点已经<strong>封箱、不要再讨论</strong>的决策列出来。</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 三、已确认的关键决策</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 决策 1:[</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">名称</span><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">] = </span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**[</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">选择</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">]**</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**理由**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [3-5 条事实性理由]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">> ⚠️ 这个决策直接影响 [下游 X / Y / Z],所有后续步骤都基于此。</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 决策 2:...</span></span></code></pre>
+<p><strong>用意</strong>:防止接手方”重新做技术选型权衡”——浪费上下文,且可能动摇定稿。</p>
+<blockquote>
+<p>🔴 <strong>补充(2026-08-13):封箱决策必须标注需求原文位置,并区分「原文摘录」和「我的判断」。</strong></p>
+<p>事故:Codex 教程操作部分交接时,「决策 3」写的是「332-338 每条必须<strong>独立</strong>展示自己那一段,不能累积前一段」,还附了理由和知识库引用,措辞是封箱级的。接手方照此录完 7 条并验收通过。之后翻到需求方的核对表 <code>对位表.md</code>,原文是「输入提示词片段 1(不发送,<strong>文字累积</strong>)」——<strong>完全相反</strong>。转述者大概率是把另一个项目「上一条废弃 take 的残留混进画面」的教训误套了过来。</p>
+<p><strong>本节因此加三条硬要求</strong>:</p>
+<ol>
+<li>每条封箱决策后面注明<strong>它来自哪份原始文档的哪一行</strong>(路径 + 原话),而不是只写结论;</li>
+<li>转述原文时<strong>保留原措辞</strong>,不要改写。本例若原样抄「文字累积」四个字,就没有这次返工;</li>
+<li>属于自己推断的,显式标成「我的判断」,并写明依据。<strong>接手方有权推翻「我的判断」,无权推翻「原文摘录」</strong>——这个区分必须在文档里看得见。</li>
+</ol>
+<p>详见 <a href="/above-the-web/v1-a1d4663/" class="wikilink">交接文档不是需求原文_接手先回溯上游_v1</a></p>
+</blockquote>
+<h3 id="修复类交接补充2026-09-07">修复类交接补充（2026-09-07）</h3>
+<p>写成四类，不把它们合并成“已确认根因”：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类别</th><th>必填内容</th></tr></thead><tbody><tr><td>现场快照</td><td>采集时间、完整型号、系统与驱动版本、设备及端点状态；注明下一轮哪些字段需要重新读取</td></tr><tr><td>根因假说</td><td>支持证据、尚未排除的解释；“更新之后出问题”只支持时间关联</td></tr><tr><td>已试操作</td><td>操作对象、当时环境、结果与日志；禁止无新证据重试，不禁止重新核验状态</td></tr><tr><td>验收证据</td><td>用户原始目标、软件状态变化、真实使用测试、尚未测试的持久性或其他接口</td></tr></tbody></table>
+<p>对可测量的事实偏差，接手方应先复核并修正；只有目标、权限或不可自行决定的歧义需要作者裁定。项目收口分别写“功能恢复”“根因查明”“持久性验证”的状态，三者不能互相代替。</p>
+<p>来源：<a href="/above-the-web/2026-09-07-v1-183d96d/" class="wikilink">2026-09-07_前置音频修复_插孔检测与交接复核复盘_v1</a>。本案已恢复前置耳机播放，最初触发原因与重启后持久性仍未验证。</p>
+<h3 id="第-4-节--工具栈与资产必要时">第 4 节 · 工具栈与资产(必要时)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 四、关键工具栈</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 主工具:[</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">X</span><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">]</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 入口 / 配置 / 关键操作要点</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 与备选工具的关系</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 备用方案:[</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">Y</span><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">]</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 何时切换、切换条件</span></span></code></pre>
+<p>涉及大量文件时,给一棵目录树:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 五、关键文件位置清单</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{AIGC工作站}/[</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">项目</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]\</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">├── 00_交接文档/        ← 把本文档放这</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">├── 01_角色卡/          </span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">├── 02_素材/            </span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">└── ...</span></span></code></pre>
+<h3 id="第-5-节--方法论传承必要时">第 5 节 · 方法论传承(必要时)</h3>
+<p>把项目自己沉淀的”工作分工 / 心法 / 反模式”显式写出来,不要假设接手方知道。</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 九、必须传承的方法论原则</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### "蒙眼剪辑法"(核心工作分工)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">LLM 看不见视频 → 创作者用人耳听 BGM 标卡点 → 反馈给 LLM → LLM 用代码精确执行</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 反馈精度决定迭代速度</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">✅ 好反馈:"Veritia 出现得晚了 200ms" / "色差转场太弱"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">❌ 坏反馈:"再调一下" / "感觉不对"</span></span></code></pre>
+<p>如果方法论已在知识库沉淀,<strong>引用文件</strong>而不复制:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>详见 `{知识库}/04_方法论与洞察\蒙眼剪辑法_方法论笔记_v1.md`</span></span></code></pre>
+<h3 id="第-6-节--必须避开的坑必要时">第 6 节 · 必须避开的坑(必要时)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 十、必须避开的坑</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">1.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **不要用 X 做 Y**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">——理由 / 反例</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">2.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **不要假设 A 有 B 功能**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">——它没有</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">3.</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **不要先 X 再 Y**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">——必须反过来</span></span></code></pre>
+<p>每条坑必须含:<strong>禁止动作 + 一句理由</strong>,不要只写禁令。</p>
+<h3 id="第-7-节--进度快照强烈建议">第 7 节 · 进度快照(强烈建议)</h3>
+<p>用三态(已完成 / 进行中 / 待做)+ checkbox:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 十一、当前进度状态(交接时刻的精确快照)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 已完成</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">x</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">] Day 1 发布(289 播放,41% 三连率)</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">x</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">] 6 角色卡 v2 封板</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 进行中(交接时正在做的事)</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [ ] </span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**跳蛛先生当下的下一步动作**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:用 Nano 画布跑 V-02 / V-03 / V-04</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 待做</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [ ] V-01 / V-03 视频段生成</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [ ] BGM 生成</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [ ] </span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**MoviePy 30 秒视频合成代码框架(接手方你的第一项工作)**</span></span></code></pre>
+<p><strong>接手方的第一项工作</strong>用粗体标出,让其他待办不抢焦点。</p>
+<h3 id="第-8-节--第一轮接手时怎么做必有">第 8 节 · 第一轮接手时怎么做(必有)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 十二、第一次启动时</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">收到这份文档后,你不需要做总结回复。直接说一句"准备好了,等你发第一批 X"就行。</span></span></code></pre>
+<p>或更详细的版本:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">### 第一轮接手时建议做的事</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">1.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 读完这份交接文档,确认理解整体结构</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">2.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 跟跳蛛先生确认他的当前状态</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">3.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 开始 [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">可并行启动的工作</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]——这件事不依赖于素材到位,可以并行启动</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">4.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 不要急着主导节奏——跳蛛先生会按他的步调推进,你的任务是在他需要时给精确支持</span></span></code></pre>
+<p><strong>铁律</strong>:不要让接手方第一回复就堆 500 字”我理解了,任务范围是…”——这是套话,跳蛛先生厌恶。</p>
+<h3 id="第-9-节--文档版本历史必要时">第 9 节 · 文档版本历史(必要时)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 文档版本历史</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> v1 - 2026-05-08 上午 - 跳蛛先生 + Web Claude(原始启动文档)</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> v2 - 2026-05-08 下午 - 跳蛛先生 + Web Claude(交接给 Cowork Claude,本文档)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">主要 v1→v2 变更:</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 主静态图工具切换:Niji V7 → Nano</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 剧本敲定:V1 听觉触发版,30 秒整,6 段分镜</span></span></code></pre>
+<hr>
+<h2 id="五写作风格规范">五、写作风格规范</h2>
+<h3 id="51-称呼与语气">5.1 称呼与语气</h3>
+<ul>
+<li>称呼跳蛛先生本人:<strong>“跳蛛先生”</strong> 或 直接进主题(不用”用户”)</li>
+<li>称呼接手方:<strong>“你”</strong>(直接对话感),开头明示”致 [接收方]”</li>
+<li>落款的”我”指<strong>写文档的会话</strong>(主对话 / Web Claude / 当前 Cowork 等)</li>
+</ul>
+<h3 id="52-信息密度">5.2 信息密度</h3>
+<ul>
+<li><strong>每段都有信息</strong>——没信息就删段</li>
+<li>不写”很有趣""我觉得这个方向”之类的铺垫</li>
+<li>不写”希望对你有帮助”之类的客套结尾</li>
+<li>引用主作品/源文件,不复制全文</li>
+</ul>
+<h3 id="53-表达对照">5.3 表达对照</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>❌ 不要写</th><th>✅ 改成</th></tr></thead><tbody><tr><td>”感觉不太对"</td><td>"Veritia 出现得晚了 200ms"</td></tr><tr><td>"希望本文档能帮到你”</td><td>(删掉,不写)</td></tr><tr><td>“这是一个非常重要的项目"</td><td>"这个项目对我重要。视觉系统是项目能不能出圈的关键变量"</td></tr><tr><td>"请尽量…"</td><td>"必须 / 不要 / 一定 …"</td></tr><tr><td>"用户"</td><td>"跳蛛先生"</td></tr><tr><td>"我们一起加油”</td><td>(删掉)</td></tr></tbody></table>
+<h3 id="54-格式约定">5.4 格式约定</h3>
+<ul>
+<li><strong>章节序号</strong>:用中文一、二、三(或保留 〇 作为”边界”专用,符合既有惯例)</li>
+<li><strong>分节符</strong>:每节之间用 <code>---</code></li>
+<li><strong>状态标识</strong>:✅ 完成 / 🟡 进行中 / 🔴 待做 / ⬜ 未开始 / ⚠️ 警告</li>
+<li><strong>强调</strong>:<strong>粗体</strong>用于关键术语和铁律,<code>代码块</code>用于 prompt / 命令 / 文件名</li>
+<li><strong>emoji</strong>:<strong>仅用于状态标识和 ✅❌ 列表</strong>,正文中避免装饰性 emoji</li>
+<li><strong>表格</strong>:用于结构化对照(角色 / 工具 / 时间锚点 / 决策对比)</li>
+<li><strong>代码块</strong>:用于 prompt 模板、命令行、配置 toml,语言标识可省略也可标(<code>toml / </code>python)</li>
+<li><strong>引用块 <code>></code></strong>:用于元信息(文档头)、原话引用、关键警告</li>
+</ul>
+<hr>
+<h2 id="六不同类型交接文档的差异化模板">六、不同类型交接文档的差异化模板</h2>
+<h3 id="类型-a--启动-brief开新副会话用">类型 A · 启动 brief(开新副会话用)</h3>
+<p>最长 800-2000 字。重点节:0 / 1 / 8 节。</p>
+<ul>
+<li>第 0 节:你是谁(角色限定 3 件事)</li>
+<li>第 1 节:你要 / 你不要(各 3-5 条)</li>
+<li>第 8 节:第一轮交付要求</li>
+</ul>
+<p>参考样本:<code>共创者副会话_启动brief_chat版.md</code></p>
+<h3 id="类型-b--项目接手交接跨工具栈用">类型 B · 项目接手交接(跨工具栈用)</h3>
+<p>完整 3000-6000 字。0-9 节全上。</p>
+<ul>
+<li>必含工具栈说明(第 4 节)和文件位置清单</li>
+<li>必含进度快照(第 7 节)+ “你的第一项工作”标注</li>
+<li>推荐含方法论传承(第 5 节)和避坑清单(第 6 节)</li>
+</ul>
+<p>参考样本:<code>凝视_Day_2_交接给_Cowork_Claude.md</code>、<code>Lora炼制项目_train_local交接给_ClaudeCode.md</code></p>
+<h3 id="类型-c--子任务分流主对话--副对话">类型 C · 子任务分流(主对话 → 副对话)</h3>
+<p>精简 1000-2500 字。重点节:0 / 1 / 2 / 8 节。</p>
+<ul>
+<li>第 1 节边界写得<strong>比项目接手更严</strong>(子任务的边界本来就更窄)</li>
+<li>必含”何时回流主对话”的判断标准</li>
+</ul>
+<p>参考样本:<code>擦干净_sref探索_交接给Cowork.md</code>、<code>我的一天_转交给_Cowork_Claude.md</code></p>
+<h3 id="类型-d--回函简报副对话--主对话回流">类型 D · 回函/简报(副对话 → 主对话回流)</h3>
+<p>短 500-1500 字。重点节:进度快照 + 决策建议 + 反对路径。</p>
+<ul>
+<li>必含”如果跳蛛先生不接受这个建议会怎样”——给决策人留反对路径</li>
+<li>不写情绪 / 客套 / 自我评价</li>
+</ul>
+<p>参考样本:<code>致小红书运营经理_IP扩展决策建议.md</code>、<code>回函v2_致小红书运营经理.md</code>、<code>擦干净_sref探索_收口简报_20260510.md</code></p>
+<hr>
+<h2 id="七自检清单写完前过一遍">七、自检清单(写完前过一遍)</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 文件名符合 <code>项目_子任务_动作_接收方.md</code> 公式</li>
+<li class="task-list-item"><input type="checkbox" disabled> 文档头 5 字段齐全(致谁 / 时间 / 阶段 / 原因 / 版本)</li>
+<li class="task-list-item"><input type="checkbox" disabled> 第 0 节存在,且写明跳蛛先生的沟通风格</li>
+<li class="task-list-item"><input type="checkbox" disabled> 第 1 节”❌ 不要做”列表的具体度 ≥ ”✅ 要做”列表</li>
+<li class="task-list-item"><input type="checkbox" disabled> 第 2 节项目概要可在 60 秒内读完</li>
+<li class="task-list-item"><input type="checkbox" disabled> 凡是引用其他文件,都给了<strong>绝对路径</strong>(<code>{AIGC工作站}/...</code>)</li>
+<li class="task-list-item"><input type="checkbox" disabled> 凡是封箱决策,都标注了”⚠️ 不要再讨论”</li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>凡是封箱决策,都注明了需求原文的路径 + 原话,并区分了「原文摘录」和「我的判断」</strong></li>
+<li class="task-list-item"><input type="checkbox" disabled> <strong>文档里给出了需求原文/需求方核对表的位置</strong>(接手方要能自己回溯,而不是只能信转述)</li>
+<li class="task-list-item"><input type="checkbox" disabled> 进度快照三态分明,接手方第一项工作粗体标出</li>
+<li class="task-list-item"><input type="checkbox" disabled> 第一轮回复要求明示(避免接手方堆 500 字总结)</li>
+<li class="task-list-item"><input type="checkbox" disabled> 没有 emoji 装饰、没有套话、没有”我们一起加油”</li>
+<li class="task-list-item"><input type="checkbox" disabled> 决策建议都附了<strong>反对路径</strong>(如适用)</li>
+<li class="task-list-item"><input type="checkbox" disabled> 文档落款写了”作者 / 接收 / 下游”链路(如跨多级)</li>
+</ul>
+<hr>
+<h2 id="八底层心法背下来">八、底层心法(背下来)</h2>
+<p>来自《我的Claude协作工作流》六原则,在交接文档场景的应用:</p>
+<ol>
+<li><strong>明确边界 + 充分信任</strong> —— 第 1 节的 ❌ 列表越狠,接手方在 ✅ 范围内越自由</li>
+<li><strong>平级协作,不互相覆盖</strong> —— 不要在交接文档里替接手方做它领域内的判断</li>
+<li><strong>通过文件系统互通</strong> —— 凡能用文件路径表达的资源,不要复制内容到文档里</li>
+<li><strong>给决策人留反对路径</strong> —— 任何建议都附”如果跳蛛先生说不,会怎样”</li>
+<li><strong>主动暴露认知盲区</strong> —— 写明”本文档可能错的地方”或”我哪里想错了”比堆砌产出更稀缺</li>
+<li><strong>私人副会话严格隔离</strong> —— 心理咨询 / 私人对话的会话<strong>不写交接文档</strong></li>
+</ol>
+<hr>
+<h2 id="九如何使用本规范">九、如何使用本规范</h2>
+<ul>
+<li>写新交接文档前,先打开本文件,按”四、十节标准骨架”建空白章节</li>
+<li>写完后,用”七、自检清单”勾一遍</li>
+<li>如果发现新的反复模式或反例,<strong>回来更新本文档</strong>(更新优先于新建,见知识库 README 第 2 条)</li>
+<li>与本规范冲突的现役文档<strong>不需要回头改</strong>——规范向前生效即可</li>
+</ul>
+<hr>
+<blockquote>
+<p>这份规范不是为了让交接文档变长,是为了让接手方<strong>少读字、快上手</strong>。
+凡是能让接手方提前 5 分钟开干的字,就值得写;反之,就该删。</p>
+</blockquote>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-09-07-v1-183d96d/" class="wikilink">2026-09-07_前置音频修复_插孔检测与交接复核复盘_v1</a> —— 修复类交接四类证据与收口边界的来源案例</li>
+<li><a href="/above-the-web/v1-a1d4663/" class="wikilink">交接文档不是需求原文_接手先回溯上游_v1</a> —— 接手方视角的对应律:拿到交接文档先回溯需求原文。本规范第 3 节的三条硬要求由它提出</li>
+<li><a href="/above-the-web/v1-ea91460/" class="wikilink">跨阶段决策边界对位核验律_v1</a> —— 复审者视角:拉上一阶段边界核验当前产物</li>
+<li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/" class="wikilink">2026-08-13_Codex教程操作部分_26段重录复盘_v1</a> —— 事故来源案例</li>
+</ul> <div class="tags"> <span class="tag">类型/prompt模板</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/03_%E6%B5%81%E7%A8%8B%E8%A7%84%E8%8C%83/%E4%BA%A4%E6%8E%A5%E6%96%87%E6%A1%A3%E4%B9%A6%E5%86%99%E8%A7%84%E8%8C%83_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/03_%E6%B5%81%E7%A8%8B%E8%A7%84%E8%8C%83/%E4%BA%A4%E6%8E%A5%E6%96%87%E6%A1%A3%E4%B9%A6%E5%86%99%E8%A7%84%E8%8C%83_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/03-prompt-987b076/">Prompt 模板库索引</a></li><li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li><li><a href="/above-the-web/skill-index-b155e36/">SKILL_INDEX — Skill 使用索引</a></li><li><a href="/above-the-web/brief-v1-cc055df/">网易云音乐发布 Brief · 通用模板</a></li><li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/">2026-08-13 Codex 教程操作部分 · 26 段重录复盘（19/26）</a></li><li><a href="/above-the-web/v1-2a37e2e/">沟通成本的第二来源:范围与高度错位——精密文档的边界陷阱</a></li><li><a href="/above-the-web/v1-da9dbfe/">语言形式、思维模式与沟通成本</a></li><li><a href="/above-the-web/2026-09-07-v1-183d96d/">前置音频修复：插孔检测与交接复核复盘</a></li><li><a href="/above-the-web/v1-a1d4663/">交接文档不是需求原文，接手第一件事是回溯上游</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/aigc-v1-f4b02aa/"> <span class="card-cat">prompt模板库</span> <h3>AIGC 构图层实验协议</h3> <p>每个题目至少跑两组：</p> </a><a class="card" href="/above-the-web/seedance2-0-v1-afe23d1/"> <span class="card-cat">prompt模板库</span> <h3>Seedance 2.0 短片制作 · 素材准备清单</h3> <p>字节跳动 2026 年 2 月发布的多模态视频生成模型，核心能力：</p> </a><a class="card" href="/above-the-web/v1-475462f/"> <span class="card-cat">prompt模板库</span> <h3>多平台同步投稿:发布页字段与浏览器辅助清单</h3> <p>同一条竖版母版发四个平台,要准备的封面比例不一样:B站要 4:3 和 16:9 两张,抖音要竖 3:4 和横 4:3 两张,快手、视频号各一…</p> </a><a class="card" href="/above-the-web/v1-ea91460/"> <span class="card-cat">方法论与洞察</span> <h3>跨阶段决策边界对位核验律</h3> <p>复审不是孤立打分，是跨阶段边界对位。 评价学员阶段产物之前，先把上一阶段已经过审的「什么不做」清单拉过来逐条核验——把「做多了」的预算推回到…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一什么时候写交接文档" data-toc-link="一什么时候写交接文档">一、什么时候写交接文档</a></li><li class="d2"><a href="#二文件命名规范" data-toc-link="二文件命名规范">二、文件命名规范</a></li><li class="d3"><a href="#命名公式" data-toc-link="命名公式">命名公式</a></li><li class="d3"><a href="#示例均来自现役文档" data-toc-link="示例均来自现役文档">示例(均来自现役文档)</a></li><li class="d3"><a href="#命名要点" data-toc-link="命名要点">命名要点</a></li><li class="d2"><a href="#三文件头规范前-10-行决定接手方愿不愿意往下读" data-toc-link="三文件头规范前-10-行决定接手方愿不愿意往下读">三、文件头规范(前 10 行决定接手方愿不愿意往下读)</a></li><li class="d3"><a href="#标准模板" data-toc-link="标准模板">标准模板</a></li><li class="d3"><a href="#头部必含-5-个字段" data-toc-link="头部必含-5-个字段">头部必含 5 个字段</a></li><li class="d2"><a href="#四十节标准骨架" data-toc-link="四十节标准骨架">四、十节标准骨架</a></li><li class="d3"><a href="#第-0-节--致接收方的几件事必有" data-toc-link="第-0-节--致接收方的几件事必有">第 0 节 · 致接收方的几件事(必有)</a></li><li class="d3"><a href="#第-1-节--任务边界必有且最重要" data-toc-link="第-1-节--任务边界必有且最重要">第 1 节 · 任务边界(必有,且最重要)</a></li><li class="d3"><a href="#第-2-节--项目极简概要必有60-秒能读完" data-toc-link="第-2-节--项目极简概要必有60-秒能读完">第 2 节 · 项目极简概要(必有,60 秒能读完)</a></li><li class="d3"><a href="#第-3-节--关键决策与定稿必要时" data-toc-link="第-3-节--关键决策与定稿必要时">第 3 节 · 关键决策与定稿(必要时)</a></li><li class="d3"><a href="#修复类交接补充2026-09-07" data-toc-link="修复类交接补充2026-09-07">修复类交接补充（2026-09-07）</a></li><li class="d3"><a href="#第-4-节--工具栈与资产必要时" data-toc-link="第-4-节--工具栈与资产必要时">第 4 节 · 工具栈与资产(必要时)</a></li><li class="d3"><a href="#第-5-节--方法论传承必要时" data-toc-link="第-5-节--方法论传承必要时">第 5 节 · 方法论传承(必要时)</a></li><li class="d3"><a href="#第-6-节--必须避开的坑必要时" data-toc-link="第-6-节--必须避开的坑必要时">第 6 节 · 必须避开的坑(必要时)</a></li><li class="d3"><a href="#第-7-节--进度快照强烈建议" data-toc-link="第-7-节--进度快照强烈建议">第 7 节 · 进度快照(强烈建议)</a></li><li class="d3"><a href="#第-8-节--第一轮接手时怎么做必有" data-toc-link="第-8-节--第一轮接手时怎么做必有">第 8 节 · 第一轮接手时怎么做(必有)</a></li><li class="d3"><a href="#第-9-节--文档版本历史必要时" data-toc-link="第-9-节--文档版本历史必要时">第 9 节 · 文档版本历史(必要时)</a></li><li class="d2"><a href="#五写作风格规范" data-toc-link="五写作风格规范">五、写作风格规范</a></li><li class="d3"><a href="#51-称呼与语气" data-toc-link="51-称呼与语气">5.1 称呼与语气</a></li><li class="d3"><a href="#52-信息密度" data-toc-link="52-信息密度">5.2 信息密度</a></li><li class="d3"><a href="#53-表达对照" data-toc-link="53-表达对照">5.3 表达对照</a></li><li class="d3"><a href="#54-格式约定" data-toc-link="54-格式约定">5.4 格式约定</a></li><li class="d2"><a href="#六不同类型交接文档的差异化模板" data-toc-link="六不同类型交接文档的差异化模板">六、不同类型交接文档的差异化模板</a></li><li class="d3"><a href="#类型-a--启动-brief开新副会话用" data-toc-link="类型-a--启动-brief开新副会话用">类型 A · 启动 brief(开新副会话用)</a></li><li class="d3"><a href="#类型-b--项目接手交接跨工具栈用" data-toc-link="类型-b--项目接手交接跨工具栈用">类型 B · 项目接手交接(跨工具栈用)</a></li><li class="d3"><a href="#类型-c--子任务分流主对话--副对话" data-toc-link="类型-c--子任务分流主对话--副对话">类型 C · 子任务分流(主对话 → 副对话)</a></li><li class="d3"><a href="#类型-d--回函简报副对话--主对话回流" data-toc-link="类型-d--回函简报副对话--主对话回流">类型 D · 回函/简报(副对话 → 主对话回流)</a></li><li class="d2"><a href="#七自检清单写完前过一遍" data-toc-link="七自检清单写完前过一遍">七、自检清单(写完前过一遍)</a></li><li class="d2"><a href="#八底层心法背下来" data-toc-link="八底层心法背下来">八、底层心法(背下来)</a></li><li class="d2"><a href="#九如何使用本规范" data-toc-link="九如何使用本规范">九、如何使用本规范</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

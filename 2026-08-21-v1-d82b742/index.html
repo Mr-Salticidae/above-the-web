@@ -1,0 +1,226 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档 · 蛛网之上</title><meta name="description" content="- 项目:风眼 · Typhoon Eye(E:\typhoon-eye),台风实况与分级应急预案单页站。双发布面:GitHub Pages + B 站 Toy(slug YliUzbE5TOqySu4G / id 898052500889…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-08-21-v1-d82b742/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档"><meta property="og:description" content="- 项目:风眼 · Typhoon Eye(E:\typhoon-eye),台风实况与分级应急预案单页站。双发布面:GitHub Pages + B 站 Toy(slug YliUzbE5TOqySu4G / id 898052500889…"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-08-21-v1-d82b742/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档"><meta name="twitter:description" content="- 项目:风眼 · Typhoon Eye(E:\typhoon-eye),台风实况与分级应急预案单页站。双发布面:GitHub Pages + B 站 Toy(slug YliUzbE5TOqySu4G / id 898052500889…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-21T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/风眼"><meta property="article:tag" content="主题/预警设计"><meta property="article:tag" content="主题/踩坑"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-08-21-v1-d82b742/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-08-21-v1-d82b742/","url":"https://tiaozhuxiansheng.com/2026-08-21-v1-d82b742/","headline":"风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目:风眼 · Typhoon Eye(E:\\typhoon-eye),台风实况与分级应急预案单页站。双发布面:GitHub Pages + B 站 Toy(slug YliUzbE5TOqySu4G / id 898052500889…","datePublished":"2026-08-21T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/风眼, 主题/预警设计, 主题/踩坑"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档","item":"https://tiaozhuxiansheng.com/2026-08-21-v1-d82b742/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-21T00:00:00+08:00">2026-08-21</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 8 分钟读完 · 3,046 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>10 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#错在哪设计事实">错在哪(设计事实)</a></li><li class="d2"><a href="#结果分析">结果分析</a></li><li class="d2"><a href="#方法论沉淀">方法论沉淀</a></li><li class="d3"><a href="#️-单因子分级会在最危险时段给出最低档首次发现">⚠️ 单因子分级会在最危险时段给出最低档(首次发现)</a></li><li class="d3"><a href="#️-数据源的生命周期短于业务风险的生命周期首次发现">⚠️ 数据源的生命周期短于业务风险的生命周期(首次发现)</a></li><li class="d3"><a href="#️-混合行尾会让多行锚点替换静默失败而常用命令查不出来首次发现">⚠️ 混合行尾会让多行锚点替换静默失败,而常用命令查不出来(首次发现)</a></li><li class="d3"><a href="#️-自曝局限比被人发现更有利首次发现">⚠️ 自曝局限比被人发现更有利(首次发现)</a></li><li class="d2"><a href="#顺带修掉的既有隐患">顺带修掉的既有隐患</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="风眼洪涝维度改造复盘单因子分级会在最危险时段给出最低档">风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档</h1>
+<blockquote>
+<p>一句话:当分级依据只覆盖一条致灾路径,遇到走另一条路径的极端个例时,它不是”不够准”,而是<strong>给出反向信号</strong>——风眼按风力推档,美莎克减弱成热带低压后档位回落到四档最低的蓝色,而那正是伤亡最集中的 26 小时。</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录(不可修改区)</h2>
+<ul>
+<li><strong>项目</strong>:风眼 · Typhoon Eye(<code>E:\typhoon-eye</code>),台风实况与分级应急预案单页站。双发布面:GitHub Pages + B 站 Toy(slug <code>YliUzbE5TOqySu4G</code> / id <code>8980525008896</code>)</li>
+<li><strong>起因</strong>:2026-08-21 QQ 群里群友称”7 月初的美莎克台风在广西正面登陆”,并把”风眼上查不到实况数据”当作佐证之一转发。作者要求核查</li>
+<li><strong>核查结论(外部事实)</strong>:
+<ul>
+<li>美莎克 = 2026 年第 10 号台风,国际编号 2610,<strong>强热带风暴级,全程未升格为台风级</strong></li>
+<li>两次登陆均不在广西:7-03 18:20 前后登陆海南陵水黎族自治县椰林镇(23 m/s);7-04 20:30 前后二次登陆<strong>越南</strong>广宁省芒街市(10 级 / 28 m/s)。芒街紧贴中越边境,台风在越南一侧登陆后随即进入广西</li>
+<li>登陆后结构不散反而<strong>在陆上重建眼区</strong>,眼区经广西东兴入境,在广西内陆<strong>滞留 26 小时</strong>;南宁 24 小时最大雨量 713.3 mm</li>
+<li>伤亡通报:7-07 全区 6 人遇难 11 失联 / 37.5 万人受灾 → 7-09 全区累计 39 死 9 失联 → <strong>8-21 新华社:南宁贵港两地 16 县 165 万人受灾,遇难 159 人、失联 10 人,其中六蓝、云表等水库溃坝洪灾遇难 107 人、失联 7 人</strong></li>
+<li>官方定性:<strong>弱级强灾</strong></li>
+</ul>
+</li>
+<li><strong>“风眼查不到美莎克”的真实原因</strong>:本仓库首次提交 2026-07-10 08:05,首份 <code>data/typhoon.json</code> 落盘 08:38,而美莎克 <strong>7-07 停编</strong>——差三天,它从未进入过这个系统。且风眼从设计上只渲染在编台风,海神/红霞/鲸鱼/浪卡同样查不到轨迹。与数据可得性无关(官方路径系统公开可查)</li>
+<li><strong>代码缺陷(改版前 <code>assets/app.js</code> <code>suggestLevel</code>,共 7 行)</strong>:<code>if (!t || !t.nearCoast) return "blue"</code> → <code>w>=14 orange</code> → <code>w>=10 yellow</code> → <code>blue</code>。<strong>唯一输入是 <code>windLevel</code></strong>。代入美莎克:登陆时 10 级→黄;减弱为热带低压后 &#x3C;10 级→<strong>蓝(四档最低)</strong>;7-07 停编后 <code>typhoons</code> 为空→页面显示”风平浪静”</li>
+<li><strong>改造(v0.8,commit <code>dd831ce</code>)</strong>:
+<ul>
+<li><code>scripts/fetch-typhoon.mjs</code> 接入第四个源<strong>中央气象台预警发布平台</strong>(<code>www.nmc.cn/rest/findAlarm</code>),抓暴雨/台风/山洪灾害/山洪风险/地质灾害五类在效预警;<code>alertid</code> 前 6 位即行政区划代码,免抓详情页即可聚合到省</li>
+<li>关联规则(台风↔省份,不涉用户位置):该省已发台风预警(多台风并存按最近者归属,上限 1500 km)∪ 省中心距实况点或预报路径 ≤450 km</li>
+<li>档位改为 <code>max(风力档, 洪涝档)</code>;洪涝档更高时页面显式标注”台风等级只反映风速,不代表致灾程度”</li>
+<li>停编后保留最长 7 天<strong>影响持续期</strong>,其间影响省份仍有洪涝预警在效则维持风险姿态,不回落”风平浪静”</li>
+<li>预警抓取设 60 s 总预算且可降级为 <code>ok:false</code>;两个数据工作流的校验步骤同步覆盖新字段</li>
+</ul>
+</li>
+<li><strong>实测验证(2026-08-21 当日真实数据)</strong>:北部湾 0021 号<strong>热带低压</strong>(未命名,7 级)——旧逻辑=蓝色;海南(101 km)/广西(301 km)/广东(365 km)三省均挂暴雨橙色预警 → 新逻辑=<strong>橙色,抬升两档</strong></li>
+<li><strong>上线</strong>:Pages 已部署并核验;手动触发数据工作流跑通,CI 新校验输出 <code>validated 2 active typhoon(s), 164 alert(s), 0 in aftermath</code>;B 站 Toy 提交审核 <code>status: auditing</code>,后由作者确认发布完成;复盘专栏发到 <strong>Toy 开发者小站「晒晒 Toy」分区</strong>,勾选了 <strong>AI 辅助创作声明</strong></li>
+<li><strong>数据来源</strong>:<code>git log</code>、新华社 8-21 通报、中国天气网气象分析师叶梦龙分析、维基百科登陆记录、横州公安通报、<code>toy mylist --json</code>、<code>gh run</code> 日志、浏览器 DOM 实测</li>
+</ul>
+<hr>
+<h2 id="错在哪设计事实">错在哪(设计事实)</h2>
+<p>不是阈值调错了,是<strong>分级依据只覆盖了一条致灾路径</strong>。</p>
+<p>台风等级(热带低压→热带风暴→…→超强台风)是<strong>按近中心最大风速</strong>定义的。风眼把它直接当成”危险程度”的代理,于是:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>致灾路径</th><th>风眼是否感知</th></tr></thead><tbody><tr><td>大风(吹倒/吹飞)</td><td>✅ <code>windLevel</code></td></tr><tr><td>风暴潮</td><td>⚠️ 间接(<code>nearCoast</code>)</td></tr><tr><td><strong>暴雨内涝</strong></td><td>❌ 数据模型里没有雨</td></tr><tr><td><strong>山洪/滑坡</strong></td><td>❌</td></tr><tr><td><strong>水库溃坝</strong></td><td>❌</td></tr></tbody></table>
+<p>美莎克走的是后三条。而后三条恰恰在台风<strong>减弱</strong>时才充分发展(残涡滞留、水汽持续输送),于是出现反向关系:<strong>致灾能力上升的同时,风力档位在下降</strong>。</p>
+<p>这比”少了个功能”严重:一个只报风的系统,在纯降雨型台风面前不是沉默,是<strong>主动给出安全信号</strong>。</p>
+<hr>
+<h2 id="结果分析">结果分析</h2>
+<ul>
+<li><strong>符合预期</strong>:五个场景全部通过(正常台风 / 影响持续期 / 真·风平浪静 / 旧 schema 缓存 / 预警源抓取失败);当日真实个例抬档两级;暗色主题与 CSS 令牌正常;旧 schema 下雨情区块自动隐藏,向后兼容</li>
+<li><strong>未验证部分(诚实边界)</strong>:
+<ol>
+<li><strong>影响持续期从未经历真实停编</strong>——只用构造数据测过,<code>recentlyEnded</code> 的识别逻辑(比对上一版 JSON 中消失的台风)要等下一次真实停编才算跑通</li>
+<li><strong>450 km / 1500 km 两个阈值是拍的</strong>,没有依据校准;省中心点关联对新疆、内蒙这类大省很粗糙(本场景多为华南沿海省份,影响有限)</li>
+<li><strong>省级 <code>floodLevel</code> 取全省最高档</strong>——省内可能只有个别区县发布,页面口径已注明,但仍是偏保守的放大</li>
+<li><strong>Toy 侧最终发布状态是作者人工确认的</strong>,不是我抓到的页面内容(Chrome 扩展在点击发布的瞬间断连,我停在了 <code>auditing</code>)。与<a href="/above-the-web/2026-07-30-v1-a378a3b/" class="wikilink">2026-07-30_风眼九段线问题地图事故复盘_v1</a>同一处复验缺口<strong>第二次出现</strong>:这类平台的线上态目前没有可自动化的核验手段</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="方法论沉淀">方法论沉淀</h2>
+<h3 id="️-单因子分级会在最危险时段给出最低档首次发现">⚠️ 单因子分级会在最危险时段给出最低档(首次发现)</h3>
+<p><strong>核心</strong>:分级/评分系统若只取一个代理指标,遇到走其他致灾路径的个例时会<strong>反向失效</strong>——不是不够灵敏,是自信地报安全。风眼按风力推档,而美莎克的伤亡全部来自水;风力档位在残涡滞留阶段回落到蓝色,恰是死亡最集中的 26 小时。</p>
+<p><strong>来源</strong>:美莎克(2610)“弱级强灾”,官方定性;代入改版前 <code>suggestLevel</code> 得到的档位序列 黄→蓝→风平浪静。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>给任何分级系统列一张<strong>致灾路径 × 是否被感知</strong>的表(见上文),空格就是盲区;</li>
+<li>多路径系统取 <code>max(各路径档位)</code>,不要用单一指标推导;</li>
+<li>当次要路径档位高于主指标档位时,<strong>必须在界面上说破这件事</strong>,而不是静默取高——否则用户会拿主指标(台风等级)自行推翻你的建议;</li>
+<li>迁移场景:健康风险评分、告警分级、风控评分、内容审核置信度——凡”用一个易测量代理去表达一个多因致的风险”都适用。</li>
+</ol>
+<h3 id="️-数据源的生命周期短于业务风险的生命周期首次发现">⚠️ 数据源的生命周期短于业务风险的生命周期(首次发现)</h3>
+<p><strong>核心</strong>:上游数据源的对象生命周期,往往按<strong>它自己的业务</strong>定义,而不是按你的。台风”编号”只存在 6 天(停编即从官方 JSON 消失),但这场灾害的伤亡数字是<strong>停编 45 天后</strong>才核定的(39 → 159)。系统跟着数据源的生命周期归零,于是在灾后重建期显示”风平浪静,风来之前都是准备的好时候”。</p>
+<p><strong>来源</strong>:7-07 停编 → 8-21 新华社定案,中间六周页面持续显示无台风态。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>接入外部源时明确问一句:<strong>“这个对象消失,是它的风险结束了,还是只是它在上游的记账周期结束了?”</strong></li>
+<li>两者不一致时自建一段”余波窗口”,由<strong>真实风险信号</strong>(此处=影响省份仍有洪涝预警在效)而非源对象存在与否来决定退出;</li>
+<li>余波期的文案要与常态区分,不要复用”一切正常”那套话术。</li>
+</ol>
+<h3 id="️-混合行尾会让多行锚点替换静默失败而常用命令查不出来首次发现">⚠️ 混合行尾会让多行锚点替换静默失败,而常用命令查不出来(首次发现)</h3>
+<p><strong>核心</strong>:<code>E:\typhoon-eye</code> 全部源文件为 <strong>CRLF / LF 混合</strong>(仓库既有状态,无 <code>.gitattributes</code>)。用 <code>\n</code> 拼接的<strong>多行锚点</strong>做字符串替换必然 miss,单行锚点却正常命中——症状极像”锚点写错了”,实际是行尾不匹配。更坑的是 <strong>Git Bash 的 <code>grep -c $'\r'</code>、<code>awk '/\r$/'</code>、<code>cat -A</code>、<code>wc -l</code> 都会静默剥掉 CR</strong>,查不出问题;只有 <code>node -e 'JSON.stringify(...)'</code> 或 <code>file</code> 看得见(实测 <code>app.js</code> 有 943 个 CR)。</p>
+<p><strong>来源</strong>:本轮连续 3 次多行锚点替换失败,先后怀疑过锚点抄错、heredoc 转义、patcher 逻辑,最后靠 node 打印原始字节定位。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>改这类仓库,锚点替换要么只用单行锚点,要么让匹配<strong>对行尾不敏感</strong>(先按原样找,找不到再按全 CRLF 变体找);</li>
+<li><strong>不要为此做全库行尾规范化</strong>——那会把真实改动淹没在噪声里;git 本身配了 autocrlf,提交时会归一;</li>
+<li>排查行尾问题一律用 node/python 看原始字节,别信 Git Bash 的文本工具;</li>
+<li>附带一坑:本机 bash heredoc 即使用 <code>&#x3C;&#x3C;'EOF'</code> 引号形式也观察到会把 <code>\\</code> 折成 <code>\</code>,所以 patcher 脚本里<strong>避免写正则转义</strong>(用双变体字符串匹配代替)。</li>
+</ol>
+<h3 id="️-自曝局限比被人发现更有利首次发现">⚠️ 自曝局限比被人发现更有利(首次发现)</h3>
+<p><strong>核心</strong>:“风眼查不到美莎克”被当成了传闻的佐证。真实原因(仓库比台风晚建三天 + 只渲染在编台风)平淡且对作者不利,但<strong>由作者自己讲清楚,比等别人发现要好得多</strong>——它同时解决了传闻和信任两件事。本轮把这条写进了 README、PLAN.md 和对外专栏的最后一节,并顺势承诺了”做一个能查历史台风的版本”。</p>
+<p><strong>操作规则</strong>:工具的已知局限写在自己的文档里,并在对外稿里主动点名;别等它变成别人手里的证据。与<a href="/above-the-web/v1-938b91e/" class="wikilink">打磨不等于校验律_v1</a>互补:那条讲”看起来精致会虚假抬高信任”,这条讲”主动示弱能换回真实信任”。</p>
+<hr>
+<h2 id="顺带修掉的既有隐患">顺带修掉的既有隐患</h2>
+<p><code>#tyKicker</code> 内含 <code>#tyCode</code> / <code>#tyEnName</code> 两个 span,而”风平浪静”分支直接 <code>tyKicker.textContent = "西北太平洋"</code> 会<strong>把这两个子节点连根删除</strong>,此后任何 <code>$("tyCode")</code> 返回 null。原代码没暴露是因为无台风分支之后不再引用它们;本轮新增”影响持续期”分支需要读 code/enName,一写就崩。已改为重建结构(<code>setKickerStorm</code>),顺带修掉”无台风态 → 有台风态”切换时的潜在崩溃。</p>
+<p><strong>教训</strong>:<code>textContent</code> 赋值是<strong>破坏性</strong>的,凡容器内嵌有 id 的子元素,一律重建而非直接赋值。</p>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>同项目前作:<a href="/above-the-web/2026-07-30-v1-a378a3b/" class="wikilink">2026-07-30_风眼九段线问题地图事故复盘_v1</a> —— 同一个站,上一次也是群友先发现;两次的复验缺口(Toy 线上态无法自动核验)是同一个</li>
+<li>同族反直觉律:<a href="/above-the-web/v1-938b91e/" class="wikilink">打磨不等于校验律_v1</a> —— 精细打磨不产生内容正确性证据;本档的”单因子分级”正是被反复维护却从未被问过”它覆盖全部致灾路径了吗”</li>
+<li>本轮查证方法沉淀:<a href="/above-the-web/v1-8b48fc6/" class="wikilink">混合真伪的证据链_最弱一环会拖垮最强一环_v1</a></li>
+<li>发布面清算:<a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/" class="wikilink">2026-07-11_B站Toy同步事故复盘_版本指纹与外部cron兜底_v1</a> —— 本轮同样踩到”Toy 包构建早于数据提交,内嵌快照是旧 schema”,手动重建工作流解决</li>
+<li>对外版(裸路径,不进图谱):<code>08_对外分发/台风工具在美莎克面前显示风平浪静_单因子分级的教训_公开版.md</code> —— 2026-08-21 首发 B 站 Toy 开发者小站「晒晒 Toy」分区</li>
+<li>区索引:<a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/风眼</span><span class="tag">主题/预警设计</span><span class="tag">主题/踩坑</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/2026-08-21_%E9%A3%8E%E7%9C%BC%E6%B4%AA%E6%B6%9D%E7%BB%B4%E5%BA%A6%E6%94%B9%E9%80%A0%E5%A4%8D%E7%9B%98_%E5%8D%95%E5%9B%A0%E5%AD%90%E5%88%86%E7%BA%A7%E4%BC%9A%E5%9C%A8%E6%9C%80%E5%8D%B1%E9%99%A9%E6%97%B6%E6%AE%B5%E7%BB%99%E5%87%BA%E6%9C%80%E4%BD%8E%E6%A1%A3_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/2026-08-21_%E9%A3%8E%E7%9C%BC%E6%B4%AA%E6%B6%9D%E7%BB%B4%E5%BA%A6%E6%94%B9%E9%80%A0%E5%A4%8D%E7%9B%98_%E5%8D%95%E5%9B%A0%E5%AD%90%E5%88%86%E7%BA%A7%E4%BC%9A%E5%9C%A8%E6%9C%80%E5%8D%B1%E9%99%A9%E6%97%B6%E6%AE%B5%E7%BB%99%E5%87%BA%E6%9C%80%E4%BD%8E%E6%A1%A3_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/2026-07-30-v1-a378a3b/">2026-07-30 风眼「九段线示意插图」问题地图事故复盘</a></li><li><a href="/above-the-web/v1-938b91e/">打磨不等于校验律</a></li><li><a href="/above-the-web/v1-8b48fc6/">混合真伪的证据链:最弱一环会拖垮最强一环</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/"> <span class="card-cat">平台工程</span> <h3>B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</h3> <p>- 项目:风眼 · Typhoon Eye(台风实况 + 分级应急预案,零依赖静态单页;仓库 Mr-Salticidae/typhoon-e…</p> </a><a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a><a class="card" href="/above-the-web/openai-worker-do-v1-d6b8be3/"> <span class="card-cat">平台工程</span> <h3>OpenAI 区域封锁与 Worker 就近执行陷阱 · 北美 DO 跳板</h3> <p>线上站读心&quot;全是片汤话&quot;——发布安全闸按设计剔除了 apiKey，前端落模板兜底。解法是在自有香港服务器挂同域中转代理（密钥服务器端注入）。…</p> </a><a class="card" href="/above-the-web/v1-050f2b8/"> <span class="card-cat">平台工程</span> <h3>二维码载荷硬预算与最长真实载荷验证</h3> <p>《镜像自我》扫码报告链路:给扫码载荷加了两个&quot;锦上添花&quot;字段（读心印象小标题 + 总结）,用调试直跳（空轨迹,987 字符）验证&quot;可扫&quot;后上…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#错在哪设计事实" data-toc-link="错在哪设计事实">错在哪(设计事实)</a></li><li class="d2"><a href="#结果分析" data-toc-link="结果分析">结果分析</a></li><li class="d2"><a href="#方法论沉淀" data-toc-link="方法论沉淀">方法论沉淀</a></li><li class="d3"><a href="#️-单因子分级会在最危险时段给出最低档首次发现" data-toc-link="️-单因子分级会在最危险时段给出最低档首次发现">⚠️ 单因子分级会在最危险时段给出最低档(首次发现)</a></li><li class="d3"><a href="#️-数据源的生命周期短于业务风险的生命周期首次发现" data-toc-link="️-数据源的生命周期短于业务风险的生命周期首次发现">⚠️ 数据源的生命周期短于业务风险的生命周期(首次发现)</a></li><li class="d3"><a href="#️-混合行尾会让多行锚点替换静默失败而常用命令查不出来首次发现" data-toc-link="️-混合行尾会让多行锚点替换静默失败而常用命令查不出来首次发现">⚠️ 混合行尾会让多行锚点替换静默失败,而常用命令查不出来(首次发现)</a></li><li class="d3"><a href="#️-自曝局限比被人发现更有利首次发现" data-toc-link="️-自曝局限比被人发现更有利首次发现">⚠️ 自曝局限比被人发现更有利(首次发现)</a></li><li class="d2"><a href="#顺带修掉的既有隐患" data-toc-link="顺带修掉的既有隐患">顺带修掉的既有隐患</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

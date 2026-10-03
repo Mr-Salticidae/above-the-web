@@ -1,0 +1,398 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>dws 块级插入：--index 语义陷阱与倒序插入法 · 蛛网之上</title><meta name="description" content="- 任务：往钉钉在线文档（adoc）「本地端安装」标题下插入 7 段口播正文"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/dws-index-v1-c5e1bec/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="dws 块级插入：--index 语义陷阱与倒序插入法"><meta property="og:description" content="- 任务：往钉钉在线文档（adoc）「本地端安装」标题下插入 7 段口播正文"><meta property="og:url" content="https://tiaozhuxiansheng.com/dws-index-v1-c5e1bec/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="dws 块级插入：--index 语义陷阱与倒序插入法"><meta name="twitter:description" content="- 任务：往钉钉在线文档（adoc）「本地端安装」标题下插入 7 段口播正文"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-18T11:17:55+08:00"><meta property="article:modified_time" content="2026-09-15T13:45:34+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="主题/钉钉文档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/dws-index-v1-c5e1bec/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/dws-index-v1-c5e1bec/","url":"https://tiaozhuxiansheng.com/dws-index-v1-c5e1bec/","headline":"dws 块级插入：--index 语义陷阱与倒序插入法","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 任务：往钉钉在线文档（adoc）「本地端安装」标题下插入 7 段口播正文","datePublished":"2026-08-18T11:17:55+08:00","dateModified":"2026-09-15T13:45:34+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 主题/钉钉文档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"dws 块级插入：--index 语义陷阱与倒序插入法","item":"https://tiaozhuxiansheng.com/dws-index-v1-c5e1bec/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-18T11:17:55+08:00">2026-08-18</time></span> <span>更新于 <time datetime="2026-09-15T13:45:34+08:00">2026-09-15</time></span> <span>约 16 分钟读完 · 6,084 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>38 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一方法论沉淀">一、方法论沉淀</a></li><li class="d3"><a href="#index-是插入位置不是参照位置">[—index 是”插入位置”，不是”参照位置”]</a></li><li class="d3"><a href="#顺序错了先想对调delete-是最后手段">[顺序错了先想对调，delete 是最后手段]</a></li><li class="d3"><a href="#口播脚本协作ai-只写文字层标注层归作者">[口播脚本协作：AI 只写文字层，标注层归作者]</a></li><li class="d2"><a href="#二一句话结论">二、一句话结论</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#事实追加2026-08-17-下午--callout-批注框与配图上传">事实追加（2026-08-17 下午 · callout 批注框与配图上传）</a></li><li class="d2"><a href="#事实追加2026-09-04--block-update-通道选择fetch-uuid-直改与-uuid-易变陷阱">事实追加（2026-09-04 · block update 通道选择、fetch-uuid 直改与 uuid 易变陷阱）</a></li><li class="d2"><a href="#事实追加2026-09-04--大板块改写先出待审稿再一次性入库">事实追加（2026-09-04 · 大板块改写：先出待审稿，再一次性入库）</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#事实追加2026-09-04--同事并行编辑下的改稿先拉快照倒序插入格式去留全文审阅导出">事实追加（2026-09-04 · 同事并行编辑下的改稿：先拉快照、倒序插入、格式去留、全文审阅导出）</a></li><li class="d3"><a href="#同事并行编辑--动笔必须重新拉快照">同事并行编辑 → 动笔必须重新拉快照</a></li><li class="d3"><a href="#倒序插入仍然成立同锚点插多块">倒序插入仍然成立（同锚点插多块）</a></li><li class="d3"><a href="#--content-会清掉-inline-格式这既是坑也是工具">--content 会清掉 inline 格式——这既是坑也是工具</a></li><li class="d3"><a href="#全文内容层审阅导出带-uuid-的行索引">全文内容层审阅：导出带 uuid 的行索引</a></li><li class="d3"><a href="#其他">其他</a></li><li class="d2"><a href="#六media-insert-批量插图verify-假失败与重复插入2026-09-04-补">六、+media-insert 批量插图：verify 假失败与重复插入（2026-09-04 补）</a></li><li class="d3"><a href="#插图的完整命令">插图的完整命令</a></li><li class="d3"><a href="#陷阱-1verify-失败--exit-1--批量脚本中断">陷阱 1：verify 失败 = exit 1 = 批量脚本中断</a></li><li class="d3"><a href="#陷阱-2脚本被中断的那一批以为没插的其实插了">陷阱 2：脚本被中断的那一批，“以为没插”的其实插了</a></li><li class="d3"><a href="#陷阱-3如何判定哪张是重复项">陷阱 3：如何判定哪张是重复项</a></li><li class="d3"><a href="#陷阱-4图片不是独立块是嵌在空段落里">陷阱 4：图片不是独立块，是嵌在空段落里</a></li><li class="d3"><a href="#陷阱-5jsonml-的-leaf-不是-leaf-标签">陷阱 5：JSONML 的 leaf 不是 leaf 标签</a></li><li class="d3"><a href="#校验脚本套路">校验脚本套路</a></li><li class="d2"><a href="#七窗口截图边缘光晕壁纸透色的自动修复2026-09-04-补">七、窗口截图边缘光晕（壁纸透色）的自动修复（2026-09-04 补）</a></li><li class="d3"><a href="#症状">症状</a></li><li class="d3"><a href="#根因三层逐层量化">根因（三层，逐层量化）</a></li><li class="d3"><a href="#解法亮度-色相基线自适应校正">解法：亮度-色相基线自适应校正</a></li><li class="d3"><a href="#为什么中间踩了两个坑">为什么中间踩了两个坑</a></li><li class="d3"><a href="#修复成果">修复成果</a></li><li class="d2"><a href="#八长文档内容层审核数字与专名核对的三条铁律">八、长文档内容层审核：数字与专名核对的三条铁律</a></li><li class="d3"><a href="#铁律一一致性--正确性与全文统一类建议必须先查外部信源">铁律一：一致性 ≠ 正确性——「与全文统一」类建议必须先查外部信源</a></li><li class="d3"><a href="#铁律二数字类错误必须对齐计数源不能只看句子本身">铁律二：数字类错误必须对齐”计数源”，不能只看句子本身</a></li><li class="d3"><a href="#铁律三审核报告的行号与块-id-会过期执行前必须重新定位">铁律三：审核报告的行号与块 ID 会过期，执行前必须重新定位</a></li><li class="d3"><a href="#副产物提示词原文块要不要改">副产物：提示词原文块要不要改</a></li><li class="d3"><a href="#执行通道复用">执行通道（复用）</a></li><li class="d2"><a href="#九事实追加2026-09-15--本档续篇已独立成篇">九、事实追加（2026-09-15 · 本档续篇已独立成篇）</a></li> </ol> </details> <h1 id="dws-块级插入index-语义陷阱与倒序插入法">dws 块级插入：—index 语义陷阱与倒序插入法</h1>
+<blockquote>
+<p>入档：2026-08-17
+来源：DeepSeek Harness 教程钉钉文档口播脚本补写（alidocs adoc，dws doc block 链路）
+验证状态：✅ 当场验证（顺序搞反 → 对调修复 → 倒序插入 5 段 → list 校验顺序正确）</p>
+</blockquote>
+<hr>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>任务：往钉钉在线文档（adoc）「本地端安装」标题下插入 7 段口播正文</li>
+<li>第一段用 <code>--ref-block &#x3C;标题块ID> --where after</code> 插入成功，正确落在标题后（index 22）</li>
+<li>第二段改用 <code>--index 22 --where after</code>，预期”插到 22 之后成为 23”，实际<strong>插到了 22 的位置</strong>，把第一段挤到 23，两段顺序颠倒；命令返回的 <code>"index": 22</code> 本身就暴露了这一语义，当时没读出来</li>
+<li>修复：没用 delete 重插，而是用 <code>dws doc block update</code> 把两个块的文本<strong>对调</strong>，零删除完成顺序修正</li>
+<li>剩余 5 段改用”同一锚点 <code>--ref-block</code> + <code>--where after</code> + <strong>倒序插入</strong>”（先插最后一段，再插倒数第二段……），每段都紧跟锚点，最终顺序自然正确</li>
+<li>插完用 <code>dws doc block list --start-index --end-index</code> 拉该区段校验文本顺序，确认 7 段全对</li>
+<li>另一条协作偏好（作者当场纠正）：口播脚本补写<strong>只交付纯口播文字</strong>，不要写「（花字：xxx）」「[录屏占位]」这类剪辑标注——剪辑标注由作者自己加，AI 加了反而是噪音，要整段重写</li>
+</ul>
+<h2 id="一方法论沉淀">一、方法论沉淀</h2>
+<h3 id="index-是插入位置不是参照位置">[—index 是”插入位置”，不是”参照位置”]</h3>
+<p><strong>核心</strong>：<code>dws doc block insert</code> 的 <code>--index N</code> 语义是**“插入到索引 N 处”**（原 N 及之后整体后移），不是直觉上的”插到 N 之后”。<code>--where before/after</code> 只修饰 <code>--ref-block</code>，不修饰 <code>--index</code>。把两者混用（<code>--index 22 --where after</code>）不会报错，会静默插错位置——和 <a href="/above-the-web/ui-v1-5a2fb47/" class="wikilink">UI自动化的固定坐标必须绑前提断言_v1</a> 同构：<strong>参数前提不成立时不报错，照常执行出错误结果</strong>。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>多段连续插入，锚定<strong>块 ID</strong>（<code>--ref-block</code>），不要锚索引——索引每次插入都会漂移，块 ID 是稳定引用；</li>
+<li>同一锚点连续插入多段时<strong>倒序插入</strong>（最后一段先插），每段都紧贴锚点，顺序自然正确；</li>
+<li>或者每插一段重新 <code>block list</code> 拿新块 ID 再插下一段（更慢但更直白）；</li>
+<li>插完必须 <code>block list</code> 校验最终顺序，返回的 success 只证明”插进去了”，不证明”插对了位置”（同 <a href="/above-the-web/v1-7f8ce8a/" class="wikilink">自动化产出双重验收_机器验参数人眼验内容_v1</a> 的机器关/人眼关分层）。</li>
+</ol>
+<h3 id="顺序错了先想对调delete-是最后手段">[顺序错了先想对调，delete 是最后手段]</h3>
+<p><strong>核心</strong>：两段顺序颠倒时，用 <code>block update</code> 互换两段文本即可修复，比”delete + 重插”少一步危险操作（<code>doc block delete</code> 不可恢复、且在 dws 危险操作清单里）。文本对调是幂等的、可预览的，适合一切”内容对、位置错”的修复。</p>
+<h3 id="口播脚本协作ai-只写文字层标注层归作者">[口播脚本协作：AI 只写文字层，标注层归作者]</h3>
+<p><strong>核心</strong>：给视频口播脚本补写内容时，AI 的交付物是<strong>可直接念的正文</strong>。花字、录屏占位、aroll/broll 提示、放大/变暗等剪辑标注是作者的私有工作流语言，由作者在录制/剪辑阶段自己加。AI 代加标注的三个问题：① 格式和作者的标注习惯不一致（作者用红色 span 标注，格式各异）；② 标注依赖素材实际情况，AI 不知道录了什么；③ 作者要全文删一遍标注才能用。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>补写口播脚本默认纯文字输出，结构对齐已有章节的口播语气（口语化、短句、有收口句）；</li>
+<li>事实性内容（命令、版本号、价格）先 WebSearch 核实再写，口播稿错了是播出事故；</li>
+<li>写钉钉文档前先用 <code>dws doc info</code> 探节点类型（adoc/axls/able 路由不同产品），写的过程中每步用 <code>block list</code> 校验。</li>
+</ol>
+<h2 id="二一句话结论">二、一句话结论</h2>
+<blockquote>
+<p>dws 块级插入锚块 ID 不锚索引、多段倒序插、插完 list 校验；顺序错了对调文本不重插；口播脚本只写纯文字，剪辑标注是作者的图层。</p>
+</blockquote>
+<h2 id="如何使用">如何使用</h2>
+<ul>
+<li>下次用 dws 给钉钉文档插内容：直接按「ref-block 锚定 + 倒序插入 + list 校验」三步走，跳过 <code>--index</code>；</li>
+<li>任何 CLI 的 index/位置类参数，先用一段无关内容探一次语义再批量执行（探针成本远低于返工）；</li>
+<li>接”补写脚本/文案”类需求时，先问一句”标注层谁来加”，默认只写正文。</li>
+</ul>
+<h2 id="事实追加2026-08-17-下午--callout-批注框与配图上传">事实追加（2026-08-17 下午 · callout 批注框与配图上传）</h2>
+<ul>
+<li><strong>callout 批注框的正确打开方式</strong>：钉钉”批注框”（蓝底气泡）在块体系里是 <code>container</code>（<code>subType: colorBlocks</code>），不是 <code>callout</code> 类型——直接传 <code>{"blockType":"callout"}</code> 会报 <code>Undefined block element</code>。正解：先让作者手动做一个样式满意的框，用 <code>block list --content-format jsonml</code> 读出它的完整 JSONML（含 <code>bgcolor:#E8F2FE</code>、<code>sticker:气泡</code>、<code>borderRadius:8</code>、padding 11），以后<strong>照抄这份 JSONML</strong> 用 <code>--content-format jsonml --element</code> 插入/更新。模板（2026-08-17 定型，跳蛛教程 6 个名词批注全部用它）：</li>
+</ul>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"container"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"subType"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"colorBlocks"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"metadata"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"padding"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"top"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"right"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"bottom"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"left"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">},</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"borderRadius"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">8</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"sticker"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"气泡"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"bgcolor"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"#E8F2FE"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"showstk"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}},[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"p"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,{},[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"span"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"text"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">},[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"span"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"leaf"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">},</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"标题"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]]],[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"p"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,{},[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"span"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"text"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">},[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"span"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"leaf"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">},</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"正文"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]]]]</span></span></code></pre>
+<ul>
+<li><strong>shell 转义坑</strong>：JSONML 里含中文引号和嵌套引号，直接写在 <code>--element '...'</code> 里会因转义错乱报 <code>invalid character '\\'</code>。稳定做法：JSONML 写入临时文件，<code>--element "$(cat /tmp/x.json)"</code> 传入。</li>
+<li><strong>media insert 管道吞返回值</strong>：<code>dws doc media insert ... | python -c ...</code> 解析失败时（stdout 前有杂质），<strong>插入本身已成功</strong>——用管道消费返回值做判断会误判失败导致重复插入（2026-08-17 实例：同一张图插了两次，靠 block list 数量复核才发现）。教训：media insert 后一律用 block list/read 校验数量，不靠管道返回值。</li>
+<li><strong>配图排序</strong>：多张图插同一段后要按口播顺序排列时，用”锚点链”：图 A 插段落后 → list 拿 A 的块 ID → 图 B 以 A 为 ref-block 插入 → 依此类推。倒序法在媒体块上同样适用但锚点链更直观。</li>
+<li><strong>重写带内嵌标注的段落</strong>：<code>block update --text</code> 会把原段落里作者手加的红色剪辑标注（span color）抹成纯文本——重写前提醒作者标注层会丢，需重新加（或先读出 jsonml 备份标注位置）。</li>
+</ul>
+<h2 id="事实追加2026-09-04--block-update-通道选择fetch-uuid-直改与-uuid-易变陷阱">事实追加（2026-09-04 · block update 通道选择、fetch-uuid 直改与 uuid 易变陷阱）</h2>
+<p>场景：WorkBuddy 教程钉钉文档（1300+ 块）按回执决策修订 5 个正文块 + 全文残留校验。</p>
+<ul>
+<li><strong><code>--element</code> 传裸 JSONML 数组会服务端 500</strong>：<code>block update --element '["p", {}, [...]]'</code> 报 <code>ClassCastException: Failed to set pojo McpBlockUpdateRequest property element value...(class java.util.ArrayList)</code>——该参数要的是 dict 结构（如 <code>{"blockType":"heading",...}</code>），不是裸数组；空属性 <code>{}</code> 还会被 fix-jsonml 弄成 <code>null</code> 加剧报错。<strong>纯文本段落直接用 <code>--content "文本"</code> 快捷参数</strong>，本次 5 块全部一次成功；带复杂格式才走 dict 结构或照抄容器 JSONML（见上一节 callout 模板）。</li>
+<li><strong><code>+fetch</code> 的 uuid 就是 blockId，可全文档直改</strong>：<code>+fetch --scope full --detail full</code> 返回的 <code>content.jsonml</code> 是<strong>字符串</strong>（需二次 <code>json.loads</code>）；块属性里的 <code>uuid</code>（19 位，如 <code>mtlb2dzffkezs5ny2nm</code>）可直接当 <code>--block-id</code> 传给 block update。配合 Python 递归解析（leaf 判据：<code>data-type=='leaf'</code> 且第 3 元素为 str），可越过 <code>block list</code> 只返回前 50 块的限制，<strong>任意深度的块都能定位并原地改</strong>。</li>
+<li><strong>uuid 易变陷阱（跨时间对比文档不能用 uuid）</strong>：块被编辑后 uuid 会重新生成——昨晚拉的全量与今天对比，uuid 对比得出「新增 38 块」的假象，改用 <code>(name+size)</code> 指纹（图片用文件名+字节大小，文本用内容哈希）才得到真实的「新增 10、消失 2」。<strong>uuid 只适合当次会话内的引用，跨版本对比一律用内容指纹</strong>。</li>
+<li><strong>写操作串行铁律（本次本地侧翻车）</strong>：同一文件的两处 Edit 并行执行，后者基于旧内容应用导致前者被覆盖——工具没报错但改动丢了。文件写操作（Edit/Write/块更新）一律串行，或合并为一次重写。</li>
+<li><strong>Windows 回收站删除对中文路径基本不可用</strong>：send2trash 依赖 8.3 短文件名转换，路径含中文且系统未启用 8.3 名称时报 <code>FileNotFoundError: \\?\E:/...</code>；PowerShell 工具又拦截 <code>Add-Type</code>（COM Shell.Application 方案不通）。实际可用路径：用户明确拍板后 <code>rm</code>，或先把文件挪到纯英文路径再 send2trash。</li>
+</ul>
+<h2 id="事实追加2026-09-04--大板块改写先出待审稿再一次性入库">事实追加（2026-09-04 · 大板块改写：先出待审稿，再一次性入库）</h2>
+<p>场景：WorkBuddy 教程《能力7-Skill》板块（22 块 / 2061 字）从「概念讲解」改为「手把手实操演示」。</p>
+<ul>
+<li><strong>诊断先行：全文导出整板块再判断</strong>。用 <code>+fetch</code> 全量 + Python 打印「标题块 → 下一同级标题块」之间的全部块（uuid + tag + 文本），一眼看出结构性问题：本板块前 4 段是理论、后 12 块是链接罗列、全篇没有一步操作路径——只靠读单块看不出「整块是干的」。</li>
+<li><strong>大板块改写不要直接写进文档</strong>。先出一份<strong>本地待审 md</strong>，固定三节结构：① 口播正文（纯净可直接念）；② 写入方案表（每段对应哪个现有 uuid、改写/新增/删除/保持）；③ 待定项（事实存疑、结构归属、补图清单）。作者一次确认覆盖全部块，避免「逐块改到一半被推翻」的返工——这比直接动文档省得多。</li>
+<li><strong>改写时顺手解决旧错误</strong>：动手前先把该板块已知的「不可复现 / 入口不符」条目列入待定项，在新稿里一次性处理（本次：删掉无法复现的「指令反向生成」弹窗说法、把「设置页导入」改为「技能页 → 添加技能 → 上传技能」）。</li>
+<li><strong>操作步骤要对齐真实界面菜单</strong>：实操稿的每一步必须能在界面上点出来，命名用界面原文（「查找技能 / 上传技能 / 创建技能」），不要用「照表单填」这类想当然的描述——口播稿描述错路径是播出事故。</li>
+<li><strong>补图跟在文稿之后</strong>：正文定了再列补图清单，并标出「需重渲」的图（本次 07-3 三条路示意图因正文改名而失效）——先出图后改文，图必返工。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/v1-388f3ab/" class="wikilink">钉钉知识库交付_格式白名单与终版回填闭环_v1</a>（同域上游：往钉钉交付长文档的格式白名单与回填闭环；本档是 dws 直连块级编辑的操作层补充）</li>
+<li><a href="/above-the-web/2026-08-26-v1-0e13a0e/" class="wikilink">2026-08-26_周报整合钉钉周会手册_三轮修复与诊断反转复盘_v1</a>（同链路下游：周报场景实战——表格 element 通道、<code>--where before</code> 正序镜像、listId 共享判据与 <code>--block-id</code> 过滤失效实测）</li>
+<li><a href="/above-the-web/v1-7f8ce8a/" class="wikilink">自动化产出双重验收_机器验参数人眼验内容_v1</a>（同根：命令返回 success ≠ 位置正确，必须独立校验）</li>
+<li><a href="/above-the-web/ui-v1-5a2fb47/" class="wikilink">UI自动化的固定坐标必须绑前提断言_v1</a>（同构：参数前提不满足时不报错、静默执行出错误结果）</li>
+<li><a href="/above-the-web/v1-f404c4e/" class="wikilink">变通方案不等于故障点_v1</a>（同项目提醒：钉钉链路结论要写明验证场景，不凭反推）</li>
+<li><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul>
+<h2 id="事实追加2026-09-04--同事并行编辑下的改稿先拉快照倒序插入格式去留全文审阅导出">事实追加（2026-09-04 · 同事并行编辑下的改稿：先拉快照、倒序插入、格式去留、全文审阅导出）</h2>
+<p>场景：WorkBuddy 教程《能力6-Skill》板块按 v2.1 稿写入 9 块；期间同事同步把「仓库推荐区」从散装链接重做成三张表格，并把整篇能力编号前移一位（删了原能力5-AI助理，导致 6→5、7→6、8→7、9→8、10→9）。</p>
+<h3 id="同事并行编辑--动笔必须重新拉快照">同事并行编辑 → 动笔必须重新拉快照</h3>
+<ul>
+<li><strong>别人的改动会让你手里的 uuid 表失效</strong>。我按旧快照规划写入位置，同事同时插入了 95 个表格块（含表头/行/单元格），原「心法收尾」块 <code>mtlbn2cj6gecwirii92</code> 已被 <code>mtmn3mvol3k0v8nnua</code> 取代。<strong>写入前一定重新 <code>+fetch</code> 一次</strong>，用新快照定位锚点——用旧快照的位置规划去写，会插到错误位置且难以回滚。</li>
+<li><strong>结构被重做时，先适配再写，不要对抗</strong>。同事把推荐区做成表格后，我原稿第五步「逐个念仓库名」就废了，改为「下面这几张表给你归好类了……链接都直接列在表里」一句带过，正文负责讲操作、表格负责给清单，各司其职。</li>
+<li><strong>编号整体位移要全局查引用</strong>。能力编号前移后，全文搜「能力\d+」确认正文无残留旧编号引用（本次一处都没有，因为正文从不引用编号，只有标题有——但这属于运气，必须查）。</li>
+</ul>
+<h3 id="倒序插入仍然成立同锚点插多块">倒序插入仍然成立（同锚点插多块）</h3>
+<p>同锚点 <code>X</code> 用 <code>--where after</code> 插多块时，<strong>按「最终顺序的倒序」依次插入</strong>：想得 <code>X → A → B</code>，就先插 B（after X），再插 A（after X）——后插的会顶到最前面。本次「第六步」+「心法」两块即如此，结果 <code>684 选择路径收尾 → 685 第六步 → 686 心法</code>，顺序正确。</p>
+<ul>
+<li>注意：<code>block insert</code> 返回体<strong>不含新块 uuid</strong>（只有 blockType/index/logId），要拿到新块 ID 必须事后 <code>+fetch</code> 再解析。</li>
+</ul>
+<h3 id="--content-会清掉-inline-格式这既是坑也是工具"><code>--content</code> 会清掉 inline 格式——这既是坑也是工具</h3>
+<ul>
+<li>用 <code>--content "文本"</code> 更新段落，<strong>原块上的 highlight / color / bold 等 inline 属性全部消失</strong>。</li>
+<li>反过来说：<strong>想去掉同事留下的讨论用高亮，用 <code>--content</code> 重写是最省事的办法</strong>（比构造 jsonml 摘除属性简单得多）。本次三段带黄色高亮 <code>#F9DDB2</code> 的块，其中两段被 <code>--content</code> 覆盖时高亮自动消失，剩下一段是之前用 jsonml 通道特意保留的，最后单独用 <code>--content</code> 重写才统一。</li>
+<li>判据：<strong>要留格式 → <code>--element '[...]' --content-format jsonml</code>；要去格式 → <code>--content</code>。</strong></li>
+<li>前提：确认高亮是「讨论用」而非「正文强调」再动手。本次由作者确认「Skill 板块的高亮是同事讨论时候用的，与我们的写入无关，可以覆盖」后才执行。</li>
+</ul>
+<h3 id="全文内容层审阅导出带-uuid-的行索引">全文内容层审阅：导出带 uuid 的行索引</h3>
+<p>审长文档（本例 4.5 万字 / 2484 块）不要靠 <code>block list</code>（只有前 50 块）或肉眼翻页面。可用流程：</p>
+<ol>
+<li><code>dws doc +fetch --node &#x3C;id> --scope full --detail full > doc.json</code></li>
+<li>Python <code>json.loads(data['content']['jsonml'])</code>（<strong>注意是字符串，要二次解析</strong>）</li>
+<li>递归遍历，<strong>只收直属 leaf 文本</strong>（子块的文本不计入父块，否则父块文本会含全部子孙，重复且无法定位）</li>
+<li>输出 <code>doc_index.tsv</code>：每行 <code>行号 \t uuid \t 类型 \t 文本</code></li>
+<li>正则扫疑似问题（<code>的的</code>、<code>了了</code>、<code>存储中</code>、<code>，，</code>、术语不一致、数字前后矛盾），命中后从 tsv 直接取 uuid</li>
+</ol>
+<p><strong>好处：审核报告里每条问题都能附块 ID，作者点头后可以直接批量执行，不用二次定位。</strong>
+本次用这套流程扫出 A 类明确错误 27 处、B 类内容缺失 7 处（都是正文留了位置没填的网址）。</p>
+<h3 id="其他">其他</h3>
+<ul>
+<li><code>dws doc block list</code> <strong>没有 <code>--ref-block</code> / <code>--where</code> 参数</strong>（只有 start-index / end-index / block-id / block-type），报 <code>unknown flag</code>。想按锚点取附近块，只能 <code>+fetch</code> 全量后本地解析。</li>
+<li><strong>bash heredoc 写 Python 会被吃掉反斜杠</strong>：heredoc 里 <code>'\n'.join(...)</code> 会变成 <code>'/n'.join(...)</code>，且引号嵌套易乱，直接 SyntaxError。含转义字符的脚本一律用文件写入工具落盘，不要用 <code>cat &#x3C;&#x3C; 'EOF'</code>。</li>
+<li>表格单元格是普通 <code>&#x3C;p></code> 块，若内容是不带链接属性的纯文本，可以直接 <code>--content</code> 改（本次订正表格内 <code>skillhub.tencent.com</code> → <code>skillhub.cn</code>）。改前先用脚本 dump 该块的原始 jsonml 确认没有 <code>a</code> / <code>link</code> 包裹，否则会把超链接打没。</li>
+</ul>
+<h2 id="六media-insert-批量插图verify-假失败与重复插入2026-09-04-补">六、+media-insert 批量插图：verify 假失败与重复插入（2026-09-04 补）</h2>
+<h3 id="插图的完整命令">插图的完整命令</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>cd &#x3C;图片所在目录>   # 必须！用 ./相对路径</span></span>
+<span class="line"><span>dws doc +media-insert --node &#x3C;DOC> --file ./xxx.png --ref-block &#x3C;ID> --where after -y</span></span></code></pre>
+<h3 id="陷阱-1verify-失败--exit-1--批量脚本中断">陷阱 1：verify 失败 = exit 1 = 批量脚本中断</h3>
+<p>四步流程 <code>resolve_upload -> upload_oss -> insert_block -> verify</code>。<strong>verify 这一步经常失败</strong>：
+<code>媒体资源在有界回读窗口内仍无法读取: list_document_blocks 声明仍有下一页但当前页为空</code>，
+返回 <code>partial_success</code>、<code>verified: false</code>、<code>retryable: false</code>，进程退出码 1。</p>
+<p><strong>但实际已经插入成功</strong>（前三步 success）。
+后果：bash 批量脚本里如果直接串行调用，第一张就把脚本”跑死”了（我第一次就只插成 2 张）。</p>
+<p>对策：批量脚本每张命令后加 <code>|| true</code>，或把退出码吞掉（子 shell 里跑完再 echo 退出码）。
+<strong>不要用 <code>&#x26;&#x26;</code> 串联，不要 <code>set -e</code>。</strong></p>
+<p><code>+media-list</code> <strong>不能作为校验依据</strong>（count 恒等于附件数，不含图片）。
+唯一可信的校验是 <code>+fetch</code> 全量拉下来数 img 块。</p>
+<h3 id="陷阱-2脚本被中断的那一批以为没插的其实插了">陷阱 2：脚本被中断的那一批，“以为没插”的其实插了</h3>
+<p>本次：批 A 脚本执行到第 3 张时进程被 SIGTERM，日志显示”插入 07-13”后无结果。
+我判断没成功，又单独重插了一次 —— 结果那一组变成 4 张（应 3 张）。
+<strong>根因</strong>：SIGTERM 发生在 verify 阶段或之后，前三步早已写库。</p>
+<p>对策：批量插入中途被打断后，<strong>必须先拉快照数一遍实际张数，再决定补哪张</strong>，
+绝不能凭”日志没有成功输出”就重跑。</p>
+<h3 id="陷阱-3如何判定哪张是重复项">陷阱 3：如何判定哪张是重复项</h3>
+<p>钉钉块 uuid 形如 <code>mt</code> + base36 时间戳 + 随机串（如 <code>mtmujds9w807gsgt0a</code>）。
+<strong>中间两个字符是时间戳，越大 = 创建越晚</strong>：jd(697) > ha(622) > en(527) > cz(467)。
+配合倒序插入法可以还原真实插入顺序，再拿 <code>src</code> 尾 40 字符和执行日志里的 <code>resourceUrl</code> 比对，
+就能精确定位”哪一张是重跑的那张”，删掉即可，不用猜。</p>
+<h3 id="陷阱-4图片不是独立块是嵌在空段落里">陷阱 4：图片不是独立块，是嵌在空段落里</h3>
+<p><code>+media-insert</code> 生成的结构是 p 段落内嵌 img 节点：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"p"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, {</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"uuid"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">},</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"span"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, {</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"text"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}, [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"span"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, {</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"leaf"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">""</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]],</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"img"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, {</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"uuid"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"src"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}, [</span><span style="--shiki-light:#B31D28;--shiki-light-font-style:italic;--shiki-dark:#FDAEB7;--shiki-dark-font-style:italic">...</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]],</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"span"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, {</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"text"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}, [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"span"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, {</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"leaf"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">""</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]]]</span></span></code></pre>
+<p><strong>删图 = 删整个 p 段落</strong>（不是删 img 子节点），<code>block delete --block-id &#x3C;p 的 uuid></code>。
+校验时也不能只统计”顶层块里的 img”，要递归找。</p>
+<h3 id="陷阱-5jsonml-的-leaf-不是-leaf-标签">陷阱 5：JSONML 的 leaf 不是 leaf 标签</h3>
+<p>文本节点是 <code>["span", {"data-type":"leaf"}, "文字"]</code> —— <strong>标签是 span，靠属性区分</strong>。
+按 <code>x[0] == "leaf"</code> 判断会全部落空（我第一次 dump 出来所有块文本都是空字符串，
+一度以为同事把正文搬走了）。正确写法：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> x[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">] </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">==</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "span"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> and</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> isinstance</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(x[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">], </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">dict</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">and</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> x[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">].get(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"data-type"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">==</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "leaf"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    text </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> x[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre>
+<h3 id="校验脚本套路">校验脚本套路</h3>
+<p>统计”锚点块之后紧跟的连续新图段落数”，与预期张数逐锚点比对：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">EXPECT</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {anchor_uuid: [图1说明, 图2说明], </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 新插入的 img：uuid 以 mt 开头且长度 > 12（文档原有的图多是 6 位短 uuid）</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 每个锚点往下扫，遇到非新图段落就停</span></span></code></pre>
+<p>26 张一次性校验完成，当场抓出 1 处重复。</p>
+<h2 id="七窗口截图边缘光晕壁纸透色的自动修复2026-09-04-补">七、窗口截图边缘光晕（壁纸透色）的自动修复（2026-09-04 补）</h2>
+<h3 id="症状">症状</h3>
+<p>实机截图（非全屏，窗口贴不满桌面）四周有一圈橙红色杂边。
+本次 26 张图里 13 张 1920×1080 实机截图全部中招；
+3200×1800 的示意图和 1600×900 的图完全干净 —— <strong>凡是自己画的图就不会有</strong>。</p>
+<h3 id="根因三层逐层量化">根因（三层，逐层量化）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>层</th><th>特征</th><th>数据</th></tr></thead><tbody><tr><td>窗口阴影</td><td>顶/右边缘柔和渐变，R-G 从 +36 衰减到 +16，跨 25-30px</td><td>无清晰边界</td></tr><tr><td>窗口边框</td><td>左边缘 x=6 处 R-G 从 +36 跳到 +19 后<strong>完全稳定</strong></td><td>清晰边界</td></tr><tr><td>圆角外的壁纸</td><td>四角 12×12 均值 R-G 48-67，比边中部（+36）更深</td><td>矩形裁剪治不了</td></tr></tbody></table>
+<p><strong>界面本体本身就是暖白设计（R-G ≈ 15-19）</strong>，所以”把橙色都改掉”会误伤界面，
+只能把”超出本体水平的色相偏移”压回去。</p>
+<h3 id="解法亮度-色相基线自适应校正">解法：亮度-色相基线自适应校正</h3>
+<ol>
+<li><strong>自动检测四边光带宽度</strong>：从边缘往内扫，找第一个”连续 8 像素 R-G ≤ 22”的位置，+3px 余量后裁剪</li>
+<li><strong>建基线</strong>：用图像内部区域（距边 > 100px）按亮度桶（r//16）统计 R-G / R-B 的中位数</li>
+<li><strong>边缘带 64px 内校正</strong>：超出 <code>基线 + 4</code> 的部分压回；<code>excess &#x3C; 50</code> 才动（保护 UI 高饱和橙色按钮）</li>
+</ol>
+<p>效果：残留 4981 → 157 像素（散布在 12px 环带，肉眼不可见），
+顶部橙色”安装”按钮、彩色卡片图标零误伤。</p>
+<h3 id="为什么中间踩了两个坑">为什么中间踩了两个坑</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>坑</th><th>现象</th><th>修正</th></tr></thead><tbody><tr><td>阈值写死</td><td>用 <code>g &#x3C; r*0.62</code> 判定橙边 → 26 张报 0 张（边缘像素 R-G 只有 36）</td><td>改用相对值</td></tr><tr><td>用绝对亮度保护</td><td><code>g > 150 才校正</code> → 深色遮罩弹窗图（g ≈ 104）全部漏掉，07-13 校正像素为 0</td><td>改用”每亮度档的基线”，深浅界面通吃</td></tr></tbody></table>
+<p><strong>结论：界面颜色是设计出来的，不能靠绝对阈值判断”正不正常”，只能跟图像自己的统计比。</strong></p>
+<h3 id="修复成果">修复成果</h3>
+<p>13 张修复图输出到 <code>截图_clean/</code>，原图未动。</p>
+<hr>
+<h2 id="八长文档内容层审核数字与专名核对的三条铁律">八、长文档内容层审核：数字与专名核对的三条铁律</h2>
+<p>场景：3 万字钉钉教程《WorkBuddy全案实战汇总》，先产出一份 A/B/C 分类审核报告（A 类明确错误 27 处），再分批执行修改。执行到「事实数字类」时踩出的坑。</p>
+<h3 id="铁律一一致性--正确性与全文统一类建议必须先查外部信源">铁律一：一致性 ≠ 正确性——「与全文统一」类建议必须先查外部信源</h3>
+<p>审核报告 #12 建议：某处写「混元 <strong>Hy3</strong>」，全文其余 12 处写「混元 3」，故「Hy3 → 混元 3」。</p>
+<p><strong>这个建议是反的。</strong> 查证后：</p>
+<ul>
+<li>腾讯 2026-07-06 正式发布 <strong>Hy3</strong>（腾讯 Hy，原「腾讯混元」品牌）</li>
+<li>官方英文稿原文：<em>“In internal evaluations conducted within Tencent’s workplace environment, Hy3 delivered a task success rate exceeding 90% when used in WorkBuddy…”</em></li>
+<li>文档那句正是「基于 WorkBuddy 办公场景内部测评，Hy3 整体表现质量更高速度更快」——照官方口径写的，<strong>内容正确</strong></li>
+<li>反倒是全文 12 处「混元 3（Hunyuan 3）」疑似旧称</li>
+</ul>
+<p><strong>教训</strong>：审核报告里凡出现「改成与 XX 统一」这种理由，它证明的只是「多数派」，不是「正确」。多数派可能集体过期。这类条目必须先查权威信源再定方向，否则会把对的内容改错——<strong>改错比不改的代价大得多</strong>。</p>
+<p>判断顺序应为：<strong>① 外部信源查证 → ② 再看全文是否需同步 → ③ 改不动的标为待确认</strong>（例如模型名这类”要看客户端实际显示什么”的事项，AI 判不了，交给人）。</p>
+<h3 id="铁律二数字类错误必须对齐计数源不能只看句子本身">铁律二：数字类错误必须对齐”计数源”，不能只看句子本身</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>报告的说法</th><th>实际要怎么做</th></tr></thead><tbody><tr><td>#7 资料库形态数</td><td>「五种形态」应改「六种」</td><td>光看这句判断不了。要拉出上方<strong>表格的实际行数</strong>——表格 6 行（在线文档/网页剪藏/数据表/汇报页/网盘文件/目录·空间），且原句只列了 5 个名词。所以不只是改数字，<strong>还要补漏掉的那个名词</strong>（汇报页）</td></tr><tr><td>#25「怎么用（2步）」</td><td>改「4 步」</td><td>往下数实际「步骤一/二/三/四」标题，确认是 4 个再改；顺带发现步骤一与步骤二内容重叠（属另一类问题，记入报告但不擅自动）</td></tr><tr><td>#24 笔记篇数 6 vs 5</td><td>两处矛盾，需统一</td><td><strong>同块内数字出现次数是判决依据</strong>：<code>mtmuayu65awu79tuhx8</code> 一块内「6」出现 3 次（6 个 md / 六篇笔记连通子图 / 6 个原始文件），而另一块的「五」只出现 1 次 → 以 6 为准，只改那 1 处</td></tr></tbody></table>
+<p><strong>要点</strong>：数字错往往伴随「列举项漏项」或「别处另有说法」，只替换数字会留下新的不一致。改前先把整节上下文（前后 8 块）dump 出来看。</p>
+<h3 id="铁律三审核报告的行号与块-id-会过期执行前必须重新定位">铁律三：审核报告的行号与块 ID 会过期，执行前必须重新定位</h3>
+<p>文档在上一步被改动过（插章节、删块、插图），报告的坐标就失效了：</p>
+<ul>
+<li>#13 报告给的 <code>mtmenixo5ng2f6im3j</code> 已不存在，实际块是 <code>mtmenixop9v7vpuqnj</code></li>
+<li>#24 报告给的 <code>mtl922crwkzgm81pmr</code> 已失效，实际要改的是 <code>mtl7sbjiumabjber7ts</code></li>
+<li>#25 报告写「5、怎么用」，文档实际是「3、怎么用」</li>
+<li>#5 报告写直角引号 <code>「任务」</code>，文档实际是弯引号 <code>“任务”</code></li>
+</ul>
+<p><strong>做法</strong>：写脚本按 uuid 在<strong>最新快照</strong>里反查，命中不到就按关键词全文重找，不要直接拿报告的 ID 去调 update。</p>
+<h3 id="副产物提示词原文块要不要改">副产物：提示词原文块要不要改</h3>
+<p>教程里的 prompt 是”录制时念的原文”，改了会与录像不一致。判据：</p>
+<ul>
+<li><strong>缺字/错字照改</strong>（如「…<strong>向</strong>、左侧纵向坐标标尺」→「<strong>横向</strong>、左侧…」）——错别字不影响录像语义</li>
+<li><strong>内容自相矛盾不擅改</strong>（如同一段 prompt 先说「小清新风格」后说「暗黑主题」）——可能就是原样念出来的，要问作者；可在旁边加口播说明而非删改</li>
+</ul>
+<h3 id="执行通道复用">执行通道（复用）</h3>
+<p>改文字一律走 <code>--element '&#x3C;jsonml>' --content-format jsonml</code>，<strong>不要用 <code>--content "文本"</code></strong>（后者会清掉 highlight/color/bold 等 inline 格式）。同块多处替换必须<strong>合成一次更新</strong>——分两次会因 uuid 在首次更新后变更而失效。</p>
+<hr>
+<h2 id="九事实追加2026-09-15--本档续篇已独立成篇">九、事实追加（2026-09-15 · 本档续篇已独立成篇）</h2>
+<p>同一篇《WorkBuddy全案实战汇总》的逐字稿补写（案例 7 / 案例 12 引言 + 两处过渡话术），本轮沉淀两条超出本篇标题范围的新律，<strong>已独立成篇，见 <a href="/above-the-web/2026-09-15-mention-v1-8393eba/" class="wikilink">2026-09-15_钉钉逐字稿引言与过渡话术补写_占位符原地改写与mention保留_v1</a></strong>：</p>
+<ol>
+<li><strong>正文里写着「过渡话术」的段落 = 作者预留的槽位</strong>，接到「补一段过渡话术」要先读区间——槽位往往已存在，原地改写而非新增；且槽位块带 <code>@某人</code> mention，改写必须原样拼回（<code>--content</code> 会把 mention 一起清掉，只能走 JSONML 通道）。</li>
+<li><strong>逐字稿案例引言有固定骨架</strong>（承上 → 传统做法对比 → 本节定位 + 步骤数预告 → 成品展示句 → 制作步骤），其中「一共 N 步」必须往下数正文实际步骤标题——与本篇「铁律二：数字对齐计数源」同失效模式，本次为跨场景二次验证。</li>
+</ol>
+<p>本篇的倒序插入法在本轮第三次验证成立；JSONML 通道留格式 / <code>--content</code> 清格式的判据本轮再次适用（mention 属于要留的那一类）。</p> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">主题/钉钉文档</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-15T13:45:34+08:00">2026-09-15</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/dws%E5%9D%97%E7%BA%A7%E6%8F%92%E5%85%A5_index%E8%AF%AD%E4%B9%89%E9%99%B7%E9%98%B1%E4%B8%8E%E5%80%92%E5%BA%8F%E6%8F%92%E5%85%A5%E6%B3%95_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/dws%E5%9D%97%E7%BA%A7%E6%8F%92%E5%85%A5_index%E8%AF%AD%E4%B9%89%E9%99%B7%E9%98%B1%E4%B8%8E%E5%80%92%E5%BA%8F%E6%8F%92%E5%85%A5%E6%B3%95_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/doc-mcp-gcp-v1-77ca6ee/">腾讯文档 doc-mcp 程序化编辑 · GCP 坐标定位与自底向上防漂移</a></li><li><a href="/above-the-web/2026-08-18-deepseekharness-v1-776a9b4/">DeepSeek Harness 保姆级教程 · 两日全链路协作复盘</a></li><li><a href="/above-the-web/2026-08-19-deepseekharness-mcp-v1-a93c3ec/">DeepSeek Harness 教程收口日 · MCP 改写与录屏重录交接复盘</a></li><li><a href="/above-the-web/2026-08-26-v1-0e13a0e/">周报整合钉钉周会手册：三轮修复与诊断反转复盘</a></li><li><a href="/above-the-web/2026-09-08-workbuddy-v1-2-v1-d3c41fb/">WorkBuddy 教程录屏公告与《屏幕录制标准》v1.2 · 协作复盘</a></li><li><a href="/above-the-web/2026-09-15-mention-v1-8393eba/">钉钉逐字稿补写：「过渡话术」是占位符不是待办 + 案例引言体例</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/ui-v1-5a2fb47/"> <span class="card-cat">方法论与洞察</span> <h3>UI 自动化的固定坐标，必须绑一条可机检的前提断言</h3> <p>坐标写错是响亮的失败——点了个空白处，什么都没发生，你立刻知道。</p> </a><a class="card" href="/above-the-web/v1-388f3ab/"> <span class="card-cat">方法论与洞察</span> <h3>钉钉知识库交付：格式白名单 + 终版回填闭环</h3> <p>- 目标：教程正文定稿后并入公司钉钉知识库母文档，上级在钉钉上做终审</p> </a><a class="card" href="/above-the-web/v1-f404c4e/"> <span class="card-cat">方法论与洞察</span> <h3>变通方案不等于故障点</h3> <p>接手钉钉交付时，我看到仓库里同日提交了 4 个格式变体（附件版 / 公网图链版 / 纯文字版 / 占位标注版），据此反推出结论：&quot;钉钉粘贴带…</p> </a><a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一方法论沉淀" data-toc-link="一方法论沉淀">一、方法论沉淀</a></li><li class="d3"><a href="#index-是插入位置不是参照位置" data-toc-link="index-是插入位置不是参照位置">[—index 是”插入位置”，不是”参照位置”]</a></li><li class="d3"><a href="#顺序错了先想对调delete-是最后手段" data-toc-link="顺序错了先想对调delete-是最后手段">[顺序错了先想对调，delete 是最后手段]</a></li><li class="d3"><a href="#口播脚本协作ai-只写文字层标注层归作者" data-toc-link="口播脚本协作ai-只写文字层标注层归作者">[口播脚本协作：AI 只写文字层，标注层归作者]</a></li><li class="d2"><a href="#二一句话结论" data-toc-link="二一句话结论">二、一句话结论</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#事实追加2026-08-17-下午--callout-批注框与配图上传" data-toc-link="事实追加2026-08-17-下午--callout-批注框与配图上传">事实追加（2026-08-17 下午 · callout 批注框与配图上传）</a></li><li class="d2"><a href="#事实追加2026-09-04--block-update-通道选择fetch-uuid-直改与-uuid-易变陷阱" data-toc-link="事实追加2026-09-04--block-update-通道选择fetch-uuid-直改与-uuid-易变陷阱">事实追加（2026-09-04 · block update 通道选择、fetch-uuid 直改与 uuid 易变陷阱）</a></li><li class="d2"><a href="#事实追加2026-09-04--大板块改写先出待审稿再一次性入库" data-toc-link="事实追加2026-09-04--大板块改写先出待审稿再一次性入库">事实追加（2026-09-04 · 大板块改写：先出待审稿，再一次性入库）</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#事实追加2026-09-04--同事并行编辑下的改稿先拉快照倒序插入格式去留全文审阅导出" data-toc-link="事实追加2026-09-04--同事并行编辑下的改稿先拉快照倒序插入格式去留全文审阅导出">事实追加（2026-09-04 · 同事并行编辑下的改稿：先拉快照、倒序插入、格式去留、全文审阅导出）</a></li><li class="d3"><a href="#同事并行编辑--动笔必须重新拉快照" data-toc-link="同事并行编辑--动笔必须重新拉快照">同事并行编辑 → 动笔必须重新拉快照</a></li><li class="d3"><a href="#倒序插入仍然成立同锚点插多块" data-toc-link="倒序插入仍然成立同锚点插多块">倒序插入仍然成立（同锚点插多块）</a></li><li class="d3"><a href="#--content-会清掉-inline-格式这既是坑也是工具" data-toc-link="--content-会清掉-inline-格式这既是坑也是工具">--content 会清掉 inline 格式——这既是坑也是工具</a></li><li class="d3"><a href="#全文内容层审阅导出带-uuid-的行索引" data-toc-link="全文内容层审阅导出带-uuid-的行索引">全文内容层审阅：导出带 uuid 的行索引</a></li><li class="d3"><a href="#其他" data-toc-link="其他">其他</a></li><li class="d2"><a href="#六media-insert-批量插图verify-假失败与重复插入2026-09-04-补" data-toc-link="六media-insert-批量插图verify-假失败与重复插入2026-09-04-补">六、+media-insert 批量插图：verify 假失败与重复插入（2026-09-04 补）</a></li><li class="d3"><a href="#插图的完整命令" data-toc-link="插图的完整命令">插图的完整命令</a></li><li class="d3"><a href="#陷阱-1verify-失败--exit-1--批量脚本中断" data-toc-link="陷阱-1verify-失败--exit-1--批量脚本中断">陷阱 1：verify 失败 = exit 1 = 批量脚本中断</a></li><li class="d3"><a href="#陷阱-2脚本被中断的那一批以为没插的其实插了" data-toc-link="陷阱-2脚本被中断的那一批以为没插的其实插了">陷阱 2：脚本被中断的那一批，“以为没插”的其实插了</a></li><li class="d3"><a href="#陷阱-3如何判定哪张是重复项" data-toc-link="陷阱-3如何判定哪张是重复项">陷阱 3：如何判定哪张是重复项</a></li><li class="d3"><a href="#陷阱-4图片不是独立块是嵌在空段落里" data-toc-link="陷阱-4图片不是独立块是嵌在空段落里">陷阱 4：图片不是独立块，是嵌在空段落里</a></li><li class="d3"><a href="#陷阱-5jsonml-的-leaf-不是-leaf-标签" data-toc-link="陷阱-5jsonml-的-leaf-不是-leaf-标签">陷阱 5：JSONML 的 leaf 不是 leaf 标签</a></li><li class="d3"><a href="#校验脚本套路" data-toc-link="校验脚本套路">校验脚本套路</a></li><li class="d2"><a href="#七窗口截图边缘光晕壁纸透色的自动修复2026-09-04-补" data-toc-link="七窗口截图边缘光晕壁纸透色的自动修复2026-09-04-补">七、窗口截图边缘光晕（壁纸透色）的自动修复（2026-09-04 补）</a></li><li class="d3"><a href="#症状" data-toc-link="症状">症状</a></li><li class="d3"><a href="#根因三层逐层量化" data-toc-link="根因三层逐层量化">根因（三层，逐层量化）</a></li><li class="d3"><a href="#解法亮度-色相基线自适应校正" data-toc-link="解法亮度-色相基线自适应校正">解法：亮度-色相基线自适应校正</a></li><li class="d3"><a href="#为什么中间踩了两个坑" data-toc-link="为什么中间踩了两个坑">为什么中间踩了两个坑</a></li><li class="d3"><a href="#修复成果" data-toc-link="修复成果">修复成果</a></li><li class="d2"><a href="#八长文档内容层审核数字与专名核对的三条铁律" data-toc-link="八长文档内容层审核数字与专名核对的三条铁律">八、长文档内容层审核：数字与专名核对的三条铁律</a></li><li class="d3"><a href="#铁律一一致性--正确性与全文统一类建议必须先查外部信源" data-toc-link="铁律一一致性--正确性与全文统一类建议必须先查外部信源">铁律一：一致性 ≠ 正确性——「与全文统一」类建议必须先查外部信源</a></li><li class="d3"><a href="#铁律二数字类错误必须对齐计数源不能只看句子本身" data-toc-link="铁律二数字类错误必须对齐计数源不能只看句子本身">铁律二：数字类错误必须对齐”计数源”，不能只看句子本身</a></li><li class="d3"><a href="#铁律三审核报告的行号与块-id-会过期执行前必须重新定位" data-toc-link="铁律三审核报告的行号与块-id-会过期执行前必须重新定位">铁律三：审核报告的行号与块 ID 会过期，执行前必须重新定位</a></li><li class="d3"><a href="#副产物提示词原文块要不要改" data-toc-link="副产物提示词原文块要不要改">副产物：提示词原文块要不要改</a></li><li class="d3"><a href="#执行通道复用" data-toc-link="执行通道复用">执行通道（复用）</a></li><li class="d2"><a href="#九事实追加2026-09-15--本档续篇已独立成篇" data-toc-link="九事实追加2026-09-15--本档续篇已独立成篇">九、事实追加（2026-09-15 · 本档续篇已独立成篇）</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

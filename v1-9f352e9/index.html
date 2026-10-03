@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>成稿链接存进库没人读 · 写入方不等于展示方 · 蛛网之上</title><meta name="description" content="- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统,2026-07-30 单会话"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-9f352e9/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="成稿链接存进库没人读 · 写入方不等于展示方"><meta property="og:description" content="- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统,2026-07-30 单会话"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-9f352e9/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="成稿链接存进库没人读 · 写入方不等于展示方"><meta name="twitter:description" content="- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统,2026-07-30 单会话"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-30T16:15:05+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/版块工程"><meta property="article:tag" content="主题/踩坑"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-9f352e9/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-9f352e9/","url":"https://tiaozhuxiansheng.com/v1-9f352e9/","headline":"成稿链接存进库没人读 · 写入方不等于展示方","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统,2026-07-30 单会话","datePublished":"2026-07-30T16:15:05+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/版块工程, 主题/踩坑"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"成稿链接存进库没人读 · 写入方不等于展示方","item":"https://tiaozhuxiansheng.com/v1-9f352e9/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-30T16:15:05+08:00">2026-07-30</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 6 分钟读完 · 2,366 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#缺口长什么样">缺口长什么样</a></li><li class="d2"><a href="#为什么跨了两轮迭代没被发现">为什么跨了两轮迭代没被发现</a></li><li class="d2"><a href="#四条可复用-insight">四条可复用 insight</a></li><li class="d3"><a href="#1-写入方不等于展示方同族第三形态">1. 写入方不等于展示方(同族第三形态)</a></li><li class="d3"><a href="#2-手工兜底会掩盖缺失的系统路径">2. 手工兜底会掩盖缺失的系统路径</a></li><li class="d3"><a href="#3-upsert-两条分支的字段集要对齐">3. upsert 两条分支的字段集要对齐</a></li><li class="d3"><a href="#4-运行时字段的验收要造出真相源与库不一致的那一格">4. 运行时字段的验收要造出「真相源与库不一致」的那一格</a></li><li class="d2"><a href="#本机验证姿势可直接复用">本机验证姿势(可直接复用)</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#方法论验证等级">方法论验证等级</a></li> </ol> </details> <h1 id="成稿链接存进库没人读--写入方不等于展示方">成稿链接存进库没人读 · 写入方不等于展示方</h1>
+<blockquote>
+<p>入档:2026-07-30
+一句话:字段有人写、有库存、接口也返回了,但<strong>没有任何页面读它</strong>——发布方在管理台填完成稿链接,任务书详情页一个字都不变;缺口跨了两轮迭代没被发现,因为在此之前<strong>人一直在正文里手写「交付情况」替系统把这件事做了</strong>。</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录(不可修改区)</h2>
+<ul>
+<li>项目:蛛网之上(tiaozhuxiansheng.com)任务书系统,2026-07-30 单会话</li>
+<li>起点:发布方把 OJO 测评任务在管理台切成「完工待打款」并填了成稿链接,详情页上什么都没变</li>
+<li>提交(above-the-web):<code>5571bad</code> 修复渲染缺口 + 同步回填 → <code>6eb6023</code> OJO 收录为评测类标杆</li>
+<li>改动规模:8 文件,+118 / -5 行;后端回归 37/37 通过(含本轮新增 2 条)</li>
+<li>定位证据(<code>git log -S</code>):<code>deliverable_url</code> 列、管理台输入框、接口 <code>deliverableUrl</code> 全部诞生于 <code>a179002</code>(账号系统那轮);<strong>前端渲染 <code>deliverableUrl</code> 的第一次提交就是本轮的 <code>5571bad</code></strong></li>
+<li>交付:详情页正文前加一行「成稿」callout(两张详情页共用,md 那份构建期就位、运行时以库为准);<code>syncTasks</code> 的 <code>UPDATE</code> 分支补上「库里空才回填」</li>
+<li>数据来源:本地 chrome-headless-shell 造三种库内状态实测 + 线上两条流水线绿后对生产页面与 <code>/api/tasks/ojo-review</code> 复验</li>
+<li>已知尾巴:库里那条链接带着飞书 <code>?from=from_copylink</code> 尾巴(能打开,未清);OJO 仍是 <code>done</code>,打款后需人工切 <code>closed</code></li>
+</ul>
+<h2 id="缺口长什么样">缺口长什么样</h2>
+<p>任务系统的成稿链接有<strong>三条写入路径</strong>:承接人在站内点「提交交付」、发布方在管理台手填、md 里的 <code>deliverable</code> 首次入库时当初值。</p>
+<p>读路径<strong>零条</strong>。详情页上那条「交付:链接」读的是 <code>deliveries</code> 流水表——只有第一条路径才会产生行。线下交付、发布方代填这两类,成稿链接就只躺在 <code>tasks.deliverable_url</code> 里,页面上不存在。</p>
+<p>顺带查出同族第二个洞:<code>syncTasks</code> 的 <code>INSERT</code> 分支写 <code>deliverable_url</code>,<code>UPDATE</code> 分支不写。md 里补了链接、而库里那行已存在时,链接永远进不来——表现得像「同步不工作」,实际是两条分支的字段集不对称。</p>
+<h2 id="为什么跨了两轮迭代没被发现">为什么跨了两轮迭代没被发现</h2>
+<ol>
+<li>之前三份任务书的成稿链接,是<strong>手写进正文的「## 交付情况」小节</strong>的——页面看起来一直是对的;</li>
+<li>frontmatter 的 <code>deliverable</code> 确实有一条读路径(任务书首页的「教程类标杆」板块),所以「这字段没人用」的直觉不成立;</li>
+<li>直到发布方第一次真的走「只在管理台填、正文一个字不改」这条从没跑过的路径,缺口才现形。</li>
+</ol>
+<h2 id="四条可复用-insight">四条可复用 insight</h2>
+<h3 id="1-写入方不等于展示方同族第三形态">1. 写入方不等于展示方(同族第三形态)</h3>
+<p>一个字段有人写、有库存、接口也返回,不等于有人读它。链路上任一环没接,功能就等于不存在。</p>
+<ul>
+<li>加运行时字段时对照<strong>三件套:存库 → 接口返回 → 页面渲染</strong>,缺一条就是隐形字段;</li>
+<li>读路径要挂在<strong>收敛后的那个字段</strong>(<code>tasks.deliverable_url</code>)上,不是某一条写入口的流水表(<code>deliveries</code>)——流水表只记「谁在什么时候提交过」,不回答「现在的成稿是哪一份」;</li>
+<li>验收问句从「数据存进去了吗」改成「<strong>页面上哪一行会因此变化</strong>」。</li>
+</ul>
+<blockquote>
+<p>边界:只写不读也可能是对的(审计、留痕字段本就不上页面)。判据是「这个字段存在的目的是给人看吗」。</p>
+</blockquote>
+<h3 id="2-手工兜底会掩盖缺失的系统路径">2. 手工兜底会掩盖缺失的系统路径</h3>
+<p>人用手写内容替系统把事做了,缺口就永远暴露不出来。发现某个功能「靠人手写补上」时要记一笔——那是系统缺口的坐标,不是工作习惯。</p>
+<p>新增字段后至少走一遍<strong>不靠手写的路径</strong>。本轮的判据就是「只在管理台填,正文一个字不改,页面变不变」。</p>
+<blockquote>
+<p>边界:手工兜底本身没错,它是上线速度的合理代价;错的是把兜底当常态而不记账。</p>
+</blockquote>
+<h3 id="3-upsert-两条分支的字段集要对齐">3. upsert 两条分支的字段集要对齐</h3>
+<p><code>INSERT</code> 写了某列、<code>UPDATE</code> 没写,表现为「只有第一次同步生效」,最像「同步不工作」。</p>
+<ul>
+<li>改 upsert 时把两条分支的列清单<strong>并排列出来</strong>比对,不逐条读代码;</li>
+<li>真相源字段与运行时字段混在一张表时,「只在空时回填」写成 <code>deliverable_url = CASE WHEN deliverable_url = '' THEN ? ELSE deliverable_url END</code>,比在应用层判断更难写错——<strong>库里已有的(承接人提交的、管理台填的)都比 md 新,不许覆盖;md 补了而库里空着,也不该让链接永远进不来</strong>。</li>
+</ul>
+<h3 id="4-运行时字段的验收要造出真相源与库不一致的那一格">4. 运行时字段的验收要造出「真相源与库不一致」的那一格</h3>
+<p>md 与库一致时,看不出到底是谁在生效。本轮自测造了三格:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>md</th><th>库</th><th>期望</th></tr></thead><tbody><tr><td>用户踩到的那个</td><td>无链接</td><td>管理台手填</td><td>显示(修复前:不显示)</td></tr><tr><td>证明「库为准」</td><td>有链接</td><td>空</td><td>隐藏</td></tr><tr><td>常态</td><td>有链接</td><td>同一条</td><td>显示</td></tr></tbody></table>
+<p>只有第二格能证明「数据库为准」这条设计真的成立。双源字段的验收矩阵至少这三格,造状态用<strong>临时库 + 管理台接口</strong>,不许动生产数据。</p>
+<h2 id="本机验证姿势可直接复用">本机验证姿势(可直接复用)</h2>
+<p>要验的是浏览器侧注水逻辑,构建产物证明不了。本机没装 playwright 包,但 playwright 的浏览器二进制在 <code>%LOCALAPPDATA%\ms-playwright\</code>:</p>
+<ul>
+<li>用 <code>chromium_headless_shell-*/chrome-headless-shell-win64/chrome-headless-shell.exe</code>,参数 <code>--disable-gpu --no-sandbox --no-first-run --user-data-dir=&#x3C;临时目录> --no-proxy-server --virtual-time-budget=5000 --dump-dom &#x3C;url></code>;</li>
+<li><strong>别用</strong> <code>chromium-*/chrome-win64/chrome.exe --headless=new --dump-dom</code>:同参数会挂住不返回(实测超 3 分钟)。目录名是 <code>chrome-win64</code> 不是 <code>chrome-win</code>;</li>
+<li><code>--no-proxy-server</code> 与 curl 的 <code>--noproxy 127.0.0.1,localhost</code> 都是必须的,本机代理会把回环请求也劫走;</li>
+<li>本地环境:平台服务指向<strong>临时 sqlite</strong> + <code>dist/tasks/index.json</code> 当清单,另起 <code>astro preview</code>(本地 base 是 <code>/above-the-web/</code>,CORS 白名单已含 <code>127.0.0.1:4321</code>),用管理员令牌 PATCH <code>/api/admin/tasks/&#x3C;slug></code> 造各种库内状态;</li>
+<li>测动效路径还要加 <code>--blink-settings=prefersReducedMotion=false</code>,见 <a href="/above-the-web/reduced-motion-v1-5d31a1e/" class="wikilink">reduced-motion本机陷阱_动效降级纯淡入而非跳过_v1</a>。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/v1-5696fe2/" class="wikilink">任务系统演进_站内新建管理台拆分首页瘦身_v1</a> —— 直接前情:那篇给 <code>fee_override</code> 配齐了「存库 + 接口 + <code>renderFee()</code>」三件套,本篇是同一张表上另一个字段<strong>只做了前两件</strong>的后果</li>
+<li><a href="/above-the-web/ai-v1-fbcd3c9/" class="wikilink">任务书接AI辅助填写_模型只产草稿与思考额度陷阱_v1</a> —— 本机自测姿势的续篇:本篇给的 <code>chrome-headless-shell --dump-dom</code> 够不着登录后的页面(令牌在 <code>localStorage</code>,一次性 dump 没有注入时机),那篇补上走 CDP 的那一半(同一个 exe 加 <code>--remote-debugging-port</code>,Node 22+ 全局 <code>WebSocket</code> 零依赖驱动),外加「验昼夜看 <code>data-theme</code> 不看 <code>prefers-color-scheme</code>」</li>
+<li>⭐ <a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a> —— 地基:<code>deliverable_url</code> 列与「正文归 git、状态归库」的双源框架都出自那轮;本篇是该框架的第一个渲染缺口</li>
+<li>⚠️ <a href="/above-the-web/v1-0abb7cd/" class="wikilink">零作品的比赛_界面演完不等于链路存在_v1</a> —— 同族第二形态(界面全在、<code>submissions</code> 表 0 行);本篇是它的镜像:<strong>数据在库里、页面不问它</strong>。两篇合起来是一句话的两头——验收既要问「跑完该多出什么数据」,也要问「库里有了页面读了吗」</li>
+<li>⚠️ <a href="/above-the-web/v1-35e4706/" class="wikilink">赛事状态机到点不切换_写入方不等于推进方_v1</a> —— 同族第一形态:字段有人写、有人显示,没人在到点推进它</li>
+<li>⭐ <a href="/above-the-web/v1-41b9cb0/" class="wikilink">零路由补路由_普查要能推翻已写的代码_v1</a> —— <strong>同族第四形态:初值方不等于渲染方</strong>(PB Arena,2026-08-20)。<code>state.currentView</code> 初值写死 <code>"lobby"</code>,而 HTML 里 active 的是首页,<code>init</code> 全程一次 <code>switchView</code> 都不调——首屏所有读这个状态的分支判的都是错的(对战悬浮条、房间聊天、赛事轮播、反馈的来源页字段)。<strong>一直没暴露是因为用户几乎总会先点一下导航,一点就对了</strong>;只有「打开就直接用首屏功能」这条少见路径会撞上。判据同族:看到一个初始状态就问三句——<strong>这个初值是谁写的?谁在渲染时用它?它俩碰过面吗?</strong> 中间没有一次同步动作的,一定已经漂了</li>
+<li>⚠️ <a href="/above-the-web/2026-07-03-v1-2d712fc/" class="wikilink">2026-07-03_云端定时内容生产连环坑复盘_全绿不等于已发_v1</a> —— insight 2 的前例:「手动跑通会掩盖自动路径」,本篇是它在内容层的形态(手写正文掩盖缺失的渲染路径)</li>
+<li>⭐ <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— insight 4 的上位律:验收要造出能证伪的那一格,不是跑一遍看着对</li>
+<li>⚠️ <a href="/above-the-web/claude-v1-b6645d9/" class="wikilink">Claude预览环境不派发滚动事件_滚动类功能无法行为验证_v1</a> —— 无头 Chrome 三层退级的来源,本篇的自测姿势是它在本机的又一次落地</li>
+<li><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 本篇顶部事实冻结区按它执行</li>
+<li>项目内复盘全文:<code>E:\above-the-web\docs\postmortem-2026-07-30-deliverable-link.md</code></li>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 平台工程区入口</li>
+</ul>
+<h2 id="方法论验证等级">方法论验证等级</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>本轮 insight</th><th>等级</th></tr></thead><tbody><tr><td>写入方不等于展示方(存进库不等于看得见)</td><td>⭐⭐ 二次验证(同族第三形态)</td></tr><tr><td>手工兜底会掩盖缺失的系统路径</td><td>⭐⭐ 二次验证</td></tr><tr><td>upsert 两条分支的字段集要对齐</td><td>⚠️ 首次发现</td></tr><tr><td>双源字段验收要造出「只有库里有」那一格</td><td>⚠️ 首次发现</td></tr></tbody></table>
+<p>没有三次验证的方法论,不用于指导下一次决策——只作为「值得继续观察的假设」。前两条已二次成立,下次做同类迭代时按它们先自查再动手。</p> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/版块工程</span><span class="tag">主题/踩坑</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E6%88%90%E7%A8%BF%E9%93%BE%E6%8E%A5%E5%AD%98%E8%BF%9B%E5%BA%93%E6%B2%A1%E4%BA%BA%E8%AF%BB_%E5%86%99%E5%85%A5%E6%96%B9%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%B1%95%E7%A4%BA%E6%96%B9_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E6%88%90%E7%A8%BF%E9%93%BE%E6%8E%A5%E5%AD%98%E8%BF%9B%E5%BA%93%E6%B2%A1%E4%BA%BA%E8%AF%BB_%E5%86%99%E5%85%A5%E6%96%B9%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%B1%95%E7%A4%BA%E6%96%B9_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/2026-07-03-v1-2d712fc/">云端定时内容生产连环坑复盘:全绿不等于已发</a></li><li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/ai-v1-58cfb5a/">AI 查询召回失准 · 容器词自指与命中率区分度</a></li><li><a href="/above-the-web/ai-v1-fbcd3c9/">任务书接 AI 辅助填写：模型只产草稿，与思考型模型的额度陷阱</a></li><li><a href="/above-the-web/v1-5696fe2/">任务系统演进:站内新建、管理台拆分与首页瘦身</a></li><li><a href="/above-the-web/v1-6532011/">公屏下线只删了界面 · 删界面不等于关链路</a></li><li><a href="/above-the-web/v1-35e4706/">赛事状态机到点不切换 · 写入方不等于推进方</a></li><li><a href="/above-the-web/v1-0abb7cd/">零作品的比赛 · 界面演完不等于链路存在</a></li><li><a href="/above-the-web/v1-41b9cb0/">零路由补路由 · 普查要能推翻已写的代码</a></li><li><a href="/above-the-web/v1-3fce0f1/">交付前实测证伪律</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-ac6b03d/"> <span class="card-cat">平台工程</span> <h3>站内新版块五件套模式:三次复用与起刊两坑</h3> <p>- 项目:蛛网之上「任务书 · Commissions」版块(/tasks/),2026-07-20 单次会话内从零到双域名上线</p> </a><a class="card" href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/"> <span class="card-cat">平台工程</span> <h3>B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</h3> <p>- 项目:风眼 · Typhoon Eye(台风实况 + 分级应急预案,零依赖静态单页;仓库 Mr-Salticidae/typhoon-e…</p> </a><a class="card" href="/above-the-web/2026-08-21-v1-d82b742/"> <span class="card-cat">平台工程</span> <h3>风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档</h3> <p>- 项目:风眼 · Typhoon Eye(E:\typhoon-eye),台风实况与分级应急预案单页站。双发布面:GitHub Pages…</p> </a><a class="card" href="/above-the-web/openai-worker-do-v1-d6b8be3/"> <span class="card-cat">平台工程</span> <h3>OpenAI 区域封锁与 Worker 就近执行陷阱 · 北美 DO 跳板</h3> <p>线上站读心&quot;全是片汤话&quot;——发布安全闸按设计剔除了 apiKey，前端落模板兜底。解法是在自有香港服务器挂同域中转代理（密钥服务器端注入）。…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#缺口长什么样" data-toc-link="缺口长什么样">缺口长什么样</a></li><li class="d2"><a href="#为什么跨了两轮迭代没被发现" data-toc-link="为什么跨了两轮迭代没被发现">为什么跨了两轮迭代没被发现</a></li><li class="d2"><a href="#四条可复用-insight" data-toc-link="四条可复用-insight">四条可复用 insight</a></li><li class="d3"><a href="#1-写入方不等于展示方同族第三形态" data-toc-link="1-写入方不等于展示方同族第三形态">1. 写入方不等于展示方(同族第三形态)</a></li><li class="d3"><a href="#2-手工兜底会掩盖缺失的系统路径" data-toc-link="2-手工兜底会掩盖缺失的系统路径">2. 手工兜底会掩盖缺失的系统路径</a></li><li class="d3"><a href="#3-upsert-两条分支的字段集要对齐" data-toc-link="3-upsert-两条分支的字段集要对齐">3. upsert 两条分支的字段集要对齐</a></li><li class="d3"><a href="#4-运行时字段的验收要造出真相源与库不一致的那一格" data-toc-link="4-运行时字段的验收要造出真相源与库不一致的那一格">4. 运行时字段的验收要造出「真相源与库不一致」的那一格</a></li><li class="d2"><a href="#本机验证姿势可直接复用" data-toc-link="本机验证姿势可直接复用">本机验证姿势(可直接复用)</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#方法论验证等级" data-toc-link="方法论验证等级">方法论验证等级</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

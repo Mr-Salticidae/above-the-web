@@ -1,0 +1,249 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Nano 场景换机位 · 四段锚定法 · 蛛网之上</title><meta name="description" content="让 Nano 给同一场景&#34;换机位&#34;,本质是「锚定不变元素 + 指定新机位」的脑补,不是 3D 重建。 Prompt 用四段式:同一场景 → 列清不变元素 → 换到这个角度拍 → 锁定风格;固定段抽成&#34;通用锚定段&#34;复用,机位单列做变量。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/nano-v1-17ac551/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Nano 场景换机位 · 四段锚定法"><meta property="og:description" content="让 Nano 给同一场景&#34;换机位&#34;,本质是「锚定不变元素 + 指定新机位」的脑补,不是 3D 重建。 Prompt 用四段式:同一场景 → 列清不变元素 → 换到这个角度拍 → 锁定风格;固定段抽成&#34;通用锚定段&#34;复用,机位单列做变量。"><meta property="og:url" content="https://tiaozhuxiansheng.com/nano-v1-17ac551/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Nano 场景换机位 · 四段锚定法"><meta name="twitter:description" content="让 Nano 给同一场景&#34;换机位&#34;,本质是「锚定不变元素 + 指定新机位」的脑补,不是 3D 重建。 Prompt 用四段式:同一场景 → 列清不变元素 → 换到这个角度拍 → 锁定风格;固定段抽成&#34;通用锚定段&#34;复用,机位单列做变量。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-15T10:34:06+08:00"><meta property="article:modified_time" content="2026-09-26T06:43:16+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="工具/nano"><meta property="article:tag" content="通用/prompt工程"><meta property="article:tag" content="模板"><meta property="article:tag" content="状态/待验证"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/nano-v1-17ac551/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/nano-v1-17ac551/","url":"https://tiaozhuxiansheng.com/nano-v1-17ac551/","headline":"Nano 场景换机位 · 四段锚定法","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"让 Nano 给同一场景\"换机位\",本质是「锚定不变元素 + 指定新机位」的脑补,不是 3D 重建。 Prompt 用四段式:同一场景 → 列清不变元素 → 换到这个角度拍 → 锁定风格;固定段抽成\"通用锚定段\"复用,机位单列做变量。","datePublished":"2026-06-15T10:34:06+08:00","dateModified":"2026-09-26T06:43:16+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 工具/nano, 通用/prompt工程, 模板, 状态/待验证"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"Nano 场景换机位 · 四段锚定法","item":"https://tiaozhuxiansheng.com/nano-v1-17ac551/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>prompt与工具方法</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-15T10:34:06+08:00">2026-06-15</time></span> <span>更新于 <time datetime="2026-09-26T06:43:16+08:00">2026-09-26</time></span> <span>约 5 分钟读完 · 1,710 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>9 节</i></summary> <ol> <li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#一原理认知nano-在做什么">一、原理认知:Nano 在做什么</a></li><li class="d2"><a href="#二方法论四段式结构顺序重要">二、方法论:四段式结构(顺序重要)</a></li><li class="d2"><a href="#三可复用成品以助行器展厅参考图为例">三、可复用成品(以助行器展厅参考图为例)</a></li><li class="d3"><a href="#通用锚定段每个-prompt-开头加">通用锚定段(每个 prompt 开头加)</a></li><li class="d3"><a href="#机位清单接在锚定段后">机位清单(接在锚定段后)</a></li><li class="d2"><a href="#四调优技巧">四、调优技巧</a></li><li class="d2"><a href="#五举一反三迁移到任意场景">五、举一反三(迁移到任意场景)</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="nano-场景换机位--四段锚定法">Nano 场景换机位 · 四段锚定法</h1>
+<blockquote>
+<p>入档:2026-06-15
+触发:助行器展厅参考图换机位需求(拍场景另一侧)的 prompt 提炼
+性质:Nano(Gemini 图像模型)基于单张参考图生成”换机位拍另一侧”画面的通用方法
+关联:<a href="/above-the-web/nano-v1-0b9354f/" class="wikilink">nano跨场景三变量发现_v1</a> / <a href="/above-the-web/prompt-v1-b768695/" class="wikilink">prompt的四段式结构_v1</a> / <a href="/above-the-web/v1-bf40113/" class="wikilink">概念锚定_风格置换迭代法_v1</a></p>
+</blockquote>
+<hr>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>让 Nano 给同一场景”换机位”,本质是「锚定不变元素 + 指定新机位」的脑补,不是 3D 重建。</strong> Prompt 用四段式:同一场景 → 列清不变元素 → 换到这个角度拍 → 锁定风格;固定段抽成”通用锚定段”复用,机位单列做变量。</p>
+<hr>
+<h2 id="一原理认知nano-在做什么">一、原理认知:Nano 在做什么</h2>
+<p>换机位拍”另一侧”,意味着新画面里大部分内容是原图<strong>没拍到</strong>的。这件事的本质:</p>
+<ul>
+<li><strong>Nano 不是 3D 重建</strong>,做不到几何级精确还原。</li>
+<li>它是”<strong>理解 + 脑补</strong>”:从参考图提取主体特征(产品类型、颜色、材质、空间风格、光线),再想象新角度下一个合理协调的场景。</li>
+<li>结果:<strong>风格、氛围、产品类别、光影能保持一致;但主体的精确数量、排列、几何位置会有出入。</strong></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>适合</th><th>不适合</th></tr></thead><tbody><tr><td>概念图、氛围图、提案配图</td><td>需要精确还原的产品目录图</td></tr><tr><td>多角度展示空间感觉</td><td>数量/排列必须 100% 一致的场景</td></tr><tr><td>快速出多版机位挑选</td><td>工程级精度还原</td></tr></tbody></table>
+<blockquote>
+<p>认清这一点 → 不对结果产生不切实际期待,也知道力气花在哪。</p>
+</blockquote>
+<hr>
+<h2 id="二方法论四段式结构顺序重要">二、方法论:四段式结构(顺序重要)</h2>
+<p><strong>1. 锚定身份 ——「这是同一个场景」</strong>
+开头说明”同一个场景 / 同一批物体,保持一致”,让模型知道是延续而非新建。</p>
+<p><strong>2. 列清固定元素 ——「哪些不能变」</strong>
+逐条写明要保留的:产品(类型、颜色、材质)、空间结构(墙、窗、地面、天花)、光线、整体氛围。<strong>列得越具体,跑偏越少。</strong></p>
+<p><strong>3. 描述新机位 ——「从哪儿拍」</strong>(换机位核心,用摄影术语)</p>
+<ul>
+<li>方向:<code>反打 / 180-degree reverse angle</code>、<code>opposite side</code>、<code>from the entrance</code></li>
+<li>高度:<code>平视 eye-level</code>、<code>俯拍 high-angle</code>、<code>低机位 low-angle</code></li>
+<li>焦段:<code>24mm 广角</code>、<code>35mm 标准</code>、<code>85mm 长焦</code></li>
+<li>要露出什么:明确点名”原图没拍到的那部分”</li>
+</ul>
+<p><strong>4. 锁定风格 ——「氛围不变」</strong>
+结尾重申光线、色调、整体调性一致,避免换角度时连风格一起改了。</p>
+<blockquote>
+<p><strong>口诀:同一个场景(1)+ 这些东西别变(2)+ 换到这个角度拍(3)+ 风格保持(4)。</strong></p>
+</blockquote>
+<p><strong>为什么拆成「锚定段 + 机位描述」:</strong> 把固定部分(1/2/4)抽成可复用的锚定段,机位(3)单列。试多个机位时基准一致、变量单一,便于对比择优。与 <a href="/above-the-web/prompt-v1-b768695/" class="wikilink">prompt的四段式结构_v1</a> 同源——都是”把固定结构沉淀、把变量前置”的思路。</p>
+<hr>
+<h2 id="三可复用成品以助行器展厅参考图为例">三、可复用成品(以助行器展厅参考图为例)</h2>
+<h3 id="通用锚定段每个-prompt-开头加">通用锚定段(每个 prompt 开头加)</h3>
+<p><strong>中文:</strong></p>
+<blockquote>
+<p>同一个医疗助行器展厅,保持所有元素一致:白色矩形展台上成排陈列的四轮带座助行器(红色、紫色、银黑色车架,黑色坐垫和黑色实心橡胶轮),右墙浅色木质格子展示柜(内置助行架、轮椅、膝代步车等辅具),左侧整面落地玻璃窗外欧式街景,抛光水泥地面,白色天花配轨道射灯,明亮自然光,高端简洁的商业展厅氛围。机位改为:</p>
+</blockquote>
+<p><strong>English:</strong></p>
+<blockquote>
+<p>The same medical mobility-aid showroom, keep every element consistent: rows of four-wheeled rollators with seats on a white rectangular platform (red, purple, silver-black frames, black seats, black solid rubber wheels); light wooden cubby shelving on the right wall (walkers, wheelchairs, knee scooters inside); full glass window wall on the left showing a European street; polished concrete floor; white ceiling with track spotlights; bright natural daylight; clean high-end commercial-showroom mood. Change the camera to:</p>
+</blockquote>
+<h3 id="机位清单接在锚定段后">机位清单(接在锚定段后)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>机位</th><th>中文</th><th>EN</th></tr></thead><tbody><tr><td>①</td><td>入口全景</td><td>从入口往里拍的广角全景,平视略低机位,24mm,左窗+中台+右柜全收,展现整体格局</td><td>A wide establishing shot from the entrance looking in, slightly low eye-level, 24mm lens, capturing window wall, central platform, and shelving — whole layout</td></tr><tr><td>②</td><td>高角俯拍</td><td>从后角高处俯拍,鸟瞰,展现助行器成排阵列与地面/展台几何关系</td><td>High-angle bird’s-eye view from a back corner, revealing the neat grid of rollators and floor/stage geometry</td></tr><tr><td>③</td><td>反打窗边</td><td>走到木柜端做 180 度反打,朝落地窗回拍,平视 35mm,逆光窗边光晕+剪影氛围</td><td>180-degree reverse angle from the shelving end, shooting back toward the window wall, eye-level 35mm, backlit window glow and soft silhouette mood</td></tr><tr><td>④</td><td>产品近景</td><td>贴近最前排红色助行器低机位近景,浅景深背景虚化,突出车架质感与坐垫细节</td><td>Low-angle close-up of the front red rollator, shallow depth of field, showroom softly blurred, highlighting frame texture and seat detail</td></tr><tr><td>⑤</td><td>木柜侧视</td><td>正对右墙木质格子柜平视中景,稍侧角,展现柜内辅具陈列,展台在前景一角</td><td>Eye-level medium shot facing the wooden cubby shelving, slight angle, showing aids inside, platform in foreground corner</td></tr><tr><td>⑥</td><td>窗外街拍</td><td>从窗外街道往店内拍,透过玻璃看陈列,临街橱窗视角,带轻微玻璃反光</td><td>Shot from the street outside through the floor-to-ceiling glass, storefront perspective with subtle glass reflections</td></tr></tbody></table>
+<hr>
+<h2 id="四调优技巧">四、调优技巧</h2>
+<ol>
+<li><strong>机位转得越大,脑补越多。</strong> 尤其 ② 俯拍、⑥ 窗外,助行器数量/颜色排列会与原图有出入,属正常,挑顺眼的留。</li>
+<li><strong>一次只改一个变量。</strong> 换机位时别同时改光线/风格,改动越多越易整体跑偏(对照 <a href="/above-the-web/v1-bf40113/" class="wikilink">概念锚定_风格置换迭代法_v1</a> 的”单层迭代”)。</li>
+<li><strong>跑偏就追加约束句。</strong> 末尾补锁定:<code>keep the wooden shelving exactly as in the reference</code> / <code>保持机位高度不变</code> / <code>do not change the product colors</code>。</li>
+<li><strong>优先英文 prompt。</strong> 多数图像模型对英文摄影术语理解更稳,中文亦可,关键术语可中英混写。</li>
+<li><strong>批量生成择优。</strong> 同条 prompt 多跑几张挑最好,再微调逐步逼近。</li>
+<li><strong>善用摄影术语。</strong> <code>reverse angle</code> / <code>opposite side</code> / <code>180-degree view</code> / <code>establishing shot</code> / <code>bird's-eye view</code> 比口语”另一侧”更精确。</li>
+</ol>
+<hr>
+<h2 id="五举一反三迁移到任意场景">五、举一反三(迁移到任意场景)</h2>
+<p>替换三处即可复用:</p>
+<ul>
+<li><strong>锚定段第 2 部分</strong> → 换成你场景的固定元素(主体、背景、材质、光线)。</li>
+<li><strong>机位描述</strong> → 套用上面六个模板,改方向/高度/焦段。</li>
+<li><strong>约束句</strong> → 按你最在意、最易跑偏的元素加。</li>
+</ul>
+<blockquote>
+<p>永恒模板:<strong>同一个场景 + 列清不变元素 + 指定新机位 + 锁定风格 + 必要时追加约束。</strong></p>
+</blockquote>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/nano-v1-0b9354f/" class="wikilink">nano跨场景三变量发现_v1</a> —— 同为 Nano 工程规律(跨场景锁脸 vs 同场景换机位)</li>
+<li><a href="/above-the-web/nano-v1-ce5a83d/" class="wikilink">Nano换屏图像融合_指令式编辑法_v1</a> —— 同为 Nano 工程规律(换机位 vs 局部换屏融合),共享”锚定不变 + 指定变化”结构</li>
+<li><a href="/above-the-web/prompt-v1-b768695/" class="wikilink">prompt的四段式结构_v1</a> —— 同源的”结构沉淀 + 变量前置”思路</li>
+<li><a href="/above-the-web/v1-bf40113/" class="wikilink">概念锚定_风格置换迭代法_v1</a> —— 单层迭代、单变量调优原则</li>
+<li>索引入口:<a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">工具/nano</span><span class="tag">通用/prompt工程</span><span class="tag">模板</span><span class="tag">状态/待验证</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:43:16+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/Nano%E5%9C%BA%E6%99%AF%E6%8D%A2%E6%9C%BA%E4%BD%8D_%E5%9B%9B%E6%AE%B5%E9%94%9A%E5%AE%9A%E6%B3%95_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/Nano%E5%9C%BA%E6%99%AF%E6%8D%A2%E6%9C%BA%E4%BD%8D_%E5%9B%9B%E6%AE%B5%E9%94%9A%E5%AE%9A%E6%B3%95_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/nano-v1-ce5a83d/">Nano 换屏图像融合 · 指令式编辑法</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/prompt-v1-b768695/"> <span class="card-cat">方法论与洞察</span> <h3>prompt 的四段式结构</h3> <p>简化 prompt 后，按 场景 → 主体 → 关键事件/光线 → 媒介质感 四段排列。这个顺序对齐了 MJ 的注意力衰减——把最重要的元素…</p> </a><a class="card" href="/above-the-web/gpt-v1-ccfda01/"> <span class="card-cat">方法论与洞察</span> <h3>GPT Image 2 一次性生成中文分镜表</h3> <p>GPT Image 2 能在单次输出里同时渲染「精确中文表格 + 16 张协调配图 + 四个建议框」,中文几乎无错字。这刷新了&quot;图像模型搞不…</p> </a><a class="card" href="/above-the-web/gptimage2-v1-8e064e4/"> <span class="card-cat">方法论与洞察</span> <h3>GPT Image 2 游戏动作精灵图 · 三段锁定法</h3> <p>给 GPT Image 2 一张角色定妆图(单图或四视图皆可),用「参考图硬锁 + 网格排版规范 + 逐行动作分解」三段式 prompt,能…</p> </a><a class="card" href="/above-the-web/vs-v1-c7b40a4/"> <span class="card-cat">方法论与洞察</span> <h3>生成式 vs 编辑式工具选择律</h3> <p>改一处用编辑式,造全图用生成式。 任务里「必须原样保留」的占比越高,越要用指令式编辑模型(Nano);越是从零造或大幅重构,越用重新生成式模…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#一原理认知nano-在做什么" data-toc-link="一原理认知nano-在做什么">一、原理认知:Nano 在做什么</a></li><li class="d2"><a href="#二方法论四段式结构顺序重要" data-toc-link="二方法论四段式结构顺序重要">二、方法论:四段式结构(顺序重要)</a></li><li class="d2"><a href="#三可复用成品以助行器展厅参考图为例" data-toc-link="三可复用成品以助行器展厅参考图为例">三、可复用成品(以助行器展厅参考图为例)</a></li><li class="d3"><a href="#通用锚定段每个-prompt-开头加" data-toc-link="通用锚定段每个-prompt-开头加">通用锚定段(每个 prompt 开头加)</a></li><li class="d3"><a href="#机位清单接在锚定段后" data-toc-link="机位清单接在锚定段后">机位清单(接在锚定段后)</a></li><li class="d2"><a href="#四调优技巧" data-toc-link="四调优技巧">四、调优技巧</a></li><li class="d2"><a href="#五举一反三迁移到任意场景" data-toc-link="五举一反三迁移到任意场景">五、举一反三(迁移到任意场景)</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

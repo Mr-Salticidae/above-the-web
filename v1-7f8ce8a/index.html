@@ -1,0 +1,260 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>自动化产出双重验收：机器验参数，人眼验内容 · 蛛网之上</title><meta name="description" content="自动化跑完会给你一个绿色的&#34;✓&#34;。那个勾的含义是&#34;我按脚本做完了&#34;，不是&#34;结果是对的&#34;。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-7f8ce8a/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="自动化产出双重验收：机器验参数，人眼验内容"><meta property="og:description" content="自动化跑完会给你一个绿色的&#34;✓&#34;。那个勾的含义是&#34;我按脚本做完了&#34;，不是&#34;结果是对的&#34;。"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-7f8ce8a/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="自动化产出双重验收：机器验参数，人眼验内容"><meta name="twitter:description" content="自动化跑完会给你一个绿色的&#34;✓&#34;。那个勾的含义是&#34;我按脚本做完了&#34;，不是&#34;结果是对的&#34;。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-31T21:04:26+08:00"><meta property="article:modified_time" content="2026-09-29T16:18:43+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="主题/自动化录屏"><meta property="article:tag" content="主题/质检"><meta property="article:tag" content="工具/ffprobe"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-7f8ce8a/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-7f8ce8a/","url":"https://tiaozhuxiansheng.com/v1-7f8ce8a/","headline":"自动化产出双重验收：机器验参数，人眼验内容","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"自动化跑完会给你一个绿色的\"✓\"。那个勾的含义是\"我按脚本做完了\"，不是\"结果是对的\"。","datePublished":"2026-07-31T21:04:26+08:00","dateModified":"2026-09-29T16:18:43+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 主题/自动化录屏, 主题/质检, 工具/ffprobe"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"自动化产出双重验收：机器验参数，人眼验内容","item":"https://tiaozhuxiansheng.com/v1-7f8ce8a/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-31T21:04:26+08:00">2026-07-31</time></span> <span>更新于 <time datetime="2026-09-29T16:18:43+08:00">2026-09-29</time></span> <span>约 7 分钟读完 · 2,553 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>8 节</i></summary> <ol> <li class="d2"><a href="#为什么这条容易被跳过">为什么这条容易被跳过</a></li><li class="d2"><a href="#实证">实证</a></li><li class="d3"><a href="#第三批操作部分-26-段这次是整批">第三批（操作部分 26 段）：这次是整批</a></li><li class="d2"><a href="#操作规则">操作规则</a></li><li class="d2"><a href="#边界">边界</a></li><li class="d2"><a href="#同构案例">同构案例</a></li><li class="d2"><a href="#验证状态">验证状态</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="自动化产出双重验收机器验参数人眼验内容">自动化产出双重验收：机器验参数，人眼验内容</h1>
+<blockquote>
+<p><strong>一句话律</strong>：自动化产出的素材，「文件存在且参数正确」和「内容正确」是两件独立的事——机器只能验前者，后者必须过人眼。</p>
+</blockquote>
+<h2 id="为什么这条容易被跳过">为什么这条容易被跳过</h2>
+<p>自动化跑完会给你一个绿色的”✓“。那个勾的含义是**“我按脚本做完了”<strong>，不是</strong>”结果是对的”**。</p>
+<p>两者之间的落差，恰恰发生在最贵的地方：脚本执行了每一步，每一步都没报错，产物参数全对——但画面里什么都没有。</p>
+<h2 id="实证">实证</h2>
+<p>Codex 教程实战六自动化录屏，19 段素材。<strong>4 条通过了机器校验但内容全错</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>现象</th><th>机器看到的</th><th>实际内容</th></tr></thead><tbody><tr><td>拖拽没生效</td><td>16.4s，参数正常</td><td>输入框<strong>根本是空的</strong>，附件压根没附上</td></tr><tr><td>播放器开到主屏</td><td>时长正常</td><td>录的那块屏上<strong>什么都没有</strong>，全黑</td></tr><tr><td>面板已展开</td><td>35.8s，参数正常</td><td>看不到”点击→展开”的动作，开头就是结果</td></tr><tr><td>全屏没生效</td><td>33.6s，参数正常</td><td>只是浮动窗口叠在别的应用上，四周露着侧栏</td></tr></tbody></table>
+<p>同一项目更早一次自动录制，产出 3 个 mp4，全部参数正常，最后<strong>被整体废弃</strong>（<code>_作废_Claude自动录制/</code>）。那次没有第二道关卡。</p>
+<p>下一批（清单 2/3/4，三个项目 19 段）又拦下 <strong>2 条</strong>，都出在最后三段、流程最熟的时候：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>现象</th><th>机器看到的</th><th>实际内容</th></tr></thead><tbody><tr><td>上一条废弃 take 的残留在画面里</td><td>43.9s，参数正常</td><td>开头就是「你在 9s 后停止了」，同一句提示词出现两遍</td></tr><tr><td>提示词没发出去</td><td>34.9s，参数正常</td><td>快门按下时提示词还躺在输入框里、发送键在转圈</td></tr></tbody></table>
+<p><strong>两批合计 6 条参数全对、内容全错。</strong></p>
+<h3 id="第三批操作部分-26-段这次是整批">第三批（操作部分 26 段）：这次是<strong>整批</strong></h3>
+<p>接手一批已录好的素材做重录，26 条 mp4 <strong>参数 100% 合格</strong>——1920×1080 / 60fps 全过，时长也正常。抽帧之后：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>镜号</th><th>应该是什么</th><th>实际录到什么</th></tr></thead><tbody><tr><td>318 / 321 / 322 / 323</td><td>Codex 各种界面操作</td><td><strong>全黑画面</strong></td></tr><tr><td>319</td><td>左上角切换 GPT/Codex</td><td>微信 + WorkBuddy</td></tr><tr><td>324 / 326-331</td><td>做 PPT、许愿式提示词</td><td>全是 <strong>ChatGPT 定价页</strong>（上一条开的窗口没人收走，一直霸着录制屏）</td></tr><tr><td>332-338</td><td>七段中文提示词逐条输入</td><td>输入框<strong>自始至终是空的</strong>（<code>type_keys</code> 走 <code>VkKeyScanW</code>，CJK 返回 -1 直接跳过，而调用方不检查返回值）</td></tr><tr><td>339 / 340</td><td>滚动展示完整需求、发送</td><td>空会话，没东西可滚可发</td></tr></tbody></table>
+<p><strong>如果只看 ffprobe，这 26 条是一批完美素材。</strong></p>
+<p>前两批是”19 条里拦下 4 条 / 2 条”，这批是<strong>整批 26 条参数全对、内容几乎全错</strong>。三批合计 32 条。</p>
+<h2 id="操作规则">操作规则</h2>
+<ol>
+<li><strong>两道关卡分开设</strong>
+<ul>
+<li>机器关：文件存在、时长在预期区间、分辨率/帧率/大小正常</li>
+<li>人眼关：抽帧目视，至少看开头、中段、结尾</li>
+</ul>
+</li>
+<li><strong>机器关过了不等于可以跳过人眼关</strong>——本条的全部价值就在这句</li>
+<li><strong>判废的产物不删</strong>，加 <code>.FAILED</code> 后缀保留，便于事后追因（删了就查不出是哪一步断的）</li>
+<li><strong>能在过程中当场校验的，不要等录完再验</strong>。例：拖放是最容易悄悄失败的一步，拖完立刻比对目标区域像素变化，低于阈值就当场判废，别把整条跑完</li>
+<li><strong>能写成断言的内容判据，就别只靠事后抽帧</strong>。“提示词到底发出去没有”完全可以机检（发送后按钮应转成停止态），加了这道当场断言之后，这类失败当场判废，不用等人看。<strong>人眼关是兜底，不是第一道防线</strong>——见 <a href="/above-the-web/ui-v1-5a2fb47/" class="wikilink">UI自动化的固定坐标必须绑前提断言_v1</a></li>
+<li><strong>长产物（>3min）标注”未完整终审”</strong>。抽帧只能证明某几帧对，证明不了中间没异常——不要把抽帧通过写成终审通过</li>
+<li><strong>给机器关补一条”内容非空”的粗判据</strong>。ffprobe 只看容器和流参数，画面全黑照样满分。第三批在 ffprobe 之后加了一道”抽一帧算纯黑像素占比 >55% 判废”，318/321/322/323 那种全黑片机器就能拦下，不用等人眼。<strong>粗判据挡不住”内容错”，但挡得住”内容无”，成本几乎为零</strong>——而”内容无”恰恰是自动化最常见的失败形态</li>
+<li><strong>接手别人录好的素材，先抽帧再信任</strong>。第三批的 26 条是带着”参数全部合格”的结论交接过来的，那个结论是真的，但它只覆盖参数层。<strong>交接结论要看清它验的是哪一层</strong></li>
+<li><strong>机器关的第三道：内容指纹，把”内容错位”也纳入机器可拦范围</strong>（2026-08-14）。开录前抓一张参照帧，停录后取视频开头帧，同一条 ffmpeg 管线灰度比对——录到壁纸/录错屏/窗口没绘制的废片当场判废。至此机器关三道各拦一类：ffprobe 拦参数、黑屏占比拦”内容无”、指纹拦”内容错位”；人眼只剩”内容对不对”</li>
+<li><strong>判据阈值必须两端实测标定，直觉会差一个量级</strong>（2026-08-14）。内容指纹阈值凭直觉预设 45%（“完全不同的画面总得差一半”），实测：正常水位 1%，<strong>完全不同的两个白底页面（定价页 vs 对话页）灰度差只有 14.3%</strong>——45% 会把全部错位废片放行，这道防线等于没建。人眼看”完全不同”看的是语义，灰度比对看的是像素，白底页面 80% 的像素都是同样的白。正例反例各标定一次再定阈值（终值 8%），反例要选<strong>最难分的</strong>，不是最容易分的</li>
+</ol>
+<h2 id="边界">边界</h2>
+<ul>
+<li>参数已知且固定的产物（如按已知时长播完一个视频文件），机器关的置信度较高；但<strong>窗口位置、全屏状态、焦点归属</strong>这些仍然只有眼睛能验。</li>
+<li>本条不是”自动化不可靠”，而是”自动化的可靠性边界在参数层”。该自动化的照样自动化，只是别让绿勾替你签字。</li>
+<li>🔴 <strong>补充（2026-08-05）：机器关本身也会失效，而且失效时给的是”看着像真值的假数”。</strong>
+原文假设的是「机器验参数是可靠的，只是不够」。实际还有一档更糟的情况——<strong>测量方法换了一类信号就崩，但仍然吐出一个数</strong>。
+实例：基频测量在正常人声录音上完美区分了好坏方案（差 6.0 个半音 vs 0.4 个半音），搬到游戏战斗语音上，量出的基频众数堆在搜索区上限 380–400 Hz（占 14.9%，正常录音只占 0.6%）——对男声物理上不可能。若照单全收，会拿一个纯伪影去做定版决策。
+<strong>三条自保</strong>：① 换一类信号先拿<strong>已知答案的样本标定</strong>；② 指标出现在<strong>搜索区边界</strong>上的堆积，几乎一定是伪影；③ 量出物理上不可能的值时，<strong>先怀疑测量、别怀疑素材</strong>。
+详见 <a href="/above-the-web/2026-08-05-v1-7db25e0/" class="wikilink">2026-08-05_后室大逃亡配音工序_四音色定版复盘_v1</a> 第三节。</li>
+</ul>
+<h2 id="同构案例">同构案例</h2>
+<p>这条律在别的域有完全同构的版本：</p>
+<ul>
+<li><strong>素材审片</strong>：<a href="/above-the-web/v1-bf57d38/" class="wikilink">素材审片也能蒙眼_盲选靠标题定案靠眼睛_v1</a>——文件名只配盲选，定案靠抽 3 帧读图</li>
+<li><strong>TTS 质检</strong>：<a href="/above-the-web/tts-asr-v1-18cdf62/" class="wikilink">TTS旁白也能蒙眼质检_ASR拼音级评分_v1</a>——机器量咬字声调，人只验收一次</li>
+</ul>
+<p>三者共享同一个骨架：<strong>机器负责把候选压到可人审的规模，最终裁决权归人</strong>。</p>
+<h2 id="验证状态">验证状态</h2>
+<p>⭐⭐⭐ 三次验证（铁律）· 四验加固</p>
+<ul>
+<li>首验：本项目更早一次自动录制，3 个 mp4 参数正常但整体被废（无第二道关卡）</li>
+<li>二验：实战六 19 段录制，第二道关卡拦下 4 条参数全对、内容全错的素材</li>
+<li>三验：清单 2/3/4 三项目 19 段录制，又拦下 2 条；且这 2 条出现在流程最熟、最容易松手的收尾阶段</li>
+<li>四验（最极端）：操作部分 26 段重录，接手时那批<strong>参数 100% 合格、内容几乎 100% 错误</strong>。前三次是”在合格品里挑出坏的”，这次是”整批都是坏的，而机器一条都没拦下”</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-07-31-codex-19-v1-e56ff53/" class="wikilink">2026-07-31_Codex教程实战六_自动化录屏19段复盘_v1</a>（本律的来源案例，含完整失败清单）</li>
+<li><a href="/above-the-web/2026-08-01-codex-2-4-19-v1-5f86653/" class="wikilink">2026-08-01_Codex教程清单2-4_三项目19段录屏复盘_v1</a>（三验案例）</li>
+<li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/" class="wikilink">2026-08-13_Codex教程操作部分_26段重录复盘_v1</a>（四验案例：整批 26 条参数全对、内容全错）</li>
+<li><a href="/above-the-web/2026-08-14-codex-v1-c53b251/" class="wikilink">2026-08-14_Codex教程录制链路打磨_复盘_v1</a>（机器关第三道”内容指纹”与阈值标定教训的来源）</li>
+<li><a href="/above-the-web/ui-v1-5a2fb47/" class="wikilink">UI自动化的固定坐标必须绑前提断言_v1</a>（一体两面：那条管事前断言，本条管事后验收）</li>
+<li><a href="/above-the-web/v1-bf57d38/" class="wikilink">素材审片也能蒙眼_盲选靠标题定案靠眼睛_v1</a>（同构：素材域）</li>
+<li><a href="/above-the-web/tts-asr-v1-18cdf62/" class="wikilink">TTS旁白也能蒙眼质检_ASR拼音级评分_v1</a>（同构：TTS 域）</li>
+<li><a href="/above-the-web/2026-08-05-v1-7db25e0/" class="wikilink">2026-08-05_后室大逃亡配音工序_四音色定版复盘_v1</a>（边界补充的来源：机器关本身失效、吐出伪影当真值）</li>
+<li><a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a>（母方法论：机器做量，人做裁决）</li>
+<li><a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/" class="wikilink">AI视频本机超分_RealESRGAN_x4plus与闪烁检查_v1</a>（同构：超分域，帧差只证明”没变坏”，观感仍归作者目视）</li>
+<li><a href="/above-the-web/v1-69498a6/" class="wikilink">绿勾只覆盖它自己那张清单_v1</a> —— <strong>互补面</strong>:那条(本条)管验得够不够深(参数层→内容层),它管验的集合对不对(清单出自实现→查不出缺项);两种失败可以同时发生</li>
+<li><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+<li>同族案例（超分、字幕、切点:指标全过，作者仍否）：<a href="/above-the-web/2026-09-29-v1-03d7c00/" class="wikilink">2026-09-29_右下角的池塘_游戏宣传微电影_实录混剪到双语字幕发布_复盘_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">主题/自动化录屏</span><span class="tag">主题/质检</span><span class="tag">工具/ffprobe</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-29T16:18:43+08:00">2026-09-29</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BA%A7%E5%87%BA%E5%8F%8C%E9%87%8D%E9%AA%8C%E6%94%B6_%E6%9C%BA%E5%99%A8%E9%AA%8C%E5%8F%82%E6%95%B0%E4%BA%BA%E7%9C%BC%E9%AA%8C%E5%86%85%E5%AE%B9_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/%E8%87%AA%E5%8A%A8%E5%8C%96%E4%BA%A7%E5%87%BA%E5%8F%8C%E9%87%8D%E9%AA%8C%E6%94%B6_%E6%9C%BA%E5%99%A8%E9%AA%8C%E5%8F%82%E6%95%B0%E4%BA%BA%E7%9C%BC%E9%AA%8C%E5%86%85%E5%AE%B9_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/eleven-v3-v1-d87db20/">Eleven v3 行为规律</a></li><li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-08-05-v1-7db25e0/">《1000人后室大逃亡》配音工序 · 四音色定版复盘（2026-08-05）</a></li><li><a href="/above-the-web/2026-08-01-codex-2-4-19-v1-5f86653/">2026-08-01 Codex 教程清单 2/3/4 · 三项目 19 段录屏复盘</a></li><li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/">2026-08-13 Codex 教程操作部分 · 26 段重录复盘（19/26）</a></li><li><a href="/above-the-web/2026-08-14-codex-v1-c53b251/">2026-08-14 Codex 教程录制链路打磨 · 复盘</a></li><li><a href="/above-the-web/2026-08-26-v1-5c8b145/">2026-08-26 《擦干净》剧本口径审计与补图承接位 · 复盘</a></li><li><a href="/above-the-web/2026-07-31-codex-19-v1-e56ff53/">2026-07-31 Codex 教程实战六 · 自动化录屏 19 段复盘</a></li><li><a href="/above-the-web/2026-09-29-v1-03d7c00/">《右下角的池塘》游戏宣传微电影：AI 屏幕外 + 游戏实录混剪，到双语字幕发布</a></li><li><a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/">AI 视频本机超分：Real-ESRGAN x4plus 与闪烁检查</a></li><li><a href="/above-the-web/tts-asr-v1-18cdf62/">TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优</a></li><li><a href="/above-the-web/v1-f4e2df1/">录屏分镜按确定性分层：生成性镜头，逐字稿后配</a></li><li><a href="/above-the-web/libass-v1-f10b402/">影视级双语字幕：中上英下与 libass 逐镜头烧录</a></li><li><a href="/above-the-web/v1-5899ba4/">游戏宣传片实录：引擎逐帧录制与脚本代打</a></li><li><a href="/above-the-web/v1-bf57d38/">素材审片也能蒙眼 —— 盲选靠标题,定案靠眼睛</a></li><li><a href="/above-the-web/v1-69498a6/">绿勾只覆盖它自己那张清单</a></li><li><a href="/above-the-web/ui-v1-5a2fb47/">UI 自动化的固定坐标，必须绑一条可机检的前提断言</a></li><li><a href="/above-the-web/dws-index-v1-c5e1bec/">dws 块级插入：--index 语义陷阱与倒序插入法</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-25a3d5e/"> <span class="card-cat">方法论与洞察</span> <h3>「蒙眼剪辑法」— 一套基于 Claude 的 AIGC 视频内容产出闭环</h3> <p>LLM(大语言模型)有一个根本性盲区:它无法直接观看视频内容。</p> </a><a class="card" href="/above-the-web/2026-05-24-30-pv-v1-e4228dd/"> <span class="card-cat">方法论与洞察</span> <h3>2026-05-24｜30 项目角色 PV 发布复盘</h3> <p>项目：30伊恩・古德费罗的寓言</p> </a><a class="card" href="/above-the-web/2026-06-07-stay-alive-ai-mv-v1-5aba73f/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-07 Stay alive AI 音乐公益 MV 复盘</h3> <p>- 作品名称：《Stay alive》</p> </a><a class="card" href="/above-the-web/2026-06-08-remotion-mj-seedance-v1-5120fe3/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘</h3> <p>- 验证场景:scene04repeattoskill</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#为什么这条容易被跳过" data-toc-link="为什么这条容易被跳过">为什么这条容易被跳过</a></li><li class="d2"><a href="#实证" data-toc-link="实证">实证</a></li><li class="d3"><a href="#第三批操作部分-26-段这次是整批" data-toc-link="第三批操作部分-26-段这次是整批">第三批（操作部分 26 段）：这次是整批</a></li><li class="d2"><a href="#操作规则" data-toc-link="操作规则">操作规则</a></li><li class="d2"><a href="#边界" data-toc-link="边界">边界</a></li><li class="d2"><a href="#同构案例" data-toc-link="同构案例">同构案例</a></li><li class="d2"><a href="#验证状态" data-toc-link="验证状态">验证状态</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

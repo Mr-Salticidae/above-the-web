@@ -1,0 +1,178 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Yu-Lin-Wen-Skill · 蛛网之上</title><meta name="description" content="修复 Image2 画面中的结构性重复纹理，同时尽量锁定原图内容、风格和镜头关系。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/skill-e3d840f/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Yu-Lin-Wen-Skill"><meta property="og:description" content="修复 Image2 画面中的结构性重复纹理，同时尽量锁定原图内容、风格和镜头关系。"><meta property="og:url" content="https://tiaozhuxiansheng.com/skill-e3d840f/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Yu-Lin-Wen-Skill"><meta name="twitter:description" content="修复 Image2 画面中的结构性重复纹理，同时尽量锁定原图内容、风格和镜头关系。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-01T14:09:17+08:00"><meta property="article:modified_time" content="2026-09-01T14:09:17+08:00"><meta property="article:section" content="skill存档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/skill-e3d840f/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/skill-e3d840f/","url":"https://tiaozhuxiansheng.com/skill-e3d840f/","headline":"Yu-Lin-Wen-Skill","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"修复 Image2 画面中的结构性重复纹理，同时尽量锁定原图内容、风格和镜头关系。","datePublished":"2026-09-01T14:09:17+08:00","dateModified":"2026-09-01T14:09:17+08:00","articleSection":"skill存档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"skill存档","item":"https://tiaozhuxiansheng.com/notes/?cat=skill%E5%AD%98%E6%A1%A3"},{"@type":"ListItem","position":3,"name":"Yu-Lin-Wen-Skill","item":"https://tiaozhuxiansheng.com/skill-e3d840f/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=skill%E5%AD%98%E6%A1%A3" data-pagefind-meta="category" data-pagefind-filter="kind:note">skill存档</a> <span aria-hidden="true">/</span><span>yu-lin-wen-skill</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-01T14:09:17+08:00">2026-09-01</time></span>  <span>约 5 分钟读完 · 2,052 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#接收任务">接收任务</a></li><li class="d2"><a href="#核心诊断">核心诊断</a></li><li class="d2"><a href="#工作流分流">工作流分流</a></li><li class="d3"><a href="#预防性生成">预防性生成</a></li><li class="d3"><a href="#a-直接修复">A. 直接修复</a></li><li class="d3"><a href="#b-ao-三步修复">B. AO 三步修复</a></li><li class="d3"><a href="#c-光影保真修复">C. 光影保真修复</a></li><li class="d2"><a href="#材质与质量用词">材质与质量用词</a></li><li class="d2"><a href="#景深修复">景深修复</a></li><li class="d2"><a href="#提示词与执行细节">提示词与执行细节</a></li><li class="d2"><a href="#验收标准">验收标准</a></li> </ol> </details> <h1 id="yu-lin-wen-skill">Yu-Lin-Wen-Skill</h1>
+<p>修复 Image2 画面中的结构性重复纹理，同时尽量锁定原图内容、风格和镜头关系。</p>
+<h2 id="接收任务">接收任务</h2>
+<p>先判断用户要的是：</p>
+<ul>
+<li><strong>实际修图</strong>：检查输入图，使用可用的图片编辑模型执行修复，并输出新文件。</li>
+<li><strong>修复提示词</strong>：只交付适配用户模型的提示词，不擅自生成图片。</li>
+<li><strong>预防性优化</strong>：修改原始生图提示词，消除容易诱发鱼鳞纹的描述。</li>
+</ul>
+<p>实际修图时，先视觉检查编辑目标。若同时提供多张图，明确标注“编辑目标”和“风格/景深参考”，不得把参考图中的界面箭头、水印或无关元素复制进结果。</p>
+<h2 id="核心诊断">核心诊断</h2>
+<p>区分两种问题：</p>
+<ol>
+<li><strong>表面型伪影</strong>：噪点、颗粒、压缩痕迹、过锐、局部斑驳，但衣料大结构正确。优先直接修复。</li>
+<li><strong>结构型鱼鳞纹</strong>：衣料已经被生成成重复叶片、蜂窝、多边形、甲片、网格或碎膜。单纯降噪无法解决，应重建无纹理几何，再回填材质。</li>
+</ol>
+<p>不要只把原因归结为质量词。以下语义也常把柔软材质错误实体化：大量重叠薄片、无数膜片、数百层碎片、密集丝带、复杂微纹理、破碎边缘、液态薄膜。</p>
+<h2 id="工作流分流">工作流分流</h2>
+<h3 id="预防性生成">预防性生成</h3>
+<p>当用户尚未出图，或要求编写不会诱发结构性重复纹理的生图提示词时，先执行预防性检查：</p>
+<ol>
+<li>扫描并删除“超高细节、极致微纹理、无数碎片、数百层薄片、密集丝带、复杂破碎边缘、全画面锐利”等无差别增加密度的表达。</li>
+<li>将柔软材质改写为“少量宽幅、连续的材质层 + 修长大褶皱 + 干净连续表面 + 低频透光渐变”。</li>
+<li>普通新图可加入 <code>smooth shading, soft lighting, controlled details, minimal microtexture, high clarity, refined edges, smooth gradients</code>，同时明确禁止噪点、颗粒、伪影、高频纹理、脏污与过锐。</li>
+<li>将清晰度放在主体焦平面上，不使用“全画面超清晰”。</li>
+<li>第一张结果先检查衣料、头发、羽翼、雾气等柔软区域是否已经形成闭合重复单元；若出现结构性重复，立即进入直接修复或 AO 分支，不继续叠加质量词。</li>
+</ol>
+<p>完整可复制的预防模块见 <a href="references/prompt-library.md">references/prompt-library.md</a> 的“预防性生图规则”。</p>
+<h3 id="a-直接修复">A. 直接修复</h3>
+<p>用于表面型伪影或很轻的结构重复：</p>
+<ol>
+<li>锁定构图、主体身份、面部、姿势、道具数量、场景关系、光影方向和配色。</li>
+<li>只清除噪点、过锐和重复微结构。</li>
+<li>将材质改写为“少量、宽幅、连续的平面 + 大褶皱 + 低频渐变”。</li>
+<li>视觉检查构图漂移、人物变化、残余鱼鳞纹和新增元素。</li>
+</ol>
+<p>若直接修复后仍存在成片重复结构，不要继续堆叠降噪词，转入 AO 流程。</p>
+<h3 id="b-ao-三步修复">B. AO 三步修复</h3>
+<p>用于结构型鱼鳞纹：</p>
+<ol>
+<li><strong>AO 白模</strong>：以原图为唯一几何和构图参考，生成无色、无纹理的中性白模；保留所有大结构，只把重复小片合并为少量连续曲面。</li>
+<li><strong>材质回填</strong>：以白模锁定几何，以原图只参考色彩、材质、光影和风格；明确禁止复制原图的鱼鳞结构。</li>
+<li><strong>最终清理</strong>：以回填图为唯一编辑目标，只处理残余片状结构、噪点、锯齿、脏灰和过锐，不再引用带鱼鳞纹的原图。</li>
+</ol>
+<p>每一步都检查人物、构图、道具、风向、主体比例和镜头位置。默认保存各阶段文件且不覆盖原图，便于回退。</p>
+<h3 id="c-光影保真修复">C. 光影保真修复</h3>
+<p>当用户明确要求材质、质感、光影、影调、色彩基调和镜头效果严格不变时，优先使用此分支，不要先走 AO。AO 白模会丢失原图的亮度场、色温场、阴影遮罩和反射分布，后续回填等同于重新打光。</p>
+<p>完整流程是“基线检查 → 单次局部修复 → 分区验收 → 必要时更换策略”，不是强制连续生成多次。每多一次生成都会增加光影、材质和构图漂移。</p>
+<ol>
+<li><strong>基线检查（不生成）</strong>：记录原图主体、问题材质、主光源、环境亮部、建筑暗部、地面/水面反射六类区域的亮度、色温、高光与阴影覆盖；记录焦点、景深和模糊层次。</li>
+<li><strong>原图单次局部修复（默认首选）</strong>：原始问题图既是唯一编辑目标，也是全部视觉属性母版。把鱼鳞纹描述为“需要擦除并用邻近像素修补的小型闭合轮廓线或内部接缝”，不要要求重建整块材质。只删除高频闭合边界，保留所有大块暗带、透光区域、大褶皱和轮廓。</li>
+<li><strong>分区验收（不生成）</strong>：与基线逐区比较。若鱼鳞已消失且光影未明显漂移，立即停止，不做“最终美化”。</li>
+<li><strong>结构参考回退（仅首选失败时）</strong>：仍从原始问题图重新开始，不串联上一张生成结果；可增加无鳞图，但它只能提供连续拓扑，不得提供亮度、颜色、曝光或景深。若光影漂移，即使画面更漂亮也应淘汰。</li>
+</ol>
+<p>不要尝试用后续“重新打光”抵消前一步产生的偏差。连续材质清理会倾向于生成浅色发光礼服，后续光影校正通常只能部分拉回。严格保真时，回到原图做更保守的局部修复，比在漂移结果上继续生成更可靠。</p>
+<p>这里的关键不是“匹配光线方向”，而是把原图低频亮度场与色彩场视为不可变量；只清除高频闭合接缝，不改变承载光影的大结构。</p>
+<h2 id="材质与质量用词">材质与质量用词</h2>
+<p>普通去噪可使用：</p>
+<p><code>smooth shading, soft lighting, controlled details, minimal microtexture, high clarity, refined edges, smooth gradients, clean tonal transitions, restrained detail density</code></p>
+<p>光影保真分支中删除 <code>soft lighting</code>、<code>smooth gradients</code> 和任何笼统的“通透、发光、高级、电影级重打光”描述，只使用 <code>controlled microtexture, refined edges, preserve exact luminance and chroma distribution</code>。这些词会把原图的有效斑驳光影误判为缺陷并重新平滑。</p>
+<p>默认禁止：</p>
+<p><code>noise, grain, artifacts, high-frequency detail, dirty texture, oversharpening, blotchy details, chaotic details, fish scales, cellular texture, repetitive polygon patterns, overlapping tiles</code></p>
+<p>避免使用会无差别增加密度的词：</p>
+<p><code>ultra high detail, hyper-detailed, extreme detail, intricate microtexture, countless fragments, hundreds of layers, razor sharp everywhere</code></p>
+<h2 id="景深修复">景深修复</h2>
+<p>用户要求突出人物时，不要使用“全画面高清”。明确焦平面：人物面部、上半身、手和关键道具清晰；近景遮挡物和最近地面柔化；月亮、远处建筑及背景植被轻柔失焦。使用自然光学渐落，禁止锐化蒙版式假景深。</p>
+<p>景深只改变清晰度层级，不得改变人物大小、位置、动作或原构图。</p>
+<h2 id="提示词与执行细节">提示词与执行细节</h2>
+<p>实际生成图片或需要交付完整模板时，读取 <a href="references/prompt-library.md">references/prompt-library.md</a>。根据诊断只选所需模板，不要一次把直修与 AO 三步全部塞进同一条提示词。用户要求严格保持光影时，读取其中的“光影保真流程模板”。</p>
+<h2 id="验收标准">验收标准</h2>
+<p>完成前确认：</p>
+<ul>
+<li>鱼鳞、蜂窝、叶片、甲片或网格式重复结构已经消失。</li>
+<li>布料仍有体积、褶皱和透光，而非塑料般涂抹。</li>
+<li>原人物、动作、道具数量、构图和叙事没有漂移。</li>
+<li>人物是主焦点，前后景具有自然层次。</li>
+<li>无新增角色、武器、文字、logo、水印或界面元素。</li>
+<li>输出另存；说明使用了直接修复还是 AO 流程。</li>
+</ul>
+<p>光影保真分支还必须逐区对照：主体、问题材质、背景主光源、环境亮部、建筑暗部、地面或水面反射。确认每一区域的曝光、亮部覆盖、暗部覆盖、色温、饱和度和虚实关系没有被重新设计。只匹配整体冷暖色不算合格。</p>
+<p>默认最多执行一次直接修复和一轮 AO 三步。若仍有明显结构伪影，只进行一次针对残余区域的定向修复；之后停止并向用户说明限制，避免无休止重绘导致构图漂移。</p>  <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-01T14:09:17+08:00">2026-09-01</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/07_skill%E5%AD%98%E6%A1%A3/yu-lin-wen-skill/SKILL.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/07_skill%E5%AD%98%E6%A1%A3/yu-lin-wen-skill/SKILL.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore>  <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/prompt-library-80f9b04/"> <span class="card-cat">skill存档</span> <h3>Image2 鱼鳞纹修复提示词库</h3> <p>按诊断结果选择一个阶段使用。花括号内容应替换成当前图片的真实信息。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#接收任务" data-toc-link="接收任务">接收任务</a></li><li class="d2"><a href="#核心诊断" data-toc-link="核心诊断">核心诊断</a></li><li class="d2"><a href="#工作流分流" data-toc-link="工作流分流">工作流分流</a></li><li class="d3"><a href="#预防性生成" data-toc-link="预防性生成">预防性生成</a></li><li class="d3"><a href="#a-直接修复" data-toc-link="a-直接修复">A. 直接修复</a></li><li class="d3"><a href="#b-ao-三步修复" data-toc-link="b-ao-三步修复">B. AO 三步修复</a></li><li class="d3"><a href="#c-光影保真修复" data-toc-link="c-光影保真修复">C. 光影保真修复</a></li><li class="d2"><a href="#材质与质量用词" data-toc-link="材质与质量用词">材质与质量用词</a></li><li class="d2"><a href="#景深修复" data-toc-link="景深修复">景深修复</a></li><li class="d2"><a href="#提示词与执行细节" data-toc-link="提示词与执行细节">提示词与执行细节</a></li><li class="d2"><a href="#验收标准" data-toc-link="验收标准">验收标准</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

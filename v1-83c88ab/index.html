@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>全站文字截断体检 · 检测工具本身要先被证伪 · 蛛网之上</title><meta name="description" content="- 触发:用户截图后台轮次列表,「参与范围」下拉只显示「所有人可」,并要求「顺便查一下类似的问题一并修复」"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-83c88ab/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="全站文字截断体检 · 检测工具本身要先被证伪"><meta property="og:description" content="- 触发:用户截图后台轮次列表,「参与范围」下拉只显示「所有人可」,并要求「顺便查一下类似的问题一并修复」"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-83c88ab/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="全站文字截断体检 · 检测工具本身要先被证伪"><meta name="twitter:description" content="- 触发:用户截图后台轮次列表,「参与范围」下拉只显示「所有人可」,并要求「顺便查一下类似的问题一并修复」"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-26T00:49:13+08:00"><meta property="article:modified_time" content="2026-09-29T16:18:43+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-83c88ab/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-83c88ab/","url":"https://tiaozhuxiansheng.com/v1-83c88ab/","headline":"全站文字截断体检 · 检测工具本身要先被证伪","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 触发:用户截图后台轮次列表,「参与范围」下拉只显示「所有人可」,并要求「顺便查一下类似的问题一并修复」","datePublished":"2026-07-26T00:49:13+08:00","dateModified":"2026-09-29T16:18:43+08:00","articleSection":"平台工程","keywords":"类型/平台工程"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"全站文字截断体检 · 检测工具本身要先被证伪","item":"https://tiaozhuxiansheng.com/v1-83c88ab/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-26T00:49:13+08:00">2026-07-26</time></span> <span>更新于 <time datetime="2026-09-29T16:18:43+08:00">2026-09-29</time></span> <span>约 13 分钟读完 · 4,884 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>10 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#四条可复用-insight">四条可复用 insight</a></li><li class="d3"><a href="#1-含经验常数的判据--未验证的假设但它输出的是权威清单-️首次">1. 含经验常数的判据 = 未验证的假设,但它输出的是权威清单 ⚠️首次</a></li><li class="d3"><a href="#2-能问浏览器就别自己算而且要问对问题-️首次">2. 能问浏览器就别自己算,而且要问对问题 ⚠️首次</a></li><li class="d3"><a href="#3-误报会伪装成顺手修一下混进提交-️首次">3. 误报会伪装成「顺手修一下」混进提交 ⚠️首次</a></li><li class="d3"><a href="#4-同类问题要按写法搜不按页面搜-️首次">4. 「同类问题」要按写法搜,不按页面搜 ⚠️首次</a></li><li class="d2"><a href="#顺手教训">顺手教训</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="全站文字截断体检--检测工具本身要先被证伪">全站文字截断体检 · 检测工具本身要先被证伪</h1>
+<blockquote>
+<p>入档:2026-07-26
+来源:PB Arena(pb.tiaozhuxiansheng.com)后台下拉框显示不全的修复会话,1 个提交(<code>f510fe5</code>)已部署上线并封版 <code>v2026.07.26</code>
+状态:已上线并线上实测;四条 insight 均为本次首次发现 ⚠️;<strong>核心律「检测工具本身要先被证伪」已于 2026-07-27 跨项目二次验证</strong>(网络测速探针,见 <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a>),其余三条仍待验证
+⭐⭐⭐⭐ <strong>核心律第四次现形(2026-08-05),且是新亚型</strong>:前三次都是「工具算错了」,这次是<strong>工具没算错,是我把它的输出读成了别的意思</strong>——<code>git check-ignore -v</code> 在空模式行上返回形如 <code>.gitignore:28:\t&#x3C;path></code> 的输出(第 28 行其实是空行、模式字段为空),看着像匹配,据此宣称”已忽略”是错的。<strong>权威判据是 <code>git status</code>:真被忽略的路径根本不会出现在里面。</strong> 见 <a href="/above-the-web/2026-08-05-v1-a1af0ef/" class="wikilink">2026-08-05_公众号稿送审翻车_弃读点与框架错误复盘_v1</a>
+⭐⭐⭐⭐⭐ <strong>第五次现形(2026-08-08),回到「工具算错了」亚型,但假阳性的代价升了一档</strong>:视频切点检测器用「帧差 ÷ 全片最大帧差」归一化再取相对阈值,在一段<strong>完全连续、只有噪声</strong>的样本上报出 <strong>26 处假切点</strong>——没有真信号时,分母塌了,纯噪声被拉满 0~1,必然撞穿任何相对阈值。<strong>新维度:当测量工具的输出就是结论本身(而非待人工复核的线索清单)时,假阳性不产生「多余的工作」,只产生「错误的知识」</strong>——那次实验的全部产出就是「有没有分段」一个判断,工具报错方向会直接把结论翻转,还附一张精确到帧的时间戳表当背书。见 <a href="/above-the-web/2026-08-08-s43-v1-656a72b/" class="wikilink">2026-08-08_后室大逃亡S43长镜头_归因未遂与生死线次序复盘_v1</a>
+⭐⭐⭐⭐⭐⭐ <strong>第六次现形(2026-08-19),第三种亚型:工具的判断机制本身有偏</strong>。前几次的「工具」都是脚本,这次是<strong>一支被明确要求「尽力反驳」的 agent 复核团</strong>——46 条提案,<strong>驳回 0 条</strong>。不是算错、也不是我读错,而是复核方拿到一段看起来合理的分析文本时倾向于确认而不是去跑一遍;光在 prompt 里写「默认怀疑」「证据不足判 false」不管用。<strong>新判据:复核结果的驳回率本身就是可信度指标——全过或全不过都不可信,必须抽最严重的几条自己验。</strong> 那次抽验纠正了两条最严重的描述偏差,而这两条纠正<strong>直接改变了修法</strong>(一条要顺手清生产 HTML 里的占位假数据、一条的止血点是没包 try/catch 的定时器而不是接口层)——照单全收会修错地方。同一毛病也发生在人身上:我写回归测试时凭印象写 action 名与路由路径,挂了两条,同样是「觉得自己知道于是没去查」。见 <a href="/above-the-web/46-v1-9df0c5a/" class="wikilink">自检46条零驳回_同类中的异类才是缺陷藏身处_v1</a>
+🧑 <strong>人肉版第三次现形(2026-08-20),并已改成动作</strong>:本律的对象一直是「工具」,但同一种失败在<strong>人</strong>身上同样成立——「我的记忆也是待验证的假设」。三次全在写回归测试时凭印象手打字符串:action 名 <code>finished</code> 写成 <code>finish</code>、好友接受漏了 <code>/respond</code>、赛事列表接口误加 <code>admin</code> 前缀。前两次在复盘里写了「要先查」,<strong>没用,第三次照犯</strong>。光记住不管用,已固化成动作:<strong>写任何调用接口的测试前,先 <code>grep</code> 出路由定义与 action 白名单,把实际字符串贴过来,不手打。</strong> 见 <a href="/above-the-web/v1-41b9cb0/" class="wikilink">零路由补路由_普查要能推翻已写的代码_v1</a>
+⭐⭐⭐⭐⭐⭐⭐ <strong>第七次现形（2026-08-21），第四种亚型：工具没算错、我也没读错，是它回答的不是我以为的那个问题</strong>。同一天连撞三次，形态完全一样：
+① <code>--window-size=390</code> 截出来的图右侧被切，我判成「手机端横向溢出」并改了一轮响应式——<code>--dump-dom</code> 量出 <strong>viewport 489、docScrollWidth 489、越界元素 0</strong>，<strong>这个参数控的是截图取景，不是布局视口</strong>；
+② <code>curl -o</code> 抓线上构建 grep 零命中，险些判成「发布的是旧版」——实际是没解压，拿到的是 gzip 流，<code>--compressed</code> 之后全部命中；
+③ <code>git status</code> 显示 <code>ahead 44</code>，我据此给出「44 个提交会一起上线、其中 6 个重启后端服务」的<strong>风险评估</strong>，<code>git fetch</code> 之后真正没推的只有 2 个。
+<strong>共同判据：问一句「这个工具回答的是哪个问题」</strong>——截图工具答的是取景不是视口，<code>curl</code> 答的是字节流不是文本，<code>git status</code> 答的是「相对我本地记的那个远端」不是真实远端。<strong>第三例最贵：它没有浪费时间，而是产出了一个错误的风险评估，差点让人为此做不必要的取舍。</strong>
+另附一个次生教训：<strong>为假问题做的改动里可能混着对的东西，要分开处置</strong>——那轮改的栅格 <code>minmax(0,1fr)</code> 是对的实践留下了，而为假问题加的 <code>overflow-x:hidden</code> <strong>会把真溢出藏起来</strong>，比不加更糟，撤掉了。见 <a href="/above-the-web/2026-08-21-v1-35cad1d/" class="wikilink">2026-08-21_一小时分享会_从设计到投影现场_全链路复盘_v1</a>
+⭐⭐⭐⭐⭐⭐⭐⭐ <strong>第八次现形(2026-09-11),两个亚型同日各来一次,而第一个是「对照样本已经在手里了,我没读」</strong>:
+① <strong>工具在被污染的环境里失效,而告警就摆在同一份输出里</strong>。本机有代理劫持 DNS(<code>battleverse.cn</code> 解析出 <code>198.18.x.x</code> 保留段),我据此做端口探测,得出「目标机 22 / 80 / 443 / <strong>3389</strong> 全部可连」——<strong>同一批测试里,老服务器的 3389 也”可连”,而那是台没装 RDP 的 Ubuntu</strong>。这个已知答案的对照免费、就在手边,它宣告了工具不可信,我却先据此下了判断(「TCP 能到但 sshd 在握手前掐断」),隔了几步才反应过来。<strong>新判据:在不可信网络里,探测的第一步是先测一个已知答案的对照,确认工具本身可信,再看真正关心的结果。</strong> 同族前情正是 <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a>——<strong>同一种 fake-ip 假信号,第二次骗到我</strong>。
+② <strong>第五种亚型:工具没算错、我没读错、它回答的也是那个问题——是我测早了</strong>。给 nginx 加 Basic Auth,<code>reload</code> 之后立刻 <code>curl</code>,无凭据返回 200。我第一反应是<strong>配置没生效</strong>,去 grep 全站 location 定义查是不是有别的块抢先匹配;实际只是 <code>reload</code> 是异步的、worker 还没切完,隔十几秒再测就是 401。<strong>更该记的是:前一次验证我写了 <code>sleep 1</code>,这次忘了——同一个坑,同一天,隔半小时。</strong> 已固化成动作:<strong>异常结果出现时,先排除「测的方式不对」(时机 / 环境 / 工具),再怀疑「被测的东西不对」</strong>——前者排查成本低一个量级,而且它正是本律八次现形的共同形态。
+见 <a href="/above-the-web/v1-191a808/" class="wikilink">换系统盘前的现状核查_给我的服务器不等于空服务器_v1</a>
+同项目前情:<a href="/above-the-web/v1-0abb7cd/" class="wikilink">零作品的比赛_界面演完不等于链路存在_v1</a> · <a href="/above-the-web/v1-35e4706/" class="wikilink">赛事状态机到点不切换_写入方不等于推进方_v1</a></p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录(不可修改区)</h2>
+<ul>
+<li>
+<p>触发:用户截图后台轮次列表,「参与范围」下拉只显示「所有人可」,并要求「顺便查一下类似的问题一并修复」</p>
+</li>
+<li>
+<p>做法:写脚本遍历全部页面 + 11 个后台面板 + 各弹窗,扫 320 / 375 / 900 / 1000 / 1100 / 1280 / 1440 七档宽度</p>
+</li>
+<li>
+<p><strong>判据换过三版,对同一个元素给出三种不同结论</strong>(以 <code>#adminEventStatusFilter</code>、宽 96px 为例):</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>版本</th><th>判据</th><th>对该元素的结论</th></tr></thead><tbody><tr><td>v1</td><td>canvas 量文字宽 + padding + border + <strong>经验值箭头宽 22px</strong></td><td>差 3px,判为截断 ❌</td></tr><tr><td>v2</td><td>克隆一个 <code>width:auto</code> 的同款 select,问浏览器要多宽</td><td>不截断 ✅</td></tr><tr><td>v3</td><td>逐项选中,读元素自身 <code>scrollWidth > clientWidth</code></td><td>不截断 ✅</td></tr></tbody></table>
+</li>
+<li>
+<p>v1 共报 14 条,其中 8 条是后台筛选下拉「差 3px」、1 条是房间人数下拉「差 9px」——<strong>全部是误报</strong></p>
+</li>
+<li>
+<p>我据 v1 的误报给房间人数下拉加过一行 <code>flex: none</code>;做 A/B 对照(加与不加各量一遍)后发现两种情况宽度都是 50px、都不截断,<strong>已撤回</strong></p>
+</li>
+<li>
+<p>v3 的信号有效性单独验证过:把该下拉故意压到 30px,<code>scrollWidth</code> 34 > <code>clientWidth</code> 30,确认信号能反映真截断</p>
+</li>
+<li>
+<p>最终确认的真缺陷 3 处,修复后七档宽度 + 各弹窗零命中;后端测试 9/9 通过</p>
+</li>
+</ul>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>体检脚本吐出来的「缺陷清单」本身就是一个待验证的假设——先用已知正常和已知损坏的样本把工具两端标定过再信它;否则你会拿着一张很权威的清单,去改一堆没坏的代码。</strong></p>
+<h2 id="四条可复用-insight">四条可复用 insight</h2>
+<h3 id="1-含经验常数的判据--未验证的假设但它输出的是权威清单-️首次">1. 含经验常数的判据 = 未验证的假设,但它输出的是权威清单 ⚠️首次</h3>
+<p>v1 判据里只有一个拍脑袋的数:下拉箭头占 22px。就这一个数,把 8 个完全正常的元素判成了缺陷。</p>
+<p>危险的地方在于<strong>输出形态</strong>:它不像一句「我觉得应该能行」那样一眼可疑,它是一张带元素选择器、带「需要 98px / 实际 95px」的表格,看起来已经量过了。<strong>人天然倾向于相信「工具找到了问题」,而不是「工具算错了」。</strong></p>
+<p>正确做法:<strong>先拿一个已知正常的元素和一个已知损坏的元素各跑一遍,确认工具在两端都判对,再信它对中间地带的判断。</strong> 本次最后就是靠「把下拉故意压到 30px,看它报不报」这一步,才确认 v3 的信号真的有效。</p>
+<p><strong>假阳性比假阴性更贵</strong>:假阴性只是漏掉一个 bug;假阳性会让你去改没坏的代码,同时放大工作量和回归风险。</p>
+<h3 id="2-能问浏览器就别自己算而且要问对问题-️首次">2. 能问浏览器就别自己算,而且要问对问题 ⚠️首次</h3>
+<p>三版判据的演进方向,是<strong>越来越少自己算</strong>:</p>
+<ul>
+<li><strong>v1</strong>:自己量文字 + 自己估箭头 + 自己加 padding → 三个中间量,三个偏差源</li>
+<li><strong>v2</strong>:克隆一个自由宽度的元素,问浏览器「你要多宽」 → 好很多,但仍高估约 10px</li>
+<li><strong>v3</strong>:让元素处在真实状态(逐项选中),直接读它自己的 <code>scrollWidth</code> / <code>clientWidth</code> → 对</li>
+</ul>
+<p><strong>判据:凡是「渲染结果对不对」的问题,答案应该由渲染引擎给出,不由你的模型给出。</strong> 你自己算的每一个中间量都是一个偏差源。</p>
+<p>v2 已经在问浏览器了,为什么还不对?因为<strong>我问错了问题</strong>:「浏览器认为一个自由宽度的 select 该多宽」和「这个 select 现在有没有截断」是两个不同的问题——前者的答案里含浏览器留的富余量。<strong>从「自己算」升级到「问引擎」只是第一步,还得确认你问的正是你要判的那件事。</strong></p>
+<h3 id="3-误报会伪装成顺手修一下混进提交-️首次">3. 误报会伪装成「顺手修一下」混进提交 ⚠️首次</h3>
+<p>那行 <code>flex: none</code> 只有一个属性,看起来完全无害,而且「防止 flex 子项被压缩」这个理由本身还挺像回事。要不是最后做了 A/B 对照,它会作为「顺带修复」留在提交里,变成一行<strong>为不存在的问题而存在、后人也不敢删</strong>的代码(因为没人知道它在防什么)。</p>
+<p><strong>判据:每一条「顺带修的」改动,都要能单独拿出「改之前确实坏、改之后确实好」的证据。拿不出来就撤回。</strong> 不要用「反正无害」当理由留着——无害的代码也是债,债在于它让后来者无法判断它的必要性。</p>
+<h3 id="4-同类问题要按写法搜不按页面搜-️首次">4. 「同类问题」要按写法搜,不按页面搜 ⚠️首次</h3>
+<p>三处真缺陷的共同点<strong>不是「都在后台」,而是同一种 CSS 写法:固定像素列宽 + 一个会自适应的邻居</strong>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>位置</th><th>写法</th><th>后果</th></tr></thead><tbody><tr><td>后台轮次列表(用户截图处)</td><td><code>80px 145px minmax(180px,1fr)</code> 三列却放了五个子元素</td><td>两个下拉掉进 80px 的标题列,最长选项要 181px</td></tr><tr><td>后台新增轮次表单</td><td>两个下拉写死 <code>160px</code></td><td>最长选项要 182px / 170px</td></tr><tr><td><strong>前台</strong>赛事卡片轮次行</td><td><code>95px 1fr auto</code></td><td>固定列 + auto 列把中间的题目挤成 <strong>15px</strong>(要 66–99px)</td></tr></tbody></table>
+<p>第三处最严重,却<strong>在用户截图的那个宽度下完全正常</strong>,只在 1100px 附近才现形;而且它在前台,不在后台。</p>
+<p>所以:按「再看看后台别的页面」去找会漏掉它;按「再看看 1440px 下还有没有」去找也会漏掉它。<strong>要按写法搜(grep 固定像素列宽)+ 按宽度扫,才能捞到同一个 bug 的另一个化身。</strong></p>
+<h2 id="顺手教训">顺手教训</h2>
+<ul>
+<li><strong>用户说「顺便查一下类似的问题」时,交付物里要包含排查覆盖面</strong>:查了哪些页面、哪些宽度、用什么判据、哪些报了但复核后判定不是问题。否则「我查过了」是不可核验的一句话。本次把「排查后确认不是问题(未改动)」单独写进了文档,和「已修复」并列。</li>
+<li><strong>带版本号的静态资源,改文件必须同步改版本号</strong>——这条在 <a href="/above-the-web/v1-35e4706/" class="wikilink">赛事状态机到点不切换_写入方不等于推进方_v1</a> 里已经记过一次,本次改 <code>styles.css</code> 时主动改了 <code>?v=20260726</code>,并在部署后单独核对线上 HTML 引用的确实是新版本号。<strong>记过的坑要在下一次主动触发,而不是等它再犯。</strong></li>
+<li><strong>线上没有可复现的数据时,注入渲染器实际产出的那段结构来量线上 CSS</strong>:生产库里没有进行中的赛事,页面渲染不出轮次卡片。做法是把 <code>renderRoundList</code> 实际产出的 HTML 注入线上页面 DOM 再量——量到的是<strong>部署后的样式</strong>,不是本地的,且全程只读、不写任何数据。</li>
+</ul>
+<h2 id="下次改进">下次改进</h2>
+<ul>
+<li>写体检 / 扫描类脚本时,第一步不是跑全量,是<strong>造一个已知正常样本和一个已知损坏样本</strong>,确认工具两端都判对。</li>
+<li>判 UI 渲染结果时,优先读元素自身在真实状态下的几何属性;要自己算之前先问一句「这个量浏览器是不是已经算好了」。</li>
+<li>每条「顺带修的」改动都配一份 A/B 证据,拿不出来就撤回。</li>
+<li>找「同类问题」时 grep 的是<strong>写法</strong>(这里是固定像素列宽),不是页面名。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⭐ <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— 直接同族的另一半:那条管「别把没验证过的<strong>方案</strong>当能行」,本篇管「别把没验证过的<strong>检测工具</strong>的输出当事实」;两条合起来才是完整的「不把未验证当已验证」</li>
+<li>⚠️ <a href="/above-the-web/v1-35e4706/" class="wikilink">赛事状态机到点不切换_写入方不等于推进方_v1</a> —— 同项目,且是本篇的正对照:那篇的教训是「决定性的一步是量,不是猜」(量到胶囊文字实际 56px / 需要 86px);本篇补上后半句——<strong>量的方法本身也可能是错的,量之前先标定</strong></li>
+<li>⚠️ <a href="/above-the-web/v1-0abb7cd/" class="wikilink">零作品的比赛_界面演完不等于链路存在_v1</a> —— 同项目上一会话:那篇是「别用界面验收功能,要用数据」,本篇是「用来验收的工具也要先被验收」</li>
+<li>⚠️ <a href="/above-the-web/claude-v1-b6645d9/" class="wikilink">Claude预览环境不派发滚动事件_滚动类功能无法行为验证_v1</a> —— 同族「验证手段本身失效」:那篇是环境不派发事件导致压根测不了,本篇是判据算错导致测出一堆假的</li>
+<li>⚠️ <a href="/above-the-web/reduced-motion-v1-5d31a1e/" class="wikilink">reduced-motion本机陷阱_动效降级纯淡入而非跳过_v1</a> —— 同族「本机测量骗了你」:那篇是本机偏好开关让自测毫无变化,本篇是自制判据让正常元素显示为缺陷</li>
+<li>⚠️ <a href="/above-the-web/v1-ffe7a6e/" class="wikilink">美工改稿全站落地_跨稿重复才是规范_v1</a> —— 同项目后续会话、同一纪律的第三次现形:本篇是自制判据把正常元素判成缺陷,那篇是拿规范文字当待办清单、把两处<strong>已经实现</strong>的功能误报成「还没做」;共同解法都是<strong>报缺陷前先回原地核实</strong>。另,本篇顺手教训里的版本号一条在那次被扩展成「版本号要覆盖会一起变的那一组文件」——<code>styles.css</code> 有 <code>?v=</code> 而 <code>app.js</code> 没有,只 bust 一半等于新样式配旧 DOM</li>
+<li>⭐ <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> —— <strong>本篇核心律的跨项目二次验证</strong>(首次出圈:上次是浏览器 UI 体检脚本,这次是网络测速脚本):探针参数超限被 403,把 14 个正常节点判成「全挂」,形态是一列整齐的 0——和本篇「一张带数字的表格」同构,都是<strong>工具的输出形态很像事实</strong>;那篇补上操作层判据「<code>0</code> 同时意味着『测到 0』和『没测成』,探针必须输出 <code>http_code</code>/<code>size_download</code> 这类能区分二者的字段」</li>
+<li>⭐ <a href="/above-the-web/v1-6fdab0b/" class="wikilink">构建产物的脏改动不是事故_复发是归因错了的信号_v1</a> —— <strong>本篇核心律的第三次现形</strong>(2026-07-28)，三条合起来覆盖了三个信息源：本篇管<strong>工具的输出</strong>要先证伪，<a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> 管<strong>诊断的信号</strong>要打在真实链路上，那篇管<strong>你自己写下的历史归因</strong>要先证伪——且那篇指出最后一种最危险：它不会被质疑（自己写的），还会主动加速下一次误判</li>
+<li>⭐ <a href="/above-the-web/2026-08-05-v1-a1af0ef/" class="wikilink">2026-08-05_公众号稿送审翻车_弃读点与框架错误复盘_v1</a> —— <strong>本篇核心律的第四次现形,补上第四个信息源</strong>:前三条管「工具的输出」「诊断的信号」「自己写下的历史归因」,这条管<strong>标准工具输出的格式本身</strong>——<code>git check-ignore -v</code> 的空模式假阳性。区别在于前三次工具是错的、这次工具是对的,<strong>错的是我对它输出的解读</strong>;因此解法也不同:不是标定工具,是<strong>换一个更朴素、语义无歧义的判据</strong>(<code>git status</code>)。另,该篇「弃读点比错误点信息量大」与本篇「假阳性比假阴性更贵」同构——都是<strong>在错误的清单里,位置信息比内容信息更可靠</strong></li>
+<li><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 本篇顶部事实冻结区按它执行</li>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 平台工程区入口</li>
+<li>⚠️ <a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/" class="wikilink">2026-08-19_vpn-guard出口归属门槛与四处假绿修复_迭代复盘_v1</a> —— 新变体(2026-08-19):本篇管<strong>工具的判据</strong>不可信,那篇是<strong>哨兵被自己的样本中和</strong>——为「不得把裸词 data 加进机房词表」写的守卫,样本 ISP 里带了 <code>Telecom</code> 命中运营商词表 −3,正好抵消待测的 +3,那条断言在任何情况下都触发不了。断言写对了、样本选错了,症状是永远绿、与「真的没问题」完全一致。对口手法=<strong>投毒</strong>:写完测试先证明它会失败,三种投毒里正是这条暴露了哨兵是坏的</li>
+<li>同族(调试探针自己制造了一百多条报错):<a href="/above-the-web/mac-macos-githubactions-v1-3b7ddc1/" class="wikilink">无Mac冒烟测试macOS版_GitHubActions截图验字体_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-29T16:18:43+08:00">2026-09-29</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E5%85%A8%E7%AB%99%E6%96%87%E5%AD%97%E6%88%AA%E6%96%AD%E4%BD%93%E6%A3%80_%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7%E6%9C%AC%E8%BA%AB%E8%A6%81%E5%85%88%E8%A2%AB%E8%AF%81%E4%BC%AA_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E5%85%A8%E7%AB%99%E6%96%87%E5%AD%97%E6%88%AA%E6%96%AD%E4%BD%93%E6%A3%80_%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7%E6%9C%AC%E8%BA%AB%E8%A6%81%E5%85%88%E8%A2%AB%E8%AF%81%E4%BC%AA_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/autoclaw-v1-aeec89d/">AutoClaw 失控删库全链路取证 · 回收站时间戳与孤本抢救</a></li><li><a href="/above-the-web/v1-c224595/">录屏假光标被打回：画出来的不算操作，与&quot;输入送达&quot;的四处假信号</a></li><li><a href="/above-the-web/v1-191a808/">换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」</a></li><li><a href="/above-the-web/mac-macos-githubactions-v1-3b7ddc1/">没有 Mac 也能冒烟测试 macOS 版：GitHub Actions 截图验字体</a></li><li><a href="/above-the-web/v1-6fdab0b/">构建产物的脏改动不是事故 · 复发是归因错了的信号</a></li><li><a href="/above-the-web/v4-v1-a4608a7/">美工改稿 V4 四屏落地 · 禁止项是待办不是护栏</a></li><li><a href="/above-the-web/v1-ffe7a6e/">美工改稿全站落地 · 跨稿重复才是规范</a></li><li><a href="/above-the-web/46-v1-9df0c5a/">自检 46 条零驳回 · 同类中的异类才是缺陷藏身处</a></li><li><a href="/above-the-web/v1-6601c25/">账号系统对标一线 · 多账号抽屉与外部通道的半开陷阱</a></li><li><a href="/above-the-web/v1-35e4706/">赛事状态机到点不切换 · 写入方不等于推进方</a></li><li><a href="/above-the-web/v1-0abb7cd/">零作品的比赛 · 界面演完不等于链路存在</a></li><li><a href="/above-the-web/v1-41b9cb0/">零路由补路由 · 普查要能推翻已写的代码</a></li><li><a href="/above-the-web/2026-08-02-livelink-v1-02b433b/">LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错</a></li><li><a href="/above-the-web/2026-08-05-v1-a1af0ef/">公众号稿送专业方审阅翻车 · 弃读点与框架错误（2026-08-05）</a></li><li><a href="/above-the-web/2026-08-08-s43-v1-656a72b/">S43 长镜头分段归因 · 归因未遂与生死线次序（2026-08-08）</a></li><li><a href="/above-the-web/2026-08-21-v1-35cad1d/">2026-08-21 一小时分享会 · 从设计到投影现场 · 全链路复盘</a></li><li><a href="/above-the-web/v1-3fce0f1/">交付前实测证伪律</a></li><li><a href="/above-the-web/v1-63180a1/">沉默失败先装嘴律 · 够不到的环境，先给它一层能看见的报错</a></li><li><a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/">2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</a></li><li><a href="/above-the-web/dns-fake-ip-dns-v1-90e0c85/">DNS 防泄露五层修复 · fake-ip 形同虚设与物理网卡 DNS 绕过</a></li><li><a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/">ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/claude-v1-b6645d9/"> <span class="card-cat">平台工程</span> <h3>Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证</h3> <p>Claude Preview 的预览 iframe 根本不向页面派发 scroll 事件——window / document、冒泡 / 捕…</p> </a><a class="card" href="/above-the-web/reduced-motion-v1-5d31a1e/"> <span class="card-cat">平台工程</span> <h3>reduced-motion 本机陷阱 · 动效降级纯淡入而非跳过</h3> <p>Windows 关了「动画效果」的机器,所有浏览器都会全局上报 prefers-reduced-motion: reduce;网页动效对它的…</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a><a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#四条可复用-insight" data-toc-link="四条可复用-insight">四条可复用 insight</a></li><li class="d3"><a href="#1-含经验常数的判据--未验证的假设但它输出的是权威清单-️首次" data-toc-link="1-含经验常数的判据--未验证的假设但它输出的是权威清单-️首次">1. 含经验常数的判据 = 未验证的假设,但它输出的是权威清单 ⚠️首次</a></li><li class="d3"><a href="#2-能问浏览器就别自己算而且要问对问题-️首次" data-toc-link="2-能问浏览器就别自己算而且要问对问题-️首次">2. 能问浏览器就别自己算,而且要问对问题 ⚠️首次</a></li><li class="d3"><a href="#3-误报会伪装成顺手修一下混进提交-️首次" data-toc-link="3-误报会伪装成顺手修一下混进提交-️首次">3. 误报会伪装成「顺手修一下」混进提交 ⚠️首次</a></li><li class="d3"><a href="#4-同类问题要按写法搜不按页面搜-️首次" data-toc-link="4-同类问题要按写法搜不按页面搜-️首次">4. 「同类问题」要按写法搜,不按页面搜 ⚠️首次</a></li><li class="d2"><a href="#顺手教训" data-toc-link="顺手教训">顺手教训</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证 · 蛛网之上</title><meta name="description" content="Claude Preview 的预览 iframe 根本不向页面派发 scroll 事件——window / document、冒泡 / 捕获全部 0 次,连 IntersectionObserver 回调也 0 次,即便 window.s…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/claude-v1-b6645d9/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证"><meta property="og:description" content="Claude Preview 的预览 iframe 根本不向页面派发 scroll 事件——window / document、冒泡 / 捕获全部 0 次,连 IntersectionObserver 回调也 0 次,即便 window.s…"><meta property="og:url" content="https://tiaozhuxiansheng.com/claude-v1-b6645d9/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证"><meta name="twitter:description" content="Claude Preview 的预览 iframe 根本不向页面派发 scroll 事件——window / document、冒泡 / 捕获全部 0 次,连 IntersectionObserver 回调也 0 次,即便 window.s…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-25T03:34:01+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/claude-v1-b6645d9/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/claude-v1-b6645d9/","url":"https://tiaozhuxiansheng.com/claude-v1-b6645d9/","headline":"Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"Claude Preview 的预览 iframe 根本不向页面派发 scroll 事件——window / document、冒泡 / 捕获全部 0 次,连 IntersectionObserver 回调也 0 次,即便 window.s…","datePublished":"2026-06-25T03:34:01+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"平台工程","keywords":"类型/平台工程"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证","item":"https://tiaozhuxiansheng.com/claude-v1-b6645d9/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-25T03:34:01+08:00">2026-06-25</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 7 分钟读完 · 2,467 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>9 节</i></summary> <ol> <li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#实测证据">实测证据</a></li><li class="d2"><a href="#替代验证法绕过环境限制">替代验证法(绕过环境限制)</a></li><li class="d2"><a href="#补充2026-06-26预览还会冻结动画时钟动效同样无法直接观测">补充(2026-06-26):预览还会「冻结动画时钟」,动效同样无法直接观测</a></li><li class="d2"><a href="#补充2026-06-26又一次验证--桌面侧新盲区computer-use-遮蔽绿色-exe">补充(2026-06-26):又一次验证 + 桌面侧新盲区(computer-use 遮蔽绿色 exe)</a></li><li class="d2"><a href="#补充2026-07-16可交互-browser-面板同样-raf0konva-全家动画hit-图双击连环失灵--无头-chrome-退级法">补充(2026-07-16):可交互 Browser 面板同样 rAF=0——Konva 全家(动画/hit 图/双击)连环失灵 + 无头 Chrome 退级法</a></li><li class="d2"><a href="#选型建议">选型建议</a></li><li class="d2"><a href="#教训可复用">教训(可复用)</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="claude-预览环境不派发滚动事件--滚动类功能无法行为验证">Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证</h1>
+<blockquote>
+<p>入档:2026-06-25 · 补充:2026-06-26(动画时钟冻结) · 2026-07-16(交互面板 rAF=0/Konva hit 图/合成双击)
+来源:给蛛网之上首页做左侧浮动版块索引(滚动高亮当前版块),想在 Claude Preview 里验证 scroll-spy
+状态:确认是预览环境硬限制(非代码 bug),已找到可靠替代验证法</p>
+</blockquote>
+<h2 id="一句话总结">一句话总结</h2>
+<p>Claude Preview 的预览 iframe <strong>根本不向页面派发 <code>scroll</code> 事件</strong>——<code>window</code> / <code>document</code>、冒泡 / 捕获<strong>全部 0 次</strong>,连 <code>IntersectionObserver</code> 回调也 <strong>0 次</strong>,<strong>即便 <code>window.scrollY</code> 确实发生了变化</strong>(<code>scrollIntoView</code> / <code>scrollTo</code> 能滚,但不触发事件)。所以一切「<strong>滚动时才发生</strong>」的逻辑(scroll-spy 高亮、滚动懒加载、滚动动画、无限加载)在预览里<strong>无法行为验证</strong>。另外预览<strong>截图对持续 rAF 动画页(如 canvas 粒子背景)会超时</strong>。</p>
+<h2 id="实测证据">实测证据</h2>
+<ul>
+<li>自挂 <code>window.addEventListener('scroll', probe)</code> → <code>scrollTo(2000)</code> 后 <code>scrollY</code> 变了,但 <code>probe</code> 触发 <strong>0 次</strong>。</li>
+<li>自挂 <code>IntersectionObserver</code> observe 一个 section → 大幅滚动后回调 <strong>0 次</strong>。</li>
+<li>捕获阶段 <code>document.addEventListener('scroll', fn, {capture:true})</code> → 同样 <strong>0 次</strong>。</li>
+<li>结论:不是监听挂错位置/相位,是这个环境的滚动<strong>根本不走事件派发</strong>。</li>
+</ul>
+<h2 id="替代验证法绕过环境限制">替代验证法(绕过环境限制)</h2>
+<ol>
+<li><strong>验证「判定公式」而非「触发」</strong>:把”当前版块”的计算抽成纯函数,用 <code>eval</code> <strong>在多个已知滚动位置手动调用它</strong>,逐一比对返回值是否正确。
+<ul>
+<li>例:<code>scrollIntoView(各 section)</code> 后调用 <code>compute()</code>,确认返回「首页/可玩/视觉系统/skill存档…」逐一对。触发器在真机必然生效,公式对了就够。</li>
+</ul>
+</li>
+<li><strong>DOM 状态验证替代截图</strong>:<code>naturalWidth>0 &#x26;&#x26; complete</code> 验图片真加载、<code>getBoundingClientRect</code> 验布局不重叠、<code>getComputedStyle</code> 验样式值——比截图可靠且不超时。</li>
+<li><strong>真机最后一眼</strong>:滚动高亮这类「触发依赖」的,留一句话请用户在真实浏览器扫一眼确认。标准 API(capture 阶段 document scroll)在所有真实浏览器必然工作。</li>
+</ol>
+<h2 id="补充2026-06-26预览还会冻结动画时钟动效同样无法直接观测">补充(2026-06-26):预览还会「冻结动画时钟」,动效同样无法直接观测</h2>
+<p>给 taowhale 首页主图做流动动效时再次撞到同类边界,且更狠:<strong>预览 iframe 会暂停渲染时钟</strong>——</p>
+<ul>
+<li><strong>CSS 动画 / SMIL / <code>requestAnimationFrame</code> 全部不推进</strong>:<code>@keyframes</code> 不走、SVG <code>&#x3C;animate></code> 不走、自己挂的 rAF 回调一帧都不跑(靠 rAF 设 CSS 变量的鼠标互动也因此「看不到」)。</li>
+<li><strong>设了内联值 <code>getComputedStyle</code> 也可能不回填</strong>:页面进入冻结态后,<code>el.style.setProperty('--x', ...)</code> 再读 computed 拿不到新值(初次渲染的静态值才读得到)。</li>
+<li>叠加旧结论:截图对持续 rAF 动画页<strong>超时</strong>——所以动效页<strong>截图、computed 采样、肉眼</strong>三条路在预览里都断了。</li>
+</ul>
+<p><strong>替代验证法:不靠时钟自动走,手动把时钟推到指定时刻再采样</strong>——</p>
+<ol>
+<li><strong>CSS 动画 / WAAPI</strong>:<code>el.getAnimations()[0]</code> 拿到动画对象,<strong>直接写 <code>anim.currentTime = t</code></strong>,再 <code>getComputedStyle</code> 读被驱动的属性。例:验证流光位移 → 设 <code>currentTime</code> 到 0/25%/50%/75%,读 <code>background-position</code> 是否线性插值(证明会动)。</li>
+<li><strong>SVG SMIL</strong>:根 <code>&#x3C;svg>.setCurrentTime(t)</code>,再读被动画属性的 <code>.animVal</code>。例:验证 <code>feTurbulence</code> 流动 → <code>setCurrentTime(0/5.5/11)</code> 读 <code>feTurbulence.baseFrequencyX.animVal</code> 是否随时间演化。</li>
+<li><strong>静态合成预览</strong>:动效的「单帧观感」可在本地用 Python/PIL 合成一帧(把遮罩 / 光层 / 位移近似画出来)肉眼看,判断强弱是否过曝/过碎——运动靠①②证明,观感靠合成图。</li>
+<li><strong>真机最后一眼</strong>:动效是否「好看 / 速度合适」终究要真机刷新确认;预览只能证明「接线对、会动」。</li>
+</ol>
+<blockquote>
+<p>教训叠加:<strong>预览能证明「结构对、会动(逐帧采样)」,但证明不了「观感对」</strong>。动效类需求,把「逻辑/接线」验证(预览)与「观感/手感」验证(真机)分开,别指望在预览里调参数。</p>
+</blockquote>
+<h2 id="补充2026-06-26又一次验证--桌面侧新盲区computer-use-遮蔽绿色-exe">补充(2026-06-26):又一次验证 + 桌面侧新盲区(computer-use 遮蔽绿色 exe)</h2>
+<p>给 desk-pond 展示页做<strong>滚动联动水波</strong>(往下滚每隔一段荡开一圈)时第三次撞到本律:<code>scrollTo</code> 后 <code>scrollY</code> 变了但绑的 <code>scroll</code> 回调里的 rAF 一帧不跑,<strong>触发链无法在预览里验证</strong>;只能用 <code>eval</code> 手动跑一遍 <code>spawn()</code> 证明「元素创建 + <code>el.animate()</code> 在 running(<code>playState</code>)」——即「接线对、会动」,触发那一下留真机抽测。完全复用上面的分层验证法。</p>
+<p>同期还撞到一个<strong>不同工具的同类边界</strong>:computer-use 截图会<strong>遮蔽不在授权清单里的应用窗口</strong>,而便携版 .exe(绿色程序、不在开始菜单)无法被 <code>request_access</code> 解析 → <strong>运行中的桌面应用 UI 根本截不到</strong>。所以桌面应用的「图标/界面观感」既不能 headless 验、也不能截图验,<strong>只能靠离线合成预览(PIL 出真实尺寸图) + 用户真机肉眼终验</strong>。</p>
+<blockquote>
+<p>母题再确认:<strong>「观感对」永远要真机/人眼终验</strong>——无论拦路的是预览 iframe(冻结时钟)、还是 computer-use(遮蔽未授权窗口)。交付时把这条盲区<strong>显式写出来</strong>让用户终验,别默认没问题。</p>
+</blockquote>
+<h2 id="补充2026-07-16可交互-browser-面板同样-raf0konva-全家动画hit-图双击连环失灵--无头-chrome-退级法">补充(2026-07-16):可交互 Browser 面板同样 rAF=0——Konva 全家(动画/hit 图/双击)连环失灵 + 无头 Chrome 退级法</h2>
+<p>给 LibreCanvas(Konva 画布应用)做验证时,在<strong>可交互的 Browser 面板</strong>(非预览 iframe,能点能截图那个)实测 <code>requestAnimationFrame</code> <strong>每秒触发 0 次</strong>(离屏渲染器按需出帧),引发三连:</p>
+<ul>
+<li><strong>Konva.Animation 一帧不跑</strong>:视频卡逐帧重绘、呼吸辉光动效全部无法观测(逻辑正确也看不到动)。</li>
+<li><strong>Konva hit 图延迟绘制不执行</strong>:<code>stage.getIntersection()</code> 全画布返回 null、hover/onClick 全部失灵——手动 <code>layer.drawHit()</code> 后立刻恢复。<strong>派生收益:把产品逻辑里”依赖 hit 图”的判定改成几何包围盒,测试路障逼出了更稳的实现。</strong></li>
+<li><strong>合成事件两个坑</strong>:Konva 9 默认听 mouse 事件,派发 PointerEvent 无效;<code>clickCount:2</code>(0ms 间隔)的机械双击不被认作 dblclick,<strong>两次 click 间隔 ≥100ms 才触发</strong>——“自动化测不出双击”是工具问题不是代码问题。</li>
+</ul>
+<p>同机还撞到一个<strong>独立环境坑</strong>:VM 里用户真实 Chrome 的媒体管线全坏——任何来源(http/blob/data)的 video 都 readyState=0 超时,但 <code>canPlayType</code> 照样回答 “probably”。<strong>canPlayType 会撒谎,它查的是解码器注册表不是管线健康。</strong></p>
+<p><strong>退级验证法(已产线化,三层)</strong>:</p>
+<ol>
+<li><strong>逻辑层</strong>:dev 构建暴露 <code>window.__lc = {stage, store}</code>(仅 <code>import.meta.env.DEV</code>),直接断言 store 状态与纯函数;</li>
+<li><strong>交互层</strong>:<code>puppeteer-core</code> 驱动本机已装 Chrome 无头实例(免下载浏览器)——<strong>真 rAF、可信鼠标事件、page.mouse 拖拽</strong>,Konva 动画采样(两次 shadowBlur 不等=在动)、吸附拖拽、双击(两次 click 加间隔)全部可端到端断言;</li>
+<li><strong>观感层</strong>:同一无头实例 <code>page.screenshot</code> 落盘,Read 进上下文人眼看(顺带产出 README 配图)。</li>
+</ol>
+<blockquote>
+<p>母题第 N 次确认:环境限制清单每多一条,分层验证法就多一层退路——先判环境,再改代码。</p>
+</blockquote>
+<h2 id="选型建议">选型建议</h2>
+<ul>
+<li>滚动监听优先 <code>document.addEventListener('scroll', fn, {capture:true, passive:true})</code> + rAF 节流 + <code>getBoundingClientRect</code> 判定——<strong>跨滚动容器可靠</strong>(window 滚动事件在容器化布局里也可能不冒到 window)。</li>
+<li>别因为「预览里没高亮」就反复改代码:先确认是不是<strong>环境不派发事件</strong>(用上面的 probe 一测便知),否则会把好代码改坏。</li>
+</ul>
+<h2 id="教训可复用">教训(可复用)</h2>
+<ul>
+<li><strong>「预览里没反应」≠「代码错」</strong>。工具环境的能力边界本身要先验证。—— 又一例「所见非真相」:预览所见 ≠ 真机所见。</li>
+<li>验证策略要<strong>分层</strong>:能行为验证就行为验证;不能,就退到「验证纯逻辑 + 信任标准 API + 真机抽测」。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/base-v1-7820209/" class="wikilink">双部署目标的base路径陷阱_根路径拼出双斜杠_v1</a> —— 同期同站,「只在一个镜像现形」的另一类验证陷阱</li>
+<li><a href="/above-the-web/v1-5d049d6/" class="wikilink">浏览器插件自动化的能力边界_v1</a> —— 同样是「先认清自动化工具的能力边界」这一母题</li>
+<li><a href="/above-the-web/logo-v1-e525ec8/" class="wikilink">网页主图logo流动动效迭代_液态变形与碎裂问题_v1</a> —— 本条「动画时钟冻结」补充的来源案例;其动效迭代与碎裂问题的完整复盘</li>
+<li><a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/" class="wikilink">2026-06-26_桌面应用打磨发布闭环复盘_工位池塘v0.5.0_v1</a> —— 2026-06-26 补充的来源案例(滚动水波再验 + 桌面 exe 截图盲区)</li>
+<li><a href="/above-the-web/v1-db37064/" class="wikilink">每日定时任务自动更新内容板块_首次自动化生产落地_v1</a> —— 同族再验:preview_screenshot 超时,退级 DOM 快照 + inspect 完成验证</li>
+<li><span class="wikilink wikilink--dangling" title="尚未发布的笔记">BeatTapper卡点标记器说明</span> —— 同族再验(2026-07-02):后台页 visibilityState=hidden 时 rAF 完全冻结,时间显示/回放动效无法行为验证;退级 preview_eval 驱动状态机 + 合成已知答案的测试音频断言算法精度</li>
+<li><a href="/above-the-web/2026-07-16-librecanvas-v1-4-v1-c9488bc/" class="wikilink">2026-07-16_LibreCanvas开源画布_单日十版从立项到v1.4复盘_v1</a> —— 2026-07-16 补充的来源案例;交互面板 rAF=0 三连坑 + puppeteer 无头 Chrome 三层退级法的完整项目背景</li>
+<li><a href="/above-the-web/2026-07-20-k-v1-4c8ee3b/" class="wikilink">2026-07-20_朱元璋K线人生_历史可视化迭代复盘_v1</a> —— 2026-07-20 再验证：动画观感需结合逻辑检查、作者真机反馈、生产构建和线上探测分层收口。</li>
+<li><a href="/above-the-web/v1-a8ba856/" class="wikilink">文档密集页两栏排版与对外截图脱敏_v1</a> —— 正向复用:本篇的无头 Chrome 退级手段,反过来是<strong>静态版式自检</strong>的强项(不依赖滚动/动画时钟,一张 <code>--screenshot</code> 即可定性)</li>
+<li><a href="/above-the-web/reduced-motion-v1-5d31a1e/" class="wikilink">reduced-motion本机陷阱_动效降级纯淡入而非跳过_v1</a> —— 同族再验(2026-07-24):headless Chrome 上报的是本机 OS 的 reduce 偏好,不加 <code>--blink-settings=prefersReducedMotion=false</code> 测到的是降级路径;附 virtual-time-budget 下”已生效并清理完毕”被误判”没生效”的口径坑</li>
+<li>⚠️ <a href="/above-the-web/v1-ffe7a6e/" class="wikilink">美工改稿全站落地_跨稿重复才是规范_v1</a> —— 同族「够不着的 UI 退到什么」再验(2026-07-26):那次是运营后台要登录、本机又没 Node 起不了服务,退到<strong>往容器注入样例 DOM + <code>getComputedStyle</code> 量栅格与计算色值</strong>;新增的纪律是交付时必须把验证等级如实写出来(「这是量出来的,不是看到的」),并把需要人工点一遍的部分明确交回作者</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/Claude%E9%A2%84%E8%A7%88%E7%8E%AF%E5%A2%83%E4%B8%8D%E6%B4%BE%E5%8F%91%E6%BB%9A%E5%8A%A8%E4%BA%8B%E4%BB%B6_%E6%BB%9A%E5%8A%A8%E7%B1%BB%E5%8A%9F%E8%83%BD%E6%97%A0%E6%B3%95%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/Claude%E9%A2%84%E8%A7%88%E7%8E%AF%E5%A2%83%E4%B8%8D%E6%B4%BE%E5%8F%91%E6%BB%9A%E5%8A%A8%E4%BA%8B%E4%BB%B6_%E6%BB%9A%E5%8A%A8%E7%B1%BB%E5%8A%9F%E8%83%BD%E6%97%A0%E6%B3%95%E8%A1%8C%E4%B8%BA%E9%AA%8C%E8%AF%81_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/">B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</a></li><li><a href="/above-the-web/openai-key-v1-7ad7e8a/">OpenAI 兼容止于对话端点：多提供商视频接口分流与真 key 首测连环坑</a></li><li><a href="/above-the-web/reduced-motion-v1-5d31a1e/">reduced-motion 本机陷阱 · 动效降级纯淡入而非跳过</a></li><li><a href="/above-the-web/v1-83c88ab/">全站文字截断体检 · 检测工具本身要先被证伪</a></li><li><a href="/above-the-web/base-v1-7820209/">双部署目标的 base 路径陷阱 · 根路径拼出 `//slug` 全站内链失效</a></li><li><a href="/above-the-web/v1-9f352e9/">成稿链接存进库没人读 · 写入方不等于展示方</a></li><li><a href="/above-the-web/v1-a8ba856/">文档密集页两栏排版与对外截图脱敏</a></li><li><a href="/above-the-web/v1-db37064/">每日定时任务自动更新内容板块:首次自动化生产落地</a></li><li><a href="/above-the-web/logo-v1-e525ec8/">网页主图 logo 流动动效迭代 · 液态变形与碎裂问题</a></li><li><a href="/above-the-web/v1-ffe7a6e/">美工改稿全站落地 · 跨稿重复才是规范</a></li><li><a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/">桌面应用打磨发布闭环复盘 · 工位池塘 Desk Pond v0.5.0</a></li><li><a href="/above-the-web/2026-07-16-librecanvas-v1-4-v1-c9488bc/">LibreCanvas 复盘：从一句涨价怒气，到单日十版上线的开源 BYOK 画布</a></li><li><a href="/above-the-web/2026-07-20-k-v1-4c8ee3b/">朱元璋K线人生：历史可视化迭代复盘</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-5d049d6/"> <span class="card-cat">方法论与洞察</span> <h3>浏览器插件自动化的能力边界</h3> <p>浏览器插件能替你导航、填表、点选、读页面状态,但有三类硬边界必须由人来过:①登录 / 验证码 / 不可逆发布、②文件上传(沙箱)、③被安全策…</p> </a><a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a><a class="card" href="/above-the-web/2026-07-17-fastapi-3000-v1-0ec39b4/"> <span class="card-cat">平台工程</span> <h3>本地部署 FastAPI 静态站到 3000 端口 · 复盘</h3> <p>要让一个基于 FastAPI 的静态站在本地通过 localhost:3000 访问，关键不是改前端文件，而是把后端启动脚本改为监听目标端口…</p> </a><a class="card" href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/"> <span class="card-cat">平台工程</span> <h3>2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</h3> <p>Top10 低延迟节点里 9 个是机房出口，其中 6 个直接租自公有云：</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#实测证据" data-toc-link="实测证据">实测证据</a></li><li class="d2"><a href="#替代验证法绕过环境限制" data-toc-link="替代验证法绕过环境限制">替代验证法(绕过环境限制)</a></li><li class="d2"><a href="#补充2026-06-26预览还会冻结动画时钟动效同样无法直接观测" data-toc-link="补充2026-06-26预览还会冻结动画时钟动效同样无法直接观测">补充(2026-06-26):预览还会「冻结动画时钟」,动效同样无法直接观测</a></li><li class="d2"><a href="#补充2026-06-26又一次验证--桌面侧新盲区computer-use-遮蔽绿色-exe" data-toc-link="补充2026-06-26又一次验证--桌面侧新盲区computer-use-遮蔽绿色-exe">补充(2026-06-26):又一次验证 + 桌面侧新盲区(computer-use 遮蔽绿色 exe)</a></li><li class="d2"><a href="#补充2026-07-16可交互-browser-面板同样-raf0konva-全家动画hit-图双击连环失灵--无头-chrome-退级法" data-toc-link="补充2026-07-16可交互-browser-面板同样-raf0konva-全家动画hit-图双击连环失灵--无头-chrome-退级法">补充(2026-07-16):可交互 Browser 面板同样 rAF=0——Konva 全家(动画/hit 图/双击)连环失灵 + 无头 Chrome 退级法</a></li><li class="d2"><a href="#选型建议" data-toc-link="选型建议">选型建议</a></li><li class="d2"><a href="#教训可复用" data-toc-link="教训可复用">教训(可复用)</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

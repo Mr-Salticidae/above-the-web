@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>云端定时内容生产连环坑复盘:全绿不等于已发 · 蛛网之上</title><meta name="description" content="- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cron 30 1    UTC = 北京 9:30,claude-code-action + ofox…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-07-03-v1-2d712fc/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="云端定时内容生产连环坑复盘:全绿不等于已发"><meta property="og:description" content="- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cron 30 1    UTC = 北京 9:30,claude-code-action + ofox…"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-07-03-v1-2d712fc/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="云端定时内容生产连环坑复盘:全绿不等于已发"><meta name="twitter:description" content="- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cron 30 1    UTC = 北京 9:30,claude-code-action + ofox…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-03T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/自动化生产"><meta property="article:tag" content="主题/踩坑"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-07-03-v1-2d712fc/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-07-03-v1-2d712fc/","url":"https://tiaozhuxiansheng.com/2026-07-03-v1-2d712fc/","headline":"云端定时内容生产连环坑复盘:全绿不等于已发","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cron 30 1    UTC = 北京 9:30,claude-code-action + ofox…","datePublished":"2026-07-03T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/自动化生产, 主题/踩坑"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"云端定时内容生产连环坑复盘:全绿不等于已发","item":"https://tiaozhuxiansheng.com/2026-07-03-v1-2d712fc/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-03T00:00:00+08:00">2026-07-03</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 6 分钟读完 · 2,278 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#排障过程">排障过程</a></li><li class="d2"><a href="#结果分析">结果分析</a></li><li class="d2"><a href="#方法论沉淀均为首次发现暂时性结论">方法论沉淀(均为首次发现,暂时性结论)</a></li><li class="d3"><a href="#️-全绿已发律首次发现">⚠️ 全绿≠已发律(首次发现)</a></li><li class="d3"><a href="#️-手动跑通会掩盖自动路径对人先跑通一遍的边界修正首次发现">⚠️ 手动跑通会掩盖自动路径(对「人先跑通一遍」的边界修正,首次发现)</a></li><li class="d3"><a href="#️-黑盒-action-先接可观测性首次发现">⚠️ 黑盒 action 先接可观测性(首次发现)</a></li><li class="d3"><a href="#️-换便宜模型更省成本单价用量首次发现">⚠️ 换便宜模型≠更省(成本=单价×用量,首次发现)</a></li><li class="d3"><a href="#-追记2026-07-12schedule-不可靠获二次验证">⭐⭐ 追记(2026-07-12):「schedule 不可靠」获二次验证</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="云端定时内容生产连环坑复盘全绿不等于已发">云端定时内容生产连环坑复盘:全绿不等于已发</h1>
+<blockquote>
+<p>一句话:无人值守流水线的验收标准是<strong>业务产物</strong>(main 上的提交/线上的页面),不是 CI 状态——「全绿」完全可以是兜底分支伪装出来的失败。</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录(不可修改区)</h2>
+<ul>
+<li>项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(<code>aigc-daily-news.yml</code>,cron <code>30 1 * * *</code> UTC = 北京 9:30,claude-code-action + ofox 中转站)</li>
+<li>前情:2026-07-03 10:49 云端 workflow 上线,取代 07-02 的本机定时任务方案(本机方案从未经历无人值守运行,见 <a href="/above-the-web/v1-db37064/" class="wikilink">每日定时任务自动更新内容板块_首次自动化生产落地_v1</a>);第 1、2 期均为人工发布</li>
+<li>2026-07-04 上午发现官网快讯停在第 2 期;排查确认:<strong>schedule 从上线起一次都没被 GitHub 触发过,且整条自动路径从未真实执行过</strong>(此前唯一一次运行因当日文件已存在而跳过,显示成功)</li>
+<li>07-04~05 共 7 次运行,连环暴露并修复 6 个独立故障点(下表);2026-07-05 08:03 第 3 期全自动上站(commit <code>c4ebc76</code>),全链路首次无人工干预跑通</li>
+<li>六个故障点:① GitHub schedule 从未自然触发(至归档时仍未发生过);② permissions 缺 <code>id-token: write</code>→OIDC 报错;③ 仓库未装 Claude GitHub App→需显式传 <code>github_token</code>;④ allowedTools 只放行 <code>Bash(curl:*)</code>→管道组合命令 12 次全拒、8 分钟空手收场;⑤ build 自检时 stamp-assets 改写跟踪文件→脏工作区卡死 <code>git pull --rebase</code>,丢掉一期已生成的提交;⑥ 中转站余额为负→402(此前一次 $4 运行耗穿余额)</li>
+<li>成本实测:Fable 5 一次真实运行 $4.04(约 40 轮);切 Sonnet 5(单价约 1/3)后首跑 <strong>$7.26</strong>(178 轮,16 次权限拒绝)——更便宜的模型跑出了更贵的账单</li>
+<li>数据来源:GitHub Actions 运行记录 + git log + claude-execution-output.json</li>
+</ul>
+<h2 id="排障过程">排障过程</h2>
+<p>按发现顺序,每个坑修一轮、暴露下一个:</p>
+<ol>
+<li><strong>schedule 不触发</strong>:workflow state=active、cron 正确、同仓库 deploy.yml 的 schedule 正常——排除配置问题,属 GitHub 对新 schedule 的已知不可靠行为。手动 dispatch 绕过,自然触发留观。</li>
+<li><strong>OIDC 402→缺权限</strong>:claude-code-action@v1 硬性要求 <code>id-token: write</code>,补一行。</li>
+<li><strong>未装 GitHub App</strong>:action 默认走 App 的 OIDC 换 token;传 <code>github_token: ${{ github.token }}</code> 跳过(本任务只需在 runner 里写一个文件,GITHUB_TOKEN 足够)。</li>
+<li><strong>白名单闷杀搜索</strong>:<code>curl … | grep …</code> 这类组合命令要求<strong>每一段</strong>都在 allowedTools 内,只放行 curl 等于全拒。扩容常用只读文本工具(node/jq/grep/sed/head/python3 等)后 Claude 才第一次真正搜到料。</li>
+<li><strong>脏工作区丢提交</strong>:<code>npm run build</code> 自检顺手改写了 <code>public/*/index.html</code>(缓存戳脚本),后续 <code>git pull --rebase</code> 拒绝执行——期刊已生成、已 commit,却没能 push,白烧一次 API。push 前加 <code>git checkout -- .</code> 丢弃构建副产。</li>
+<li><strong>余额 402</strong>:报错只存在 runner 本地的执行输出 JSON 里,workflow 日志只有 <code>is_error: true</code>。加了「打印执行输出末尾」诊断步骤后一眼定位:<code>402 Insufficient credits, balance $-0.05</code>。充值后跑通。</li>
+</ol>
+<h2 id="结果分析">结果分析</h2>
+<ul>
+<li>符合预期:6 个故障点全部修复;07-05 第 3 期从搜稿到上站全自动完成,内容质量合格(5 条真实可溯源)</li>
+<li><strong>未验证部分(诚实边界)</strong>:① schedule 自然触发至今为零次,每一期都靠手动 dispatch,「定时」二字尚未兑现;② 成本纪律(<code>--max-turns 80</code> + prompt 内「凑足 5-8 条即收工」)是修复后新加的,压成本效果待下次运行验证</li>
+</ul>
+<h2 id="方法论沉淀均为首次发现暂时性结论">方法论沉淀(均为首次发现,暂时性结论)</h2>
+<h3 id="️-全绿已发律首次发现">⚠️ 全绿≠已发律(首次发现)</h3>
+<p><strong>核心</strong>:带「不发」兜底分支的流水线,失败会伪装成成功——Claude 没产出文件时 verify 步骤走 <code>exit 0</code>,Actions 全绿,但什么都没发。验收和巡检必须盯业务产物,不看 CI 徽章。</p>
+<p><strong>来源</strong>:07-04 两次「成功」运行实际都是空手而归,徽章全绿。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>巡检口诀:看 main 有没有当日 <code>news(快讯)</code> 提交 / 线上页面日期,不看 Actions 状态;</li>
+<li>兜底分支不要静默 <code>exit 0</code>,至少 <code>echo</code> 出显著告警(有条件就发通知);</li>
+<li>「宁缺毋滥」闸门(见前档)与本律是一对:闸门允许不发,本律要求<strong>不发必须可见</strong>。</li>
+</ol>
+<h3 id="️-手动跑通会掩盖自动路径对人先跑通一遍的边界修正首次发现">⚠️ 手动跑通会掩盖自动路径(对「人先跑通一遍」的边界修正,首次发现)</h3>
+<p><strong>核心</strong>:前档主张「人先手动跑通再交给定时器」,本次暴露其盲区——手动发布让当日产物已存在,自动路径的幂等检查直接跳过,于是<strong>自动路径从未被执行过,而所有人都以为它验证过了</strong>。缺陷(OIDC/App/白名单/脏工作区)全部潜伏到第一次真实执行才连环引爆。</p>
+<p><strong>来源</strong>:07-03 那次 workflow 运行 8 秒「成功」,实为跳过;6 个坑全部在 07-04 首次真实执行时暴露。</p>
+<p><strong>操作规则</strong>:验证等级分三层分开记账,缺一不可:</p>
+<ol>
+<li>手动跑通(人在环,验证流程设计);</li>
+<li>自动路径真实执行(在产物<strong>不存在</strong>的条件下手动 dispatch 一次,验证权限/环境/脚本);</li>
+<li>定时器自然触发(验证调度本身)。
+本案例三层分别于 07-02、07-05 达成,第三层至今未达成。</li>
+</ol>
+<h3 id="️-黑盒-action-先接可观测性首次发现">⚠️ 黑盒 action 先接可观测性(首次发现)</h3>
+<p><strong>核心</strong>:claude-code-action 的真实报错(API 402、denial 明细)只写在 runner 本地的 <code>claude-execution-output.json</code>,workflow 日志只给 <code>is_error: true</code>。盲修了三轮才想起把它打出来,一打出来 10 秒定位。</p>
+<p><strong>操作规则</strong>:接入任何黑盒 action,第一个 commit 就加 <code>if: always()</code> 的诊断步骤把其执行输出暴露到日志——排障顺序应是「先能看见,再动手修」。</p>
+<h3 id="️-换便宜模型更省成本单价用量首次发现">⚠️ 换便宜模型≠更省(成本=单价×用量,首次发现)</h3>
+<p><strong>核心</strong>:Sonnet 5 单价约为 Fable 5 的 1/3,首跑却花 $7.26 > $4.04——搜索行为更发散(爬 DuckDuckGo/Bing 结果页、for 循环批量查询),178 轮 vs 40 轮,用量放大 4 倍以上,把单价优势整个吃掉。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>agent 型任务换模型必须实测总成本,不能只看牌价;</li>
+<li>给 agent 明确<strong>停止条件</strong>(「凑足 5-8 条立即收工」)和硬上限(<code>--max-turns</code>);</li>
+<li>权限白名单拒绝会诱发换姿势重试,放大用量(本次 16 次拒绝)——白名单要么放够,要么在 prompt 里明说哪些路径走不通,别让它自己撞。</li>
+</ol>
+<h3 id="-追记2026-07-12schedule-不可靠获二次验证">⭐⭐ 追记(2026-07-12):「schedule 不可靠」获二次验证</h3>
+<p>坑① 在另一仓库(typhoon-eye,台风数据每 15 分钟定时抓取)再次实证:每小时 4 班仅被放行约 1 班、整点连丢 4 班,GitHub 状态页全程 operational。该规律升 ⭐⭐ 二次验证,系统性兜底方案(外部 cron dispatch watchdog 型任务)见 <a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/" class="wikilink">2026-07-11_B站Toy同步事故复盘_版本指纹与外部cron兜底_v1</a>。</p>
+<h2 id="下次改进">下次改进</h2>
+<ul>
+<li>观察次日 9:30 schedule 是否首次自然触发;连续不触发则换冷门分钟(如 <code>47 1 * * *</code>)再试</li>
+<li>记录 max-turns + 成本纪律生效后的单次成本,更新本档成本结论的验证等级</li>
+<li>考虑给「未产出」分支加通知渠道(而不只是日志告警)</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/v1-db37064/" class="wikilink">每日定时任务自动更新内容板块_首次自动化生产落地_v1</a> —— 前传:板块架构与「自动化只碰数据/人先跑通/宁缺毋滥」三律;本档修正其中「人先跑通」的验证盲区,并接续其三个待观察点</li>
+<li><a href="/above-the-web/public-v1-4e27eaf/" class="wikilink">内容子项目构建时同步_独立仓库镜像进public_v1</a> —— 同族:内容自动上线管线;本次坑⑤(构建副产弄脏工作区)正发生在该管线的 build 环节</li>
+<li>⚠️ <a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/" class="wikilink">2026-07-11_B站Toy同步事故复盘_版本指纹与外部cron兜底_v1</a> —— 续证:坑①(schedule 不触发)的第二例,升二次验证;外部 cron 兜底方案落地并首跑补救实录</li>
+<li><a href="/above-the-web/openai-worker-do-v1-d6b8be3/" class="wikilink">OpenAI区域封锁与Worker就近执行陷阱_北美DO跳板_v1</a> —— 同族排查心法:云上黑盒不瞎试,先做定性实验(本档是可观测性先行,那档是双端对照定性)</li>
+<li><a href="/above-the-web/422-v1-4a070bb/" class="wikilink">内测反馈渠道上线_匿名兜底与422探针验证_v1</a> —— 同一「部署完≠已生效」纪律的轻量做法:上线后用必失败的校验请求(422 探针)独立核查新路由,零脏数据</li>
+<li>⭐⭐ <a href="/above-the-web/v1-9f352e9/" class="wikilink">成稿链接存进库没人读_写入方不等于展示方_v1</a> —— 本档「手动跑通会掩盖自动路径」的<strong>内容层再验</strong>(蛛网之上,2026-07-30):任务书正文里手写的「交付情况」替系统把成稿链接显示了,系统那条渲染路径缺失了两轮迭代都没人发现;升二次验证——<strong>凡「靠人手写补上」的地方,就是系统缺口的坐标</strong></li>
+<li>⚠️ <a href="/above-the-web/2026-09-17-vpn-guard-v1-06d9964/" class="wikilink">2026-09-17_vpn-guard目录整理收口_挪脚本等于挪状态与四处静默放行_迭代复盘_v1</a> —— 「跳过显示成功」的跨项目二次验证(2026-09-17):vpn-guard CI 的 shellcheck 步骤在工具缺失时 echo 一句「跳过」后正常退出,macOS 上从来没执行过;同篇另有一个后台等 CI 的任务查不到 run,却以退出码 0 结束</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/自动化生产</span><span class="tag">主题/踩坑</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/2026-07-03_%E4%BA%91%E7%AB%AF%E5%AE%9A%E6%97%B6%E5%86%85%E5%AE%B9%E7%94%9F%E4%BA%A7%E8%BF%9E%E7%8E%AF%E5%9D%91%E5%A4%8D%E7%9B%98_%E5%85%A8%E7%BB%BF%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%B7%B2%E5%8F%91_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/2026-07-03_%E4%BA%91%E7%AB%AF%E5%AE%9A%E6%97%B6%E5%86%85%E5%AE%B9%E7%94%9F%E4%BA%A7%E8%BF%9E%E7%8E%AF%E5%9D%91%E5%A4%8D%E7%9B%98_%E5%85%A8%E7%BB%BF%E4%B8%8D%E7%AD%89%E4%BA%8E%E5%B7%B2%E5%8F%91_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/">B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</a></li><li><a href="/above-the-web/ai-v1-ef6f7d4/">AI 问答板块收尾 · 打通判据与小圆头像构图律</a></li><li><a href="/above-the-web/openai-key-v1-7ad7e8a/">OpenAI 兼容止于对话端点：多提供商视频接口分流与真 key 首测连环坑</a></li><li><a href="/above-the-web/git-github-submodule-mcp-ghcli-v1-54041cc/">Git 初始化已有工作区并建 GitHub 仓库 · 嵌套仓库用 submodule 引入 + MCP 无权限时 gh CLI 兜底</a></li><li><a href="/above-the-web/openai-worker-do-v1-d6b8be3/">OpenAI 区域封锁与 Worker 就近执行陷阱 · 北美 DO 跳板</a></li><li><a href="/above-the-web/422-v1-4a070bb/">内测反馈渠道上线 · 匿名兜底与 422 探针验证</a></li><li><a href="/above-the-web/v1-9f352e9/">成稿链接存进库没人读 · 写入方不等于展示方</a></li><li><a href="/above-the-web/v1-db37064/">每日定时任务自动更新内容板块:首次自动化生产落地</a></li><li><a href="/above-the-web/v1-6601c25/">账号系统对标一线 · 多账号抽屉与外部通道的半开陷阱</a></li><li><a href="/above-the-web/v1-35e4706/">赛事状态机到点不切换 · 写入方不等于推进方</a></li><li><a href="/above-the-web/v1-0abb7cd/">零作品的比赛 · 界面演完不等于链路存在</a></li><li><a href="/above-the-web/git-v1-bd10b6f/">静态站接账号系统 · 内容归 git、状态归库的双源切分</a></li><li><a href="/above-the-web/2026-09-17-vpn-guard-v1-06d9964/">2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-08-21-v1-d82b742/"> <span class="card-cat">平台工程</span> <h3>风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档</h3> <p>- 项目:风眼 · Typhoon Eye(E:\typhoon-eye),台风实况与分级应急预案单页站。双发布面:GitHub Pages…</p> </a><a class="card" href="/above-the-web/v1-050f2b8/"> <span class="card-cat">平台工程</span> <h3>二维码载荷硬预算与最长真实载荷验证</h3> <p>《镜像自我》扫码报告链路:给扫码载荷加了两个&quot;锦上添花&quot;字段（读心印象小标题 + 总结）,用调试直跳（空轨迹,987 字符）验证&quot;可扫&quot;后上…</p> </a><a class="card" href="/above-the-web/v1-41b9cb0/"> <span class="card-cat">平台工程</span> <h3>零路由补路由 · 普查要能推翻已写的代码</h3> <p>- 起点：上一轮自检清单清空到只剩一项——全站零路由（对 pushState / popstate / hashchange / locat…</p> </a><a class="card" href="/above-the-web/public-v1-4e27eaf/"> <span class="card-cat">平台工程</span> <h3>内容子项目「构建时同步」· 独立仓库镜像进 public,新内容自动上线</h3> <p>当一块内容是独立仓库 + 频繁更新 + 自包含静态站(或大体积素材)时,不要把它拷快照进主站仓库(会让主仓变胖、且每次更新要手动重拷、必然陈…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#排障过程" data-toc-link="排障过程">排障过程</a></li><li class="d2"><a href="#结果分析" data-toc-link="结果分析">结果分析</a></li><li class="d2"><a href="#方法论沉淀均为首次发现暂时性结论" data-toc-link="方法论沉淀均为首次发现暂时性结论">方法论沉淀(均为首次发现,暂时性结论)</a></li><li class="d3"><a href="#️-全绿已发律首次发现" data-toc-link="️-全绿已发律首次发现">⚠️ 全绿≠已发律(首次发现)</a></li><li class="d3"><a href="#️-手动跑通会掩盖自动路径对人先跑通一遍的边界修正首次发现" data-toc-link="️-手动跑通会掩盖自动路径对人先跑通一遍的边界修正首次发现">⚠️ 手动跑通会掩盖自动路径(对「人先跑通一遍」的边界修正,首次发现)</a></li><li class="d3"><a href="#️-黑盒-action-先接可观测性首次发现" data-toc-link="️-黑盒-action-先接可观测性首次发现">⚠️ 黑盒 action 先接可观测性(首次发现)</a></li><li class="d3"><a href="#️-换便宜模型更省成本单价用量首次发现" data-toc-link="️-换便宜模型更省成本单价用量首次发现">⚠️ 换便宜模型≠更省(成本=单价×用量,首次发现)</a></li><li class="d3"><a href="#-追记2026-07-12schedule-不可靠获二次验证" data-toc-link="-追记2026-07-12schedule-不可靠获二次验证">⭐⭐ 追记(2026-07-12):「schedule 不可靠」获二次验证</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

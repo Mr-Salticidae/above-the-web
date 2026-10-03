@@ -1,0 +1,292 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>DSH接入第三方OpenAI兼容提供商_providers声明与凭据热重载断档 · 蛛网之上</title><meta name="description" content="- 项目：DeepSeek Harness 本地部署，DSHHOME = E:/deepseek-harness/.dsh-home"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/dsh-openai-providers-v1-57207d0/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="DSH接入第三方OpenAI兼容提供商_providers声明与凭据热重载断档"><meta property="og:description" content="- 项目：DeepSeek Harness 本地部署，DSHHOME = E:/deepseek-harness/.dsh-home"><meta property="og:url" content="https://tiaozhuxiansheng.com/dsh-openai-providers-v1-57207d0/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="DSH接入第三方OpenAI兼容提供商_providers声明与凭据热重载断档"><meta name="twitter:description" content="- 项目：DeepSeek Harness 本地部署，DSHHOME = E:/deepseek-harness/.dsh-home"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-26T10:51:32+08:00"><meta property="article:modified_time" content="2026-09-26T06:43:16+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/LLM接入"><meta property="article:tag" content="主题/凭据管理"><meta property="article:tag" content="来源/DeepSeekHarness"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/dsh-openai-providers-v1-57207d0/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/dsh-openai-providers-v1-57207d0/","url":"https://tiaozhuxiansheng.com/dsh-openai-providers-v1-57207d0/","headline":"DSH接入第三方OpenAI兼容提供商_providers声明与凭据热重载断档","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目：DeepSeek Harness 本地部署，DSHHOME = E:/deepseek-harness/.dsh-home","datePublished":"2026-08-26T10:51:32+08:00","dateModified":"2026-09-26T06:43:16+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/LLM接入, 主题/凭据管理, 来源/DeepSeekHarness"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"DSH接入第三方OpenAI兼容提供商_providers声明与凭据热重载断档","item":"https://tiaozhuxiansheng.com/dsh-openai-providers-v1-57207d0/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-26T10:51:32+08:00">2026-08-26</time></span> <span>更新于 <time datetime="2026-09-26T06:43:16+08:00">2026-09-26</time></span> <span>约 5 分钟读完 · 1,760 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>19 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#核心律">核心律</a></li><li class="d3"><a href="#1-providers-是-dictmodels-列表整体替换目录">1. providers 是 dict，models 列表整体替换目录</a></li><li class="d3"><a href="#2-apikeyenv-是凭据引用名不是凭据本身">2. apiKeyEnv 是凭据引用名，不是凭据本身</a></li><li class="d3"><a href="#3-凭据文件热重载--web-进程环境快照热更新">3. 凭据文件热重载 ≠ Web 进程环境快照热更新</a></li><li class="d3"><a href="#4-推理参数兼容性要逐家实测不能假设">4. 推理参数兼容性要逐家实测，不能假设</a></li><li class="d3"><a href="#5-compatthinkingformat-决定推理参数的线上拼写">5. compat.thinkingFormat 决定推理参数的线上拼写</a></li><li class="d2"><a href="#踩坑记录">踩坑记录</a></li><li class="d3"><a href="#️-坑-1web-进程凭据快照断档首次现形">⚠️ 坑 1：Web 进程凭据快照断档（首次现形）</a></li><li class="d3"><a href="#️-坑-2百炼参数拒绝伪装成-invalidapikey首次现形">⚠️ 坑 2：百炼参数拒绝伪装成 InvalidApiKey（首次现形）</a></li><li class="d3"><a href="#️-坑-3百炼-models-列表端点返回-invalidapikey首次现形">⚠️ 坑 3：百炼 models 列表端点返回 InvalidApiKey（首次现形）</a></li><li class="d3"><a href="#️-坑-4工作区路径-enoentdsh-记忆残留">⚠️ 坑 4：工作区路径 ENOENT（DSH 记忆残留）</a></li><li class="d2"><a href="#配置模板">配置模板</a></li><li class="d3"><a href="#settingsyamlproviders-声明">settings.yaml（providers 声明）</a></li><li class="d3"><a href="#credentialsyaml凭据键值对">.credentials.yaml（凭据键值对）</a></li><li class="d2"><a href="#接入新提供商的标准流程">接入新提供商的标准流程</a></li><li class="d2"><a href="#端点速查">端点速查</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="dsh接入第三方openai兼容提供商_providers声明与凭据热重载断档">DSH接入第三方OpenAI兼容提供商_providers声明与凭据热重载断档</h1>
+<blockquote>
+<p>首次记录：2026-08-25
+来源：本地 DeepSeek Harness（@deepseek-ai/dsh v0.1.0-rc.6，E:\deepseek-harness）接入 LongCat 与阿里云百炼 Token Plan 两家第三方提供商。
+状态：两家均端到端验证通过（headless 全链路 + curl 直连）；Web 服务凭据热重载问题已定位并给出重启解法。</p>
+</blockquote>
+<hr>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>项目：DeepSeek Harness 本地部署，DSH_HOME = <code>E:/deepseek-harness/.dsh-home</code></li>
+<li>接入提供商：
+<ul>
+<li><strong>LongCat</strong>（美团）：<code>https://api.longcat.chat/openai</code>，模型 <code>LongCat-2.0</code>（1M 上下文 / 128K 输出），思维链模型</li>
+<li><strong>百炼 Token Plan 个人版</strong>（阿里云）：<code>https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1</code>，模型 <code>qwen3.8-max</code>（1M 上下文 / 128K 输出，2.4T MoE / 95B 激活），思维链模型</li>
+</ul>
+</li>
+<li>配置文件：<code>settings.yaml</code>（<code>llm-pi-ai.providers</code> 命名空间）+ <code>.credentials.yaml</code>（凭据键值对）</li>
+<li>验证方式：curl 直连 API（模型列表 / 对话补全 / 参数兼容性）+ <code>dsh --profile headless</code> 全链路 agent 调用</li>
+<li>数据来源：dsh-llm-pi-ai README、dsh-credentials-local README、阿里云百炼官方文档、curl 实测</li>
+</ul>
+<hr>
+<h2 id="一句话总结">一句话总结</h2>
+<p>DSH 的 <code>llm-pi-ai</code> 插件用一份 <code>providers</code> dict 声明任意 OpenAI 兼容提供商——<strong>端点、协议、模型目录全靠 YAML 配置而非代码</strong>，但凭据写入 <code>.credentials.yaml</code> 后 <strong>Web 进程的环境快照不会热更新</strong>，必须重启才能让新 key 生效。</p>
+<hr>
+<h2 id="核心律">核心律</h2>
+<h3 id="1-providers-是-dictmodels-列表整体替换目录">1. providers 是 dict，models 列表整体替换目录</h3>
+<p><code>llm-pi-ai.providers</code> 下每个键是一个路由名（如 <code>longcat</code>、<code>bailian</code>），值是该路由的完整 provider 声明。<strong>catalog route</strong>（pi-ai 内置已知的，如 openai/deepseek）继承端点与模型目录；<strong>hand-declared route</strong>（pi-ai 不认识的，如 longcat/bailian）必须自填 <code>api</code> + <code>baseURL</code> + <code>models</code>。</p>
+<p><code>models</code> 列表 <strong>替换</strong> 而非扩展该路由的内置目录——声明了 <code>models</code> 就必须列出所有要用模型，哪怕只列 <code>id</code> 一个字段也够。<code>modelOverrides</code> 则是原地修改单个 catalog 模型而不替换整表。</p>
+<h3 id="2-apikeyenv-是凭据引用名不是凭据本身">2. apiKeyEnv 是凭据引用名，不是凭据本身</h3>
+<p><code>apiKeyEnv: LONGCAT_API_KEY</code> 是一个<strong>引用</strong>——运行时由 <code>dsh-credentials-local</code> 插件从 <code>.credentials.yaml</code>（或环境变量）按此名解析。<strong>密钥不进 settings.yaml</strong>，只进 <code>.credentials.yaml</code>，键名 = <code>apiKeyEnv</code> 的值。省略 <code>apiKeyEnv</code> 则走 pi-ai 的环境变量 ambient discovery。</p>
+<h3 id="3-凭据文件热重载--web-进程环境快照热更新">3. 凭据文件热重载 ≠ Web 进程环境快照热更新</h3>
+<p><code>dsh-credentials-local</code> 支持文件热重载（外部编辑 <code>.credentials.yaml</code> 会触发 <code>credentials/updated</code> 事件）。但 <strong>Web 进程在启动时冻结了一份环境快照</strong>，启动后写入的新凭据<strong>不会进入该进程的环境层</strong>——headless 每次启动都重新读，所以 headless 测试通过 ≠ Web UI 能用。<strong>写入新凭据后必须重启 Web 服务</strong>。</p>
+<blockquote>
+<p>判据：headless 测试通过但 Web UI 报 <code>API key is invalid (AUTH)</code> → 99% 是 Web 进程在凭据写入前已启动。</p>
+</blockquote>
+<h3 id="4-推理参数兼容性要逐家实测不能假设">4. 推理参数兼容性要逐家实测，不能假设</h3>
+<p>同样是「OpenAI 兼容」端点，对推理控制参数的支持天差地别：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>提供商</th><th><code>thinking:{type}</code></th><th><code>reasoning_effort</code></th><th><code>temperature</code> 等常规参数</th><th>默认思维链</th></tr></thead><tbody><tr><td>LongCat</td><td>✅ 接受（DeepSeek 方言）</td><td>✅ 接受</td><td>✅</td><td>默认开启</td></tr><tr><td>百炼 Token Plan</td><td>❌ 拒绝（报 InvalidApiKey）</td><td>❌ 拒绝</td><td>✅</td><td>默认开启，无法关闭</td></tr></tbody></table>
+<p><strong>百炼的参数拒绝错误会伪装成 <code>Invalid API-key provided</code></strong>——实际是参数不支持，但错误信息指向认证失败，极具误导性。判据：同一个 key 裸请求成功、带额外参数失败 → 是参数问题不是 key 问题。</p>
+<h3 id="5-compatthinkingformat-决定推理参数的线上拼写">5. compat.thinkingFormat 决定推理参数的线上拼写</h3>
+<p>对 hand-declared route，pi-ai 无法从 URL 推断推理方言，需手动声明 <code>compat.thinkingFormat</code>：</p>
+<ul>
+<li><code>deepseek</code>：<code>off</code> → <code>thinking:{type:"disabled"}</code>，effort 档位 → <code>thinking:{type:"enabled"}</code> + 对应 spelling</li>
+<li>不声明：走 OpenAI 方言，<code>off</code> → 什么都不发（provider 默认行为），effort → <code>reasoning_effort</code> 字段</li>
+</ul>
+<p>选错方言 = 参数被静默忽略或报错。<strong>选哪个方言要 curl 实测</strong>：先裸请求确认 key 有效，再逐个测 <code>thinking</code> / <code>reasoning_effort</code> 参数，最后测 <code>off</code>（关闭思维链）是否真正生效。</p>
+<hr>
+<h2 id="踩坑记录">踩坑记录</h2>
+<h3 id="️-坑-1web-进程凭据快照断档首次现形">⚠️ 坑 1：Web 进程凭据快照断档（首次现形）</h3>
+<p><strong>现象</strong>：headless 端到端测试百炼成功返回”确认”，但 Web UI（MemoraX Code）运行报 <code>API key is invalid (AUTH)</code>。</p>
+<p><strong>根因</strong>：Web 服务进程在 <code>.credentials.yaml</code> 写入 <code>BAILIAN_API_KEY</code> <strong>之前</strong>已启动。<code>dsh-credentials-local</code> 虽然热重载文件，但 Web 进程的环境快照层（<code>env</code> source）在启动时冻结，新写入的凭据只更新了 <code>file</code> 层，而 <code>env</code> 层优先级更高——但 <code>env</code> 层里没有这个 key，<code>file</code> 层有，按理 <code>file</code> 应该 win。<strong>实际问题更微妙</strong>：Web 进程的 settings 命名空间缓存可能未刷新，或 pi-ai adapter 的 provider 注册在启动时已完成。</p>
+<p><strong>判据</strong>：<code>headless 通过 + Web 失败 = 重启 Web</code>。重启后凭据重新加载，问题消失。</p>
+<p><strong>处置</strong>：找到并终止占用 3080 端口的 node 进程，重新 <code>dsh web</code> 启动。Windows 下 <code>netstat -ano | grep :3080</code> 找 PID（注意 TIME_WAIT 残留不是 LISTENING），或直接 <code>taskkill /PID &#x3C;pid> /F</code>。</p>
+<h3 id="️-坑-2百炼参数拒绝伪装成-invalidapikey首次现形">⚠️ 坑 2：百炼参数拒绝伪装成 InvalidApiKey（首次现形）</h3>
+<p><strong>现象</strong>：百炼裸请求成功，带 <code>thinking:{enabled:false}</code> / <code>reasoning_effort:"low"</code> / <code>enable_thinking:false</code> 等任何额外参数都返回 <code>{"error":{"code":"invalid_api_key","message":"Invalid API-key provided"}}</code>。</p>
+<p><strong>根因</strong>：百炼 Token Plan 的 OpenAI 兼容端点<strong>不支持推理控制参数</strong>，但错误信息不报「参数不支持」而报「API key 无效」。连续高频请求也会触发同样的伪装错误（实为限流）。</p>
+<p><strong>判据</strong>：同一 key 裸请求成功 + 带参数失败 → 参数问题，不是 key 问题。<strong>永远先 curl 裸请求确认 key 有效</strong>，再测参数兼容性。</p>
+<p><strong>处置</strong>：百炼配置中<strong>不声明 <code>reasoningEfforts</code></strong>，交由模型默认启用思维链。LongCat 则实测支持 <code>thinking:{type}</code> 全形式，声明 <code>compat.thinkingFormat: deepseek</code> + <code>reasoningEfforts: {off:, low:low, medium:medium, high:high}</code>。</p>
+<h3 id="️-坑-3百炼-models-列表端点返回-invalidapikey首次现形">⚠️ 坑 3：百炼 models 列表端点返回 InvalidApiKey（首次现形）</h3>
+<p><strong>现象</strong>：<code>GET /compatible-mode/v1/models</code> 返回 <code>{"code":"InvalidApiKey"}</code>，但 <code>POST /chat/completions</code> 正常工作。</p>
+<p><strong>根因</strong>：百炼 Token Plan 的 <code>/models</code> 端点鉴权方式与 <code>/chat/completions</code> 不同（可能不支持 Token Plan key，或端点本身未开放）。</p>
+<p><strong>处置</strong>：不依赖 <code>/models</code> 拉列表，手动从官方文档查模型规格填入 <code>models</code> 声明。</p>
+<h3 id="️-坑-4工作区路径-enoentdsh-记忆残留">⚠️ 坑 4：工作区路径 ENOENT（DSH 记忆残留）</h3>
+<p><strong>现象</strong>：DSH Web 启动后报 <code>ENOENT: no such file or directory</code>，无法打开工作区。</p>
+<p><strong>根因</strong>：DSH 记住了上次的工作区路径（如 <code>E:\deepseek-harness\lab\擦干净</code>），但该目录已被重命名/删除（实际名为 <code>擦干净一站式</code>）。DSH 启动时尝试打开上次路径，找不到就报错。</p>
+<p><strong>处置</strong>：创建缺失目录，或在 DSH UI 中重新选择工作区。</p>
+<hr>
+<h2 id="配置模板">配置模板</h2>
+<h3 id="settingsyamlproviders-声明">settings.yaml（providers 声明）</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">llm-pi-ai</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">  providers</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">    longcat</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      displayName</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">LongCat</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      apiKeyEnv</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">LONGCAT_API_KEY</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      api</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">openai-completions</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      baseURL</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">https://api.longcat.chat/openai</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      compat</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">        thinkingFormat</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">deepseek</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      models</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        - </span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">id</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">LongCat-2.0</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">          name</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">LongCat-2.0</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">          contextWindow</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1048576</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">          maxTokens</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">131072</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">          reasoningEfforts</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">            off</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">            low</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">low</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">            medium</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">medium</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">            high</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">high</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">    bailian</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      displayName</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">百炼</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      apiKeyEnv</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">BAILIAN_API_KEY</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      api</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">openai-completions</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      baseURL</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">      models</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">        - </span><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">id</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">qwen3.8-max</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">          name</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">Qwen-3.8-Max</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">          contextWindow</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1000000</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">          maxTokens</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">131072</span></span></code></pre>
+<h3 id="credentialsyaml凭据键值对">.credentials.yaml（凭据键值对）</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">DEEPSEEK_API_KEY</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">sk-...</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">LONGCAT_API_KEY</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">ak_...</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D">BAILIAN_API_KEY</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">sk-sp-...</span></span></code></pre>
+<blockquote>
+<p>格式约束：纯 YAML mapping，键必须是 POSIX identifier（字母+数字+下划线），值为非空字符串。注释会随条目删除而移除。</p>
+</blockquote>
+<hr>
+<h2 id="接入新提供商的标准流程">接入新提供商的标准流程</h2>
+<ol>
+<li><strong>curl 裸请求确认 key 有效</strong>：<code>POST {baseURL}/chat/completions</code>，带最小 messages + max_tokens</li>
+<li><strong>curl 测参数兼容性</strong>：逐个测 <code>thinking:{type:"disabled"}</code> / <code>reasoning_effort</code> / <code>temperature</code>，观察哪些被接受、哪些被拒绝</li>
+<li><strong>curl 测模型列表端点</strong>：<code>GET {baseURL}/models</code>，失败则从官方文档手动查模型规格</li>
+<li><strong>写入 .credentials.yaml</strong>：<code>{CREDENTIAL_REF}: {key}</code>，键名自取（POSIX identifier）</li>
+<li><strong>写入 settings.yaml</strong>：<code>llm-pi-ai.providers.{route}</code> 声明，含 <code>apiKeyEnv</code> / <code>api</code> / <code>baseURL</code> / <code>models</code>，按参数兼容性决定是否声明 <code>compat.thinkingFormat</code> 和 <code>reasoningEfforts</code></li>
+<li><strong>headless 验证</strong>：临时把 <code>agent-default-model</code> 切到新提供商，跑 <code>dsh --profile headless "只回复：确认"</code></li>
+<li><strong>重启 Web 服务</strong>：headless 通过后，<strong>必须重启 Web 进程</strong>让凭据快照刷新</li>
+<li><strong>Web UI 验证</strong>：浏览器打开 127.0.0.1:3080，切 provider + model，发一条消息确认</li>
+</ol>
+<hr>
+<h2 id="端点速查">端点速查</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>提供商</th><th>baseURL</th><th>模型</th><th>上下文</th><th>输出</th><th>思维链</th><th>推理参数控制</th></tr></thead><tbody><tr><td>LongCat</td><td><code>https://api.longcat.chat/openai</code></td><td>LongCat-2.0</td><td>1M</td><td>128K</td><td>✅ 默认开启</td><td>✅ <code>thinking:{type}</code> 全形式</td></tr><tr><td>百炼 Token Plan</td><td><code>https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1</code></td><td>qwen3.8-max</td><td>1M</td><td>128K</td><td>✅ 默认开启</td><td>❌ 不支持，错误伪装成 InvalidApiKey</td></tr><tr><td>百炼 Anthropic 兼容</td><td><code>https://token-plan.cn-beijing.maas.aliyuncs.com/apps/anthropic</code></td><td>—</td><td>—</td><td>—</td><td>—</td><td>Anthropic 协议，DSH 未接入</td></tr></tbody></table>
+<blockquote>
+<p>百炼 Token Plan 的 API Key 以 <code>sk-sp-</code> 开头，与百炼通用 API Key（<code>sk-</code> 开头）格式不同，两者不可混用，必须配套使用各自的 Base URL。</p>
+</blockquote>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>所属索引:<a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/LLM接入</span><span class="tag">主题/凭据管理</span><span class="tag">来源/DeepSeekHarness</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:43:16+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/DSH%E6%8E%A5%E5%85%A5%E7%AC%AC%E4%B8%89%E6%96%B9OpenAI%E5%85%BC%E5%AE%B9%E6%8F%90%E4%BE%9B%E5%95%86_providers%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%87%AD%E6%8D%AE%E7%83%AD%E9%87%8D%E8%BD%BD%E6%96%AD%E6%A1%A3_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/DSH%E6%8E%A5%E5%85%A5%E7%AC%AC%E4%B8%89%E6%96%B9OpenAI%E5%85%BC%E5%AE%B9%E6%8F%90%E4%BE%9B%E5%95%86_providers%E5%A3%B0%E6%98%8E%E4%B8%8E%E5%87%AD%E6%8D%AE%E7%83%AD%E9%87%8D%E8%BD%BD%E6%96%AD%E6%A1%A3_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/2026-08-26-agnes-deepseekharness-v1-5199d3a/">agnes接入DeepSeekHarness_双节点实测与思考方言</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a><a class="card" href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/"> <span class="card-cat">平台工程</span> <h3>B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</h3> <p>- 项目:风眼 · Typhoon Eye(台风实况 + 分级应急预案,零依赖静态单页;仓库 Mr-Salticidae/typhoon-e…</p> </a><a class="card" href="/above-the-web/2026-07-17-fastapi-3000-v1-0ec39b4/"> <span class="card-cat">平台工程</span> <h3>本地部署 FastAPI 静态站到 3000 端口 · 复盘</h3> <p>要让一个基于 FastAPI 的静态站在本地通过 localhost:3000 访问，关键不是改前端文件，而是把后端启动脚本改为监听目标端口…</p> </a><a class="card" href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/"> <span class="card-cat">平台工程</span> <h3>2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</h3> <p>Top10 低延迟节点里 9 个是机房出口，其中 6 个直接租自公有云：</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#核心律" data-toc-link="核心律">核心律</a></li><li class="d3"><a href="#1-providers-是-dictmodels-列表整体替换目录" data-toc-link="1-providers-是-dictmodels-列表整体替换目录">1. providers 是 dict，models 列表整体替换目录</a></li><li class="d3"><a href="#2-apikeyenv-是凭据引用名不是凭据本身" data-toc-link="2-apikeyenv-是凭据引用名不是凭据本身">2. apiKeyEnv 是凭据引用名，不是凭据本身</a></li><li class="d3"><a href="#3-凭据文件热重载--web-进程环境快照热更新" data-toc-link="3-凭据文件热重载--web-进程环境快照热更新">3. 凭据文件热重载 ≠ Web 进程环境快照热更新</a></li><li class="d3"><a href="#4-推理参数兼容性要逐家实测不能假设" data-toc-link="4-推理参数兼容性要逐家实测不能假设">4. 推理参数兼容性要逐家实测，不能假设</a></li><li class="d3"><a href="#5-compatthinkingformat-决定推理参数的线上拼写" data-toc-link="5-compatthinkingformat-决定推理参数的线上拼写">5. compat.thinkingFormat 决定推理参数的线上拼写</a></li><li class="d2"><a href="#踩坑记录" data-toc-link="踩坑记录">踩坑记录</a></li><li class="d3"><a href="#️-坑-1web-进程凭据快照断档首次现形" data-toc-link="️-坑-1web-进程凭据快照断档首次现形">⚠️ 坑 1：Web 进程凭据快照断档（首次现形）</a></li><li class="d3"><a href="#️-坑-2百炼参数拒绝伪装成-invalidapikey首次现形" data-toc-link="️-坑-2百炼参数拒绝伪装成-invalidapikey首次现形">⚠️ 坑 2：百炼参数拒绝伪装成 InvalidApiKey（首次现形）</a></li><li class="d3"><a href="#️-坑-3百炼-models-列表端点返回-invalidapikey首次现形" data-toc-link="️-坑-3百炼-models-列表端点返回-invalidapikey首次现形">⚠️ 坑 3：百炼 models 列表端点返回 InvalidApiKey（首次现形）</a></li><li class="d3"><a href="#️-坑-4工作区路径-enoentdsh-记忆残留" data-toc-link="️-坑-4工作区路径-enoentdsh-记忆残留">⚠️ 坑 4：工作区路径 ENOENT（DSH 记忆残留）</a></li><li class="d2"><a href="#配置模板" data-toc-link="配置模板">配置模板</a></li><li class="d3"><a href="#settingsyamlproviders-声明" data-toc-link="settingsyamlproviders-声明">settings.yaml（providers 声明）</a></li><li class="d3"><a href="#credentialsyaml凭据键值对" data-toc-link="credentialsyaml凭据键值对">.credentials.yaml（凭据键值对）</a></li><li class="d2"><a href="#接入新提供商的标准流程" data-toc-link="接入新提供商的标准流程">接入新提供商的标准流程</a></li><li class="d2"><a href="#端点速查" data-toc-link="端点速查">端点速查</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

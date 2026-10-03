@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>可灵图生视频 · 中文 prompt 模板库 · 蛛网之上</title><meta name="description" content="1. 中文 prompt 对位可灵预设词训练(预设词全中文)"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/prompt-v1-603b0f9/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="可灵图生视频 · 中文 prompt 模板库"><meta property="og:description" content="1. 中文 prompt 对位可灵预设词训练(预设词全中文)"><meta property="og:url" content="https://tiaozhuxiansheng.com/prompt-v1-603b0f9/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="可灵图生视频 · 中文 prompt 模板库"><meta name="twitter:description" content="1. 中文 prompt 对位可灵预设词训练(预设词全中文)"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="prompt模板库"><meta property="article:tag" content="类型/prompt模板"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/prompt-v1-603b0f9/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/prompt-v1-603b0f9/","url":"https://tiaozhuxiansheng.com/prompt-v1-603b0f9/","headline":"可灵图生视频 · 中文 prompt 模板库","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"1. 中文 prompt 对位可灵预设词训练(预设词全中文)","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"prompt模板库","keywords":"类型/prompt模板"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"prompt模板库","item":"https://tiaozhuxiansheng.com/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93"},{"@type":"ListItem","position":3,"name":"可灵图生视频 · 中文 prompt 模板库","item":"https://tiaozhuxiansheng.com/prompt-v1-603b0f9/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93" data-pagefind-meta="category" data-pagefind-filter="kind:note">prompt模板库</a> <span aria-hidden="true">/</span><span>prompt模板</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 2 分钟读完 · 906 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>10 节</i></summary> <ol> <li class="d2"><a href="#通用规则所有模板都遵守">通用规则(所有模板都遵守)</a></li><li class="d2"><a href="#模板-a--完全静止凝固镜头">模板 A · 完全静止(凝固镜头)</a></li><li class="d2"><a href="#模板-b--微动静立克制日常存在">模板 B · 微动静立(克制日常存在)</a></li><li class="d2"><a href="#模板-c--凝固对望双主体">模板 C · 凝固对望(双主体)</a></li><li class="d2"><a href="#模板-d--小动物飞行--蝶轨迹">模板 D · 小动物飞行 / 蝶轨迹</a></li><li class="d2"><a href="#模板-e--机械主体行走--跟拍">模板 E · 机械主体行走 + 跟拍</a></li><li class="d2"><a href="#模板-f--镜头拉远--主体缩小outro-类">模板 F · 镜头拉远 + 主体缩小(Outro 类)</a></li><li class="d2"><a href="#模板-g--横向平移规避中央背景幻觉">模板 G · 横向平移(规避中央背景幻觉)</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="可灵图生视频--中文-prompt-模板库">可灵图生视频 · 中文 prompt 模板库</h1>
+<blockquote>
+<p>来源:R-07 项目 2026-05-11 全片实跑验证(17 段视频)
+适用:可灵 Kling 3.0 / Omni(libtv 幕布版)
+配套:02_参数行为档案 / 可灵Kling3_0_行为规律_v1.md + 04_方法论与洞察 / 图生视频_ForwardOnly原则_v1.md</p>
+</blockquote>
+<h2 id="通用规则所有模板都遵守">通用规则(所有模板都遵守)</h2>
+<ol>
+<li><strong>中文 prompt 对位可灵预设词训练</strong>(预设词全中文)</li>
+<li><strong>Forward-Only</strong>——只描述从源图状态向后发展</li>
+<li><strong>One Movement Per Shot</strong>——一镜一个主导动作</li>
+<li><strong>慢动作修饰</strong>——“以极慢的速度 / 缓慢 / 极缓 / 几乎察觉不到”</li>
+<li><strong>接受默认微动</strong>——不堆否定词</li>
+</ol>
+<h2 id="模板-a--完全静止凝固镜头">模板 A · 完全静止(凝固镜头)</h2>
+<p><strong>适用</strong>:题眼镜头 / 凝固高潮瞬间 / 长时长(15s)/ 视觉重量最大的镜头</p>
+<p><strong>预设词组合</strong>:</p>
+<ul>
+<li>基础镜头:<strong>固定镜头</strong></li>
+<li>运镜速度:<strong>慢速</strong></li>
+<li>景别:<strong>中景</strong>(或按需特写 / 远景)</li>
+<li>光影:<strong>自然光</strong></li>
+<li>画面:<strong>丰富细节</strong></li>
+<li>氛围:<strong>宁静</strong></li>
+</ul>
+<p><strong>Prompt 框架</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[主体描述 - 简洁,呼应源图]。镜头在整个 [X] 秒内完全静止、锁定不动。[主体] 在 [X] 秒内完全静止,没有任何身体动作——[列举关键不动部位]。[次主体] [如何静止]。背景中仅有 [极轻微的元素] 缓慢飘动,几乎察觉不到。镜头不发生任何位移——没有推、拉、摇、移、抖动、漂移。油画质感保留,[色调描述]。绝对静止的电影感,时间冻结的瞬间。</span></span></code></pre>
+<p><strong>实例</strong>:R-07 S8 题眼 15s</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>一个机器人侧面站立在浓雾弥漫的工业废墟中,蝴蝶停在它的红色圆盘面甲附近。镜头在整个 15 秒内完全静止、锁定不动。机器人的身体在 15 秒内完全静止,没有任何身体动作——头部不转动、肩膀不起伏、躯干不晃动、装甲板不震颤、颈部线缆不甩动、不呼吸、不调整重心。蝴蝶翅膀完全合拢且静止,15 秒内没有任何扇动。背景中仅有极轻微的雾气粒子缓慢飘动,几乎察觉不到。镜头不发生任何位移。油画质感保留,冷灰色调与雾蓝色调。绝对静止的电影感,时间冻结的瞬间。</span></span></code></pre>
+<h2 id="模板-b--微动静立克制日常存在">模板 B · 微动静立(克制日常存在)</h2>
+<p><strong>适用</strong>:R-07 静立 / 主体不变但环境有微动 / “活着但不张扬”</p>
+<p><strong>预设词</strong>:同模板 A</p>
+<p><strong>Prompt 框架</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[主体]静静地 [姿态描述] 在 [场景],[环境元素]。镜头在整个 [X] 秒内完全静止、锁定不动。[主体] 的身体在 [X] 秒内完全静止,没有任何身体动作——[关键不动部位]。仅有极轻微的微动:[元素 1] 在 [情景] 中以极小幅度 [运动描述]、[元素 2] [运动描述]、[元素 3] [运动描述]。除此之外没有其他动作。油画质感保留,[色调]。</span></span></code></pre>
+<p><strong>实例</strong>:R-07 S2 (R-07 静立 8s + 颈缆 + 雾流 + 草微动)</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>一个机器人静静地站立在杂草丛生的废墟空地中央,以背影/侧背的角度入画,远处是半坍塌的工厂厂房,周围有混凝土裂缝中长出的野草、苔藓覆盖的钢梁与藤蔓。镜头在整个 8 秒内完全静止、锁定不动。机器人的身体在 8 秒内完全静止,没有任何身体动作——不行走、头部不转动、肩膀不起伏、腿部不动。仅有极轻微的微动:颈部线缆在轻风中以 1-2 厘米的极小幅度缓慢摆动、背景大气雾气向上缓慢飘动、画面边缘的前景野草在微风中极轻地摇曳。除此之外没有其他动作。油画质感保留,冷灰色调与雾蓝色调,后启示录的静谧感。</span></span></code></pre>
+<h2 id="模板-c--凝固对望双主体">模板 C · 凝固对望(双主体)</h2>
+<p><strong>适用</strong>:双主体不动 + 时序分段微动 / “时间被凝固的相遇”</p>
+<p><strong>预设词</strong>:同模板 A</p>
+<p><strong>Prompt 框架</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>镜头在整个 [X] 秒内完全静止、锁定不动。[主体 A] 和 [主体 B] 保持完全静止的对望状态——[A 姿态],[B 姿态]。[A] 在 [X] 秒内完全静立——[A 关键不动部位]。[X] 秒内,[B] 的 [具体微动部位] 在第 [X-Y] 秒之间轻微抽动 1 次,[另一部位] 在第 [Z-W] 秒之间轻微抽动 1 次,**总共仅 2 次微动**,除此之外完全静止。油画质感保留。</span></span></code></pre>
+<p><strong>实例</strong>:R-07 S14 兔子相遇 13s</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>镜头在整个 13 秒内完全静止、锁定不动。机器人和墙顶上的小兔子保持完全静止的对望状态——机器人面向左侧的塌墙,身体不动、头部不动、手臂不动、双腿不动,机械传感器与兔子的眼睛保持在同一高度线上的平视对望。兔子始终在墙顶原位不动,毛色保持原图的灰褐色调,与环境融合,不被美化变浅。13 秒内,兔子的耳朵在第 4-5 秒之间轻微抽动 1 次,鼻子在第 8-9 秒之间轻微抽动 1 次,除此之外完全静止。机器人在整个 13 秒内完全静立——不行走、不转身、不移动位置、不挥动手臂、颈缆几乎不动。冷灰雾蓝色调,后启示录的克制对望,时间被凝固的相遇。</span></span></code></pre>
+<blockquote>
+<p><strong>注意</strong>:这是从”R-07 走入开阔地停下转向兔子对望”(反向逻辑)修订的 forward-only 版本。详见 04_方法论与洞察 / 图生视频_ForwardOnly原则_v1.md。</p>
+</blockquote>
+<h2 id="模板-d--小动物飞行--蝶轨迹">模板 D · 小动物飞行 / 蝶轨迹</h2>
+<p><strong>适用</strong>:蝶 / 鸟 / 飞虫的飞行轨迹(进入 / 接近 / 落下 / 飞过)</p>
+<p><strong>预设词</strong>:</p>
+<ul>
+<li>基础镜头:<strong>固定镜头</strong></li>
+<li>运镜速度:<strong>慢速</strong></li>
+<li>景别:<strong>中景</strong> 或 <strong>近景</strong></li>
+</ul>
+<p><strong>Prompt 框架</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[飞行主体] 从画面 [起始位置] 缓慢飞入,飞行轨迹呈 [轻微 S 型 / 慢弧线 / 匀速] 起伏,以匀速的慢速向 [终点方向] 移动。[X] 秒内完成"飞入 → 接近 → [停留 / 落下 / 悬停]"的进程,最终在第 [Y-Z] 秒之间 [终点动作]。[主体保持静止描述]。镜头完全静止。冷灰雾蓝色调,[暖色锚点] 作为唯一暖色。油画质感保留。</span></span></code></pre>
+<p><strong>约束(必加)</strong>:</p>
+<ul>
+<li>数量严格(单只 / 2-3 只),不要凭空增加</li>
+<li>轨迹匀速,不俯冲,不盘旋</li>
+<li>不飞出画面(除非剧情需要)</li>
+</ul>
+<h2 id="模板-e--机械主体行走--跟拍">模板 E · 机械主体行走 + 跟拍</h2>
+<p><strong>适用</strong>:R-07 类机械主体行走 / 跟拍镜头 / 镜头跟随平移</p>
+<p><strong>预设词</strong>:</p>
+<ul>
+<li>基础镜头:<strong>跟随</strong>(关键!跟拍镜头与”固定镜头”形成强差异化)</li>
+<li>运镜速度:<strong>慢速</strong></li>
+<li>景别:<strong>远景</strong> 或 <strong>中景</strong></li>
+</ul>
+<p><strong>Prompt 框架</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>镜头跟随 [主体] 缓慢 [向右/向左] 平移,镜头平移幅度约 [%],[X] 秒内体现明显的跟拍感。[主体] 在画面中持续向前行走,机械式步伐分明,每一步有清晰的脚步落下感,颈部线缆与背部装甲随步伐自然摆动。[主体] 在画面中保持在中央偏 [左/右] 的位置(镜头跟随保持构图)。在第 [X-Y] 秒之间,[主体] 逐步走向画面 [出框方向] 的边缘,即将走出框外。画面 [两侧/前景] 的 [环境元素] 在镜头平移过程中自然滑过画面。冷灰雾蓝色调,[主体暖色锚点] 是画面里唯一的暖色锚点。油画质感保留,[主体] 形态严格保持 humanoid 比例。</span></span></code></pre>
+<p><strong>实例</strong>:R-07 S13a (9s 跟拍向右 + R-07 走出右侧)</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>镜头跟随机器人缓慢向右平移,镜头平移幅度约 35%,9 秒内体现明显的跟拍感。机器人在画面中持续向前行走,机械式步伐分明,每一步有清晰的脚步落下感,颈部线缆与背部装甲随步伐自然摆动。机器人的背影在画面中保持在中央偏左的位置。在第 8-9 秒之间,机器人逐步走向画面右侧的边缘,即将走出框外。画面左侧的苔藓覆盖钢架、画面右侧的小树等环境元素,在镜头平移过程中自然滑过画面。冷灰雾蓝色调,机器人红装甲是画面里唯一的暖色锚点。油画质感保留,humanoid 比例严格保持。</span></span></code></pre>
+<h2 id="模板-f--镜头拉远--主体缩小outro-类">模板 F · 镜头拉远 + 主体缩小(Outro 类)</h2>
+<p><strong>适用</strong>:Outro 段 / 退场感 / 主体在画面中变小</p>
+<p><strong>预设词</strong>:</p>
+<ul>
+<li>基础镜头:<strong>拉远</strong></li>
+<li>景别:<strong>远景</strong></li>
+</ul>
+<p><strong>Prompt 框架</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>镜头以极慢的速度持续拉远,[X] 秒内拉远幅度约 [%]。[主体] 在画面里继续 [行走 / 静止],[X] 秒内从当前的 [起始尺寸] 高度逐步缩小到 [末尺寸] 高度。背景大气雾气在 [X] 秒内逐渐加厚,远处工厂剪影更模糊。[主体暖色] 是画面里唯一的暖色锚点,这个暖色随着主体变小而面积同步缩减,**不要被美化放大**。冷灰雾蓝色调主导,后启示录的辽远感。油画质感保留。</span></span></code></pre>
+<p><strong>实例</strong>:R-07 S15 (15s 拉远 + R-07 缩小)</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>镜头以极慢的速度持续拉远,15 秒内拉远幅度约 25-30%。机器人在画面里继续向画面深处行走,机械式步伐稳定,颈缆随步伐轻微摆动,机器人因为镜头拉远和自身向前走的双重作用,在画面里从当前的中远景尺寸(约 50% 高度)逐步缩小到大远景尺寸(约 25-30% 高度)。背景大气雾气在 15 秒内逐渐加厚,远处工厂剪影更模糊。机器人的红色装甲是画面里唯一的暖色锚点,这个暖色随着机器人变小而面积同步缩减,不要被美化放大。冷灰雾蓝色调主导,后启示录的辽远感,humming 进入的退场氛围。油画质感保留。</span></span></code></pre>
+<h2 id="模板-g--横向平移规避中央背景幻觉">模板 G · 横向平移(规避中央背景幻觉)</h2>
+<p><strong>适用</strong>:无主体的环境镜头 / 当源图中央有可疑模糊轮廓时</p>
+<p><strong>预设词</strong>:</p>
+<ul>
+<li>基础镜头:<strong>右摇</strong> 或 <strong>左摇</strong></li>
+<li>景别:<strong>中景</strong></li>
+</ul>
+<p><strong>Prompt 框架</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>镜头以极慢的速度向 [方向] 平移,[X] 秒内平移幅度约 [%],几乎没有向前推进或拉远,只有横向移动。画面内的 [环境元素] 在镜头平移过程中自然横向滑过画面,左侧的元素逐渐移出画面,右侧新的元素进入画面。前景的 [细节元素] 在微风中轻摇。**画面中央背景的远处元素和任何模糊的阴影都保持远处的模糊状态,不被放大、不变清晰,不会被识别为任何人形或机器人形状**。画面中完全没有机器人,没有任何人形物体出现。冷灰雾蓝色调,以 [低饱和暖色元素] 为暖色锚点。油画质感保留,纯环境镜头,慢速横向扫视。</span></span></code></pre>
+<blockquote>
+<p><strong>关键约束</strong>:推进镜头会让中央阴影被”清晰化为主体”(详见 02_参数行为档案 § 推进镜头的背景幻觉风险)。<strong>当源图中央背景有可疑模糊轮廓时,改用横向平移</strong>。</p>
+</blockquote>
+<h2 id="如何使用">如何使用</h2>
+<ol>
+<li>写新镜头 prompt 前,<strong>先判断属于哪类模板</strong>(凝固 / 静立微动 / 对望 / 飞行 / 行走跟拍 / 拉远 / 横向平移)</li>
+<li>复制对应模板,填入具体细节</li>
+<li>过一遍 Forward-Only 自检(prompt 是否在描述”如何到达源图状态”?)</li>
+<li>接受”默认微动”——不堆砌反复否定</li>
+</ol>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>工具行为:<a href="/above-the-web/kling3-0-v1-8b6096c/" class="wikilink">可灵Kling3_0_行为规律_v1</a></li>
+<li>配套方法论:<a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a></li>
+<li>IP 精神锚:<a href="/above-the-web/r-07-v1-1b29bfb/" class="wikilink">R-07 创作内核：克制、天真与减法</a>(克制 ≠ 死掉,影响模板 B / C 的微动设计) · <a href="/above-the-web/r-07-ip-v1-c77edd5/" class="wikilink">R-07_IP_视觉系统_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/prompt模板</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/01_prompt%E6%A8%A1%E6%9D%BF/%E5%8F%AF%E7%81%B5%E5%9B%BE%E7%94%9F%E8%A7%86%E9%A2%91_%E4%B8%AD%E6%96%87prompt%E6%A8%A1%E6%9D%BF%E5%BA%93_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/01_prompt%E6%A8%A1%E6%9D%BF/%E5%8F%AF%E7%81%B5%E5%9B%BE%E7%94%9F%E8%A7%86%E9%A2%91_%E4%B8%AD%E6%96%87prompt%E6%A8%A1%E6%9D%BF%E5%BA%93_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/kling3-0-v1-8b6096c/">可灵 Kling 3.0 / Omni 行为规律</a></li><li><a href="/above-the-web/03-prompt-987b076/">Prompt 模板库索引</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/mj-v1-00f5dde/"> <span class="card-cat">prompt模板库</span> <h3>MJ V7/V8 审核避雷词表</h3> <p>MJ 审核会拦截&quot;真实风格人像 + 年轻女性&quot;的特定组合——记下 7 大类雷词 + 1 个过审神器。</p> </a><a class="card" href="/above-the-web/muji-v1-4df2ece/"> <span class="card-cat">prompt模板库</span> <h3>MUJI 极简插画基础句</h3> <p>一组可复用的关键词组合,能稳定锁定&quot;MUJI / 长场雄 / 中村佑介早期&quot;那条线的日系极简插画感,不会跑去当代漫画 / 韩系小红书壁纸 /…</p> </a><a class="card" href="/above-the-web/ova-v1-7559330/"> <span class="card-cat">prompt模板库</span> <h3>OVA 怀旧基础句</h3> <p>一组可复用的关键词组合,能稳定锁定&quot;80 年代末 90 年代初日本 OVA 动画&quot;那条线的怀旧手绘动画感,绕开新海诚 / 京アニ 的当代日漫…</p> </a><a class="card" href="/above-the-web/v1-a37bf29/"> <span class="card-cat">prompt模板库</span> <h3>东方美人五官堆叠基础句</h3> <p>一段可复用的五官 + 气质堆叠词块,无需 personalize、无需参考图,靠纯文字就能稳定锁定&quot;复古东方美人&quot;原型(瓷肌血色 / 杏眼深…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#通用规则所有模板都遵守" data-toc-link="通用规则所有模板都遵守">通用规则(所有模板都遵守)</a></li><li class="d2"><a href="#模板-a--完全静止凝固镜头" data-toc-link="模板-a--完全静止凝固镜头">模板 A · 完全静止(凝固镜头)</a></li><li class="d2"><a href="#模板-b--微动静立克制日常存在" data-toc-link="模板-b--微动静立克制日常存在">模板 B · 微动静立(克制日常存在)</a></li><li class="d2"><a href="#模板-c--凝固对望双主体" data-toc-link="模板-c--凝固对望双主体">模板 C · 凝固对望(双主体)</a></li><li class="d2"><a href="#模板-d--小动物飞行--蝶轨迹" data-toc-link="模板-d--小动物飞行--蝶轨迹">模板 D · 小动物飞行 / 蝶轨迹</a></li><li class="d2"><a href="#模板-e--机械主体行走--跟拍" data-toc-link="模板-e--机械主体行走--跟拍">模板 E · 机械主体行走 + 跟拍</a></li><li class="d2"><a href="#模板-f--镜头拉远--主体缩小outro-类" data-toc-link="模板-f--镜头拉远--主体缩小outro-类">模板 F · 镜头拉远 + 主体缩小(Outro 类)</a></li><li class="d2"><a href="#模板-g--横向平移规避中央背景幻觉" data-toc-link="模板-g--横向平移规避中央背景幻觉">模板 G · 横向平移(规避中央背景幻觉)</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

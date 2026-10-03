@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>任务系统演进:站内新建、管理台拆分与首页瘦身 · 蛛网之上</title><meta name="description" content="- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统 + 管理台 + 首页,2026-07-24 → 2026-07-29"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-5696fe2/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="任务系统演进:站内新建、管理台拆分与首页瘦身"><meta property="og:description" content="- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统 + 管理台 + 首页,2026-07-24 → 2026-07-29"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-5696fe2/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="任务系统演进:站内新建、管理台拆分与首页瘦身"><meta name="twitter:description" content="- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统 + 管理台 + 首页,2026-07-24 → 2026-07-29"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-29T18:48:59+08:00"><meta property="article:modified_time" content="2026-08-03T19:45:51+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/版块工程"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-5696fe2/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-5696fe2/","url":"https://tiaozhuxiansheng.com/v1-5696fe2/","headline":"任务系统演进:站内新建、管理台拆分与首页瘦身","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统 + 管理台 + 首页,2026-07-24 → 2026-07-29","datePublished":"2026-07-29T18:48:59+08:00","dateModified":"2026-08-03T19:45:51+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/版块工程"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"任务系统演进:站内新建、管理台拆分与首页瘦身","item":"https://tiaozhuxiansheng.com/v1-5696fe2/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-29T18:48:59+08:00">2026-07-29</time></span> <span>更新于 <time datetime="2026-08-03T19:45:51+08:00">2026-08-03</time></span> <span>约 7 分钟读完 · 2,619 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#这一轮在哪座地基上加盖">这一轮在哪座地基上加盖</a></li><li class="d2"><a href="#六条可复用-insight">六条可复用 insight</a></li><li class="d3"><a href="#1-双源头模型的延伸source-字段分流同步">1. 双源头模型的延伸:source 字段分流同步</a></li><li class="d3"><a href="#2-运行时状态再分离fee_override-独立于真相源">2. 运行时状态再分离:fee_override 独立于真相源</a></li><li class="d3"><a href="#3-管理台一件事一页--共用壳">3. 管理台一件事一页 + 共用壳</a></li><li class="d3"><a href="#4-首页是入口不是仓库">4. 首页是入口不是仓库</a></li><li class="d3"><a href="#5-浏览器侧渲染的安全基线">5. 浏览器侧渲染的安全基线</a></li><li class="d3"><a href="#6-滚动渐现抽成共用模块">6. 滚动渐现抽成共用模块</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#方法论验证等级">方法论验证等级</a></li> </ol> </details> <h1 id="任务系统演进站内新建管理台拆分与首页瘦身">任务系统演进:站内新建、管理台拆分与首页瘦身</h1>
+<blockquote>
+<p>一句话:任务书从「写 md 才发」进化到「站内直接发」,代价是表加两列 + 详情页拆成动静两份;管理台一件事一页比一页堆所有内容更清晰;首页是入口不是仓库,362 篇笔记搬去子页后首页从 218 KB 降到 30 KB。</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录(不可修改区)</h2>
+<ul>
+<li>项目:蛛网之上(tiaozhuxiansheng.com)任务书系统 + 管理台 + 首页,2026-07-24 → 2026-07-29</li>
+<li>提交(above-the-web 仓库):<code>0a473e4</code> 站内新建任务书 → <code>b6ed9c4</code> 管理台拆分 + 调价 → <code>ce86599</code> 首页瘦身</li>
+<li>改动规模:27 文件,+2251 / -710 行;后端回归 35/35 通过;线上自检 + 无头 Chrome 实测全过</li>
+<li>起点:任务书只能写 <code>src/data/tasks/*.md</code> 然后 push,发一份任务要开编辑器、改 md、等构建;管理台一页堆了申请/任务/账号/记录;首页底部铺了 362 篇笔记(134 KB / 218 KB)</li>
+<li>交付:站内新建即时生效(md 与 web 两种来源共用一套流转);管理台六页 + 共用壳 + 调价面板;笔记搬进 <code>/notes/</code>,首页只留栏目入口</li>
+<li>已知尾巴:第一次 deploy rsync 被香港服务器断连(Broken pipe),重跑即通,非代码问题;mini-markdown 不支持表格/脚注(复杂内容仍落成 md);调价「加减」算法靠正则找第一个数字,遇到区间(「100-150 元」)会算错,用「直接写新报酬」兜底</li>
+<li>数据来源:本地无头 Chrome 实测 + 线上 <code>curl /api/tasks</code> 自检 + CI 回归</li>
+</ul>
+<h2 id="这一轮在哪座地基上加盖">这一轮在哪座地基上加盖</h2>
+<p>本轮是 <a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a> 的续篇。那篇定下了「正文归 git、状态归库、同步只写正文类字段」的基本框架,本轮在上面长出新东西:</p>
+<ul>
+<li>那篇把任务书写死在 md 里;<strong>本轮让任务书也能在站内直接写</strong>,表加 <code>source</code> 列区分「md 来的」和「站内新建的」</li>
+<li>那篇把 <code>fee</code> 当作真相源字段(同步可覆盖);<strong>本轮发现调价是运行时状态</strong>,加 <code>fee_override</code> 把它从真相源里拆出来</li>
+<li>那篇的管理台是一页;<strong>本轮拆成六页</strong></li>
+<li>那篇的首页已经在放笔记卡片;<strong>本轮把整个笔记库搬走</strong></li>
+</ul>
+<p>也延续了 <a href="/above-the-web/v1-ac6b03d/" class="wikilink">站内新版块五件套模式_三次复用与起刊两坑_v1</a> 的「数据驱动呈现层」思路——本轮新建的「任务书详情页(/tasks/detail/)」同样是数据驱动,只是数据源从 md 文件换成了数据库。</p>
+<h2 id="六条可复用-insight">六条可复用 insight</h2>
+<h3 id="1-双源头模型的延伸source-字段分流同步">1. 双源头模型的延伸:source 字段分流同步</h3>
+<p><a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a> 处理的是「同一个东西一个来源」(md)。现实很快变成<strong>同一个 slug 两种来源</strong>:md 是真相源,但站内也会创建任务,两者共用一张表、一套流转。</p>
+<p>加 <code>source</code> 列(<code>md</code> / <code>web</code>),同步逻辑全部带 <code>WHERE source = 'md'</code>:</p>
+<ul>
+<li>站内新建的行(<code>source='web'</code>)不参与「清单里没有 → 下架」——清单里没有它不代表 md 被删了</li>
+<li>md 补上同名 slug 时自动接管正文(正文以 md 为准),但认领、打款这些运行时记录<strong>一条不动</strong></li>
+<li>详情页按来源分发:md 走静态页,web 走 <code>/tasks/detail/?slug=</code> 动态页</li>
+</ul>
+<blockquote>
+<p><strong>同步逻辑必须按来源分流,否则「清单里没有」会被误判为「被删了」。</strong> 这条是 <a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a>「同步只写正文类字段」的推论,本轮首次实测。</p>
+</blockquote>
+<h3 id="2-运行时状态再分离fee_override-独立于真相源">2. 运行时状态再分离:fee_override 独立于真相源</h3>
+<p><code>fee</code> 在 md 里写的是任务书原价,但定完人之后临时加钱是常事(报销会员费、加急、追加内容)。<strong>改 md 既慢(要等一轮构建)又会被下一轮同步覆盖回去</strong>,正好是 <a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a> 里「真相源不该承载运行时改动」的又一个实例。</p>
+<p>加 <code>fee_override</code> / <code>fee_note</code> 两列,同步一律不碰:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>字段</th><th>归属</th><th>谁能改</th><th>同步覆盖?</th></tr></thead><tbody><tr><td><code>fee</code></td><td>真相源</td><td>md</td><td>✅</td></tr><tr><td><code>fee_override</code></td><td>运行时</td><td>管理台「调整报酬」</td><td>❌</td></tr><tr><td><code>fee_note</code></td><td>运行时</td><td>管理台「事由」</td><td>❌</td></tr></tbody></table>
+<p>对外接口:<code>fee</code> = <code>COALESCE(fee_override, md.fee)</code> 永远是「现在到底结多少」,页面不用各自判断。导出 md 时只写真相源(<code>fee</code>)——任务书是任务书,这次结多少是这次的事。</p>
+<blockquote>
+<p><strong>区分「真相源字段」和「运行时字段」看一件事:改它要不要等构建、会不会被同步覆盖。</strong> 要等构建的就是真相源,即时生效的就是运行时,存在同一张表但要分列。</p>
+</blockquote>
+<p>调价面板交互:填 <code>+40</code> 当场算 <code>100 元 → 140 元</code>(正则找第一个数字,后缀原样留着),也可「直接写新报酬」;「事由」写进流转记录,承接人在任务页看得到;「撤销调整」回到原价。</p>
+<h3 id="3-管理台一件事一页--共用壳">3. 管理台一件事一页 + 共用壳</h3>
+<p>管理台原先一页堆了待处理申请、任务列表、账号管理、操作记录。加新内容=在一页里找地方塞,越塞越挤。</p>
+<p>改成六页(概览 / 申请 / 任务 / 新建 / 账号 / 记录),共用 <code>AdminLayout.astro</code> 一层壳:</p>
+<ul>
+<li>壳只管:标题、板块导航、权限门禁、<code>slot</code> 分发</li>
+<li><code>bootAdmin()</code> 集中门禁逻辑(没登录 / 过期 / 非 admin 各给各的话)</li>
+<li>各页只管:自己的数据、自己的交互、自己的提示</li>
+<li>页面里需要塞到壳按钮区的(如任务页的「同步任务清单」)用 <code>&#x3C;button slot="actions"></code></li>
+</ul>
+<blockquote>
+<p><strong>管理台是工具页不是展示页,一件事一页 + 共用壳比一页堆所有内容清晰。</strong> 加新页 = 往 NAV 数组加一项 + 新建页面文件,不动其它页。</p>
+</blockquote>
+<h3 id="4-首页是入口不是仓库">4. 首页是入口不是仓库</h3>
+<p><a href="/above-the-web/v1-ac6b03d/" class="wikilink">站内新版块五件套模式_三次复用与起刊两坑_v1</a> 的「首页速览版块」原本是露几条 + 入口。但笔记库一直在首页底部完整铺开(7 栏目、35 子栏目、362 张卡、134 KB),占了整页八成篇幅,进站第一眼是卡片墙,看不出这站有什么。</p>
+<p>把整个笔记索引搬去 <code>/notes/</code> 独立成页,首页那一节换成七个栏目入口(篇数 + 一句话定位),点进去带 <code>?cat=</code> 直接落在对应筛选上(此时不做平滑滚动——人还没看过刊头,把页面拽走反而莫名其妙)。</p>
+<p>首页 218 KB → 30 KB,和快讯、任务书两页终于一个量级。分组逻辑抽进 <code>lib/note-groups.mjs</code>,首页与 <code>/notes/</code> 共用一份,计数不再各算各的。</p>
+<blockquote>
+<p><strong>首页回答「这站有什么」,不回答「这站的所有内容是什么」。</strong> 全部内容进子页,首页只给入口。新增板块时先想「进首页还是进子页」,默认进子页。</p>
+</blockquote>
+<h3 id="5-浏览器侧渲染的安全基线">5. 浏览器侧渲染的安全基线</h3>
+<p>站内新建的任务书正文存库,构建期看不到,只能在浏览器侧渲染。写了一个轻量 <code>mini-markdown.js</code>(认 <code>##</code> 标题 / 列表 / 引用 / 粗斜体 / 代码 / 链接 / 图片 / 分隔线,表格脚注不做——写到那份上本来就该落成 md)。</p>
+<p>安全基线:<strong>内容进过数据库,就不再是「自己写的字符串」</strong>——先转义再拼 HTML,链接白名单只放行 <code>/</code>, <code>#</code>, <code>http(s):</code>, <code>mailto:</code>,<code>javascript:</code> 之流当普通文本落地。</p>
+<blockquote>
+<p>这条和 <a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a> 的「注水脚本的 catch 里什么都不做」同属一类:<strong>给静态站挂后端 / 挂动态内容时,安全边界要设在数据进页面之前,不是写数据的时候。</strong> 发布方自己写正文也不能绕过转义。</p>
+</blockquote>
+<h3 id="6-滚动渐现抽成共用模块">6. 滚动渐现抽成共用模块</h3>
+<p>首页 / 快讯 / 任务书 / 笔记四个页面都在用「元素进视口淡入上移、同批错峰」,每个页面各写了一份 IntersectionObserver + rv 类 + keyframes。抽成 <code>scripts/reveal.js</code> 的 <code>revealOnScroll(selector)</code>,四页共用。<code>rv</code> / <code>rv-in</code> / keyframes 收进 <code>global.css</code>。</p>
+<p>顺手把刊头 <code>.masthead*</code> 三页重复副本也收进 <code>global.css</code>——快报、任务书、笔记三个板块页共用一套刊头,不该各存一份。</p>
+<blockquote>
+<p><strong>同一份样式 / 同一个 JS 模式出现第三次,就该抽出来。</strong> 抽的收益不是少写代码,是改一处能全站生效,避免「改了首页的渐现速度忘了改笔记页」。</p>
+</blockquote>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⭐ <a href="/above-the-web/ai-v1-fbcd3c9/" class="wikilink">任务书接AI辅助填写_模型只产草稿与思考额度陷阱_v1</a> —— <strong>后续续篇</strong>:本篇让任务书能在站内直接发,那篇再往前推一步——发布方与接单人两处入口都换成「说一句大白话 → AI 填表单 → 人过一眼再改」,并给同步清单加了 <code>outline</code> 字段(本篇双源切分的又一次复用:跨源传数据先看现有的缝够不够宽)</li>
+<li><a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a> —— 本轮的地基:双源切分律 / 降级即默认 / scoped CSS 不覆盖 JS 注入 DOM / 登录墙架在钱前</li>
+<li><a href="/above-the-web/v1-ac6b03d/" class="wikilink">站内新版块五件套模式_三次复用与起刊两坑_v1</a> —— 新增内容版块的五件套固定套路,本轮「任务书」是第三次复用</li>
+<li><a href="/above-the-web/v1-6601c25/" class="wikilink">账号系统对标一线_多账号抽屉与外部通道半开陷阱_v1</a> —— 管理台门禁、多账号抽屉、功能开关接在能力验证上的来源</li>
+<li><a href="/above-the-web/reduced-motion-v1-5d31a1e/" class="wikilink">reduced-motion本机陷阱_动效降级纯淡入而非跳过_v1</a> —— 滚动渐现的 reduced-motion 降级策略(本轮把渐现抽成共用模块时复用)</li>
+<li>⭐⭐ <a href="/above-the-web/v1-9f352e9/" class="wikilink">成稿链接存进库没人读_写入方不等于展示方_v1</a> —— 次日续篇兼<strong>本轮的反面</strong>:本轮给 <code>fee_override</code> 配齐了「存库 + 接口 + <code>renderFee()</code>」三件套,同一张表上的 <code>deliverable_url</code> 只做了前两件,页面从来没读过它;沉淀「写入方不等于展示方」⭐⭐ 与「upsert 两条分支的字段集要对齐」(<code>syncTasks</code> 的 <code>INSERT</code> 写了该列、<code>UPDATE</code> 没写,md 补的链接永远进不来)</li>
+</ul>
+<h2 id="方法论验证等级">方法论验证等级</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>本轮 insight</th><th>等级</th></tr></thead><tbody><tr><td>source 字段分流同步</td><td>⚠️ 首次发现</td></tr><tr><td>fee_override 真相源 / 运行时分离</td><td>⚠️ 首次发现</td></tr><tr><td>管理台一件事一页</td><td>⚠️ 首次发现</td></tr><tr><td>首页是入口不是仓库</td><td>⚠️ 首次发现</td></tr><tr><td>浏览器侧渲染安全基线</td><td>⚠️ 首次发现</td></tr><tr><td>滚动渐现抽共用模块</td><td>⚠️ 首次发现</td></tr></tbody></table>
+<p>没有三次验证的方法论,不用于指导下一次决策——只作为「值得继续观察的假设」。本轮六条均首次发现,下次做类似迭代时逐条验证。</p> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/版块工程</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-08-03T19:45:51+08:00">2026-08-03</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E4%BB%BB%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%BC%94%E8%BF%9B_%E7%AB%99%E5%86%85%E6%96%B0%E5%BB%BA%E7%AE%A1%E7%90%86%E5%8F%B0%E6%8B%86%E5%88%86%E9%A6%96%E9%A1%B5%E7%98%A6%E8%BA%AB_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E4%BB%BB%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%BC%94%E8%BF%9B_%E7%AB%99%E5%86%85%E6%96%B0%E5%BB%BA%E7%AE%A1%E7%90%86%E5%8F%B0%E6%8B%86%E5%88%86%E9%A6%96%E9%A1%B5%E7%98%A6%E8%BA%AB_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/reduced-motion-v1-5d31a1e/">reduced-motion 本机陷阱 · 动效降级纯淡入而非跳过</a></li><li><a href="/above-the-web/ai-v1-fbcd3c9/">任务书接 AI 辅助填写：模型只产草稿，与思考型模型的额度陷阱</a></li><li><a href="/above-the-web/v1-9f352e9/">成稿链接存进库没人读 · 写入方不等于展示方</a></li><li><a href="/above-the-web/v1-ac6b03d/">站内新版块五件套模式:三次复用与起刊两坑</a></li><li><a href="/above-the-web/v1-6601c25/">账号系统对标一线 · 多账号抽屉与外部通道的半开陷阱</a></li><li><a href="/above-the-web/git-v1-bd10b6f/">静态站接账号系统 · 内容归 git、状态归库的双源切分</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a><a class="card" href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/"> <span class="card-cat">平台工程</span> <h3>B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</h3> <p>- 项目:风眼 · Typhoon Eye(台风实况 + 分级应急预案,零依赖静态单页;仓库 Mr-Salticidae/typhoon-e…</p> </a><a class="card" href="/above-the-web/2026-07-17-fastapi-3000-v1-0ec39b4/"> <span class="card-cat">平台工程</span> <h3>本地部署 FastAPI 静态站到 3000 端口 · 复盘</h3> <p>要让一个基于 FastAPI 的静态站在本地通过 localhost:3000 访问，关键不是改前端文件，而是把后端启动脚本改为监听目标端口…</p> </a><a class="card" href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/"> <span class="card-cat">平台工程</span> <h3>2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</h3> <p>Top10 低延迟节点里 9 个是机房出口，其中 6 个直接租自公有云：</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#这一轮在哪座地基上加盖" data-toc-link="这一轮在哪座地基上加盖">这一轮在哪座地基上加盖</a></li><li class="d2"><a href="#六条可复用-insight" data-toc-link="六条可复用-insight">六条可复用 insight</a></li><li class="d3"><a href="#1-双源头模型的延伸source-字段分流同步" data-toc-link="1-双源头模型的延伸source-字段分流同步">1. 双源头模型的延伸:source 字段分流同步</a></li><li class="d3"><a href="#2-运行时状态再分离fee_override-独立于真相源" data-toc-link="2-运行时状态再分离fee_override-独立于真相源">2. 运行时状态再分离:fee_override 独立于真相源</a></li><li class="d3"><a href="#3-管理台一件事一页--共用壳" data-toc-link="3-管理台一件事一页--共用壳">3. 管理台一件事一页 + 共用壳</a></li><li class="d3"><a href="#4-首页是入口不是仓库" data-toc-link="4-首页是入口不是仓库">4. 首页是入口不是仓库</a></li><li class="d3"><a href="#5-浏览器侧渲染的安全基线" data-toc-link="5-浏览器侧渲染的安全基线">5. 浏览器侧渲染的安全基线</a></li><li class="d3"><a href="#6-滚动渐现抽成共用模块" data-toc-link="6-滚动渐现抽成共用模块">6. 滚动渐现抽成共用模块</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#方法论验证等级" data-toc-link="方法论验证等级">方法论验证等级</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

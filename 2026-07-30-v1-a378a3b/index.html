@@ -1,0 +1,268 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>2026-07-30 风眼「九段线示意插图」问题地图事故复盘 · 蛛网之上</title><meta name="description" content="- 项目:风眼 · Typhoon Eye,台风实况与分级应急预案单页站。双发布面:GitHub Pages(mr-salticidae.github.io/typhoon-eye)+ B 站 Toy(YliUzbE5TOqySu4G / …"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-07-30-v1-a378a3b/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="2026-07-30 风眼「九段线示意插图」问题地图事故复盘"><meta property="og:description" content="- 项目:风眼 · Typhoon Eye,台风实况与分级应急预案单页站。双发布面:GitHub Pages(mr-salticidae.github.io/typhoon-eye)+ B 站 Toy(YliUzbE5TOqySu4G / …"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-07-30-v1-a378a3b/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="2026-07-30 风眼「九段线示意插图」问题地图事故复盘"><meta name="twitter:description" content="- 项目:风眼 · Typhoon Eye,台风实况与分级应急预案单页站。双发布面:GitHub Pages(mr-salticidae.github.io/typhoon-eye)+ B 站 Toy(YliUzbE5TOqySu4G / …"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-30T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-07-30-v1-a378a3b/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-07-30-v1-a378a3b/","url":"https://tiaozhuxiansheng.com/2026-07-30-v1-a378a3b/","headline":"2026-07-30 风眼「九段线示意插图」问题地图事故复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目:风眼 · Typhoon Eye,台风实况与分级应急预案单页站。双发布面:GitHub Pages(mr-salticidae.github.io/typhoon-eye)+ B 站 Toy(YliUzbE5TOqySu4G / …","datePublished":"2026-07-30T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"2026-07-30 风眼「九段线示意插图」问题地图事故复盘","item":"https://tiaozhuxiansheng.com/2026-07-30-v1-a378a3b/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-30T00:00:00+08:00">2026-07-30</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 9 分钟读完 · 3,357 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>12 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#错在哪技术事实">错在哪(技术事实)</a></li><li class="d2"><a href="#为什么是下线而不是改坐标">为什么是「下线」而不是「改坐标」</a></li><li class="d2"><a href="#结果分析ai-审查者豆包判对了但理由半数是错的">结果分析:AI 审查者(豆包)判对了,但理由半数是错的</a></li><li class="d2"><a href="#方法论沉淀">方法论沉淀</a></li><li class="d3"><a href="#1-法定表达不自绘">1. 法定表达不自绘</a></li><li class="d3"><a href="#2-打磨不等于校验反直觉已抽独立律档">2. 打磨不等于校验(反直觉,已抽独立律档)</a></li><li class="d3"><a href="#3-ai-审查者当警报器不当依据">3. AI 审查者当警报器,不当依据</a></li><li class="d3"><a href="#4-合规类缺陷的正确处置是下线不是修正">4. 合规类缺陷的正确处置是下线,不是修正</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="2026-07-30-风眼九段线示意插图问题地图事故复盘">2026-07-30 风眼「九段线示意插图」问题地图事故复盘</h1>
+<blockquote>
+<p>入档:2026-07-30
+来源:风眼 · Typhoon Eye(<code>E:\typhoon-eye</code>)台风路径图里一块自绘的「南海诸岛九段线示意」插图,上线 19 天后被群友肉眼发现走向错误,当日紧急下线
+验证状态:⚠️ 首次;其中合规规则属法规 / 平台事实,不需二次验证</p>
+</blockquote>
+<hr>
+<h2 id="事实记录不可修改区">事实记录(不可修改区)</h2>
+<ul>
+<li><strong>项目</strong>:风眼 · Typhoon Eye,台风实况与分级应急预案单页站。双发布面:GitHub Pages(<code>mr-salticidae.github.io/typhoon-eye</code>)+ B 站 Toy(<code>YliUzbE5TOqySu4G</code> / id <code>8980525008896</code>)</li>
+<li><strong>缺陷内容</strong>:<code>assets/toy-runtime.js</code> 里用手写经纬度画的一块 SVG 插图,标题「南海诸岛」、角注「九段线示意」,含 9 条断续线段 + 海南岛 / 台湾岛两个多边形</li>
+<li><strong>引入</strong>:2026-07-11 <code>5690b3f</code>(feat: add Toy 30-minute refresh and nine-dash map inset)</li>
+<li><strong>期间迭代</strong>(插图被反复维护,但从未被校验内容):
+<ul>
+<li>2026-07-12 <code>baec80a</code> fix: 九段线插图四角动态避让台风路径</li>
+<li>2026-07-29 <code>19e492f</code> fix: 远洋视图与自适应小地图(改同一文件,插图原样保留)</li>
+<li>CI <code>toy: rebuild package</code> 重建发布包 10 次以上,每次都带着错误插图</li>
+</ul>
+</li>
+<li><strong>下线</strong>:2026-07-30 12:13 <code>45029d2</code>(整体移除,不修坐标)</li>
+<li><strong>在线时长</strong>:19 天(07-11 → 07-30)</li>
+<li><strong>曝光</strong>(B 站 Toy 侧,<code>toy stats --days 90</code>,区间 07-11 ~ 07-29,07-30 当日未结算):<strong>PV 1845 / UV 1510</strong>
+<ul>
+<li>对照:发布首日 07-10 单日 PV 18591 / UV 16678 —— <strong>在插图引入之前</strong>,不计入本次影响面</li>
+<li>GitHub Pages 侧无访问统计,影响面无法量化(全程在线)</li>
+</ul>
+</li>
+<li><strong>发现路径</strong>:QQ 群友肉眼质疑(「线要把海南岛包在里面」「这张图把整个北部湾都划到线外了」)→ 作者拿去问豆包 → 豆包判定有误 → 作者转报要求修复。<strong>不是自己发现的,也不是任何自动化检查发现的</strong></li>
+<li><strong>修复方式</strong>:整体移除自绘插图,<strong>没有去修坐标</strong></li>
+<li><strong>上线状态</strong>:
+<ul>
+<li>GitHub Pages:已 curl 核验线上 <code>toy-runtime.js</code> / <code>index.html</code>,绘制代码 0 处</li>
+<li>B 站 Toy:已提交并过审,平台返回 <code>status: published</code>,<code>mtime</code> 2026-07-30 12:36:33(提交后约 6 分钟)</li>
+</ul>
+</li>
+<li><strong>未独立复验项</strong>(诚实标注):Toy 线上页面 DOM 未能从命令行抓取复验 —— 资源直链 404、外壳页需真实浏览器环境。Toy 侧「已是修复版」的依据是平台状态,不是我抓到的页面内容
+<ul>
+<li><strong>补记(2026-07-30,不覆盖上一行)</strong>:上述复验缺口已由作者人工闭合 —— 作者在真实浏览器里打开 Toy 页面确认插图已消失,回复「验证通过」。同日 B 站专栏对外稿也已发布(<code>opus/1230719988161052674</code>,发布时未在编辑器内改动,库内版即线上终稿)。<strong>结论:两个发布面均已确认下线,但 Toy 侧的最终证据是人工目视,不是自动化检查</strong> —— 风控页面挡住了 WebFetch 与 headless 两条路,这类平台的线上复验目前没有可自动化的手段,下次仍需人来看一眼</li>
+</ul>
+</li>
+<li><strong>数据来源</strong>:<code>git log</code>、<code>toy stats --days 90 --json</code>、<code>toy mylist --json</code>、headless Chromium DOM 对照自测</li>
+</ul>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>涉及国家法定表达的内容(疆界 / 国界线 / 南海断续线),不存在「自绘一个简化示意版」这个选项</strong> —— 标注「示意」不免责;这次的错误不是坐标偏差,是把海南岛和整个北部湾画到了线外侧,而它还被精心打磨过一轮(四角动态避让),打磨恰恰让它更像「已经审查过的东西」。</p>
+<hr>
+<h2 id="错在哪技术事实">错在哪(技术事实)</h2>
+<p>自北向南绕一圈的 9 段坐标里,前 7 段大致沿菲律宾以西 → 南端 → 越南以东走,<strong>最后两段是硬错</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">[[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">110.2</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">16.4</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">110.7</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">17.9</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]],   </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 第 8 段</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">[[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">111.9</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">19.3</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">], [</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">113.1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">20.5</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]]    </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 第 9 段</span></span></code></pre>
+<ul>
+<li>这两段把断续线的北端封口,从越南中部海岸<strong>一路横拉到海南岛东南方向、珠江口以南</strong>。结果是<strong>海南岛、整个北部湾、西沙群岛全部落在线的外侧</strong>。</li>
+<li>正确走向:西侧最北一段位于<strong>北部湾内</strong>(海南岛与越南之间,约 108°E),北部湾与海南岛都在线<strong>内侧</strong>。</li>
+<li>标题写「南海诸岛」,插图里<strong>一个岛礁都没画</strong>(东沙、西沙、中沙、南沙全缺),只有海南岛和台湾岛两个多边形。</li>
+<li>段数按 <strong>9 段</strong>绘制,而现行标准地图(2023 年版)是<strong>十段线</strong>,台湾岛东侧另有一段。</li>
+</ul>
+<p>连带发现的真 bug:<code>app.js</code> 的小地图放置算法把插图矩形建模成障碍(<code>sc</code> / <code>scs</code> / <code>overlap</code> / <code>gapTo</code> 及罚分项)。插图撤掉后这套建模变成<strong>幻影障碍</strong>,会让小地图无理由地避开右上角;插图还是不透明面板,会盖掉 2 个经纬网标注。移除后 12 个标注全部可见。</p>
+<hr>
+<h2 id="为什么是下线而不是改坐标">为什么是「下线」而不是「改坐标」</h2>
+<p>这是本次最关键的判断,也是最容易做错的一步(第一反应都是「那我把坐标改对」)。</p>
+<ul>
+<li>涉及国界线与南海断续线的地图,<strong>必须依自然资源部标准画法</strong>;向社会公开发布通常还需<strong>送审取得审图号</strong>(高德地图角上那种「GS(2025)3454 号」)。</li>
+<li>标注「示意」「仅表示空间趋势」<strong>不免责</strong>。自绘断续线只要走向、段数与标准不符,就是「问题地图」。</li>
+<li>一个人手写经纬度,不可能达到标准画法的精度要求 —— 改坐标只是把「明显错的问题地图」变成「不明显错的问题地图」,风险性质没变。</li>
+<li>所以:<strong>删掉,并在代码里写下「不要再加回来」的原因</strong>,防止后来者(包括未来的自己和 AI)看到空白又补一个回去。</li>
+</ul>
+<p>保留的合规做法:v0.6 的小地图底图用 Natural Earth 1:110m Land(public domain),<strong>只含陆地轮廓、不含任何国界线</strong>,不受影响。要疆界表达时,唯一合规路子是引用自然资源部标准地图服务 <a href="https://bzdt.ch.mnr.gov.cn">https://bzdt.ch.mnr.gov.cn</a> 的官方图并标注审图号。</p>
+<hr>
+<h2 id="结果分析ai-审查者豆包判对了但理由半数是错的">结果分析:AI 审查者(豆包)判对了,但理由半数是错的</h2>
+<p>作者是拿豆包的判断来推动修复的,所以必须单独核对它的可信度 —— <strong>不能因为结论对,就把它的理由也当依据</strong>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>豆包的说法</th><th>核对结果</th></tr></thead><tbody><tr><td>这张图有明显错误,不能当标准地理地图</td><td>✅ 结论正确</td></tr><tr><td>岛礁位置严重失真、南沙大片缺失</td><td>✅ 正确(插图确实没画任何岛礁)</td></tr><tr><td>左上角区块对应西沙群岛,右上角对应东沙群岛</td><td>❌ <strong>看错了</strong>。那两个多边形是代码里的 <code>HAINAN_INSET</code> 和 <code>TAIWAN_INSET</code>,即海南岛与台湾岛</td></tr><tr><td>我国南海是九段线,标准为 9 条</td><td>❌ <strong>过时</strong>。现行标准地图为十段线(台湾岛东侧另有一段)</td></tr><tr><td>海南岛本体不在九段线内部</td><td>❌ <strong>错</strong>。海南岛在断续线内侧,整个北部湾也在线内侧</td></tr></tbody></table>
+<p>反倒是<strong>群友的肉眼判断完全正确</strong>(「线要把海南岛包在里面」「整个北部湾都被划到线外了」),而且指出的正是最严重的那处错误。</p>
+<p>结论:AI 审查者适合当<strong>警报器</strong>(它喊「这里有问题」值得立刻去查),不适合当<strong>依据</strong>(它给的理由要逐条核实,否则会顺着错理由改出新的错)。这次如果照豆包的「标准是 9 条」去改,只会把十段线改成九段线,错得更隐蔽。</p>
+<hr>
+<h2 id="方法论沉淀">方法论沉淀</h2>
+<h3 id="1-法定表达不自绘">1. 法定表达不自绘</h3>
+<p><strong>核心</strong>:疆界、国界线、南海断续线这类<strong>国家法定表达</strong>,只能引用官方标准源,不能自制「简化示意版」;标「示意」不免责。</p>
+<p><strong>来源</strong>:本次插图从第一行代码起就注定不合规,与坐标准不准无关。</p>
+<p><strong>验证状态</strong>:⚠️ 首次(但属法规事实,不依赖二次验证)</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>任何要出现中国地图的场合(网站、短片、海报、Remotion 视频、PPT),先问:<strong>只需要陆地轮廓 / 海岸线,还是需要疆界表达?</strong></li>
+<li>只需陆地轮廓 → 可用 Natural Earth 这类 public domain 数据自绘(不含国界线)。</li>
+<li>需要疆界表达 → 走 <a href="https://bzdt.ch.mnr.gov.cn">https://bzdt.ch.mnr.gov.cn</a> 官方标准地图 + 标注审图号。<strong>不要自己写经纬度画线</strong>。</li>
+<li>别把「加个免责声明」当解决方案。</li>
+</ol>
+<p><strong>反例 / 边界</strong>:纯抽象的、不指向真实地理的图形(如把台风画成一个漩涡符号)不受此约束 —— 约束触发点是「它看起来在表达真实疆界」。</p>
+<h3 id="2-打磨不等于校验反直觉已抽独立律档">2. 打磨不等于校验(反直觉,已抽独立律档)</h3>
+<p><strong>核心</strong>:对一个对象做精细打磨(避让、动效、响应式适配),<strong>不产生任何关于它内容正确性的证据</strong>,反而因为「看起来经过了工序」而抬高自己和他人对它的信任。</p>
+<p><strong>来源</strong>:2026-07-12 专门写了一次 <code>fix: 九段线插图四角动态避让台风路径</code> —— 收集路径点坐标、四角打分、给底部两角加罚分,是一段挺讲究的布局算法。做完之后,这块插图在心里的可信度不知不觉升了一级,却<strong>从没有人问过一句「这 9 条线画对了吗」</strong>。19 天里它被维护了 3 次、重新打包 10 次以上。</p>
+<p><strong>验证状态</strong>:⚠️ 首次</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>给某个模块做第二次打磨前,先补一句自问:<strong>这东西的内容本身,被验证过吗?</strong></li>
+<li>把「内容正确性」和「呈现质量」当两条独立的检查线,不要让后者的进展代表前者。</li>
+<li>越是「看起来专业」的产出(地图、图表、法条摘要、医疗数据、统计口径),越要单独校验内容源。</li>
+</ol>
+<p><strong>反例 / 边界</strong>:对内容正确性已有独立验证的模块(如数据来自权威 API 并校验过),打磨就是纯粹的打磨,不受此律约束。</p>
+<p>详见 <a href="/above-the-web/v1-938b91e/" class="wikilink">打磨不等于校验律_v1</a></p>
+<h3 id="3-ai-审查者当警报器不当依据">3. AI 审查者当警报器,不当依据</h3>
+<p><strong>核心</strong>:AI 指出「这里有问题」值得立刻去查(召回率有价值),但它给的<strong>理由必须逐条核实</strong> —— 结论对 + 理由错的组合很常见,照错理由改会引出新错。</p>
+<p><strong>来源</strong>:豆包 5 条论据里 3 条错(见上表),但它的总结论是对的。</p>
+<p><strong>验证状态</strong>:⚠️ 首次</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>把 AI 的判断当<strong>警报</strong>,不当<strong>结论</strong>;警报响了就自己去查一手事实(标准、法规、源码)。</li>
+<li>逐条核对它的论据,尤其是「数字类」断言(几段线、几年版本、哪个方位)。</li>
+<li>别把 AI 的措辞直接抄进修复方案或对外说明。</li>
+</ol>
+<h3 id="4-合规类缺陷的正确处置是下线不是修正">4. 合规类缺陷的正确处置是下线,不是修正</h3>
+<p><strong>核心</strong>:功能 bug 修到对为止;<strong>合规缺陷</strong>要先问「这件事我有资格自己做吗」 —— 没资格的,修得再准也仍然违规,正确动作是下线 + 换官方源。</p>
+<p><strong>来源</strong>:第一反应是「把坐标改对」,但改对也仍是问题地图。</p>
+<p><strong>验证状态</strong>:⚠️ 首次</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>判定为合规问题后,先分类:<strong>能力问题(改得对就行)</strong> 还是<strong>资格问题(自己做就不行)</strong>。</li>
+<li>资格问题 → 立刻下线止血,再找官方源接回来;不要在「修得更准一点」上投工时。</li>
+<li>下线的同时在代码里留下原因注释,防止空白被后来者(或 AI)补回去。</li>
+</ol>
+<hr>
+<h2 id="下次改进">下次改进</h2>
+<p><strong>如果重来,最想改哪一步</strong>:2026-07-11 写下 <code>NINE_DASH_SEGMENTS</code> 那 9 行坐标的时候,应该先停下来问一句「疆界这种东西,我有资格自己画吗」。这一句能省掉后面 19 天的暴露和一次紧急下线。</p>
+<p><strong>行动清单</strong>:</p>
+<ol>
+<li><strong>立项时扫一遍「法定表达清单」</strong>:项目里会不会出现地图 / 疆界 / 国旗国徽 / 法条 / 医疗剂量 / 官方统计口径?有 → 先定官方源,再写代码。</li>
+<li><strong>给这类内容单独一条检查线</strong>,不与 UI 打磨混在一起;每次改动这个模块都重问一次内容源。</li>
+<li><strong>发布面要清算</strong>:这次是双发布面(Pages + Toy),Pages 推送即生效、Toy 要过审才生效 —— 下线时<strong>两个面都要处理</strong>,只推 git 等于只修了一半。</li>
+<li><strong>收到外部质疑时,先自己查一手标准</strong>,再决定怎么改;不要把 AI 的理由当依据(这次差点照「标准是 9 条」去改)。</li>
+<li>跨项目通用规则已写进本机 memory(<code>china-map-compliance</code>),下次在短片 / 海报 / 视频项目里碰到中国地图会直接生效。</li>
+</ol>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>同族合规红线:<a href="/above-the-web/h5-v1-959b634/" class="wikilink">H5移植微信小程序的要点与合规红线_v1</a> · <a href="/above-the-web/1-v1-3fb8828/" class="wikilink">小红书导流话术合规红线_扣1领资料_v1</a></li>
+<li>本次抽出的律:<a href="/above-the-web/v1-938b91e/" class="wikilink">打磨不等于校验律_v1</a></li>
+<li>同项目(风眼)平台侧事故:<a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/" class="wikilink">2026-07-11_B站Toy同步事故复盘_版本指纹与外部cron兜底_v1</a></li>
+<li>同项目续篇(2026-08-21,同样是群友先发现,且本档「Toy 线上态无法自动核验」的缺口第二次出现):<a href="/above-the-web/2026-08-21-v1-d82b742/" class="wikilink">2026-08-21_风眼洪涝维度改造复盘_单因子分级会在最危险时段给出最低档_v1</a> · 查证方法沉淀 <a href="/above-the-web/v1-8b48fc6/" class="wikilink">混合真伪的证据链_最弱一环会拖垮最强一环_v1</a></li>
+<li>复盘方法:<a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> · <a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a></li>
+<li>交付诚实相关:<a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a></li>
+<li>对外版(裸路径,不进图谱):<code>08_对外分发/我的台风站把海南岛画在了国界线外_自绘地图的合规红线_公开版.md</code></li>
+<li>项目底料(库外裸路径):<code>E:\typhoon-eye\assets\toy-runtime.js</code>(文件头注释写有「不要再加回来」的原因)</li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/2026-07-30_%E9%A3%8E%E7%9C%BC%E4%B9%9D%E6%AE%B5%E7%BA%BF%E9%97%AE%E9%A2%98%E5%9C%B0%E5%9B%BE%E4%BA%8B%E6%95%85%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/2026-07-30_%E9%A3%8E%E7%9C%BC%E4%B9%9D%E6%AE%B5%E7%BA%BF%E9%97%AE%E9%A2%98%E5%9C%B0%E5%9B%BE%E4%BA%8B%E6%95%85%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/">B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</a></li><li><a href="/above-the-web/2026-08-21-v1-d82b742/">风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档</a></li><li><a href="/above-the-web/2026-08-01-codex-2-4-19-v1-5f86653/">2026-08-01 Codex 教程清单 2/3/4 · 三项目 19 段录屏复盘</a></li><li><a href="/above-the-web/h5-v1-959b634/">H5 移植微信小程序:要点与合规红线</a></li><li><a href="/above-the-web/v1-3fce0f1/">交付前实测证伪律</a></li><li><a href="/above-the-web/1-v1-3fb8828/">小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</a></li><li><a href="/above-the-web/v1-938b91e/">打磨不等于校验律</a></li><li><a href="/above-the-web/v1-8b48fc6/">混合真伪的证据链:最弱一环会拖垮最强一环</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/claude-v1-ec3d11f/"> <span class="card-cat">方法论与洞察</span> <h3>Claude 完成报告核查心法</h3> <p>Claude（Code 或 Cowork）写完成报告时对自己的产出过度自信。常见表现：</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a><a class="card" href="/above-the-web/1000-v1-2b2c761/"> <span class="card-cat">方法论与洞察</span> <h3>小红书正文超 1000 字是拆篇信号</h3> <p>小红书正文 1000 字上限不是排版限制,是平台在替你执行「别写大教程」。 写超了,第一反应不该是删字,该是拆篇——因为逼你超限的那个结构(…</p> </a><a class="card" href="/above-the-web/2026-05-18-19-v1-6f72139/"> <span class="card-cat">方法论与洞察</span> <h3>获奖图复盘方法论合集 v1 · 已被活合集取代</h3> <p>核心:让一个物件同时承载两种身份——观众的脑子需要 0.4 秒来切换,这 0.4 秒就是反讽。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#错在哪技术事实" data-toc-link="错在哪技术事实">错在哪(技术事实)</a></li><li class="d2"><a href="#为什么是下线而不是改坐标" data-toc-link="为什么是下线而不是改坐标">为什么是「下线」而不是「改坐标」</a></li><li class="d2"><a href="#结果分析ai-审查者豆包判对了但理由半数是错的" data-toc-link="结果分析ai-审查者豆包判对了但理由半数是错的">结果分析:AI 审查者(豆包)判对了,但理由半数是错的</a></li><li class="d2"><a href="#方法论沉淀" data-toc-link="方法论沉淀">方法论沉淀</a></li><li class="d3"><a href="#1-法定表达不自绘" data-toc-link="1-法定表达不自绘">1. 法定表达不自绘</a></li><li class="d3"><a href="#2-打磨不等于校验反直觉已抽独立律档" data-toc-link="2-打磨不等于校验反直觉已抽独立律档">2. 打磨不等于校验(反直觉,已抽独立律档)</a></li><li class="d3"><a href="#3-ai-审查者当警报器不当依据" data-toc-link="3-ai-审查者当警报器不当依据">3. AI 审查者当警报器,不当依据</a></li><li class="d3"><a href="#4-合规类缺陷的正确处置是下线不是修正" data-toc-link="4-合规类缺陷的正确处置是下线不是修正">4. 合规类缺陷的正确处置是下线,不是修正</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,555 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MJ v8.1 无 oref/cref · 混合工作流 · 蛛网之上</title><meta name="description" content="v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。 解法不是二选一，是按镜头需要分工："><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/mj-v8-1-oref-v1-5d5f854/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="MJ v8.1 无 oref/cref · 混合工作流"><meta property="og:description" content="v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。 解法不是二选一，是按镜头需要分工："><meta property="og:url" content="https://tiaozhuxiansheng.com/mj-v8-1-oref-v1-5d5f854/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MJ v8.1 无 oref/cref · 混合工作流"><meta name="twitter:description" content="v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。 解法不是二选一，是按镜头需要分工："><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:55:33+08:00"><meta property="article:modified_time" content="2026-09-26T06:55:33+08:00"><meta property="article:section" content="参数行为档案"><meta property="article:tag" content="类型/档案"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/mj-v8-1-oref-v1-5d5f854/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/mj-v8-1-oref-v1-5d5f854/","url":"https://tiaozhuxiansheng.com/mj-v8-1-oref-v1-5d5f854/","headline":"MJ v8.1 无 oref/cref · 混合工作流","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。 解法不是二选一，是按镜头需要分工：","datePublished":"2026-09-26T06:55:33+08:00","dateModified":"2026-09-26T06:55:33+08:00","articleSection":"参数行为档案","keywords":"类型/档案"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"参数行为档案","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88"},{"@type":"ListItem","position":3,"name":"MJ v8.1 无 oref/cref · 混合工作流","item":"https://tiaozhuxiansheng.com/mj-v8-1-oref-v1-5d5f854/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88" data-pagefind-meta="category" data-pagefind-filter="kind:note">参数行为档案</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time></span>  <span>约 9 分钟读完 · 3,136 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>23 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#v7-vs-v81-实测对比拾色-d2">v7 vs v8.1 实测对比（拾色 D2）</a></li><li class="d3"><a href="#v81-出图特点">v8.1 出图特点</a></li><li class="d3"><a href="#v81-inset-frame-双层结构稳定执行2026-05-14-实测">v8.1 inset frame 双层结构稳定执行（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-inset-frame-子图内容偏离-prompt-的常见模式2026-05-14-实测追加">v8.1 inset frame 子图内容偏离 prompt 的常见模式（2026-05-14 实测追加）</a></li><li class="d3"><a href="#v81-材质属性形容词弱权重2026-05-14-实测">v8.1 材质属性形容词弱权重（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-数量约束-single--one-执行不稳定2026-05-14-实测">v8.1 数量约束 “single / one” 执行不稳定（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-closing-transmissionshot-自动召出-letterbox--双频道结构2026-05-14-实测">v8.1 “closing transmission/shot” 自动召出 letterbox + 双频道结构（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-双重约束尺寸技巧稳定锁标记点大小2026-05-14-实测">v8.1 双重约束尺寸技巧：稳定锁标记点大小（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-雷达扫描召唤静态而非动态2026-05-14-实测">v8.1 雷达扫描召唤静态而非动态（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-sref-跨色温场景强度阈值2026-05-14-实测">v8.1 sref 跨色温场景强度阈值（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-sref-工作流变化2026-05-14-实测">v8.1 sref 工作流变化（2026-05-14 实测）</a></li><li class="d3"><a href="#v7--oref-出图特点">v7 + oref 出图特点</a></li><li class="d2"><a href="#风险预案如果-v7--oref-不达标">风险预案（如果 v7 + oref 不达标）</a></li><li class="d2"><a href="#拾色实战配置">「拾色」实战配置</a></li><li class="d2"><a href="#封面抽卡场景的行为规律异界气象台-minitest-v2-实测沉淀">「封面抽卡场景」的行为规律（异界气象台 minitest v2 实测沉淀）</a></li><li class="d3"><a href="#规律-1--五重反字幕约束100-有效率">规律 1 · 五重反字幕约束（100% 有效率）</a></li><li class="d3"><a href="#规律-2--主体尺寸召唤词单一--群体封面专属">规律 2 · 主体尺寸召唤词「单一 &gt; 群体」（封面专属）</a></li><li class="d3"><a href="#规律-3--sref-强度的视频---封面差分">规律 3 · sref 强度的「视频 - 封面」差分</a></li><li class="d3"><a href="#规律-4--所有目标比例必须-mj-原生抽卡流程层">规律 4 · 所有目标比例必须 MJ 原生抽卡（流程层）</a></li><li class="d3"><a href="#规律-5--sw-不是主体形态杠杆prompt-文本才是">规律 5 · sw 不是主体形态杠杆，prompt 文本才是</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="mj-v81-无-orefcref--混合工作流">MJ v8.1 无 oref/cref · 混合工作流</h1>
+<blockquote>
+<p>入档：2026-05-12（D2 晚间）
+触发：「拾色」女主形象试跑时，需要在 v8.1 美学和角色一致性之间做 trade-off
+关联：<a href="/above-the-web/v1-6b0cabf/" class="wikilink">角色一致性金字塔_v1</a> / <a href="/above-the-web/mj-v8-2-v1-4cf28a0/" class="wikilink">MJ_v8.2_行为档案_v1</a>（v8.2 已实测 —preview 通道，质感再上一档，oref 支持情况未测）</p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。</strong> 解法不是二选一，是<strong>按镜头需要分工</strong>：</p>
+<ul>
+<li>必须锁脸的镜头 → v7 + oref</li>
+<li>无人物 / 局部 / 远景 → v8.1 美学最大化</li>
+</ul>
+<hr>
+<h2 id="如何使用">如何使用</h2>
+<p>写一支多镜头作品（MV / 海报组 / 系列封面）前，<strong>先把所有镜头按”是否需要清晰看到她的脸”分成 A/B/C 三类</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类别</th><th>定义</th><th>工具</th></tr></thead><tbody><tr><td><strong>A · 必须锁脸</strong></td><td>脸是主体（特写 / 半身正面 / 看表情）</td><td><strong>v7 + oref —ow 100</strong></td></tr><tr><td><strong>B · 半锁脸</strong></td><td>半身侧背 / 远景轮廓</td><td><strong>v7 + oref —ow 50-70</strong></td></tr><tr><td><strong>C · 无需锁脸</strong></td><td>道具 / 局部 / 场景 / 远景 / 手部 / 黑场</td><td><strong>v8.1</strong>（美学最大化 + 无 reference）</td></tr></tbody></table>
+<p><strong>典型分布</strong>：16 镜作品里 A 类约 25% / B 类约 25% / C 类约 50%。</p>
+<p>C 类占一半 → <strong>整片综合美学接近 v8.1 全片</strong>，只有”她的脸”的镜头损失 v7 的美学差。</p>
+<hr>
+<h2 id="v7-vs-v81-实测对比拾色-d2">v7 vs v8.1 实测对比（拾色 D2）</h2>
+<h3 id="v81-出图特点">v8.1 出图特点</h3>
+<ul>
+<li>✅ 真实质感更强（皮肤 / 织物 / 光影）</li>
+<li>✅ photographic realism 关键词响应更准</li>
+<li>✅ Hasselblad / Kodak Portra 等胶片关键词改变质感</li>
+<li>✅ 长 prompt 解读更精准</li>
+<li>❌ <strong>没有 cref / oref / character reference 功能</strong></li>
+<li>❌ 每次 seed 不同，脸会漂移</li>
+</ul>
+<h3 id="v81-inset-frame-双层结构稳定执行2026-05-14-实测">v8.1 inset frame 双层结构稳定执行（2026-05-14 实测）</h3>
+<p><strong>发现来源</strong>：异界气象台 minitest 第一节·深海第七断层 prompt 测试（A-v3 组）</p>
+<p>prompt 写入：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>... ultra wide top-down satellite view of an unknown ocean region as the main image, a smaller inset square frame in the upper right corner showing a cross-section diagram of an underwater trench ...</span></span></code></pre>
+<p><strong>结果</strong>：MJ V8.1 在 4 张抽卡中<strong>全部稳定召出</strong>”主图 + 右上角子图”的标准排版——主图是俯瞰场景，子图小窗口里是 cross-section / radar scan / topographic 等技术示意图。</p>
+<p><strong>关键能力</strong>：</p>
+<ul>
+<li>“inset frame” / “inset square frame in the upper right corner” 指令稳定执行</li>
+<li>子图内容可由 prompt 后续描述指定（cross-section / radar / topographic / scope view 等）</li>
+<li>子图与主图视觉风格保持一致（同色温、同质感），不会出现”现代 UI 子图”违和</li>
+</ul>
+<p><strong>应用场景</strong>：</p>
+<ul>
+<li>央视气象图主图 + 雷达扫描子图（异界气象台 minitest 实测）</li>
+<li>监控录像 + 监控目标特写子图</li>
+<li>仪表盘 + 单一仪表读数子图</li>
+<li>任何”档案/纪录片/报告”语境的复合信息呈现</li>
+</ul>
+<p><strong>注意事项</strong>：</p>
+<ul>
+<li>子图位置（upper right / upper left / lower right …）按 prompt 指令稳定执行</li>
+<li>“smaller inset square frame” 比 “small picture-in-picture” 更精准——前者 MJ 理解为”嵌入边框小窗口”，后者可能被理解为”另一张完整画面叠加”</li>
+</ul>
+<hr>
+<h3 id="v81-inset-frame-子图内容偏离-prompt-的常见模式2026-05-14-实测追加">v8.1 inset frame 子图内容偏离 prompt 的常见模式（2026-05-14 实测追加）</h3>
+<p>第一节验证过双层叠加（inset frame）100% 稳定召出，但<strong>子图具体内容</strong>的执行有偏差：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>prompt 写</th><th>实际跑出</th></tr></thead><tbody><tr><td><code>cross-section diagram of an underwater trench</code></td><td>✅ 较准确（剖面图）</td></tr><tr><td><code>radar scan view with grid scale</code></td><td>✅ 准确（带刻度的雷达扫描）</td></tr><tr><td><code>thermal radar visualization with cold color heat map</code></td><td>⚠️ 偏离 —— 出”温度热点 / 异常事件型景观”，不是”等温线图”</td></tr><tr><td><code>geological topographic chart</code></td><td>（未测试）</td></tr></tbody></table>
+<p><strong>规律推测</strong>：MJ 训练数据里 “radar” / “cross-section” 等”二维可视化技术”图示丰富，但 “thermal heat map” 这类”色彩映射数据可视化”训练样本较少，倾向用”光点 / 红色热区”代替等温线。</p>
+<p><strong>应对</strong>：想要”等温线图”风格，prompt 写得更直接：<code>topographic isotherm contour map with concentric temperature rings</code> 而非 <code>thermal heat map</code>。</p>
+<p>但子图偏离不一定是坏事——异界气象台第三节 A-v2_u0 跑出的”红色温度热点”反而和字幕”-89℃ 温度回升”互锁，是 happy accident。</p>
+<hr>
+<h3 id="v81-材质属性形容词弱权重2026-05-14-实测">v8.1 材质属性形容词弱权重（2026-05-14 实测）</h3>
+<p>prompt 写：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>snowflakes have a faint metallic sheen catching the dim ambient light</span></span></code></pre>
+<p>期望：雪花有金属光泽（暗示”金属味的雪”诗意）。</p>
+<p>实际：4 张抽卡<strong>全部跑出普通雾雪</strong>，没有任何金属感。</p>
+<p><strong>规律</strong>：MJ V8.1 对”具体材质属性形容词”（metallic sheen / glossy / wet / translucent / iridescent 作为形容词修饰名词时）执行不稳定——它把这些当弱权重 modifier 处理，优先级低于主体形态描述。</p>
+<p><strong>应对</strong>：把材质属性<strong>做成视觉元素本身</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>❌ 弱（形容词模式）</th><th>✅ 强（视觉元素模式）</th></tr></thead><tbody><tr><td><code>snowflakes with metallic sheen</code></td><td><code>tiny metallic silver shards mixed with snow particles</code></td></tr><tr><td><code>glossy black armor</code></td><td><code>pitch black armor reflecting bright highlights</code></td></tr><tr><td><code>wet skin</code></td><td><code>skin with visible water droplets on the surface</code></td></tr><tr><td><code>iridescent feathers</code></td><td><code>feathers with rainbow color gradient like oil on water</code></td></tr></tbody></table>
+<hr>
+<h3 id="v81-数量约束-single--one-执行不稳定2026-05-14-实测">v8.1 数量约束 “single / one” 执行不稳定（2026-05-14 实测）</h3>
+<p>prompt 写：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>a single tall thin mechanical figure silhouette barely visible</span></span></code></pre>
+<p>实际：4 张抽卡里有 <strong>2 张跑出了 2-3 个剪影</strong>，“single” 数量约束执行率约 50%。</p>
+<p><strong>规律</strong>：MJ 对”数量词”的执行受 prompt 整体语境干扰。如果 prompt 后续描述了”scattered” / “in the distance” 等空间分布词，“single” 会被忽略。</p>
+<p><strong>应对</strong>：双重约束 + 强否定：</p>
+<ul>
+<li>写 <code>a single ... and no other figures anywhere in the entire frame</code></li>
+<li>或者 <code>exactly one ... only one, nothing else moving in the frame</code></li>
+</ul>
+<p><strong>注意</strong>：本节恰好需要”几个剪影”而非”一个”（brief 要求”几个机械生命体的剪影”），所以这次的”数量约束失败”反而符合 brief。<strong>是否需要严格 single 看具体需求</strong>。</p>
+<hr>
+<h3 id="v81-closing-transmissionshot-自动召出-letterbox--双频道结构2026-05-14-实测">v8.1 “closing transmission/shot” 自动召出 letterbox + 双频道结构（2026-05-14 实测）</h3>
+<p><strong>发现来源</strong>：异界气象台 minitest 收尾·总览图 v2/v3 测试</p>
+<p><strong>问题</strong>：v3 prompt <strong>没写</strong> letterbox，但 4 张全部跑出了 letterbox + 双弧线结构；v2 prompt 写了 <code>prominent black letterbox bars</code>，但跑出的 4 张里 3 张是<strong>双 letterbox 双弧线</strong>而非期望的”单 letterbox 单弧线”。</p>
+<p><strong>规律</strong>：MJ V8.1 把 <code>closing transmission</code> / <code>closing shot</code> 关联到了**“电视信号即将关机的双频道残影 / 录像带切换瞬间”**——这是训练数据里电视档案影像的典型视觉特征。</p>
+<p><strong>应用调整</strong>：</p>
+<ul>
+<li>想要 closing 镜头的”单频道”视觉，要在 prompt 里<strong>显式排除</strong>：<code>single continuous frame, no signal interruption, no double horizontal split</code></li>
+<li>想要”双频道分裂感”反而是 happy accident——直接写 <code>closing transmission</code> 就能稳定召出</li>
+</ul>
+<hr>
+<h3 id="v81-双重约束尺寸技巧稳定锁标记点大小2026-05-14-实测">v8.1 双重约束尺寸技巧：稳定锁标记点大小（2026-05-14 实测）</h3>
+<p><strong>发现来源</strong>：异界气象台 minitest 收尾·总览图 12 张抽卡</p>
+<p><strong>正例</strong>：prompt 写</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>three small bright white circular markers ... about 2 percent of the frame width each</span></span></code></pre>
+<p><strong>12 张全部稳定召出清晰、大小合适的白色圆点</strong>——MJ 把”形容词（small bright）+ 量化（about 2%）“作为强双重约束执行。</p>
+<p><strong>模板</strong>：</p>
+<ul>
+<li><code>[形容词描述] [object], about X percent of the frame [width/height] each</code></li>
+<li>比单独写 “small markers” 或 “tiny dots” 稳定得多</li>
+</ul>
+<p><strong>对比反例</strong>：第三节 prompt 写 <code>tiny dark dots barely visible</code>——只用形容词，MJ 把”废墟”画得比 prompt 要求更显眼。</p>
+<p><strong>回流到”材质属性形容词弱权重”小节作为对比正例</strong>：单形容词权重弱，但<strong>形容词 + 量化数值</strong>权重强。</p>
+<hr>
+<h3 id="v81-雷达扫描召唤静态而非动态2026-05-14-实测">v8.1 雷达扫描召唤静态而非动态（2026-05-14 实测）</h3>
+<p><strong>发现来源</strong>：异界气象台 minitest 收尾·总览图 v3 测试</p>
+<p><strong>问题</strong>：prompt 写 <code>a sweeping radar scan line ... sweeping clockwise</code>，期望是”动态扫描线”。实际 4 张跑出<strong>静态雷达光带 + 同心圆脉冲</strong>——没有”运动”概念。</p>
+<p><strong>规律</strong>：MJ 是图像生成模型，<strong>所有”运动 / 扫描 / 旋转”等动态词都被翻译成静态呈现</strong>。</p>
+<p><strong>应用调整</strong>：</p>
+<ul>
+<li>不在 prompt 里期望”动态”</li>
+<li>“扫描动作”由后期 MoviePy/AE 实现——MJ 出”扫描线已经定格的某一帧”作为基底</li>
+<li>prompt 写 <code>radar scan line frozen at moment of sweeping</code> 比 <code>sweeping radar scan line</code> 更准确（前者承认是静态帧）</li>
+</ul>
+<hr>
+<h3 id="v81-sref-跨色温场景强度阈值2026-05-14-实测">v8.1 sref 跨色温场景强度阈值（2026-05-14 实测）</h3>
+<p><strong>发现来源</strong>：异界气象台 minitest 第一节·B-v1 镜头测试</p>
+<p><strong>问题</strong>：使用 sref 基准图（navy 色调）+ prompt 写 “deep saturated purple”，期望出紫色场景。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>sw 值</th><th>实际输出</th><th>评价</th></tr></thead><tbody><tr><td>100</td><td>完全 navy，紫色被吃掉</td><td>❌</td></tr><tr><td>60</td><td>teal 青绿（navy 和紫色折中产物）</td><td>❌ 仍不达标</td></tr><tr><td><strong>40-50（推测）</strong></td><td>应能出现 deep purple 主导</td><td>待验证</td></tr></tbody></table>
+<p><strong>结论</strong>：sref 跨色温压制能力很强。当目标色温和 sref 色温<strong>显著不同</strong>时（如 navy → purple、navy → magenta、teal → red），<strong>sw 必须降到 40-50</strong>，否则 prompt 的色温描述会被洗掉。</p>
+<p><strong>判断阈值</strong>：</p>
+<ul>
+<li>同色温微调（如 navy → 深 navy）：sw 100</li>
+<li>邻色温（如 navy → cyan）：sw 70-80</li>
+<li>跨色温（如 navy → purple/red/green）：sw 40-50</li>
+<li>想完全脱离 sref 色温：不挂 sref，纯 prompt</li>
+</ul>
+<hr>
+<h3 id="v81-sref-工作流变化2026-05-14-实测">v8.1 sref 工作流变化（2026-05-14 实测）</h3>
+<p><strong>Web 端 v8.1 的 sref 已从”数字 ID”改为”图片挂载”</strong>：</p>
+<ul>
+<li>❌ 旧（v7 时代）：prompt 末尾写 <code>--sref 5692463053 --sw 100</code>，数字 ID 可跨会话/项目复用</li>
+<li>✅ 新（v8.1 web 端）：点击 prompt 输入框旁的”加图”按钮上传/挂载参考图，UI 显示为图片缩略图挂载状态</li>
+<li>✅ <code>--sw 100</code> 等强度属性照常生效（写在 prompt 文本里）</li>
+<li>⚠️ 无法直接获取 sref 数字 ID（UI 隐藏了 ID 字段）</li>
+</ul>
+<p><strong>对知识库的影响</strong>：</p>
+<ul>
+<li>旧 sref 档案命名约定 <code>sref_&#x3C;数字ID>_&#x3C;描述>.md</code> 不再适用于 v8.1 web 端工作流</li>
+<li>新约定：<code>sref_&#x3C;项目>_&#x3C;图片名>.md</code>，文件内挂图片路径（相对/绝对都可），而非 ID</li>
+<li>旧档案（如 <code>sref_5692463053_navy现代极简_v1.md</code>）仍适用于 v7 + oref 或 discord 端工作流</li>
+</ul>
+<p><strong>对项目工作流的影响</strong>：</p>
+<ul>
+<li>sref 母本图片必须<strong>保留为本地图片</strong> + <strong>路径稳定</strong>（移动/删除原图 = sref 失效，每次都要重新挂）</li>
+<li>跨项目复用 sref → 把图片复制到新项目目录，在新项目里重新挂载</li>
+<li>用 MJ Web 端做风格统一项目时，<strong>先固定 sref 母本图片的存储位置再开始批量出图</strong>——避免中途搬家</li>
+</ul>
+<h3 id="v7--oref-出图特点">v7 + oref 出图特点</h3>
+<ul>
+<li>✅ oref 锁脸一致性 ≈ 85%（跑 8 张里 7 张能保住主气质）</li>
+<li>✅ 美学比 v8.1 弱 10-15%（但仍可用）</li>
+<li>⚠️ 部分图唇色偏深 / 神态偏锐利（v7 默认偏好）</li>
+<li>⚠️ <code>--ow</code> 不是越高越好：100 锁得死但缺活气，50-70 留 moodboard 调味空间</li>
+</ul>
+<hr>
+<h2 id="风险预案如果-v7--oref-不达标">风险预案（如果 v7 + oref 不达标）</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Step 1：v7 + oref 跑 1-2 个 A 类镜头测试</span></span>
+<span class="line"><span>   ↓</span></span>
+<span class="line"><span>   评估"她"的气质保留度 vs 主基准图</span></span>
+<span class="line"><span>   ↓</span></span>
+<span class="line"><span>   ├─ ≥ 80% → 走 v7 + oref（主推）</span></span>
+<span class="line"><span>   ├─ 60-80% → v7 + oref + 后期换脸补正</span></span>
+<span class="line"><span>   └─ &#x3C; 60% → 切换 libtv + nano-banana（节点工具）</span></span>
+<span class="line"><span>       ↓</span></span>
+<span class="line"><span>       nano 接管所有 A/B 类（角色一致性）</span></span>
+<span class="line"><span>       v8.1 仍管 C 类（美学最大化）</span></span></code></pre>
+<p><strong>Cowork 推荐顺序</strong>：</p>
+<ol>
+<li>v7 + oref（首试）</li>
+<li>libtv + nano-banana（备用）</li>
+<li>v8.1 全跑 + FaceFusion / InsightFace 后期换脸（兜底）</li>
+</ol>
+<hr>
+<h2 id="拾色实战配置">「拾色」实战配置</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>镜号</th><th>内容</th><th>类别</th><th>工具</th></tr></thead><tbody><tr><td>S01</td><td>雨打邮局门外</td><td>C</td><td>v8.1</td></tr><tr><td>S02</td><td>邮局内景空镜</td><td>C</td><td>v8.1</td></tr><tr><td>S03</td><td>推门背影</td><td>B</td><td>v7+oref ow50</td></tr><tr><td>S04</td><td>取信特写</td><td>A</td><td>v7+oref ow100</td></tr><tr><td>S05</td><td>信封特写</td><td>C</td><td>v8.1</td></tr><tr><td>S06</td><td>看信表情</td><td>A</td><td>v7+oref ow100</td></tr><tr><td>S07</td><td>撑伞远景</td><td>B</td><td>v7+oref ow70</td></tr><tr><td>S08</td><td>室内换装暗示</td><td>A</td><td>v7+oref ow100</td></tr><tr><td>S09</td><td>抽屉题眼</td><td>C</td><td>v8.1</td></tr><tr><td>S10-S11</td><td>闪回手部</td><td>C</td><td>v8.1</td></tr><tr><td>S12</td><td>弄堂行走</td><td>B</td><td>v7+oref ow60</td></tr><tr><td>S13</td><td>邮局复入</td><td>B</td><td>v7+oref ow70</td></tr><tr><td>S14</td><td>邮局远景</td><td>C</td><td>v8.1</td></tr><tr><td>S15</td><td>直视镜头</td><td>A</td><td>v7+oref ow100</td></tr><tr><td>S16</td><td>黑场</td><td>C</td><td>v8.1</td></tr></tbody></table>
+<p><strong>统计</strong>：A 类 4 / B 类 4 / C 类 8。</p>
+<hr>
+<h2 id="封面抽卡场景的行为规律异界气象台-minitest-v2-实测沉淀">「封面抽卡场景」的行为规律（异界气象台 minitest v2 实测沉淀）</h2>
+<blockquote>
+<p>入档时间：2026-05-14（运营经理 + Cowork 双方确认）
+触发：异界气象台 minitest 封面 v2，32 张 MJ 实测（首轮 24 + 横屏补抽 8）
+关联：<a href="/above-the-web/v1-1-v1-9f69a9f/" class="wikilink">入场票框架_v1.1迭代待办暂存_v1</a> 补丁 2/3/6/7</p>
+</blockquote>
+<p>封面属于”无 cref/oref”的子场景，但有独有的行为规律，与 A/B/C 三类角色场景不完全重叠。</p>
+<h3 id="规律-1--五重反字幕约束100-有效率">规律 1 · 五重反字幕约束（100% 有效率）</h3>
+<p>封面 prompt 必须包含：<code>no text, no labels, no logos, no subtitles, no banners</code>。</p>
+<p><strong>理由</strong>：MJ V8.1 在没有强压制时，会按”它理解的央视/纪录片画面”自带生成红条字幕条——对封面是污染。32 张实测 100% 无字幕，验证有效。</p>
+<p><strong>适用范围</strong>：任何”自带制式画面”的素材（央视格式、新闻联播、动物世界、气象预报、纪录片）都需要这条防御。</p>
+<h3 id="规律-2--主体尺寸召唤词单一--群体封面专属">规律 2 · 主体尺寸召唤词「单一 > 群体」（封面专属）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>召唤词</th><th>实测主体压倒感</th></tr></thead><tbody><tr><td>单一主体（colossal / towering / monolithic）+ 形容词激进</td><td><strong>4-5 分</strong></td></tr><tr><td>群体（massive / countless / horde）</td><td>2-3 分</td></tr></tbody></table>
+<p><strong>实测数据</strong>：</p>
+<ul>
+<li>B-v1（<code>massive whales</code> 群体）→ 鲸群被画太小，主体感 2-3 分</li>
+<li>B-v2（<code>colossal whale</code> 单一）→ 主体压倒感 5 分</li>
+<li>A 系列（<code>towering tower</code> 单一）→ 4-5 分</li>
+</ul>
+<p><strong>操作指南</strong>：封面 prompt 优先用”单一主体 + 形容词激进”。如必须做群体，每个个体单独 prompt，避免依赖群体词。</p>
+<h3 id="规律-3--sref-强度的视频---封面差分">规律 3 · sref 强度的「视频 - 封面」差分</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>推荐 sw</th></tr></thead><tbody><tr><td>视频内画面（追求广角连贯感）</td><td>80</td></tr><tr><td>封面（追求主体冲出框）</td><td><strong>40-50</strong></td></tr></tbody></table>
+<p><strong>理由</strong>：封面追求”主体压倒”而非”风格一致”。sw 50 同色家族验证一致性 4.7、主体压倒感 4.6——封面默认值。sw 40 适用于跨色家族。</p>
+<h3 id="规律-4--所有目标比例必须-mj-原生抽卡流程层">规律 4 · 所有目标比例必须 MJ 原生抽卡（流程层）</h3>
+<p><strong>禁止</strong>：从 9:16 抽卡通过 PIL 扩展 / 裁剪 / 翻转得到 16:9 / 4:3。</p>
+<p><strong>实测对比</strong>：</p>
+<ul>
+<li>PIL 画布扩展 16:9 左留白质量 = <strong>1 分</strong>（色块 + 噪点）</li>
+<li>MJ 原生重抽 16:9 左留白质量 = <strong>5 分</strong>（真实雾天 + 海面层次）</li>
+</ul>
+<p><strong>操作指南</strong>：每个目标比例（9:16 / 3:4 / 16:9 / 4:3）必须独立 MJ prompt，第一轮就抽出来。</p>
+<h3 id="规律-5--sw-不是主体形态杠杆prompt-文本才是">规律 5 · sw 不是主体形态杠杆，prompt 文本才是</h3>
+<p><strong>反例</strong>：异界气象台 C-v1 用 <code>monolithic mechanical lifeforms</code> + sw 40，4 张全部跑成”弯腰前行的人类剪影”。<strong>降 sw 不能纠正歧义</strong>。</p>
+<p><strong>修复</strong>：必须改 prompt 文本——<code>weathered ancient industrial machinery, no glow, no neon, no humanoid form</code> 类显式排除。</p>
+<p><strong>操作指南</strong>：当 MJ 跑出”概念歧义”时（如”机械生命”→“人形”），优先调 prompt 文本，而非调 sw。</p>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>顶层方法论:<a href="/above-the-web/v1-6b0cabf/" class="wikilink">角色一致性金字塔_v1</a>(oref/seed/personalize/sref 4 层)</li>
+<li>账号级地基:<a href="/above-the-web/personalize-moodboard-v1-cccac49/" class="wikilink">personalize与moodboard分工_v1</a></li>
+<li>IP 应用案例:<a href="/above-the-web/ip-v1-649b0d2/" class="wikilink">檐下IP_视觉系统_v1</a>(V4 基准图修复案例)</li>
+<li>对照参数:<a href="/above-the-web/ow-v1-01aee62/" class="wikilink">ow_行为规律_v1</a> · <a href="/above-the-web/seed-v1-7ad0aa2/" class="wikilink">seed_行为规律_v1</a></li>
+<li>封面抽卡触发本节的源头：<code>20_异界气象台_minitest/02_视觉/封面_v2/sref调试日志_v2.md</code></li>
+</ul> <div class="tags"> <span class="tag">类型/档案</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/MJ_v8.1_%E6%97%A0oref_%E6%B7%B7%E5%90%88%E5%B7%A5%E4%BD%9C%E6%B5%81_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/MJ_v8.1_%E6%97%A0oref_%E6%B7%B7%E5%90%88%E5%B7%A5%E4%BD%9C%E6%B5%81_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/sref-v1u0-20d5e86/">sref 异界气象台云图基准 · v1_u0</a></li><li><a href="/above-the-web/02-33115ae/">参数行为档案索引</a></li><li><a href="/above-the-web/mj-niji5-v2-1153ad3/">MJ niji 5 · 行为档案</a></li><li><a href="/above-the-web/mj-v8-2-v1-4cf28a0/">MJ v8.2 行为档案</a></li><li><a href="/above-the-web/ip-v1-649b0d2/">「檐下」IP 视觉系统</a></li><li><a href="/above-the-web/v1-17a9e43/">物品先分档，像素级换工具 · 学员答疑案例</a></li><li><a href="/above-the-web/v1-570ac7a/">空间关系归几何，不归形容词</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/ow-v1-01aee62/"> <span class="card-cat">参数行为档案</span> <h3>`--ow`(omni-weight)行为规律</h3> <p>--ow 不是&quot;听话度&quot;的滑块,是&quot;复读欲望&quot;的滑块——给得太低等于没用 oref,给得太高等于让 AI 抄你自己。100 是甜蜜点。</p> </a><a class="card" href="/above-the-web/seed-v1-7ad0aa2/"> <span class="card-cat">参数行为档案</span> <h3>`--seed` 行为规律</h3> <p>seed 锁的不是&quot;微调&quot;,是&quot;同帧锁&quot;——94% 构图相似 / 11% 微调指令执行率。给的不是&quot;我能改细节&quot;,是&quot;同一帧的不同瞬间&quot;。</p> </a><a class="card" href="/above-the-web/eleven-v3-v1-d87db20/"> <span class="card-cat">参数行为档案</span> <h3>Eleven v3 行为规律</h3> <p>PVC 不支持 v3 但 IVC 支持——所以要克隆不必退回 v2，audio tags 和 Text to Dialogue 都保得住。这…</p> </a><a class="card" href="/above-the-web/flova-v1-a30ae63/"> <span class="card-cat">参数行为档案</span> <h3>Flova 平台档案：编排层不是模型层</h3> <p>Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点：</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#v7-vs-v81-实测对比拾色-d2" data-toc-link="v7-vs-v81-实测对比拾色-d2">v7 vs v8.1 实测对比（拾色 D2）</a></li><li class="d3"><a href="#v81-出图特点" data-toc-link="v81-出图特点">v8.1 出图特点</a></li><li class="d3"><a href="#v81-inset-frame-双层结构稳定执行2026-05-14-实测" data-toc-link="v81-inset-frame-双层结构稳定执行2026-05-14-实测">v8.1 inset frame 双层结构稳定执行（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-inset-frame-子图内容偏离-prompt-的常见模式2026-05-14-实测追加" data-toc-link="v81-inset-frame-子图内容偏离-prompt-的常见模式2026-05-14-实测追加">v8.1 inset frame 子图内容偏离 prompt 的常见模式（2026-05-14 实测追加）</a></li><li class="d3"><a href="#v81-材质属性形容词弱权重2026-05-14-实测" data-toc-link="v81-材质属性形容词弱权重2026-05-14-实测">v8.1 材质属性形容词弱权重（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-数量约束-single--one-执行不稳定2026-05-14-实测" data-toc-link="v81-数量约束-single--one-执行不稳定2026-05-14-实测">v8.1 数量约束 “single / one” 执行不稳定（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-closing-transmissionshot-自动召出-letterbox--双频道结构2026-05-14-实测" data-toc-link="v81-closing-transmissionshot-自动召出-letterbox--双频道结构2026-05-14-实测">v8.1 “closing transmission/shot” 自动召出 letterbox + 双频道结构（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-双重约束尺寸技巧稳定锁标记点大小2026-05-14-实测" data-toc-link="v81-双重约束尺寸技巧稳定锁标记点大小2026-05-14-实测">v8.1 双重约束尺寸技巧：稳定锁标记点大小（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-雷达扫描召唤静态而非动态2026-05-14-实测" data-toc-link="v81-雷达扫描召唤静态而非动态2026-05-14-实测">v8.1 雷达扫描召唤静态而非动态（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-sref-跨色温场景强度阈值2026-05-14-实测" data-toc-link="v81-sref-跨色温场景强度阈值2026-05-14-实测">v8.1 sref 跨色温场景强度阈值（2026-05-14 实测）</a></li><li class="d3"><a href="#v81-sref-工作流变化2026-05-14-实测" data-toc-link="v81-sref-工作流变化2026-05-14-实测">v8.1 sref 工作流变化（2026-05-14 实测）</a></li><li class="d3"><a href="#v7--oref-出图特点" data-toc-link="v7--oref-出图特点">v7 + oref 出图特点</a></li><li class="d2"><a href="#风险预案如果-v7--oref-不达标" data-toc-link="风险预案如果-v7--oref-不达标">风险预案（如果 v7 + oref 不达标）</a></li><li class="d2"><a href="#拾色实战配置" data-toc-link="拾色实战配置">「拾色」实战配置</a></li><li class="d2"><a href="#封面抽卡场景的行为规律异界气象台-minitest-v2-实测沉淀" data-toc-link="封面抽卡场景的行为规律异界气象台-minitest-v2-实测沉淀">「封面抽卡场景」的行为规律（异界气象台 minitest v2 实测沉淀）</a></li><li class="d3"><a href="#规律-1--五重反字幕约束100-有效率" data-toc-link="规律-1--五重反字幕约束100-有效率">规律 1 · 五重反字幕约束（100% 有效率）</a></li><li class="d3"><a href="#规律-2--主体尺寸召唤词单一--群体封面专属" data-toc-link="规律-2--主体尺寸召唤词单一--群体封面专属">规律 2 · 主体尺寸召唤词「单一 &gt; 群体」（封面专属）</a></li><li class="d3"><a href="#规律-3--sref-强度的视频---封面差分" data-toc-link="规律-3--sref-强度的视频---封面差分">规律 3 · sref 强度的「视频 - 封面」差分</a></li><li class="d3"><a href="#规律-4--所有目标比例必须-mj-原生抽卡流程层" data-toc-link="规律-4--所有目标比例必须-mj-原生抽卡流程层">规律 4 · 所有目标比例必须 MJ 原生抽卡（流程层）</a></li><li class="d3"><a href="#规律-5--sw-不是主体形态杠杆prompt-文本才是" data-toc-link="规律-5--sw-不是主体形态杠杆prompt-文本才是">规律 5 · sw 不是主体形态杠杆，prompt 文本才是</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

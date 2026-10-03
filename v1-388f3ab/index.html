@@ -1,0 +1,255 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>钉钉知识库交付：格式白名单 + 终版回填闭环 · 蛛网之上</title><meta name="description" content="- 目标：教程正文定稿后并入公司钉钉知识库母文档，上级在钉钉上做终审"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-388f3ab/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="钉钉知识库交付：格式白名单 + 终版回填闭环"><meta property="og:description" content="- 目标：教程正文定稿后并入公司钉钉知识库母文档，上级在钉钉上做终审"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-388f3ab/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="钉钉知识库交付：格式白名单 + 终版回填闭环"><meta name="twitter:description" content="- 目标：教程正文定稿后并入公司钉钉知识库母文档，上级在钉钉上做终审"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-17T17:05:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="主题/教程制作"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-388f3ab/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-388f3ab/","url":"https://tiaozhuxiansheng.com/v1-388f3ab/","headline":"钉钉知识库交付：格式白名单 + 终版回填闭环","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 目标：教程正文定稿后并入公司钉钉知识库母文档，上级在钉钉上做终审","datePublished":"2026-07-17T17:05:28+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 主题/教程制作"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"钉钉知识库交付：格式白名单 + 终版回填闭环","item":"https://tiaozhuxiansheng.com/v1-388f3ab/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-17T17:05:28+08:00">2026-07-17</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 10 分钟读完 · 3,887 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>13 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#事实追加2026-07-20--三篇-codex-教程附件版交付">事实追加（2026-07-20 · 三篇 Codex 教程附件版交付）</a></li><li class="d2"><a href="#事实追加2026-07-20--四篇终版回填完成">事实追加（2026-07-20 · 四篇终版回填完成）</a></li><li class="d2"><a href="#事实追加2026-07-23--laststand-教程钉钉版交付跨项目复用">事实追加（2026-07-23 · LastStand 教程钉钉版交付，跨项目复用）</a></li><li class="d2"><a href="#一方法论沉淀">一、方法论沉淀</a></li><li class="d3"><a href="#富文本平台交付格式白名单先行不等审核删改">[富文本平台交付：格式白名单先行，不等审核删改]</a></li><li class="d3"><a href="#终版回填闭环平台审核版是唯一真身">[终版回填闭环：平台审核版是唯一真身]</a></li><li class="d3"><a href="#导入通道不明时用变体分治通道定了就收敛">[导入通道不明时用变体分治，通道定了就收敛]</a></li><li class="d3"><a href="#配图策略跟着交付通道走通道变了先实测再选版">[配图策略跟着交付通道走，通道变了先实测再选版]</a></li><li class="d3"><a href="#教程文档的四段式体例先给结果再给工具最后给能带走的资产">[教程文档的四段式体例：先给结果，再给工具，最后给能带走的资产]</a></li><li class="d2"><a href="#二一句话结论">二、一句话结论</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="钉钉知识库交付格式白名单--终版回填闭环">钉钉知识库交付：格式白名单 + 终版回填闭环</h1>
+<blockquote>
+<p>入档：2026-07-17
+来源：《实战6-自动化口播剪辑》附件版并入钉钉知识库母文档「自动化口播剪辑」节的交付全程（教程本体见 <a href="/above-the-web/v1-9bb7884/" class="wikilink">完结项目反推学员教程_大纲先行两级审核_v1</a>）
+验证状态：✅✅ 闭环三验证（2026-07-17 实战6 首验 → 2026-07-20 白名单沿用 → 2026-07-20 四篇 Codex 教程回填完成，闭环走通）</p>
+</blockquote>
+<hr>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>目标：教程正文定稿后并入公司钉钉知识库母文档，上级在钉钉上做终审</li>
+<li>API 路线搁置：钉钉推送脚本骨架已就绪（<code>ai-editing-course/scripts/dingtalk_push.py</code>，凭证走 <code>.dingtalk.env</code> 不入库），卡在企业应用权限审批，本次改走手动导入</li>
+<li>手动导入前做了 4 个变体试探导入通道（单日 4 连发提交）：
+<ol>
+<li>附件版（小标题并入正文为纯一级文本）</li>
+<li>公网图链版（14 处配图改 GitHub raw 直链，赌钉钉导入自动抓图）</li>
+<li>纯文字版（去除全部 Markdown 符号，图/视频位置 🔴 文字占位，供直接粘贴）</li>
+<li>占位标注版（保留 Markdown，仅图/视频换 🔴 占位，供知识库导入后中转）</li>
+</ol>
+</li>
+<li>母文档在钉钉上人工修正后过审。终审版 vs 仓库占位标注版的实际 diff：
+<ul>
+<li><strong>删除结尾「准备清单」表格</strong>（信息由图14卡片承担，正文不再重复）</li>
+<li><strong>Step 1 / Step 5 的示例话术从引用块改为正文段落</strong></li>
+<li>开场白重写为口播式完整段落（原「先看成片。」三字开头）；成片视频改为钉钉附件链接</li>
+<li>新增加粗三处：「AI 乐队」「帮我安装这几个 skill」「你说一段话，Codex 给一个结果」</li>
+<li>残留一处引用块未删（Step 4 反馈公式 <code>> 截图 + 圈出来 + 说想要什么</code>）——回填时按「不擅改过审稿」标待办上报，作者确认为漏网，当天修正线上版并同步本地，白名单零例外成立</li>
+</ul>
+</li>
+<li>审核后定下的格式规则（作者原话）：<strong>修饰文本只能使用加粗和代码块</strong>；引用块和表格全部去掉</li>
+<li>2026-07-22 作者澄清了当初做 4 个变体的真实原因：<strong>导入钉钉这一步本身没问题（含图片），出问题的是「从钉钉文档复制到另一个钉钉文档」这一步会丢图</strong>。此后交付一律走「md 带 GitHub raw 公网直链 → 直接导入目标位置」，14 张图零手工补图；纯文字版与占位标注版降级为无公网直链时的兜底</li>
+<li>终版 md 从钉钉下载后 verbatim 回填 <code>ai-editing-course/docs/实战6_自动化口播剪辑_附件版_钉钉终版.md</code></li>
+<li>2026-07-22 第二轮交付（同一篇教程按公司通行教程体例重做，<code>docs/实战6_自动化口播剪辑_钉钉版_四段式_v2.md</code>）：
+<ul>
+<li>体例参照同知识库《鲸海拾贝-导演调度蓝图生视频教程》，重排为五节：一、成品展示 → 二、所用工具 → 三、操作方法 → 四、总结与小技巧 → 五、附件</li>
+<li>「所用工具」按作者要求补全<strong>生成图片与视频的幕后工具</strong>：faster-whisper（词级字幕）、Pillow（26 张卡片/4 组图表/进度条）、FFmpeg（合成渲染质检），均从仓库真实脚本核对得出，标注”Codex 自动调用、读者不用装”</li>
+<li>14 张配图改 GitHub raw 公网直链并逐条 <code>curl -I</code> 验证 200，随导入自动抓图，零手工补图</li>
+<li>「五、附件」把 4 个 skill + 安装说明打成 <code>docs/attachments/实战6_剪辑工具包.zip</code>（19.9 KB）随仓库分发；打包前比对 <code>.agents</code> / <code>.claude</code> / 学员包三处副本逐文件哈希一致</li>
+<li>全文仅剩视频与 zip 两处需手动上传，均以 🔴 标注</li>
+<li>归因更正详见 <a href="/above-the-web/v1-f404c4e/" class="wikilink">变通方案不等于故障点_v1</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="事实追加2026-07-20--三篇-codex-教程附件版交付">事实追加（2026-07-20 · 三篇 Codex 教程附件版交付）</h2>
+<ul>
+<li>交付对象：《120min Codex小白系列教程》三个子章节（人生模拟器 / 台风实时预测 / 桌面小程序）附件版，仓库 <code>codex-tutorial</code></li>
+<li>交付通道从「导入 md 文件」变为<strong>复制粘贴正文进母文档</strong>；作者实测：钉钉粘贴无法携带图片与视频，公网直链（GitHub raw）在粘贴场景同样失效</li>
+<li>三篇共 46 处配图从 raw 直链全部改回 🔴 占位标注（占位内写仓库源文件路径），视频维持附件占位；作者一键复制文字后手动补素材（人生模拟器篇已上传完毕）</li>
+<li>引言按组长「AI剪辑」板块范文重写，两轮迭代的写作规律另档 <a href="/above-the-web/v1-a82d159/" class="wikilink">范文参考骨架律_v1</a></li>
+</ul>
+<h2 id="事实追加2026-07-20--四篇终版回填完成">事实追加（2026-07-20 · 四篇终版回填完成）</h2>
+<ul>
+<li>作者提供母文档完整终版（含四个子章节：台风实时预测 / 人生模拟器 / 桌面小程序 / AI编程理论科普），按标题定位逐篇 verbatim 提取为 <code>codex-tutorial/docs/*_附件版_钉钉终版.md</code></li>
+<li>diff 核对（先用正则剥离图片链接、🔴 占位、标题、空白行后再比对，避免图片实体化/列表渲染差异污染判断）：其中两篇（人生模拟器、桌面小程序）与仓库稿件逐句一致，唯一差异是平台把 <code>- </code> 列表渲染成 <code>*</code> 加空行、<code>1.</code>加成<code>1.  </code>双空格——纯格式噪音，不代表真实修改</li>
+<li>另两篇有真实文字改动，均已回填进仓库底稿（<code>_教程正文_定稿.md</code>/<code>_教程正文_v0.1.md</code> 与 <code>_附件版.md</code> 同步，而非只留在终版文件里）：
+<ul>
+<li>台风实时预测：删去开场句「挂在 B站上、上线后还拿到了官方推流」（简化开场，非事实证伪）；「你在实战 2 已经会了」改「你在<strong>自动化剪辑案例</strong>已经会了」——<strong>内部草稿的章节编号不能进最终交付</strong>，因为草稿编号（实战2）与母文档最终编号不保证一致，只有实际章节标题是稳定引用</li>
+<li>AI编程理论科普：「点开软件动手」改「点开Codex动手」（更具体）；结尾统一改成「一句话总结」；「这套课」在部分位置改「这套教程」——<strong>用词一致性由平台终审收口，仓库草稿反过来要跟平台学</strong></li>
+</ul>
+</li>
+<li>白名单持续零例外：四篇终版逐一 grep 引用块（<code>^></code>）与表格（<code>^|</code>）标记，计数均为 0</li>
+</ul>
+<h2 id="事实追加2026-07-23--laststand-教程钉钉版交付跨项目复用">事实追加（2026-07-23 · LastStand 教程钉钉版交付，跨项目复用）</h2>
+<ul>
+<li>交付对象：个人项目 LastStand《从 0 到发布》教程（12 张配图），公开仓库 <code>last-stand</code></li>
+<li>首次导入钉钉后 12 张图全部「加载失败」，根因是正文写的是仓库相对路径 <code>../assets/...</code>——<strong>相对路径在任何通道都失效</strong>，这是与”导入 vs 粘贴”通道差异无关的前置错误，先修这个再谈通道</li>
+<li>按本档配图策略产出<strong>两版一起交</strong>，交付方按现场通道二选一：
+<ul>
+<li><strong>raw 直链版</strong>：链接按 <code>raw.githubusercontent.com/&#x3C;owner>/&#x3C;repo>/main/&#x3C;path></code> 拼，中文路径段 percent-encode（<code>上传itch</code> → <code>%E4%B8%8A%E4%BC%A0itch</code>），交付前逐条 <code>curl</code> 确认 200（12 条全绿才交稿）——对应「<strong>导入 md 文件</strong>」通道</li>
+<li><strong>🔴 占位标注版</strong>：每图替换为 <code>🔴【图N · 说明 ｜ 源文件：路径】</code>——对应「<strong>复制粘贴进母文档</strong>」通道（本档 2026-07-20 已记：粘贴场景公网直链同样失效）</li>
+</ul>
+</li>
+<li>本次新增做法：占位版文末附**「图片上传对照表」**（编号 → 说明 → 源文件路径的完整清单），解决十几张图手动上传时对不上号的问题</li>
+<li>定位修正：占位版不再只是”无法用直链时才退回的兜底”，而是<strong>与直链版并列的通道适配版本</strong>，两版一起交付、一起入库</li>
+<li>附带约束：raw 直链依赖仓库<strong>保持公开</strong>且图片留在 main，仓库转私有会让已交付文档的图集体失效——这类文档要么锁定占位版，要么在转私有时同步替换</li>
+</ul>
+<h2 id="一方法论沉淀">一、方法论沉淀</h2>
+<h3 id="富文本平台交付格式白名单先行不等审核删改">[富文本平台交付：格式白名单先行，不等审核删改]</h3>
+<p><strong>核心</strong>：往钉钉这类富文本知识库交付 Markdown，语法要按平台白名单<strong>主动收敛</strong>，而不是全量语法交上去等审核人手动删。本次白名单：修饰只用<strong>加粗 + 代码块</strong>；结构层面正文段落和有序列表可用；禁引用块、禁表格、禁多级小标题（并入正文加粗）。表格的信息改走图卡片或正文列点。</p>
+<p><strong>来源</strong>：终审 diff 的两处关键删改（表格删除、引用块转正文）都是格式层修改，与内容无关——这些返工本可以在交付前收敛掉。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>首次给一个新平台交付，交付后拿审核版 diff 一遍，把格式层删改提炼成该平台白名单；</li>
+<li>白名单一旦确立，后续交付按白名单写母版，变体试探（直链版/纯文字版/占位版）收敛为单一母版；</li>
+<li>白名单存进 skill / 规范文档，不靠记忆。</li>
+</ol>
+<h3 id="终版回填闭环平台审核版是唯一真身">[终版回填闭环：平台审核版是唯一真身]</h3>
+<p><strong>核心</strong>：文档在平台上被人工修改并过审后，<strong>平台版成为 source of truth</strong>，必须立即下载回填 git 仓库（verbatim，不做任何「顺手优化」）；否则仓库版从此漂移，下次迭代会基于过时底稿返工。</p>
+<p><strong>来源</strong>：本次终审在钉钉编辑器里完成（开场白重写、加粗调整均发生在平台侧），仓库里 4 个变体没有一个等于过审版；不回填则真身只存在于钉钉。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>平台过审 → 当天下载 md → 与仓库最新变体 diff → verbatim 回填为「钉钉终版」文件；</li>
+<li>diff 出的格式类修改沉淀进白名单，内容类修改沉淀进复盘；</li>
+<li>回填时发现审核版自身违反已定规则（如本次残留引用块），<strong>不擅自改过审稿</strong>，标记待办向审核人确认；</li>
+<li><strong>内容类修改要反向同步回仓库底稿</strong>（正文定稿/大纲展开稿），不能只留在「钉钉终版」文件里——否则下次基于底稿改版又会长出同样的问题。2026-07-20 实例：草稿里用内部编号引用其他章节（「实战 2」），终审改成实际章节标题（「自动化剪辑案例」），因为草稿编号和母文档最终编号不保证一致；这条修正回填进了正文定稿而不只是终版文件。</li>
+</ol>
+<h3 id="导入通道不明时用变体分治通道定了就收敛">[导入通道不明时用变体分治，通道定了就收敛]</h3>
+<p><strong>核心</strong>：不确定平台导入行为（会不会自动抓图、认不认 Markdown）时，一文多变体各赌一条通道是合理试探；但通道和白名单确认后，变体只保留历史价值，母版收敛为一个，避免多副本漂移。</p>
+<p><strong>来源</strong>：单日 4 个变体提交是试探期产物；终版落地后它们全部被「钉钉终版」取代。</p>
+<h3 id="配图策略跟着交付通道走通道变了先实测再选版">[配图策略跟着交付通道走，通道变了先实测再选版]</h3>
+<p><strong>核心</strong>（2026-07-22 作者澄清后更正）：钉钉有三条通道，能不能带图各不相同——<strong>导入 md 文件：公网直链自动抓图，可带</strong>；<strong>钉钉文档 → 另一个钉钉文档复制粘贴：丢图</strong>；本地文本粘贴：丢图。所以正解不是”退回占位版”，而是<strong>把链路设计成 md 直接导入到目标位置，不要经过中转文档</strong>；占位标注版只在无公网直链可用（私有仓库 / 图未入库）时才启用。</p>
+<p><strong>来源</strong>：2026-07-17 导入通道实测直链可行；2026-07-20 一度按”复制粘贴丢图”把占位版定为默认；2026-07-22 作者澄清真正丢图的是”钉钉→钉钉复制”这一步，导入本身没问题，遂改回直链并实测 14 张图零手工补图。归因错位的教训另立 <a href="/above-the-web/v1-f404c4e/" class="wikilink">变通方案不等于故障点_v1</a>。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>每次交付先确认通道，并按”是否经过中转文档”判断能否带图；</li>
+<li>首选：md 带 GitHub raw 公网直链，<strong>直接导入目标位置</strong>；链接中文路径段百分号编码，交付前逐条 <code>curl -I</code> 确认 200（图须已 push 到 main、仓库公开）；</li>
+<li>无直链可用时才退回占位标注版，占位写 <code>🔴【此处插入图N xxx ｜ 源文件：docs/images/xxx/图N_xxx.png】</code>；</li>
+<li>视频与 zip 附件任何通道都带不进去，留 🔴 占位、导入后手动上传；</li>
+<li>通道结论当天写回 skill <code>dingtalk-doc-delivery</code>，不靠记忆。</li>
+</ol>
+<h3 id="教程文档的四段式体例先给结果再给工具最后给能带走的资产">[教程文档的四段式体例：先给结果，再给工具，最后给能带走的资产]</h3>
+<p><strong>核心</strong>：公司现行教程通行结构是<strong>一、成品展示 → 二、所用工具 → 三、操作方法 → 四、总结与小技巧 → 五、附件</strong>。三个易漏点：① 成品放在第一屏（读者先看到结果才有动力读下去）；② 「所用工具」要把<strong>生成图片和视频的幕后工具</strong>也列全（读者不用装的也列，注明”由 X 自动调用”），否则读者不知道成品里每样东西是谁做的；③ 文末挂一个 zip，把 skill / 模板 / 脚本这些<strong>能带走的资产</strong>打包，并写清包里没有、需要自己注册的在线账号。</p>
+<p><strong>来源</strong>：2026-07-22 作者指定按《鲸海拾贝-导演调度蓝图生视频教程》体例重做实战6；「补幕后工具」与「加附件压缩包」两条都是作者点名追加的，说明它们是体例里读者最在意的部分。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>幕后工具从<strong>仓库真实脚本</strong>核对（本次 faster-whisper / Pillow / FFmpeg 三样均取自 <code>transcribe.py</code>、<code>render_codex_tutorial.py</code>），不凭印象写；</li>
+<li>小技巧一节从项目复盘的”没有一次做对的”提炼，一条一句、加粗开头；</li>
+<li>附件 zip 放 <code>docs/attachments/</code> 随仓库提交；多处存在同名资产时先逐文件哈希比对再打包，避免打进旧版本；</li>
+<li>标题层级按文档定位：作为母文档子节并入时并入正文加粗，独立成页教程用「一、二、三」分节。</li>
+</ol>
+<h2 id="二一句话结论">二、一句话结论</h2>
+<blockquote>
+<p>富文本平台交付 = 格式白名单 + 通道适配 + 终版回填：按白名单收敛格式、按通道决定图片走直链还是占位、按体例排成品-工具-步骤-总结-附件；过审后平台版是唯一真身，当天下载回填，仓库才不漂移。</p>
+</blockquote>
+<h2 id="如何使用">如何使用</h2>
+<ul>
+<li>下次往钉钉母文档交付：直接按 skill <code>07_skill存档/dingtalk-doc-delivery</code> 的白名单写母版，跳过变体试探；</li>
+<li>遇到新的富文本平台（语雀/Notion/飞书知识库等）：套用「交付→diff 审核版→提炼白名单→回填」同一套闭环。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>
+<p><a href="/above-the-web/2026-08-26-v1-0e13a0e/" class="wikilink">2026-08-26_周报整合钉钉周会手册_三轮修复与诊断反转复盘_v1</a>（适用边界下游：本档白名单是<strong>教程知识库交付</strong>场景律，周报/汇报场景需保留表格——跨场景硬套引发”图表框架异常”返工的实证）</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-9bb7884/" class="wikilink">完结项目反推学员教程_大纲先行两级审核_v1</a>（同项目上游：大纲与正文的两级审核；本档是其下游交付段）</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-f404c4e/" class="wikilink">变通方案不等于故障点_v1</a>（本档催生的原子律：从 4 个格式变体反推”粘贴丢图”是错误归因，真故障点在钉钉文档间复制）</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-a82d159/" class="wikilink">范文参考骨架律_v1</a>（同批交付的正文行文层规律：参考范文提炼骨架不抄句式）</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-07-16-codex-v1-13b837e/" class="wikilink">2026-07-16_Codex保姆级教学_代码化口播剪辑完整复盘_v1</a>（教程素材母体）</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a>（回填闭环同根：先冻结事实，仓库版=事实）</p>
+</li>
+<li>
+<p>配套 skill：<span class="wikilink wikilink--dangling" title="尚未发布的笔记">dingtalk-doc-delivery/SKILL.md</span></p>
+</li>
+<li>
+<p>飞书侧同类链路：<a href="/above-the-web/open-id-v1-d50e7e4/" class="wikilink">飞书应用文档授用户编辑权_唯open_id可靠_v1</a> · skill <code>07_skill存档/feishu-doc-publish</code></p>
+</li>
+<li>
+<p><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></p>
+</li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">主题/教程制作</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E9%92%89%E9%92%89%E7%9F%A5%E8%AF%86%E5%BA%93%E4%BA%A4%E4%BB%98_%E6%A0%BC%E5%BC%8F%E7%99%BD%E5%90%8D%E5%8D%95%E4%B8%8E%E7%BB%88%E7%89%88%E5%9B%9E%E5%A1%AB%E9%97%AD%E7%8E%AF_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E9%92%89%E9%92%89%E7%9F%A5%E8%AF%86%E5%BA%93%E4%BA%A4%E4%BB%98_%E6%A0%BC%E5%BC%8F%E7%99%BD%E5%90%8D%E5%8D%95%E4%B8%8E%E7%BB%88%E7%89%88%E5%9B%9E%E5%A1%AB%E9%97%AD%E7%8E%AF_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li><li><a href="/above-the-web/doc-mcp-gcp-v1-77ca6ee/">腾讯文档 doc-mcp 程序化编辑 · GCP 坐标定位与自底向上防漂移</a></li><li><a href="/above-the-web/2026-08-26-v1-0e13a0e/">周报整合钉钉周会手册：三轮修复与诊断反转复盘</a></li><li><a href="/above-the-web/2026-09-08-workbuddy-v1-2-v1-d3c41fb/">WorkBuddy 教程录屏公告与《屏幕录制标准》v1.2 · 协作复盘</a></li><li><a href="/above-the-web/dws-index-v1-c5e1bec/">dws 块级插入：--index 语义陷阱与倒序插入法</a></li><li><a href="/above-the-web/v1-6e3df89/">任务书制作：把合作需求变成可执行的学员任务</a></li><li><a href="/above-the-web/v1-f404c4e/">变通方案不等于故障点</a></li><li><a href="/above-the-web/v1-9bb7884/">完结项目反推学员教程：大纲先行 + 两级审核</a></li><li><a href="/above-the-web/v1-e9d7826/">理论板块教程制作：无源项目可反推时的变体</a></li><li><a href="/above-the-web/v1-a82d159/">范文参考骨架律：提炼功能骨架，不抄表层句式</a></li><li><a href="/above-the-web/skill-be740f8/">DingTalk Doc Delivery · 钉钉知识库文档交付工作流</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/open-id-v1-d50e7e4/"> <span class="card-cat">方法论与洞察</span> <h3>飞书应用文档授用户编辑权：唯 open_id 可靠</h3> <p>把&quot;应用发布的飞书文档&quot;授予某人编辑权，别信手机号 / 邮箱那套；唯一稳的是拿到此人 openid，按 membertype=openid …</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a><a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a><a class="card" href="/above-the-web/1000-v1-2b2c761/"> <span class="card-cat">方法论与洞察</span> <h3>小红书正文超 1000 字是拆篇信号</h3> <p>小红书正文 1000 字上限不是排版限制,是平台在替你执行「别写大教程」。 写超了,第一反应不该是删字,该是拆篇——因为逼你超限的那个结构(…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#事实追加2026-07-20--三篇-codex-教程附件版交付" data-toc-link="事实追加2026-07-20--三篇-codex-教程附件版交付">事实追加（2026-07-20 · 三篇 Codex 教程附件版交付）</a></li><li class="d2"><a href="#事实追加2026-07-20--四篇终版回填完成" data-toc-link="事实追加2026-07-20--四篇终版回填完成">事实追加（2026-07-20 · 四篇终版回填完成）</a></li><li class="d2"><a href="#事实追加2026-07-23--laststand-教程钉钉版交付跨项目复用" data-toc-link="事实追加2026-07-23--laststand-教程钉钉版交付跨项目复用">事实追加（2026-07-23 · LastStand 教程钉钉版交付，跨项目复用）</a></li><li class="d2"><a href="#一方法论沉淀" data-toc-link="一方法论沉淀">一、方法论沉淀</a></li><li class="d3"><a href="#富文本平台交付格式白名单先行不等审核删改" data-toc-link="富文本平台交付格式白名单先行不等审核删改">[富文本平台交付：格式白名单先行，不等审核删改]</a></li><li class="d3"><a href="#终版回填闭环平台审核版是唯一真身" data-toc-link="终版回填闭环平台审核版是唯一真身">[终版回填闭环：平台审核版是唯一真身]</a></li><li class="d3"><a href="#导入通道不明时用变体分治通道定了就收敛" data-toc-link="导入通道不明时用变体分治通道定了就收敛">[导入通道不明时用变体分治，通道定了就收敛]</a></li><li class="d3"><a href="#配图策略跟着交付通道走通道变了先实测再选版" data-toc-link="配图策略跟着交付通道走通道变了先实测再选版">[配图策略跟着交付通道走，通道变了先实测再选版]</a></li><li class="d3"><a href="#教程文档的四段式体例先给结果再给工具最后给能带走的资产" data-toc-link="教程文档的四段式体例先给结果再给工具最后给能带走的资产">[教程文档的四段式体例：先给结果，再给工具，最后给能带走的资产]</a></li><li class="d2"><a href="#二一句话结论" data-toc-link="二一句话结论">二、一句话结论</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>信任资产保得住、造不出 · 账号基线 vs 人群先验 · 蛛网之上</title><meta name="description" content="同样的出口 IP、同样的浏览器指纹，老号和新号的判罚可以天差地别——因为被判的不是这次的信号，而是「这次的信号与该账号历史的偏离度」。 于是防泄露工具能做的只有保住已有的信任资产，它造不出信任资产。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/vs-v1-a9977f1/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="信任资产保得住、造不出 · 账号基线 vs 人群先验"><meta property="og:description" content="同样的出口 IP、同样的浏览器指纹，老号和新号的判罚可以天差地别——因为被判的不是这次的信号，而是「这次的信号与该账号历史的偏离度」。 于是防泄露工具能做的只有保住已有的信任资产，它造不出信任资产。"><meta property="og:url" content="https://tiaozhuxiansheng.com/vs-v1-a9977f1/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="信任资产保得住、造不出 · 账号基线 vs 人群先验"><meta name="twitter:description" content="同样的出口 IP、同样的浏览器指纹，老号和新号的判罚可以天差地别——因为被判的不是这次的信号，而是「这次的信号与该账号历史的偏离度」。 于是防泄露工具能做的只有保住已有的信任资产，它造不出信任资产。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-19T22:15:51+08:00"><meta property="article:modified_time" content="2026-09-17T21:43:40+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/账号安全"><meta property="article:tag" content="主题/风控归因"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/vs-v1-a9977f1/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/vs-v1-a9977f1/","url":"https://tiaozhuxiansheng.com/vs-v1-a9977f1/","headline":"信任资产保得住、造不出 · 账号基线 vs 人群先验","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"同样的出口 IP、同样的浏览器指纹，老号和新号的判罚可以天差地别——因为被判的不是这次的信号，而是「这次的信号与该账号历史的偏离度」。 于是防泄露工具能做的只有保住已有的信任资产，它造不出信任资产。","datePublished":"2026-08-19T22:15:51+08:00","dateModified":"2026-09-17T21:43:40+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/账号安全, 主题/风控归因"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"信任资产保得住、造不出 · 账号基线 vs 人群先验","item":"https://tiaozhuxiansheng.com/vs-v1-a9977f1/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a> <span aria-hidden="true">/</span><span>账号与访问</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-19T22:15:51+08:00">2026-08-19</time></span> <span>更新于 <time datetime="2026-09-17T21:43:40+08:00">2026-09-17</time></span> <span>约 4 分钟读完 · 1,426 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>7 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#机制两套完全不同的判据">机制：两套完全不同的判据</a></li><li class="d2"><a href="#反直觉的地方结论要反过来读">反直觉的地方：结论要反过来读</a></li><li class="d2"><a href="#权重排序工具能碰到哪几层">权重排序（工具能碰到哪几层）</a></li><li class="d2"><a href="#归因纪律本次差点踩的坑">归因纪律（本次差点踩的坑）</a></li><li class="d2"><a href="#边界必须说清楚">边界（必须说清楚）</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="信任资产保得住造不出--账号基线-vs-人群先验">信任资产保得住、造不出 · 账号基线 vs 人群先验</h1>
+<blockquote>
+<p>入档：2026-08-19
+来源：一次「为什么我从没被封、同事却反复被封」的归因会话（见 <a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/" class="wikilink">2026-08-19_vpn-guard出口归属门槛与四处假绿修复_迭代复盘_v1</a>）
+状态：<strong>规律已确立</strong>，能解释全部观测；适用于任何按账号计分的平台（AI 服务、电商店铺、广告账户、社媒）</p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>同样的出口 IP、同样的浏览器指纹，老号和新号的判罚可以天差地别——因为被判的不是这次的信号，而是「这次的信号与该账号历史的偏离度」。</strong> 于是防泄露工具能做的只有<strong>保住已有的信任资产，它造不出信任资产</strong>。</p>
+<hr>
+<h2 id="机制两套完全不同的判据">机制：两套完全不同的判据</h2>
+<p>风控对不同账号用的根本不是同一套标准：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>判据</th><th>对「从代理 IP 登录」的反应</th></tr></thead><tbody><tr><td><strong>老号</strong></td><td>per-account baseline（这个账号的正常长什么样）</td><td>它一直这样 → 不构成异常</td></tr><tr><td><strong>新号</strong></td><td>population prior（这类特征的人一般是什么货色）</td><td>落到人群先验上 → 机房段的先验极差</td></tr></tbody></table>
+<p><strong>关键推论：你的「异常」只要从第一天起就是常态，它就不构成异常。</strong></p>
+<p>本次的证据链很干净：作者的账号走 2018 年在国内用 VPN 注册的 Google 账号（当时为了上 Coursera），此后七八年一直是「中国 + 代理」这个组合在用。于是「从代理登录」早就写进了它的基线。而实测发现，作者长期使用的那个节点出口是 <strong>DigitalOcean（AS14061，<code>hosting=true</code>）</strong>——风控黑名单上最经典的 VPS 段之一，却从未出过事。</p>
+<p>同一个 DigitalOcean 出口对一个上周为注册而新建的号是另一回事：没有基线可比，只能按人群先验评估，而那个先验很难看。</p>
+<hr>
+<h2 id="反直觉的地方结论要反过来读">反直觉的地方：结论要反过来读</h2>
+<p>拿到「我的号一直没事」这个观测，直觉结论是「所以我可以随便点」。<strong>恰恰相反：</strong></p>
+<blockquote>
+<p><strong>你的账号不是抗封的，是不可替代的。</strong></p>
+</blockquote>
+<p>抗封意味着可再生——丢了再弄一个。但一个八年老号的价值全部来自不可压缩的时间，真封了你不可能「再注册一个 2018 年的账号」。反过来，新号被封是可修复的（本来也没积累）。</p>
+<p>所以理性的风险管理是：<strong>信任资产越厚，越该省着用</strong>，而不是越可以挥霍。</p>
+<hr>
+<h2 id="权重排序工具能碰到哪几层">权重排序（工具能碰到哪几层）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="center">权重</th><th>因素</th><th>脚本能做什么</th></tr></thead><tbody><tr><td align="center">1</td><td>出口 IP 的共享密度与信誉</td><td>⚠️ 只覆盖一半：能判机房段，但<strong>测不出一个 IP 背后挂了多少账号</strong></td></tr><tr><td align="center">2</td><td><strong>账号出身</strong>（注册 IP 国别、支付归属、账号年龄、自注册 vs 合租买号）</td><td>❌ <strong>完全碰不到</strong></td></tr><tr><td align="center">3</td><td>行为模式（国家跳变 / 一号多设备 / 并发）</td><td>✅ 出口轮换检测、固定节点</td></tr><tr><td align="center">4</td><td>技术指纹（时区 / 语言 / WebRTC / DNS）</td><td>✅ 指纹对齐</td></tr></tbody></table>
+<p><strong>第 2 层是高权重因素里工具唯一完全碰不到的一层</strong>，而它恰好解释了全部差异。给同事换一个中华电信的住宅节点，账号该封还是封——他们缺的不是干净 IP，是那八年。</p>
+<hr>
+<h2 id="归因纪律本次差点踩的坑">归因纪律（本次差点踩的坑）</h2>
+<p>作者最初的推理是「我从没被封，所以这些技术信号不重要」。这里有两个陷阱：</p>
+<ol>
+<li><strong>样本量为 1 且无反事实</strong>：你不知道是工具在保护你，还是你本来就在低分区。</li>
+<li><strong>累加计分不是单点判死</strong>：同一个失误对已攒到高分的账号致命、对低分账号无感——「同样用代理，有人被封有人没事」在这个模型下是<strong>正常输出，不是矛盾</strong>，不能拿它反证信号无用。</li>
+</ol>
+<p>判据：<strong>当你想用自己的账号安然无恙来证明某个措施没必要时，先问「我和被封的人之间，差的到底是这个措施，还是别的东西」。</strong></p>
+<hr>
+<h2 id="边界必须说清楚">边界（必须说清楚）</h2>
+<p>这是一个<strong>能解释全部观测的模型</strong>，不是任何平台内部风控系统的知识。上述机制与公开的风控设计惯例一致，与本次实测数据一致，但没有任何一条来自平台官方。把它当作行动依据可以，当作事实断言不行。</p>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/" class="wikilink">2026-08-19_vpn-guard出口归属门槛与四处假绿修复_迭代复盘_v1</a> —— 本律的来源全链路复盘，含实测数据与工具侧改造</li>
+<li><a href="/above-the-web/chatgpt-windows-v1-8152abb/" class="wikilink">ChatGPT_Windows桌面版安装排障与账号合规边界_v1</a> —— 同域互补：那篇校正「403=风控」「伪装时区防封号」等<strong>过度推断</strong>（否定侧），本篇给出正面解释（到底什么在起作用）</li>
+<li>⚠️ <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> —— 同一台机器、同一套 Clash 环境；那篇讲选节点别看延迟，本篇讲选对节点也救不了账号出身</li>
+<li><a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— 本律的成立靠实测：先假设「他的节点大概是干净的」，实测直接推翻（是 DigitalOcean）</li>
+<li>⚠️ <a href="/above-the-web/2026-09-17-vpn-guard-v1-06d9964/" class="wikilink">2026-09-17_vpn-guard目录整理收口_挪脚本等于挪状态与四处静默放行_迭代复盘_v1</a> —— 工具自己也可能制造基线跳变：<code>browse-vpn</code> 的 Chrome 配置目录跟着脚本位置走，一次「整理目录」就会换出一个空配置，重新登录等于一台新设备（第 3 层）</li>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 平台工程区入口；本文归入「账号与访问」</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/账号安全</span><span class="tag">主题/风控归因</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-17T21:43:40+08:00">2026-09-17</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/%E4%BF%A1%E4%BB%BB%E8%B5%84%E4%BA%A7%E4%BF%9D%E5%BE%97%E4%BD%8F%E9%80%A0%E4%B8%8D%E5%87%BA_%E8%B4%A6%E5%8F%B7%E5%9F%BA%E7%BA%BFvs%E4%BA%BA%E7%BE%A4%E5%85%88%E9%AA%8C_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/%E4%BF%A1%E4%BB%BB%E8%B5%84%E4%BA%A7%E4%BF%9D%E5%BE%97%E4%BD%8F%E9%80%A0%E4%B8%8D%E5%87%BA_%E8%B4%A6%E5%8F%B7%E5%9F%BA%E7%BA%BFvs%E4%BA%BA%E7%BE%A4%E5%85%88%E9%AA%8C_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/2026-07-14-vpn-guard-v1-7eff1d0/">vpn-guard 全链路复盘：从一个防护需求，到开源工具，到宣传片</a></li><li><a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/">2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</a></li><li><a href="/above-the-web/2026-09-17-vpn-guard-v1-06d9964/">2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘</a></li><li><a href="/above-the-web/chatgpt-windows-v1-8152abb/">ChatGPT Windows 桌面版安装排障与账号合规边界</a></li><li><a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/">ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/github-2fa-totp-v1-f9e47bb/"> <span class="card-cat">平台工程</span> <h3>GitHub 强制 2FA 的小白处置 · TOTP 原理与离线生成器</h3> <p>GitHub 弹的「Enable two-factor authentication」不是收费,是强制两步验证(对上传过代码的账号强制,免费…</p> </a><a class="card" href="/above-the-web/2026-09-06-tun-agent-gui-v1-a8056b4/"> <span class="card-cat">平台工程</span> <h3>2026-09-06 · TUN 开关状态漂移复发 · 三层真相源与 agent 起 GUI 边界 · 复盘</h3> <p>- 截图：Codex CLI「你在 0 秒后停止了」+「正在重新连接 3/5」</p> </a><a class="card" href="/above-the-web/dns-fake-ip-dns-v1-90e0c85/"> <span class="card-cat">平台工程</span> <h3>DNS 防泄露五层修复 · fake-ip 形同虚设与物理网卡 DNS 绕过</h3> <p>vpn-leak-audit.ps1 自查 8 项中第 6 项「DNS 解析路径」FAIL：对随机子域发起真实解析后回查，3/3 个实际应答…</p> </a><a class="card" href="/above-the-web/tun-codex-cli-v1-4cbeae3/"> <span class="card-cat">平台工程</span> <h3>代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障</h3> <p>- 用户主诉：Codex CLI 在执行指令时反复遇到网络错误，界面显示&quot;正在重新连接 2/5&quot;。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#机制两套完全不同的判据" data-toc-link="机制两套完全不同的判据">机制：两套完全不同的判据</a></li><li class="d2"><a href="#反直觉的地方结论要反过来读" data-toc-link="反直觉的地方结论要反过来读">反直觉的地方：结论要反过来读</a></li><li class="d2"><a href="#权重排序工具能碰到哪几层" data-toc-link="权重排序工具能碰到哪几层">权重排序（工具能碰到哪几层）</a></li><li class="d2"><a href="#归因纪律本次差点踩的坑" data-toc-link="归因纪律本次差点踩的坑">归因纪律（本次差点踩的坑）</a></li><li class="d2"><a href="#边界必须说清楚" data-toc-link="边界必须说清楚">边界（必须说清楚）</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

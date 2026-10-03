@@ -1,0 +1,265 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MJ 混合媒介拼贴霓虹街头人物提示词复盘 · 蛛网之上</title><meta name="description" content="- 作品名称:未提供,暂记为&#34;混合媒介拼贴霓虹街头人物&#34;"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-06-08-mj-v1-a7096f8/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="MJ 混合媒介拼贴霓虹街头人物提示词复盘"><meta property="og:description" content="- 作品名称:未提供,暂记为&#34;混合媒介拼贴霓虹街头人物&#34;"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-06-08-mj-v1-a7096f8/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MJ 混合媒介拼贴霓虹街头人物提示词复盘"><meta name="twitter:description" content="- 作品名称:未提供,暂记为&#34;混合媒介拼贴霓虹街头人物&#34;"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-08T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="prompt模板库"><meta property="article:tag" content="类型/prompt模板"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-06-08-mj-v1-a7096f8/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-06-08-mj-v1-a7096f8/","url":"https://tiaozhuxiansheng.com/2026-06-08-mj-v1-a7096f8/","headline":"MJ 混合媒介拼贴霓虹街头人物提示词复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 作品名称:未提供,暂记为\"混合媒介拼贴霓虹街头人物\"","datePublished":"2026-06-08T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"prompt模板库","keywords":"类型/prompt模板"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"prompt模板库","item":"https://tiaozhuxiansheng.com/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93"},{"@type":"ListItem","position":3,"name":"MJ 混合媒介拼贴霓虹街头人物提示词复盘","item":"https://tiaozhuxiansheng.com/2026-06-08-mj-v1-a7096f8/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93" data-pagefind-meta="category" data-pagefind-filter="kind:note">prompt模板库</a> <span aria-hidden="true">/</span><span>案例复盘</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-08T00:00:00+08:00">2026-06-08</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 6 分钟读完 · 2,111 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>19 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#原始-prompt-参考">原始 prompt 参考</a></li><li class="d2"><a href="#图本身的赢点">图本身的赢点</a></li><li class="d3"><a href="#1-主体是摄影质感轮廓是手绘信号">1. 主体是摄影质感,轮廓是手绘信号</a></li><li class="d3"><a href="#2-背景不是城市而是城市的纸质残片">2. 背景不是城市,而是城市的纸质残片</a></li><li class="d3"><a href="#3-3d-chrome-液体形状提供材质反差">3. 3D chrome 液体形状提供材质反差</a></li><li class="d3"><a href="#4-鱼眼低机位把走向镜头变成压迫感">4. 鱼眼低机位把”走向镜头”变成压迫感</a></li><li class="d3"><a href="#5-酸性图形不是颜色而是一套攻击性秩序">5. 酸性图形不是颜色,而是一套攻击性秩序</a></li><li class="d2"><a href="#这条-prompt-的结构价值">这条 prompt 的结构价值</a></li><li class="d2"><a href="#可迁移方法论">可迁移方法论</a></li><li class="d3"><a href="#多媒介分层提示词">多媒介分层提示词</a></li><li class="d3"><a href="#灰底高饱和描边">灰底高饱和描边</a></li><li class="d3"><a href="#动势靠镜头不是只靠动作词">动势靠镜头,不是只靠动作词</a></li><li class="d2"><a href="#可复用-prompt-母版">可复用 prompt 母版</a></li><li class="d3"><a href="#本案例同风格变体">本案例同风格变体</a></li><li class="d3"><a href="#关键变量">关键变量</a></li><li class="d2"><a href="#下次同类图的行动清单">下次同类图的行动清单</a></li><li class="d2"><a href="#沉淀去向">沉淀去向</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="mj-混合媒介拼贴霓虹街头人物提示词复盘">MJ 混合媒介拼贴霓虹街头人物提示词复盘</h1>
+<blockquote>
+<p>入档:2026-06-08
+性质:Midjourney 官网优秀提示词观察,不是本人参赛结果复盘
+关键词: mixed media collage / streetwear / neon scribbles / torn magazine paper / halftone / chrome liquid / fisheye / acid graphics</p>
+</blockquote>
+<hr>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>作品名称:未提供,暂记为”混合媒介拼贴霓虹街头人物”</li>
+<li>比赛/项目:Midjourney 官网优秀提示词观察</li>
+<li>作者:未知</li>
+<li>提交时间:未知</li>
+<li>最终结果:非比赛结果,用户主观反馈”很喜欢出来的图片”</li>
+<li>数据来源:用户提供 MJ 官网提示词与单张出图</li>
+<li>复盘性质:优秀参考图观察,所有方法论标注为”首次发现 / 待验证”</li>
+</ul>
+<hr>
+<h2 id="原始-prompt-参考">原始 prompt 参考</h2>
+<blockquote>
+<p>来源:用户从 Midjourney 官网整理。此处作为案例原文存档,不代表建议无脑套用。</p>
+</blockquote>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Mixed media collage animation style, a trendy youth in oversized streetwear walking confidently towards the camera. The character has a realistic photographic texture but is outlined with glowing 2D neon green and hot pink scribbles. The background is a brutalist cityscape made of torn magazine paper layers and halftone print textures. Floating 3D chrome liquid shapes in the air. Grungy edges, dynamic fisheye lens perspective, acid graphics aesthetic, vibrant and juicy colors, ultra-detailed, stop-motion feel</span></span></code></pre>
+<hr>
+<h2 id="图本身的赢点">图本身的赢点</h2>
+<h3 id="1-主体是摄影质感轮廓是手绘信号">1. 主体是摄影质感,轮廓是手绘信号</h3>
+<p>这张图最强的记忆点不是”街头青年”,而是<strong>真人摄影主体 + 2D 荧光涂鸦描边</strong>的冲突。</p>
+<p>主体本身接近黑白摄影:皮肤、衣服、裤脚和鞋底都有真实照片的颗粒、阴影和脏污纹理。外轮廓却被亮绿色和玫红色手绘线条重新包住,像动画分层、涂鸦标记、剪贴画标注同时叠在一张图里。</p>
+<p>这个结构让人物既像真实存在,又像被二次创作重新激活。关键不是单纯加霓虹,而是让霓虹线条承担”视觉签名”功能。</p>
+<h3 id="2-背景不是城市而是城市的纸质残片">2. 背景不是城市,而是城市的纸质残片</h3>
+<p>prompt 里写的是 <code>brutalist cityscape</code>,但画面没有把背景做成完整建筑群,而是把城市拆成撕裂杂志纸、灰白油墨、网点印刷和脏边。</p>
+<p>这会带来两个效果:</p>
+<ol>
+<li>城市不再抢主体,只提供粗粝、冷硬、地下文化的气味。</li>
+<li>拼贴边缘天然允许画面破碎,AI 生成的纹理不稳定反而变成风格的一部分。</li>
+</ol>
+<p>这类提示词不是追求干净真实,而是主动把”残缺、断裂、印刷误差”写成审美资产。</p>
+<h3 id="3-3d-chrome-液体形状提供材质反差">3. 3D chrome 液体形状提供材质反差</h3>
+<p>画面里的银色液态金属并不解释剧情,它的作用是给平面拼贴加入第三种媒介:</p>
+<ul>
+<li>人物:真实摄影质感</li>
+<li>轮廓:2D 荧光手绘线</li>
+<li>背景:纸质拼贴 / 半调印刷</li>
+<li>悬浮物:3D 铬金属液体</li>
+</ul>
+<p>这不是元素堆叠,而是媒介分层。每一层都有独立材质,所以画面复杂但不乱。</p>
+<h3 id="4-鱼眼低机位把走向镜头变成压迫感">4. 鱼眼低机位把”走向镜头”变成压迫感</h3>
+<p>如果只写 <code>walking confidently towards the camera</code>,人物可能只是普通全身照。这里加入 <code>dynamic fisheye lens perspective</code>,结果让鞋、腿和身体比例产生夸张近大远小。</p>
+<p>人物不是站在那里展示穿搭,而是带着压迫感向观者走来。鱼眼让街头感更强,也给 stop-motion / collage 风格增加一种不稳定的运动感。</p>
+<h3 id="5-酸性图形不是颜色而是一套攻击性秩序">5. 酸性图形不是颜色,而是一套攻击性秩序</h3>
+<p><code>acid graphics aesthetic</code> 不是简单的”鲜艳颜色”。它在这张图里由四个信号共同组成:</p>
+<ul>
+<li>高饱和荧光绿 + 热粉</li>
+<li>粗粝纸边和脏污印刷</li>
+<li>手绘乱线包边</li>
+<li>低机位鱼眼造成的视觉冲撞</li>
+</ul>
+<p>所以这张图虽然有 <code>vibrant and juicy colors</code>,但真正成立的是”灰黑摄影底 + 少量高饱和撞色”。如果整张都做成彩虹高饱和,反而会丢掉街头拼贴的锋利感。</p>
+<hr>
+<h2 id="这条-prompt-的结构价值">这条 prompt 的结构价值</h2>
+<p>它不是按”主体 + 背景 + 画质”的普通顺序写完,而是连续指定了四个层级:</p>
+<ol>
+<li><strong>媒介总风格</strong>:<code>Mixed media collage animation style</code></li>
+<li><strong>主体动作与身份</strong>:<code>a trendy youth in oversized streetwear walking confidently towards the camera</code></li>
+<li><strong>主体处理方式</strong>:<code>realistic photographic texture</code> + <code>glowing 2D neon green and hot pink scribbles</code></li>
+<li><strong>环境与附加媒介</strong>:<code>torn magazine paper layers</code> / <code>halftone print textures</code> / <code>3D chrome liquid shapes</code></li>
+<li><strong>镜头与后期气质</strong>:<code>fisheye lens</code> / <code>acid graphics</code> / <code>grungy edges</code> / <code>stop-motion feel</code></li>
+</ol>
+<p>它的价值在于:先把画面定义成”多媒介混合”,再明确每个媒介分别放在哪一层。这样 MJ 不会只生成一张普通街拍,也不会把所有风格词糊成一团。</p>
+<hr>
+<h2 id="可迁移方法论">可迁移方法论</h2>
+<h3 id="多媒介分层提示词">多媒介分层提示词</h3>
+<p><strong>核心</strong>:混合媒介 prompt 不要只堆风格词,要明确”哪一层使用哪一种媒介”。</p>
+<p><strong>来源</strong>:本图把摄影质感给人物,把 2D 涂鸦给轮廓,把纸质拼贴给背景,把 3D 铬金属给悬浮物。</p>
+<p><strong>验证状态</strong>:首次发现 / 待验证</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>先给整张图一个总媒介方向,如 <code>mixed media collage animation style</code>。</li>
+<li>主体用一种稳定媒介承载,例如 realistic photographic texture / claymation / cel animation。</li>
+<li>轮廓、标注或能量层单独指定另一种媒介,例如 glowing 2D scribbles / marker outlines / ink strokes。</li>
+<li>背景使用第三种材质系统,例如 torn magazine paper / halftone print / photocopy texture。</li>
+<li>只添加 1 个强材质反差物,例如 3D chrome liquid shapes,不要同时加入太多装饰。</li>
+</ol>
+<p><strong>反例/边界</strong>:</p>
+<ul>
+<li>如果主体识别度很重要,不要让背景拼贴和涂鸦线条覆盖脸部。</li>
+<li>如果画面要商业干净,grungy edges / torn paper / halftone 可能会显脏。</li>
+<li>如果没有明确分层,<code>mixed media</code> 容易变成随机贴纸感。</li>
+</ul>
+<h3 id="灰底高饱和描边">灰底高饱和描边</h3>
+<p><strong>核心</strong>:想要酸性街头感时,不要把全画面都做成高饱和;用灰黑摄影底承接少量荧光描边,冲击力更强。</p>
+<p><strong>来源</strong>:本图主体和背景大面积是灰黑、纸白、印刷脏色,真正高饱和的只有荧光绿和热粉轮廓。</p>
+<p><strong>验证状态</strong>:首次发现 / 待验证</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>主体与背景先用低饱和照片 / 印刷质感打底。</li>
+<li>只给轮廓、动势线、局部标记上荧光色。</li>
+<li>荧光色控制在 2 个以内,优先使用高对比互补或近互补组合。</li>
+<li>让描边粗糙、不闭合、有手绘误差,避免变成干净 UI 发光边。</li>
+</ol>
+<p><strong>反例/边界</strong>:</p>
+<ul>
+<li>如果目标是高级时装大片,热粉和荧光绿会把气质推向地下海报。</li>
+<li>如果主体服装本身已经很花,再加荧光描边会过载。</li>
+</ul>
+<h3 id="动势靠镜头不是只靠动作词">动势靠镜头,不是只靠动作词</h3>
+<p><strong>核心</strong>:<code>walking towards camera</code> 这类动作词必须配镜头畸变或机位,否则容易变成静态摆拍。</p>
+<p><strong>来源</strong>:本图用 <code>dynamic fisheye lens perspective</code> 把走向镜头放大成近距离压迫感。</p>
+<p><strong>验证状态</strong>:首次发现 / 待验证</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>动作词后面补镜头: fisheye / low-angle / wide-angle close perspective。</li>
+<li>让离镜头最近的部位成为视觉锚,如鞋、手、道具、前景物。</li>
+<li>用 <code>confidently towards the camera</code> 这类方向词明确主体与观者关系。</li>
+<li>拼贴或 stop-motion 风格里,轻微比例夸张可以保留,不要一味追求标准人像比例。</li>
+</ol>
+<p><strong>反例/边界</strong>:</p>
+<ul>
+<li>角色设定图、服装设定图不适合强鱼眼,会破坏比例判断。</li>
+<li>脸部精度优先时,过强低机位容易让五官变形。</li>
+</ul>
+<hr>
+<h2 id="可复用-prompt-母版">可复用 prompt 母版</h2>
+<blockquote>
+<p>不是原作者 prompt,而是根据本图反推的可迁移结构。替换 <code>{主体}</code>、<code>{场景}</code>、<code>{荧光色}</code> 即可测试。</p>
+</blockquote>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Mixed media collage animation style, {subject} walking confidently towards the camera, realistic photographic texture on the character, outlined with rough glowing 2D scribbles in {neon color 1} and {neon color 2}, oversized streetwear silhouette, low-angle dynamic fisheye lens perspective, {background} made from torn magazine paper layers, photocopy grain, halftone print textures, grungy ripped edges, one or two floating 3D chrome liquid shapes, acid graphics aesthetic, grey-black photographic base with limited vibrant neon accents, stop-motion collage feel, tactile paper texture, ultra-detailed, no text, no logo, no watermark</span></span></code></pre>
+<h3 id="本案例同风格变体">本案例同风格变体</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Mixed media collage animation style, a young underground fashion model in oversized black streetwear stepping toward the camera, realistic monochrome photographic texture on the body and clothing, rough glowing 2D neon lime and hot magenta scribble outlines wrapping the silhouette, brutalist concrete city fragments made of torn magazine paper, photocopy grain and halftone print textures, floating 3D chrome liquid blobs near the shoulders, grungy ripped paper edges, low-angle fisheye street photography perspective, acid graphics poster aesthetic, grey-green paper base with limited juicy neon accents, stop-motion collage feel, ultra-detailed --ar 3:4 --style raw --no text, logo, watermark, clean vector outline, polished fashion catalog</span></span></code></pre>
+<h3 id="关键变量">关键变量</h3>
+<ul>
+<li><code>realistic photographic texture on the character</code>:锁住主体真实质感。</li>
+<li><code>rough glowing 2D scribble outlines</code>:让霓虹成为手绘层,不是普通光效。</li>
+<li><code>torn magazine paper layers</code> + <code>halftone print textures</code>:把背景转成印刷拼贴,不是完整城市景观。</li>
+<li><code>floating 3D chrome liquid shapes</code>:提供一个强材质反差点。</li>
+<li><code>low-angle dynamic fisheye</code>:把行走动作变成镜头冲击。</li>
+<li><code>grey-black photographic base with limited vibrant neon accents</code>:控制酸性图形的饱和度比例。</li>
+</ul>
+<hr>
+<h2 id="下次同类图的行动清单">下次同类图的行动清单</h2>
+<ol>
+<li>先判断这张图的核心不是”街头人物”,而是”多媒介分层”。</li>
+<li>复用时优先保留四层结构:摄影主体 / 2D 描边 / 纸质背景 / 3D 反差物。</li>
+<li>改主题时只替换主体身份和背景场景,不要同时替换所有媒介层。</li>
+<li>测试时固定同一主体,分别开关 <code>fisheye</code>、<code>chrome liquid</code>、<code>halftone</code>、<code>neon scribbles</code>,观察哪一层对成图影响最大。</li>
+<li>如果要用于人物 IP,先测试脸部是否被涂鸦描边和鱼眼破坏;必要时把描边限制到身体外轮廓。</li>
+</ol>
+<hr>
+<h2 id="沉淀去向">沉淀去向</h2>
+<p>本案例暂时沉淀为一篇优秀 prompt 观察复盘,后续如果二次验证成立,可进一步拆出正式方法论文档:</p>
+<ul>
+<li><code>多媒介分层提示词</code></li>
+<li><code>灰底高饱和描边</code></li>
+<li><code>动势靠镜头,不是只靠动作词</code></li>
+</ul>
+<p>关联文档:</p>
+<ul>
+<li><a href="/above-the-web/03-prompt-987b076/" class="wikilink">03_prompt模板库索引</a></li>
+<li><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+<li><a href="/above-the-web/prompt-v1-b768695/" class="wikilink">prompt的四段式结构_v1</a></li>
+<li><a href="/above-the-web/v1-8af5c76/" class="wikilink">触觉抽象词翻译公式_v1</a></li>
+<li><a href="/above-the-web/v1-b1b1347/" class="wikilink">姿态指令的不确定性策略_v1</a></li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>所属索引:<a href="/above-the-web/03-prompt-987b076/" class="wikilink">03_prompt模板库索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/prompt模板</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/02_%E6%A1%88%E4%BE%8B%E5%A4%8D%E7%9B%98/2026-06-08_MJ%E6%B7%B7%E5%90%88%E5%AA%92%E4%BB%8B%E6%8B%BC%E8%B4%B4%E9%9C%93%E8%99%B9%E8%A1%97%E5%A4%B4%E4%BA%BA%E7%89%A9%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/02_%E6%A1%88%E4%BE%8B%E5%A4%8D%E7%9B%98/2026-06-08_MJ%E6%B7%B7%E5%90%88%E5%AA%92%E4%BB%8B%E6%8B%BC%E8%B4%B4%E9%9C%93%E8%99%B9%E8%A1%97%E5%A4%B4%E4%BA%BA%E7%89%A9%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/03-prompt-987b076/">Prompt 模板库索引</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-05-12-v1-9ca3327/"> <span class="card-cat">prompt模板库</span> <h3>「告白」获奖图复盘</h3> <p>身体从右上斜切到左下,占据画面绝大部分,没有给观众&quot;喘气&quot;的空间。这种压迫感和&quot;告白前夜的疲惫&quot;主题高度同构——情绪是从画面外溢出来的,不是…</p> </a><a class="card" href="/above-the-web/2026-05-12-v1-d5ca7d5/"> <span class="card-cat">prompt模板库</span> <h3>「星河如丝般顺滑」获奖图复盘</h3> <p>prompt 写的是 head slightly tilted back with eyes gently closed,MJ 把&quot;slig…</p> </a><a class="card" href="/above-the-web/2026-05-14-v1-e2a7ed9/"> <span class="card-cat">prompt模板库</span> <h3>「秘密基地」获奖图复盘</h3> <p>小女孩侧身蹲着,低头看自己手里的小本子,完全沉浸在自己的世界里。</p> </a><a class="card" href="/above-the-web/2026-05-15-v1-ad50349/"> <span class="card-cat">prompt模板库</span> <h3>「灵光一现」+「风花雪月」双题复盘</h3> <p>第一版方案是&quot;头顶飘一颗灯泡&quot;——99% 的人都会做的版本,撞车池极大。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#原始-prompt-参考" data-toc-link="原始-prompt-参考">原始 prompt 参考</a></li><li class="d2"><a href="#图本身的赢点" data-toc-link="图本身的赢点">图本身的赢点</a></li><li class="d3"><a href="#1-主体是摄影质感轮廓是手绘信号" data-toc-link="1-主体是摄影质感轮廓是手绘信号">1. 主体是摄影质感,轮廓是手绘信号</a></li><li class="d3"><a href="#2-背景不是城市而是城市的纸质残片" data-toc-link="2-背景不是城市而是城市的纸质残片">2. 背景不是城市,而是城市的纸质残片</a></li><li class="d3"><a href="#3-3d-chrome-液体形状提供材质反差" data-toc-link="3-3d-chrome-液体形状提供材质反差">3. 3D chrome 液体形状提供材质反差</a></li><li class="d3"><a href="#4-鱼眼低机位把走向镜头变成压迫感" data-toc-link="4-鱼眼低机位把走向镜头变成压迫感">4. 鱼眼低机位把”走向镜头”变成压迫感</a></li><li class="d3"><a href="#5-酸性图形不是颜色而是一套攻击性秩序" data-toc-link="5-酸性图形不是颜色而是一套攻击性秩序">5. 酸性图形不是颜色,而是一套攻击性秩序</a></li><li class="d2"><a href="#这条-prompt-的结构价值" data-toc-link="这条-prompt-的结构价值">这条 prompt 的结构价值</a></li><li class="d2"><a href="#可迁移方法论" data-toc-link="可迁移方法论">可迁移方法论</a></li><li class="d3"><a href="#多媒介分层提示词" data-toc-link="多媒介分层提示词">多媒介分层提示词</a></li><li class="d3"><a href="#灰底高饱和描边" data-toc-link="灰底高饱和描边">灰底高饱和描边</a></li><li class="d3"><a href="#动势靠镜头不是只靠动作词" data-toc-link="动势靠镜头不是只靠动作词">动势靠镜头,不是只靠动作词</a></li><li class="d2"><a href="#可复用-prompt-母版" data-toc-link="可复用-prompt-母版">可复用 prompt 母版</a></li><li class="d3"><a href="#本案例同风格变体" data-toc-link="本案例同风格变体">本案例同风格变体</a></li><li class="d3"><a href="#关键变量" data-toc-link="关键变量">关键变量</a></li><li class="d2"><a href="#下次同类图的行动清单" data-toc-link="下次同类图的行动清单">下次同类图的行动清单</a></li><li class="d2"><a href="#沉淀去向" data-toc-link="沉淀去向">沉淀去向</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

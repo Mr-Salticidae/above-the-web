@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>录屏假光标被打回：画出来的不算操作，与&quot;输入送达&quot;的四处假信号 · 蛛网之上</title><meta name="description" content="教程录屏交付 11 条，被一句话打回：&#34;这不是鼠标操作&#34;。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-c224595/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="录屏假光标被打回：画出来的不算操作，与&#34;输入送达&#34;的四处假信号"><meta property="og:description" content="教程录屏交付 11 条，被一句话打回：&#34;这不是鼠标操作&#34;。"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-c224595/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="录屏假光标被打回：画出来的不算操作，与&#34;输入送达&#34;的四处假信号"><meta name="twitter:description" content="教程录屏交付 11 条，被一句话打回：&#34;这不是鼠标操作&#34;。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-20T10:26:16+08:00"><meta property="article:modified_time" content="2026-08-20T10:26:16+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-c224595/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-c224595/","url":"https://tiaozhuxiansheng.com/v1-c224595/","headline":"录屏假光标被打回：画出来的不算操作，与\"输入送达\"的四处假信号","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"教程录屏交付 11 条，被一句话打回：\"这不是鼠标操作\"。","datePublished":"2026-08-20T10:26:16+08:00","dateModified":"2026-08-20T10:26:16+08:00","articleSection":"平台工程","keywords":"类型/平台工程"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"录屏假光标被打回：画出来的不算操作，与\"输入送达\"的四处假信号","item":"https://tiaozhuxiansheng.com/v1-c224595/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-20T10:26:16+08:00">2026-08-20</time></span>  <span>约 6 分钟读完 · 2,414 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>7 节</i></summary> <ol> <li class="d2"><a href="#现象">现象</a></li><li class="d2"><a href="#根因与正解">根因与正解</a></li><li class="d2"><a href="#四处看着对的假信号终端录屏同一天连废-3-条">四处”看着对”的假信号（终端录屏，同一天连废 3 条）</a></li><li class="d2"><a href="#附同批次其它坑">附：同批次其它坑</a></li><li class="d2"><a href="#第五处假信号我自己的摘要-二次验证">第五处假信号：我自己的摘要 ⭐二次验证</a></li><li class="d2"><a href="#教训">教训</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="录屏假光标被打回画出来的不算操作与输入送达的四处假信号">录屏假光标被打回：画出来的不算操作，与”输入送达”的四处假信号</h1>
+<blockquote>
+<p>一句话律：<strong>演示鼠标操作，观众要看的是”手怎么动”，不是”屏幕上有个圆点在动”</strong>——浏览器里画的光标无论放多大都不是系统指针；顺着这条往下，录屏自动化里每一个”看着对”的信号都要问一句”它测的是不是我以为的那件事”。</p>
+</blockquote>
+<h2 id="现象">现象</h2>
+<p>教程录屏交付 11 条，被一句话打回：<strong>“这不是鼠标操作”</strong>。</p>
+<p>那批素材是 Playwright 无头浏览器录的，页面里注入一个 CSS <code>div</code> 当光标。收到的第一版反馈是”鼠标指针太小、看不清落点”，我据此把假光标从 18px 调到 30px、描边 2.5→3.5px、点击涟漪终点 52→88px——<strong>方向从一开始就是错的</strong>。假光标再大也只是网页里的一个圆点，真实系统指针全程没动。</p>
+<h2 id="根因与正解">根因与正解</h2>
+<p>改用 <a href="https://github.com/Mr-Salticidae/humancast">humancast</a> 驱动真实 Windows 指针（最小急动度轨迹 + 贝塞尔弧线 + 落点前微抖 + 终点过冲回修），配成<strong>混合架构</strong>：</p>
+<ul>
+<li><strong>CDP 算”点哪”</strong>：Playwright <code>connectOverCDP</code> 用 DOM 选择器拿元素位置——选择器比坐标稳，UI 一改就自动跟着走；</li>
+<li><strong>humancast 让真实鼠标”走过去”</strong>：录进画面的是系统指针。</li>
+</ul>
+<p>坐标不靠推 DPI，走<strong>闭环标定</strong>：真实鼠标先走两个已知屏幕点，从页面 <code>mousemove</code> 读回 <code>clientX/clientY</code>，反解仿射变换。实测 <code>screen = page × 1.0 + (2560, 87)</code>。这一步绕开了混屏 DPI 的全部推理——本机主屏 2560×1440 物理 = 2048×1152 DIP（125% 缩放），Chrome 报 <code>availLeft: 2048</code> 而 Win32 报 2560，硬算必错。</p>
+<h2 id="四处看着对的假信号终端录屏同一天连废-3-条">四处”看着对”的假信号（终端录屏，同一天连废 3 条）</h2>
+<p>换到 PowerShell 终端录屏后，前三条全废。<strong>没有一条是被录软件的问题，全是判据测错了东西</strong>：</p>
+<ol>
+<li>
+<p><strong>“有子进程”不等于”命令在跑”</strong> ⚠️首次
+我用”PowerShell 有没有活着的子进程”判断命令结束，但<strong>空闲的 PowerShell 本身就挂着一个 <code>conhost.exe</code> 子进程</strong>，判据恒为真：<code>git clone</code> 一路等到 300s 超时才往下走，后面全部错位。要按 exe 名过滤。
+底下还压着一层：<code>CreateToolhelp32Snapshot</code> 没设 <code>restype = c_void_p</code>，64 位句柄被 ctypes 默认按 <code>c_int</code> 截断。修完实测：空闲 → False，命令在跑 → <code>['node.exe']</code>，跑完 → False。</p>
+</li>
+<li>
+<p><strong>“开打前验过前台”不等于”全程在前台”</strong> ⚠️首次
+后台进程调 <code>SetForegroundWindow</code> 会被 Windows <strong>静默拒绝</strong>（不报错，就是不生效）。抽帧确认第一条废片里 <code>pnpm run build</code> 和 <code>pnpm dsh web</code> 根本没敲进终端——画面停在上一条命令的提示符上，而脚本以为自己敲完了。
+humancast 自带保险丝 <code>window.require_foreground(hwnd)</code>（“不是目标窗口就一个键都不发”），但<strong>只在开打前验一次不够</strong>：一条长路径要敲三四秒，中途焦点被抢走，后半截就飞出去了。实测把后半截 <code>{项目工作区}\lab\install-demo"</code> 敲进了另一个窗口，终端里只剩半条 <code>cd "E:</code>，<strong>未闭合的引号让 PowerShell 进了续行模式 <code>>></code></strong>，后续两条命令全被吞进续行，最后 <code>pnpm install</code> 在盘根目录跑，报 <code>ERR_PNPM_NO_PKG_MANIFEST</code>。
+正解：<code>AttachThreadInput</code> 强抢前台 + <strong>分段打字，每 6 个字符重验一次</strong>，抢不到就中止。</p>
+</li>
+<li>
+<p><strong>“屏幕没变化”不等于”命令没执行”</strong> ⚠️首次
+用屏幕变化确认回车生效，测出来永远是”没变化”。量了才知道：<strong>一条命令回车后整屏差异只有 0.0014，光标闪烁的本底噪声是 0.00012，而 humancast <code>wait_change</code> 默认 <code>tol=0.002</code> 正好卡在信号上方</strong>——默认值不是保守，是完全失灵。取 0.0005（噪声 4 倍、信号 1/3）才分得开。
+另一半是取样时序：<strong>基线必须在按回车之前取</strong>。秒回命令（<code>git --version</code>）在 <code>press</code> 返回时输出已经画完了，回车后再取基线永远比不出差异，脚本会白敲第二次回车、多出一个空提示符。</p>
+</li>
+<li>
+<p><strong>“刚拿到焦点”不等于”能开始打字”</strong> ⚠️首次
+焦点切换瞬间打字会掉前几个字符，实测 <code>git --version</code> 变成 <code>t --version</code>。要是落在 <code>git clone</code> 上，整条素材废在第一行。
+正解：<strong>命令前补两个空格当牺牲字符</strong>（PowerShell 不在乎前导空格），掉的是空格不是 <code>git</code> 的 <code>g</code>。
+我一度改用 ESC 当”热身键”——<strong>这是个错误做法</strong>：ESC 会把”上一条没提交成功的命令”整行清掉，等于毁尸灭迹，现场连证据都不剩，反而更难查。修一个症状引入一个更坏的 bug。</p>
+</li>
+</ol>
+<h2 id="附同批次其它坑">附：同批次其它坑</h2>
+<ul>
+<li><strong><code>Remove-Item -Recurse -Force</code> 删不掉 pnpm 的 <code>node_modules</code></strong> ⚠️首次：报 <code>mismatch between the tag specified in the request and the tag present in the reparse point</code>。pnpm 的 <code>node_modules</code> 里全是 reparse point，PowerShell 处理不了。<strong>这句报错极易被误读成”文件被占用”</strong>，去查占用进程是白费功夫（我查了一轮进程树和监听端口）。用 <code>cmd /c rd /s /q</code>。</li>
+<li><strong>OBS 开录会把自己拉到前台</strong>：Chrome 一失去前台，下一次点击就被当成”激活窗口”吞掉（实测设置弹窗压根没开）。开录后要留延时并重新置前台。</li>
+<li><strong>终端字号是”鼠标太小”的同类问题</strong>：默认 conhost 字体在 1920×1080 下几乎看不清，教学素材等于白录。正解是让 shell 自己调 <code>SetCurrentConsoleFontEx</code>（Consolas 30px）——<strong>只影响那一个窗口，不写注册表</strong>，不污染用户环境。</li>
+<li><strong><code>.ps1</code> 要 CRLF + UTF-8 BOM</strong>（⭐二次验证，见关联）：LF 会让 here-string 解析炸；无 BOM 则 PS 5.1 按 ANSI 读，中文窗口标题变乱码，脚本按标题找窗口就永远找不到——<strong>症状是”窗口没起来”，跟真的没起来完全一样</strong>。</li>
+<li><strong>废片文件名必须编号</strong>：我用了固定名 <code>.FAILED.mp4</code>，第二条废片落盘时把第一条覆盖了。协作红线写的是”不删废片”，<strong>覆盖同名文件同样是删</strong>——约 382MB 的废片没保住。</li>
+</ul>
+<h2 id="第五处假信号我自己的摘要-二次验证">第五处假信号：我自己的摘要 ⭐二次验证</h2>
+<p>收口写回执时，我把交接单里的「C 类 9 条」写成了「转 Mac 端另录，本机不再处理」——
+<strong>而原文写的是「Claude Code 本机处理（9 条，原误标 Mac）……本机 Windows 即可录，无需 Mac 设备」，
+意思完全相反</strong>。等于我把 9 条本该我做的活，在回执里写成了别人的。</p>
+<p>错因：写回执时我用的是自己对交接单的<strong>摘要记忆</strong>，没回去读原文那一节。而这份交接单的
+C 类恰好前后改过三版（Mac 另录 → 执行人自己有 Mac → 根本不需要 Mac），我的记忆停在中间那版。</p>
+<p><strong>这跟协作方同日总结的「转述链衰减律」是同一条</strong>，只不过那边衰减的是人与人之间的转述，
+这边衰减的是<strong>我自己对原始材料的压缩</strong>——而后者更隐蔽，因为它不经过任何人，
+不会有第二个人在场提出异议。长会话被压缩、跨会话交接、隔天续做，都会制造这种”自摘要”。</p>
+<p>判据很简单：<strong>凡是要写进交付物的”谁做什么”，落笔前回原文那一节重读一遍</strong>，
+不用回忆、不用信摘要——重读一节的成本是十几秒，写反的成本是 9 条素材没人做。</p>
+<h2 id="教训">教训</h2>
+<ul>
+<li><strong>“把它调大”之前先问”它是不是那个东西”</strong>。假光标从 18px 调到 30px 是完全正确的执行 + 完全错误的方向；反馈说”看不清”，真问题是”根本不是它”。</li>
+<li><strong>每一个绿灯都要问”它测的是不是我以为的那件事”</strong>：conhost 让”有子进程”恒真、默认阈值让”屏幕变化”恒假、<code>SetForegroundWindow</code> 静默失败让”已置前台”恒真。三个判据全是假的，而症状都长得像”程序跑得好好的”。</li>
+<li><strong>单次验证成本高的任务，先做不录制的彩排</strong>。每条素材 3–10 分钟，我”改一处 → 录一次 → 再废”重复了三轮；第四次之前改成先跑一遍不开 OBS 的干跑，<strong>1 分钟就验完了整条输入链路</strong>。这个顺序早两小时用上就不会废三条。</li>
+<li><strong>自己的摘要也是转述</strong>。长会话压缩、跨会话交接、隔天续做都会生成”我记得规格是这么写的”，它和别人的转述一样会衰减，且更隐蔽——没有第二个人在场纠正。</li>
+<li><strong>红线要按后果理解，不按动作理解</strong>。“不删废片”约束的是”废片还在不在”，不是”有没有执行删除操作”。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> —— “永远绿的信号最没用”同族；其中「PS 5.1 按 ANSI 读 UTF-8 无 BOM 致中文标识符静默走错分支」在本轮<strong>二次验证</strong>（这次是中文窗口标题）</li>
+<li><a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> —— “检测工具本身要先被证伪”的跨场景二次验证：本轮是默认阈值卡在信号上方，工具两端都要用已知样本标定</li>
+<li><a href="/above-the-web/v1-6fdab0b/" class="wikilink">构建产物的脏改动不是事故_复发是归因错了的信号_v1</a> —— 归因错了会让”修复”引入更坏的问题（本轮的 ESC 热身键）</li>
+<li><a href="/above-the-web/2026-08-19-deepseekharness-mcp-v1-a93c3ec/" class="wikilink">2026-08-19_DeepSeekHarness教程收口日_MCP改写与录屏重录交接复盘_v1</a> —— 同一天、同一项目的协作侧复盘，其头号律「转述链衰减律：执行前回原始材料」在本文第五节由我<strong>二次验证</strong>(这次衰减的是自摘要)</li>
+<li><a href="/above-the-web/v1-a1d4663/" class="wikilink">交接文档不是需求原文_接手先回溯上游_v1</a> —— 同族先例</li>
+<li><a href="/above-the-web/v1-0abb7cd/" class="wikilink">零作品的比赛_界面演完不等于链路存在_v1</a> —— 「X 不等于 Y」同族：那边是界面演完≠链路存在，这边是画出来的光标≠鼠标操作</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-08-20T10:26:16+08:00">2026-08-20</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E5%BD%95%E5%B1%8F%E5%81%87%E5%85%89%E6%A0%87%E8%A2%AB%E6%89%93%E5%9B%9E_%E7%94%BB%E5%87%BA%E6%9D%A5%E7%9A%84%E4%B8%8D%E7%AE%97%E6%93%8D%E4%BD%9C%E4%B8%8E%E8%BE%93%E5%85%A5%E9%80%81%E8%BE%BE%E5%9B%9B%E5%A4%84%E5%81%87%E4%BF%A1%E5%8F%B7_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E5%BD%95%E5%B1%8F%E5%81%87%E5%85%89%E6%A0%87%E8%A2%AB%E6%89%93%E5%9B%9E_%E7%94%BB%E5%87%BA%E6%9D%A5%E7%9A%84%E4%B8%8D%E7%AE%97%E6%93%8D%E4%BD%9C%E4%B8%8E%E8%BE%93%E5%85%A5%E9%80%81%E8%BE%BE%E5%9B%9B%E5%A4%84%E5%81%87%E4%BF%A1%E5%8F%B7_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/doc-mcp-gcp-v1-77ca6ee/">腾讯文档 doc-mcp 程序化编辑 · GCP 坐标定位与自底向上防漂移</a></li><li><a href="/above-the-web/2026-09-08-workbuddy-v1-2-v1-d3c41fb/">WorkBuddy 教程录屏公告与《屏幕录制标准》v1.2 · 协作复盘</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/ping-fake-ip-v1-9bfe0c8/"> <span class="card-cat">平台工程</span> <h3>ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型</h3> <p>- 用户主诉：ping coursera.org 通，浏览器看课程极卡。</p> </a><a class="card" href="/above-the-web/v1-0abb7cd/"> <span class="card-cat">平台工程</span> <h3>零作品的比赛 · 界面演完不等于链路存在</h3> <p>- 项目:PB Arena 官方赛事(报名 → 出图 → 上传 → 投票 → 结算)</p> </a><a class="card" href="/above-the-web/v1-6fdab0b/"> <span class="card-cat">平台工程</span> <h3>构建产物的脏改动不是事故 · 复发是归因错了的信号</h3> <p>E:\above-the-web\kb-content 稳定呈现 305 个 M（modified）。作者明确指出「第二次了」。</p> </a><a class="card" href="/above-the-web/v1-83c88ab/"> <span class="card-cat">平台工程</span> <h3>全站文字截断体检 · 检测工具本身要先被证伪</h3> <p>- 触发:用户截图后台轮次列表,「参与范围」下拉只显示「所有人可」,并要求「顺便查一下类似的问题一并修复」</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#现象" data-toc-link="现象">现象</a></li><li class="d2"><a href="#根因与正解" data-toc-link="根因与正解">根因与正解</a></li><li class="d2"><a href="#四处看着对的假信号终端录屏同一天连废-3-条" data-toc-link="四处看着对的假信号终端录屏同一天连废-3-条">四处”看着对”的假信号（终端录屏，同一天连废 3 条）</a></li><li class="d2"><a href="#附同批次其它坑" data-toc-link="附同批次其它坑">附：同批次其它坑</a></li><li class="d2"><a href="#第五处假信号我自己的摘要-二次验证" data-toc-link="第五处假信号我自己的摘要-二次验证">第五处假信号：我自己的摘要 ⭐二次验证</a></li><li class="d2"><a href="#教训" data-toc-link="教训">教训</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

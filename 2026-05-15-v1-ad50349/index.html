@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>「灵光一现」+「风花雪月」双题复盘 · 蛛网之上</title><meta name="description" content="第一版方案是&#34;头顶飘一颗灯泡&#34;——99% 的人都会做的版本,撞车池极大。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-05-15-v1-ad50349/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="「灵光一现」+「风花雪月」双题复盘"><meta property="og:description" content="第一版方案是&#34;头顶飘一颗灯泡&#34;——99% 的人都会做的版本,撞车池极大。"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-05-15-v1-ad50349/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="「灵光一现」+「风花雪月」双题复盘"><meta name="twitter:description" content="第一版方案是&#34;头顶飘一颗灯泡&#34;——99% 的人都会做的版本,撞车池极大。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-05-15T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="prompt模板库"><meta property="article:tag" content="类型/prompt模板"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-05-15-v1-ad50349/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-05-15-v1-ad50349/","url":"https://tiaozhuxiansheng.com/2026-05-15-v1-ad50349/","headline":"「灵光一现」+「风花雪月」双题复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"第一版方案是\"头顶飘一颗灯泡\"——99% 的人都会做的版本,撞车池极大。","datePublished":"2026-05-15T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"prompt模板库","keywords":"类型/prompt模板"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"prompt模板库","item":"https://tiaozhuxiansheng.com/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93"},{"@type":"ListItem","position":3,"name":"「灵光一现」+「风花雪月」双题复盘","item":"https://tiaozhuxiansheng.com/2026-05-15-v1-ad50349/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93" data-pagefind-meta="category" data-pagefind-filter="kind:note">prompt模板库</a> <span aria-hidden="true">/</span><span>案例复盘</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-05-15T00:00:00+08:00">2026-05-15</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 11 分钟读完 · 4,063 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>16 节</i></summary> <ol> <li class="d2"><a href="#第一部分--灵光一现我的方案--获奖图分析">第一部分 · 「灵光一现」我的方案 + 获奖图分析</a></li><li class="d3"><a href="#我的方案设计要点虽未获奖但值得沉淀">我的方案设计要点(虽未获奖但值得沉淀)</a></li><li class="d3"><a href="#prompt-的赢点案例特定">prompt 的赢点(案例特定)</a></li><li class="d3"><a href="#反思被否决的头顶飘灯泡版本">反思:被否决的”头顶飘灯泡”版本</a></li><li class="d3"><a href="#我的方案-prompt-完整存档">我的方案 prompt 完整存档</a></li><li class="d3"><a href="#本期获奖图分析牛顿苹果灯泡头油画漫画混合媒介">本期获奖图分析:牛顿苹果灯泡头(油画+漫画混合媒介)</a></li><li class="d2"><a href="#第二部分--风花雪月我的方案--获奖图分析">第二部分 · 「风花雪月」我的方案 + 获奖图分析</a></li><li class="d3"><a href="#我的方案四时态叠化同一空间的四个季节">我的方案:四时态叠化(同一空间的四个季节)</a></li><li class="d3"><a href="#我的方案-prompt-完整存档-1">我的方案 prompt 完整存档</a></li><li class="d3"><a href="#本期获奖图分析双图平票获奖">本期获奖图分析(双图平票获奖)</a></li><li class="d2"><a href="#第三部分--本次双题的方法论沉淀总览">第三部分 · 本次双题的方法论沉淀总览</a></li><li class="d3"><a href="#已有方法论的验证情况">已有方法论的验证情况</a></li><li class="d3"><a href="#新沉淀的-11-条方法论">新沉淀的 11 条方法论</a></li><li class="d3"><a href="#与已有知识库的对照升级">与已有知识库的对照升级</a></li><li class="d3"><a href="#元复盘为什么未获奖也值得复盘">元复盘:为什么”未获奖也值得复盘”</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="灵光一现风花雪月双题复盘">「灵光一现」+「风花雪月」双题复盘</h1>
+<blockquote>
+<p>入档:2026-05-15 · 校准:2026-05-15(原标题”获奖图复盘”修正为”双题复盘”)
+主线作品来源:<code>{AIGC工作站}/复盘记录\2026-05-14_MPB_灵光一现+风花雪月复盘.md</code>
+性质:双题方案复盘 + 同期获奖图对比研究。<strong>我的方案</strong>票数靠前但未达获奖线;<strong>获奖图</strong>是同期对手作品。两组放在一起复盘,产出 11 条新方法论,首次系统性梳理”红海主题的三条破局路径”。</p>
+</blockquote>
+<hr>
+<h2 id="第一部分--灵光一现我的方案--获奖图分析">第一部分 · 「灵光一现」我的方案 + 获奖图分析</h2>
+<h3 id="我的方案设计要点虽未获奖但值得沉淀">我的方案设计要点(虽未获奖但值得沉淀)</h3>
+<h4 id="1-隐喻的身体化头本身就是灯泡">1. 隐喻的”身体化”:头本身就是灯泡</h4>
+<p>第一版方案是”头顶飘一颗灯泡”——99% 的人都会做的版本,撞车池极大。
+我的最终版本:<strong>整个头被替换成一颗巨大的发光灯泡</strong>,脖子和灯泡之间有可见的金属螺口。</p>
+<p>关键的概念升级:</p>
+<ul>
+<li>头顶飘灯泡 = 灵光<strong>来到</strong>他这里(外部事件)</li>
+<li>头就是灯泡 = 灵光<strong>就是</strong>他自己(内部状态)</li>
+</ul>
+<p>把隐喻从”事件”升级为”身体本身的属性”,视觉荒诞度和概念密度同步翻倍。这条概念升级是这次方案最得意的点。</p>
+<p>→ 沉淀:<a href="/above-the-web/v1-495d30c/" class="wikilink">隐喻身体化升级法_v1</a></p>
+<h4 id="2-拥挤集体作为对比锚">2. 拥挤集体作为对比锚</h4>
+<p>地铁车厢里挤满了西装通勤者,<strong>所有人都是普通人头</strong>,只有主角一个人是灯泡头。</p>
+<p>如果是主角独处的厕所版,灯泡头只是”换了个头”;放进集体里,瞬间变成**“只有他一个人不一样”**——孤独感、被孤立感、内在与外部世界的割裂感全部叠加上来。</p>
+<p>→ 沉淀:<a href="/above-the-web/v1-e00d97e/" class="wikilink">集体作为个体的对比锚_v1</a></p>
+<h4 id="3-物理细节让超现实可信">3. 物理细节让超现实可信</h4>
+<p>灯泡头<strong>有可见的金属螺口</strong>和脖子衔接。这一个细节让”头变成灯泡”从”AI 拼接感”升级为”这个世界里就有这种生物”。prompt 里的 <code>seamlessly attached to his neck with a visible metal screw base</code> —— 8 个词,直接决定了画面的可信度。</p>
+<p>→ 沉淀:<a href="/above-the-web/v1-6fdd726/" class="wikilink">超现实细节的物理锚_v1</a></p>
+<h4 id="4-身体普通反衬头的超现实">4. 身体”普通”反衬头的”超现实”</h4>
+<p>灯泡头是超现实的,但他的身体保留了完全普通的疲惫:灰色西装皱皱的、肩膀松垮、公文包被挤在胸前、领带歪着。<strong>身体越普通越疲惫,头越超现实,反差就越强</strong>。</p>
+<p>→ 沉淀:<a href="/above-the-web/v1-96351ff/" class="wikilink">超现实主体的普通身体律_v1</a></p>
+<h4 id="5-冷暖光对比">5. 冷暖光对比</h4>
+<p>地铁车厢的冷蓝灰白炽日光灯 vs 灯泡头的暖黄光。<strong>整个画面冷,只有他一个人暖</strong>——光本身就是叙事:冷光 = 外部世界 / 集体 / 麻木,暖光 = 内部世界 / 个体 / 灵感。</p>
+<h3 id="prompt-的赢点案例特定">prompt 的赢点(案例特定)</h3>
+<p><strong>1. “his entire head has transformed into” 是关键句</strong></p>
+<p>不用 <code>his head is a lightbulb</code>(模糊)、不用 <code>lightbulb head</code>(标签化),用了 <code>his entire head has transformed into a large glowing yellow incandescent lightbulb</code>:</p>
+<ul>
+<li><code>entire</code> 强调全替换,不是部分</li>
+<li><code>has transformed into</code> 是动词时态,带过程感</li>
+<li><code>incandescent</code> 锁定老式钨丝灯泡(而非现代 LED),情绪温度更暖更复古</li>
+</ul>
+<p><strong>2. 道具列表的克制</strong></p>
+<p>通勤场景里没写”手机/报纸/咖啡杯”等典型通勤道具,只写了 <code>briefcase squeezed against his chest</code>。减法到极致,让灯泡头是唯一视觉焦点。</p>
+<p><strong>3. “oblivious commuters” 是关键叙事词</strong></p>
+<p><code>surrounded by other commuters ... all with ordinary human heads ... in resigned silence</code> 确保周围人**“无视”**主角的灯泡头——这才是”灵光一现”的真正荒诞:<strong>只有他自己知道脑子亮了,别人都看不见</strong>。</p>
+<h3 id="反思被否决的头顶飘灯泡版本">反思:被否决的”头顶飘灯泡”版本</h3>
+<p>第一轮方案被否决的原因:</p>
+<ul>
+<li>灯泡作为外部物件 → 老套(经典漫画时代就在用)</li>
+<li>主角抬头看灯泡 → 把超现实”指出来”了,失了”他自己都不知道脑子亮了”的钝感</li>
+<li>头顶飘的灯泡和主角是分离的两个物件 → 概念密度不够</li>
+</ul>
+<p><strong>升级路径</strong>:外部隐喻物 → 主体身体本身的属性。可套到其他主题:</p>
+<ul>
+<li>“热血沸腾” → 头顶冒蒸汽 ❌ → 整个人就是个滚烫的水壶 ✅</li>
+<li>“怒火中烧” → 头顶冒火 ❌ → 整个头是个燃烧的火炬 ✅</li>
+<li>“心如止水” → 胸口画水 ❌ → 胸腔被替换为一个静止的水缸 ✅</li>
+</ul>
+<h3 id="我的方案-prompt-完整存档">我的方案 prompt 完整存档</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>a tired east asian man in a grey office suit crushed against the glass door of a packed morning commute subway car, briefcase squeezed against his chest, surrounded by other commuters jammed shoulder to shoulder all with ordinary human heads looking down or away in resigned silence, but his entire head has transformed into a large glowing yellow incandescent lightbulb seamlessly attached to his neck with a visible metal screw base where his neck meets the bulb, the bulb glowing warmly from within casting a private circle of warm light onto the surrounding commuters who remain oblivious, his shoulders still slumped with commute exhaustion, harsh cold subway car fluorescent light everywhere except the warm glow from his bulb head, photorealistic surreal photography, shot on medium format film, hyperreal texture, fine grain, tight claustrophobic composition, muted palette of cold steel grey commuter black and warm amber light, cinematic surrealism, absurd tender moment, lonely commuter poetry</span></span></code></pre>
+<h3 id="本期获奖图分析牛顿苹果灯泡头油画漫画混合媒介">本期获奖图分析:牛顿苹果灯泡头(油画+漫画混合媒介)</h3>
+<p><strong>这张图是本期「灵光一现」的实际获奖作品。我的方案虽然有票但没达到获奖线,获奖的是这一张。</strong></p>
+<p>参考截图:男人脸极致特写,<strong>头顶半边是燃烧着的灯泡,旁边一颗大苹果几乎砸到他脸上</strong>,脸部极度夸张(瞪眼、张嘴)。媒介是<strong>油画厚涂 + 漫画粗线 + 网点纸</strong>的混合。</p>
+<p><strong>这张图的核心赢点</strong>:</p>
+<ol>
+<li><strong>双符号叠加</strong> —— 牛顿苹果(外部触发)+ 灯泡(内部反应),两个最经典的”灵感”符号叠在同一帧形成因果链</li>
+<li><strong>媒介混合破局</strong> —— 油画肉感笔触 + 漫画粗黑线 + 60 年代漫画网点纸,<strong>三种语言冲突在同一张图</strong></li>
+<li><strong>极致夸张表情</strong> —— 和我们「删表情律」完全反向。<strong>油画/漫画语境本身就能承受夸张表情</strong></li>
+<li><strong>特写切边</strong> —— 头顶、下巴、苹果都被画面切掉,<strong>所有边都不完整</strong></li>
+<li><strong>几乎撞脸的距离</strong> —— 苹果”几乎已经砸到了”,时间锚定在最戏剧的那一帧</li>
+</ol>
+<p><strong>与我的方案对比</strong>:</p>
+<ul>
+<li>我的方案:<strong>冷静的荒诞</strong>(地铁灯泡头,身体疲惫,光对比克制)</li>
+<li>获奖图:<strong>爆炸的荒诞</strong>(特写表情,媒介冲突,瞬间动态)</li>
+</ul>
+<p><strong>两条路径都能打动观众,但本期票数倾向”热处理”</strong> —— “灵光一现”这种主题至少有两条破局路径:<strong>冷处理</strong>(超现实作为日常默默发生的事件)vs <strong>热处理</strong>(超现实作为爆炸性瞬间)。两种我都不放弃,但本期获奖结果说明<strong>爆炸感更适合社群投票场景</strong>(第一眼就被打中 > 慢慢回味)。</p>
+<p>→ 沉淀:<a href="/above-the-web/v1-8f6325d/" class="wikilink">超现实主题的冷热两种处理路径_v1</a> · <a href="/above-the-web/v1-ccee41c/" class="wikilink">夸张表情律_反向_v1</a></p>
+<hr>
+<h2 id="第二部分--风花雪月我的方案--获奖图分析">第二部分 · 「风花雪月」我的方案 + 获奖图分析</h2>
+<h3 id="我的方案四时态叠化同一空间的四个季节">我的方案:四时态叠化(同一空间的四个季节)</h3>
+<blockquote>
+<p>同样,我的这版「风花雪月」票数靠前但未获奖。获奖的是后面分析的 A 图(雪夜樱花月)和 B 图(粉色山林老夫妇)。</p>
+</blockquote>
+<h4 id="我的方案设计要点">我的方案设计要点</h4>
+<p><strong>1. 概念路径独特</strong></p>
+<p>红海池里”风花雪月”的常见做法:</p>
+<ul>
+<li>一个女人 + 花 + 月(古风插画/工笔)❌ 撞车</li>
+<li>樱花树下 + 满月(新海诚风)❌ 撞车</li>
+<li>抽象水墨 + 四元素图标 ❌ 撞车</li>
+</ul>
+<p>我的路径:<strong>四个时态叠化在同一个空间</strong> —— 一张图同时是春夏秋冬。</p>
+<p>稀缺性:</p>
+<ul>
+<li>不需要画人物 → 跳出”美少女 + 风花雪月”的红海</li>
+<li>用空间概念替代具体物 → 跳出”罗列四元素”的低段位</li>
+<li>同一个空间被四时态占据 → 暗合”风花雪月”作为”四季流转”的本意</li>
+</ul>
+<p><strong>2. 锚定物作为时间一致性的证据</strong></p>
+<p>板凳、圆窗、墙——三个物体在四个象限里同位置出现,<strong>证明这是同一个空间</strong>。锚定物的选择:<strong>简洁、对称、易识别</strong>。</p>
+<p>→ 沉淀:<a href="/above-the-web/v1-c4d956c/" class="wikilink">时空叠化的锚定物律_v1</a></p>
+<p><strong>3. 四元素的视觉强度差异</strong></p>
+<ul>
+<li>春(花瓣)— 视觉强度中等</li>
+<li>夏(纱帘)— 视觉强度弱</li>
+<li>冬(雪)— 视觉强度强</li>
+<li>月 — 视觉强度强</li>
+</ul>
+<p>四块视觉强度不均,造成画面节奏感而不是平铺。</p>
+<h4 id="prompt-的赢点">prompt 的赢点</h4>
+<p><strong>1. “the bench wall and round window are continuous across the soft transitions” 是核心句</strong></p>
+<p>直接告诉 MJ:<strong>四个象限不是四张图拼的,是同一个空间在不同时态</strong>。</p>
+<p><strong>2. “gentle gradient blends not hard seams” 软化拼接</strong></p>
+<p>第一版用 <code>invisible seams</code> —— MJ 仍画了硬切。
+修正版用 <code>gentle gradient blends not hard seams</code> —— 把”软过渡”和”硬切”显式对比。</p>
+<p>→ 沉淀:<a href="/above-the-web/v1-f9d56ac/" class="wikilink">反向描述的负面锚定_v1</a></p>
+<p><strong>3. “unified soft palette … all in low saturation”</strong></p>
+<p>四块都是低饱和、统一调性,避免色温差距过大失了”同一空间”的统一感。</p>
+<h4 id="反思被否决的-b-版muji-插画女性侧脸">反思:被否决的 B 版(MUJI 插画女性侧脸)</h4>
+<p>B 版尝试用「星河」同款 MUJI 极简插画风做”女性头发里夹着风花雪月四元素”。失败原因:</p>
+<ul>
+<li><strong>MUJI 风的极简属性吃掉了主题清晰度</strong> —— 头发里只看到一片模糊花瓣和一个雪花,月亮根本没出来</li>
+<li><strong>极简风适合”单一状态”</strong> —— 被星河浇灌、等一封信,这些都是”一个完整状态”,MUJI 能承载。但”四元素叠加”需要符号清晰度,MUJI 的克制是反向 buff</li>
+<li><strong>媒介与主题的适配性问题</strong> —— 不是所有题都适合 MUJI 风</li>
+</ul>
+<p>→ 沉淀:<a href="/above-the-web/muji-v1-2b71666/" class="wikilink">MUJI风的适用边界_v1</a></p>
+<h3 id="我的方案-prompt-完整存档-1">我的方案 prompt 完整存档</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>a quiet empty traditional east asian courtyard with a single wooden bench against a pale plaster wall and a small round moon window, the image softly divided into four quadrants by gentle invisible gradient transitions each quadrant showing the same courtyard space in a different element, upper left quadrant filled with drifting pink cherry blossom petals floating through soft afternoon light catching on the bench, upper right quadrant with a translucent white gauze curtain billowing through the open round window being lifted by visible flowing wind, lower left quadrant with quiet snowflakes falling and a thin even layer of fresh white snow covering the bench and ground, lower right quadrant at night with a clear full pale moon hanging visible through the round window casting soft silvery moonlight onto the empty bench, the four quadrants align so the bench wall and round window are continuous across the soft transitions creating one space layered with four poetic elements, the transitions between quadrants are gentle gradient blends not hard seams, no figures, unified soft palette of pale pink warm cream pale silver and soft pale blue all in low saturation, photorealistic surreal photography, shot on medium format film, hyperreal texture, fine grain, balanced symmetrical composition, fresh poetic atmosphere, quiet temporal layering, dreamy soft focus</span></span></code></pre>
+<h3 id="本期获奖图分析双图平票获奖">本期获奖图分析(双图平票获奖)</h3>
+<h4 id="a-图雪夜樱花月少女--透明伞--樱花树--满月--雪">A 图:雪夜樱花月(少女 + 透明伞 + 樱花树 + 满月 + 雪)</h4>
+<p><strong>主题翻译策略</strong>:四元素全部字面化,但叠在<strong>同一个动作时刻</strong>——一个少女在雪夜的樱花树下打着透明伞看月亮。</p>
+<p><strong>赢点</strong>:</p>
+<ol>
+<li><strong>打破季节物理逻辑</strong> —— 樱花(春)和雪(冬)同框,现实里不共存。<strong>违反物理本身就是诗意</strong></li>
+<li><strong>透明伞作为构图引擎</strong> —— 伞的圆和月的圆形成视觉对位,伞还隔出了”个体私人空间 vs 外部世界”</li>
+<li><strong>配色克制</strong> —— 只用深蓝 + 樱粉 + 月白,三色统一</li>
+<li><strong>少女背影</strong> —— <a href="/above-the-web/v1-44939f6/" class="wikilink">主体不看镜头律_v1</a> 再次验证</li>
+<li><strong>新海诚式当代日漫风</strong> —— 撞车率高但执行精度顶</li>
+</ol>
+<p><strong>胜负手</strong>:四元素压缩进<strong>同一时刻同一空间</strong>(我的方案是四时态叠化,这是单时刻叠化)。</p>
+<h4 id="b-图粉色山林老夫妇红外摄影质感">B 图:粉色山林老夫妇(红外摄影质感)</h4>
+<p><strong>主题翻译策略</strong>:<strong>用红外摄影的物理特性作为破局</strong> —— 红外波段下绿色植物变成粉色,所以这不是 PS 出来的,是<strong>物理上拍出来的粉色山</strong>。</p>
+<p><strong>赢点</strong>:</p>
+<ol>
+<li><strong>媒介=破局</strong>(本案最狠) —— 红外摄影把”花”做到极致,整座山都是花</li>
+<li><strong>真实摄影的稀有性</strong> —— AI 图泛滥的当下,<strong>真实摄影/真实拍摄手段</strong>反而成了稀缺(疑似 Steve McCurry 1984《Pink Mountain》或同源)</li>
+<li><strong>老夫妇的轮椅细节</strong> —— 把”风花雪月”从”年轻人的浪漫”翻译成”陪伴一生的最后一段路”,<strong>主题温度被翻倍</strong></li>
+<li><strong>主体的”小”</strong> —— 人物占画面不到 5%,<strong>山是主角,人是观众</strong></li>
+<li><strong>四元素暗藏</strong> —— 风(粉色草丛起伏)、花(整片山)、雪(右上浅色山头)、月(右上小月亮),<strong>全部融进风景</strong>,不直白</li>
+</ol>
+<p><strong>胜负手</strong>:不靠 AI 视觉花样,靠<strong>摄影手段的物理稀缺性 + 隐喻深度</strong>取胜。</p>
+<p>→ 沉淀:<a href="/above-the-web/ai-v1-374c1ce/" class="wikilink">真实摄影手段作为AI时代的稀缺性_v1</a></p>
+<h4 id="三张图对比我的方案--两张获奖图">三张图对比(我的方案 + 两张获奖图)</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>我的方案(四时态叠化)</th><th>A 图获奖(雪夜樱花月)</th><th>B 图获奖(粉色山林老夫妇)</th></tr></thead><tbody><tr><td>四元素</td><td>四象限,每象限一元素</td><td>同一时刻,四元素并置</td><td>暗藏融入环境</td></tr><tr><td>主体</td><td>无人物,空间为主</td><td>少女(年轻浪漫)</td><td>老夫妇(陪伴终点)</td></tr><tr><td>媒介</td><td>超现实摄影</td><td>新海诚式当代日漫</td><td>真实红外摄影</td></tr><tr><td>破局点</td><td>概念几何(四时态)</td><td>物理违和(樱花+雪)</td><td>摄影手段稀缺</td></tr><tr><td>主题温度</td><td>静默诗意</td><td>静谧浪漫</td><td>沉重温柔</td></tr><tr><td>投票结果</td><td>票数靠前但未获奖</td><td>获奖</td><td>获奖</td></tr></tbody></table>
+<p><strong>三张并置说明</strong>:“风花雪月”这种传统文人题至少有<strong>三条破局路径</strong>:</p>
+<ol>
+<li><strong>概念路径</strong>(我的方案):用几何/空间/时间结构重构主题</li>
+<li><strong>视觉奇观路径</strong>(A):违反物理逻辑造成诗意</li>
+<li><strong>媒介稀缺路径</strong>(B):用摄影手段本身作为破局</li>
+</ol>
+<p><strong>为什么我的方案没获奖</strong>(自我诊断):</p>
+<ul>
+<li>概念路径需要观众”看懂”——四时态叠化必须看出”这是同一个空间”,对部分观众门槛偏高</li>
+<li>视觉奇观路径(A)和媒介稀缺路径(B)都是<strong>第一眼就能被打中</strong>的类型</li>
+<li>社群投票场景下,<strong>“立刻被打中”>“慢慢回味”</strong> —— 这是路径选择上的复盘点</li>
+</ul>
+<p>记住:撞车池越深的题,<strong>破局路径越多元</strong>。下次遇到红海题,先在三条路径里选,<strong>并意识到不同路径在不同评价场景下有不同的成功率</strong>。</p>
+<p>→ 沉淀:<a href="/above-the-web/v1-1a2f6ac/" class="wikilink">红海主题的三条破局路径_v1</a></p>
+<hr>
+<h2 id="第三部分--本次双题的方法论沉淀总览">第三部分 · 本次双题的方法论沉淀总览</h2>
+<h3 id="已有方法论的验证情况">已有方法论的验证情况</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方法论</th><th>灵光一现验证</th><th>风花雪月验证</th></tr></thead><tbody><tr><td>红海主题靠媒介差异化破局</td><td>—</td><td>✓ 四时态叠化破局(已升级为通用三路径)</td></tr><tr><td>风格关键词四层锚</td><td>✓</td><td>✓</td></tr><tr><td><a href="/above-the-web/v1-44939f6/" class="wikilink">主体不看镜头律_v1</a></td><td>—</td><td>✓ (A 图也用了)</td></tr><tr><td><a href="/above-the-web/v1-73a9328/" class="wikilink">极简插画删表情律_v1</a></td><td>✗ 但反向验证了”夸张表情律_反向_v1”</td><td>—</td></tr><tr><td>工艺词堆得够厚</td><td>✓</td><td>✓</td></tr></tbody></table>
+<h3 id="新沉淀的-11-条方法论">新沉淀的 11 条方法论</h3>
+<ol>
+<li><a href="/above-the-web/v1-495d30c/" class="wikilink">隐喻身体化升级法_v1</a> —— 把外部隐喻物升级为主体身体本身的属性</li>
+<li><a href="/above-the-web/v1-e00d97e/" class="wikilink">集体作为个体的对比锚_v1</a> —— 用人群同质化切割个体特殊性</li>
+<li><a href="/above-the-web/v1-6fdd726/" class="wikilink">超现实细节的物理锚_v1</a> —— 用具体物理细节(螺口、缝线、关节)让超现实可信</li>
+<li><a href="/above-the-web/v1-96351ff/" class="wikilink">超现实主体的普通身体律_v1</a> —— 超现实部分越夸张,其他部分越要保留普通的疲惫/日常</li>
+<li><a href="/above-the-web/v1-8f6325d/" class="wikilink">超现实主题的冷热两种处理路径_v1</a> —— 冷处理 vs 热处理</li>
+<li><a href="/above-the-web/v1-ccee41c/" class="wikilink">夸张表情律_反向_v1</a> —— 漫画/油画语境下,夸张表情是核心引擎</li>
+<li><a href="/above-the-web/v1-c4d956c/" class="wikilink">时空叠化的锚定物律_v1</a> —— 多时态/多视角叠化必须有跨象限的锚定物</li>
+<li><a href="/above-the-web/v1-f9d56ac/" class="wikilink">反向描述的负面锚定_v1</a> —— “不要 X,要 Y” 的双向规约</li>
+<li><a href="/above-the-web/muji-v1-2b71666/" class="wikilink">MUJI风的适用边界_v1</a> —— 单一状态可,多符号叠加不可</li>
+<li><a href="/above-the-web/ai-v1-374c1ce/" class="wikilink">真实摄影手段作为AI时代的稀缺性_v1</a> —— 红外、长曝、闪光实验、胶片光化学、暗房 alt processes</li>
+<li><a href="/above-the-web/v1-1a2f6ac/" class="wikilink">红海主题的三条破局路径_v1</a> —— 概念路径 / 视觉奇观路径 / 媒介稀缺路径</li>
+</ol>
+<h3 id="与已有知识库的对照升级">与已有知识库的对照升级</h3>
+<ul>
+<li><a href="/above-the-web/v1-44939f6/" class="wikilink">主体不看镜头律_v1</a> —— 风花雪月 A 图(获奖)再次验证,可标 ✓✓</li>
+<li><a href="/above-the-web/v1-e96482a/" class="wikilink">光暗作为空间叙事工具_v1</a> —— 灵光一现地铁版变体使用了”人群作为对比锚”,同源不同形(光暗 vs 人群)</li>
+<li>「告白」/「星河」/「秘密基地」沉淀的「红海主题靠媒介差异化破局」 → 升级为 <a href="%E5%AA%92%E4%BB%8B%E5%8F%AA%E6%98%AF%E5%85%B6%E4%B8%AD%E4%B8%80%E6%9D%A1">[红海主题的三条破局路径_v1]</a></li>
+</ul>
+<h3 id="元复盘为什么未获奖也值得复盘">元复盘:为什么”未获奖也值得复盘”</h3>
+<p>本期双题我的两个方案票数都靠前但未达获奖线。最初我把这两份记成了”获奖图复盘”——这是一次<strong>自我归因偏差</strong>。</p>
+<p>修正后的认知:</p>
+<ul>
+<li><strong>方案的设计巧思和获奖结果是两件事</strong> —— 巧思值得沉淀(11 条方法论就是证明),但不要把它们打包成”成功案例”</li>
+<li><strong>未获奖比获奖更值得复盘</strong> —— 知道哪里出了路径选择问题(概念路径在社群投票场景的弱势),比庆祝胜利更有用</li>
+<li><strong>获奖图与我的方案对照看,才能看出”路径分流”</strong> —— 单看自己的方案不知道选错了路径,看对手才看到”原来还可以这样”</li>
+</ul>
+<p>这次校准也提醒:<strong>写复盘文档时,先确认事实(获奖结果、票数、排名),再写”赢点”和”对比”</strong>。不要把”我喜欢的设计”等同于”获奖的设计”。</p>
+<p>→ 这次踩坑沉淀:<a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a>(含 Cowork 整合复盘文档前必问的三个事实问题)</p>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>上一轮复盘:<a href="/above-the-web/2026-05-14-v1-e2a7ed9/" class="wikilink">2026-05-14_秘密基地获奖图复盘_v1</a></li>
+<li>互补案例:<a href="/above-the-web/2026-05-12-v1-9ca3327/" class="wikilink">2026-05-12_告白获奖图复盘_v1</a> · <a href="/above-the-web/2026-05-12-v1-d5ca7d5/" class="wikilink">2026-05-12_星河如丝般顺滑获奖图复盘_v1</a></li>
+<li>风格模板:<a href="/above-the-web/muji-v1-4df2ece/" class="wikilink">MUJI极简插画基础句_v1</a> · <a href="/above-the-web/ova-v1-7559330/" class="wikilink">OVA怀旧基础句_v1</a></li>
+<li>主线方法论:<a href="/above-the-web/v1-1a2f6ac/" class="wikilink">红海主题的三条破局路径_v1</a> · <a href="/above-the-web/v1-495d30c/" class="wikilink">隐喻身体化升级法_v1</a> · <a href="/above-the-web/v1-8f6325d/" class="wikilink">超现实主题的冷热两种处理路径_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/prompt模板</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/02_%E6%A1%88%E4%BE%8B%E5%A4%8D%E7%9B%98/2026-05-15_%E7%81%B5%E5%85%89%E4%B8%80%E7%8E%B0+%E9%A3%8E%E8%8A%B1%E9%9B%AA%E6%9C%88%E5%8F%8C%E9%A2%98%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/02_%E6%A1%88%E4%BE%8B%E5%A4%8D%E7%9B%98/2026-05-15_%E7%81%B5%E5%85%89%E4%B8%80%E7%8E%B0+%E9%A3%8E%E8%8A%B1%E9%9B%AA%E6%9C%88%E5%8F%8C%E9%A2%98%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/03-prompt-987b076/">Prompt 模板库索引</a></li><li><a href="/above-the-web/muji-v1-2b71666/">MUJI 风的适用边界</a></li><li><a href="/above-the-web/v1-44939f6/">主体不看镜头律</a></li><li><a href="/above-the-web/v1-f9d56ac/">反向描述的负面锚定</a></li><li><a href="/above-the-web/v1-c4d956c/">时空叠化的锚定物律</a></li><li><a href="/above-the-web/v1-e00d97e/">集体作为个体的对比锚</a></li><li><a href="/above-the-web/v1-ccee41c/">夸张表情律_反向_v1</a></li><li><a href="/above-the-web/v1-1a2f6ac/">红海主题的三条破局路径</a></li><li><a href="/above-the-web/v1-96351ff/">超现实主体的普通身体律</a></li><li><a href="/above-the-web/v1-8f6325d/">超现实主题的冷热两种处理路径</a></li><li><a href="/above-the-web/v1-6fdd726/">超现实细节的物理锚</a></li><li><a href="/above-the-web/v1-495d30c/">隐喻身体化升级法</a></li><li><a href="/above-the-web/ai-v1-374c1ce/">真实摄影手段作为 AI 时代的稀缺性</a></li><li><a href="/above-the-web/v1-78108ee/">复盘事实先行原则</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-05-12-v1-9ca3327/"> <span class="card-cat">prompt模板库</span> <h3>「告白」获奖图复盘</h3> <p>身体从右上斜切到左下,占据画面绝大部分,没有给观众&quot;喘气&quot;的空间。这种压迫感和&quot;告白前夜的疲惫&quot;主题高度同构——情绪是从画面外溢出来的,不是…</p> </a><a class="card" href="/above-the-web/2026-05-12-v1-d5ca7d5/"> <span class="card-cat">prompt模板库</span> <h3>「星河如丝般顺滑」获奖图复盘</h3> <p>prompt 写的是 head slightly tilted back with eyes gently closed,MJ 把&quot;slig…</p> </a><a class="card" href="/above-the-web/2026-05-14-v1-e2a7ed9/"> <span class="card-cat">prompt模板库</span> <h3>「秘密基地」获奖图复盘</h3> <p>小女孩侧身蹲着,低头看自己手里的小本子,完全沉浸在自己的世界里。</p> </a><a class="card" href="/above-the-web/muji-v1-4df2ece/"> <span class="card-cat">prompt模板库</span> <h3>MUJI 极简插画基础句</h3> <p>一组可复用的关键词组合,能稳定锁定&quot;MUJI / 长场雄 / 中村佑介早期&quot;那条线的日系极简插画感,不会跑去当代漫画 / 韩系小红书壁纸 /…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#第一部分--灵光一现我的方案--获奖图分析" data-toc-link="第一部分--灵光一现我的方案--获奖图分析">第一部分 · 「灵光一现」我的方案 + 获奖图分析</a></li><li class="d3"><a href="#我的方案设计要点虽未获奖但值得沉淀" data-toc-link="我的方案设计要点虽未获奖但值得沉淀">我的方案设计要点(虽未获奖但值得沉淀)</a></li><li class="d3"><a href="#prompt-的赢点案例特定" data-toc-link="prompt-的赢点案例特定">prompt 的赢点(案例特定)</a></li><li class="d3"><a href="#反思被否决的头顶飘灯泡版本" data-toc-link="反思被否决的头顶飘灯泡版本">反思:被否决的”头顶飘灯泡”版本</a></li><li class="d3"><a href="#我的方案-prompt-完整存档" data-toc-link="我的方案-prompt-完整存档">我的方案 prompt 完整存档</a></li><li class="d3"><a href="#本期获奖图分析牛顿苹果灯泡头油画漫画混合媒介" data-toc-link="本期获奖图分析牛顿苹果灯泡头油画漫画混合媒介">本期获奖图分析:牛顿苹果灯泡头(油画+漫画混合媒介)</a></li><li class="d2"><a href="#第二部分--风花雪月我的方案--获奖图分析" data-toc-link="第二部分--风花雪月我的方案--获奖图分析">第二部分 · 「风花雪月」我的方案 + 获奖图分析</a></li><li class="d3"><a href="#我的方案四时态叠化同一空间的四个季节" data-toc-link="我的方案四时态叠化同一空间的四个季节">我的方案:四时态叠化(同一空间的四个季节)</a></li><li class="d3"><a href="#我的方案-prompt-完整存档-1" data-toc-link="我的方案-prompt-完整存档-1">我的方案 prompt 完整存档</a></li><li class="d3"><a href="#本期获奖图分析双图平票获奖" data-toc-link="本期获奖图分析双图平票获奖">本期获奖图分析(双图平票获奖)</a></li><li class="d2"><a href="#第三部分--本次双题的方法论沉淀总览" data-toc-link="第三部分--本次双题的方法论沉淀总览">第三部分 · 本次双题的方法论沉淀总览</a></li><li class="d3"><a href="#已有方法论的验证情况" data-toc-link="已有方法论的验证情况">已有方法论的验证情况</a></li><li class="d3"><a href="#新沉淀的-11-条方法论" data-toc-link="新沉淀的-11-条方法论">新沉淀的 11 条方法论</a></li><li class="d3"><a href="#与已有知识库的对照升级" data-toc-link="与已有知识库的对照升级">与已有知识库的对照升级</a></li><li class="d3"><a href="#元复盘为什么未获奖也值得复盘" data-toc-link="元复盘为什么未获奖也值得复盘">元复盘:为什么”未获奖也值得复盘”</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

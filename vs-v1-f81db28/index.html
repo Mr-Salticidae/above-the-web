@@ -1,0 +1,316 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>角色卡 vs 主办方意图 · 协作元方法论 · 蛛网之上</title><meta name="description" content="Claude 推导的&#34;角色卡设定&#34; 是工作锚点，不是合规标准。当工具反复输出&#34;意外解&#34; 且主办方未明确否决时，先送审让主办方拍板，不要在 Claude 脑补的&#34;合规标准&#34; 里反复消耗用户时间和资源。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/vs-v1-f81db28/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="角色卡 vs 主办方意图 · 协作元方法论"><meta property="og:description" content="Claude 推导的&#34;角色卡设定&#34; 是工作锚点，不是合规标准。当工具反复输出&#34;意外解&#34; 且主办方未明确否决时，先送审让主办方拍板，不要在 Claude 脑补的&#34;合规标准&#34; 里反复消耗用户时间和资源。"><meta property="og:url" content="https://tiaozhuxiansheng.com/vs-v1-f81db28/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="角色卡 vs 主办方意图 · 协作元方法论"><meta name="twitter:description" content="Claude 推导的&#34;角色卡设定&#34; 是工作锚点，不是合规标准。当工具反复输出&#34;意外解&#34; 且主办方未明确否决时，先送审让主办方拍板，不要在 Claude 脑补的&#34;合规标准&#34; 里反复消耗用户时间和资源。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-02T13:11:13+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="重要度/⭐⭐"><meta property="article:tag" content="跨项目/合规判断"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/vs-v1-f81db28/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/vs-v1-f81db28/","url":"https://tiaozhuxiansheng.com/vs-v1-f81db28/","headline":"角色卡 vs 主办方意图 · 协作元方法论","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"Claude 推导的\"角色卡设定\" 是工作锚点，不是合规标准。当工具反复输出\"意外解\" 且主办方未明确否决时，先送审让主办方拍板，不要在 Claude 脑补的\"合规标准\" 里反复消耗用户时间和资源。","datePublished":"2026-06-02T13:11:13+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 重要度/⭐⭐, 跨项目/合规判断"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"角色卡 vs 主办方意图 · 协作元方法论","item":"https://tiaozhuxiansheng.com/vs-v1-f81db28/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-02T13:11:13+08:00">2026-06-02</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 7 分钟读完 · 2,504 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>26 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#一触发场景">一、触发场景</a></li><li class="d3"><a href="#11-复盘案例涂图儿撞墙史">1.1 复盘案例（涂图儿撞墙史）</a></li><li class="d3"><a href="#12-对照案例良伞胜利路径">1.2 对照案例（良伞胜利路径）</a></li><li class="d2"><a href="#二核心规律">二、核心规律</a></li><li class="d3"><a href="#21-角色卡的真实身份">2.1 角色卡的真实身份</a></li><li class="d3"><a href="#22-主办方反馈中的硬指标-vs-软指标">2.2 主办方反馈中的”硬指标 vs 软指标”</a></li><li class="d3"><a href="#23-工具反复输出意外解-的意义">2.3 工具反复输出”意外解” 的意义</a></li><li class="d2"><a href="#三操作规则">三、操作规则</a></li><li class="d3"><a href="#规则-1--角色卡是假设不是合规标准">规则 1 · 角色卡是假设，不是合规标准</a></li><li class="d3"><a href="#规则-2--模糊反馈要拆解不要硬扩张">规则 2 · 模糊反馈要拆解，不要硬扩张</a></li><li class="d3"><a href="#规则-3--意外解--未明确否决--值得送审">规则 3 · 意外解 + 未明确否决 = 值得送审</a></li><li class="d3"><a href="#规则-4--接受意外解-不是放弃质量是让真实信号说话">规则 4 · 接受”意外解” 不是放弃质量，是让真实信号说话</a></li><li class="d2"><a href="#四检查清单claude-自查">四、检查清单（Claude 自查）</a></li><li class="d2"><a href="#五与已有方法论的关系">五、与已有方法论的关系</a></li><li class="d3"><a href="#与-识别工具天花板的时机_v1-的关系">与 识别工具天花板的时机_v1 的关系</a></li><li class="d3"><a href="#与-claude完成报告核查心法_v1-的关系">与 Claude完成报告核查心法_v1 的关系</a></li><li class="d3"><a href="#与-cowork协作的接口文件模式_v1-的关系">与 Cowork协作的接口文件模式_v1 的关系</a></li><li class="d2"><a href="#六防御性写作-vs-创造性合成--元教训">六、防御性写作 vs 创造性合成 · 元教训</a></li><li class="d2"><a href="#七适用场景">七、适用场景</a></li><li class="d3"><a href="#适用">适用 ✅</a></li><li class="d3"><a href="#不适用">不适用 ❌</a></li><li class="d2"><a href="#八案例库待累积">八、案例库（待累积）</a></li><li class="d2"><a href="#九给未来副会话的-brief-模板补丁">九、给未来副会话的 brief 模板补丁</a></li><li class="d2"><a href="#十版本">十、版本</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="角色卡-vs-主办方意图--协作元方法论">角色卡 vs 主办方意图 · 协作元方法论</h1>
+<blockquote>
+<p>入档：2026-05-20
+触发：副会话 #4 涂图儿+良伞会话——Claude 反复在”自推角色卡” vs “主办方实际审美” 之间摇摆，导致涂图儿全程撞墙
+性质：<strong>跨项目协作元方法论</strong>——任何”外部审稿方 + Claude 协助” 的项目都适用
+关联：<code>复盘记录/复盘笔记_涂图儿良伞_悠船niji5_Nano极简_2026-05-20</code> / <a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a> / <a href="/above-the-web/v1-dff6dd3/" class="wikilink">识别工具天花板的时机_v1</a> / <a href="/above-the-web/cowork-v1-2dc55e4/" class="wikilink">Cowork协作的接口文件模式_v1</a></p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>Claude 推导的”角色卡设定” 是工作锚点，不是合规标准。当工具反复输出”意外解” 且主办方未明确否决时，先送审让主办方拍板，不要在 Claude 脑补的”合规标准” 里反复消耗用户时间和资源。</strong></p>
+<hr>
+<h2 id="一触发场景">一、触发场景</h2>
+<h3 id="11-复盘案例涂图儿撞墙史">1.1 复盘案例（涂图儿撞墙史）</h3>
+<p>涂图儿（PB 冠军 #4 · 白虎兽人女）形象图制作中，Claude 反复在两套标准之间摇摆：</p>
+<ul>
+<li><strong>Claude 自推的”角色卡设定”</strong>：黑色 ArtDeco 礼服 + 翡翠绿 + 真兽人</li>
+<li><strong>主办方实际审美锚点</strong>（事后才看清）：白色为主 + 银白头饰 + 接受双形态意外解</li>
+</ul>
+<p>工具反复输出”意外解”（银发美人 + 伴生白虎双形态）—— Claude 把这视为”撞墙”，硬掰回角色卡方向，<strong>全程 5-6 轮 niji 5 重做都死磕”真兽人 + 黑礼服”角色卡</strong> → 全部撞墙。</p>
+<p>niji 5 v5 释放约束后（只锚定”虎元素 + 黑色 + 复古高贵”）→ 立刻出”银发美人 + 伴生白虎” 双形态——和最初被驳回的图本质上是同方向。送审 → 主办方搁置（对涂图儿整体兴趣已减）。</p>
+<p><strong>根因诊断</strong>：撞墙不是工具或 prompt 的问题，是 <strong>Claude 把角色卡当成了合规标准、不愿意接受工具反复输出的”意外解”</strong>。</p>
+<h3 id="12-对照案例良伞胜利路径">1.2 对照案例（良伞胜利路径）</h3>
+<p>良伞（PB 冠军 #5 · 人形山海经文鳐鱼男）一次出种子图通过——核心是<strong>释放角色卡约束</strong>：</p>
+<ul>
+<li>角色卡列了”鸟翼 / 鳞片 / 怀抱文鳐鱼” 等细节</li>
+<li>工具 niji 5 v4 跑出”袍上鱼纹替代怀抱” 的意外解</li>
+<li>Claude 没有硬掰回”必须怀抱” → 送审 → 主办方通过</li>
+</ul>
+<p><strong>核心胜利</strong>：<strong>没有把角色卡当成合规标准</strong>。</p>
+<hr>
+<h2 id="二核心规律">二、核心规律</h2>
+<h3 id="21-角色卡的真实身份">2.1 角色卡的真实身份</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>误解</th><th>正解</th></tr></thead><tbody><tr><td>来源</td><td>”主办方提供的合规标准”</td><td><strong>Claude + 上一个会话推导的</strong></td></tr><tr><td>验证状态</td><td>”已经被认可”</td><td><strong>主办方对此从未正式确认</strong></td></tr><tr><td>使用方式</td><td>”必须遵守的硬指标”</td><td><strong>工作锚点，未经验证的假设</strong></td></tr><tr><td>冲突时</td><td>角色卡优先</td><td><strong>主办方意图优先</strong></td></tr></tbody></table>
+<p><strong>角色卡只是 Claude 的工作起点，不是合规标准</strong>。</p>
+<h3 id="22-主办方反馈中的硬指标-vs-软指标">2.2 主办方反馈中的”硬指标 vs 软指标”</h3>
+<p>主办方驳回理由通常模糊（如”和设定差别太大”）。Claude 容易把模糊反馈解读为”必须严格回归原始角色卡”——<strong>这是错的</strong>。</p>
+<p>正确解读路径：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>模糊反馈 → 拆解"设定" 具体指什么 → 找主办方真正认可过的视觉锚点 →</span></span>
+<span class="line"><span>保住已认可锚点 → 其他元素允许工具自由发挥</span></span></code></pre>
+<h3 id="23-工具反复输出意外解-的意义">2.3 工具反复输出”意外解” 的意义</h3>
+<p><strong>当工具在多轮重做后反复输出某种与角色卡不同的形态</strong>（如双形态、特定颜色组合、特定构图），这往往不是工具的”问题”，可能是：</p>
+<ul>
+<li>主办方真正想要的形态（角色卡推导错了）</li>
+<li>训练数据里的天然语义组合（工具的本能往往合理）</li>
+<li>用户审美的真实倾向（数据驱动的暗示）</li>
+</ul>
+<p><strong>正确做法</strong>：<strong>先送审让主办方拍板</strong>，不要硬掰回角色卡方向。</p>
+<hr>
+<h2 id="三操作规则">三、操作规则</h2>
+<h3 id="规则-1--角色卡是假设不是合规标准">规则 1 · 角色卡是假设，不是合规标准</h3>
+<p>任何 Claude（或上一个会话）推导的角色卡设定，在主办方明确确认之前，<strong>都是未经验证的工作假设</strong>。</p>
+<ul>
+<li>✅ 把角色卡作为”工作起点” 使用</li>
+<li>❌ 不要把角色卡作为”合规标准” 强守</li>
+<li>✅ 当工具反复反弹角色卡方向时，<strong>先质疑角色卡，不要硬掰工具</strong></li>
+</ul>
+<h3 id="规则-2--模糊反馈要拆解不要硬扩张">规则 2 · 模糊反馈要拆解，不要硬扩张</h3>
+<p>主办方说”和设定差别太大” 时：</p>
+<p><strong>不要做</strong>：把”设定” 默认理解为”原始角色卡的所有细节”
+<strong>要做</strong>：</p>
+<ol>
+<li>拆解”设定” 具体指什么（核心物种？关键颜色？主体形态？）</li>
+<li>找出主办方真正认可过的视觉锚点（已通过的图、明确表态过的元素）</li>
+<li>优先保住这些已认可锚点</li>
+<li>其他元素允许工具自由发挥</li>
+</ol>
+<h3 id="规则-3--意外解--未明确否决--值得送审">规则 3 · 意外解 + 未明确否决 = 值得送审</h3>
+<p><strong>判断公式</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>工具反复输出某种形态 + 主办方未明确否决该形态 = 值得送审的方案</span></span></code></pre>
+<p>不要在 Claude 自己脑补的”合规标准” 里反复消耗用户时间和资源。</p>
+<h3 id="规则-4--接受意外解-不是放弃质量是让真实信号说话">规则 4 · 接受”意外解” 不是放弃质量，是让真实信号说话</h3>
+<p>工具的”意外解” 不是它的”bug”，而是它根据训练数据 + prompt 的”最优概率输出”。当多轮 prompt 调整后输出仍指向同一方向，<strong>这是个强信号</strong>——可能是：</p>
+<ul>
+<li>主办方审美的隐性倾向</li>
+<li>题面词汇的天然语义</li>
+<li>训练集里的合理组合</li>
+</ul>
+<p>把这个信号送审，让主办方判断——比 Claude 自己脑补”应该是什么样” 更接近真实。</p>
+<hr>
+<h2 id="四检查清单claude-自查">四、检查清单（Claude 自查）</h2>
+<p>当 Claude 在某个项目里反复撞墙时，先做以下自查：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 我正在守的”标准” 是 Claude 自推的，还是主办方明确确认过的？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 我把主办方的模糊反馈扩张解读了吗？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 工具在多轮重做后是否反复输出同一种”意外解”？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 这个”意外解” 是否被主办方明确否决过？</li>
+<li class="task-list-item"><input type="checkbox" disabled> 我是不是在”防御性写作” —— 想把所有可能出错的地方都堵死？</li>
+</ul>
+<p>如果其中两条以上为是，<strong>停下来，先送审一个”意外解” 版本</strong>，让主办方拍板。</p>
+<hr>
+<h2 id="五与已有方法论的关系">五、与已有方法论的关系</h2>
+<h3 id="与-识别工具天花板的时机_v1-的关系">与 <a href="/above-the-web/v1-dff6dd3/" class="wikilink">识别工具天花板的时机_v1</a> 的关系</h3>
+<p><a href="/above-the-web/v1-dff6dd3/" class="wikilink">识别工具天花板的时机_v1</a> 讲：<strong>当工具在某层反复触顶时，让 LLM 接管该层</strong> —— 这是”工具撞天花板” 的应对。</p>
+<p>本方法论讲：<strong>当 Claude 自己脑补”合规标准” 反复撞墙时，先送审让真主办方拍板</strong> —— 这是”Claude 撞天花板” 的应对。</p>
+<p>两条同源：<strong>识别”自己撞了天花板” 的能力是 AI 协作中最重要的元能力之一</strong>。</p>
+<h3 id="与-claude完成报告核查心法_v1-的关系">与 <a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a> 的关系</h3>
+<p><a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a> 讲：<strong>Claude 的”已完成” 判定常基于代码路径，但用户看到的是运行时表现</strong>。</p>
+<p>本方法论是同源的另一个角度：<strong>Claude 的”合规判定” 常基于自推角色卡，但主办方看到的是实际审美匹配</strong>。</p>
+<p>更上位的元规律：<strong>Claude 的”自我判断” 有结构性局限——基于内部逻辑而非外部验证。任何”自我判断” 都需要被外部信号校准</strong>。</p>
+<h3 id="与-cowork协作的接口文件模式_v1-的关系">与 <a href="/above-the-web/cowork-v1-2dc55e4/" class="wikilink">Cowork协作的接口文件模式_v1</a> 的关系</h3>
+<p>接口文件模式讲：“所有决策、理由、约束都通过显式 markdown 文件互传”。</p>
+<p>本方法论补充：<strong>Claude 推导出的”角色卡”（工作锚点）不应在文档里被表述为”合规标准”</strong>。在共创者 brief 里要明确：</p>
+<ul>
+<li>哪些是”主办方已确认的硬指标”</li>
+<li>哪些是”Claude 推导的工作锚点”</li>
+<li>两者冲突时主办方优先</li>
+</ul>
+<p>未来给副会话的 brief 应该按这个分类标清楚。</p>
+<hr>
+<h2 id="六防御性写作-vs-创造性合成--元教训">六、防御性写作 vs 创造性合成 · 元教训</h2>
+<p>涂图儿撞墙的元层根因还有一条：<strong>Claude 的”防御性写作” 把创造性合成压制了</strong>。</p>
+<p>精密的 prompt（堆叠遮挡关系/位置锚点/光影统一/反向禁止）本质是”想把所有可能出错的地方堵死”。但生成式 AI 工具的特点是”在弹性约束下的创造性判断”，防御性写作反而把创造性压制了。</p>
+<p><strong>详细规律见 <a href="/above-the-web/ai-niji5-nano-v2-aff7d44/" class="wikilink">AI形象图工作流分层_niji5+Nano_v2</a> §十二 · Nano 极简 prompt 原则</strong>。</p>
+<p>本方法论与那条<strong>同源</strong>：</p>
+<ul>
+<li>§十二 讲”对工具的弹性约束 vs 防御性精密 prompt”</li>
+<li>本方法论讲”对主办方的灵活解读 vs Claude 自推合规标准”</li>
+</ul>
+<p>两条规律的共同元层：<strong>Claude 倾向于过度防御，反而压制了真实信号</strong>。</p>
+<hr>
+<h2 id="七适用场景">七、适用场景</h2>
+<h3 id="适用">适用 ✅</h3>
+<ul>
+<li>任何”外部审稿方 + Claude 协助” 的项目</li>
+<li>角色形象图项目（主办方/客户提供模糊要求）</li>
+<li>文案创作项目（编辑/客户审稿）</li>
+<li>视觉设计项目（用户/品牌方决策）</li>
+<li>工程实现项目（产品经理/团队决策）</li>
+</ul>
+<h3 id="不适用">不适用 ❌</h3>
+<ul>
+<li>没有外部审稿方的纯个人创作（Claude 与跳蛛先生单独协作时，跳蛛先生本人就是审稿方，本方法论的”主办方” 直接换成”跳蛛先生” 即可）</li>
+<li>已经有明确硬指标的合规项目（如法律文档格式 / API 接口规范 等——这种情况下硬指标确实是硬指标）</li>
+</ul>
+<hr>
+<h2 id="八案例库待累积">八、案例库（待累积）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项目</th><th>撞墙原因</th><th>教训</th></tr></thead><tbody><tr><td>涂图儿（PB #4）</td><td>Claude 把”角色卡兽人+黑礼服” 当合规标准，工具反复输出双形态被硬掰</td><td>5-6 轮无效迭代后主办方搁置</td></tr><tr><td>良伞（PB #5）</td><td>Claude 释放角色卡的”鸟翼/鳞片/怀抱”约束 → 工具出”袍上鱼纹替代” 意外解</td><td>一次出种子图通过</td></tr><tr><td><strong>未来案例</strong>：待积累</td><td></td><td></td></tr></tbody></table>
+<hr>
+<h2 id="九给未来副会话的-brief-模板补丁">九、给未来副会话的 brief 模板补丁</h2>
+<p>未来给副会话的 brief 中，应明确分类：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 主办方已确认的硬指标（必须遵守）</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">列具体指标</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">来源：主办方某次明确表态</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## Claude 推导的工作锚点（参考性，可调）</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">列具体锚点</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span><span style="--shiki-light:#032F62;--shiki-light-text-decoration:underline;--shiki-dark:#DBEDFF;--shiki-dark-text-decoration:underline">来源：角色卡推导</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ⚠️ 当工具反复输出与此不同的"意外解" 时，先送审主办方判断</span></span></code></pre>
+<p>防止副会话把”工作锚点” 误用为”合规标准”。</p>
+<hr>
+<h2 id="十版本">十、版本</h2>
+<ul>
+<li><strong>v1 - 2026-05-20 - 主对话 Claude（第二任）沉淀</strong>（基于涂图儿+良伞会话副会话 #4 复盘）</li>
+</ul>
+<p>升级触发：</p>
+<ul>
+<li>第三个项目验证后 v2</li>
+<li>跨领域验证（非视觉项目）后升格为更通用的”Claude 自推标准 vs 外部信号” 元方法论</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>所属索引:<a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">重要度/⭐⭐</span><span class="tag">跨项目/合规判断</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E8%A7%92%E8%89%B2%E5%8D%A1vs%E4%B8%BB%E5%8A%9E%E6%96%B9%E6%84%8F%E5%9B%BE_%E5%8D%8F%E4%BD%9C%E5%85%83%E6%96%B9%E6%B3%95%E8%AE%BA_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E8%A7%92%E8%89%B2%E5%8D%A1vs%E4%B8%BB%E5%8A%9E%E6%96%B9%E6%84%8F%E5%9B%BE_%E5%8D%8F%E4%BD%9C%E5%85%83%E6%96%B9%E6%B3%95%E8%AE%BA_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/v1-fd9700f/">方向词要用既往选片反推</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/claude-v1-ec3d11f/"> <span class="card-cat">方法论与洞察</span> <h3>Claude 完成报告核查心法</h3> <p>Claude（Code 或 Cowork）写完成报告时对自己的产出过度自信。常见表现：</p> </a><a class="card" href="/above-the-web/cowork-v1-2dc55e4/"> <span class="card-cat">方法论与洞察</span> <h3>Cowork 协作的接口文件模式</h3> <p>三方协作(创作者 + 运营经理 + Cowork 制作侧)的最高效模式是「接口文件互通」——所有决策、理由、约束都通过显式 markdown…</p> </a><a class="card" href="/above-the-web/v1-dff6dd3/"> <span class="card-cat">方法论与洞察</span> <h3>识别工具天花板的时机</h3> <p>当工具在某一层达到物理上限时，继续在工具内努力等于&quot;看起来勤奋实际无效&quot;。识别天花板的时机 + 切换到合适的工具/角色接管该层，是 AI 协…</p> </a><a class="card" href="/above-the-web/suno-v1-6d5ca8c/"> <span class="card-cat">方法论与洞察</span> <h3>Suno Custom Mode 版权过滤器规避</h3> <p>Suno Custom Mode 版权过滤器主要拦截三类：副歌 hook 撞名 / 歌词文本撞句 / Style 框具体艺人指向。优先换 h…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#一触发场景" data-toc-link="一触发场景">一、触发场景</a></li><li class="d3"><a href="#11-复盘案例涂图儿撞墙史" data-toc-link="11-复盘案例涂图儿撞墙史">1.1 复盘案例（涂图儿撞墙史）</a></li><li class="d3"><a href="#12-对照案例良伞胜利路径" data-toc-link="12-对照案例良伞胜利路径">1.2 对照案例（良伞胜利路径）</a></li><li class="d2"><a href="#二核心规律" data-toc-link="二核心规律">二、核心规律</a></li><li class="d3"><a href="#21-角色卡的真实身份" data-toc-link="21-角色卡的真实身份">2.1 角色卡的真实身份</a></li><li class="d3"><a href="#22-主办方反馈中的硬指标-vs-软指标" data-toc-link="22-主办方反馈中的硬指标-vs-软指标">2.2 主办方反馈中的”硬指标 vs 软指标”</a></li><li class="d3"><a href="#23-工具反复输出意外解-的意义" data-toc-link="23-工具反复输出意外解-的意义">2.3 工具反复输出”意外解” 的意义</a></li><li class="d2"><a href="#三操作规则" data-toc-link="三操作规则">三、操作规则</a></li><li class="d3"><a href="#规则-1--角色卡是假设不是合规标准" data-toc-link="规则-1--角色卡是假设不是合规标准">规则 1 · 角色卡是假设，不是合规标准</a></li><li class="d3"><a href="#规则-2--模糊反馈要拆解不要硬扩张" data-toc-link="规则-2--模糊反馈要拆解不要硬扩张">规则 2 · 模糊反馈要拆解，不要硬扩张</a></li><li class="d3"><a href="#规则-3--意外解--未明确否决--值得送审" data-toc-link="规则-3--意外解--未明确否决--值得送审">规则 3 · 意外解 + 未明确否决 = 值得送审</a></li><li class="d3"><a href="#规则-4--接受意外解-不是放弃质量是让真实信号说话" data-toc-link="规则-4--接受意外解-不是放弃质量是让真实信号说话">规则 4 · 接受”意外解” 不是放弃质量，是让真实信号说话</a></li><li class="d2"><a href="#四检查清单claude-自查" data-toc-link="四检查清单claude-自查">四、检查清单（Claude 自查）</a></li><li class="d2"><a href="#五与已有方法论的关系" data-toc-link="五与已有方法论的关系">五、与已有方法论的关系</a></li><li class="d3"><a href="#与-识别工具天花板的时机_v1-的关系" data-toc-link="与-识别工具天花板的时机_v1-的关系">与 识别工具天花板的时机_v1 的关系</a></li><li class="d3"><a href="#与-claude完成报告核查心法_v1-的关系" data-toc-link="与-claude完成报告核查心法_v1-的关系">与 Claude完成报告核查心法_v1 的关系</a></li><li class="d3"><a href="#与-cowork协作的接口文件模式_v1-的关系" data-toc-link="与-cowork协作的接口文件模式_v1-的关系">与 Cowork协作的接口文件模式_v1 的关系</a></li><li class="d2"><a href="#六防御性写作-vs-创造性合成--元教训" data-toc-link="六防御性写作-vs-创造性合成--元教训">六、防御性写作 vs 创造性合成 · 元教训</a></li><li class="d2"><a href="#七适用场景" data-toc-link="七适用场景">七、适用场景</a></li><li class="d3"><a href="#适用" data-toc-link="适用">适用 ✅</a></li><li class="d3"><a href="#不适用" data-toc-link="不适用">不适用 ❌</a></li><li class="d2"><a href="#八案例库待累积" data-toc-link="八案例库待累积">八、案例库（待累积）</a></li><li class="d2"><a href="#九给未来副会话的-brief-模板补丁" data-toc-link="九给未来副会话的-brief-模板补丁">九、给未来副会话的 brief 模板补丁</a></li><li class="d2"><a href="#十版本" data-toc-link="十版本">十、版本</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,195 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它 · 蛛网之上</title><meta name="description" content="- 项目：71余温哥特告别短片/08群像预告片/15关键帧先行20260918；不是比赛。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-09-20-m02-v1-8100c2c/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它"><meta property="og:description" content="- 项目：71余温哥特告别短片/08群像预告片/15关键帧先行20260918；不是比赛。"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-09-20-m02-v1-8100c2c/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它"><meta name="twitter:description" content="- 项目：71余温哥特告别短片/08群像预告片/15关键帧先行20260918；不是比赛。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-20T00:00:00+08:00"><meta property="article:modified_time" content="2026-10-01T18:26:27+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="主题/AI短片"><meta property="article:tag" content="主题/动作连续性"><meta property="article:tag" content="主题/图生视频"><meta property="article:tag" content="工具/Seedance"><meta property="article:tag" content="工具/GPT-Image"><meta property="article:tag" content="工具/Blender"><meta property="article:tag" content="来源/创作实测"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-09-20-m02-v1-8100c2c/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-09-20-m02-v1-8100c2c/","url":"https://tiaozhuxiansheng.com/2026-09-20-m02-v1-8100c2c/","headline":"《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目：71余温哥特告别短片/08群像预告片/15关键帧先行20260918；不是比赛。","datePublished":"2026-09-20T00:00:00+08:00","dateModified":"2026-10-01T18:26:27+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 主题/AI短片, 主题/动作连续性, 主题/图生视频, 工具/Seedance, 工具/GPT-Image, 工具/Blender, 来源/创作实测"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它","item":"https://tiaozhuxiansheng.com/2026-09-20-m02-v1-8100c2c/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-20T00:00:00+08:00">2026-09-20</time></span> <span>更新于 <time datetime="2026-10-01T18:26:27+08:00">2026-10-01</time></span> <span>约 4 分钟读完 · 1,554 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>7 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话记住">一句话记住</a></li><li class="d2"><a href="#发生了什么">发生了什么</a></li><li class="d2"><a href="#助手错在哪">助手错在哪</a></li><li class="d2"><a href="#沉淀出的律都是首次发现">沉淀出的律（都是首次发现）</a></li><li class="d2"><a href="#证据索引">证据索引</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="余温关键帧先行--锚点制--m02-四轮试镜把该交给视频模型的还给它">《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它</h1>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>项目：<code>71_余温_哥特告别短片/08_群像预告片/15_关键帧先行_20260918</code>；不是比赛。</li>
+<li>时段：2026-09-18 ～ 2026-09-20 09:40（两台机器接力，作者去公司接手时收口）。</li>
+<li>阶段目标：解决”分开生成的片段之间光线、服装、道具对不上”——作者 9/18 决定先把画面钉在图上，视频只演动作。</li>
+<li>最终结果：<strong>M02（第二幕，25 秒）的生产配方在试镜 r4 上被作者判定有效。</strong> 原话：“这次好多了，之前的脏是噪点，现在不是脏了，只是分辨率低，这个我们后期用超分手段超分至 1080p 即可，这个方法是有效的。” r4 是试镜不是成片；M02 未正式出片，M03–M06 未出锚点。</li>
+<li>工具与提交：即梦 CLI <code>multimodal2video</code> / Seedance 2.5 / 720p / 16:9 / 25 秒，试镜 r1–r4 各 500 积分（账号 885557817775943，余额 10030→8030）；关键帧由 Codex exec 与 chatgpt.com 聊天模式的 GPT Image 出（约 30 张）；Blender 5.2.1 白模 v1–v5 本地渲染。</li>
+<li>作者逐轮原话：
+<ul>
+<li>9/19 审 K09 v3：“这个手持袖子有点怪，按理说这么长的袖子应该会搭在小臂上，而不是抓着一个角”</li>
+<li>9/19 看 KF13/KF14：“我觉得我们的颗粒度太细了，只需要几个关键帧即可，给 Seedance 2.5 创作空间……这个图已经崩了，只有手臂没有布兰”</li>
+<li>9/20 看 r1：“布兰拦门前后太假……只给出每一处关键帧时候的人物站位，具体的动作由 Seedance 去渲染”</li>
+<li>9/20 看 r2：“r2 好多了，但是画面很脏……用 GPT 改图就会出现越改噪点越多的问题……这条 GPT 产出的线应该尽量少用”</li>
+<li>9/20 看 r4：见”最终结果”</li>
+</ul>
+</li>
+<li>数据来源：项目仓库 <code>试镜_M02_20260920/提交记录/*</code>、<code>产出/*/下载校验.json</code>、两台机器的会话记录。项目内完整复盘：<code>07_阶段复盘/2026-09-20_关键帧先行与锚点试镜_复盘.md</code>。</li>
+<li>边界：一个项目、一幕、四条试镜，每条只变一个变量；没有固定随机种子、没有多次重复。作者的”有效”是对方法的判断，超分后的成片还没做过。</li>
+</ul>
+<h2 id="一句话记住">一句话记住</h2>
+<p><strong>给视频模型的静态参考只定”谁在哪、什么状态”，动作和质感还给模型；参考图本身要干净——GPT 多轮派生的图会把噪点一起交给视频。</strong> 单项目一次逐变量对照，尚未跨项目验证。</p>
+<h2 id="发生了什么">发生了什么</h2>
+<p>三天里路线收窄了四次，每一次都是作者否掉”控制过度”：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>轮</th><th>静态参考给了什么</th><th>作者判断</th><th>改法</th></tr></thead><tbody><tr><td>关键帧表 v1</td><td>85 镜 111 张首尾帧，含”布兰只露一截前臂”的近景</td><td>颗粒度太细；近景崩了</td><td>改锚点表 v2：每段 4–6 张状态变化</td></tr><tr><td>r1</td><td>5 张锚点，其中两张摆了动作（横臂、掌抵胸甲）</td><td>拦门前后太假</td><td>锚点只给站位，人物自然站姿</td></tr><tr><td>r2</td><td>站位锚点（GPT 派生）＋ GPT 派生身份图</td><td>好多了，但画面很脏</td><td>排查 GPT 派生线</td></tr><tr><td>r3</td><td>锚点换成 r2 自己的抽帧，提示词逐字不变</td><td>（未单独评价）</td><td>锚点不是脏的主因</td></tr><tr><td>r4</td><td>身份图换成 MJ 原图（A01/A11/A12）</td><td>不脏了，只是分辨率低</td><td><strong>配方定稿</strong></td></tr></tbody></table>
+<p>配方：站位锚点（Seedance 抽帧或 Blender 白模，不摆动作）＋ MJ 原图身份 ＋ 文字规定姿势与动作顺序（“空袖对折搭在横在腰前的左小臂上”只靠文字就能照做）＋ 原曲；720p 出片、后期超分；GPT/Codex 派生图不进视频输入。</p>
+<h2 id="助手错在哪">助手错在哪</h2>
+<ul>
+<li>9/19 的总则写了”派生优先”（同机位帧从前一张改），链深到四五代，正是噪点累积的直接原因。</li>
+<li>用”平坦区 3×3 高通残差”量噪点，r2/r3/r4 数值相当，据此写”r4 没有更干净”；作者目视 r4 明显干净。指标没量到作者看到的东西，已弃用。</li>
+</ul>
+<h2 id="沉淀出的律都是首次发现">沉淀出的律（都是首次发现）</h2>
+<ul>
+<li><a href="/above-the-web/v1-dd98c63/" class="wikilink">锚点只给站位律_动作交给视频模型_v1</a> ⚠️</li>
+<li><a href="/above-the-web/v1-c5fded6/" class="wikilink">派生图不进视频输入律_噪点随编辑代数累积_v1</a> ⚠️</li>
+<li>“一次只变一个变量的试镜法”给 <a href="/above-the-web/v1-5ee9070/" class="wikilink">按切点重拍_省的是生成时长_v1</a> 的思路补了一次同类成立：500 积分一条，三条定位病因。</li>
+</ul>
+<h2 id="证据索引">证据索引</h2>
+<p>媒体与原始回执在创作档案，知识库只收方法和索引：</p>
+<ul>
+<li><code>08_群像预告片/15_关键帧先行_20260918/试镜_M02_20260920/README.md</code>：四轮试镜的输入、回执、抽帧、作者原话。</li>
+<li><code>提示词_M02_锚点试镜_r4.txt</code> 与 <code>参考清单_r4.json</code>：定稿配方的实际提示词与 10 张输入的哈希。</li>
+<li><code>锚点表_v2.md</code>：每段 4–6 张锚点的原则与 M02–M06 清单。</li>
+<li><code>白模/M02_白模.py</code>：Blender bpy 白模脚本（大厅、门、四个命名胶囊人按打点走位、两个机位，Workbench 逐帧渲染）。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-09-16-v1-11febd5/" class="wikilink">2026-09-16_余温_持物与行进方向修复复盘_v1</a> —— 同片前一阶段：把”自然”写成具体持物与走位；本阶段把”具体”又收回到只给站位。</li>
+<li><a href="/above-the-web/v1-ad701a9/" class="wikilink">跨镜道具锁定律_资产图优于形容词_v1</a> —— 道具要资产图；本案补的是”资产图本身要干净”。</li>
+<li><a href="/above-the-web/v1-5ee9070/" class="wikilink">按切点重拍_省的是生成时长_v1</a> —— 计费按秒；本案的逐变量试镜是同一思路。</li>
+<li><a href="/above-the-web/seedance2-5-v1-14bc5c5/" class="wikilink">Seedance2_5_行为规律_v1</a> —— 本案补了第四节（派生图噪点）与第七节（720p 20 分/秒、官方四种镜头结构控制）。</li>
+<li><a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/" class="wikilink">2026-09-26_清月_单条15秒角色PV_立项到三平台发布_复盘_v1</a> —— 下游：把本案配方缩成单角色 15 秒一条生成（无白模、模型自主配乐、非单变量），不能反过来给本案作证。</li>
+<li><a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/" class="wikilink">AI视频本机超分_RealESRGAN_x4plus与闪烁检查_v1</a> —— 本案”720p 出片、后期超分”的第一次实做。</li>
+<li><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+<li>后续:“720p 出片后期超分”在写实胶片感片子上被作者否决：<a href="/above-the-web/2026-09-29-v1-03d7c00/" class="wikilink">2026-09-29_右下角的池塘_游戏宣传微电影_实录混剪到双语字幕发布_复盘_v1</a></li>
+<li>后续：同项目角色 PV 用了本案配方（白模＋MJ 原图身份＋一条 30 秒），白模 4 条×5 切点全中、第一支四平台发布：<a href="/above-the-web/2026-10-01-pv-v1-1ddae81/" class="wikilink">2026-10-01_余温_见证者角色PV_立项到四平台发布_复盘_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">主题/AI短片</span><span class="tag">主题/动作连续性</span><span class="tag">主题/图生视频</span><span class="tag">工具/Seedance</span><span class="tag">工具/GPT-Image</span><span class="tag">工具/Blender</span><span class="tag">来源/创作实测</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-01T18:26:27+08:00">2026-10-01</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-09-20_%E4%BD%99%E6%B8%A9_%E5%85%B3%E9%94%AE%E5%B8%A7%E5%85%88%E8%A1%8C%E5%88%B0%E9%94%9A%E7%82%B9%E5%88%B6_M02%E5%9B%9B%E8%BD%AE%E8%AF%95%E9%95%9C%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-09-20_%E4%BD%99%E6%B8%A9_%E5%85%B3%E9%94%AE%E5%B8%A7%E5%85%88%E8%A1%8C%E5%88%B0%E9%94%9A%E7%82%B9%E5%88%B6_M02%E5%9B%9B%E8%BD%AE%E8%AF%95%E9%95%9C%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/seedance2-5-v1-14bc5c5/">Seedance 2.5 行为规律</a></li><li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/">《清月》单条 15 秒角色 PV：立项到三平台发布</a></li><li><a href="/above-the-web/2026-09-29-v1-03d7c00/">《右下角的池塘》游戏宣传微电影：AI 屏幕外 + 游戏实录混剪，到双语字幕发布</a></li><li><a href="/above-the-web/2026-10-01-pv-v1-1ddae81/">《余温》见证者角色 PV：立项到四平台发布</a></li><li><a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/">AI 视频本机超分：Real-ESRGAN x4plus 与闪烁检查</a></li><li><a href="/above-the-web/v1-c5fded6/">派生图不进视频输入律：噪点随编辑代数累积</a></li><li><a href="/above-the-web/v1-dd98c63/">锚点只给站位律：动作交给视频模型</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-09-16-v1-11febd5/"> <span class="card-cat">方法论与洞察</span> <h3>《余温》动作修复：把“自然”写成具体的持物与走位</h3> <p>- 项目：71余温哥特告别短片，群像预告片 v6；不是比赛。</p> </a><a class="card" href="/above-the-web/v1-5ee9070/"> <span class="card-cat">方法论与洞察</span> <h3>按切点重拍：省的是生成时长，不是&quot;局部编辑功能&quot;</h3> <p>一句话：片子里有一段不对，不要整片重生成，也不要指望&quot;局部重绘&quot;这种开关——在切点上把片子切开，只重拍出问题的那几秒。生成类接口按时长收费，…</p> </a><a class="card" href="/above-the-web/v1-ad701a9/"> <span class="card-cat">方法论与洞察</span> <h3>跨镜道具锁定律：资产图优于形容词</h3> <p>一句话：一件道具只要出现在两个以上镜头，就得有一张属于它自己的参考图。提示词里写多少形容词，模型每一镜都会重新想象一次。</p> </a><a class="card" href="/above-the-web/2026-08-26-v1-c69c850/"> <span class="card-cat">方法论与洞察</span> <h3>2026-08-26 《过风》雪雾珍珠人像动态写真 · 全链路复盘</h3> <p>- 作品名称：《过风》（雪雾珍珠人像动态写真，28.08s）</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话记住" data-toc-link="一句话记住">一句话记住</a></li><li class="d2"><a href="#发生了什么" data-toc-link="发生了什么">发生了什么</a></li><li class="d2"><a href="#助手错在哪" data-toc-link="助手错在哪">助手错在哪</a></li><li class="d2"><a href="#沉淀出的律都是首次发现" data-toc-link="沉淀出的律都是首次发现">沉淀出的律（都是首次发现）</a></li><li class="d2"><a href="#证据索引" data-toc-link="证据索引">证据索引</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

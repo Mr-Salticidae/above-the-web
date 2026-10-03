@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>打磨不等于校验律 · 蛛网之上</title><meta name="description" content="对一个对象做精细打磨,不产生任何关于它内容正确性的证据 —— 但会因为「看起来经过了工序」,悄悄抬高你和所有人对它的信任。打磨越多,越没人回头问「这东西本身对吗」。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-938b91e/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="打磨不等于校验律"><meta property="og:description" content="对一个对象做精细打磨,不产生任何关于它内容正确性的证据 —— 但会因为「看起来经过了工序」,悄悄抬高你和所有人对它的信任。打磨越多,越没人回头问「这东西本身对吗」。"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-938b91e/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="打磨不等于校验律"><meta name="twitter:description" content="对一个对象做精细打磨,不产生任何关于它内容正确性的证据 —— 但会因为「看起来经过了工序」,悄悄抬高你和所有人对它的信任。打磨越多,越没人回头问「这东西本身对吗」。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-30T12:53:04+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-938b91e/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-938b91e/","url":"https://tiaozhuxiansheng.com/v1-938b91e/","headline":"打磨不等于校验律","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"对一个对象做精细打磨,不产生任何关于它内容正确性的证据 —— 但会因为「看起来经过了工序」,悄悄抬高你和所有人对它的信任。打磨越多,越没人回头问「这东西本身对吗」。","datePublished":"2026-07-30T12:53:04+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"打磨不等于校验律","item":"https://tiaozhuxiansheng.com/v1-938b91e/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-30T12:53:04+08:00">2026-07-30</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 3 分钟读完 · 1,179 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>6 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#原理">原理</a></li><li class="d2"><a href="#案例本律来源">案例(本律来源)</a></li><li class="d2"><a href="#操作规则">操作规则</a></li><li class="d2"><a href="#反例--边界">反例 / 边界</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="打磨不等于校验律">打磨不等于校验律</h1>
+<blockquote>
+<p>入档:2026-07-30
+来源:风眼「九段线示意插图」事故 —— 给一块内容画错的地图插图写了一段讲究的四角避让算法,打磨完反而没人再怀疑它画得对不对
+验证状态:⚠️ 首次(反直觉,值得继续观察)</p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>对一个对象做精细打磨,不产生任何关于它内容正确性的证据</strong> —— 但会因为「看起来经过了工序」,悄悄抬高你和所有人对它的信任。打磨越多,越没人回头问「这东西本身对吗」。</p>
+<hr>
+<h2 id="原理">原理</h2>
+<p>打磨和校验作用在<strong>两条完全独立的轴</strong>上:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>关心什么</th><th>产出什么证据</th></tr></thead><tbody><tr><td>打磨(呈现质量)</td><td>好不好看、会不会挡、缩放会不会崩</td><td>只证明「呈现没问题」</td></tr><tr><td>校验(内容正确性)</td><td>数据 / 事实 / 来源对不对</td><td>只证明「内容没问题」</td></tr></tbody></table>
+<p>人脑会把两者混淆,因为<strong>打磨需要投入注意力</strong>,而「我认真看过这块东西」的记忆,会被错记成「我检查过这块东西」。于是精修过的模块获得一种<strong>未经授予的可信度</strong>。</p>
+<p>第三方也会被这层工序骗过:一块有边框、有经纬网、有动态避让、会跟着缩放的插图,看起来像是「产品级、已审查」的东西 —— 而它可能从第一行坐标起就是错的。</p>
+<hr>
+<h2 id="案例本律来源">案例(本律来源)</h2>
+<p>风眼项目 2026-07-11 加了一块自绘的「南海诸岛九段线示意」插图,9 段坐标是手写的,其中最后两段把海南岛和整个北部湾画到了国界线外侧。</p>
+<p>第二天(07-12)专门提交了一次 <code>fix: 九段线插图四角动态避让台风路径</code>:收集路径点与折线顶点坐标、四角打分、给叠着图例的底部两角加固定罚分、只在顶部两角都被占据时才退到底部。后来又给它加了「与远洋小地图互不重叠」的硬障碍避让、「被插图盖住的经纬度标注整条隐藏」的细节处理。</p>
+<p><strong>这些打磨全都做对了,而且做得挺细。</strong> 19 天里这块插图被维护 3 次、随发布包重建 10 次以上 ——</p>
+<p><strong>从来没有人问过一句:这 9 条线画对了吗?</strong></p>
+<p>最后是一位群友肉眼看出来的:「线要把海南岛包在里面」。</p>
+<hr>
+<h2 id="操作规则">操作规则</h2>
+<ol>
+<li><strong>给同一个模块做第二次打磨前,先补一句自问</strong>:这东西的<strong>内容本身</strong>,被谁验证过?依据是什么?</li>
+<li><strong>两条检查线分开记</strong>:呈现质量的进展,不写进内容正确性那一栏。commit 信息里 <code>fix: 避让 / 布局 / 适配</code> 这类词,不构成对内容的任何背书。</li>
+<li><strong>越”看起来专业”的产出,越单独校验内容源</strong>:地图与疆界、图表与统计口径、法条摘要、医疗剂量、财务数字、术语翻译 —— 这些的共同点是<strong>读者没有能力当场质疑</strong>,所以错了传得最远。</li>
+<li><strong>警惕”工序信任”</strong>:如果你发现自己说不出某块内容的来源,却觉得”它应该是对的”,通常就是被打磨工序骗了。</li>
+<li><strong>AI 协作场景加倍适用</strong>:AI 很擅长把一段内容打磨得非常完整、格式漂亮、术语齐全,这层完成度与内容真实性完全无关。</li>
+</ol>
+<hr>
+<h2 id="反例--边界">反例 / 边界</h2>
+<ul>
+<li><strong>内容源已独立验证过的模块</strong>不受此律约束:比如台风路径点来自权威 API 且做过字段校验,那么给它做视觉打磨就是纯粹的打磨。</li>
+<li><strong>纯装饰性内容</strong>不受约束(不指向任何可判真伪的事实)。</li>
+<li>本律<strong>不是</strong>”别打磨”的意思 —— 打磨该做,只是不要让它冒领校验的功劳。</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>本律来源案例:<a href="/above-the-web/2026-07-30-v1-a378a3b/" class="wikilink">2026-07-30_风眼九段线问题地图事故复盘_v1</a></li>
+<li>同族新形态(同项目):<a href="/above-the-web/2026-08-21-v1-d82b742/" class="wikilink">2026-08-21_风眼洪涝维度改造复盘_单因子分级会在最危险时段给出最低档_v1</a> —— 被反复维护却从未被问过「它覆盖全部致灾路径了吗」的单因子分级</li>
+<li>信任的另一侧:<a href="/above-the-web/v1-8b48fc6/" class="wikilink">混合真伪的证据链_最弱一环会拖垮最强一环_v1</a> —— 本律讲精细打磨会<strong>虚假抬高</strong>信任,该档讲最弱论据会<strong>真实摧毁</strong>信任</li>
+<li>同族:交付前要证伪而非”应该能行” —— <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a></li>
+<li>同族:先撞生死线再打磨外观 —— <a href="/above-the-web/v1-75dde95/" class="wikilink">可行性生死线前置律_移植先探一票否决约束_v1</a></li>
+<li>核查心法:<a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a> · <a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E6%89%93%E7%A3%A8%E4%B8%8D%E7%AD%89%E4%BA%8E%E6%A0%A1%E9%AA%8C%E5%BE%8B_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E6%89%93%E7%A3%A8%E4%B8%8D%E7%AD%89%E4%BA%8E%E6%A0%A1%E9%AA%8C%E5%BE%8B_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-08-21-v1-d82b742/">风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档</a></li><li><a href="/above-the-web/v1-6532011/">公屏下线只删了界面 · 删界面不等于关链路</a></li><li><a href="/above-the-web/aa-v1-fecad09/">模型排名科学性律：五层评估框架与 AA 拆解</a></li><li><a href="/above-the-web/2026-07-30-v1-a378a3b/">2026-07-30 风眼「九段线示意插图」问题地图事故复盘</a></li><li><a href="/above-the-web/v1-3fce0f1/">交付前实测证伪律</a></li><li><a href="/above-the-web/v1-75dde95/">可行性生死线前置律 · 移植先探一票否决约束，再修正确性</a></li><li><a href="/above-the-web/v1-8b48fc6/">混合真伪的证据链:最弱一环会拖垮最强一环</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/claude-v1-ec3d11f/"> <span class="card-cat">方法论与洞察</span> <h3>Claude 完成报告核查心法</h3> <p>Claude（Code 或 Cowork）写完成报告时对自己的产出过度自信。常见表现：</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a><a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a><a class="card" href="/above-the-web/1000-v1-2b2c761/"> <span class="card-cat">方法论与洞察</span> <h3>小红书正文超 1000 字是拆篇信号</h3> <p>小红书正文 1000 字上限不是排版限制,是平台在替你执行「别写大教程」。 写超了,第一反应不该是删字,该是拆篇——因为逼你超限的那个结构(…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#原理" data-toc-link="原理">原理</a></li><li class="d2"><a href="#案例本律来源" data-toc-link="案例本律来源">案例(本律来源)</a></li><li class="d2"><a href="#操作规则" data-toc-link="操作规则">操作规则</a></li><li class="d2"><a href="#反例--边界" data-toc-link="反例--边界">反例 / 边界</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

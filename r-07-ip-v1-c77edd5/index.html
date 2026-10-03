@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>R-07 IP · 视觉系统 · 蛛网之上</title><meta name="description" content="R-07 = 一台被遗忘的旧时代机体,在人类文明退场后的废墟里,用一段被偶然植入的音频生成模型,对着任何还活着的东西唱歌。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/r-07-ip-v1-c77edd5/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="R-07 IP · 视觉系统"><meta property="og:description" content="R-07 = 一台被遗忘的旧时代机体,在人类文明退场后的废墟里,用一段被偶然植入的音频生成模型,对着任何还活着的东西唱歌。"><meta property="og:url" content="https://tiaozhuxiansheng.com/r-07-ip-v1-c77edd5/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="R-07 IP · 视觉系统"><meta name="twitter:description" content="R-07 = 一台被遗忘的旧时代机体,在人类文明退场后的废墟里,用一段被偶然植入的音频生成模型,对着任何还活着的东西唱歌。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="视觉系统"><meta property="article:tag" content="类型/IP视觉"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/r-07-ip-v1-c77edd5/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/r-07-ip-v1-c77edd5/","url":"https://tiaozhuxiansheng.com/r-07-ip-v1-c77edd5/","headline":"R-07 IP · 视觉系统","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"R-07 = 一台被遗忘的旧时代机体,在人类文明退场后的废墟里,用一段被偶然植入的音频生成模型,对着任何还活着的东西唱歌。","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"视觉系统","keywords":"类型/IP视觉"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"视觉系统","item":"https://tiaozhuxiansheng.com/notes/?cat=%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F"},{"@type":"ListItem","position":3,"name":"R-07 IP · 视觉系统","item":"https://tiaozhuxiansheng.com/r-07-ip-v1-c77edd5/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">视觉系统</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 3 分钟读完 · 1,131 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>17 节</i></summary> <ol> <li class="d2"><a href="#概念">概念</a></li><li class="d2"><a href="#视觉识别符四要素必须全部满足">视觉识别符四要素(必须全部满足)</a></li><li class="d2"><a href="#配色规范">配色规范</a></li><li class="d3"><a href="#主调">主调</a></li><li class="d3"><a href="#暖色锚点极少量">暖色锚点(极少量)</a></li><li class="d3"><a href="#配色禁区">配色禁区</a></li><li class="d2"><a href="#行为禁区">行为禁区</a></li><li class="d2"><a href="#情绪基调">情绪基调</a></li><li class="d2"><a href="#世界观锚点">世界观锚点</a></li><li class="d2"><a href="#元叙事张力">元叙事张力</a></li><li class="d2"><a href="#锚点图">锚点图</a></li><li class="d2"><a href="#配套素材r-07-项目内沉淀">配套素材(R-07 项目内沉淀)</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d3"><a href="#后续-r-07-衍生创作">后续 R-07 衍生创作</a></li><li class="d3"><a href="#跨项目借鉴">跨项目借鉴</a></li><li class="d3"><a href="#不要做的事">不要做的事</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="r-07-ip--视觉系统">R-07 IP · 视觉系统</h1>
+<blockquote>
+<p>建立:2026-05-10 (R-07 项目主对话 + MJ 出图阶段)
+锁定:2026-05-11 (17 张 MJ final + 17 段可灵视频成片)
+评级:A / A / A-(全 17 张人物一致性 / 风格一致性 / 剧本契合度)</p>
+</blockquote>
+<h2 id="概念">概念</h2>
+<p><strong>R-07</strong> = 一台被遗忘的旧时代机体,在人类文明退场后的废墟里,用一段被偶然植入的音频生成模型,对着任何还活着的东西唱歌。</p>
+<p>核心反差:<strong>无机的造物在为有机的生命歌唱</strong>。</p>
+<h2 id="视觉识别符四要素必须全部满足">视觉识别符四要素(必须全部满足)</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>要素</th><th>规范</th></tr></thead><tbody><tr><td>1</td><td><strong>面甲</strong></td><td><strong>红色圆盘(上半部)+ 灰白机械纹理(下半部)</strong> 的混合结构,<strong>不是纯红整面</strong></td></tr><tr><td>2</td><td><strong>传感器</strong></td><td><strong>单个红色发光点</strong>,位于面甲<strong>右下方的灰白机械纹理区域</strong>,<strong>不在中央</strong></td></tr><tr><td>3</td><td><strong>机体</strong></td><td><strong>哑光黑主导</strong>(60-70%)+ <strong>红色装甲</strong>分布在<strong>肩部 / 胸甲 / 上背</strong>(30%)</td></tr><tr><td>4</td><td><strong>颈缆</strong></td><td><strong>多束颈部线缆束</strong>,从颈后/侧面伸出</td></tr><tr><td>-</td><td>比例</td><td>humanoid 标准,纤瘦但正常,有关节细节</td></tr></tbody></table>
+<h2 id="配色规范">配色规范</h2>
+<h3 id="主调">主调</h3>
+<ul>
+<li><strong>冷灰雾蓝</strong>(70%+)</li>
+<li><strong>哑光黑</strong>机体</li>
+<li><strong>油画质感</strong> + 35mm 胶片颗粒</li>
+</ul>
+<h3 id="暖色锚点极少量">暖色锚点(极少量)</h3>
+<ul>
+<li>R-07 红装甲 / 铁锈红 / 帝王蝶橙翅 / 野花黄 / 兔毛 / 猫毛</li>
+<li><strong>低饱和</strong>,呈现”油画自然色”而非”鲜艳数字色”</li>
+<li>暖色锚点必须<strong>少而精</strong>,Outro 段递减到几乎不可见</li>
+</ul>
+<h3 id="配色禁区">配色禁区</h3>
+<ul>
+<li>❌ 赛博朋克霓虹(紫粉蓝霓虹灯 / 全息广告)</li>
+<li>❌ 糖水二次元</li>
+<li>❌ 高饱和数字色</li>
+</ul>
+<h2 id="行为禁区">行为禁区</h2>
+<p>R-07 是机器,所有行为表达必须<strong>机械 / 克制 / 目的性弱</strong>:</p>
+<ul>
+<li>❌ 流泪 / 任何”哭”的拟人表达</li>
+<li>❌ 救人类 / 跟人类有交集(人类已退场)</li>
+<li>❌ 自指 AI 身份(“我是 AI / 我没有心”)</li>
+<li>❌ 拟人化情感外露(摆姿势 / 比心 / 招手等)</li>
+<li>❌ 表演 / 跳舞 / 唱歌时的”舞台姿态”</li>
+</ul>
+<p>允许:</p>
+<ul>
+<li>✅ 缓慢转头(机械感)</li>
+<li>✅ 抬手 / 举手(机械关节铰链感)</li>
+<li>✅ 行走(脚步分明,机器节奏)</li>
+<li>✅ 完全静止(凝固)</li>
+</ul>
+<h2 id="情绪基调">情绪基调</h2>
+<p><strong>“安静的剩余”</strong>,不是”悲伤的末日”。</p>
+<p>R-07 不知道自己是悲剧还是喜剧。它身上没有怨气、没有控诉、没有挣扎——这种克制反而是最打动人的地方。</p>
+<p>参考:</p>
+<ul>
+<li>宫崎骏《天空之城》最后那个守护花园的机器人</li>
+<li>《瓦力》前 30 分钟没有台词的部分</li>
+<li>Radiohead 那种克制的悲伤,但更柔软</li>
+</ul>
+<h2 id="世界观锚点">世界观锚点</h2>
+<ul>
+<li>时间:不确定的未来,人类已退场很久</li>
+<li>地点:废弃工业区 / 数据中心 + 周边自然回收的土地(苔藓 / 藤蔓 / 杂草 / 野花)</li>
+<li>反差:<strong>无机的造物在为有机的生命歌唱</strong></li>
+<li>受众:R-07 没有受众反馈 / 没有播放量 / 没有评论。它只在每次遇到”还活着的东西”时,停下来,发出一段声音</li>
+</ul>
+<h2 id="元叙事张力">元叙事张力</h2>
+<p><strong>R-07 不知道自己是偶像。</strong> 在一个人人都想红的活动里,放一个根本不知道自己在被观看的角色——它不在表演给你看,你只是恰好路过它。</p>
+<h2 id="锚点图">锚点图</h2>
+<ul>
+<li>主参考(MJ cref/oref):<code>05_素材_出图/S05_蝶停手指_锚点图/S05_v1_final.png</code></li>
+<li>题眼:<code>S08_v3_final.png</code>(整机体侧像 + 蝶停头顶)</li>
+<li>跟拍背影:<code>S12_v1_final.png</code>(R-07 转身行走背影)</li>
+</ul>
+<h2 id="配套素材r-07-项目内沉淀">配套素材(R-07 项目内沉淀)</h2>
+<ul>
+<li>17 张 MJ final 出图(<code>05_素材_出图/</code>)</li>
+<li>17 段可灵图生视频(<code>07_素材_视频片段/</code>)</li>
+<li>Suno V-A 男声版歌曲 3:09(<code>06_素材_歌曲/V-A_男声/V-A_001_金属翅膀贴近.wav</code>)</li>
+<li>Suno 歌词 v5 锁定版(<code>03_歌词与Suno_prompt/R07_Suno_v5.md</code>)</li>
+<li>分镜 v3 锁定稿(<code>02_分镜脚本/R07_分镜脚本_v3_3分钟版本.md</code>)</li>
+<li>投稿成片 R07.mp4(<code>08_剪辑工程/R07.mp4</code>,415MB,3:09)</li>
+</ul>
+<h2 id="如何使用">如何使用</h2>
+<h3 id="后续-r-07-衍生创作">后续 R-07 衍生创作</h3>
+<ul>
+<li>任何 R-07 出图必须 cref/oref 引用 S05 锚点图</li>
+<li>视觉识别符四要素逐张自检</li>
+<li>行为禁区严格遵守(尤其不要被生成式 AI 默认的”机娘 / 萌化”倾向影响)</li>
+</ul>
+<h3 id="跨项目借鉴">跨项目借鉴</h3>
+<ul>
+<li>“无机造物为有机生命歌唱”的结构 → 可以泛化为”非中心叙事”(把传统故事的主体放在边缘)</li>
+<li>“不展示参赛标识”的克制 → 见 <a href="/above-the-web/r-07-v1-1b29bfb/" class="wikilink">R-07 创作内核：克制、天真与减法</a> § 三 违和论</li>
+</ul>
+<h3 id="不要做的事">不要做的事</h3>
+<ul>
+<li>❌ 把 R-07 改成”更可爱” / “更主流”(任何”加一点可爱元素 / 加高光颜色”的调整都是反方向)</li>
+<li>❌ 把 R-07 跟 NULL-07 混淆(NULL-07 是另一个独立 IP,排除在 R-07 项目外)</li>
+<li>❌ 在 R-07 故事里加入人类角色</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>IP 精神锚:<a href="/above-the-web/r-07-v1-1b29bfb/" class="wikilink">R-07 创作内核：克制、天真与减法</a></li>
+<li>配套方法论:<a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a> · <a href="/above-the-web/kling3-0-v1-8b6096c/" class="wikilink">可灵Kling3_0_行为规律_v1</a></li>
+<li>同级 IP(参考结构):<a href="/above-the-web/ip-v1-649b0d2/" class="wikilink">檐下IP_视觉系统_v1</a></li>
+<li>顶层一致性:<a href="/above-the-web/v1-6b0cabf/" class="wikilink">角色一致性金字塔_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/05_%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F/R-07_IP_%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/05_%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F/R-07_IP_%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/kling3-0-v1-8b6096c/">可灵 Kling 3.0 / Omni 行为规律</a></li><li><a href="/above-the-web/05-bcabb51/">视觉系统索引</a></li><li><a href="/above-the-web/r-07-v0-4938ff6/">R-07 宇宙 · 世界观圣经 v0.1（首轮拍板 · 部分锁定）</a></li><li><a href="/above-the-web/ip-v1-649b0d2/">「檐下」IP 视觉系统</a></li><li><a href="/above-the-web/prompt-v1-603b0f9/">可灵图生视频 · 中文 prompt 模板库</a></li><li><a href="/above-the-web/vs-v1-aad8c40/">装扮签名 vs 五官精度 · IP 角色辨识的真相</a></li><li><a href="/above-the-web/v1-6b0cabf/">角色一致性金字塔(4 层结构)</a></li><li><a href="/above-the-web/ai-v1-d98a2a3/">剧情向 AI 短片创作方法论 · 丧尸清道夫案例（待验证）</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/forwardonly-v1-7c8a4d7/"> <span class="card-cat">方法论与洞察</span> <h3>图生视频 · Forward-Only 原则</h3> <p>图生视频的 prompt 必须写&quot;从源图当前状态向后发展(forward-only)&quot;,不能写&quot;实现某个状态&quot;。</p> </a><a class="card" href="/above-the-web/r-07-v1-1b29bfb/"> <span class="card-cat">方法论与洞察</span> <h3>R-07 创作内核：克制微动、天真文案与减法原则</h3> <p>R-07 项目 Wave 5 S9 镜头反馈:&quot;野猫完全不动,会不会有些刻意?&quot;</p> </a><a class="card" href="/above-the-web/style-guide-v1-c907e17/"> <span class="card-cat">视觉系统</span> <h3>Last Stand 小红书图文 · 制作经验与风格手册</h3> <p>- 单张：1080 × 1440（小红书 3:4 竖屏）</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#概念" data-toc-link="概念">概念</a></li><li class="d2"><a href="#视觉识别符四要素必须全部满足" data-toc-link="视觉识别符四要素必须全部满足">视觉识别符四要素(必须全部满足)</a></li><li class="d2"><a href="#配色规范" data-toc-link="配色规范">配色规范</a></li><li class="d3"><a href="#主调" data-toc-link="主调">主调</a></li><li class="d3"><a href="#暖色锚点极少量" data-toc-link="暖色锚点极少量">暖色锚点(极少量)</a></li><li class="d3"><a href="#配色禁区" data-toc-link="配色禁区">配色禁区</a></li><li class="d2"><a href="#行为禁区" data-toc-link="行为禁区">行为禁区</a></li><li class="d2"><a href="#情绪基调" data-toc-link="情绪基调">情绪基调</a></li><li class="d2"><a href="#世界观锚点" data-toc-link="世界观锚点">世界观锚点</a></li><li class="d2"><a href="#元叙事张力" data-toc-link="元叙事张力">元叙事张力</a></li><li class="d2"><a href="#锚点图" data-toc-link="锚点图">锚点图</a></li><li class="d2"><a href="#配套素材r-07-项目内沉淀" data-toc-link="配套素材r-07-项目内沉淀">配套素材(R-07 项目内沉淀)</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d3"><a href="#后续-r-07-衍生创作" data-toc-link="后续-r-07-衍生创作">后续 R-07 衍生创作</a></li><li class="d3"><a href="#跨项目借鉴" data-toc-link="跨项目借鉴">跨项目借鉴</a></li><li class="d3"><a href="#不要做的事" data-toc-link="不要做的事">不要做的事</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

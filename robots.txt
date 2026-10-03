@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /above-the-web/api/
+
+Sitemap: https://tiaozhuxiansheng.com/sitemap.xml

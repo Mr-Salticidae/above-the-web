@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>sref 用一年,我才搞懂的「纯净性原则」 · 蛛网之上</title><meta name="description" content="做项目的人都知道, sref(style reference)是 MJ 实现&#34;风格统一&#34;的核心机制。但你有没有遇到过这种情况:"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/sref-v1-311be08/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="sref 用一年,我才搞懂的「纯净性原则」"><meta property="og:description" content="做项目的人都知道, sref(style reference)是 MJ 实现&#34;风格统一&#34;的核心机制。但你有没有遇到过这种情况:"><meta property="og:url" content="https://tiaozhuxiansheng.com/sref-v1-311be08/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="sref 用一年,我才搞懂的「纯净性原则」"><meta name="twitter:description" content="做项目的人都知道, sref(style reference)是 MJ 实现&#34;风格统一&#34;的核心机制。但你有没有遇到过这种情况:"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/核心方法论"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/sref-v1-311be08/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/sref-v1-311be08/","url":"https://tiaozhuxiansheng.com/sref-v1-311be08/","headline":"sref 用一年,我才搞懂的「纯净性原则」","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"做项目的人都知道, sref(style reference)是 MJ 实现\"风格统一\"的核心机制。但你有没有遇到过这种情况:","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/核心方法论"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"sref 用一年,我才搞懂的「纯净性原则」","item":"https://tiaozhuxiansheng.com/sref-v1-311be08/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>角色一致性与视觉签名</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 9 分钟读完 · 3,296 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>20 节</i></summary> <ol> <li class="d2"><a href="#一问题的提出">一、问题的提出</a></li><li class="d2"><a href="#二我犯过的错">二、我犯过的错</a></li><li class="d2"><a href="#三洞察风格泛化产物--风格锚点">三、洞察:风格泛化产物 ≠ 风格锚点</a></li><li class="d2"><a href="#四什么才是真正的风格锚点">四、什么才是真正的”风格锚点”?</a></li><li class="d2"><a href="#五纯净性原则">五、纯净性原则</a></li><li class="d2"><a href="#六症状识别">六、症状识别</a></li><li class="d2"><a href="#七修复方法">七、修复方法</a></li><li class="d3"><a href="#步骤-1-判断当前-sref-是不是伪锚点">步骤 1: 判断当前 sref 是不是伪锚点</a></li><li class="d3"><a href="#步骤-2-找回真锚点">步骤 2: 找回真锚点</a></li><li class="d3"><a href="#步骤-3-用真锚点重做体系">步骤 3: 用真锚点重做体系</a></li><li class="d2"><a href="#八推论sref-的形态中性原则">八、推论:sref 的”形态中性”原则</a></li><li class="d2"><a href="#九这条洞察对工作流的影响">九、这条洞察对工作流的影响</a></li><li class="d3"><a href="#before-错误工作流">Before (错误工作流)</a></li><li class="d3"><a href="#after-纯净工作流">After (纯净工作流)</a></li><li class="d2"><a href="#十和现有-sref-教程的差别">十、和现有 sref 教程的差别</a></li><li class="d2"><a href="#十一附适用边界">十一、附:适用边界</a></li><li class="d2"><a href="#十一之二扩展判据2026-08-26-补挂不挂-sref看主体的媒介不看画面里有没有那个元素">十一之二、扩展判据（2026-08-26 补）：挂不挂 sref,看主体的媒介,不看画面里有没有那个元素</a></li><li class="d2"><a href="#十二写在最后">十二、写在最后</a></li><li class="d2"><a href="#关键术语速查">关键术语速查</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="sref-用一年我才搞懂的纯净性原则">sref 用一年,我才搞懂的「纯净性原则」</h1>
+<blockquote>
+<p>作者: 跳蛛先生 / Mr. Jumping Spider<br>
+实践来源: 《擦干净》项目 sref 探索阶段<br>
+沉淀日期: 2026-05-10<br>
+适用对象: 所有用 MJ sref 工作流做风格统一项目的创作者</p>
+</blockquote>
+<hr>
+<h2 id="一问题的提出">一、问题的提出</h2>
+<p>做项目的人都知道, sref(style reference)是 MJ 实现”风格统一”的核心机制。但你有没有遇到过这种情况:</p>
+<ul>
+<li>一张 sref 图,跑某些主体很稳,跑另一些主体就反复跑偏</li>
+<li>调 prompt 调了十几轮,某个主体就是出不来对的风格</li>
+<li>越深入项目,sref 就越”漂”——明明是同一张 sref,后期出图却越来越不像最初的风格基准</li>
+</ul>
+<p>如果你遇到过——<strong>问题可能不在你的 prompt,而在你的 sref 本身</strong>。</p>
+<hr>
+<h2 id="二我犯过的错">二、我犯过的错</h2>
+<p>我做《擦干净》项目时,前期 sref 探索阶段有一个关键产物——一张 Taniguchi 风格的妈妈背影。这张图风格漂亮、主体清晰、是项目里第一张让我满意的人物图。</p>
+<p>然后我做了一件<strong>当时觉得理所当然、现在看来根本错了</strong>的事:</p>
+<blockquote>
+<p><strong>把这张妈妈背影当成”人物视觉锚点”,作为新的 sref 用于跑后续所有人物。</strong></p>
+</blockquote>
+<p>这件事的逻辑听起来无懈可击:</p>
+<ul>
+<li>我要的就是这种风格——这张图就是这种风格的最佳代表</li>
+<li>那把它当 sref,后续所有人物自然就保持这种风格了</li>
+</ul>
+<p>但事实是:<strong>用这张妈妈背影做 sref 跑年轻女孩时,sref 完全失效</strong>。MJ 跑出来的全是 90 年代欧美胶片少女肖像,和我要的 Taniguchi 风格毫无关系。</p>
+<p>我调了三轮 prompt,加关键词、删关键词、换语序,全部无效。</p>
+<p>直到我突然意识到一件事——</p>
+<hr>
+<h2 id="三洞察风格泛化产物--风格锚点">三、洞察:风格泛化产物 ≠ 风格锚点</h2>
+<p>这张妈妈背影不是”风格的纯粹形态”。<strong>它是”风格 + 妈妈这个具体主体”的混合产物</strong>。</p>
+<p>它的视觉指纹里同时编码了:</p>
+<ul>
+<li>✅ Taniguchi 的线条质感(我想要的)</li>
+<li>❌ 一个含蓄的、中年的、东亚女性的、背影姿态(我不想要的污染)</li>
+<li>❌ 围裙、发髻、肩膀微弓的具体形态(我不想要的污染)</li>
+<li>❌ 含蓄克制的情绪基调(可能不想要的污染)</li>
+</ul>
+<p>当我把它当成 sref 跑”年轻女孩举手喊加油”时,MJ 在内部要解决一个矛盾——<strong>sref 在告诉它”含蓄的中年女性背影”,prompt 在告诉它”狂热的少女正面”</strong>。</p>
+<p>矛盾本身不致命,致命的是 MJ 的解决方式: 它会<strong>放弃那个权重最弱的部分</strong>——也就是 Taniguchi 风格本身。然后跑出”狂热的西方少女正面”——按胶片摄影母题的训练数据来填充。</p>
+<blockquote>
+<p><strong>关键认知</strong>: sref 越是”具体主体的成果图”,它的风格信息就越被主体形态稀释。当新 prompt 的主体和 sref 的主体差异过大时,sref 的风格部分会被率先抛弃。</p>
+</blockquote>
+<hr>
+<h2 id="四什么才是真正的风格锚点">四、什么才是真正的”风格锚点”?</h2>
+<p>回头看《擦干净》项目里另一张图——一张早期的咖啡杯线条画。</p>
+<p>这张图的特殊之处在于: <strong>它是用纯 prompt 跑出来的,没有用任何 sref</strong>。它的视觉指纹里只编码了:</p>
+<ul>
+<li>✅ Taniguchi 的线条质感</li>
+<li>✅ 一个中性的容器形状(咖啡杯)</li>
+<li>✅ 大量留白</li>
+</ul>
+<p>它没有”特定主体形态”的污染。当我把这张图当 sref,prompt 描述任何新主体时,MJ 没有矛盾要解决——sref 只在告诉它”风格”,主体由 prompt 决定。</p>
+<p><strong>结果</strong>: 这一个 sref 一次性扛住了所有主体——容器、扁平物件、年轻女性、中老年女性背影,全部以高命中率跑出 Taniguchi 线条画风格。</p>
+<hr>
+<h2 id="五纯净性原则">五、纯净性原则</h2>
+<p>总结起来就是一条:</p>
+<blockquote>
+<p><strong>风格锚点必须是「纯 prompt 抽卡」的产物,不能是「用其他 sref 跑出来的」产物。</strong></p>
+</blockquote>
+<p>为什么?</p>
+<p>因为 sref 的本质是”提取一张图的整体视觉指纹用于迁移”。这个指纹<strong>不区分</strong>”风格属性”和”主体属性”——它是把整张图的全部视觉特征打包压缩成一个嵌入向量。</p>
+<ul>
+<li>如果你的 sref 源图是”风格 + 中性主体”,指纹里风格成分占主导,迁移时风格被保留</li>
+<li>如果你的 sref 源图是”风格 + 强烈主体”,指纹里主体成分占主导,迁移时主体特征会污染新生成</li>
+</ul>
+<p>而<strong>用 sref 跑出来的成果图,本身就是”风格 + 强烈主体”</strong>——因为 sref 已经把上一个主体的形态特征注入了。</p>
+<p>把这种成果图再做 sref,等于<strong>每次都在累积主体污染</strong>。第一次:风格 + 主体 A;第二次:风格 + 主体 A + 主体 B;第三次:更糟。</p>
+<p>这是一个<strong>指数级累积偏差的过程</strong>。</p>
+<hr>
+<h2 id="六症状识别">六、症状识别</h2>
+<p>如果你怀疑自己的 sref 是”伪锚点”,这些是常见症状:</p>
+<ol>
+<li>
+<p><strong>特定主体类型反复跑偏,调 prompt 不奏效</strong>
+→ sref 里的主体偏差和新主体冲突</p>
+</li>
+<li>
+<p><strong>生成图越来越偏离最初的风格基准</strong>
+→ 每次用 sref 跑新主体时都在累积污染</p>
+</li>
+<li>
+<p><strong>某些 prompt 关键词奇怪地”失灵”</strong>
+→ prompt 在和 sref 里编码的主体特征对抗,某一方被牺牲</p>
+</li>
+<li>
+<p><strong>加新关键词解决一个问题,会引发另一个问题</strong>
+→ 在 sref 已经污染的基础上做修补,治标不治本</p>
+</li>
+</ol>
+<hr>
+<h2 id="七修复方法">七、修复方法</h2>
+<p>如果发现自己用了”伪锚点”,<strong>回滚步骤</strong>:</p>
+<h3 id="步骤-1-判断当前-sref-是不是伪锚点">步骤 1: 判断当前 sref 是不是伪锚点</h3>
+<p>问自己: 这张 sref 图是怎么生成的?</p>
+<ul>
+<li>纯 prompt(无 sref)→ 真锚点</li>
+<li>用其他 sref 生成的 → 伪锚点</li>
+</ul>
+<h3 id="步骤-2-找回真锚点">步骤 2: 找回真锚点</h3>
+<p>回到这个项目最早期、还没有 sref 时,<strong>用纯关键词抽卡跑出的某张图</strong>——那个就是你的真锚点。</p>
+<p>如果当时没有保留——重新用纯关键词抽卡 4-8 次,挑一张风格最对、主体形态最中性(容器、抽象物体、留白多)的作为新 sref 源。</p>
+<h3 id="步骤-3-用真锚点重做体系">步骤 3: 用真锚点重做体系</h3>
+<p>用这个真 sref 重新跑你之前那些”反复跑偏”的主体。<strong>大概率一次就过</strong>——因为这次 sref 没有主体污染,prompt 描述什么主体就跑什么主体。</p>
+<hr>
+<h2 id="八推论sref-的形态中性原则">八、推论:sref 的”形态中性”原则</h2>
+<p>从纯净性原则可以推出一个实操层面的延伸——</p>
+<p><strong>做风格锚点 sref 时,优先选择形态中性的主体</strong>:</p>
+<ul>
+<li>✅ 优先: 容器(杯、碗、瓶)、抽象物体、几何体、大量留白的画面</li>
+<li>⚠️ 谨慎: 具体的人(尤其是有强烈姿态/情绪的)、复杂场景、有强叙事的画面</li>
+<li>❌ 避免: 任何已经用其他 sref 跑出来的图</li>
+</ul>
+<p>这是因为形态中性的主体,在向量空间里的位置接近”原点”,sref 提取出来的指纹更靠近纯风格;而强烈主体的图,指纹会被主体特征拉偏。</p>
+<hr>
+<h2 id="九这条洞察对工作流的影响">九、这条洞察对工作流的影响</h2>
+<p>理解了这一条之后,我重新整理了 sref 工作流:</p>
+<h3 id="before-错误工作流">Before (错误工作流)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. 用关键词抽卡找风格 → 选一张做 sref</span></span>
+<span class="line"><span>2. 用这个 sref 跑出某个主体 A 的图,效果好</span></span>
+<span class="line"><span>3. 把主体 A 的图当成"主体类型 A 的视觉锚点",存档</span></span>
+<span class="line"><span>4. 后续跑主体类型 A 时,用这个新存的 sref</span></span>
+<span class="line"><span>5. 跑主体类型 B 时,再找一个 sref,陷入复杂的 sref 管理</span></span></code></pre>
+<h3 id="after-纯净工作流">After (纯净工作流)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>1. 用关键词抽卡找风格 → 挑选形态中性的图做唯一 sref</span></span>
+<span class="line"><span>2. 这一张 sref + 风格关键词,作为整个项目的固定基底</span></span>
+<span class="line"><span>3. 跑任何主体: [风格关键词] + [中性 sref] + [主体描述]</span></span>
+<span class="line"><span>4. 不论主体如何变化,体系不需要扩展</span></span></code></pre>
+<p>这套工作流的好处:</p>
+<ul>
+<li>✅ 体系简洁,只有一个 sref 要管</li>
+<li>✅ 风格一致性最高</li>
+<li>✅ 任何主体都能跑,不需要”专项 sref 探索”</li>
+<li>✅ 项目可复现性强(整套流程文档化容易)</li>
+</ul>
+<hr>
+<h2 id="十和现有-sref-教程的差别">十、和现有 sref 教程的差别</h2>
+<p>主流的 sref 教程会教你:</p>
+<ul>
+<li>“找一张你喜欢的图,把它做成 sref”</li>
+<li>“如果跑得不准,试试更换 sref 或调整 sw 值”</li>
+<li>“不同场景用不同的 sref”</li>
+</ul>
+<p>这些教程没错,但<strong>不够深</strong>。它们停留在”如何使用 sref”的层面,没有触及”如何选 sref 源图”。</p>
+<p>而<strong>选 sref 源图的关键判据</strong>,就是这条纯净性原则:<strong>这张图是不是”主体污染过的成果图”</strong>。</p>
+<hr>
+<h2 id="十一附适用边界">十一、附:适用边界</h2>
+<p>这条原则不是绝对的——有时候你<strong>就是要用某个具体主体的视觉特征</strong>:</p>
+<ul>
+<li>角色一致性项目(同一个角色在不同场景出现,你需要 sref 锁定主体形态)</li>
+<li>特定姿态/构图的批量生成(你需要 sref 锁定姿态)</li>
+</ul>
+<p>这些场景下”主体污染”反而是你想要的。</p>
+<p>但<strong>风格统一类项目</strong>——也就是大部分商业/创作场景下”我要这种画风,主体随便”的需求——纯净性原则适用。</p>
+<p>判断标准: <strong>你用 sref 是为了锁定”风格”还是”主体”?</strong></p>
+<ul>
+<li>锁风格 → 用纯净的 sref</li>
+<li>锁主体 → 主体污染是 feature,不是 bug</li>
+</ul>
+<hr>
+<h2 id="十一之二扩展判据2026-08-26-补挂不挂-sref看主体的媒介不看画面里有没有那个元素">十一之二、扩展判据（2026-08-26 补）：挂不挂 sref,看主体的<strong>媒介</strong>,不看画面里有没有那个元素</h2>
+<p>上一节的判据是”锁风格还是锁主体”。实践里还有第三种情况原文没覆盖——
+<strong>一张图里同时存在两种媒介</strong>。</p>
+<p>《擦干净》后续的”融合底图 v2”就是:<strong>整张是写实纪录照片,只有一件小物件(茶缸 / 球鞋 / 咖啡杯)是 Taniguchi 线条画。</strong></p>
+<p>当时的纠结:项目红线写着”线条画类必须带 <code>--sref</code> 锚点 + <code>--sw 100</code>”,那这张算不算线条画类?
+prompt 清单末尾的锚点表挂着”待填”,一挂好几天,出图卡在这里。</p>
+<p><strong>按本篇的机制推,答案是不挂</strong>:</p>
+<p>咖啡杯锚点是”纯线条 + 大留白”的纯净锚点。挂上去,sref 说”整张是线条画”,prompt 说”整张是照片、只有杯子是线条”——
+这正是本篇第三节描述的那个矛盾结构。MJ 的解决方式是<strong>放弃权重最弱的部分</strong>,
+轻则线条质感丢失,重则把整张写实底图拖成线稿。</p>
+<p>判据由此再推一层:</p>
+<blockquote>
+<p><strong>决定挂不挂 sref,看的是画面主体的媒介,不是画面里有没有那个风格的元素。</strong>
+主体是照片 → 走写实组规格,不挂线条锚点,那一件物件靠 prompt 内描述;
+主体是线条画 → 挂锚点。
+“画面里有线条画元素”<strong>不构成</strong>挂线条锚点的理由。</p>
+</blockquote>
+<p>同批有一张是真该挂的:S26 的”线条勾边卧室”——整个房间每个物体都被墨线勾边、颜色在褪,
+线条覆盖全画面、是画面的主导媒介。这张挂锚点,并配了 <code>--sw 100 → 50 → 去掉</code> 的阶梯兜底
+(防它一路拖成纯线稿,把照片底层吃掉)。</p>
+<p>⚠️ <strong>验证状态:推论,不是实证</strong>——本次没跑挂 sref 的 A/B 对照组。
+若出图后发现不挂 sref 的物件线条与素材库脱节,这条要回来改。
+来源:<a href="/above-the-web/2026-08-26-v1-5c8b145/" class="wikilink">2026-08-26_擦干净_剧本口径审计与补图承接位_复盘_v1</a></p>
+<hr>
+<h2 id="十二写在最后">十二、写在最后</h2>
+<p>这条原则的发现过程,对我而言是一个意料之外的副产品。</p>
+<p>我做项目时本意是用 sref 解决”儿时女神出图风格不统一”的具体问题。结果调了三轮都不行——但<strong>每次失败都在逼近问题的本质</strong>。</p>
+<p>直到第三次失败后,我才意识到我们用错了”锚点”——我们一直把成果图当锚点,而不是把纯净的产物当锚点。</p>
+<blockquote>
+<p><strong>回头看,这是 sref 工作流的一阶错误</strong>——一个一般用户用一辈子都不会触及的层面,因为大部分人不会做需要严格风格统一的多主体项目,所以这个偏差永远不会暴露。</p>
+</blockquote>
+<p>但只要你做的项目复杂到一定程度——多主体、多场景、风格强一致性要求——这个错误就会浮现。<strong>问题不是 sref 不行,是我们没真正理解 sref 的工作机制</strong>。</p>
+<p>如果这条洞察能让你少走我走过的弯路,这篇笔记的价值就实现了。</p>
+<hr>
+<h2 id="关键术语速查">关键术语速查</h2>
+<ul>
+<li><strong>风格锚点 (style anchor)</strong>: 用于做 sref 的图。<strong>应该是纯 prompt 抽卡产物</strong>。</li>
+<li><strong>风格泛化产物 (style propagation output)</strong>: 用 sref 跑出来的成果图。<strong>不能用作新 sref</strong>。</li>
+<li><strong>形态中性 (morphology neutral)</strong>: 主体形状简单、不含强姿态/情绪的图。容器、抽象物体、几何体属于此类。</li>
+<li><strong>指纹污染 (fingerprint contamination)</strong>: sref 源图里编码的非风格成分(主体形态、姿态、情绪)对生成结果的干扰。</li>
+</ul>
+<hr>
+<p><em>以上为方法论沉淀,可独立发布,可并入《蒙眼剪辑法》方法论笔记 v2 作为第二条核心洞察。</em></p>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/v1-9369dec/" class="wikilink">单锚点优于三视图_v1</a> —— 同源结论的另一个面：参考的纯净性比数量重要，40 镜实跑数据</li>
+<li><a href="/above-the-web/2026-08-26-v1-5c8b145/" class="wikilink">2026-08-26_擦干净_剧本口径审计与补图承接位_复盘_v1</a> —— 十一之二「看主体媒介」判据的来源；同案还给出一个<strong>允许</strong>的沿用法：同主体、同取景、只换光线时，可拿本组第一张定稿当 sref 跑后续</li>
+<li><a href="/above-the-web/v1-85d6168/" class="wikilink">骨架篇幅即权重_v1</a> —— 张力方向：不挂 sref 时，靠长骨架锁取景（但明确不适用于锁脸）</li>
+<li><a href="/above-the-web/mj-v8-2-v1-4cf28a0/" class="wikilink">MJ_v8.2_行为档案_v1</a> —— 第 3 条「sref 跨批质感续接」的实测依据</li>
+</ul> <div class="tags"> <span class="tag">类型/核心方法论</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/01_%E8%A7%92%E8%89%B2%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E8%A7%86%E8%A7%89%E7%AD%BE%E5%90%8D/sref%E7%BA%AF%E5%87%80%E6%80%A7%E5%8E%9F%E5%88%99_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/01_%E8%A7%92%E8%89%B2%E4%B8%80%E8%87%B4%E6%80%A7%E4%B8%8E%E8%A7%86%E8%A7%89%E7%AD%BE%E5%90%8D/sref%E7%BA%AF%E5%87%80%E6%80%A7%E5%8E%9F%E5%88%99_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/01-sref-b783de7/">sref 档案索引</a></li><li><a href="/above-the-web/sref-3282860382-90s-v1-e49de1c/">sref 3282860382 · 90s 赛璐璐怀旧动画</a></li><li><a href="/above-the-web/sref-3234384125-v1-bab5f12/">sref 3234384125 · 第一轮实测记录</a></li><li><a href="/above-the-web/sref-v1u0-20d5e86/">sref 异界气象台云图基准 · v1_u0</a></li><li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/moodboard-v1-c683401/">moodboard 拉力陷阱</a></li><li><a href="/above-the-web/oref-sref-v1-a1dd8d4/">oref / sref 的工具版本与挂载方式(MJ 实操约束)</a></li><li><a href="/above-the-web/moodboard-v1-604d1f0/">moodboard 跨题材审美迁移（人物 moodboard 当通用审美增强器）</a></li><li><a href="/above-the-web/sref-v1-fa9fbc1/">sref 编号独立律</a></li><li><a href="/above-the-web/v1-9369dec/">单锚点优于三视图：一次没做身份板却撑住了一致性的实跑</a></li><li><a href="/above-the-web/v1-38b6d46/">参考图缺失维度不可继承律</a></li><li><a href="/above-the-web/2026-08-26-v1-5c8b145/">2026-08-26 《擦干净》剧本口径审计与补图承接位 · 复盘</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/ai-niji5-nano-v2-aff7d44/"> <span class="card-cat">方法论与洞察</span> <h3>AI 形象图工作流分层 · niji5 + Nano</h3> <p>任何&quot;画风强 + 个性化要素多&quot;的 AI 形象图项目，都不可能用单一工具完成。强行让 niji 5 一次性出&quot;画风对 + 漂浮对 + 颜值对…</p> </a><a class="card" href="/above-the-web/gptimage2-v1-e7fe63b/"> <span class="card-cat">方法论与洞察</span> <h3>GPT Image 2 锁脸的「脸占比上限」</h3> <p>- 参考图特征：温婉圆脸、蓝灰色大而圆的眼睛、气质温婉。</p> </a><a class="card" href="/above-the-web/nano-mj-v1-1991f0e/"> <span class="card-cat">方法论与洞察</span> <h3>双工具分工 · nano 锁脸 + MJ 摄影质感</h3> <p>叙事型项目里,nano 负责&quot;凡是有主角脸的镜头&quot;,MJ 负责&quot;环境/物件/不露脸的氛围镜&quot;——两个工具同时跑,各自做自己最强的事。MJ 没…</p> </a><a class="card" href="/above-the-web/nano-v1-0b9354f/"> <span class="card-cat">方法论与洞察</span> <h3>nano 跨场景三变量发现</h3> <p>nano 在没有 IPAdapter 的情况下实现「跨场景同一角色」,只靠 prompt 不够,必须同时锁定三个变量:参考图(带氛围)+ 锁…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一问题的提出" data-toc-link="一问题的提出">一、问题的提出</a></li><li class="d2"><a href="#二我犯过的错" data-toc-link="二我犯过的错">二、我犯过的错</a></li><li class="d2"><a href="#三洞察风格泛化产物--风格锚点" data-toc-link="三洞察风格泛化产物--风格锚点">三、洞察:风格泛化产物 ≠ 风格锚点</a></li><li class="d2"><a href="#四什么才是真正的风格锚点" data-toc-link="四什么才是真正的风格锚点">四、什么才是真正的”风格锚点”?</a></li><li class="d2"><a href="#五纯净性原则" data-toc-link="五纯净性原则">五、纯净性原则</a></li><li class="d2"><a href="#六症状识别" data-toc-link="六症状识别">六、症状识别</a></li><li class="d2"><a href="#七修复方法" data-toc-link="七修复方法">七、修复方法</a></li><li class="d3"><a href="#步骤-1-判断当前-sref-是不是伪锚点" data-toc-link="步骤-1-判断当前-sref-是不是伪锚点">步骤 1: 判断当前 sref 是不是伪锚点</a></li><li class="d3"><a href="#步骤-2-找回真锚点" data-toc-link="步骤-2-找回真锚点">步骤 2: 找回真锚点</a></li><li class="d3"><a href="#步骤-3-用真锚点重做体系" data-toc-link="步骤-3-用真锚点重做体系">步骤 3: 用真锚点重做体系</a></li><li class="d2"><a href="#八推论sref-的形态中性原则" data-toc-link="八推论sref-的形态中性原则">八、推论:sref 的”形态中性”原则</a></li><li class="d2"><a href="#九这条洞察对工作流的影响" data-toc-link="九这条洞察对工作流的影响">九、这条洞察对工作流的影响</a></li><li class="d3"><a href="#before-错误工作流" data-toc-link="before-错误工作流">Before (错误工作流)</a></li><li class="d3"><a href="#after-纯净工作流" data-toc-link="after-纯净工作流">After (纯净工作流)</a></li><li class="d2"><a href="#十和现有-sref-教程的差别" data-toc-link="十和现有-sref-教程的差别">十、和现有 sref 教程的差别</a></li><li class="d2"><a href="#十一附适用边界" data-toc-link="十一附适用边界">十一、附:适用边界</a></li><li class="d2"><a href="#十一之二扩展判据2026-08-26-补挂不挂-sref看主体的媒介不看画面里有没有那个元素" data-toc-link="十一之二扩展判据2026-08-26-补挂不挂-sref看主体的媒介不看画面里有没有那个元素">十一之二、扩展判据（2026-08-26 补）：挂不挂 sref,看主体的媒介,不看画面里有没有那个元素</a></li><li class="d2"><a href="#十二写在最后" data-toc-link="十二写在最后">十二、写在最后</a></li><li class="d2"><a href="#关键术语速查" data-toc-link="关键术语速查">关键术语速查</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

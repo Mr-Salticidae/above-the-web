@@ -1,0 +1,323 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>2026-05-16 闪电战双轮 R1+R2 复盘 · 蛛网之上</title><meta name="description" content="所有参赛者既是创作者也是投票人,每人投一票。这意味着:"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-05-16-r1-r2-v1-d3c074e/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="2026-05-16 闪电战双轮 R1+R2 复盘"><meta property="og:description" content="所有参赛者既是创作者也是投票人,每人投一票。这意味着:"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-05-16-r1-r2-v1-d3c074e/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="2026-05-16 闪电战双轮 R1+R2 复盘"><meta name="twitter:description" content="所有参赛者既是创作者也是投票人,每人投一票。这意味着:"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-05-16T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="prompt模板库"><meta property="article:tag" content="类型/prompt模板"><meta property="article:tag" content="状态/已收录"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-05-16-r1-r2-v1-d3c074e/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-05-16-r1-r2-v1-d3c074e/","url":"https://tiaozhuxiansheng.com/2026-05-16-r1-r2-v1-d3c074e/","headline":"2026-05-16 闪电战双轮 R1+R2 复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"所有参赛者既是创作者也是投票人,每人投一票。这意味着:","datePublished":"2026-05-16T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"prompt模板库","keywords":"类型/prompt模板, 状态/已收录"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"prompt模板库","item":"https://tiaozhuxiansheng.com/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93"},{"@type":"ListItem","position":3,"name":"2026-05-16 闪电战双轮 R1+R2 复盘","item":"https://tiaozhuxiansheng.com/2026-05-16-r1-r2-v1-d3c074e/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93" data-pagefind-meta="category" data-pagefind-filter="kind:note">prompt模板库</a> <span aria-hidden="true">/</span><span>案例复盘</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-05-16T00:00:00+08:00">2026-05-16</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 7 分钟读完 · 2,466 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>22 节</i></summary> <ol> <li class="d2"><a href="#一最终成品概要">一、最终成品概要</a></li><li class="d2"><a href="#二赛制本质与获奖图逻辑重构">二、赛制本质与”获奖图”逻辑重构</a></li><li class="d3"><a href="#21-赛制结构">2.1 赛制结构</a></li><li class="d3"><a href="#22-r1-冠军图为什么赢">2.2 R1 冠军图为什么赢</a></li><li class="d3"><a href="#23-r1-我们的真实失败原因">2.3 R1 我们的真实失败原因</a></li><li class="d2"><a href="#三同行互投赛制的胜负逻辑">三、“同行互投”赛制的胜负逻辑</a></li><li class="d3"><a href="#31-同行会投什么样的图">3.1 同行会投什么样的图</a></li><li class="d3"><a href="#32-同行不太会投什么">3.2 同行不太会投什么</a></li><li class="d3"><a href="#33-r2-为什么赢">3.3 R2 为什么赢</a></li><li class="d2"><a href="#四关键方法论沉淀">四、关键方法论沉淀</a></li><li class="d3"><a href="#41-同行互投赛制的反主流原则_v1">4.1 同行互投赛制的反主流原则_v1 ⭐⭐⭐</a></li><li class="d3"><a href="#42-我没想到--我做不到双触发器">4.2 “我没想到 + 我做不到”双触发器</a></li><li class="d3"><a href="#43-赛前必问的-3-个问题">4.3 赛前必问的 3 个问题</a></li><li class="d3"><a href="#44-微调的边界_v1">4.4 微调的边界_v1</a></li><li class="d3"><a href="#45-claude-在闪电战中的真实角色">4.5 Claude 在闪电战中的真实角色</a></li><li class="d3"><a href="#46-闪电战通讯协议">4.6 闪电战通讯协议</a></li><li class="d2"><a href="#五本次失败胜利清单">五、本次失败/胜利清单</a></li><li class="d3"><a href="#51-r1-失败原因按权重">5.1 R1 失败原因(按权重)</a></li><li class="d3"><a href="#52-r2-成功原因按权重">5.2 R2 成功原因(按权重)</a></li><li class="d2"><a href="#六待验证假设下次闪电战可测试">六、待验证假设(下次闪电战可测试)</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#八r2-获奖-prompt-完整存档">八、R2 获奖 prompt 完整存档</a></li> </ol> </details> <h1 id="2026-05-16-闪电战双轮-r1r2-复盘">2026-05-16 闪电战双轮 R1+R2 复盘</h1>
+<blockquote>
+<p>✅ <strong>已收录进知识库</strong> · 入库日期 2026-05-16
+<strong>底料原文</strong>：<code>复盘记录/2026-05-16_MPB_复盘笔记.md</code>
+<strong>提炼的 4 条独立方法论</strong>（均在 <code>知识库/04_方法论与洞察/</code>）：</p>
+<ul>
+<li>枢纽级 ⭐⭐⭐：<a href="/above-the-web/v1-2067983/" class="wikilink">同行互投赛制的反主流原则_v1</a></li>
+<li>投票心理学 ⭐⭐：<a href="/above-the-web/v1-bd044c5/" class="wikilink">我没想到+我做不到双触发器_v1</a></li>
+<li>工程规则 ⭐⭐：<a href="/above-the-web/v1-e30488e/" class="wikilink">微调的边界_v1</a></li>
+<li>协作协议 ⭐：<a href="/above-the-web/v1-1193eff/" class="wikilink">闪电战赛前赛中协议_v1</a>（含赛前 3 问 + Claude 角色定位 + 通讯协议）</li>
+</ul>
+<p><strong>说明</strong>：本文档为知识库案例底料保留。所有 [[]] 链接指向知识库内独立沉淀的方法论文档。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>日期:2026-05-16
+副会话:Claude(主题策划 + prompt 工程师)
+项目:Prompt Battle 闪电战(5 分钟出图,1 轮跑图无迭代余地)
+赛制:内部社群活动,<strong>所有参赛者互为投票人</strong>,每人投出一票
+总轮次:R1(未获奖)+ R2(获奖)
+主题:R1「无所不能的人」· R2「春风若有怜花意,可否许我再少年」</p>
+</blockquote>
+<hr>
+<h2 id="一最终成品概要">一、最终成品概要</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>轮次</th><th>主题</th><th>方向</th><th>媒介</th><th>结果</th></tr></thead><tbody><tr><td>R1</td><td>无所不能的人</td><td>废土修理工修麻雀</td><td>超现实电影感摄影</td><td><strong>未获奖</strong></td></tr><tr><td>R2</td><td>春风若有怜花意,可否许我再少年</td><td>老人在樱花树下面对亡妻墓碑</td><td>超现实电影感摄影</td><td><strong>获奖</strong> ✓</td></tr></tbody></table>
+<hr>
+<h2 id="二赛制本质与获奖图逻辑重构">二、赛制本质与”获奖图”逻辑重构</h2>
+<h3 id="21-赛制结构">2.1 赛制结构</h3>
+<p><strong>所有参赛者既是创作者也是投票人,每人投一票</strong>。这意味着:</p>
+<ul>
+<li>没有统一审美标准(没有评委组)</li>
+<li>获胜 = 在一群同样懂 AI 出图的人里,<strong>赢得最多”我也想投这张”的瞬间</strong></li>
+<li>投票人都是创作者,<strong>对 prompt 工程有自己的判断</strong>——他们能看出炫技,也能看出真东西</li>
+</ul>
+<h3 id="22-r1-冠军图为什么赢">2.2 R1 冠军图为什么赢</h3>
+<p>一对父女在沙尘里行进,父亲背着孩子,几乎过曝的白色雾霾,新闻摄影质感。</p>
+<p><strong>这张图在”同行互投”语境下的杀伤力</strong>:</p>
+<ul>
+<li><strong>同行投票时,人会投”我做不到 / 我没想到”的方向</strong></li>
+<li>同行都在卷概念、卷光影、卷质感的时候,<strong>有人交了一张”几乎不修饰的瞬间”</strong>——这是同行最难做的方向</li>
+<li>这张图的胜利不是”评委喜欢朴素”,是**“它在同行卷向高概念的时候,反向稀缺”**</li>
+</ul>
+<p>→ 这不是”评委口味”,这是<strong>赛场博弈论</strong>:对手都在做 A,你做 B 就赢了。</p>
+<h3 id="23-r1-我们的真实失败原因">2.3 R1 我们的真实失败原因</h3>
+<p>把”废土修理工修麻雀”放进同行视角再看:</p>
+<ul>
+<li>视觉震撼度 ✓</li>
+<li>概念深度 ✓</li>
+<li>技术执行 ✓</li>
+<li><strong>但是——这是”AI 出图爱好者最熟悉的那条线”</strong></li>
+</ul>
+<p>后启示录 + 概念艺术 + 超现实摄影 = MJ 群组的”主流审美”。当所有 AI 创作者都在卷这个池子,我们交了一张”卷得很好的”作品,<strong>但没有跳出去</strong>。</p>
+<p>→ <strong>R1 真正的失败</strong>:<strong>没有意识到”AI 出图同行”是一个有强烈共同审美偏好的池子,要赢必须跳出他们的舒适区</strong>。</p>
+<hr>
+<h2 id="三同行互投赛制的胜负逻辑">三、“同行互投”赛制的胜负逻辑</h2>
+<h3 id="31-同行会投什么样的图">3.1 同行会投什么样的图</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>投票心理</th><th>触发场景</th></tr></thead><tbody><tr><td><strong>”我做不到”</strong></td><td>看到稀缺方向、反主流选择、需要勇气的简陋质感</td></tr><tr><td><strong>”我没想到”</strong></td><td>概念诠释角度独特,题面被翻新</td></tr><tr><td><strong>”被打到”</strong></td><td>情绪一击,跳过技术评估直接共情</td></tr><tr><td><strong>”佩服”</strong></td><td>看出 prompt 工程的精妙(但这条权重最低,因为同行能复现)</td></tr></tbody></table>
+<h3 id="32-同行不太会投什么">3.2 同行不太会投什么</h3>
+<ul>
+<li>“我也能做出来的”那种图(技术中等、概念中等)</li>
+<li>“做得很好但是常见路线”(技术 9 分 + 套路 8 分)</li>
+<li><strong>“我能看出 prompt 怎么写的”图</strong>——同行会下意识扣分,因为破解感会消解魔法感</li>
+</ul>
+<h3 id="33-r2-为什么赢">3.3 R2 为什么赢</h3>
+<p>代入同行视角:</p>
+<ul>
+<li><strong>“墓碑”意象</strong>:同行看到第一反应是”卧槽我怎么没想到加这个”——<strong>“我没想到”触发</strong></li>
+<li><strong>整体氛围朴素</strong>(没有炫光柱、没有戏剧化构图):同行看到”敢这么朴素”——<strong>“我做不到”触发</strong></li>
+<li><strong>“再少年”对应到具体的人(亡妻)而非抽象怀旧</strong>:情绪从虚转实,<strong>“被打到”触发</strong></li>
+<li><strong>prompt 不显眼</strong>:同行看不出明显的关键词堆砌,<strong>没有破解感扣分</strong></li>
+</ul>
+<p>三个触发器同时命中。</p>
+<hr>
+<h2 id="四关键方法论沉淀">四、关键方法论沉淀</h2>
+<h3 id="41-同行互投赛制的反主流原则_v1">4.1 <a href="/above-the-web/v1-2067983/" class="wikilink">同行互投赛制的反主流原则_v1</a> ⭐⭐⭐</h3>
+<p><strong>核心</strong>:当对手是 AI 出图创作者(都懂 prompt、都见过 MJ 主流审美)时,<strong>主流审美的卷度是负权重</strong>。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>先识别”本届主题在 AI 创作者池子里的撞车主流”
+<ul>
+<li>例 R1「无所不能的人」→ 主流撞车:超人嫁接、神性人物、超现实概念</li>
+<li>例 R2「春风/再少年」→ 主流撞车:落樱白发老人、虚实少年与老人、文艺孤独</li>
+</ul>
+</li>
+<li>主动避开主流撞车池</li>
+<li>选<strong>同行需要勇气才会选的方向</strong>——朴素、简陋、反技术、反炫技</li>
+</ol>
+<p><strong>1 轮场景的 5 个方向推荐排序应该按”反主流稀缺度”排,不是按”作者审美命中度”或”技术上限”排</strong>。</p>
+<h3 id="42-我没想到--我做不到双触发器">4.2 <a href="/above-the-web/v1-bd044c5/" class="wikilink">“我没想到 + 我做不到”双触发器</a></h3>
+<p>获奖图至少要触发其一,最好两个都触发。</p>
+<p><strong>“我没想到”触发器</strong>:</p>
+<ul>
+<li>题面有一个核心意象没人想到(R2 的墓碑)</li>
+<li>题面被反向解读(把”无所不能”解读成”普通人的承担”)</li>
+<li>题面被嫁接到陌生载体(把”再少年”嫁接到亡妻)</li>
+</ul>
+<p><strong>“我做不到”触发器</strong>:</p>
+<ul>
+<li>反 AI 主流审美的简陋质感(R1 冠军的过曝沙尘)</li>
+<li>反炫技的勇气(不用光柱、不用震撼构图)</li>
+<li>反精修的留白(不去补细节,任由画面”未完成”)</li>
+</ul>
+<h3 id="43-赛前必问的-3-个问题">4.3 <a href="/above-the-web/v1-1193eff/" class="wikilink">赛前必问的 3 个问题</a></h3>
+<p>下次闪电战开始前,Claude 必须主动问跳蛛先生:</p>
+<ol>
+<li><strong>“这次主题的主流撞车方向你预判是什么?”</strong>——确定要避开什么</li>
+<li><strong>“参赛者构成是 AI 创作者居多还是混杂?”</strong>——决定要不要”反主流”</li>
+<li><strong>“有没有上次赛题的获奖图我能参考一下?”</strong>——校准本社群的”稀缺审美”</li>
+</ol>
+<p>这三个问题不是 prompt 工程的一部分,是<strong>比赛策略的核心输入</strong>。R1 我没问,所以失败。</p>
+<h3 id="44-微调的边界_v1">4.4 <a href="/above-the-web/v1-e30488e/" class="wikilink">微调的边界_v1</a></h3>
+<p>R2 中跳蛛先生让我微调,我做了两个改动:</p>
+<ul>
+<li>单束光柱 → 整体柔光 ❌</li>
+<li>墓碑字迹清晰化 ✓</li>
+</ul>
+<p><strong>错误的那个改动</strong>:把核心叙事意象(光柱 = 春风的怜意)当成普通光线处理掉了。</p>
+<p><strong>原则</strong>:</p>
+<ul>
+<li>✅ 可微调:细节缺失、解剖错误、明显瑕疵</li>
+<li>❌ 不可微调:<strong>构成画面情绪的不可替代意象</strong></li>
+<li><strong>自检方法</strong>:微调前问”这个特征如果没了,主题还成立吗?”——不成立就不动</li>
+</ul>
+<h3 id="45-claude-在闪电战中的真实角色">4.5 Claude 在闪电战中的真实角色</h3>
+<p><strong>事实</strong>:R2 获奖的真正引爆点(“墓碑”意象)来自跳蛛先生,不是我。</p>
+<p><strong>自我定位修正</strong>:</p>
+<ul>
+<li>我是**“快速候选生成器 + prompt 翻译机”**,不是创意主导</li>
+<li>跳蛛先生的人生经验、文化语境、对题面的直觉,是我无法替代的</li>
+<li>我的价值:1 分钟给出 5-6 个方向让跳蛛先生快速筛选,然后把选定方向翻译成可执行 prompt</li>
+<li><strong>不要替跳蛛先生做最终选择,不要在他说”定稿”后继续说服</strong></li>
+</ul>
+<h3 id="46-闪电战通讯协议">4.6 <a href="/above-the-web/v1-1193eff/" class="wikilink">闪电战通讯协议</a></h3>
+<p>跳蛛先生中途要求:简短,不解释,不发散对比,除非主动问。</p>
+<p><strong>协议优化版</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>方向阶段:[ABCDEF 列表,每条一行,不解释]</span></span>
+<span class="line"><span>prompt 阶段:[纯 prompt 代码块,后附一句关键改动]</span></span>
+<span class="line"><span>判断阶段:[一句话:能投/可微调/换方向]</span></span></code></pre>
+<p>不要再出现”对比表 / 推荐表 / 自我推荐”。</p>
+<hr>
+<h2 id="五本次失败胜利清单">五、本次失败/胜利清单</h2>
+<h3 id="51-r1-失败原因按权重">5.1 R1 失败原因(按权重)</h3>
+<ol>
+<li><strong>没识别”AI 创作者池”的主流审美陷阱</strong>(权重 55%)——废土+超现实摄影正中 MJ 主流审美舒适区</li>
+<li><strong>赛前没问”主流撞车方向”和”上届获奖图”</strong>(权重 25%)</li>
+<li><strong>方向推荐按”作者审美命中度”排序而非”反主流稀缺度”排序</strong>(权重 15%)——方向 2(厨房多手妈妈)更接近赢点但被我排第二</li>
+<li><strong>过度自信于”老头非人感”是赢点</strong>(权重 5%)——技术加分但不是稀缺加分</li>
+</ol>
+<h3 id="52-r2-成功原因按权重">5.2 R2 成功原因(按权重)</h3>
+<ol>
+<li><strong>跳蛛先生加入”墓碑”意象</strong>(权重 50%)——“我没想到”触发器</li>
+<li><strong>媒介朴素化(电影感摄影,不上油画/插画)</strong>(权重 15%)</li>
+<li><strong>prompt 不炫技,无明显关键词堆砌痕迹</strong>(权重 15%)——避免同行破解扣分</li>
+<li><strong>跳蛛先生拒绝我的破坏性微调</strong>(权重 20%)——保住核心意象光柱</li>
+</ol>
+<p>→ <strong>跳蛛先生在 R2 的贡献至少 70%,我占 30%</strong>。清醒认知。</p>
+<hr>
+<h2 id="六待验证假设下次闪电战可测试">六、待验证假设(下次闪电战可测试)</h2>
+<ol>
+<li><strong>赛前问 3 个核心问题</strong>(撞车预判 / 参赛者构成 / 上届获奖图),是否能显著提高方向决策质量?</li>
+<li>方向推荐按”反主流稀缺度”排序,是否比按”技术上限”排序更易获奖?</li>
+<li><strong>主推”反 AI 主流”方向</strong>(简陋、朴素、反炫技),在同行互投赛制下是否稳定?</li>
+<li>1 轮场景下,**朴素媒介(纪实摄影、新闻摄影、手机随手拍质感)**是否比”超现实电影感摄影”更易得票?</li>
+</ol>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>配套基础句:<a href="/above-the-web/ova-v1-7559330/" class="wikilink">OVA怀旧基础句_v1</a> · <a href="%E6%9C%AC%E6%AC%A1%E6%9C%AA%E4%BD%BF%E7%94%A8">[MUJI极简插画基础句_v1]</a></li>
+<li>配套方法论:<a href="/above-the-web/2026-05-12-v1-9ca3327/" class="wikilink">2026-05-12_告白获奖图复盘_v1</a> · <a href="/above-the-web/2026-05-12-v1-d5ca7d5/" class="wikilink">2026-05-12_星河如丝般顺滑获奖图复盘_v1</a> · <a href="/above-the-web/2026-05-14-v1-e2a7ed9/" class="wikilink">2026-05-14_秘密基地获奖图复盘_v1</a></li>
+<li>新增方法论 ⭐:<a href="/above-the-web/v1-2067983/" class="wikilink">同行互投赛制的反主流原则_v1</a> · <a href="/above-the-web/v1-bd044c5/" class="wikilink">“我没想到 + 我做不到”双触发器</a> · <a href="/above-the-web/v1-1193eff/" class="wikilink">赛前必问的 3 个问题</a> · <a href="/above-the-web/v1-e30488e/" class="wikilink">微调的边界_v1</a> · Claude 在闪电战中的真实角色 · <a href="/above-the-web/v1-1193eff/" class="wikilink">闪电战通讯协议</a></li>
+</ul>
+<hr>
+<h2 id="八r2-获奖-prompt-完整存档">八、R2 获奖 prompt 完整存档</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>hyperrealistic cinematic medium format film photograph of an elderly east asian man standing alone beneath a massive cherry blossom tree in full bloom, shot from behind in three-quarter view his face partially visible in profile gently lowered, wearing a simple dark grey wool coat over plain clothes one hand holding a small bouquet of white flowers at his side, standing in front of a weathered stone grave marker his deceased wife's grave the headstone covered in soft moss with faded carved characters, fallen pink cherry petals covering the grave the ground and resting on his shoulders and white hair, more petals drifting down through the air all around him caught in slow motion, a single shaft of warm late afternoon sunlight breaking through the canopy falling across his shoulders the grave and the petals in the air, the rest of the scene in soft cool shadow, shallow depth of field with the man and grave in sharp focus the cherry branches above dissolving into pale pink bokeh, scattered petals on the stone path leading to the grave, restrained palette of soft faded pink weathered stone grey deep wool charcoal and one warm shaft of golden light, shot on medium format film with fine grain, museum quality documentary photography, contemplative quiet atmosphere, the quiet weight of a lifetime of love waiting under falling petals</span></span>
+<span class="line"><span>--ar 4:5 --style raw --stylize 200</span></span></code></pre> <div class="tags"> <span class="tag">类型/prompt模板</span><span class="tag">状态/已收录</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/02_%E6%A1%88%E4%BE%8B%E5%A4%8D%E7%9B%98/2026-05-16_%E9%97%AA%E7%94%B5%E6%88%98%E5%8F%8C%E8%BD%AE_R1+R2%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/02_%E6%A1%88%E4%BE%8B%E5%A4%8D%E7%9B%98/2026-05-16_%E9%97%AA%E7%94%B5%E6%88%98%E5%8F%8C%E8%BD%AE_R1+R2%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/03-prompt-987b076/">Prompt 模板库索引</a></li><li><a href="/above-the-web/note-1060456/">获奖图复盘方法论合集 · 活合集 v12</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-05-12-v1-9ca3327/"> <span class="card-cat">prompt模板库</span> <h3>「告白」获奖图复盘</h3> <p>身体从右上斜切到左下,占据画面绝大部分,没有给观众&quot;喘气&quot;的空间。这种压迫感和&quot;告白前夜的疲惫&quot;主题高度同构——情绪是从画面外溢出来的,不是…</p> </a><a class="card" href="/above-the-web/2026-05-12-v1-d5ca7d5/"> <span class="card-cat">prompt模板库</span> <h3>「星河如丝般顺滑」获奖图复盘</h3> <p>prompt 写的是 head slightly tilted back with eyes gently closed,MJ 把&quot;slig…</p> </a><a class="card" href="/above-the-web/2026-05-14-v1-e2a7ed9/"> <span class="card-cat">prompt模板库</span> <h3>「秘密基地」获奖图复盘</h3> <p>小女孩侧身蹲着,低头看自己手里的小本子,完全沉浸在自己的世界里。</p> </a><a class="card" href="/above-the-web/muji-v1-4df2ece/"> <span class="card-cat">prompt模板库</span> <h3>MUJI 极简插画基础句</h3> <p>一组可复用的关键词组合,能稳定锁定&quot;MUJI / 长场雄 / 中村佑介早期&quot;那条线的日系极简插画感,不会跑去当代漫画 / 韩系小红书壁纸 /…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一最终成品概要" data-toc-link="一最终成品概要">一、最终成品概要</a></li><li class="d2"><a href="#二赛制本质与获奖图逻辑重构" data-toc-link="二赛制本质与获奖图逻辑重构">二、赛制本质与”获奖图”逻辑重构</a></li><li class="d3"><a href="#21-赛制结构" data-toc-link="21-赛制结构">2.1 赛制结构</a></li><li class="d3"><a href="#22-r1-冠军图为什么赢" data-toc-link="22-r1-冠军图为什么赢">2.2 R1 冠军图为什么赢</a></li><li class="d3"><a href="#23-r1-我们的真实失败原因" data-toc-link="23-r1-我们的真实失败原因">2.3 R1 我们的真实失败原因</a></li><li class="d2"><a href="#三同行互投赛制的胜负逻辑" data-toc-link="三同行互投赛制的胜负逻辑">三、“同行互投”赛制的胜负逻辑</a></li><li class="d3"><a href="#31-同行会投什么样的图" data-toc-link="31-同行会投什么样的图">3.1 同行会投什么样的图</a></li><li class="d3"><a href="#32-同行不太会投什么" data-toc-link="32-同行不太会投什么">3.2 同行不太会投什么</a></li><li class="d3"><a href="#33-r2-为什么赢" data-toc-link="33-r2-为什么赢">3.3 R2 为什么赢</a></li><li class="d2"><a href="#四关键方法论沉淀" data-toc-link="四关键方法论沉淀">四、关键方法论沉淀</a></li><li class="d3"><a href="#41-同行互投赛制的反主流原则_v1" data-toc-link="41-同行互投赛制的反主流原则_v1">4.1 同行互投赛制的反主流原则_v1 ⭐⭐⭐</a></li><li class="d3"><a href="#42-我没想到--我做不到双触发器" data-toc-link="42-我没想到--我做不到双触发器">4.2 “我没想到 + 我做不到”双触发器</a></li><li class="d3"><a href="#43-赛前必问的-3-个问题" data-toc-link="43-赛前必问的-3-个问题">4.3 赛前必问的 3 个问题</a></li><li class="d3"><a href="#44-微调的边界_v1" data-toc-link="44-微调的边界_v1">4.4 微调的边界_v1</a></li><li class="d3"><a href="#45-claude-在闪电战中的真实角色" data-toc-link="45-claude-在闪电战中的真实角色">4.5 Claude 在闪电战中的真实角色</a></li><li class="d3"><a href="#46-闪电战通讯协议" data-toc-link="46-闪电战通讯协议">4.6 闪电战通讯协议</a></li><li class="d2"><a href="#五本次失败胜利清单" data-toc-link="五本次失败胜利清单">五、本次失败/胜利清单</a></li><li class="d3"><a href="#51-r1-失败原因按权重" data-toc-link="51-r1-失败原因按权重">5.1 R1 失败原因(按权重)</a></li><li class="d3"><a href="#52-r2-成功原因按权重" data-toc-link="52-r2-成功原因按权重">5.2 R2 成功原因(按权重)</a></li><li class="d2"><a href="#六待验证假设下次闪电战可测试" data-toc-link="六待验证假设下次闪电战可测试">六、待验证假设(下次闪电战可测试)</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#八r2-获奖-prompt-完整存档" data-toc-link="八r2-获奖-prompt-完整存档">八、R2 获奖 prompt 完整存档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

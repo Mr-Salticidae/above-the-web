@@ -1,0 +1,436 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Suno v5.5 行为规律 · 蛛网之上</title><meta name="description" content="Suno v5.5 的自动作词能力 = 跳蛛先生原创草案的能力。当 prompt 里的&#34;风格描述 + 情境暗示&#34;足够精确，Suno 自己作的词比手写更好。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/suno-v5-5-v1-b2fa879/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Suno v5.5 行为规律"><meta property="og:description" content="Suno v5.5 的自动作词能力 = 跳蛛先生原创草案的能力。当 prompt 里的&#34;风格描述 + 情境暗示&#34;足够精确，Suno 自己作的词比手写更好。"><meta property="og:url" content="https://tiaozhuxiansheng.com/suno-v5-5-v1-b2fa879/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Suno v5.5 行为规律"><meta name="twitter:description" content="Suno v5.5 的自动作词能力 = 跳蛛先生原创草案的能力。当 prompt 里的&#34;风格描述 + 情境暗示&#34;足够精确，Suno 自己作的词比手写更好。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:55:33+08:00"><meta property="article:modified_time" content="2026-09-26T06:55:33+08:00"><meta property="article:section" content="参数行为档案"><meta property="article:tag" content="类型/档案"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/suno-v5-5-v1-b2fa879/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/suno-v5-5-v1-b2fa879/","url":"https://tiaozhuxiansheng.com/suno-v5-5-v1-b2fa879/","headline":"Suno v5.5 行为规律","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"Suno v5.5 的自动作词能力 = 跳蛛先生原创草案的能力。当 prompt 里的\"风格描述 + 情境暗示\"足够精确，Suno 自己作的词比手写更好。","datePublished":"2026-09-26T06:55:33+08:00","dateModified":"2026-09-26T06:55:33+08:00","articleSection":"参数行为档案","keywords":"类型/档案"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"参数行为档案","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88"},{"@type":"ListItem","position":3,"name":"Suno v5.5 行为规律","item":"https://tiaozhuxiansheng.com/suno-v5-5-v1-b2fa879/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88" data-pagefind-meta="category" data-pagefind-filter="kind:note">参数行为档案</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time></span>  <span>约 6 分钟读完 · 2,045 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>22 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#v55-实测拾色自动作词案例">v5.5 实测：「拾色」自动作词案例</a></li><li class="d3"><a href="#prompt只写风格--情境无-lyrics-草案">Prompt（只写风格 + 情境，无 lyrics 草案）</a></li><li class="d3"><a href="#suno-自动作词输出节选--与-ip-立项的命中度">Suno 自动作词输出（节选 · 与 IP 立项的命中度）</a></li><li class="d2"><a href="#反直觉发现suno-选的意象比立项更深一层">反直觉发现：Suno 选的意象比立项更深一层</a></li><li class="d2"><a href="#反直觉发现suno-自发完成跨-ip-副歌签名">反直觉发现：Suno 自发完成跨 IP 副歌签名</a></li><li class="d2"><a href="#v55-vs-v3v4-时代的能力跃升">v5.5 vs v3/v4 时代的能力跃升</a></li><li class="d2"><a href="#v55-的局限实测发现">v5.5 的局限（实测发现）</a></li><li class="d2"><a href="#工作流时间节省">工作流时间节省</a></li><li class="d2"><a href="#custom-mode-工程经验5-条--v55-实测">Custom Mode 工程经验（5 条 · v5.5 实测）</a></li><li class="d3"><a href="#经验-1--字符-1000-上限是硬天花板">经验 1 · 字符 1000 上限是硬天花板</a></li><li class="d3"><a href="#经验-2--段落标签用英文-male-female-both--中文-男--女--合">经验 2 · 段落标签用英文 [Male] [Female] [Both] &gt; 中文 男 / 女 / 合</a></li><li class="d3"><a href="#经验-3--vocal-gender-在男女对唱场景必须留空">经验 3 · Vocal Gender 在男女对唱场景必须留空</a></li><li class="d3"><a href="#经验-4--weirdness-与-style-influence-最优组合">经验 4 · Weirdness 与 Style Influence 最优组合</a></li><li class="d3"><a href="#经验-5--反-suno-本能指令需要重复--具象化">经验 5 · “反 Suno 本能”指令需要重复 + 具象化</a></li><li class="d3"><a href="#经验-6--vocal-gender-不只是声部开关更是隐藏的风格-prior">经验 6 · Vocal Gender 不只是声部开关，更是隐藏的”风格 prior” ⭐⭐⭐</a></li><li class="d2"><a href="#段落差异化设计方法解决太平--没差异点">段落差异化设计方法（解决”太平 / 没差异点”）</a></li><li class="d3"><a href="#核心思路">核心思路</a></li><li class="d3"><a href="#贯穿动机">贯穿动机</a></li><li class="d3"><a href="#段落差异化">段落差异化</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="suno-v55-行为规律">Suno v5.5 行为规律</h1>
+<blockquote>
+<p>入档：2026-05-12（D2 晚间）
+触发：「拾色」Suno BGM 试听时的惊艳发现
+关联：<a href="/above-the-web/suno-v1-f32f73e/" class="wikilink">Suno配乐制作分享_v1</a>（基础流程 · 仍有效）</p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>Suno v5.5 的自动作词能力 = 跳蛛先生原创草案的能力</strong>。当 prompt 里的”风格描述 + 情境暗示”足够精确，Suno 自己作的词比手写更好。</p>
+<hr>
+<h2 id="如何使用">如何使用</h2>
+<p>写新作品 BGM 时：</p>
+<ol>
+<li><strong>不要急着写歌词草案</strong>——先把 IP 内核 / 情境 / 调性写进 style prompt</li>
+<li><strong>第一轮跑 Suno 不指定 lyrics</strong>（让它自由作词）</li>
+<li><strong>如果第一轮歌词命中 IP 内核 ≥ 80% → 直接采纳</strong>（节省”歌词决策日”一整天工作量）</li>
+<li>如果命中度 &#x3C; 80% → 用 Suno 自动作词作为草案，手动修正关键句</li>
+</ol>
+<hr>
+<h2 id="v55-实测拾色自动作词案例">v5.5 实测：「拾色」自动作词案例</h2>
+<h3 id="prompt只写风格--情境无-lyrics-草案">Prompt（只写风格 + 情境，无 lyrics 草案）</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Trip-jazz with Shanghai 1940s old-jazz influence, female lead vocal with restrained nostalgic tone like Zhou Xuan meets Norah Jones, sparse piano, rain ambience, 75 BPM, 3 minutes 10 seconds, Mandarin verses with English chorus phrases "still here, still kept, still folded, still unread", background male humming in outro</span></span></code></pre>
+<p>注意：只给了 4 个英文 hook 关键词（still here / still kept / still folded / still unread），中文部分<strong>完全没给</strong>。</p>
+<h3 id="suno-自动作词输出节选--与-ip-立项的命中度">Suno 自动作词输出（节选 · 与 IP 立项的命中度）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Suno 写的句</th><th>命中「拾色」立项的哪个锚点</th></tr></thead><tbody><tr><td>雨落在窗沿 / 像旧邮票发蓝</td><td>”她每周去邮局取信” / 旧邮票</td></tr><tr><td>抽屉还留着 / 你没带走的蓝衫</td><td><strong>题眼 S09 抽屉堆满未拆信</strong></td></tr><tr><td>我没说再见 / 也没把你忘 / 只是把名字 / 轻轻藏进墙</td><td><strong>”她知道但选择不说”内核</strong></td></tr><tr><td>Still folded, still folded / Still unread</td><td><strong>她不拆信的核心动作</strong></td></tr><tr><td>我学会安静 / 像街边那盏栈桥</td><td><strong>比立项更深的人格隐喻</strong>（神级意象 · 见下方）</td></tr></tbody></table>
+<p><strong>命中度</strong>：约 95%。<strong>比手写的 brief 草案更好</strong>。</p>
+<hr>
+<h2 id="反直觉发现suno-选的意象比立项更深一层">反直觉发现：Suno 选的意象比立项更深一层</h2>
+<p>立项书 v1 设计的视觉锚点是<strong>具象空间锚点</strong>：</p>
+<ul>
+<li>邮局 / 旗袍 / 邮票 / 黄铜邮箱 / 抽屉</li>
+</ul>
+<p>Suno 自动作词加入了<strong>抽象人格隐喻</strong>：</p>
+<blockquote>
+<p>“我学会安静 / 像街边那盏栈桥 / 只把影子留给 / 来往的雨潮”</p>
+</blockquote>
+<p><strong>栈桥</strong> = 沉默伫立 + 不参与的迎送 + 影子映在水面 + 经历来往雨潮但不被带走。</p>
+<p>完美呼应”她知道但选择不说”的内核。</p>
+<p><strong>为什么 Suno 能选出这个意象</strong>：</p>
+<ul>
+<li>prompt 里写了 “restrained nostalgic” + “Zhou Xuan meets Norah Jones”</li>
+<li>v5.5 训练数据里有大量”民国书信体诗歌 / 上海老克勒爵士歌词”</li>
+<li>它把”克制感”翻译成了”静默物件 + 不参与”的意象组</li>
+</ul>
+<p><strong>立项的视觉层</strong> + <strong>Suno 的人格层</strong> = IP 完整立体起来。</p>
+<hr>
+<h2 id="反直觉发现suno-自发完成跨-ip-副歌签名">反直觉发现：Suno 自发完成跨 IP 副歌签名</h2>
+<p>R-07 Suno V-A_001 副歌（手写）：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>still here, still near / something soft, something dear</span></span></code></pre>
+<p>「拾色」Suno V-S_001 副歌（仅提示了 4 个 hook 词）：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Still here, still here / Still kept, still kept</span></span>
+<span class="line"><span>Still folded, still folded / Still unread</span></span></code></pre>
+<p><strong>“still here” 在两个 IP 间共享</strong>。Suno 没有跨会话记忆，但因为我们在 prompt 里写了 “still here, still kept, still folded, still unread”，它自然按 R-07 的副歌结构展开了——<strong>形成跨 IP 的副歌签名</strong>。</p>
+<p>详见：<a href="/above-the-web/ip-still-here-v1-ccf566b/" class="wikilink">跨IP作者签名_白玉兰与still_here_v1</a></p>
+<hr>
+<h2 id="v55-vs-v3v4-时代的能力跃升">v5.5 vs v3/v4 时代的能力跃升</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>v3-v4（2024）</th><th>v5.5（2026）</th></tr></thead><tbody><tr><td>自动作词质量</td><td>”听起来好听但与画面对不上”</td><td><strong>直接命中 IP 内核 95%+</strong></td></tr><tr><td>中文歌词</td><td>押韵勉强 / 意象套话</td><td><strong>押韵自然 + 意象精准 + 文学性强</strong></td></tr><tr><td>中英混</td><td>衔接生硬</td><td><strong>自然过渡 + 跨语言 hook 设计</strong></td></tr><tr><td>情境理解</td><td>只懂”风格描述”</td><td><strong>能从”作者意图”反推具体意象</strong></td></tr><tr><td>演唱表现</td><td>偶尔出戏</td><td><strong>女声音色稳定 + 情绪克制</strong></td></tr><tr><td>段落结构</td><td>偶尔混乱</td><td><strong>Intro/Verse/Pre-Chorus/Chorus/Bridge/Outro 完整</strong></td></tr></tbody></table>
+<hr>
+<h2 id="v55-的局限实测发现">v5.5 的局限（实测发现）</h2>
+<ol>
+<li><strong>个别字段输出 bug</strong>：歌词文本”街边那盏栈桥”的”盏”作量词不严谨（实际演唱仍是”栈桥”，文本输出小问题，不影响使用）</li>
+<li><strong>特定环境音不够明显</strong>：prompt 写了 “rain ambience throughout” → 实际生成的雨声偏弱，需要后期混音叠加</li>
+<li><strong>Outro humming 不一定生成</strong>：prompt 写了 “background male humming in outro” → 实际输出可能省略，需要单独跑一段 humming 后期叠加</li>
+<li><strong>纯器乐古筝场景时长不稳定</strong>（2026-05-14 异界气象台 minitest 实测）：prompt 写 <code>approximately 50 seconds instrumental</code> + 五幕时间锚点（0/3/15/27/37s），实际跑 8 个 take 中 <strong>70%+ 输出 &#x3C; 20 秒</strong>，少数能跑到 38-72 秒。<strong>Suno 在纯器乐 + Chinese folk 风格下倾向于”短句结束”</strong>，可能是因为这类训练数据本身片段偏短。<strong>应对</strong>：(a) 重跑直到出现一两个达标时长的 take；(b) 接受 30-40 秒输出后用 Suno Extend 续接；(c) 用 Suno Replace Section 把短片段拼成长片段。<strong>最反直觉的发现</strong>：38 秒的 v4_take1 能量曲线竟然天然吻合 0/3/15/27/37s 五幕骨架（27s 后能量缓降，37s 后掉到 0.02 形成自然淡出）——<strong>v5.5 对”段落能量切换”时间锚点的遵循度，远高于对”总时长”的遵循度</strong></li>
+<li><strong>乐器进场时间锚点遵循度低</strong>（同一实测）：prompt 写 <code>dizi flute joins at 5 seconds with simple counter-line</code>，实际生成的曲子<strong>全程没有笛声</strong>（仅有古筝独奏）。同一 prompt 里”段落能量切换”锚点（at 15s/27s）却被精确执行。<strong>规律</strong>：v5.5 把”乐器编配”理解为风格描述而非时间指令，<strong>“什么时候加入什么乐器”靠 prompt 控制不稳定</strong>。<strong>应对</strong>：核心乐器写在主风格描述里（如 “guzheng with dizi flute throughout”），不要写”在第 X 秒加入”；如必须特定时点加入，单跑一段独立音轨后期叠加</li>
+</ol>
+<p><strong>应对策略</strong>：主轨 + 后期叠加补救</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>主轨：Suno 自动作词 + 主旋律（保留 95% 内容）</span></span>
+<span class="line"><span>   ↓ 后期混音叠加：</span></span>
+<span class="line"><span>   ├─ 男声 humming 独立生成（30 秒，简短 prompt 单跑）</span></span>
+<span class="line"><span>   ├─ 雨声采样（Freesound 免费源，-15dB 底层叠加）</span></span>
+<span class="line"><span>   └─ 其他 SFX（如有）</span></span></code></pre>
+<hr>
+<h2 id="工作流时间节省">工作流时间节省</h2>
+<p><strong>v3-v4 时代</strong>：</p>
+<ul>
+<li>写歌词草案：0.5-1 天</li>
+<li>Suno 多版试听：0.5-1 天</li>
+<li>微调歌词 + 重跑：0.5 天</li>
+<li><strong>总计 1.5-2.5 天</strong></li>
+</ul>
+<p><strong>v5.5 时代</strong>（拾色 D2 实测）：</p>
+<ul>
+<li>Suno 不写 lyrics 直接跑：30 分钟（2 版）</li>
+<li>试听 + 决策：30 分钟</li>
+<li>单跑男声 humming + 找雨声：30 分钟</li>
+<li><strong>总计 1.5 小时</strong></li>
+</ul>
+<p><strong>节省了 80%+ 的 Suno 工作时间</strong>。「拾色」的 D3 “歌词决策日”被压缩进 D2 当晚完成。</p>
+<hr>
+<h2 id="custom-mode-工程经验5-条--v55-实测">Custom Mode 工程经验（5 条 · v5.5 实测）</h2>
+<blockquote>
+<p>入档：2026-05-17
+触发：23《再少年》音乐共创副会话 5 轮 Custom Mode 迭代后的实测经验
+适用：所有 Suno Custom Mode 操作</p>
+</blockquote>
+<h3 id="经验-1--字符-1000-上限是硬天花板">经验 1 · 字符 1000 上限是硬天花板</h3>
+<p><strong>实测</strong>：第一版 1300+ 字符的 Style of Music 直接被 Suno 拒绝。</p>
+<p><strong>应对</strong>：</p>
+<ul>
+<li>把所有 negative tags（如 no auto-tune / no trap hi-hats / no EDM 等）<strong>全部移到 Exclude Styles 框</strong></li>
+<li>正向 Style of Music 框就能腾出空间放结构指令（如段落音色变化）</li>
+</ul>
+<p><strong>Bad</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Mandarin pop-folk, ... no auto-tune, no trap hi-hats, no EDM drops, no plastic synth ...</span></span></code></pre>
+<p><strong>Good</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Style of Music: Mandarin pop-folk, ... [所有正向描述]</span></span>
+<span class="line"><span>Exclude Styles: autotune, trap hi-hats, EDM, plastic synth</span></span></code></pre>
+<h3 id="经验-2--段落标签用英文-male-female-both--中文-男--女--合">经验 2 · 段落标签用英文 <code>[Male] [Female] [Both]</code> > 中文 <code>男 / 女 / 合</code></h3>
+<p><strong>实测</strong>：</p>
+<ul>
+<li>Simple Mode 用中文标签 OK（Suno 自发结构化）</li>
+<li><strong>Custom Mode 必须用英文标签强制锁定</strong>，中文标签 Suno 可能忽略</li>
+</ul>
+<p><strong>Lyrics 字段示例（正确）</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[Verse 1]</span></span>
+<span class="line"><span>[Male]</span></span>
+<span class="line"><span>我把旧照片一张张摊开</span></span>
+<span class="line"><span>[Female]</span></span>
+<span class="line"><span>雨落在瓦上，很轻</span></span></code></pre>
+<h3 id="经验-3--vocal-gender-在男女对唱场景必须留空">经验 3 · Vocal Gender 在男女对唱场景必须<strong>留空</strong></h3>
+<p><strong>实测</strong>：男女对唱时强选任何一个 Vocal Gender（Male / Female / Both）都会导致<strong>另一声部被弱化或删除</strong>。</p>
+<p><strong>应对</strong>：让 Lyrics 框的段落标签去控制声部，<strong>More Options 的 Vocal Gender 不选</strong>。</p>
+<h3 id="经验-4--weirdness-与-style-influence-最优组合">经验 4 · Weirdness 与 Style Influence 最优组合</h3>
+<p><strong>实测最优组合</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Weirdness:       30-35%</span></span>
+<span class="line"><span>Style Influence: 75%</span></span></code></pre>
+<p><strong>为什么</strong>：</p>
+<ul>
+<li>Weirdness 低于 25% → Suno 机械执行 → 失去意外发现</li>
+<li>Weirdness 高于 50% → 结构指令失控 → prompt 写的反 Suno 本能指令（如 chorus descends）被无视</li>
+<li>Style Influence 低于 70% → 反 Suno 本能指令（如 chorus 不上扬）被无视</li>
+</ul>
+<h3 id="经验-5--反-suno-本能指令需要重复--具象化">经验 5 · “反 Suno 本能”指令需要<strong>重复 + 具象化</strong></h3>
+<p>Suno 有强烈的本能默认（如 chorus 默认上扬 / 男女默认 duet / 结尾默认大团圆）。要反这些本能，prompt 必须<strong>重复 + 具象化</strong>。</p>
+<p><strong>Bad</strong>（抽象 + 单点）：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>keep chorus restrained</span></span></code></pre>
+<p><strong>Good</strong>（具象 + 重复）：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[Style of Music 框]</span></span>
+<span class="line"><span>... chorus descends not ascends ...</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>[Lyrics 框段落规划里再说]</span></span>
+<span class="line"><span>[Chorus] female voice on final "再少年" makes a small descending slide</span></span></code></pre>
+<p><strong>口诀</strong>：<strong>反本能指令在 Style 框 + 段落规划 + 具体动作描述 三处说，比说一次精确句更有效</strong>。</p>
+<h3 id="经验-6--vocal-gender-不只是声部开关更是隐藏的风格-prior">经验 6 · Vocal Gender 不只是声部开关，更是隐藏的”风格 prior” ⭐⭐⭐</h3>
+<blockquote>
+<p>入档：2026-05-19
+触发：29《扔掉》音乐共创副会话 Custom Mode 跑歌时跳蛛先生的反直觉操作
+详细方法论：<a href="/above-the-web/vocal-gender-prior-v1-8eddad6/" class="wikilink">Vocal_Gender反选_风格prior_v1</a></p>
+</blockquote>
+<p><strong>实测</strong>：在 Style 框 + Lyrics 标签明确锁定声部的前提下，反向选择 Vocal Gender 会激活”对侧”的风格分布，但声部不会变（被 Style 框 + Lyrics 标签压倒）。</p>
+<p><strong>实测案例</strong>（《扔掉》）：纯男声 indie folk + country</p>
+<ul>
+<li>Vocal Gender: Male → 编曲偏向”乡村硬汉”气质</li>
+<li>Vocal Gender: Female + Lyrics 锁 [Male] → 编曲偏向”现代华语 indie pop” 气质（命中庄东茹《又活了一天》目标参考）</li>
+<li>结果：男声没变，气质对了</li>
+</ul>
+<p><strong>Vocal Gender 反选 · 气质调味矩阵</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>需求</th><th>配方</th></tr></thead><tbody><tr><td>男声 + 厚重传统</td><td>Vocal Gender: Male + Lyrics [Male]</td></tr><tr><td>男声 + 现代轻盈</td><td>Vocal Gender: Female + Lyrics [Male]</td></tr><tr><td>女声 + 厚重深沉</td><td>Vocal Gender: Male + Lyrics [Female]</td></tr><tr><td>女声 + 明亮轻盈</td><td>Vocal Gender: Female + Lyrics [Female]</td></tr><tr><td>男女对唱</td><td>Vocal Gender: 不选</td></tr></tbody></table>
+<p><strong>口诀</strong>：<strong>Style 框管”是什么”，Vocal Gender 管”什么味”</strong>。</p>
+<p><strong>风险</strong>：</p>
+<ul>
+<li>这是 v5.5 上的实测发现，可能未来版本变化</li>
+<li>建议每次跑都对照测试，不要假设它一直有效</li>
+<li><strong>该经验仅适用于纯男声 / 纯女声场景</strong>（男女对唱时 Vocal Gender 必须留空——见经验 3）</li>
+</ul>
+<p><strong>反向校验</strong>：</p>
+<ul>
+<li>《再少年》是男女对唱，Vocal Gender 留空 → 此现象未浮现</li>
+<li>《扔掉》是纯男声 → 此现象浮现</li>
+</ul>
+<p><strong>意义</strong>：</p>
+<ul>
+<li>之前所有 Suno 经验都是”如何更精确地告诉 Suno”</li>
+<li>这一条是”如何用 Suno 自己也没明说的参数路径，跨界调味”</li>
+<li>这是<strong>用户控制层未明示的隐藏维度</strong>——Suno 团队自己可能都没把这个当作设计意图来文档化</li>
+</ul>
+<hr>
+<h2 id="段落差异化设计方法解决太平--没差异点">段落差异化设计方法（解决”太平 / 没差异点”）</h2>
+<blockquote>
+<p>入档：2026-05-17
+触发：23《再少年》v3 跑出”整体对但太平”，副会话用此方法解决</p>
+</blockquote>
+<h3 id="核心思路">核心思路</h3>
+<p><strong>贯穿动机 + 段落差异化</strong></p>
+<h3 id="贯穿动机">贯穿动机</h3>
+<p>选一个<strong>有限出现次数（3-4 次）<strong>的”标志音色”，在关键段落复现，制造</strong>”声音指纹”</strong>。</p>
+<p>23《再少年》的贯穿动机：<strong>口琴</strong>（同时与跳蛛先生独游”小白”IP 形成隐秘呼应 → IP 内部 callback）。</p>
+<h3 id="段落差异化">段落差异化</h3>
+<p>给每个段落注入一个<strong>独特的”声音事件”</strong>，避免段落同质化：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>段落</th><th>差异化设计</th></tr></thead><tbody><tr><td>V1 vs V2</td><td>器乐厚度差异（V2 加入 bass drone）</td></tr><tr><td>Pre-Chorus 1 vs 2</td><td>有吉他 vs 无吉他</td></tr><tr><td>Chorus 1 vs 2</td><td>无口琴 vs 口琴和声</td></tr><tr><td>Bridge</td><td><strong>所有器乐坍缩到真空</strong>（反向爆发）</td></tr></tbody></table>
+<p><strong>关键</strong>：差异化不是为了变化，是为了让<strong>每个段落都有”事件感”</strong>——观众听到这个段落会想”哦这里不一样了”。</p>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>基础流程:<a href="%E4%BB%8D%E6%9C%89%E6%95%88">[Suno配乐制作分享_v1]</a></li>
+<li>跨 IP 签名:<a href="/above-the-web/ip-still-here-v1-ccf566b/" class="wikilink">跨IP作者签名_白玉兰与still_here_v1</a>(still here 跨 IP 副歌签名)</li>
+<li><strong>两阶段工作流</strong>:<a href="/above-the-web/suno-v1-1-0ee403e/" class="wikilink">Suno两阶段工作流_v1.1</a> ⭐</li>
+<li><strong>Vocal Gender 反选风格 prior</strong>:<a href="/above-the-web/vocal-gender-prior-v1-8eddad6/" class="wikilink">Vocal_Gender反选_风格prior_v1</a> ⭐⭐⭐（经验 6 的独立深入文档）</li>
+<li><strong>版权过滤器规避</strong>:<a href="/above-the-web/suno-v1-6d5ca8c/" class="wikilink">Suno版权过滤器规避_v1</a> ⭐</li>
+<li>上位元方法论:<a href="/above-the-web/v1-dff6dd3/" class="wikilink">识别工具天花板的时机_v1</a></li>
+<li>同层(另一个音频工具的行为档案):<a href="/above-the-web/eleven-v3-v1-d87db20/" class="wikilink">Eleven_v3_行为规律_v1</a> —— TTS 侧的路径选择(IVC vs Voice Design)、克隆素材要求、audio tag 跨语言实测</li>
+<li>主线作品:
+<ul>
+<li><code>{AIGC工作站}/17_拾色\03_歌词与Suno_prompt\拾色_Suno_brief_v1.md</code>(拾色 Suno brief)</li>
+<li><code>{AIGC工作站}/23_檐下再少年_叙事MV\01_音频\</code> (23《再少年》Custom Mode 实测)</li>
+<li><code>{AIGC工作站}/29_扔掉_叙事MV\01_音频\</code> (29《扔掉》Custom Mode 实测 + Vocal Gender 反选发现)</li>
+</ul>
+</li>
+<li>案例回执:
+<ul>
+<li><code>跨会话协作/23_再少年_音乐共创回执_2026-05-17</code></li>
+<li><code>跨会话协作/24_扔掉_音乐共创回执_2026-05-19</code></li>
+</ul>
+</li>
+</ul> <div class="tags"> <span class="tag">类型/档案</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/Suno_v5.5_%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%BE%8B_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/Suno_v5.5_%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%BE%8B_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/02-33115ae/">参数行为档案索引</a></li><li><a href="/above-the-web/eleven-v3-v1-d87db20/">Eleven v3 行为规律</a></li><li><a href="/above-the-web/flova-v1-a30ae63/">Flova 平台档案：编排层不是模型层</a></li><li><a href="/above-the-web/niji7-v1-1-fdcb938/">niji 7 行为规律</a></li><li><a href="/above-the-web/skill-index-b155e36/">SKILL_INDEX — Skill 使用索引</a></li><li><a href="/above-the-web/2026-06-10-suno-v1-18c768f/">为什么不早说 Suno 粉丝梗歌复盘</a></li><li><a href="/above-the-web/ai-niji5-nano-v2-aff7d44/">AI 形象图工作流分层 · niji5 + Nano</a></li><li><a href="/above-the-web/prompt-v1-244d8dc/">prompt 极简化原则 · v1.2（跨工具多场验证版）</a></li><li><a href="/above-the-web/2026-08-24-v1-60852b9/">2026-08-24 《擦干净》从素材到动态化制片 · 全链路阶段性复盘</a></li><li><a href="/above-the-web/suno-v1-1-0ee403e/">Suno 两阶段工作流 · Simple→Custom</a></li><li><a href="/above-the-web/suno-v1-6d5ca8c/">Suno Custom Mode 版权过滤器规避</a></li><li><a href="/above-the-web/suno-v1-cb637cc/">Suno 时长控制:结构标签代替秒数</a></li><li><a href="/above-the-web/vocal-gender-prior-v1-8eddad6/">Vocal Gender 反选 · 风格 prior</a></li><li><a href="/above-the-web/reference-suno-v1-02d748b/">参考曲复刻法 · reference 曲 → Suno 提示词</a></li><li><a href="/above-the-web/v1-adba543/">对话感 · 关系产生生命力</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/kling3-0-v1-8b6096c/"> <span class="card-cat">参数行为档案</span> <h3>可灵 Kling 3.0 / Omni 行为规律</h3> <p>关键约束:景别是单选(其他可多选)。</p> </a><a class="card" href="/above-the-web/minimaxh3-v1-29d13d7/"> <span class="card-cat">参数行为档案</span> <h3>MiniMax H3 (Ref2VA) 行为规律</h3> <p>值得，前提是你被会员门槛挡住了。项目 61 依次撞了三道墙：</p> </a><a class="card" href="/above-the-web/mj-niji5-v2-1153ad3/"> <span class="card-cat">参数行为档案</span> <h3>MJ niji 5 · 行为档案</h3> <p>niji 5 是有&quot;两个分支&quot;的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定&quot;触发词…</p> </a><a class="card" href="/above-the-web/mj-v8-1-oref-v1-5d5f854/"> <span class="card-cat">参数行为档案</span> <h3>MJ v8.1 无 oref/cref · 混合工作流</h3> <p>v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。 解法不是二选一，是按镜头需要分工：</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#v55-实测拾色自动作词案例" data-toc-link="v55-实测拾色自动作词案例">v5.5 实测：「拾色」自动作词案例</a></li><li class="d3"><a href="#prompt只写风格--情境无-lyrics-草案" data-toc-link="prompt只写风格--情境无-lyrics-草案">Prompt（只写风格 + 情境，无 lyrics 草案）</a></li><li class="d3"><a href="#suno-自动作词输出节选--与-ip-立项的命中度" data-toc-link="suno-自动作词输出节选--与-ip-立项的命中度">Suno 自动作词输出（节选 · 与 IP 立项的命中度）</a></li><li class="d2"><a href="#反直觉发现suno-选的意象比立项更深一层" data-toc-link="反直觉发现suno-选的意象比立项更深一层">反直觉发现：Suno 选的意象比立项更深一层</a></li><li class="d2"><a href="#反直觉发现suno-自发完成跨-ip-副歌签名" data-toc-link="反直觉发现suno-自发完成跨-ip-副歌签名">反直觉发现：Suno 自发完成跨 IP 副歌签名</a></li><li class="d2"><a href="#v55-vs-v3v4-时代的能力跃升" data-toc-link="v55-vs-v3v4-时代的能力跃升">v5.5 vs v3/v4 时代的能力跃升</a></li><li class="d2"><a href="#v55-的局限实测发现" data-toc-link="v55-的局限实测发现">v5.5 的局限（实测发现）</a></li><li class="d2"><a href="#工作流时间节省" data-toc-link="工作流时间节省">工作流时间节省</a></li><li class="d2"><a href="#custom-mode-工程经验5-条--v55-实测" data-toc-link="custom-mode-工程经验5-条--v55-实测">Custom Mode 工程经验（5 条 · v5.5 实测）</a></li><li class="d3"><a href="#经验-1--字符-1000-上限是硬天花板" data-toc-link="经验-1--字符-1000-上限是硬天花板">经验 1 · 字符 1000 上限是硬天花板</a></li><li class="d3"><a href="#经验-2--段落标签用英文-male-female-both--中文-男--女--合" data-toc-link="经验-2--段落标签用英文-male-female-both--中文-男--女--合">经验 2 · 段落标签用英文 [Male] [Female] [Both] &gt; 中文 男 / 女 / 合</a></li><li class="d3"><a href="#经验-3--vocal-gender-在男女对唱场景必须留空" data-toc-link="经验-3--vocal-gender-在男女对唱场景必须留空">经验 3 · Vocal Gender 在男女对唱场景必须留空</a></li><li class="d3"><a href="#经验-4--weirdness-与-style-influence-最优组合" data-toc-link="经验-4--weirdness-与-style-influence-最优组合">经验 4 · Weirdness 与 Style Influence 最优组合</a></li><li class="d3"><a href="#经验-5--反-suno-本能指令需要重复--具象化" data-toc-link="经验-5--反-suno-本能指令需要重复--具象化">经验 5 · “反 Suno 本能”指令需要重复 + 具象化</a></li><li class="d3"><a href="#经验-6--vocal-gender-不只是声部开关更是隐藏的风格-prior" data-toc-link="经验-6--vocal-gender-不只是声部开关更是隐藏的风格-prior">经验 6 · Vocal Gender 不只是声部开关，更是隐藏的”风格 prior” ⭐⭐⭐</a></li><li class="d2"><a href="#段落差异化设计方法解决太平--没差异点" data-toc-link="段落差异化设计方法解决太平--没差异点">段落差异化设计方法（解决”太平 / 没差异点”）</a></li><li class="d3"><a href="#核心思路" data-toc-link="核心思路">核心思路</a></li><li class="d3"><a href="#贯穿动机" data-toc-link="贯穿动机">贯穿动机</a></li><li class="d3"><a href="#段落差异化" data-toc-link="段落差异化">段落差异化</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

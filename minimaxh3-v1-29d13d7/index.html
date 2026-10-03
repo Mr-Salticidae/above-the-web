@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MiniMax H3 (Ref2VA) 行为规律 · 蛛网之上</title><meta name="description" content="值得，前提是你被会员门槛挡住了。项目 61 依次撞了三道墙："><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/minimaxh3-v1-29d13d7/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="MiniMax H3 (Ref2VA) 行为规律"><meta property="og:description" content="值得，前提是你被会员门槛挡住了。项目 61 依次撞了三道墙："><meta property="og:url" content="https://tiaozhuxiansheng.com/minimaxh3-v1-29d13d7/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MiniMax H3 (Ref2VA) 行为规律"><meta name="twitter:description" content="值得，前提是你被会员门槛挡住了。项目 61 依次撞了三道墙："><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-24T03:46:20+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="参数行为档案"><meta property="article:tag" content="类型/档案"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/minimaxh3-v1-29d13d7/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/minimaxh3-v1-29d13d7/","url":"https://tiaozhuxiansheng.com/minimaxh3-v1-29d13d7/","headline":"MiniMax H3 (Ref2VA) 行为规律","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"值得，前提是你被会员门槛挡住了。项目 61 依次撞了三道墙：","datePublished":"2026-08-24T03:46:20+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"参数行为档案","keywords":"类型/档案"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"参数行为档案","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88"},{"@type":"ListItem","position":3,"name":"MiniMax H3 (Ref2VA) 行为规律","item":"https://tiaozhuxiansheng.com/minimaxh3-v1-29d13d7/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88" data-pagefind-meta="category" data-pagefind-filter="kind:note">参数行为档案</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-24T03:46:20+08:00">2026-08-24</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 7 分钟读完 · 2,564 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>18 节</i></summary> <ol> <li class="d2"><a href="#一开源权重路线值不值得走">一、开源权重路线值不值得走</a></li><li class="d2"><a href="#二硬件架构断崖不是显存断崖">二、硬件：架构断崖，不是显存断崖</a></li><li class="d2"><a href="#三耗时跟参考图张数强相关这是排产的关键">三、耗时：跟参考图张数强相关，这是排产的关键</a></li><li class="d2"><a href="#四帧数必须落在-17k5-网格上">四、帧数必须落在 17k+5 网格上</a></li><li class="d2"><a href="#五comfyui-api-格式两个会静默失败的坑">五、ComfyUI API 格式：两个会静默失败的坑</a></li><li class="d3"><a href="#1-嵌套-dynamiccombo-的键名是点号链">1. 嵌套 DynamicCombo 的键名是点号链</a></li><li class="d3"><a href="#2-参考图是-autogrow序号即语义">2. 参考图是 Autogrow，序号即语义</a></li><li class="d3"><a href="#3-缓存会救你">3. 缓存会救你</a></li><li class="d2"><a href="#六prompt模型跟得住像什么跟不住怎么拍发生什么">六、Prompt：模型跟得住「像什么」，跟不住「怎么拍、发生什么」</a></li><li class="d3"><a href="#1-否定句几乎无效越禁越突出">1. 否定句几乎无效，越禁越突出</a></li><li class="d3"><a href="#2-把意图写成可见的物理结果">2. 把意图写成可见的物理结果</a></li><li class="d3"><a href="#3-品类词会把模型带向错误的先验">3. 品类词会把模型带向错误的先验</a></li><li class="d3"><a href="#4-太短的-cam-等于没写">4. 太短的 cam 等于没写</a></li><li class="d3"><a href="#5-️-排除项写多了会削掉画面的成立条件">5. ⚠️ 排除项写多了会削掉画面的成立条件</a></li><li class="d3"><a href="#6-跨镜必须一致的东西只能写一处">6. 跨镜必须一致的东西，只能写一处</a></li><li class="d2"><a href="#七模板拼装类代码要对生成结果做自检">七、模板拼装类代码要对生成结果做自检</a></li><li class="d2"><a href="#八租卡运维">八、租卡运维</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="minimax-h3-ref2va-行为规律">MiniMax H3 (Ref2VA) 行为规律</h1>
+<blockquote>
+<p>来源：项目 61《雨里旧信》MV 2026-08-23~24 本地部署实跑
+环境：AutoDL RTX 5090 32GB · ComfyUI 0.33.0 · 开源权重 62.7GB（nvfp4 文本编码器）
+适用：MiniMax H3 开源权重的 ComfyUI 路线（非 API）
+注意：本档只写<strong>实测</strong>结论，每条都注明是怎么测出来的</p>
+</blockquote>
+<hr>
+<h2 id="一开源权重路线值不值得走">一、开源权重路线值不值得走</h2>
+<p>值得，前提是你被会员门槛挡住了。项目 61 依次撞了三道墙：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>路线</th><th>门槛</th><th>结果</th></tr></thead><tbody><tr><td>即梦 Dreamina CLI</td><td>需「高级」会员</td><td>❌ 充值不解决，是权限不是积分</td></tr><tr><td>ElevenLabs Flows API</td><td>需 Pro 套餐</td><td>❌</td></tr><tr><td>火山方舟 API</td><td>充值 200 元</td><td>⚠️ 门槛可接受，但<strong>不收含真人人脸的参考图</strong></td></tr><tr><td><strong>AutoDL 按小时租卡 + H3 开源权重</strong></td><td><strong>按小时付费</strong></td><td>✅</td></tr></tbody></table>
+<p>三条 API 路线的共同问题是<strong>能力握在别人手里，权限说变就变</strong>。
+开源权重 + 租卡的唯一变量是钱和时间，没有资格审查。</p>
+<hr>
+<h2 id="二硬件架构断崖不是显存断崖">二、硬件：架构断崖，不是显存断崖</h2>
+<p><strong>24GB 的 Ada（4090）跑不动，32GB 的 Blackwell（5090）跑得动，差的不是那 8GB。</strong></p>
+<p>H3 的文本编码器是 Qwen3-VL-32B。Blackwell 原生支持 nvfp4，编码器只要 14.6GB；
+非 Blackwell 只能用 int8，同一个编码器要 25.3GB——<strong>文本编码阶段就 OOM</strong>。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>GPU</th><th>量化</th><th>编码器</th><th>权重总量</th><th>结论</th></tr></thead><tbody><tr><td>RTX 5090 32GB</td><td>nvfp4</td><td>14.6GB</td><td>62.7GB</td><td>✅ 峰值 24.4GB，余 7.6GB</td></tr><tr><td>vGPU-48GB / PRO 6000</td><td>int8</td><td>25.3GB</td><td>73.4GB</td><td>✅ 需 ≥40GB 显存</td></tr><tr><td>RTX 4090 / 3090 24GB</td><td>int8</td><td>25.3GB</td><td>73.4GB</td><td>❌ 吃不到 nvfp4</td></tr></tbody></table>
+<p>所以选卡时<strong>先看架构再看显存</strong>。5090 还比 48GB 的 vGPU 便宜（¥2.78 vs ¥2.88/时）。</p>
+<hr>
+<h2 id="三耗时跟参考图张数强相关这是排产的关键">三、耗时：跟参考图张数强相关，这是排产的关键</h2>
+<p>官方对 <code>ref_image_size</code> 的说明里有一句：<code>'max'</code> … <em>“Reference tokens ride through
+every sampling step, so ‘max’ can be several times slower.”</em>
+参考图 token 要跟着<strong>每一步采样</strong>走，所以耗时随参考图张数明显上升。</p>
+<p>1344×768 · steps=20 · 不挂 turbo LoRA · <code>ref_image_size=max</code> 实测：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>参考图张数</th><th>实测</th><th>s/帧</th></tr></thead><tbody><tr><td>1 张</td><td>124 帧 / 440s</td><td><strong>3.55</strong></td></tr><tr><td>2 张</td><td>243 帧 / 1406s</td><td><strong>5.79</strong></td></tr><tr><td>3 张</td><td>192 帧 / 1301s</td><td><strong>6.78</strong></td></tr><tr><td>1 张 + <code>ref_image_size=match</code></td><td>124 帧 / 330s</td><td><strong>2.66</strong></td></tr></tbody></table>
+<p><strong>排产必须按张数分桶估，不能用单一 s/帧。</strong>
+项目 61 一开始拿 3 张那镜的 6.78 去乘全片，把预算估成 ¥35.6；
+按桶重算实际是 ¥25.7，差了 38%。</p>
+<p><code>match</code> 比 <code>max</code> 快约 25%（不是官方说的「several times」）。但注意：
+<strong>改 <code>ref_image_size</code> 会改变条件，出的是完全不同的构图，不只是画质差异</strong>，
+所以它不能当画质 A/B 用，也不适合在一批里混用。</p>
+<hr>
+<h2 id="四帧数必须落在-17k5-网格上">四、帧数必须落在 17k+5 网格上</h2>
+<p>节点签名写死：<code>length</code> 的 <code>min=5, max=3600, step=17</code>。
+合法帧数是 <code>17k+5</code>：22 / 39 / … / 124 / 141 / 158 / 175 / 192 / 209 / 226 / 243 …
+（124 帧 ≈ 5s，官方标注训练区间约 124–362 帧。）</p>
+<p>按秒排的分镜要先吸附到网格再算总时长：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">def</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> snap_frames</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(seconds, fps</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">24</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> max</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, math.ceil((seconds </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> fps </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 5</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 17</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    return</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 17</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 5</span></span></code></pre>
+<blockquote>
+<p><strong>2026-08-25 跨路线确认（65_过风 项目，LibTV 商业 API 路线）</strong>：
+LibTV 的 H3 只给 <code>duration</code> 滑杆（<strong>min 5 / max 15</strong>），看不到 <code>length</code>。
+按 15s 出片，<code>ffprobe</code> 实测 <strong>362 帧 @ 24fps</strong> —— <strong>正好是 <code>17×21+5</code>，落在网格上</strong>，
+且正好是本节记的官方训练区间上限（124–362）。</p>
+<p>→ <strong>商业 API 路线与开源权重路线共用同一套帧网格。</strong>
+→ <strong><code>duration</code> 的 15s 上限不是平台限速，是模型训练边界</strong>：15s×24fps=360，
+网格上的下一个点 379 已越过 362。所以「H3 做不到 15 秒以上」是模型属性，换平台也绕不过去。
+需要更长的单条生成只能换模型（同项目对照组 Seedance 2.5 单条 30s 实测成立）。</p>
+</blockquote>
+<hr>
+<h2 id="五comfyui-api-格式两个会静默失败的坑">五、ComfyUI API 格式：两个会静默失败的坑</h2>
+<h3 id="1-嵌套-dynamiccombo-的键名是点号链">1. 嵌套 DynamicCombo 的键名是<strong>点号链</strong></h3>
+<p><code>SaveVideo</code> 的编码参数是层层嵌套的动态组合：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>format = "mp4"  →  露出 codec  →  "h264"  →  露出 encoding  →  "re-encode"  →  露出 crf</span></span></code></pre>
+<p>API 格式里必须写成点号链，和 <code>ref_images.ref_image_0</code> 是同一套规则
+（ComfyUI 的 <code>finalize_prefix()</code> 把前缀链用 <code>.</code> 连起来）：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"inputs"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    "video"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"15"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">],</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    "filename_prefix"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: prefix,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    "format"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"mp4"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    "format.codec"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"h264"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    "format.codec.encoding"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"re-encode"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">    "format.codec.encoding.crf"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">12.0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,        </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># h264 范围 0-51</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<p>⚠️ <strong>写成扁平的 <code>"codec"</code> / <code>"encoding"</code> / <code>"crf"</code> 不会报错，会被静默忽略</strong>，
+然后 codec 退回默认 <code>auto</code>（直通不重编码）。实测码率 <strong>1.0 Mbps</strong>，
+雨这种高频细节直接压成糊块。改对之后同一镜 <strong>6.9 Mbps</strong>，S34 达 11.9 Mbps。</p>
+<p><strong>所以「提交成功」不等于「参数生效」。</strong> 凡是加了质量相关的参数，
+先用极短探针（<code>--length 39 --steps 4 --turbo</code>，约 45 秒）验一次实际码率再开长跑。</p>
+<h3 id="2-参考图是-autogrow序号即语义">2. 参考图是 Autogrow，序号即语义</h3>
+<p><code>ref_images</code> 是 <code>io.Autogrow.Input</code>，前缀 <code>ref_image_</code>，<code>min=0, max=9</code>。
+API 键为 <code>ref_images.ref_image_0</code>、<code>ref_images.ref_image_1</code>…</p>
+<p>节点 docstring 明确：参考按 <strong>图 → 视频 → 音频</strong> 的固定顺序进入，
+每类各自 1-based 编号，prompt 里用 <code>&#x3C;Picture i></code> / <code>&#x3C;Video k></code> / <code>&#x3C;Audio j></code> 引用。
+<strong>挂载顺序错了，模型会把「窗外景象」当成「角色身份」用。</strong></p>
+<p>另有 <code>ref_videos</code>（Autogrow，max=3，收的是<strong>图像帧序列</strong>不是视频文件，24fps 下 2–15s）。</p>
+<h3 id="3-缓存会救你">3. 缓存会救你</h3>
+<p>改了 <code>SaveVideo</code> 参数重跑同一镜，采样结果命中缓存，<strong>1301s 的镜头只花 20s</strong>
+就重新出片。所以「参数写错了要重跑」的代价往往只有重编码，不是重采样。</p>
+<hr>
+<h2 id="六prompt模型跟得住像什么跟不住怎么拍发生什么">六、Prompt：模型跟得住「像什么」，跟不住「怎么拍、发生什么」</h2>
+<p>这是项目 61 最大的一条。40 镜里前三个验证镜的表现高度一致：</p>
+<blockquote>
+<p><strong>调性、材质、年代、色彩——全对。</strong>
+<strong>构图、机位、动作——全错。</strong></p>
+</blockquote>
+<h3 id="1-否定句几乎无效越禁越突出">1. 否定句几乎无效，越禁越突出</h3>
+<p>S17 要求「她手拿折着的信，但全程不看信」。原文 116 词，几乎全是否定：
+<code>never lowers her head</code> / <code>never looks down at the letter</code> /
+<code>does not read, unfold, lift or examine</code>，而 <code>letter</code> 出现 <strong>5 次</strong>。</p>
+<p><strong>连改四版都失败</strong>，每版她都在低头读信。反复提及反而把信推成了画面重点。</p>
+<p><strong>有效解法不是把禁令写得更狠，是把冲突源头拿掉</strong>——
+第五版直接把镜头收到锁骨以上、手在画框之外，prompt 里一次都不提信。一次通过。</p>
+<blockquote>
+<p>前一镜已是折信特写，靠剪辑说话就够了。
+<strong>画面里不该出现的东西，连提都不要提。</strong></p>
+</blockquote>
+<h3 id="2-把意图写成可见的物理结果">2. 把意图写成<strong>可见的物理结果</strong></h3>
+<p>S34 要求「伞明显向女主一侧倾斜」（表达他在照顾她）。直接这么写，两版都没执行。</p>
+<p>改成写这件事的<strong>后果</strong>：</p>
+<blockquote>
+<p>她的头肩完全在伞下保持干燥，而他外侧的肩袖露在伞沿之外被淋透，
+浅蓝布料那一块变成深色。</p>
+</blockquote>
+<p>一次就对了，而且比原意图更好读——观众一眼看到湿透的肩膀。</p>
+<p><strong>规律：模型渲染的是「看得见的东西」。抽象意图要翻译成可见的物理事实。</strong></p>
+<h3 id="3-品类词会把模型带向错误的先验">3. 品类词会把模型带向错误的先验</h3>
+<p>S34 写 <code>a black oiled-paper umbrella</code>（黑色油纸伞）→ 出的是<strong>灰白条纹纸伞</strong>。
+「油纸伞」把它带向了传统花纸伞的先验。</p>
+<p>同一批里 S35 只写 <code>the same black umbrella</code> → <strong>正确的纯黑伞</strong>。</p>
+<p><strong>解法：不写品类，写外观。</strong> 改为
+<code>a large plain black umbrella, its canopy a single flat matte black all over with no stripes, no panels of any other colour, no pattern and no printing anywhere on it</code>。</p>
+<h3 id="4-太短的-cam-等于没写">4. 太短的 cam 等于没写</h3>
+<p>S30 的 <code>cam</code> 原本只有 <code>Medium shot, frontal, completely locked off with no movement</code>。
+模型没有可抓的构图信息，<strong>自己编了一条走廊</strong>，门被推到侧面且很小。</p>
+<p>改为写具体构图：门面与画框平行、门居中且占满画高、两侧只留窄边灰泥墙、
+显式排除走廊/房间/窗/家具——门就出来了。</p>
+<p><strong>描述详略要和你在意的程度成正比。你写得越短，模型自由度越大。</strong></p>
+<h3 id="5-️-排除项写多了会削掉画面的成立条件">5. ⚠️ 排除项写多了会削掉画面的成立条件</h3>
+<p>承上：为了赶走走廊，写了 <code>no corridor / no room / no window / no furniture</code>。
+结果那一版<strong>整个画面几乎全黑</strong>——因为风格模板要求「恰好一处暖光源」，
+而排除项把所有可能充当光源的东西都删干净了。</p>
+<p>补回一束<strong>画外</strong>的低角度侧光（光源本身留在画框外，否则它又会画一扇窗），
+并写明「门是画面里最亮的东西，从不处于黑暗中」，才恢复正常。</p>
+<p><strong>删掉一个元素之前，先想清楚它在画面里还承担了什么功能。</strong></p>
+<h3 id="6-跨镜必须一致的东西只能写一处">6. 跨镜必须一致的东西，只能写一处</h3>
+<p>S34/S35 是同机位冷暖对照，必须是同一把伞。两镜各写一遍描述，<strong>必然漂</strong>。
+项目 61 的做法是在 shots.json 里加 <code>_shared</code> 段，镜头文本用 <code>{UMBRELLA}</code> 引用，
+装配时替换并校验键存在——和「资产映射只写一份真源」同一个思路。</p>
+<hr>
+<h2 id="七模板拼装类代码要对生成结果做自检">七、模板拼装类代码要对<strong>生成结果</strong>做自检</h2>
+<p>项目 61 在同一类 bug 上栽了两次，都是分支覆盖测不出来的：</p>
+<ol>
+<li><code>mem_char</code> 模式下 prompt 写「参考图中的这位女性」，而分镜写「画面里没有女性」</li>
+<li><code>has_ref = mode.endswith("_char")</code>——这是「有没有<strong>角色</strong>」，
+却被拿去控制「有没有<strong>参考图</strong>」的措辞。结果挂了场景资产但没人物的镜头，
+一边描述 <code>&#x3C;Picture 1></code> 是那扇门，一边连说两遍 <code>no reference assets</code>。
+<strong>模型于是不把资产当权威、自己另编构图</strong>（就是上面 S30 那条走廊的真正根因），
+影响 16 镜、占全片 40%。</li>
+</ol>
+<p><strong>代码分支都覆盖了，语义却是矛盾的。</strong> 修完加了一段全片自检：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">for</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> x </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">in</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> shots:</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> len</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(x.get(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"refs"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">or</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [])</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    if</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">and</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "no reference assets"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> in</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> x[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"prompt"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]:  </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">...</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    if</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> not</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> n </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">and</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "&#x3C;Picture 1>"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> in</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> x[</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"prompt"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]:      </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">...</span></span></code></pre>
+<hr>
+<h2 id="八租卡运维">八、租卡运维</h2>
+<ul>
+<li><strong>换区 = 数据全丢。</strong> AutoDL 数据盘绑可用区不绑账号。项目 61 因余额耗尽自动关机、
+原区无资源只能换区，62.7GB 权重和已生成的成片全部作废，重下 110 分钟。</li>
+<li><strong>纪律：出一镜拉一镜</strong>，别等全量跑完再导出。</li>
+<li><strong>国内机房到 GitHub 基本不可用</strong>（实测直连 21 KB/s）。走 <code>gh-proxy.com</code> 镜像
+取 tarball（3827 KB/s）。<strong>AutoDL 的 <code>/etc/network_turbo</code>「学术加速」实测 0 KB/s</strong>，
+它会打印「设置成功」但把连接彻底掐死，开了比不开还慢。</li>
+<li><strong>pip 源要选同步快的不是选近的。</strong> 清华源缺 ComfyUI master 要求的
+<code>comfyui-workflow-templates==0.11.44</code>，而 <code>pip install -r</code> 是先解析全部再安装，
+<strong>一个包解析不到，整个 requirements 一个都装不上</strong>。用阿里云（376 KB/s，版本齐全）。</li>
+<li><strong>Windows 的 OpenSSH 不支持 ControlMaster</strong>（没有 unix socket）。防止刷连接数的办法是
+<strong>把轮询循环写在远端</strong>，一条 ssh 连接跑到底；绝不要本地 <code>for ...; do ssh ...; sleep 6; done</code>。</li>
+<li><strong><code>pkill -f</code> 会匹配到自己的命令行</strong>（远端 <code>bash -c</code> 的 cmdline 里就含那个串），
+表现为 ssh 退出码 255。pattern 要加方括号：<code>pkill -f "git-remote-htt[p]"</code>。</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/seedance2-5-v1-14bc5c5/" class="wikilink">Seedance2_5_行为规律_v1</a> —— 商业 API 路线的对应档案，prompt 规范与本文完全不通用</li>
+<li><a href="/above-the-web/kling3-0-v1-8b6096c/" class="wikilink">可灵Kling3_0_行为规律_v1</a> —— 另一条视频模型路线的实测档案</li>
+<li><a href="/above-the-web/eleven-v3-v1-d87db20/" class="wikilink">Eleven_v3_行为规律_v1</a> —— ElevenLabs 平台行为</li>
+<li><a href="/above-the-web/v1-9369dec/" class="wikilink">单锚点优于三视图_v1</a> —— 同项目的角色一致性复盘：为什么没做身份板也撑住了</li>
+</ul> <div class="tags"> <span class="tag">类型/档案</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/MiniMaxH3_%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%BE%8B_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/MiniMaxH3_%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%BE%8B_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/02-33115ae/">参数行为档案索引</a></li><li><a href="/above-the-web/eleven-v3-v1-d87db20/">Eleven v3 行为规律</a></li><li><a href="/above-the-web/seedance2-5-v1-14bc5c5/">Seedance 2.5 行为规律</a></li><li><a href="/above-the-web/kling3-0-v1-8b6096c/">可灵 Kling 3.0 / Omni 行为规律</a></li><li><a href="/above-the-web/v1-9369dec/">单锚点优于三视图：一次没做身份板却撑住了一致性的实跑</a></li><li><a href="/above-the-web/v1-44939f6/">主体不看镜头律</a></li><li><a href="/above-the-web/v1-17a9e43/">物品先分档，像素级换工具 · 学员答疑案例</a></li><li><a href="/above-the-web/2026-08-26-v1-c69c850/">2026-08-26 《过风》雪雾珍珠人像动态写真 · 全链路复盘</a></li><li><a href="/above-the-web/v1-7d210aa/">白底上的白事件等于没发生</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/flova-v1-a30ae63/"> <span class="card-cat">参数行为档案</span> <h3>Flova 平台档案：编排层不是模型层</h3> <p>Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点：</p> </a><a class="card" href="/above-the-web/mj-niji5-v2-1153ad3/"> <span class="card-cat">参数行为档案</span> <h3>MJ niji 5 · 行为档案</h3> <p>niji 5 是有&quot;两个分支&quot;的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定&quot;触发词…</p> </a><a class="card" href="/above-the-web/mj-v8-1-oref-v1-5d5f854/"> <span class="card-cat">参数行为档案</span> <h3>MJ v8.1 无 oref/cref · 混合工作流</h3> <p>v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。 解法不是二选一，是按镜头需要分工：</p> </a><a class="card" href="/above-the-web/mj-v8-2-v1-4cf28a0/"> <span class="card-cat">参数行为档案</span> <h3>MJ v8.2 行为档案</h3> <p>v8.2 已于 2026-07-24 正式发布，调用从 --preview 转为 --v 8.2；写实人像质感较 v8.1 再上一档；异色瞳…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一开源权重路线值不值得走" data-toc-link="一开源权重路线值不值得走">一、开源权重路线值不值得走</a></li><li class="d2"><a href="#二硬件架构断崖不是显存断崖" data-toc-link="二硬件架构断崖不是显存断崖">二、硬件：架构断崖，不是显存断崖</a></li><li class="d2"><a href="#三耗时跟参考图张数强相关这是排产的关键" data-toc-link="三耗时跟参考图张数强相关这是排产的关键">三、耗时：跟参考图张数强相关，这是排产的关键</a></li><li class="d2"><a href="#四帧数必须落在-17k5-网格上" data-toc-link="四帧数必须落在-17k5-网格上">四、帧数必须落在 17k+5 网格上</a></li><li class="d2"><a href="#五comfyui-api-格式两个会静默失败的坑" data-toc-link="五comfyui-api-格式两个会静默失败的坑">五、ComfyUI API 格式：两个会静默失败的坑</a></li><li class="d3"><a href="#1-嵌套-dynamiccombo-的键名是点号链" data-toc-link="1-嵌套-dynamiccombo-的键名是点号链">1. 嵌套 DynamicCombo 的键名是点号链</a></li><li class="d3"><a href="#2-参考图是-autogrow序号即语义" data-toc-link="2-参考图是-autogrow序号即语义">2. 参考图是 Autogrow，序号即语义</a></li><li class="d3"><a href="#3-缓存会救你" data-toc-link="3-缓存会救你">3. 缓存会救你</a></li><li class="d2"><a href="#六prompt模型跟得住像什么跟不住怎么拍发生什么" data-toc-link="六prompt模型跟得住像什么跟不住怎么拍发生什么">六、Prompt：模型跟得住「像什么」，跟不住「怎么拍、发生什么」</a></li><li class="d3"><a href="#1-否定句几乎无效越禁越突出" data-toc-link="1-否定句几乎无效越禁越突出">1. 否定句几乎无效，越禁越突出</a></li><li class="d3"><a href="#2-把意图写成可见的物理结果" data-toc-link="2-把意图写成可见的物理结果">2. 把意图写成可见的物理结果</a></li><li class="d3"><a href="#3-品类词会把模型带向错误的先验" data-toc-link="3-品类词会把模型带向错误的先验">3. 品类词会把模型带向错误的先验</a></li><li class="d3"><a href="#4-太短的-cam-等于没写" data-toc-link="4-太短的-cam-等于没写">4. 太短的 cam 等于没写</a></li><li class="d3"><a href="#5-️-排除项写多了会削掉画面的成立条件" data-toc-link="5-️-排除项写多了会削掉画面的成立条件">5. ⚠️ 排除项写多了会削掉画面的成立条件</a></li><li class="d3"><a href="#6-跨镜必须一致的东西只能写一处" data-toc-link="6-跨镜必须一致的东西只能写一处">6. 跨镜必须一致的东西，只能写一处</a></li><li class="d2"><a href="#七模板拼装类代码要对生成结果做自检" data-toc-link="七模板拼装类代码要对生成结果做自检">七、模板拼装类代码要对生成结果做自检</a></li><li class="d2"><a href="#八租卡运维" data-toc-link="八租卡运维">八、租卡运维</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

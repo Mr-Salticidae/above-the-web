@@ -1,0 +1,189 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>长期更新展示站:两层结构 + 无头卡片量产 · 蛛网之上</title><meta name="description" content="任何「长期一期一期往里加」的展示型站点(作品集 / 教程系列 / 案例库),首页都不要顺序罗列全文——改成「分类封面墙 + 详情」两层,数据驱动;配图卡用「HTML 复用站点 CSS → Chrome 无头截图」量产,不依赖图像生成或手绘。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-afcd606/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="长期更新展示站:两层结构 + 无头卡片量产"><meta property="og:description" content="任何「长期一期一期往里加」的展示型站点(作品集 / 教程系列 / 案例库),首页都不要顺序罗列全文——改成「分类封面墙 + 详情」两层,数据驱动;配图卡用「HTML 复用站点 CSS → Chrome 无头截图」量产,不依赖图像生成或手绘。"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-afcd606/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="长期更新展示站:两层结构 + 无头卡片量产"><meta name="twitter:description" content="任何「长期一期一期往里加」的展示型站点(作品集 / 教程系列 / 案例库),首页都不要顺序罗列全文——改成「分类封面墙 + 详情」两层,数据驱动;配图卡用「HTML 复用站点 CSS → Chrome 无头截图」量产,不依赖图像生成或手绘。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-19T22:43:52+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-afcd606/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-afcd606/","url":"https://tiaozhuxiansheng.com/v1-afcd606/","headline":"长期更新展示站:两层结构 + 无头卡片量产","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"任何「长期一期一期往里加」的展示型站点(作品集 / 教程系列 / 案例库),首页都不要顺序罗列全文——改成「分类封面墙 + 详情」两层,数据驱动;配图卡用「HTML 复用站点 CSS → Chrome 无头截图」量产,不依赖图像生成或手绘。","datePublished":"2026-06-19T22:43:52+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"长期更新展示站:两层结构 + 无头卡片量产","item":"https://tiaozhuxiansheng.com/v1-afcd606/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-19T22:43:52+08:00">2026-06-19</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 5 分钟读完 · 1,794 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>8 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#背景顺序罗列的必然崩坏">背景:顺序罗列的必然崩坏</a></li><li class="d2"><a href="#律一--两层数据驱动结构">律一 · 两层数据驱动结构</a></li><li class="d2"><a href="#技术二--无头卡片量产html--chrome-截图">技术二 · 无头卡片量产(HTML → Chrome 截图)</a></li><li class="d2"><a href="#踩过的坑可迁移">踩过的坑(可迁移)</a></li><li class="d2"><a href="#二次验证-2026-06-24--反诈柜台多端发布">二次验证 ⭐⭐(2026-06-24 · 反诈柜台多端发布)</a></li><li class="d2"><a href="#适用边界">适用边界</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="长期更新展示站两层结构--无头卡片量产">长期更新展示站:两层结构 + 无头卡片量产</h1>
+<blockquote>
+<p>入档:2026-06-19
+来源:给《目标是成为 Prompt 大师》学员站(GitHub Pages)加第 2 期时的结构升级
+性质:可迁移的内容站架构律 + 卡片量产技术</p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>任何「长期一期一期往里加」的展示型站点(作品集 / 教程系列 / 案例库),首页都不要顺序罗列全文——改成「分类封面墙 + 详情」两层,数据驱动;配图卡用「HTML 复用站点 CSS → Chrome 无头截图」量产,不依赖图像生成或手绘。</strong></p>
+<hr>
+<h2 id="背景顺序罗列的必然崩坏">背景:顺序罗列的必然崩坏</h2>
+<p>第 1 期时,<code>index.html</code> 把整期内容(封面卡 + 拆解卡 + 原图 + 操作区)平铺在一页里。一期没问题,但这是<strong>会持续更新</strong>的系列:到第 10、20 期,首页会变成一条几十屏的长卷,读者要找某一期得一路滚,首页也越来越重。</p>
+<blockquote>
+<p>判据:只要内容是「单调增长」的,顺序罗列就是一颗定时炸弹。第一期就该按「将来有 50 期」来设计结构。</p>
+</blockquote>
+<hr>
+<h2 id="律一--两层数据驱动结构">律一 · 两层数据驱动结构</h2>
+<p>把单页拆成两个视图,中间用 URL <code>hash</code> 路由切换:</p>
+<ol>
+<li><strong>首页 = 封面墙(catalog)</strong>:一格一期,只放封面卡缩图 + 期号 + 分类标签。紧凑、恒定高度,不随期数变长。顶部一排<strong>分类筛选 chip</strong>,按主题筛(本例:抽象词破题 / 物件与尺度)。</li>
+<li><strong>详情页(detail)</strong>:点封面进入 <code>#ep02</code>,才渲染该期的完整内容(双卡 + 原图 + 一键复制 + 笔记弹窗 + 点赞)。一次只加载一期,互不干扰。</li>
+</ol>
+<p><strong>关键:数据驱动,不是手抄 HTML。</strong> 把每期抽成一个 JS 清单数组(manifest)里的一条对象:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">var</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> EPISODES</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> [</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  { id:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"ep02"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, no:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"第 2 期"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, title:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"《童话镇里的纸飞机》"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, cat:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"object"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    sub:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, folder:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"02_纸飞机"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    cover:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"...封面卡.png"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, breakdown:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"...拆解卡.png"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, original:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"...原图.png"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    note:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"...笔记.md"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, xhs:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"https://..."</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, prompt:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"..."</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">];</span></span></code></pre>
+<p>封面墙、详情页、筛选、路由全部由这个数组渲染。<strong>于是「新增一期 = 建一个文件夹放资产 + 在数组里加一条对象」</strong>——再不用复制粘贴一大块 <code>&#x3C;article></code> HTML,也不会漏改 id / data-target / 计数 key 这类唯一标识(旧的「复制 <code>&#x3C;article></code> 区块」做法每次都得手动改 5 处占位,极易出错)。</p>
+<blockquote>
+<p>反直觉点:很多人升级时第一反应是「拆成多个 HTML 页面」。但静态站(GitHub Pages、无构建)下,<strong>单文件 + 数据数组 + hash 路由</strong>维护成本最低:公共的灯箱 / 弹窗 / 脚本只留一份,新增期零改动公共逻辑。</p>
+</blockquote>
+<hr>
+<h2 id="技术二--无头卡片量产html--chrome-截图">技术二 · 无头卡片量产(HTML → Chrome 截图)</h2>
+<p>系列每期要两张 3:4 卡(封面卡 + prompt 四层拆解卡),用作站内展示 + 小红书发布。产出方式:</p>
+<ol>
+<li>用<strong>站点同一套 CSS 变量</strong>(四色系统、字体、留白)写一个卡片 HTML,<code>html,body</code> 固定成目标尺寸(如 <code>600×800</code>),<code>overflow:hidden</code>。</li>
+<li>Chrome 无头截图导出 PNG:</li>
+</ol>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">chrome</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --headless</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --disable-gpu</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --hide-scrollbars</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  --force-device-scale-factor=2</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --window-size=600,800</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  --screenshot=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"封面卡.png"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "file:///绝对路径/card.html"</span></span></code></pre>
+<p><code>--window-size</code> 决定版面尺寸,<code>--force-device-scale-factor=2</code> 出 2 倍高清(600×800 → 实际 1200×1600)。截图尺寸 = window-size × scale,所以<strong>让 body 尺寸严丝合缝等于 window-size,就能得到精确比例、无白边、无滚动条的卡</strong>。</p>
+<p><strong>为什么用它而不是 Pillow 逐像素画 / 图像生成模型:</strong></p>
+<ul>
+<li>卡和网站<strong>共用 CSS</strong>,视觉天然一致,改配色一处改两处生效;</li>
+<li>排版用 HTML/flex,中文换行、下划线分段(给 prompt 按层上色)比 Pillow 画框算坐标省事得多;</li>
+<li>完全确定、可复现、零 API 成本,不像生成模型会漂移。</li>
+</ul>
+<p>(系列原有的 <code>make_cards.py</code>(Pillow)仍可用;HTML→无头 是同等有效、改版式更快的替代路径,二选一。)</p>
+<hr>
+<h2 id="踩过的坑可迁移">踩过的坑(可迁移)</h2>
+<ul>
+<li><strong>中文文件名上线要 URL 编码</strong>:<code>纸飞机_原图.png</code> 在 GitHub Pages 上的 URL 是 <code>%E7%BA%B8...</code>。验证线上可达要用编码后的 URL <code>curl</code> 看 200。</li>
+<li><strong>本地 <code>file://</code> 下 <code>fetch()</code> 会被 CORS 拦</strong>:站点的「笔记弹窗」是 <code>fetch</code> 本地 <code>.md</code>,本地直接打开 index.html 测不了——纯 DOM 渲染(封面墙、详情排版)可用无头截图本地验证,<strong>fetch 类功能要等上线后测</strong>。</li>
+<li><strong>MSYS/Git Bash 会改写 <code>/tmp</code> 路径</strong>:传给 Chrome 的 <code>--screenshot=/tmp/x.png</code> 会被映射到 Windows temp。<strong>统一用 Windows 绝对路径</strong>(<code>E:/.../x.png</code>)最稳。详见 <a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a>。</li>
+<li><strong>GitHub Pages 重建有延迟</strong>:push 后约 30–60 秒才生效,且可能命中 CDN 缓存;轮询线上时加随机 query(<code>?cb=$RANDOM</code>)绕缓存确认。</li>
+<li><strong>外站跳小红书会被反外链拦</strong>:从自己站点点击 xhslink 跳转,浏览器带 <code>Referer</code>,小红书弹「当前笔记暂时无法浏览 / 扫码查看」;地址栏直接打开却正常(无 referer)。解法:出站链接加 <strong><code>referrerpolicy="no-referrer"</code></strong>(配 <code>rel="noopener noreferrer"</code>)。这类「带来源被反爬 / 被拦」对外链平台通用。</li>
+</ul>
+<hr>
+<h2 id="二次验证-2026-06-24--反诈柜台多端发布">二次验证 ⭐⭐(2026-06-24 · 反诈柜台多端发布)</h2>
+<p>把一个 H5 小游戏铺到自有站时,本律两条各二次成立、并有延伸:</p>
+<ul>
+<li><strong>数据驱动入口再验</strong>:在 Astro 站首页做”可玩 · Plays”作品墙,<strong>加一个游戏 = 在 <code>games.js</code> 数组加一条</strong>(title / path / tags / accent…),卡片自动出现——和系列站”新增一期 = 数组加一条”是同一招,换了内容类型照样成立。游戏本体直接丢进 Astro <code>public/&#x3C;slug>/</code> 原样托管到 <code>/&#x3C;slug>/</code>(见 <a href="/above-the-web/v1-d1440b9/" class="wikilink">知识库网站免备案上线_香港轻量服务器方案_v1</a> 用例扩展)。</li>
+<li><strong>无头出图扩到 SVG + 真机截图</strong>:
+<ul>
+<li><strong>SVG→PNG</strong>:把 SVG <strong>内联进 HTML</strong>(外链 <code>&#x3C;img src=.svg></code> 不会应用网页字体)再截,即得带 Fraunces / Inter 的高清图;本地没 cairosvg / magick / inkscape 时这是最稳的出图路。</li>
+<li>用 <code>--headless=new</code> + <code>--virtual-time-budget=8000</code> 等字体 / 网络就绪再截,避免字体没加载就截空。</li>
+<li><strong>真机感截图</strong>:给渲染页注入一段 auto-play 脚本(可读同页顶层 <code>let</code> 全局变量,自动点”正确答案”凑画面)+ 用手机视口(≤600px)触发移动布局,批量抓”像手机实拍”的游戏截图,免手动操作。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="适用边界">适用边界</h2>
+<ul>
+<li>适合<strong>条目化、单调增长</strong>的展示内容(系列、作品集、案例库)。一次性单页、或条目间强耦合需要同屏对比的,不必拆两层。</li>
+<li>无头截图卡适合<strong>版式固定、批量同款</strong>的设计稿;每张都要独特艺术构图的,还是回到图像生成 / 手绘。</li>
+<li>数据驱动单文件到几百条会偏大,届时再考虑拆数据文件 / 上构建;百条以内单文件最省心。</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>落地实例(库外裸路径):<code>E:\目标是成为 Prompt 大师\index.html</code>(数据驱动两层结构)</li>
+<li>生产工作流:<a href="/above-the-web/07-skill-8c697c0/" class="wikilink">07_skill存档索引</a> 内的 <code>prompt-master-series</code>(已据本律更新阶段 E)</li>
+<li>触发本次升级的案例:<a href="/above-the-web/2026-06-05-lego-v1-69fad40/" class="wikilink">2026-06-05_童话镇里的纸飞机_LEGO小镇获奖图复盘_v1</a></li>
+<li>同类工具/部署经验:<a href="/above-the-web/webapp-webuploadapp-v1-0dffe3c/" class="wikilink">轻量级WebApp部署尸检_WebUploadApp_v1</a> · <a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a></li>
+<li>部署上线续篇:<a href="%E6%9C%AC%E7%AB%99%E4%B8%A4%E5%B1%82%E7%BB%93%E6%9E%84%E6%80%9D%E8%B7%AF%E7%9C%9F%E6%AD%A3%E9%83%A8%E7%BD%B2%E5%88%B0%E9%A6%99%E6%B8%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E3%80%81%E5%9B%BD%E5%86%85%E5%85%8D%E5%A4%87%E6%A1%88%E5%8F%AF%E8%AE%BF%E9%97%AE">[知识库网站免备案上线_香港轻量服务器方案_v1]</a></li>
+<li>二次验证项目 · 同族工程化经验:<a href="/above-the-web/v1-5d049d6/" class="wikilink">浏览器插件自动化的能力边界_v1</a> · <a href="/above-the-web/v1-cdc8e5f/" class="wikilink">子代理并行批量生成与校验组装_v1</a></li>
+<li>二次验证项目底料(库外裸路径):<code>E:\fraud-desk\_postmortem.md</code>(《反诈柜台》多端发布复盘)</li>
+<li>边界应用:<a href="/above-the-web/2026-07-28-ultra-v1-e8094ce/" class="wikilink">2026-07-28_Ultra模式个人作品集网站_从附件到部署闭环复盘_v1</a> —— 单次只有一个主系列时保留单页叙事;待完整项目增多后再升级为目录 / 详情两层。</li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%E5%B1%95%E7%A4%BA%E7%AB%99_%E4%B8%A4%E5%B1%82%E7%BB%93%E6%9E%84%E4%B8%8E%E6%97%A0%E5%A4%B4%E5%8D%A1%E7%89%87%E9%87%8F%E4%BA%A7_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E9%95%BF%E6%9C%9F%E6%9B%B4%E6%96%B0%E5%B1%95%E7%A4%BA%E7%AB%99_%E4%B8%A4%E5%B1%82%E7%BB%93%E6%9E%84%E4%B8%8E%E6%97%A0%E5%A4%B4%E5%8D%A1%E7%89%87%E9%87%8F%E4%BA%A7_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li><li><a href="/above-the-web/2026-06-05-lego-v1-69fad40/">「童话镇里的纸飞机」LEGO 小镇获奖图复盘</a></li><li><a href="/above-the-web/2026-07-28-ultra-v1-e8094ce/">Ultra 模式个人作品集网站：从附件到部署闭环复盘</a></li><li><a href="/above-the-web/2026-08-02-livelink-v1-02b433b/">LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错</a></li><li><a href="/above-the-web/windows-dpi-v1-c276e21/">Windows 下编码与 DPI 的「所见非真相」</a></li><li><a href="/above-the-web/v1-cdc8e5f/">子代理并行批量生成 + 脚本校验组装</a></li><li><a href="/above-the-web/v1-d1440b9/">知识库网站免备案上线 · 香港轻量服务器方案</a></li><li><a href="/above-the-web/skill-87b136e/">Prompt Master Series(目标是成为 Prompt 大师 · 系列内容生产)</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-5d049d6/"> <span class="card-cat">方法论与洞察</span> <h3>浏览器插件自动化的能力边界</h3> <p>浏览器插件能替你导航、填表、点选、读页面状态,但有三类硬边界必须由人来过:①登录 / 验证码 / 不可逆发布、②文件上传(沙箱)、③被安全策…</p> </a><a class="card" href="/above-the-web/webapp-webuploadapp-v1-0dffe3c/"> <span class="card-cat">方法论与洞察</span> <h3>轻量级 WebApp 部署复盘：WebUploadApp</h3> <p>- 预期目标：搭建一个小团队可用的文件上传网页，把图片 / 视频上传到服务器固定目录。</p> </a><a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a><a class="card" href="/above-the-web/1000-v1-2b2c761/"> <span class="card-cat">方法论与洞察</span> <h3>小红书正文超 1000 字是拆篇信号</h3> <p>小红书正文 1000 字上限不是排版限制,是平台在替你执行「别写大教程」。 写超了,第一反应不该是删字,该是拆篇——因为逼你超限的那个结构(…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#背景顺序罗列的必然崩坏" data-toc-link="背景顺序罗列的必然崩坏">背景:顺序罗列的必然崩坏</a></li><li class="d2"><a href="#律一--两层数据驱动结构" data-toc-link="律一--两层数据驱动结构">律一 · 两层数据驱动结构</a></li><li class="d2"><a href="#技术二--无头卡片量产html--chrome-截图" data-toc-link="技术二--无头卡片量产html--chrome-截图">技术二 · 无头卡片量产(HTML → Chrome 截图)</a></li><li class="d2"><a href="#踩过的坑可迁移" data-toc-link="踩过的坑可迁移">踩过的坑(可迁移)</a></li><li class="d2"><a href="#二次验证-2026-06-24--反诈柜台多端发布" data-toc-link="二次验证-2026-06-24--反诈柜台多端发布">二次验证 ⭐⭐(2026-06-24 · 反诈柜台多端发布)</a></li><li class="d2"><a href="#适用边界" data-toc-link="适用边界">适用边界</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

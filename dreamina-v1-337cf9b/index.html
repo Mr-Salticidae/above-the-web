@@ -1,0 +1,451 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>即梦 / Dreamina 跨区定价实测:同产品双账号对照 · 蛛网之上</title><meta name="description" content="价格差本身落在税负 / 支付通道 / 合规成本 / 受管制算力所能解释的区间内。真正的问题是通道。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/dreamina-v1-337cf9b/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="即梦 / Dreamina 跨区定价实测:同产品双账号对照"><meta property="og:description" content="价格差本身落在税负 / 支付通道 / 合规成本 / 受管制算力所能解释的区间内。真正的问题是通道。"><meta property="og:url" content="https://tiaozhuxiansheng.com/dreamina-v1-337cf9b/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="即梦 / Dreamina 跨区定价实测:同产品双账号对照"><meta name="twitter:description" content="价格差本身落在税负 / 支付通道 / 合规成本 / 受管制算力所能解释的区间内。真正的问题是通道。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-15T13:21:21+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="主题/平台观察"><meta property="article:tag" content="工具/即梦"><meta property="article:tag" content="工具/Seedance"><meta property="article:tag" content="状态/部分待验证"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/dreamina-v1-337cf9b/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/dreamina-v1-337cf9b/","url":"https://tiaozhuxiansheng.com/dreamina-v1-337cf9b/","headline":"即梦 / Dreamina 跨区定价实测:同产品双账号对照","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"价格差本身落在税负 / 支付通道 / 合规成本 / 受管制算力所能解释的区间内。真正的问题是通道。","datePublished":"2026-08-15T13:21:21+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 主题/平台观察, 工具/即梦, 工具/Seedance, 状态/部分待验证"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"即梦 / Dreamina 跨区定价实测:同产品双账号对照","item":"https://tiaozhuxiansheng.com/dreamina-v1-337cf9b/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-15T13:21:21+08:00">2026-08-15</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 7 分钟读完 · 2,691 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>15 节</i></summary> <ol> <li class="d2"><a href="#一结论摘要">一、结论摘要</a></li><li class="d2"><a href="#二积分标价三档独立验证">二、积分标价(三档独立验证)</a></li><li class="d2"><a href="#三购买力校正-️-关键修正">三、购买力校正 ⚠️ 关键修正</a></li><li class="d3"><a href="#逐条排除的辩护理由">逐条排除的辩护理由</a></li><li class="d2"><a href="#四跨区套利被主动封锁">四、跨区套利被主动封锁</a></li><li class="d3"><a href="#为什么这条最关键">为什么这条最关键</a></li><li class="d3"><a href="#关于区域列表没有-china-只有-hk--tw">关于「区域列表没有 China 只有 HK / TW」</a></li><li class="d2"><a href="#五三轮纠错过程方法论资产勿删">五、三轮纠错过程(方法论资产,勿删)</a></li><li class="d2"><a href="#六结论分档">六、结论分档</a></li><li class="d3"><a href="#-成立">✅ 成立</a></li><li class="d3"><a href="#-已推翻">❌ 已推翻</a></li><li class="d3"><a href="#-待验证">❓ 待验证</a></li><li class="d2"><a href="#七判断">七、判断</a></li><li class="d2"><a href="#库外产物">库外产物</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="即梦--dreamina-跨区定价实测同产品双账号对照">即梦 / Dreamina 跨区定价实测:同产品双账号对照</h1>
+<blockquote>
+<p>入档:2026-07-31
+触发:即梦 Seedance 2.5 内测报价 ¥80 / 30s(内测用户口述),追查是否属垄断定价。
+方法:同时持有即梦(国内)与 Dreamina(国际)账号,对<strong>同一产品 Seedance 2.0</strong> 做双账号对照。
+定位:<a href="/above-the-web/ai-v1-c522145/" class="wikilink">AI平台定价与可及性观察台账_v1</a> 的<strong>首案</strong>,也是那套测量口径的来源。
+结论一句话:<strong>国内到手贵 14.4%(税前 8%),幅度不算离谱;离谱的是大陆用户被主动挡在国际版之外。</strong></p>
+</blockquote>
+<hr>
+<h2 id="一结论摘要">一、结论摘要</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>结果</th></tr></thead><tbody><tr><td>积分<strong>标价</strong>差</td><td>国内贵 <strong>38.9%</strong>(¥0.100/积分 vs $0.01≈¥0.072/积分)</td></tr><tr><td>同规格<strong>消耗</strong>差</td><td>国际多耗 <strong>21.4%</strong>(85 分 vs 70 分)——方向相反,抵消大半</td></tr><tr><td><strong>到手实付</strong>差</td><td><strong>国内贵 14.4%</strong>(¥7.00 vs ¥6.12 每条 5s)</td></tr><tr><td>抹平增值税后</td><td>国内贵 <strong>7.9%</strong></td></tr><tr><td>大陆可用的国际购买通道</td><td><strong>0</strong></td></tr></tbody></table>
+<p><strong>价格差本身落在税负 / 支付通道 / 合规成本 / 受管制算力所能解释的区间内。真正的问题是通道。</strong></p>
+<hr>
+<h2 id="二积分标价三档独立验证">二、积分标价(三档独立验证)</h2>
+<p>两边购买页有三个<strong>积分数量完全相同</strong>的档位,可直接对价,无需换算争议:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>积分</th><th>即梦(国内)</th><th>Dreamina(国际)</th><th>国际折人民币 @7.2</th><th>国内溢价</th></tr></thead><tbody><tr><td>1,500</td><td>¥150.00</td><td>$15.00</td><td>¥108.00</td><td>+38.9%</td></tr><tr><td>4,500</td><td>¥450.00</td><td>$45.00</td><td>¥324.00</td><td>+38.9%</td></tr><tr><td>9,000</td><td>¥899.00</td><td>$90.00</td><td>¥648.00</td><td>+38.7%</td></tr><tr><td><strong>单位价</strong></td><td><strong>¥0.1000</strong></td><td><strong>$0.0100</strong></td><td><strong>¥0.0720</strong></td><td><strong>+38.9%</strong></td></tr></tbody></table>
+<p>补充观察:</p>
+<ul>
+<li>两边均为<strong>平价、无阶梯折扣</strong>。国内 ¥223/2250 与 ¥899/9000 看似批量优惠,实际较整数价只低 0.9% 与 0.1%,属<strong>尾数定价</strong>;美区反倒是干净的 $45 / $90 / $180。</li>
+<li>档位阶梯国内整体砍半:国际起充 1,000、顶到 18,000;国内起充 500、封顶 9,000。重度用户要多跑几次充值。</li>
+</ul>
+<hr>
+<h2 id="三购买力校正-️-关键修正">三、购买力校正 ⚠️ 关键修正</h2>
+<p><strong>两边的「积分」不是同一个单位。</strong> 同规格生成的消耗量不同:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>即梦(国内)</th><th>Dreamina(国际)</th></tr></thead><tbody><tr><td>模型</td><td>Seedance 2.0 VIP</td><td>Seedance 2.0</td></tr><tr><td>规格</td><td>9:16 / 720P / 5s / 1 条</td><td>9:16 / 720P / 5s / 1 条</td></tr><tr><td><strong>消耗</strong></td><td><strong>70 积分</strong></td><td><strong>85 积分</strong></td></tr><tr><td>实付</td><td>70 × ¥0.100 = <strong>¥7.00</strong></td><td>85 × $0.010 = $0.85 ≈ <strong>¥6.12</strong></td></tr><tr><td>折每秒</td><td>¥1.40</td><td>¥1.22</td></tr></tbody></table>
+<p>净差计算:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>计算口径</th><th>国内</th><th>国际</th><th>国内溢价</th></tr></thead><tbody><tr><td>积分标价</td><td>¥0.1000</td><td>¥0.0720</td><td>+38.9%</td></tr><tr><td>同规格消耗</td><td>70 分</td><td>85 分</td><td>−17.6%(国际多耗 21.4%)</td></tr><tr><td><strong>每条实付(含税)</strong></td><td><strong>¥7.00</strong></td><td><strong>¥6.12</strong></td><td><strong>+14.4%</strong></td></tr><tr><td>每条实付(抹平增值税 6%)</td><td>¥6.60</td><td>¥6.12</td><td>+7.9%</td></tr><tr><td>汇率敏感性 7.0 / 7.2 / 7.4</td><td>—</td><td>—</td><td>+17.6% / +14.4% / +11.3%</td></tr></tbody></table>
+<p><strong>结论不随汇率翻转。</strong></p>
+<h3 id="逐条排除的辩护理由">逐条排除的辩护理由</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>理由</th><th>能否解释 14%</th></tr></thead><tbody><tr><td>增值税(国内标价含 6%,美区标价税前)</td><td>能解释一小截,差距降到 7.9%</td></tr><tr><td>支付通道费率</td><td><strong>反向</strong> —— 支付宝/微信费率低于 Stripe 一类国际卡组织</td></tr><tr><td>区域定价惯例</td><td><strong>反向且最要命</strong> —— 通行做法是低收入市场定价<strong>更低</strong>(Steam / Netflix / Spotify)。中国人均 GDP 约为美国六分之一,实际却更贵</td></tr><tr><td>批量折扣结构差异</td><td>不适用 —— 两边都是平价无阶梯</td></tr><tr><td>零售 vs 批发价差</td><td>不适用 —— 本次是同产品同计费单位对比(<strong>此前推测有误</strong>)</td></tr></tbody></table>
+<p>参考对照:国内 API(火山引擎 Seedance 2.0)15s / 720P 约 ¥14.21,折 <strong>¥0.95/秒</strong>;即梦 C 端 <strong>¥1.40/秒</strong>,零售较批发高约 47% —— 这是<strong>正常</strong>的零售批发价差,与跨区问题无关。</p>
+<hr>
+<h2 id="四跨区套利被主动封锁">四、跨区套利被主动封锁</h2>
+<p>这一节比价格重要。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>观察</th><th>事实</th></tr></thead><tbody><tr><td>区域列表</td><td>国际侧国家 / 地区选项<strong>无中国大陆</strong>,仅列 Hong Kong、Taiwan</td></tr><tr><td>支付拦截</td><td>中国银行发行、<strong>英镑计价、英国账单地址</strong>的 Mastercard 被拒付</td></tr><tr><td>对照组</td><td><strong>同一张卡在 Suno 等国际 AI 服务正常扣款</strong></td></tr><tr><td>推定机制</td><td>BIN 段<strong>发卡行国别</strong>级拦截(而非账单地址级)</td></tr></tbody></table>
+<h3 id="为什么这条最关键">为什么这条最关键</h3>
+<p><strong>14% 的价差不需要一堵墙来保护。</strong> 跨境支付摩擦、汇率点差、退款风险,光这些就能吃掉 14%——就算完全不设防,也不会有多少人真跑去国际站买。</p>
+<p>所以墙不是为了守价差建的,<strong>它守的是分区本身</strong>:国内一个版本、国际一个版本,可以有不同过滤强度、不同能力上限、不同定价,且互不串货。而被守住的东西里,对创作者最有价值的<strong>不是价格,是那个过滤更轻的国际版本</strong>。</p>
+<p>发卡行国别级拦截<strong>要额外开发,不是支付网关的默认行为</strong>。Suno 不拦,字节国际侧拦——这个不对称本身就说明防止大陆套利是设计目标,不是副作用。</p>
+<h3 id="关于区域列表没有-china-只有-hk--tw">关于「区域列表没有 China 只有 HK / TW」</h3>
+<p>按<strong>商业逻辑</strong>读,不要按政治逻辑读。国际产品的账单区域列表普遍把港台单列,因为它们是独立的货币区、税区与支付清算区,这是账单系统通行惯例。大陆缺席的实际原因更朴素:<strong>字节的国内实体(即梦 / 火山引擎)与国际实体(Dreamina / BytePlus)是两套独立公司与产品线</strong>,国际侧摘掉大陆是为了不让大陆用户绕过国内定价,顺带规避外汇、数据出境与内容合规。</p>
+<p>但原因不改变结果:<strong>大陆个人用户既买不到更低的价,也买不到过滤更轻的版本。</strong></p>
+<hr>
+<h2 id="五三轮纠错过程方法论资产勿删">五、三轮纠错过程(方法论资产,勿删)</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>轮次</th><th>结论</th><th>错因</th><th>纠正来源</th></tr></thead><tbody><tr><td><strong>v0</strong></td><td>「2.5 贵但不出格,对标 Veo 3.1 顶配」</td><td>拿 <strong>BytePlus 国际 API 价目表</strong>对<strong>即梦国内内测价</strong>,两张单子</td><td>用户指出国内外定价不同</td></tr><tr><td><strong>v1</strong></td><td>「国内积分比国际贵 38.9%」</td><td>只比<strong>积分标价</strong>,未核对购买力</td><td><strong>用户主动指出</strong>积分不等值</td></tr><tr><td><strong>v1.1</strong></td><td>「国内到手贵 14.4%,税前 8%」</td><td>目前站得住</td><td>—</td></tr></tbody></table>
+<p>三点值得记住:</p>
+<ol>
+<li><strong>两次都是口径错误,不是数据错误。</strong> 每一步看着都合理,结论却是反的。</li>
+<li><strong>三轮纠错全部由一手证据推动,公开检索一次都没帮上忙。</strong> 搜索索引偏英文与美区,越搜越容易拿到国际价目表——这正是 v0 错误的直接来源。</li>
+<li><strong>v1 的修正方向不利于提出方自己的论点。</strong> 这是数据可信度的强信号:证据不是被挑着给的。</li>
+</ol>
+<hr>
+<h2 id="六结论分档">六、结论分档</h2>
+<h3 id="-成立">✅ 成立</h3>
+<ul>
+<li><strong>国内定价高于国际</strong> —— 到手 14.4%(税前 8%),一手实测。</li>
+<li><strong>定价方向违反区域惯例</strong> —— 应更低而实际更高。</li>
+<li><strong>跨区通道被主动封锁</strong> —— 大陆个人既买不到更低价,也买不到过滤更轻的版本。</li>
+<li><strong>逃生口按主体身份分配</strong> —— 个人无出口;有境外实体的机构可直接采购 BytePlus。<strong>同一个产品,身份决定你能买到哪个版本、付什么价。</strong></li>
+</ul>
+<h3 id="-已推翻">❌ 已推翻</h3>
+<ul>
+<li><strong>「国内贵 39%」</strong> —— 只对比积分标价的产物,校正后 14.4%。</li>
+<li><strong>「技术垄断」</strong> —— 垄断的判定是缺乏替代品。可灵、Vidu、海螺、Runway、Veo 均在售且部分更便宜(Seedance 2.0 Fast 的 $0.09/s 本身就是全球地板价之一)。这是<strong>价格歧视,不是垄断</strong>。</li>
+<li><strong>「零售批发价差可解释跨区差」</strong> —— 同产品同单位对比,该解释不适用。</li>
+</ul>
+<h3 id="-待验证">❓ 待验证</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>待验项</th><th>怎么测</th><th>若成立的影响</th></tr></thead><tbody><tr><td>国内外模型质量 / 过滤强度差异</td><td>同 prompt 两边各跑一次,留原始输出</td><td>目前仅从业者体感。最可能的机制是<strong>内容安全过滤层</strong>(拒绝生成 / prompt 静默改写 / 输出降质),而非模型本体不同——但对创作者体感等价</td></tr><tr><td>70 分是否已含会员折扣</td><td>查非会员价</td><td>界面标注 VIP。若含折扣,真实差距<strong>更大</strong></td></tr><tr><td>国际侧默认生成条数</td><td>看参数栏是否有隐藏的条数字段</td><td>国内有显式「1」,国际未见。若默认 2 条,整个购买力校正要重算</td></tr><tr><td>Seedance 2.5 的 ¥80/30s 规格</td><td>向内测用户确认分辨率</td><td>反推约 800 积分,单位积分消耗约为 2.0 的 1.9 倍;若为 4K 则不可直接比较</td></tr></tbody></table>
+<hr>
+<h2 id="七判断">七、判断</h2>
+<p><strong>不是垄断,也不必然是恶意,但确实是一次「向走不掉的市场收租」的选择——而「走不掉」是工程实现出来的,不是自然形成的。</strong></p>
+<p>8%–14% 单独看不值得动怒。国内跑这个产品确实更贵也更难:内容审核基建、备案、安全评估都是真金白银,《生成式AI服务管理暂行办法》不是字节写的,芯片出口管制更不是。体感到的「对国内用户更差」,有相当一部分实际是「国内经营环境更苛刻」。</p>
+<p><strong>但公司不是这个环境的被动受害者。</strong> 约束给定之后,怎么分配负担有选择空间。他们完全有能力按平价定国内、把差额当市场培育成本吃掉——豆包在大模型价格战里就是这么干的,而且干得很凶。他们在自己国内地位最强、竞争压力最小的那个产品上,选择了不这么干。</p>
+<p><strong>对创作者的实际结论:能防的是可迁移性,不是义愤。</strong> 14% 伤不到你,把生产管线绑死在一个已经证明了「既愿意分区、又有能力围墙」的供应商身上才会。工作流常驻 2–3 个模型、任一供应商都当可替换件——这同时是对「前沿溢价终将蒸发」的免费保险。</p>
+<hr>
+<h2 id="库外产物">库外产物</h2>
+<ul>
+<li>报告成品(PNG 2880×5592):<code>D:\AIGC工作站\52_AI平台定价与可及性观察\01_报告成品\即梦跨区定价实测报告_2026-07-31.png</code></li>
+<li>报告源码(入库):<code>assets/2026-07-31_即梦跨区定价实测报告.html</code></li>
+<li>重新渲染(Chrome 无头,样式取自 pb-arena 米白编辑体):</li>
+</ul>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">chrome</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --headless=new</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --hide-scrollbars</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --force-device-scale-factor=2</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --window-size=1440,2796</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --screenshot=out.png</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "file:///&#x3C;html绝对路径>"</span></span></code></pre>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/ai-v1-c522145/" class="wikilink">AI平台定价与可及性观察台账_v1</a> —— 本档所属的长期台账;本案是首案,那套测量口径由本案倒逼产生</li>
+<li>⭐ <a href="/above-the-web/v1-1b51e5d/" class="wikilink">积分制比价先校购买力律_v1</a> —— 本案 v1→v1.1 修正提炼出的原子律</li>
+<li><a href="/above-the-web/2026-07-16-librecanvas-v1-4-v1-c9488bc/" class="wikilink">2026-07-16_LibreCanvas开源画布_单日十版从立项到v1.4复盘_v1</a> —— 同类事件的另一种应对:平台涨价 → 自研 MIT 开源替代</li>
+<li>⚠️ <a href="/above-the-web/v1-9c3eb59/" class="wikilink">伪开源三查律_v1</a> —— 同为「厂商说法要自己验」;那条查许可证,本条查价目表</li>
+<li>⭐ <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— 本案三轮纠错的元教训:别信「应该是这样」,去测</li>
+<li><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 两轮错误都是判断跑在事实前面</li>
+<li><a href="/above-the-web/v1-dff6dd3/" class="wikilink">识别工具天花板的时机_v1</a> —— 换工具的另一轴:那条看能力,本条看商业可及性</li>
+<li><a href="/above-the-web/seedance2-0-v1-afe23d1/" class="wikilink">Seedance2.0_素材准备清单_v1</a> —— 同一工具的创作侧档案</li>
+<li><a href="/above-the-web/kling3-0-v1-8b6096c/" class="wikilink">可灵Kling3_0_行为规律_v1</a> —— 「常驻 2–3 个模型」的替代项之一</li>
+<li>索引入口:<a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">主题/平台观察</span><span class="tag">工具/即梦</span><span class="tag">工具/Seedance</span><span class="tag">状态/部分待验证</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E5%8D%B3%E6%A2%A6Dreamina%E8%B7%A8%E5%8C%BA%E5%AE%9A%E4%BB%B7%E5%AE%9E%E6%B5%8B_%E5%90%8C%E4%BA%A7%E5%93%81%E5%8F%8C%E8%B4%A6%E5%8F%B7%E5%AF%B9%E7%85%A7_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E5%8D%B3%E6%A2%A6Dreamina%E8%B7%A8%E5%8C%BA%E5%AE%9A%E4%BB%B7%E5%AE%9E%E6%B5%8B_%E5%90%8C%E4%BA%A7%E5%93%81%E5%8F%8C%E8%B4%A6%E5%8F%B7%E5%AF%B9%E7%85%A7_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-08-08-s43-v1-656a72b/">S43 长镜头分段归因 · 归因未遂与生死线次序（2026-08-08）</a></li><li><a href="/above-the-web/2026-08-26-v1-726c42b/">即梦片场活动细则审阅：四类坑点清单</a></li><li><a href="/above-the-web/ai-v1-c522145/">AI 平台定价与可及性观察台账</a></li><li><a href="/above-the-web/v1-1b51e5d/">积分制比价先校购买力律</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-07-16-librecanvas-v1-4-v1-c9488bc/"> <span class="card-cat">方法论与洞察</span> <h3>LibreCanvas 复盘：从一句涨价怒气，到单日十版上线的开源 BYOK 画布</h3> <p>- 项目名称：LibreCanvas 自由画布（E:\libre-canvas）</p> </a><a class="card" href="/above-the-web/v1-3fce0f1/"> <span class="card-cat">方法论与洞察</span> <h3>交付前实测证伪律</h3> <p>别交付未验证的&quot;应该能行&quot;。任何&quot;X 应该有效&quot;的假设，交付前先写最小探针去证伪它——尤其跨平台、跨环境、跨版本的行为假设，它们最爱静默失效…</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a><a class="card" href="/above-the-web/v1-9c3eb59/"> <span class="card-cat">方法论与洞察</span> <h3>伪开源三查律</h3> <p>GitHub 公开仓库 ≠ 开源。 想改造/依赖一个&quot;开源项目&quot;之前，花五分钟做三查——查不过就只能&quot;看功能找灵感&quot;，不能碰代码。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一结论摘要" data-toc-link="一结论摘要">一、结论摘要</a></li><li class="d2"><a href="#二积分标价三档独立验证" data-toc-link="二积分标价三档独立验证">二、积分标价(三档独立验证)</a></li><li class="d2"><a href="#三购买力校正-️-关键修正" data-toc-link="三购买力校正-️-关键修正">三、购买力校正 ⚠️ 关键修正</a></li><li class="d3"><a href="#逐条排除的辩护理由" data-toc-link="逐条排除的辩护理由">逐条排除的辩护理由</a></li><li class="d2"><a href="#四跨区套利被主动封锁" data-toc-link="四跨区套利被主动封锁">四、跨区套利被主动封锁</a></li><li class="d3"><a href="#为什么这条最关键" data-toc-link="为什么这条最关键">为什么这条最关键</a></li><li class="d3"><a href="#关于区域列表没有-china-只有-hk--tw" data-toc-link="关于区域列表没有-china-只有-hk--tw">关于「区域列表没有 China 只有 HK / TW」</a></li><li class="d2"><a href="#五三轮纠错过程方法论资产勿删" data-toc-link="五三轮纠错过程方法论资产勿删">五、三轮纠错过程(方法论资产,勿删)</a></li><li class="d2"><a href="#六结论分档" data-toc-link="六结论分档">六、结论分档</a></li><li class="d3"><a href="#-成立" data-toc-link="-成立">✅ 成立</a></li><li class="d3"><a href="#-已推翻" data-toc-link="-已推翻">❌ 已推翻</a></li><li class="d3"><a href="#-待验证" data-toc-link="-待验证">❓ 待验证</a></li><li class="d2"><a href="#七判断" data-toc-link="七判断">七、判断</a></li><li class="d2"><a href="#库外产物" data-toc-link="库外产物">库外产物</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

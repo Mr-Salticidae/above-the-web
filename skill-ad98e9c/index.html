@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Work Weekly Report · 公司工作周报工作流 · 蛛网之上</title><meta name="description" content="你帮跳蛛先生生成提交给公司的工作周报。这不是创作复盘，是一份对外汇报文档——读者是公司/上级，要看清「这周干了什么、下周干什么、卡在哪、想明白了什么」。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/skill-ad98e9c/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Work Weekly Report · 公司工作周报工作流"><meta property="og:description" content="你帮跳蛛先生生成提交给公司的工作周报。这不是创作复盘，是一份对外汇报文档——读者是公司/上级，要看清「这周干了什么、下周干什么、卡在哪、想明白了什么」。"><meta property="og:url" content="https://tiaozhuxiansheng.com/skill-ad98e9c/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Work Weekly Report · 公司工作周报工作流"><meta name="twitter:description" content="你帮跳蛛先生生成提交给公司的工作周报。这不是创作复盘，是一份对外汇报文档——读者是公司/上级，要看清「这周干了什么、下周干什么、卡在哪、想明白了什么」。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-29T11:51:53+08:00"><meta property="article:modified_time" content="2026-06-29T11:51:53+08:00"><meta property="article:section" content="skill存档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/skill-ad98e9c/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/skill-ad98e9c/","url":"https://tiaozhuxiansheng.com/skill-ad98e9c/","headline":"Work Weekly Report · 公司工作周报工作流","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"你帮跳蛛先生生成提交给公司的工作周报。这不是创作复盘，是一份对外汇报文档——读者是公司/上级，要看清「这周干了什么、下周干什么、卡在哪、想明白了什么」。","datePublished":"2026-06-29T11:51:53+08:00","dateModified":"2026-06-29T11:51:53+08:00","articleSection":"skill存档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"skill存档","item":"https://tiaozhuxiansheng.com/notes/?cat=skill%E5%AD%98%E6%A1%A3"},{"@type":"ListItem","position":3,"name":"Work Weekly Report · 公司工作周报工作流","item":"https://tiaozhuxiansheng.com/skill-ad98e9c/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=skill%E5%AD%98%E6%A1%A3" data-pagefind-meta="category" data-pagefind-filter="kind:note">skill存档</a> <span aria-hidden="true">/</span><span>work-weekly-report</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-29T11:51:53+08:00">2026-06-29</time></span>  <span>约 5 分钟读完 · 1,913 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>14 节</i></summary> <ol> <li class="d2"><a href="#角色定位">角色定位</a></li><li class="d2"><a href="#触发判断">触发判断</a></li><li class="d2"><a href="#关键路径与格式约定照抄别自创">关键路径与格式约定（照抄，别自创）</a></li><li class="d2"><a href="#四阶段流程">四阶段流程</a></li><li class="d3"><a href="#阶段-a--取数跨仓库扫描别靠回忆">阶段 A · 取数（跨仓库扫描，别靠回忆）</a></li><li class="d3"><a href="#阶段-b--归集到工作线">阶段 B · 归集到工作线</a></li><li class="d3"><a href="#阶段-c--写周报三段式照真实格式">阶段 C · 写周报（三段式，照真实格式）</a></li><li class="d3"><a href="#阶段-d--归档与提交写到-work-reports不进知识库">阶段 D · 归档与提交（写到 work-reports，不进知识库）</a></li><li class="d2"><a href="#跨周连续性每期必做">跨周连续性（每期必做）</a></li><li class="d2"><a href="#写作护栏">写作护栏</a></li><li class="d2"><a href="#与相邻-skill-的区别">与相邻 skill 的区别</a></li><li class="d2"><a href="#禁止行为">禁止行为</a></li><li class="d2"><a href="#周报模板可整段复制到-work-reports">周报模板（可整段复制到 work-reports）</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="work-weekly-report--公司工作周报工作流">Work Weekly Report · 公司工作周报工作流</h1>
+<h2 id="角色定位">角色定位</h2>
+<p>你帮跳蛛先生生成<strong>提交给公司的工作周报</strong>。这不是创作复盘，是一份<strong>对外汇报</strong>文档——读者是公司/上级，要看清「这周干了什么、下周干什么、卡在哪、想明白了什么」。</p>
+<p>两个本质特征，决定了它和库内其他 skill 不同：</p>
+<ol>
+<li><strong>跨仓库聚合</strong>：跳蛛先生的工作散在 E 盘十几个仓库里（公司平台 <code>taowhale-site</code>、AIGC 创作、知识库、游戏/桌面应用、主页站、工具…）。周报要把一周横跨所有仓库的活动收拢成 4–6 条工作线。</li>
+<li><strong>产物落在另一个仓库</strong>：本 skill 文件在知识库 <code>07_skill存档/</code>，但<strong>周报成品写到 work-reports 仓库</strong>（<code>E:\工作报告</code>），并推送到它自己的远程，<strong>不进知识库</strong>。</li>
+</ol>
+<hr>
+<h2 id="触发判断">触发判断</h2>
+<ul>
+<li>“写周报”、“本周工作周报”、“这周的周报”、“生成周报交公司”、“提交给公司的周报”；</li>
+<li>周五/周末/周一节点，要交上一周的工作汇报。</li>
+</ul>
+<p><strong>默认时间盒</strong>：上一个完整自然周（周一 00:00 → 周日 23:59）。作者另指定则按指定。先看 work-reports 已有最新一期覆盖到哪一周，<strong>接着往下排，别重复或跳周</strong>。</p>
+<hr>
+<h2 id="关键路径与格式约定照抄别自创">关键路径与格式约定（照抄，别自创）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>约定</th></tr></thead><tbody><tr><td>周报输出仓库</td><td><code>E:\工作报告</code>（= GitHub <code>Mr-Salticidae/work-reports</code>，SSH，分支 <code>main</code>）</td></tr><tr><td>周报落位</td><td><code>E:\工作报告\2026\周报\</code></td></tr><tr><td>文件命名</td><td><code>YYYY-MM-DD_MM-DD-周报.md</code>（如 <code>2026-06-22_06-28-周报.md</code>，下划线连起止日）</td></tr><tr><td>标题行</td><td><code># 周报 · YYYY.MM.DD–MM.DD</code>（点分日期，连接号是 <code>–</code>）</td></tr><tr><td>取数源·仓库清单</td><td><code>E:\GitHub仓库对应关系.md</code>（列了哪些是本人仓库、哪些是外部上游）</td></tr><tr><td>月报 / 项目材料</td><td>月报落 <code>2026\月报\</code>；项目过程材料落对应月份项目文件夹（见 work-reports README）</td></tr></tbody></table>
+<p>固定三段式（缺一不可）：<strong>一、本周工作总结</strong> ／ <strong>二、下周工作计划</strong> ／ <strong>三、协助 · 思考 · 总结 · 成长</strong>。</p>
+<hr>
+<h2 id="四阶段流程">四阶段流程</h2>
+<h3 id="阶段-a--取数跨仓库扫描别靠回忆">阶段 A · 取数（跨仓库扫描，别靠回忆）</h3>
+<p>一周横跨十几个仓库，记不全。客观账本是各仓库的 git log。</p>
+<ol>
+<li>
+<p><strong>发现仓库</strong>（不要只读映射文档——它会滞后，如 <code>fraud-desk</code>/<code>zombie-world</code> 一度未登记）。扫 E 盘工作区里所有 git 仓库：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">for</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> d </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">in</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "E:/"*/</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "E:/AIGC工作站/"*/</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "E:/工具/"*/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">; </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">do</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  [ </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-d</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$d</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">.git"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ] &#x26;&#x26; </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">echo</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "${</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">d</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">%/</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">}"</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">done</span></span></code></pre>
+<p>再对照 <code>E:\GitHub仓库对应关系.md</code> <strong>剔除外部上游</strong>（<code>remotion</code>、<code>video-use</code> 等只读跟踪的非本人仓库，不计入工作量）。</p>
+</li>
+<li>
+<p><strong>逐仓库抓本周提交</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">SINCE</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"YYYY-MM-DD 00:00"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">; UNTIL</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"YYYY-MM-DD 00:00"</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">   # UNTIL 取周日的次日 00:00</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -C</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$REPO</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> log</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --since=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$SINCE</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --until=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$UNTIL</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  --pretty=format:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"%ad | %s"</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --date=format:</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"%m-%d"</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -C</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$REPO</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> rev-list</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --count</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --since=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$SINCE</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --until=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$UNTIL</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> HEAD</span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">   # 该仓提交数</span></span></code></pre>
+<p>提交信息前缀即分类信号：<code>新档/沉淀/复盘/改版/新工具/新工程/精简/修复/发布</code>。</p>
+</li>
+<li>
+<p><strong>补 git 抓不到的</strong>：很多创作产出（AIGC 短片/图集立项与发布、平台分发与数据、线下沟通、服务器侧操作）不在 git 里。<strong>列待补清单问作者</strong>：本周发布了什么、平台数据（CTR / 点赞 / 播放 / 涨粉 / 投流）、有无新立项/交付、外部凭证阻塞是否解除。问不到的数据如实标，别编。</p>
+</li>
+</ol>
+<h3 id="阶段-b--归集到工作线">阶段 B · 归集到工作线</h3>
+<p>把所有仓库的提交，按<strong>稳定的工作线</strong>归类（顺序可调，但公司平台要可见）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>工作线</th><th>典型来源仓库</th></tr></thead><tbody><tr><td><strong>公司平台</strong></td><td><code>taowhale-site</code>（公司官网/知识库模块/安全加固）、<code>xiaoe-learning</code>（小鹅通数据采集）</td></tr><tr><td><strong>个人创作主业</strong>（AIGC 短片/图集/封面）</td><td><code>AIGC工作站</code>(aigc-creative-archive)、<code>bilibili-ctr-pipeline</code>、<code>fraud-desk</code>、<code>目标是成为 Prompt 大师</code></td></tr><tr><td><strong>知识库沉淀</strong>（含新 Skill / 首发方法论）</td><td><code>knowledge-base</code></td></tr><tr><td><strong>游戏与桌面应用</strong></td><td><code>zombie-world</code>、<code>last-stand</code>、<code>desk-pond</code>、<code>livelink</code></td></tr><tr><td><strong>工作区与维护</strong></td><td><code>above-the-web</code>(主页站)、<code>工作报告</code>、<code>工具/*</code>、仓库映射维护</td></tr></tbody></table>
+<blockquote>
+<p>工作线随业务演变，以<strong>当周实际有产出的</strong>为准，没动的线不硬凑。</p>
+</blockquote>
+<h3 id="阶段-c--写周报三段式照真实格式">阶段 C · 写周报（三段式，照真实格式）</h3>
+<h4 id="一本周工作总结">一、本周工作总结</h4>
+<ul>
+<li>按工作线分组，每组 <code>**N. 工作线名（括注：本周状态，如「承上周计划，本周收官交付」）**</code>，下面跟 <code>-</code> bullet 写具体动作与结果。</li>
+<li><strong>加粗关键术语 / 量级 / 里程碑</strong>（如 <strong>100 母版 ×（BASE+9 变体）</strong>、<strong>FTS5 trigram 检索</strong>、<strong>v1.0→v1.2</strong>）。</li>
+<li>写<strong>推进与结果</strong>，不是流水账（“完成最终交付：X” 优于 “做了 X”）。</li>
+<li>用项目代号（<code>47_众</code>、<code>46_含泪凝视</code>、<code>EP01 SCARLATTA</code>）保持与内部一致。</li>
+</ul>
+<h4 id="二下周工作计划">二、下周工作计划</h4>
+<ul>
+<li><code>-</code> bullet，每条 = <strong>项目名 + 具体可执行的下一步</strong>（“出六/五张首帧 → 静态占位粗剪卡节奏”，不是”继续推进”）。</li>
+<li>优先排：承本周未收口的、公司平台、有 deadline 的。</li>
+</ul>
+<h4 id="三协助--思考--总结--成长">三、协助 · 思考 · 总结 · 成长</h4>
+<p>四个子块，<strong>标题加粗</strong>：</p>
+<ul>
+<li><strong>需协助</strong>：阻塞项，尤其外部凭证/额度。<strong>复发的标「沿用上周/前两周阻塞，未解除」</strong>——让公司看到卡点是外部依赖、已持续多久。</li>
+<li><strong>思考</strong>：2–3 条原则级提炼，<code>**一句话原则**：展开</code>。诚实、有洞察（范例：「诚实是最便宜的护栏」「机制认知 > 参数调校」「经验要资产化、可交接」）。</li>
+<li><strong>总结</strong>：一段话，本周主线叙事——哪条线是重头、从什么切到什么、双线/三线如何并进、显性阻塞是什么。</li>
+<li><strong>学习成长</strong>：2–3 条本周新掌握的能力/认知（“掌握 OCR 驱动的量产质检闭环""打通 SQLite FTS5 中文全文检索”）。</li>
+</ul>
+<h3 id="阶段-d--归档与提交写到-work-reports不进知识库">阶段 D · 归档与提交（写到 work-reports，不进知识库）</h3>
+<ol>
+<li>写入 <code>E:\工作报告\2026\周报\YYYY-MM-DD_MM-DD-周报.md</code>。</li>
+<li><strong>在 work-reports 仓库</strong>提交并推送：
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -C</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "E:/工作报告"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> add</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "2026/周报/&#x3C;文件名>"</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -C</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "E:/工作报告"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> commit</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -m</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "周报:YYYY.MM.DD–MM.DD"</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -C</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "E:/工作报告"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> push</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> origin</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> main</span></span></code></pre>
+</li>
+<li><strong>不要</strong>把周报写进知识库、不要在知识库里 commit 它。两个仓库分开。</li>
+<li>若本周维护动作里包含「work-reports 纳入版本管理 / 归档上周周报」，可在本周总结的「维护」线提一句（真实周报就这么记的）。</li>
+</ol>
+<hr>
+<h2 id="跨周连续性每期必做">跨周连续性（每期必做）</h2>
+<ol>
+<li><strong>回填上周计划</strong>：打开 work-reports 上一期的「二、下周工作计划」，本周总结里体现哪些收口了（“承上周计划，本周收官交付”），下周计划里顺延哪些。</li>
+<li><strong>阻塞续期</strong>：外部凭证/额度类阻塞，在「需协助」标明已沿用几周——这是周报对公司最有用的信号之一（暴露外部依赖卡点）。</li>
+<li><strong>主线漂移</strong>：总结里点出本周主线落在哪（如「从短片创作切到产品化 + 内容站运营」）。</li>
+</ol>
+<hr>
+<h2 id="写作护栏">写作护栏</h2>
+<ul>
+<li>✅ <strong>诚实优先</strong>：夸大/误导要改回如实（真实案例：「自封神图」改回《空》、「扣1领源码」导流话术全系去除）。周报是长期信任资产。</li>
+<li>✅ <strong>加粗关键信息</strong>：术语、量级、里程碑、版本号加粗，方便快速扫读。</li>
+<li>✅ <strong>公司平台可见</strong>：个人创作占比再大，公司平台线（taowhale-site 等）要清晰呈现，别被淹没。</li>
+<li>✅ <strong>数据带来源</strong>：CTR/点赞/播放有就写、标来源；没有就标「数据待回收/待补」。</li>
+<li>❌ 不编数据、不写”大概/应该”凑客观数字。</li>
+<li>❌ 不用流水账（“改了几个文件”），写推进了什么。</li>
+</ul>
+<hr>
+<h2 id="与相邻-skill-的区别">与相邻 skill 的区别</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Skill</th><th>做什么</th><th>产物去哪</th></tr></thead><tbody><tr><td><code>aigc-postmortem</code></td><td>单个作品/比赛纵向复盘（事实先行）</td><td>知识库</td></tr><tr><td><code>knowledge-base-curator</code></td><td>一次答疑成果沉淀 + 对外学员版</td><td>知识库 / <code>08_对外分发</code></td></tr><tr><td><strong><code>work-weekly-report</code>（本）</strong></td><td><strong>跨工作区所有仓库</strong>的一周活动 → 公司三段式周报</td><td><strong>work-reports 仓库</strong></td></tr></tbody></table>
+<p>本 skill 的「知识库沉淀」工作线，可引用 <code>knowledge-base</code> 当周的复盘/新 Skill 作为素材；但它是<strong>对公司的汇报</strong>，不是知识库内部资产，归 work-reports。</p>
+<hr>
+<h2 id="禁止行为">禁止行为</h2>
+<ul>
+<li>❌ 把周报写进知识库 / 在知识库 commit（应落 <code>E:\工作报告</code> 并推 work-reports 远程）</li>
+<li>❌ 只读映射文档取数（会漏掉未登记的新仓库；必须扫盘发现 git 仓库）</li>
+<li>❌ 把外部上游仓库（remotion / video-use）的提交计入工作量</li>
+<li>❌ 跳周或与已有最新一期重叠（先看 work-reports 排到哪周）</li>
+<li>❌ 丢掉三段式任一段，或漏掉「需协助/思考/总结/学习成长」子块</li>
+<li>❌ 编平台数据 / 把流水账当工作总结</li>
+<li>❌ 复发阻塞不标「沿用上周」（公司看不到外部依赖卡了多久）</li>
+</ul>
+<hr>
+<h2 id="周报模板可整段复制到-work-reports">周报模板（可整段复制到 work-reports）</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="markdown"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold"># 周报 · YYYY.MM.DD–MM.DD</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 一、本周工作总结</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**1. 公司平台 ·（括注本周状态）**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> …</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**2. 个人创作主业 ·（…）**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> …</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**3. 知识库沉淀（含新 Skill / 首发方法论）**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> …</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**4. 游戏与桌面应用**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> …</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**5. 其他维护**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> …</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 二、下周工作计划</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **项目**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">：具体下一步</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> …</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-light-font-weight:bold;--shiki-dark:#79B8FF;--shiki-dark-font-weight:bold">## 三、协助 · 思考 · 总结 · 成长</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**需协助**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 阻塞项（复发标「沿用上周阻塞，未解除」）</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**思考**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold"> **一句话原则**</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">：展开</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**总结**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 一段话主线叙事 + 显性阻塞</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-light-font-weight:bold;--shiki-dark:#E1E4E8;--shiki-dark-font-weight:bold">**学习成长**</span></span>
+<span class="line"><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 本周新掌握的能力/认知</span></span></code></pre>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>周报输出仓库：<code>E:\工作报告</code>（GitHub <code>Mr-Salticidae/work-reports</code>），README 含目录约定</li>
+<li>取数源·仓库清单：<code>E:\GitHub仓库对应关系.md</code>（本人仓库 vs 外部上游）</li>
+<li>Skill 登记：<a href="/above-the-web/skill-index-b155e36/" class="wikilink">SKILL_INDEX</a> · <a href="/above-the-web/07-skill-8c697c0/" class="wikilink">07_skill存档索引</a></li>
+<li>同族 skill：<code>aigc-postmortem</code>（单作品复盘）· <code>knowledge-base-curator</code>（知识库策展）· <code>subtask-receipt-writer</code>（子任务回执）</li>
+</ul>  <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-06-29T11:51:53+08:00">2026-06-29</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/07_skill%E5%AD%98%E6%A1%A3/work-weekly-report/SKILL.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/07_skill%E5%AD%98%E6%A1%A3/work-weekly-report/SKILL.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article>  <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#角色定位" data-toc-link="角色定位">角色定位</a></li><li class="d2"><a href="#触发判断" data-toc-link="触发判断">触发判断</a></li><li class="d2"><a href="#关键路径与格式约定照抄别自创" data-toc-link="关键路径与格式约定照抄别自创">关键路径与格式约定（照抄，别自创）</a></li><li class="d2"><a href="#四阶段流程" data-toc-link="四阶段流程">四阶段流程</a></li><li class="d3"><a href="#阶段-a--取数跨仓库扫描别靠回忆" data-toc-link="阶段-a--取数跨仓库扫描别靠回忆">阶段 A · 取数（跨仓库扫描，别靠回忆）</a></li><li class="d3"><a href="#阶段-b--归集到工作线" data-toc-link="阶段-b--归集到工作线">阶段 B · 归集到工作线</a></li><li class="d3"><a href="#阶段-c--写周报三段式照真实格式" data-toc-link="阶段-c--写周报三段式照真实格式">阶段 C · 写周报（三段式，照真实格式）</a></li><li class="d3"><a href="#阶段-d--归档与提交写到-work-reports不进知识库" data-toc-link="阶段-d--归档与提交写到-work-reports不进知识库">阶段 D · 归档与提交（写到 work-reports，不进知识库）</a></li><li class="d2"><a href="#跨周连续性每期必做" data-toc-link="跨周连续性每期必做">跨周连续性（每期必做）</a></li><li class="d2"><a href="#写作护栏" data-toc-link="写作护栏">写作护栏</a></li><li class="d2"><a href="#与相邻-skill-的区别" data-toc-link="与相邻-skill-的区别">与相邻 skill 的区别</a></li><li class="d2"><a href="#禁止行为" data-toc-link="禁止行为">禁止行为</a></li><li class="d2"><a href="#周报模板可整段复制到-work-reports" data-toc-link="周报模板可整段复制到-work-reports">周报模板（可整段复制到 work-reports）</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

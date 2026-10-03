@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>《余温》动作修复：把“自然”写成具体的持物与走位 · 蛛网之上</title><meta name="description" content="- 项目：71余温哥特告别短片，群像预告片 v6；不是比赛。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-09-16-v1-11febd5/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="《余温》动作修复：把“自然”写成具体的持物与走位"><meta property="og:description" content="- 项目：71余温哥特告别短片，群像预告片 v6；不是比赛。"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-09-16-v1-11febd5/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="《余温》动作修复：把“自然”写成具体的持物与走位"><meta name="twitter:description" content="- 项目：71余温哥特告别短片，群像预告片 v6；不是比赛。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-16T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="主题/AI短片"><meta property="article:tag" content="主题/动作连续性"><meta property="article:tag" content="来源/创作实测"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-09-16-v1-11febd5/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-09-16-v1-11febd5/","url":"https://tiaozhuxiansheng.com/2026-09-16-v1-11febd5/","headline":"《余温》动作修复：把“自然”写成具体的持物与走位","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目：71余温哥特告别短片，群像预告片 v6；不是比赛。","datePublished":"2026-09-16T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 主题/AI短片, 主题/动作连续性, 来源/创作实测"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"《余温》动作修复：把“自然”写成具体的持物与走位","item":"https://tiaozhuxiansheng.com/2026-09-16-v1-11febd5/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-16T00:00:00+08:00">2026-09-16</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 6 分钟读完 · 2,161 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话记住">一句话记住</a></li><li class="d2"><a href="#发生了什么">发生了什么</a></li><li class="d2"><a href="#可直接复用的修订片段">可直接复用的修订片段</a></li><li class="d2"><a href="#本案支持的观察与仍待检验的部分">本案支持的观察与仍待检验的部分</a></li><li class="d3"><a href="#1-把形容词转成可见的动作关系">1. 把形容词转成可见的动作关系</a></li><li class="d3"><a href="#2-分镜预演与正式生产参考需要分别判断用途">2. 分镜预演与正式生产参考，需要分别判断用途</a></li><li class="d3"><a href="#3-短镜头的动作容量值得提前审核">3. 短镜头的动作容量值得提前审核</a></li><li class="d2"><a href="#下次如何检查">下次如何检查</a></li><li class="d2"><a href="#证据入口">证据入口</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="余温动作修复把自然写成具体的持物与走位">《余温》动作修复：把“自然”写成具体的持物与走位</h1>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>项目：71_余温_哥特告别短片，群像预告片 v6；不是比赛。</li>
+<li>目标：在第二幕完成舍冠与告别，让王保留旧空袖、继续越过第一道门。</li>
+<li>工具与提交：Dreamina CLI 调用 Seedance 2.5；M02 r3 于 2026-09-16 提交，25 秒、720p、16:9，8 张正式参考图加原速分段音频，没有上传动态分镜视频。</li>
+<li>失败来源：作者审看 M02 r2 后指出“袖子的位置很不自然”，右手摘冠时应让左手持袖；另指出被旧旗卫和舞伶拦下后“不应该转身回去”。</li>
+<li>修改来源：作者定位问题；助手据此修改持物分工、机位、人物站位及继续前行的动作，按此前要求使用 Prompt Master 1.8 优化表达。</li>
+<li>本次结果：作者在官网看过 M02 r3，2026-09-16 明确“审核通过”“修复成功”，并认为修复值得复盘入库。</li>
+<li>文件证据：原片 30,564,099 字节，容器时长 25.056009 秒；SHA-256 为 <code>2bf00fe62b344470a359b7fb27f0ac610879c542fe92f8ff698c554419127e2e</code>；助手完整解码通过。画面与叙事的验收来自作者，解码通过只证明文件可读取。</li>
+<li>边界：单项目一次修订后的认可，没有固定随机种子、逐项消融或观众测试。不能分离各项修改的贡献，不能断言模型必然服从这些约束。</li>
+</ul>
+<h2 id="一句话记住">一句话记住</h2>
+<p><strong>写“自然地告别”之前，先说清谁的哪只手拿什么、其他人站在哪、下一步往哪里走。</strong> 这是本案得到作者认可的修订方式，尚未成为跨项目验证的规律。</p>
+<h2 id="发生了什么">发生了什么</h2>
+<p>第二幕的故事任务并不复杂：王摘冠，塞芙琳接续保管王冠；旧旗卫与舞者挽留后让路；王带着空袖继续前行。但人物同时处理多个物件、接触和视线，含糊的一句话给模型留下了太多空间。</p>
+<p>两处错误还会改变观众的理解。空袖挂在正在摘冠的右腕，让动作不顺；王转身返回，让“决意继续舍弃”的人物变成了“改变主意”。这些问题属于画面里的动作和叙事关系，增加“电影感、真实、细腻”等词并没有说明该怎么改。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>需要解决的关系</th><th>r3 的具体表达</th><th>便于审看的现象</th></tr></thead><tbody><tr><td>持物与执行动作</td><td>左手手指抓空袖一角，布料垂在左腿旁；右手摘冠</td><td>袖子不占用右手，也不套在任一手腕</td></tr><tr><td>挽留者的位置</td><td>门在右前方，同伴在王的侧前方、通道旁</td><td>王不用转身面对身后的人</td></tr><tr><td>停留与离开的区别</td><td>停步侧目，肩胯和脚尖仍朝门；对方撤手、撤臂并向侧方让路</td><td>告别结束后仍沿原方向跨门</td></tr><tr><td>甲与手的接触</td><td>舞者轻扶右前臂甲面，手指顺着硬甲曲面落下</td><td>不把硬甲写成可按陷的软衣料</td></tr><tr><td>同一次动作的切镜</td><td>切近景延续既有接触与下落</td><td>下一镜不重新抬手、重新推一次或重演整套动作</td></tr></tbody></table>
+<p>这张表是提示词设计与验收目标，不冒充逐帧视觉评分。作者认可的是修订版整体结果。</p>
+<h2 id="可直接复用的修订片段">可直接复用的修订片段</h2>
+<p>下面是本案方向明确后的写法，使用时应替换角色、道具和空间，不能无条件固定“左手”或“向右”。</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>门在画面右侧前方，王由左向右接近。</span></span>
+<span class="line"><span>王的解剖学左手手指抓住旧空袖一角，布料垂在左腿旁；</span></span>
+<span class="line"><span>双腕空着，右手用来摘冠。</span></span>
+<span class="line"><span>同伴站在他的侧前方。王停步、仅侧目回应，肩胯与双脚仍朝门。</span></span>
+<span class="line"><span>同伴撤回拦路的前臂并向侧面让开，王沿原方向继续向前跨门。</span></span>
+<span class="line"><span>切近景延续同一次接触，不重新起手。</span></span></code></pre>
+<p>“解剖学左手”指角色自己的左手，不是观众看到的画面左边。跨机位写动作时，二者容易混淆。</p>
+<h2 id="本案支持的观察与仍待检验的部分">本案支持的观察与仍待检验的部分</h2>
+<h3 id="1-把形容词转成可见的动作关系">1. 把形容词转成可见的动作关系</h3>
+<p><strong>来源</strong>：袖位与返回路线的两条具体反馈，触发了上述修订。</p>
+<p><strong>验证状态</strong>：首次项目内观察；作者认可修订版，未单独验证每一句约束。</p>
+<p><strong>可检验做法</strong>：为持物镜头写一行“左手／右手／物件／接触目标”，为移动镜头画清起点、目的地与阻挡者站位。再审看是否发生手的互换、道具跳位或意外返回。</p>
+<p><strong>边界</strong>：角色有意犹豫、折返、换手时，应明确写出变化的原因与交接动作。固定向前不是所有故事的正确答案；画面方向也不能替代完整的场景空间。</p>
+<h3 id="2-分镜预演与正式生产参考需要分别判断用途">2. 分镜预演与正式生产参考，需要分别判断用途</h3>
+<p><strong>来源</strong>：此前作者认为动态分镜视频影响效果与人物一致性，要求移除；去掉该视频参考后的第一幕获作者评价“虽然没有音乐，但是整体质感非常好”。M02 r3 也继续采用正式图片与原速音频。</p>
+<p><strong>验证状态</strong>：同项目的前后反馈，非受控对照。此次 M02 r2 与 r3 都没有上传动态分镜视频，因此不能把 r3 的改善归因为“这一次才去掉视频”。</p>
+<p><strong>可检验做法</strong>：保留动态分镜作为本地节奏、构图和剪辑沟通稿；正式生成时逐项决定哪些参考上传。粗分镜的脸和动作未获生产级认可时，可先做不带它的小样。</p>
+<p><strong>边界</strong>：本案不能证明视频参考普遍有害，更不能证明所有视频模型都会优先模仿视频中的人物。这次只是确立了本片当前采用的输入组合。</p>
+<h3 id="3-短镜头的动作容量值得提前审核">3. 短镜头的动作容量值得提前审核</h3>
+<p><strong>来源</strong>：本轮续审发现 M03 把解扣压到约半秒、卸甲压到不足三秒；M05 的约 1.7 秒还安排了撑膝、站稳、看脸、看手、后退。</p>
+<p><strong>验证状态</strong>：这是审核提示词提出的待验证调整，不是已证明成功的成片经验。</p>
+<p><strong>本轮试验</strong>：M03 解扣只拍动作末端，利用局部镜头与切镜省略完整拆甲；M05 从已经站稳的状态进入，只保留接近引发戒备的反应。M04 将“回头叫人”改为身体朝出口、侧目看侧前方的人。</p>
+<p><strong>边界</strong>：切镜省略步骤仍需前后状态可读，不能让铠甲在连续镜头里穿过身体或消失。M03 已提交待审；M04–M06 未生产，本次入库不提前认定成功。</p>
+<h2 id="下次如何检查">下次如何检查</h2>
+<ol>
+<li><strong>先记反馈原话</strong>：哪一处、哪个动作、为什么改变了故事理解。</li>
+<li><strong>查实际输入</strong>：图片、音频、视频分别上传了什么，人物外观由谁约束。</li>
+<li><strong>查动作分工</strong>：每只手拿什么；同时执行的动作是否互相占用。</li>
+<li><strong>查空间关系</strong>：谁在前面、谁在后面，回应对方是否迫使角色掉头。</li>
+<li><strong>查镜头时长</strong>：该时长能否看清一件事；需要时从动作中间切入、以切镜省略过程。</li>
+<li><strong>单段再试、作者验收</strong>：保存失败版、修订版、实际提交提示词和任务回执。文件可解码、作者看过、作者通过分别登记。</li>
+</ol>
+<p>本轮采用这组检查项推进下一幕，是作者授权的项目试验。今后跨场景再次成立，才增加证据等级；不把“Prompt Master 优化过”本身当成成功原因。</p>
+<h2 id="证据入口">证据入口</h2>
+<p>媒体与原始回执保留在创作档案，知识库只收方法和证据索引：</p>
+<ul>
+<li>项目相对目录：<code>71_余温_哥特告别短片/08_群像预告片/13_视频生产_20260915_v6无对白/</code>。</li>
+<li><code>提交记录/M02_r3_20260916/M02_r3_实际提示词.txt</code> 与 <code>平台回执.json</code>：实际发送的文字、任务标识与配置。</li>
+<li><code>产出/M02_r3/下载校验.json</code>：原片哈希、媒体参数、作者通过原话。</li>
+<li><code>20260916_M02修复验收与后续审核.md</code>：后续动作风险、改法与待验证状态。</li>
+<li>原片和媒体不用知识库双链，不在本库重复上传；以 SHA-256 对照创作档案副本。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-09-06-v1-47fea6b/" class="wikilink">2026-09-06_余温_分段蒙太奇与原片重配声音_阶段复盘_v1</a>：同片早期声音制作阶段；日期与版本独立，本案不改写旧阶段结论。</li>
+<li><a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a>：有关起始状态与动作延续的关联阅读。该文讨论指定首帧，本案是多模态参考与人物走位，不把两者混为同一个机制或跨模型验证。</li>
+<li><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a>。</li>
+<li><a href="/above-the-web/v1-ad701a9/" class="wikilink">跨镜道具锁定律_资产图优于形容词_v1</a> —— 同项目 2026-09-18 的第二次：邀请函的蜡封跨四镜出现三种状态，补独立道具资产图后治住；本复盘的银枝额冠是第一次</li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">主题/AI短片</span><span class="tag">主题/动作连续性</span><span class="tag">来源/创作实测</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-09-16_%E4%BD%99%E6%B8%A9_%E6%8C%81%E7%89%A9%E4%B8%8E%E8%A1%8C%E8%BF%9B%E6%96%B9%E5%90%91%E4%BF%AE%E5%A4%8D%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-09-16_%E4%BD%99%E6%B8%A9_%E6%8C%81%E7%89%A9%E4%B8%8E%E8%A1%8C%E8%BF%9B%E6%96%B9%E5%90%91%E4%BF%AE%E5%A4%8D%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-09-06-v1-47fea6b/">《余温》阶段复盘：分段蒙太奇与原片重配声音</a></li><li><a href="/above-the-web/2026-09-20-m02-v1-8100c2c/">《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它</a></li><li><a href="/above-the-web/forwardonly-v1-7c8a4d7/">图生视频 · Forward-Only 原则</a></li><li><a href="/above-the-web/v1-5ee9070/">按切点重拍：省的是生成时长，不是&quot;局部编辑功能&quot;</a></li><li><a href="/above-the-web/v1-ad701a9/">跨镜道具锁定律：资产图优于形容词</a></li><li><a href="/above-the-web/v1-dd98c63/">锚点只给站位律：动作交给视频模型</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/ai-icemerchants-v1-4c02144/"> <span class="card-cat">方法论与洞察</span> <h3>强对比型 AI 短片：Ice Merchants 案例</h3> <p>短片不一定要靠复杂剧情打动观众。 当视觉设定、人物关系、重复动作和情感缺口形成强对比系统时，一个极简故事也能完成清楚、克制、有效的情绪闭环。</p> </a><a class="card" href="/above-the-web/ai-jailbird-v1-20e6676/"> <span class="card-cat">方法论与洞察</span> <h3>现实悖论型 AI 短片：Jailbird 案例</h3> <p>AI 短片的一致性不只有角色一致性。 当命题、视角和情绪足够稳定时，角色外观的不稳定可以被转化为风格；《Jailbird》的核心不是“同一只…</p> </a><a class="card" href="/above-the-web/ai-thewindshieldwiper-v1-01329e3/"> <span class="card-cat">方法论与洞察</span> <h3>多线交叉型 AI 短片：The Windshield Wiper 案例</h3> <p>AI 短片不一定要靠一个主角、一条连续剧情或大量对白来完成叙事。 当角色识别、情绪递进、声音信息和统一主题足够清楚时，多条人物线可以轮流推进…</p> </a><a class="card" href="/above-the-web/ai-totalpixelspace-v1-07886c3/"> <span class="card-cat">方法论与洞察</span> <h3>概念推演型 AI 短片：Total Pixel Space 案例</h3> <p>AI 短片不一定要先讲传统故事，也可以先提出一个足够锋利的思想问题，再用概念递进、视觉统一和声音节奏，把观众推向这个问题背后的不安。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话记住" data-toc-link="一句话记住">一句话记住</a></li><li class="d2"><a href="#发生了什么" data-toc-link="发生了什么">发生了什么</a></li><li class="d2"><a href="#可直接复用的修订片段" data-toc-link="可直接复用的修订片段">可直接复用的修订片段</a></li><li class="d2"><a href="#本案支持的观察与仍待检验的部分" data-toc-link="本案支持的观察与仍待检验的部分">本案支持的观察与仍待检验的部分</a></li><li class="d3"><a href="#1-把形容词转成可见的动作关系" data-toc-link="1-把形容词转成可见的动作关系">1. 把形容词转成可见的动作关系</a></li><li class="d3"><a href="#2-分镜预演与正式生产参考需要分别判断用途" data-toc-link="2-分镜预演与正式生产参考需要分别判断用途">2. 分镜预演与正式生产参考，需要分别判断用途</a></li><li class="d3"><a href="#3-短镜头的动作容量值得提前审核" data-toc-link="3-短镜头的动作容量值得提前审核">3. 短镜头的动作容量值得提前审核</a></li><li class="d2"><a href="#下次如何检查" data-toc-link="下次如何检查">下次如何检查</a></li><li class="d2"><a href="#证据入口" data-toc-link="证据入口">证据入口</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

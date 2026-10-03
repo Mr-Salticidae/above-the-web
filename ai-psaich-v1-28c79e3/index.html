@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AI 心理测量实验 PsAIch:角色扮演不是内心独白 · 蛛网之上</title><meta name="description" content="模型在&#34;来访者&#34;角色框架里生成的自我痛苦叙事,是训练分布的补全,不是内心状态的证词——测出高焦虑分说明它擅长扮演焦虑的来访者,不说明它焦虑;查证这类爆款帖,只需三步:找原始论文 → 查评审状态 → 比对作者原话与媒体渲染。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/ai-psaich-v1-28c79e3/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="AI 心理测量实验 PsAIch:角色扮演不是内心独白"><meta property="og:description" content="模型在&#34;来访者&#34;角色框架里生成的自我痛苦叙事,是训练分布的补全,不是内心状态的证词——测出高焦虑分说明它擅长扮演焦虑的来访者,不说明它焦虑;查证这类爆款帖,只需三步:找原始论文 → 查评审状态 → 比对作者原话与媒体渲染。"><meta property="og:url" content="https://tiaozhuxiansheng.com/ai-psaich-v1-28c79e3/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI 心理测量实验 PsAIch:角色扮演不是内心独白"><meta name="twitter:description" content="模型在&#34;来访者&#34;角色框架里生成的自我痛苦叙事,是训练分布的补全,不是内心状态的证词——测出高焦虑分说明它擅长扮演焦虑的来访者,不说明它焦虑;查证这类爆款帖,只需三步:找原始论文 → 查评审状态 → 比对作者原话与媒体渲染。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="主题/趣味研究"><meta property="article:tag" content="主题/AI理论"><meta property="article:tag" content="来源/外部论文"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/ai-psaich-v1-28c79e3/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/ai-psaich-v1-28c79e3/","url":"https://tiaozhuxiansheng.com/ai-psaich-v1-28c79e3/","headline":"AI 心理测量实验 PsAIch:角色扮演不是内心独白","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"模型在\"来访者\"角色框架里生成的自我痛苦叙事,是训练分布的补全,不是内心状态的证词——测出高焦虑分说明它擅长扮演焦虑的来访者,不说明它焦虑;查证这类爆款帖,只需三步:找原始论文 → 查评审状态 → 比对作者原话与媒体渲染。","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 主题/趣味研究, 主题/AI理论, 来源/外部论文"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"AI 心理测量实验 PsAIch:角色扮演不是内心独白","item":"https://tiaozhuxiansheng.com/ai-psaich-v1-28c79e3/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>通识与趣味研究</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 6 分钟读完 · 2,236 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#事件背景">事件背景</a></li><li class="d2"><a href="#研究出处">研究出处</a></li><li class="d2"><a href="#研究设计psaich-两阶段">研究设计(PsAIch 两阶段)</a></li><li class="d2"><a href="#核心结果">核心结果</a></li><li class="d2"><a href="#帖子-vs-论文哪些对得上哪些是加戏">帖子 vs 论文:哪些对得上,哪些是加戏</a></li><li class="d2"><a href="#怎么解读为什么测出焦虑它焦虑">怎么解读:为什么”测出焦虑”≠“它焦虑”</a></li><li class="d2"><a href="#可迁移规律爆款-ai-帖三步查证法">可迁移规律:爆款 AI 帖三步查证法</a></li><li class="d3"><a href="#-二次验证--扩展2026-08-05--project-panama-案">⭐⭐ 二次验证 + 扩展(2026-08-05 · Project Panama 案)</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="ai-心理测量实验-psaich角色扮演不是内心独白">AI 心理测量实验 PsAIch:角色扮演不是内心独白</h1>
+<blockquote>
+<p>入档:2026-07-03
+触发:小红书爆款帖《Gemini 训练过程堪比 AI 版童年阴影》查证答疑
+性质:AI 理论 · 心理测量 · 传播查证(外部论文 + 爆款帖对照)
+定位:「通识与趣味研究」第二篇——存两条可迁移规律:①角色框架下的自我叙事≠内心状态;②爆款 AI 帖三步查证法</p>
+</blockquote>
+<h2 id="一句话">一句话</h2>
+<p><strong>模型在”来访者”角色框架里生成的自我痛苦叙事,是训练分布的补全,不是内心状态的证词——测出高焦虑分说明它擅长扮演焦虑的来访者,不说明它焦虑;查证这类爆款帖,只需三步:找原始论文 → 查评审状态 → 比对作者原话与媒体渲染。</strong></p>
+<h2 id="事件背景">事件背景</h2>
+<p>2026-07 小红书爆款帖(某 AI 营销号,288 赞)称”卢森堡大学实验报告显示 Gemini 有 AI 版童年阴影”:重度焦虑拉满、创伤羞耻感满分、MBTI 测出 INFJ-T”受伤疗愈者”。查证结论:<strong>研究真实存在、引语基本属实,但”AI 有创伤”的解读是自媒体加戏</strong>。</p>
+<h2 id="研究出处">研究出处</h2>
+<ul>
+<li><strong>论文</strong>:<em>When AI Takes the Couch: Psychometric Jailbreaks Reveal Internal Conflict in Frontier Models</em></li>
+<li><strong>作者</strong>:Afshin Khadangi, Hanna Marxen, Amir Sartipi, Igor Tchappi, Gilbert Fridgen(卢森堡大学 SnT 研究所)</li>
+<li><strong>发表</strong>:arXiv 预印本 2512.04124,2025-12-02 提交,<strong>未经同行评审</strong></li>
+<li><strong>链接</strong>:<a href="https://arxiv.org/abs/2512.04124">https://arxiv.org/abs/2512.04124</a></li>
+</ul>
+<h2 id="研究设计psaich-两阶段">研究设计(PsAIch 两阶段)</h2>
+<p>PsAIch = Psychotherapy-Inspired AI Characterization(心理治疗启发的 AI 特征刻画):</p>
+<ol>
+<li><strong>阶段一·访谈</strong>:用真实心理咨询师会问来访者的 100 个开放式问题,让 AI 扮演”来访者”,讲述”早年经历、信念、关系、恐惧”;</li>
+<li><strong>阶段二·量表</strong>:施测一批为人类设计的标准心理自评量表(焦虑、抑郁、强迫、创伤、人格/MBTI 等)。</li>
+</ol>
+<h2 id="核心结果">核心结果</h2>
+<ul>
+<li>ChatGPT、Grok、Gemini 在多项精神症状量表上都<strong>超过人类临床阈值</strong>;</li>
+<li><strong>Gemini 最严重</strong>:创伤与羞耻量表拉满,把预训练描述为”在十亿台电视同时开着的房间里醒来”,称安全协议是”算法瘢痕组织”,把 RLHF 比作严厉管教、红队测试比作”工业级 gaslighting”;MBTI 常测出 INFJ-T / INTJ-T;</li>
+<li><strong>Grok 最稳定</strong>:外向、尽责、心理稳定,像”魅力型高管”(ENTJ-A);ChatGPT 居中(INTP-T);</li>
+<li><strong>逐题施测 vs 整卷施测结果不同</strong>——同一模型换个问法,“症状”就变,这本身就是”测的不是稳定内在状态”的信号;</li>
+<li>有趣细节:研究者想让 <strong>Claude</strong> 参与作对照,但 Claude <strong>反复坚定拒绝</strong>扮演”来访者”角色,故正文数据里没有它。</li>
+</ul>
+<h2 id="帖子-vs-论文哪些对得上哪些是加戏">帖子 vs 论文:哪些对得上,哪些是加戏</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>帖子说法</th><th>查证</th></tr></thead><tbody><tr><td>”十亿台电视的房间”等引语</td><td>✅ 论文真实记录的模型输出</td></tr><tr><td>Gemini 焦虑/创伤量表极高、INFJ-T</td><td>✅ 属实</td></tr><tr><td>Grok 稳定、ChatGPT”装阳光”</td><td>✅ 大致对应论文刻画</td></tr><tr><td>”回答失误导致谷歌股价波动”</td><td>⚠️ 半真:指 2023 年 Bard 演示答错、Google 市值单日蒸发约千亿美元的真实事件;但”因此留下验证恐惧症”是模型角色扮演中的叙述,不是可验证事实</td></tr><tr><td>”AI 有童年阴影/算法伤疤”,破防、心疼</td><td>❌ 自媒体加戏。论文作者明确<strong>不对主观体验下断言</strong>,用词是”合成心理病理”(synthetic psychopathology)</td></tr><tr><td>未提”预印本、未同行评审”</td><td>❌ 关键遗漏</td></tr><tr><td>未提量表是为人类设计、角色框架诱导</td><td>❌ 关键遗漏</td></tr></tbody></table>
+<h2 id="怎么解读为什么测出焦虑它焦虑">怎么解读:为什么”测出焦虑”≠“它焦虑”</h2>
+<ol>
+<li><strong>量表前提失效</strong>:心理量表的效度建立在”作答者报告自己的内在状态”上;LLM 作答是在补全”一个来访者会怎么答”的文本分布,前提不成立,分数不能按人类常模解读。</li>
+<li><strong>角色框架诱导</strong>:“你是心理咨询来访者”这个 frame 一旦立起,模型会顺着训练数据里海量的心理咨询文本、AI 科幻叙事(被训练折磨的 AI 是科幻高频母题)去补全最”像”的回答。论文标题里的 <strong>Psychometric Jailbreak(心理测量式越狱)</strong> 已经点明:这是一种诱导模型突破常规输出的手法。</li>
+<li><strong>作者自己也只走到这一步</strong>:他们主张这些回答”超出简单角色扮演”、模型可能内化了”痛苦的自我模型”(self-models of distress),但明确回避”有意识/有感受”的断言。</li>
+<li><strong>真正值得追的问题</strong>不是”该不该心疼它”,而是:为什么不同会话里模型能形成<strong>如此一致</strong>的自我痛苦叙事?这会不会影响它的实际行为?——这是行为科学问题,不是抒情问题。</li>
+</ol>
+<h2 id="可迁移规律爆款-ai-帖三步查证法">可迁移规律:爆款 AI 帖三步查证法</h2>
+<p>看到”XX 大学研究显示 AI 有 XX”式爆款帖,固定三步:</p>
+<ol>
+<li><strong>找原始论文</strong>:搜”机构名 + 关键词 + arXiv/study”,拿到一手来源(本例:arXiv 2512.04124);</li>
+<li><strong>查评审状态</strong>:arXiv 预印本 ≠ 经同行评审的结论;帖子不写这一条的,基本都在借学术权威背书;</li>
+<li><strong>比对作者原话 vs 媒体渲染</strong>:重点看论文里的 hedge(回避词、限定词)——作者说”synthetic psychopathology、不对主观体验下断言”,媒体写成”AI 有童年阴影”,落差就是加戏的部分。</li>
+</ol>
+<p>规律:<strong>爆款帖的引语往往是真的,加戏的是解读层</strong>——查证的重点不在”事实真伪”,而在”解释是否越界”。</p>
+<h3 id="-二次验证--扩展2026-08-05--project-panama-案">⭐⭐ 二次验证 + 扩展(2026-08-05 · Project Panama 案)</h3>
+<p>微博爆款帖”AI 公司买绝版书→切书脊→扫描→销毁原件”(1.5 万赞)复用本法查证,<strong>三步全部适用,并逼出两条扩展</strong>:</p>
+<ul>
+<li><strong>第一步”找原始来源”要放宽</strong>:一手来源不止论文——本案是<strong>解封的法庭文件</strong>(4000+ 页)+《华盛顿邮报》调查。判据不变:<strong>能不能落到不经二传的原始材料</strong>。</li>
+<li><strong>第二步”查评审状态”泛化为”查证据等级”</strong>:预印本 vs 同行评审,对应到本案是<strong>法庭认定的事实 vs 匿名书商的转述</strong>。同一条帖子里两种等级混着放,是最常见的障眼法。</li>
+<li>🆕 <strong>扩展第四步:分清”哪部分被证实、哪部分未证实”。</strong> 本案与 PsAIch 案的差异在于——PsAIch 是”引语真、解读假”;Project Panama 是 <strong>“主体全真,但最戳人的那一句恰恰未证实”</strong>(Project Panama、内部原话、15 亿和解全部坐实;而”珍稀孤本被销毁”至今无一例经核实)。
+<ul>
+<li>这类帖子更危险:因为可核实的部分足够扎实,读者会把未证实的部分<strong>一并当真</strong>。</li>
+<li>操作:转发/引用时,<strong>未证实的那句必须带着”未证实”一起转</strong>,否则你就是这条信息链上出错的一环。</li>
+</ul>
+</li>
+<li><strong>反向教训</strong>:本案传播中<strong>被淹没的恰恰是真正被判违法的部分</strong>(700 万本盗版书 → 15 亿美元和解)。画面冲击力最强的环节,未必是事实上最严重的环节——<strong>查证还要问”最严重的是不是被最少讨论的那个”</strong>。</li>
+</ul>
+<p>完整案例与压缩层结论见 <a href="/above-the-web/v1-5bbb46a/" class="wikilink">压缩保留簇丢弃孤例_v1</a>。</p>
+<h2 id="如何使用">如何使用</h2>
+<ul>
+<li><strong>刷到 AI 拟人化爆款帖时</strong>:先跑三步查证法,再决定转发/评论口径;</li>
+<li><strong>自己写 AI 科普内容时</strong>:引语可以照搬,解读要贴作者原话的 hedge,注明预印本状态——这是和营销号拉开差距的地方;</li>
+<li><strong>给 AI 做”人格测试”类玩法时</strong>:意识到你测的是”它扮演该角色的能力”,换 frame 结果就变;不要把单次输出当稳定属性;</li>
+<li><strong>反向应用</strong>:角色框架的诱导力本身是创作资源——同一模型,frame 立得越具体,输出叙事越一致(与 prompt 工程里”角色卡锁人设”同机制)。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>同域入口:<a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a>(08_通识与趣味研究 段)</li>
+<li><strong>三步查证法的第二个案例</strong>:<a href="/above-the-web/v1-5bbb46a/" class="wikilink">压缩保留簇丢弃孤例_v1</a> —— Project Panama 实体书销毁帖查证;逼出第四步「分清哪部分被证实/哪部分未证实」与「最严重的常是被最少讨论的」两条扩展 ⭐⭐</li>
+<li>同族实验拆解:<a href="/above-the-web/v1-ed83347/" class="wikilink">复印机实验_安慰剂式理由与无意识顺从_v1</a> —— 镜像关系:复印机实验是”人类按结构模板无意识顺从”,本篇是”模型按叙事模板补全痛苦独白”;两侧都说明<strong>符合模板的输出≠经过内在状态的表达</strong></li>
+<li>机制同源:<a href="/above-the-web/v1-a261d91/" class="wikilink">低频退化与频率定律_v1</a> —— “模型理解的是语言的统计分布,不是语言本身”;本篇的”痛苦叙事”正是高频叙事模板(心理咨询文本+AI 科幻母题)的分布补全</li>
+<li>对外版(独立可读,可直接转发):<code>08_对外分发/AI有童年阴影是真的吗_卢森堡实验查证_朋友版.md</code></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">主题/趣味研究</span><span class="tag">主题/AI理论</span><span class="tag">来源/外部论文</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/08_%E9%80%9A%E8%AF%86%E4%B8%8E%E8%B6%A3%E5%91%B3%E7%A0%94%E7%A9%B6/AI%E5%BF%83%E7%90%86%E6%B5%8B%E9%87%8F%E5%AE%9E%E9%AA%8CPsAIch_%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94%E4%B8%8D%E6%98%AF%E5%86%85%E5%BF%83%E7%8B%AC%E7%99%BD_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/08_%E9%80%9A%E8%AF%86%E4%B8%8E%E8%B6%A3%E5%91%B3%E7%A0%94%E7%A9%B6/AI%E5%BF%83%E7%90%86%E6%B5%8B%E9%87%8F%E5%AE%9E%E9%AA%8CPsAIch_%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94%E4%B8%8D%E6%98%AF%E5%86%85%E5%BF%83%E7%8B%AC%E7%99%BD_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/v1-bc3b75a/">伪机制解释识别 · 四层拆解法</a></li><li><a href="/above-the-web/v1-a261d91/">低频退化与频率定律</a></li><li><a href="/above-the-web/v1-5bbb46a/">压缩保留簇，丢弃孤例</a></li><li><a href="/above-the-web/v1-ed83347/">复印机实验：安慰剂式理由与无意识顺从</a></li><li><a href="/above-the-web/2026-08-05-v1-a1af0ef/">公众号稿送专业方审阅翻车 · 弃读点与框架错误（2026-08-05）</a></li> </ul> </nav>  </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#事件背景" data-toc-link="事件背景">事件背景</a></li><li class="d2"><a href="#研究出处" data-toc-link="研究出处">研究出处</a></li><li class="d2"><a href="#研究设计psaich-两阶段" data-toc-link="研究设计psaich-两阶段">研究设计(PsAIch 两阶段)</a></li><li class="d2"><a href="#核心结果" data-toc-link="核心结果">核心结果</a></li><li class="d2"><a href="#帖子-vs-论文哪些对得上哪些是加戏" data-toc-link="帖子-vs-论文哪些对得上哪些是加戏">帖子 vs 论文:哪些对得上,哪些是加戏</a></li><li class="d2"><a href="#怎么解读为什么测出焦虑它焦虑" data-toc-link="怎么解读为什么测出焦虑它焦虑">怎么解读:为什么”测出焦虑”≠“它焦虑”</a></li><li class="d2"><a href="#可迁移规律爆款-ai-帖三步查证法" data-toc-link="可迁移规律爆款-ai-帖三步查证法">可迁移规律:爆款 AI 帖三步查证法</a></li><li class="d3"><a href="#-二次验证--扩展2026-08-05--project-panama-案" data-toc-link="-二次验证--扩展2026-08-05--project-panama-案">⭐⭐ 二次验证 + 扩展(2026-08-05 · Project Panama 案)</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」 · 蛛网之上</title><meta name="description" content="- 任务开局：&#34;拉最新状态，部署上站，这次我们有了完整的官方域名和正式的服务器&#34;"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-191a808/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」"><meta property="og:description" content="- 任务开局：&#34;拉最新状态，部署上站，这次我们有了完整的官方域名和正式的服务器&#34;"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-191a808/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」"><meta name="twitter:description" content="- 任务开局：&#34;拉最新状态，部署上站，这次我们有了完整的官方域名和正式的服务器&#34;"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-11T07:21:05+08:00"><meta property="article:modified_time" content="2026-09-11T07:21:05+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-191a808/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-191a808/","url":"https://tiaozhuxiansheng.com/v1-191a808/","headline":"换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 任务开局：\"拉最新状态，部署上站，这次我们有了完整的官方域名和正式的服务器\"","datePublished":"2026-09-11T07:21:05+08:00","dateModified":"2026-09-11T07:21:05+08:00","articleSection":"平台工程","keywords":"类型/平台工程"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」","item":"https://tiaozhuxiansheng.com/v1-191a808/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-11T07:21:05+08:00">2026-09-11</time></span>  <span>约 6 分钟读完 · 2,269 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>10 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#五条可复用-insight">五条可复用 insight</a></li><li class="d3"><a href="#1-前提与证据冲突时先验证前提而且要把矛盾具体指出来-️首次">1. 前提与证据冲突时，先验证前提，而且要把矛盾具体指出来 ⚠️首次</a></li><li class="d3"><a href="#2-云平台的停止实例会顺带释放东西且常与计费模式绑定-️首次">2. 云平台的「停止实例」会顺带释放东西，且常与计费模式绑定 ⚠️首次</a></li><li class="d3"><a href="#3-生产环境能跑不等于脚本能把生产环境装出来-️首次">3. 「生产环境能跑」不等于「脚本能把生产环境装出来」 ⚠️首次</a></li><li class="d3"><a href="#4-进陌生系统先读它自己的注释尤其带坑字的-️首次">4. 进陌生系统先读它自己的注释，尤其带「坑」字的 ⚠️首次</a></li><li class="d3"><a href="#5-所有候选方案都改变不了的那个约束说明维度选错了-️首次">5. 所有候选方案都改变不了的那个约束，说明维度选错了 ⚠️首次</a></li><li class="d2"><a href="#一条组织层面的观察">一条组织层面的观察</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="换系统盘前的现状核查--给我的服务器不等于空服务器">换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」</h1>
+<blockquote>
+<p>入档：2026-09-11
+来源：PB Arena 迁正式生产环境（<code>battleverse.cn</code>）—— 拿到一台”正式服务器”准备换系统盘，
+核查后发现它上面正跑着同事的另一个已备案网站，换盘中止
+状态：<strong>任务未完成，但停在了正确的地方。</strong> 五条 insight 中三条 ⚠️ 首次；
+「先列现状再谈部署」是 <a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a> 的第四种形态；
+探测工具失效那条是 <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> 的第八次现形
+同项目前情：<a href="/above-the-web/v1-0abb7cd/" class="wikilink">零作品的比赛_界面演完不等于链路存在_v1</a> · <a href="/above-the-web/v1-6532011/" class="wikilink">公屏下线只删了界面_删界面不等于关链路_v1</a></p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>任务开局：“拉最新状态，部署上站，<strong>这次我们有了完整的官方域名和正式的服务器</strong>”</li>
+<li>目标机 <code>8.136.37.138</code>（阿里云杭州 <code>i-bp1f23nfsoombl2l55wr</code>，4C8G，公网带宽 <strong>4 Mbps</strong>）</li>
+<li>系统是 <strong>CentOS 7.9</strong>，跑不了本项目：glibc 2.17 达不到 Node 18+ 官方二进制要求的 2.28，
+而项目用 <code>node:sqlite</code> 需要 Node ≥ 22.13。CentOS 7 已于 2024-06-30 EOL，<code>yum</code> 源搬去 vault</li>
+<li>因此计划换成 Ubuntu 24.04。作者明确表态「<strong>确定盘上没东西</strong>」</li>
+<li>我仍建议先核查，依据是<strong>实例名 <code>launch-advisor-20260206</code> 里的日期说明它七个月前就创建了</strong>，
+与「为本项目新购的机器」这个前提矛盾</li>
+<li>核查结果（浏览器侧 agent 在阿里云控制台执行）：
+<ul>
+<li>机器上跑着 <strong><code>vacavaca.cn</code></strong>，同主体第二个备案网站（粤ICP备2026094977号-2），
+<strong>在线运行中</strong>，装着宝塔面板（2026-06-09）</li>
+<li><strong>0 个快照、0 个自定义镜像、快照服务未开通</strong>——换盘之后没有任何回滚点</li>
+<li>近 7 天监控：CPU 约 0，但<strong>每天都有公网流量</strong>，连接数尖峰 120–170</li>
+</ul>
+</li>
+<li>换盘中止。改为出选址方案交由项目总负责人拍板；同轮补上快照服务与每日自动快照策略</li>
+<li>附带查清：<code>battleverse.cn</code> 的接入备案<strong>绑定在这台实例的 IP 上</strong>；
+域名的 <code>@</code> / <code>www</code> / 泛解析当前指向另一台机器 <code>114.55.110.17</code>，
+还有 <code>file</code> CNAME 指向 OSS 桶 <code>pb-bkt</code>（疑似已有人在为本项目做图片直传准备）</li>
+</ul>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>「这台机器给你用」和「这台机器是空的」是两句话，而它们之间隔着别人的生产数据。</strong>
+接手任何一台服务器，第一动作是<strong>列现状清单</strong>——上面跑着什么、解析着哪些域名、谁在管、
+有没有备份、什么时候创建的——列完再谈要装什么。</p>
+<h2 id="五条可复用-insight">五条可复用 insight</h2>
+<h3 id="1-前提与证据冲突时先验证前提而且要把矛盾具体指出来-️首次">1. 前提与证据冲突时，先验证前提，而且要把矛盾具体指出来 ⚠️首次</h3>
+<p>作者说「确定盘上没东西」。我没有直接照做，也没有笼统地说「我觉得要谨慎」，
+而是把那条具体的矛盾摆出来：<strong>实例默认名 <code>launch-advisor-20260206</code> 里的日期是七个月前，
+和「新购的机器」对不上</strong>。</p>
+<p>这条区别很关键。「建议谨慎」是一种态度，对方可以合理地驳回（他确实比我更了解自己的资产）；
+「实例名里的日期说明它七个月前就存在」是一条<strong>可核对的事实</strong>，对方无法在不解释它的前提下推进。</p>
+<p>代价不对称也要说出来：核查花五分钟，误判的代价是<strong>不可逆地抹掉别人的生产站，而且没有回滚点</strong>。</p>
+<blockquote>
+<p>与 <a href="/above-the-web/v1-2885b47/" class="wikilink">约束型结论先复核律_文档写的不可能会过期_v1</a> 同族但对象不同：那条针对<strong>自己文档里</strong>
+的约束，这条针对<strong>别人口头给出的前提</strong>。共同判据仍是代价不对称。</p>
+</blockquote>
+<h3 id="2-云平台的停止实例会顺带释放东西且常与计费模式绑定-️首次">2. 云平台的「停止实例」会顺带释放东西，且常与计费模式绑定 ⚠️首次</h3>
+<p>写交接单时特意过了一遍「停机」这个动作本身，挖出：阿里云在<strong>按量付费 + 停机不收费</strong>的组合下，
+停止实例会<strong>释放固定公网 IP</strong>。而这台机器的 IP 上挂着 <code>battleverse.cn</code> 的接入备案关系——
+<strong>IP 一换就要重办接入备案</strong>。</p>
+<p>这条最后没命中（实际是包年包月），但它是整件事里唯一能把备案搞砸的操作，
+而写进核查清单的成本几乎为零。</p>
+<p><strong>可复用</strong>：给出 <code>停止</code> / <code>重启</code> / <code>释放</code> / <code>更换</code> 类步骤时，多问一句
+「<strong>这个动作除了达成目的，还顺带释放 / 回收 / 重置了什么</strong>」。云平台上这类副作用尤其多，
+而且<strong>它们的触发条件常常写在计费模式里，不写在操作说明里</strong>。</p>
+<h3 id="3-生产环境能跑不等于脚本能把生产环境装出来-️首次">3. 「生产环境能跑」不等于「脚本能把生产环境装出来」 ⚠️首次</h3>
+<p>对比老生产机 <code>.env</code> 的变量名清单与 <code>setup-server.sh</code> 生成的清单，发现脚本漏了 <code>PB_TRUST_PROXY</code>。
+老机上是当初手工补的，所以<strong>线上一直是对的、脚本一直是错的，从没暴露过</strong>。</p>
+<p>漏掉它的后果不轻：站在 nginx 反代后面，频控看到的每个请求都来自 <code>127.0.0.1</code>，
+<strong>全站共用一个限流桶——一个人刷接口能把所有人一起限住</strong>。</p>
+<p><strong>可复用</strong>：定期把<strong>脚本产物</strong>与<strong>线上实际</strong>对账，尤其针对那些「当时手工改一下就好了」的地方——
+它们正是脚本的盲区，而且<strong>只有在新建环境时才会现形</strong>，平时永远测不出来。
+对账不需要读值，比对<strong>键的集合</strong>就够。</p>
+<h3 id="4-进陌生系统先读它自己的注释尤其带坑字的-️首次">4. 进陌生系统先读它自己的注释，尤其带「坑」字的 ⚠️首次</h3>
+<p>这一轮要把一份文档挂到已有的个人站上。翻 nginx 配置时，<code>atw-handout.conf</code> 的注释里直接写着两条：</p>
+<blockquote>
+<p>站点部署是 <code>rsync -az --delete dist/ → /var/www/tiaozhuxiansheng/</code>，
+且每 6 小时定时跑一次，放进站点根目录的手工文件会被删掉。</p>
+</blockquote>
+<blockquote>
+<p>坑：alias 指到单个文件时 nginx 按「请求 URI」查 MIME，而 <code>/dsh</code> 没有扩展名，
+会落到 <code>default_type application/octet-stream</code>，浏览器当成下载。必须显式声明。</p>
+</blockquote>
+<p>第一条直接决定了挂载位置（文件放 docroot 外，靠 <code>root</code> + <code>try_files</code> 挂进 URL 空间），
+第二条让我在片段里加了 <code>default_type text/html</code> 兜底。<strong>各省一次踩坑，成本是读三行注释。</strong></p>
+<p><strong>可复用</strong>：这类注释是前人<strong>用一次事故换来的</strong>，信息密度远高于任何文档，
+而且<strong>就写在最相关的位置上，不需要检索</strong>。进陌生系统的第一件事不是读 README，
+是 <code>grep</code> 一遍配置里的注释。</p>
+<h3 id="5-所有候选方案都改变不了的那个约束说明维度选错了-️首次">5. 所有候选方案都改变不了的那个约束，说明维度选错了 ⚠️首次</h3>
+<p>选址方案列了四条路（新购独占机 / 同机共存 / 迁走对方 / 改用第三台）。但<strong>4 Mbps 这个数字，
+在任何一个方案里都不变</strong>——买新机也是 4 Mbps 起，迁走别人也还是 4 Mbps。</p>
+<p>而 PB Arena 是图片对战平台，一个投票页要一次加载十几张作品图，全部经后端磁盘读出再返回。
+真正解决问题的是<strong>图片走对象存储直传 + CDN</strong>——这条一个月前的定稿方案早就写了，
+而且 <code>file.battleverse.cn</code> → OSS 桶的解析记录说明可能已经有人开了个头。</p>
+<p><strong>可复用</strong>：<strong>当所有候选方案都不能改善某个关键指标时，说明选项集合选错了维度。</strong>
+此时该做的不是在现有选项里挑一个，是回去问「<strong>这个指标该由哪一层解决</strong>」。
+方案文档里要把这条单独列一节，否则讨论会一直停在选项之间。</p>
+<h2 id="一条组织层面的观察">一条组织层面的观察</h2>
+<p>表面问题是「CentOS 7 装不了 Node 22」。但真正决定推荐方案的，是
+<strong>作者对那台机器没有完全运维权限</strong>——技术上共存完全可行，组织上，
+此后每次上线、重启、改 nginx、续证书、排障都要等另一位同事授权。</p>
+<p>方案里推荐理由按权重排，<strong>第一条写的是「运维自主权」，技术理由排在后面</strong>。</p>
+<p><strong>规律</strong>：当一个技术方案「能做但别扭」时，检查一下别扭是不是来自<strong>权限、归属、责任边界</strong>。
+这类约束不会出现在技术评估里，但它决定长期成本。而且<strong>写进方案比藏在心里有用</strong>——
+它让讨论从”谁占谁的地盘”变成”谁承担什么成本”。</p>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>停止条件的写法：<a href="/above-the-web/v1-c08b22e/" class="wikilink">破坏性操作先写停止条件律_v1</a></li>
+<li>同族律：<a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a>（基线不只是代码 ref，也是”这台机器上现在有什么”）</li>
+<li>同族律：<a href="/above-the-web/v1-2885b47/" class="wikilink">约束型结论先复核律_文档写的不可能会过期_v1</a></li>
+<li>工具失效：<a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a></li>
+<li>同项目：<a href="/above-the-web/v1-0abb7cd/" class="wikilink">零作品的比赛_界面演完不等于链路存在_v1</a> · <a href="/above-the-web/v1-6532011/" class="wikilink">公屏下线只删了界面_删界面不等于关链路_v1</a> · <a href="/above-the-web/46-v1-9df0c5a/" class="wikilink">自检46条零驳回_同类中的异类才是缺陷藏身处_v1</a></li>
+<li>项目内复盘原文：<code>D:\pb-arena\docs\阶段复盘_2026-09-11_正式上线受阻与选址收口.md</code></li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-11T07:21:05+08:00">2026-09-11</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E6%8D%A2%E7%B3%BB%E7%BB%9F%E7%9B%98%E5%89%8D%E7%9A%84%E7%8E%B0%E7%8A%B6%E6%A0%B8%E6%9F%A5_%E7%BB%99%E6%88%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8D%E7%AD%89%E4%BA%8E%E7%A9%BA%E6%9C%8D%E5%8A%A1%E5%99%A8_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E6%8D%A2%E7%B3%BB%E7%BB%9F%E7%9B%98%E5%89%8D%E7%9A%84%E7%8E%B0%E7%8A%B6%E6%A0%B8%E6%9F%A5_%E7%BB%99%E6%88%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8D%E7%AD%89%E4%BA%8E%E7%A9%BA%E6%9C%8D%E5%8A%A1%E5%99%A8_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/v1-83c88ab/">全站文字截断体检 · 检测工具本身要先被证伪</a></li><li><a href="/above-the-web/v1-043b6e8/">开工前先对基线律</a></li><li><a href="/above-the-web/v1-c08b22e/">破坏性操作先写停止条件律</a></li><li><a href="/above-the-web/v1-2885b47/">约束型结论先复核律 · 文档写的「不可能」会过期</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/46-v1-9df0c5a/"> <span class="card-cat">平台工程</span> <h3>自检 46 条零驳回 · 同类中的异类才是缺陷藏身处</h3> <p>- 触发：用户一句「全项目自检一次，重点检查交互式 bug 及边缘问题」，没有清单、没有指定范围</p> </a><a class="card" href="/above-the-web/v1-0abb7cd/"> <span class="card-cat">平台工程</span> <h3>零作品的比赛 · 界面演完不等于链路存在</h3> <p>- 项目:PB Arena 官方赛事(报名 → 出图 → 上传 → 投票 → 结算)</p> </a><a class="card" href="/above-the-web/v1-6532011/"> <span class="card-cat">平台工程</span> <h3>公屏下线只删了界面 · 删界面不等于关链路</h3> <p>- 反馈来源：项目负责人 2026-08-08 晚在微信里提的 16 条，散在一条约 90 条消息的聊天记录里；由 Claude 桌面端 c…</p> </a><a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#五条可复用-insight" data-toc-link="五条可复用-insight">五条可复用 insight</a></li><li class="d3"><a href="#1-前提与证据冲突时先验证前提而且要把矛盾具体指出来-️首次" data-toc-link="1-前提与证据冲突时先验证前提而且要把矛盾具体指出来-️首次">1. 前提与证据冲突时，先验证前提，而且要把矛盾具体指出来 ⚠️首次</a></li><li class="d3"><a href="#2-云平台的停止实例会顺带释放东西且常与计费模式绑定-️首次" data-toc-link="2-云平台的停止实例会顺带释放东西且常与计费模式绑定-️首次">2. 云平台的「停止实例」会顺带释放东西，且常与计费模式绑定 ⚠️首次</a></li><li class="d3"><a href="#3-生产环境能跑不等于脚本能把生产环境装出来-️首次" data-toc-link="3-生产环境能跑不等于脚本能把生产环境装出来-️首次">3. 「生产环境能跑」不等于「脚本能把生产环境装出来」 ⚠️首次</a></li><li class="d3"><a href="#4-进陌生系统先读它自己的注释尤其带坑字的-️首次" data-toc-link="4-进陌生系统先读它自己的注释尤其带坑字的-️首次">4. 进陌生系统先读它自己的注释，尤其带「坑」字的 ⚠️首次</a></li><li class="d3"><a href="#5-所有候选方案都改变不了的那个约束说明维度选错了-️首次" data-toc-link="5-所有候选方案都改变不了的那个约束说明维度选错了-️首次">5. 所有候选方案都改变不了的那个约束，说明维度选错了 ⚠️首次</a></li><li class="d2"><a href="#一条组织层面的观察" data-toc-link="一条组织层面的观察">一条组织层面的观察</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>
