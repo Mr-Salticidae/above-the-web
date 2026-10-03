@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-03",
+  "headline": "Flux 3 Image 支持多步局部编辑，Suno 新增语音与配乐同步生成",
+  "items": [
+    {
+      "title": "Black Forest Labs 发布 Flux 3 Image",
+      "summary": "Black Forest Labs 推出 Flux 3 系列的图像模型 Flux 3 Image，支持多步编辑且不影响画面其余部分。用户可通过 bounding box 和最多十张参考图组合场景，输出最高 4K 分辨率，开源权重将在数周内发布。对 AI 图像创作者而言，这意味着更可控的局部修改工作流。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/black-forest-labs-launches-flux-3-image-with-multi-step-editing-that-leaves-the-rest-of-your-picture-alone",
+      "featured": true
+    },
+    {
+      "title": "Suno 上线 Speech 功能，可同步生成语音与配乐",
+      "summary": "AI 音乐生成器 Suno 新增 Speech 功能，能在单条音轨中同时生成朗读语音和匹配的背景音乐，适用于诗歌、冥想引导和睡前故事等场景。该功能已在网页端和移动端公测，但 Suno 未披露模型训练数据来源。做播客或有声内容的创作者可以关注这一工具的效率变化。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-music-generator-suno-can-now-create-spoken-audio-with-matching-background-music",
+      "featured": true
+    },
+    {
+      "title": "Microsoft 发布实时转录与语音合成新模型",
+      "summary": "Microsoft AI 发布了面向语音 Agent 的新模型 MAI-Transcribe-2-Streaming，支持实时转录，并同步更新了文本转语音能力。这为需要处理长音频或搭建语音交互流程的开发者提供了新的底层选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/microsoft-ai-releases-new-transcription-and-text-to-speech-models-for-voice-agents",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 发布 GPT-6 系列模型选型指南",
+      "summary": "OpenAI 官方发布文档，梳理 GPT-6 家族各模型的适用场景，涵盖推理强度调节、Prompt 优化、工具调用协调及生产环境部署建议。对于正在将 GPT-6 接入写作或自动化工作流的创作者，这是一份基础参考。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/practical-guide-building-gpt-6",
+      "featured": false
+    },
+    {
+      "title": "Sean Parker 接手 Stability AI 并转向音乐方向",
+      "summary": "Napster 创始人 Sean Parker 正在围绕音乐重建 Stability AI，据报道已获得唱片公司的资金与授权支持。Stability AI 此前以图像生成模型闻名，此次业务重心转移值得长期关注。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/02/sean-parker-is-rebuilding-stability-ai-around-music",
+      "featured": false
+    },
+    {
+      "title": "教皇公开批评 AI 生成艺术缺乏人性",
+      "summary": "教皇 Leo XIV 撰文表示，机器基于海量他人图像进行统计计算所生成的内容，与人类艺术存在本体论层面的差异，算法不具备人性的火花。这是宗教界对 AIGC 创作价值的又一次明确表态。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/02/pope-leo-xiv-is-not-a-fan-of-ai-generated-art",
+      "featured": false
+    },
+    {
+      "title": "Apple 收紧 macOS 全盘访问权限应对 AI Agent 风险",
+      "summary": "Apple 宣布将为 macOS 的全盘访问权限增加新限制，指出日益强大的 AI Agent 让应用获取用户文件、邮件和浏览记录的风险显著上升。对于在 Mac 本地运行 AI 写作或自动化脚本的创作者，后续可能需要重新配置权限。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1004295/apple-limit-mac-disk-access-ai-agents",
+      "featured": false
+    }
+  ]
+}
