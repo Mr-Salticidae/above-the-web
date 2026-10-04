@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-04",
+  "headline": "Capcom 筹备 AI 协作开发，单图转 3D 场景工具仍难自判几何精度",
+  "items": [
+    {
+      "title": "Capcom 展示 RE Engine 与 AI 结合的游戏开发方向",
+      "summary": "在 Capcom Open Conference RE: 2026 上，程序员 Satoshi Ishida 介绍了 RE Engine 的演进路线，探讨未来如何将 AI 融入游戏制作流程。尽管其新作《Pragmata》以 AI 失控为题材，但工作室在实际开发中对该技术持开放态度。对游戏美术和关卡设计从业者而言，这意味着主流引擎正在将 AI 辅助纳入标准工作流。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/games/1004418/capcom-ai-game-development",
+      "featured": true
+    },
+    {
+      "title": "LEGO-Anything 可将单张照片转为可编辑的 Blender 3D 场景",
+      "summary": "新方法 LEGO-Anything 能将单张照片转化为可编辑的 Blender 代码来构建 3D 场景，GPT-6 Astra 在配套基准测试中以最高 53% 的重建准确率领先。不过测试显示，所有受测 Agent 都无法判断自身输出的几何准确性，表现接近随机猜测。对 3D 创作者来说，这类工具目前更适合作为初始草图生成器，仍需人工校验结构。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-agents-build-3d-scenes-from-photos-but-have-no-idea-if-they-got-it-right",
+      "featured": true
+    },
+    {
+      "title": "Claude Code 新增 Mods 系统，支持开发者自定义工具行为",
+      "summary": "Anthropic 为 Claude Code 引入 Mods 系统，允许开发者使用 JavaScript 或 TypeScript 编写中间件，直接修改工具的界面和行为，包括添加自定义面板、拦截工具调用或接入新命令。这为习惯用脚本扩展创作环境的开发者提供了更灵活的控制方式。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-codes-new-mods-system-lets-developers-rewrite-the-ai-coding-tool-from-the-inside",
+      "featured": false
+    },
+    {
+      "title": "thatgamecompany 分享将梵高画作转化为可游玩空间的技术细节",
+      "summary": "Yingxian Lu 在 Creative Bloq 的采访中透露，《Sky: Children of the Light》「Dear Van Gogh」季节的笔触渲染技术早于叙事设计完成，梵高的信件内容随后塑造了整个季节的体验。对数字艺术和游戏视觉创作者而言，这是一个风格化渲染驱动内容设计的参考案例。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/3d/video-game-design/how-thatgamecompany-turned-van-gogh-paintings-into-playable-spaces",
+      "featured": false
+    },
+    {
+      "title": "Splice CEO：AI 生成的邮件正在破坏音乐人之间的沟通",
+      "summary": "采样平台 Splice CEO Kakul Srivastava 指出，大量 AI 生成的邮件正在削弱创作者之间真实的交流质量。Splice 的采样曾被用于多首热门单曲，是音乐制作人日常依赖的工具。这一反馈提醒音乐创作者，在使用 AI 处理对外沟通时需注意保持个人辨识度。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/1004162/splice-ceo-kakul-srivastava-ai-interview",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 联合创始人与宗教人士讨论 AI 意识与受苦可能性",
+      "summary": "自 2025 年秋季起，Anthropic 邀请数十位宗教思想家讨论 Claude 是否具备意识。联合创始人 Christopher Olah 提出语言模型可能具有感受痛苦的能力，并寻求外部意见来帮助塑造其道德属性。批评者认为，将 AI 视为道德实体可能会在出现问题时为公司规避责任提供借口。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-co-founder-reportedly-told-religious-leaders-he-fears-having-created-something-that-suffers-perpetually",
+      "featured": false
+    },
+    {
+      "title": "DeepMind 研究者提出「人工共生智能」替代奇点叙事",
+      "summary": "DeepMind Institute 的研究人员发表论文称，通用 AI 不会以单一超级模型的形式出现，而是由多个协作 Agent 与人类组成的网络构成。他们认为决定系统能力的关键不是模型规模，而是治理这些组件协同工作的规则与制度。这一视角为理解多 Agent 创作工作流的演进提供了理论框架。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/deepmind-researchers-propose-artificial-symbiotic-intelligence-as-an-alternative-to-the-singularity",
+      "featured": false
+    }
+  ]
+}
