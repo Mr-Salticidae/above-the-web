@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-07",
+  "headline": "Mistral 与 Reflection 发布大参数模型，Google 更新图像生成与多模态嵌入",
+  "items": [
+    {
+      "title": "Mistral 发布万亿参数多模态模型 Large 4",
+      "summary": "法国 AI 实验室 Mistral 发布 Mistral Large 4，参数规模达一万亿，在欧洲自有基础设施上训练。该模型在独立评测中较前代有明显进步，但仍落后于 Claude、GPT-6 及部分中国竞品，主打网络安全等闭源模型受限场景。对创作者而言，开源阵营在多模态能力上又增加了一个可选方案。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/06/mistrals-new-1t-model-aims-to-leapfrog-closed-and-open-rivals",
+      "featured": true
+    },
+    {
+      "title": "Reflection 发布开源 MoE 模型 Beam",
+      "summary": "Reflection 推出首个开源权重模型 Beam，总参数 501B，每次推理激活 23B，目标是以三到四倍的算力效率匹配 GLM 5.2 的编程与推理表现。其策略偏向效率而非绝对性能，主要面向企业与主权机构。对需要本地部署的 AIGC 工作流来说，这是一个轻量级 MoE 选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/reflections-beam-becomes-the-most-capable-open-weight-model-built-outside-china",
+      "featured": true
+    },
+    {
+      "title": "Google 发布图像生成模型 Nano Banana 2.1",
+      "summary": "Nano Banana 2.1 基于 Gemini 3.6 Flash，在部分基准测试中超过前代 Pro 模型且调用成本更低。不过线索指出，Pro 模型在实际出图质量上仍常有优势。对依赖 API 批量生图的创作者，这意味着可以在成本与效果之间重新权衡。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/googles-new-image-model-nano-banana-2-1-generates-better-images-for-less-money",
+      "featured": false
+    },
+    {
+      "title": "Google 开源多模态嵌入模型 EmbeddingGemma 2",
+      "summary": "EmbeddingGemma 2 参数量 740M，支持将文本、图像、视频、音频和代码转为向量，运行仅需约 191MB 内存，可在端侧离线使用。配合 Gemma 4 等小模型可实现无需外部服务器的 RAG 应用。适合需要在本地处理多模态素材检索的创作者。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-claims-embeddinggemma-2-outperforms-rival-embedding-models-twice-its-size",
+      "featured": false
+    },
+    {
+      "title": "xAI 阻止明尼苏达州 AI 深伪禁令生效",
+      "summary": "Elon Musk 旗下 xAI 成功阻止了明尼苏达州一项针对 AI 生成非自愿裸露图像的禁令。该法案原本旨在限制未经同意生成他人露骨图像的应用与网站。此事为各地针对 AI 生成有害内容的立法进程增加了不确定性。",
+      "category": "政策",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/06/elon-musks-xai-blocks-minnesotas-landmark-ban-on-ai-nudification-apps",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 公布未发布前沿模型的 722 篇数学论文",
+      "summary": "OpenAI 披露了一个尚未发布的前沿模型产出的 722 篇手稿，覆盖 372 个相关结果族，解决了一批长期悬而未决的数学问题。这是近期多家 AI 实验室密集发表数学突破的延续，引发了学界关于研究伦理的讨论。虽然不直接服务于图像或视频创作，但反映了当前前沿模型推理能力的增长节奏。",
+      "category": "研究",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1005004/openai-math-release-github",
+      "featured": false
+    },
+    {
+      "title": "Aftershoot 推出免费 RAW 编辑器 Photon",
+      "summary": "以 AI 修图工具为人所知的 Aftershoot 发布了免费的 RAW 编辑器 Photon，内置教学引导功能，帮助用户学习照片后期流程。对于希望降低软件成本的摄影与视觉创作者，这是一个新的基础工具选项。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/06/aftershoots-free-raw-editor-photon-teaches-you-how-to-edit-photos",
+      "featured": false
+    }
+  ]
+}
