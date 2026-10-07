@@ -73,17 +73,23 @@ jobs:
       # 从 desk-pond 最新 Release 抓 Windows 安装包，随 dist 一起 rsync 到香港服务器，
       # 让主页能国内直连直接下载（不入 git、不进 Pages 产物——Pages 单文件 100MB 上限）。
       # 统一命名为稳定文件名，主页链接无需随版本改动；每次部署自动同步到最新版。
+      # 同一份 Release 信息顺手写出 dist/desk-pond/latest.json：桌面版（v0.7 起）启动时读它做「新版本提示」
+      # （版本号 + 下载页 + 说明第一句）。和 exe 一样每次部署都生成，免得 rsync --delete 把它删掉。
       - name: 拉取 desk-pond 最新 Release 安装包到 dist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p dist/desk-pond/download
-          asset_url=$(curl -sL -H "Authorization: Bearer $GH_TOKEN" \
-            https://api.github.com/repos/Mr-Salticidae/desk-pond/releases/latest \
-            | grep -o '"browser_download_url": *"[^"]*\.exe"' | head -1 | sed -E 's/.*"(https[^"]+)".*/\1/')
+          release=$(curl -fsSL -H "Authorization: Bearer $GH_TOKEN" \
+            https://api.github.com/repos/Mr-Salticidae/desk-pond/releases/latest)
+          asset_url=$(printf '%s' "$release" | jq -r '[.assets[].browser_download_url | select(endswith(".exe"))][0] // empty')
           echo "下载: $asset_url"
           test -n "$asset_url"
           curl -fL "$asset_url" -o dist/desk-pond/download/DeskPond-Windows.exe
+          printf '%s' "$release" | jq '{version: (.tag_name | ltrimstr("v")), url: "https://tiaozhuxiansheng.com/desk-pond/", notes: ((.body // "") | gsub("\r"; "") | split("\n")[0] | .[0:60])}' \
+            > dist/desk-pond/latest.json
+          test -s dist/desk-pond/latest.json
+          cat dist/desk-pond/latest.json
           ls -la dist/desk-pond/download/
       # LiveLink（B 站直播弹幕助手）同理：安装包约 82MB，走服务器直连下载，
       # 稳定文件名 LiveLink-Setup.exe，/livelink/ 落地页链接不随版本变动。
