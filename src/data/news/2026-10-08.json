@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-08",
+  "headline": "GPT-6 与 Claude Haiku 5.5 同日更新，SynthID 检测工具开放公测",
+  "items": [
+    {
+      "title": "OpenAI 发布 GPT-6 及 Intelligent UI 交互界面",
+      "summary": "OpenAI 向所有用户推送 GPT-6，并上线 Intelligent UI 功能。模型回复不再局限于纯文本，可直接输出图表、表单和可点击按钮等交互组件。付费用户使用 GPT-6 Sol，免费用户对应 GPT-6 Luna。对创作者而言，这意味着可以在对话中直接获取可视化素材和结构化信息，减少跨应用排版的步骤。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/gpt-6-for-everyone",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 发布 Claude Haiku 5.5，Token 价格最高降 90%",
+      "summary": "Anthropic 推出轻量模型 Claude Haiku 5.5，在 OSWorld 计算机使用测试中的得分从前代的 15.7% 升至 72.4%。Token 单价最高下调 90%，但新 tokenizer 处理相同任务会消耗更多 token，部分抵消了降价幅度。适合需要高频调用 API 进行批量图像或文本处理的创作者关注实际成本变化。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-haiku-5-5-arrives-with-massive-price-cuts-proving-the-ai-pricing-arms-race-is-far-from-over",
+      "featured": true
+    },
+    {
+      "title": "Google SynthID 检测器公开，已覆盖 1800 亿条内容",
+      "summary": "Google 将 AI 水印检测工具 SynthID 面向公众开放，支持验证图像、视频和音频是否由 Google 及其合作伙伴（含 OpenAI、Nvidia）的 AI 生成。目前已有超过 1800 亿条内容携带该水印。需要注意的是，它只能识别带 SynthID 标记的内容，无法检测所有 AI 生成物。对于需要自证作品来源的创作者，这是一个可用的核验入口。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-says-180-billion-images-and-videos-now-carry-synthid-watermarks-as-detector-goes-public",
+      "featured": false
+    },
+    {
+      "title": "Google 推出 Playground，用文本提示词生成浏览器游戏",
+      "summary": "Google Labs 上线实验性平台 Playground，用户无需编码，通过文本提示词即可创建并在浏览器中运行自定义游戏。该平台底层运行 Gemini、Nano Banana 和 Lyria 模型。同期 Google 与 Unity 公布了面向专业开发者的 Unity Spark 工具。对互动内容创作者来说，这降低了快速制作可玩原型的技术门槛。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-bets-gemini-can-turn-casual-players-into-game-developers-with-new-playground-feature",
+      "featured": false
+    },
+    {
+      "title": "开发者用 AI 构建开源版 Adobe Creative Cloud 替代品",
+      "summary": "软件工程师 Brandon Thomas 发布了名为 ArtCraft 的开源项目，包含 Photoshop、Premiere、Lightroom、After Effects 等 Adobe 软件的免费替代版本，支持 macOS、Windows 和 Linux。报道指出这些应用由 AI 辅助构建，目前仍处于早期阶段，远未完成。可作为了解 AI 辅助软件工程能力的参考，暂不建议直接用于生产工作流。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/07/someone-rebuilt-free-open-source-versions-of-photoshop-premiere-and-lightroom-using-ai",
+      "featured": false
+    },
+    {
+      "title": "利用 AI 歌曲和机器人刷流媒体播放量者被判刑",
+      "summary": "一名男子因使用上万个机器人账户和 AI 生成的音乐骗取约 800 万美元流媒体版税，被判处 18 个月监禁。其操作规模一度在播放数据上超过 Taylor Swift。这一判例为 AI 音乐创作者划定了明确的法律边界：用自动化手段伪造播放量属于欺诈行为。",
+      "category": "政策",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/10/outstreaming-taylor-swift-is-easy-with-10k-bots-and-ai-songs-fraudster-admits",
+      "featured": false
+    },
+    {
+      "title": "新 AI 模型可从脑电波活动重建视觉图像",
+      "summary": "研究人员开发出一种 AI 模型，能够读取大脑活动并重建受试者正在观看的图像，速度和准确度均有提升。报道展示了原始图像与 AI 重建结果的对比。虽然距离实用工具尚远，但这类研究为理解 AI 如何解析和生成视觉信号提供了新的参考维度。",
+      "category": "研究",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/07/fastest-ever-mind-reading-ai-model-can-reconstruct-images-from-your-brain",
+      "featured": false
+    }
+  ]
+}
