@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-09",
+  "headline": "Claude 新增动画视频与仪表盘生成，Anthropic 更新使用条款",
+  "items": [
+    {
+      "title": "Claude 新增文本生成动画视频与数据仪表盘功能",
+      "summary": "Anthropic 为 Claude 推出两项 beta 功能：Motion 可根据文本和图像生成动画解说视频，Dashboards 可将 BigQuery、Snowflake 等数据源通过文本提示词转为实时仪表盘。此外，Docs、Slides 和 Design 功能现已向所有计划（含免费账户）开放。对创作者而言，这意味着从脚本到可视化短片的流程可以在同一个对话窗口内完成。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-can-now-generate-animated-explainer-videos-and-live-data-dashboards-from-text-prompts",
+      "featured": true
+    },
+    {
+      "title": "Pollo AI 接入 GPT-6 Astra 等模型用于广告视频制作",
+      "summary": "Pollo AI 宣布结合 GPT-5.6、GPT-6 Astra 及 GPT-Image-2.5，帮助创作者将创意转化为细节图像和电影级视频广告。该平台主要面向营销场景，提供从概念到成片的生成工作流。做商业短片或广告素材的创作者可以关注其实际出片质量。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/pollo-ai",
+      "featured": true
+    },
+    {
+      "title": "KeyShot 2026 评测：渲染工作流中引入 AI Shots 功能",
+      "summary": "3D 渲染软件 KeyShot 发布 2026 版本，核心更新是 AI Shots 功能，将生成式 AI 直接嵌入渲染流程。官方定位是让材质调整和视角探索更快速。对于依赖 KeyShot 做产品可视化的 3D 创作者，这是一次值得测试的工作流升级。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/3d/keyshot-2026-review-fast-easy-3d-rendering-and-with-ai-tools-you-might-actually-use",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 更新使用条款，禁止持续性辱骂 Claude",
+      "summary": "Anthropic 时隔一年多首次更新使用政策，明确禁止用户对 Claude 进行「持续且不必要的虐待或残忍行为」，同时收紧了选举干预、武器软件开发和监控等方面的限制。普通的使用挫折和批评仍在允许范围内。这一变化反映了模型厂商正在重新定义人机交互的边界。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1008100/anthropic-new-usage-policy-abuse-claude",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 推出 OSS Scanner，免费扫描开源项目安全漏洞",
+      "summary": "Anthropic 上线 OSS Scanner 服务，使用其最强模型为选择加入的开源项目进行定期安全扫描，且不收取费用。该服务旨在帮助开源维护者更早发现潜在安全问题。对于在 GitHub 上发布 AIGC 工具或插件的开发者，这是一个低成本的安全审计选项。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1008521/anthropic-open-source-oss-scanner",
+      "featured": false
+    },
+    {
+      "title": "USA Today 起诉 OpenAI，索赔超 2.5 亿美元",
+      "summary": "USA Today 及其旗下多家地方报纸对 OpenAI 提起诉讼，指控其在训练 AI 模型时未经授权复制了数十万篇文章，索赔金额超过 2.5 亿美元。这是出版业针对大模型训练数据版权发起的最新一起诉讼。内容创作者需持续关注此类判例对未来授权模式的影响。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1008198/usa-today-openai-copyright-lawsuit",
+      "featured": false
+    },
+    {
+      "title": "Google 推出 Gemini 企业版 Agent，可跨应用执行任务",
+      "summary": "Google 在 Gemini at Work 活动上发布了通用型 AI Agent，可在后台跨应用和设备规划并执行任务。该 Agent 支持将工作委派给子 Agent、调用多个 AI 模型，并拥有独立的工作身份和邮箱地址。目前主要面向企业用户，侧重业务流程自动化而非创意生产。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1007904/google-gemini-ai-agent-enterprise",
+      "featured": false
+    }
+  ]
+}
