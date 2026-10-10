@@ -1,0 +1,607 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>方法论与洞察索引 · 蛛网之上</title><meta name="description" content="角色一致性、sref / personalize / moodboard、视觉签名与角色形象工作流。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/04-1d37684/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="方法论与洞察索引"><meta property="og:description" content="角色一致性、sref / personalize / moodboard、视觉签名与角色形象工作流。"><meta property="og:url" content="https://tiaozhuxiansheng.com/04-1d37684/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="方法论与洞察索引"><meta name="twitter:description" content="角色一致性、sref / personalize / moodboard、视觉签名与角色形象工作流。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-02T13:11:13+08:00"><meta property="article:modified_time" content="2026-10-07T00:58:03+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/04-1d37684/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/04-1d37684/","url":"https://tiaozhuxiansheng.com/04-1d37684/","headline":"方法论与洞察索引","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"角色一致性、sref / personalize / moodboard、视觉签名与角色形象工作流。","datePublished":"2026-06-02T13:11:13+08:00","dateModified":"2026-10-07T00:58:03+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"方法论与洞察索引","item":"https://tiaozhuxiansheng.com/04-1d37684/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:index">方法论与洞察</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-02T13:11:13+08:00">2026-06-02</time></span> <span>更新于 <time datetime="2026-10-07T00:58:03+08:00">2026-10-07</time></span> <span>约 43 分钟读完 · 1.6 万 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#子目录">子目录</a></li><li class="d3"><a href="#01_角色一致性与视觉签名">01_角色一致性与视觉签名</a></li><li class="d3"><a href="#02_风格审美与画面律">02_风格审美与画面律</a></li><li class="d3"><a href="#03_超现实与主题破局">03_超现实与主题破局</a></li><li class="d3"><a href="#04_视频影像与声音">04_视频影像与声音</a></li><li class="d3"><a href="#05_prompt与工具方法">05_prompt与工具方法</a></li><li class="d3"><a href="#06_协作运营与发布">06_协作运营与发布</a></li><li class="d3"><a href="#07_ai理论与创作哲学">07_AI理论与创作哲学</a></li><li class="d3"><a href="#08_通识与趣味研究">08_通识与趣味研究</a></li><li class="d2"><a href="#使用规则">使用规则</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="方法论与洞察索引">方法论与洞察索引</h1>
+<blockquote>
+<p>用途:整理高阶 insight、工具方法、创作哲学和协作经验的入口。</p>
+</blockquote>
+<h2 id="子目录">子目录</h2>
+<h3 id="01_角色一致性与视觉签名">01_角色一致性与视觉签名</h3>
+<p>角色一致性、sref / personalize / moodboard、视觉签名与角色形象工作流。</p>
+<ul>
+<li>⭐ <a href="/above-the-web/v1-6b0cabf/" class="wikilink">角色一致性金字塔_v1</a></li>
+<li>⭐ <a href="/above-the-web/sref-v1-fa9fbc1/" class="wikilink">sref编号独立律_v1</a></li>
+<li><a href="/above-the-web/sref-v1-311be08/" class="wikilink">sref纯净性原则_v1</a></li>
+<li><a href="/above-the-web/personalize-moodboard-v1-cccac49/" class="wikilink">personalize与moodboard分工_v1</a></li>
+<li><a href="/above-the-web/moodboard-v1-c683401/" class="wikilink">moodboard拉力陷阱_v1</a></li>
+<li><a href="/above-the-web/moodboard-v1-604d1f0/" class="wikilink">moodboard跨题材审美迁移_v1</a> ⚠️首次发现（含 A/B 证据）</li>
+<li><a href="/above-the-web/moodboard-v1-e606d3e/" class="wikilink">moodboard主体位判据_假说_v1</a> —— 按「画面里有没有可被替换的主体位」统一归类三条 moodboard 档;<strong>跨族一格已获首个受控样本</strong> ⭐(合挂尾巴 7/7 把画种从插画拖成摄影,主体构图守住;归因待单挂隔离)。当日经历「立律→证据作废降级→受控补测回填」完整一轮</li>
+<li><a href="/above-the-web/v1-38b6d46/" class="wikilink">参考图缺失维度不可继承律_v1</a> ⚠️首次 —— 图里没有的维度 <code>--sw</code> 拉满也补不出来;与 <a href="/above-the-web/moodboard-v1-c683401/" class="wikilink">moodboard拉力陷阱_v1</a> 镜像配对</li>
+<li><a href="/above-the-web/vs-v1-aad8c40/" class="wikilink">装扮签名vs五官精度_v1</a></li>
+<li><a href="/above-the-web/oref-v1-51c7af9/" class="wikilink">oref高方差律_v1</a></li>
+<li><a href="/above-the-web/oref-sref-v1-a1dd8d4/" class="wikilink">oref与sref的工具版本与挂载方式_v1</a></li>
+<li><a href="/above-the-web/v1-9369dec/" class="wikilink">单锚点优于三视图_v1</a> ⚠️首次发现（40 镜实跑，含反例）</li>
+<li><a href="/above-the-web/nano-v1-0b9354f/" class="wikilink">nano跨场景三变量发现_v1</a></li>
+<li><a href="/above-the-web/nano-mj-v1-1991f0e/" class="wikilink">双工具分工_nano锁脸+MJ摄影质感_v1</a></li>
+<li><a href="/above-the-web/ai-niji5-nano-v2-aff7d44/" class="wikilink">AI形象图工作流分层_niji5+Nano_v2</a></li>
+<li><a href="/above-the-web/lora-v1-4b2a964/" class="wikilink">画风Lora数据集策划方法论_v1</a></li>
+<li><a href="/above-the-web/ip-still-here-v1-ccf566b/" class="wikilink">跨IP作者签名_白玉兰与still_here_v1</a></li>
+<li><a href="/above-the-web/v1-e30488e/" class="wikilink">微调的边界_v1</a></li>
+<li><a href="/above-the-web/gptimage2-v1-e7fe63b/" class="wikilink">GPTImage2锁脸的脸占比上限_v1</a> ⚠️首次发现</li>
+<li><a href="/above-the-web/v1-4478bc8/" class="wikilink">严格人脸一致性二创的范式阶梯_假说_v1</a> 🔬未验证假说</li>
+</ul>
+<h3 id="02_风格审美与画面律">02_风格审美与画面律</h3>
+<p>风格判断、画面构成、视觉锚点、媒介差异和图像表达规律。</p>
+<ul>
+<li><a href="/above-the-web/ai-vs-v1-7078a4f/" class="wikilink">AI甜妹脸vs复古东方美人_v1</a> —— 2026-08-05 补边界:双盲证据全在女性侧,<strong>男性侧同一 profile 未能阻止韩系倾向</strong>(性别覆盖假说,待 A/B)</li>
+<li><a href="/above-the-web/v1-6705db3/" class="wikilink">不够帅是年龄轴不是颜系轴_v1</a> —— “不够帅/不够美”先分轴(年龄/颜系/骨架/光影);默认先试<strong>年龄轴</strong>(单调),颜系轴是倒 U 型堆过头从帅变凶;<strong>风格归属判断≠客观缺陷</strong> ⚠️首次(含实测证伪:浓颜版真跑了)</li>
+<li><a href="/above-the-web/ai-v1-428f03e/" class="wikilink">AI温柔违抗_v1</a></li>
+<li><a href="/above-the-web/ai-v1-7e03ae3/" class="wikilink">AI静物特写的本质短板_v1</a></li>
+<li><a href="/above-the-web/muji-v1-2b71666/" class="wikilink">MUJI风的适用边界_v1</a></li>
+<li><a href="/above-the-web/v1-44939f6/" class="wikilink">主体不看镜头律_v1</a></li>
+<li><a href="/above-the-web/v1-e96482a/" class="wikilink">光暗作为空间叙事工具_v1</a></li>
+<li><a href="/above-the-web/v1-8176290/" class="wikilink">儿童主题避雷词替换法_v1</a></li>
+<li><a href="/above-the-web/v1-f9d56ac/" class="wikilink">反向描述的负面锚定_v1</a></li>
+<li><a href="/above-the-web/v1-b1b1347/" class="wikilink">姿态指令的不确定性策略_v1</a></li>
+<li><a href="/above-the-web/vs-v1-eb9095e/" class="wikilink">无边界现象vs有边界物件_v1</a></li>
+<li><a href="/above-the-web/v1-c4d956c/" class="wikilink">时空叠化的锚定物律_v1</a></li>
+<li><a href="/above-the-web/v1-73a9328/" class="wikilink">极简插画删表情律_v1</a></li>
+<li><a href="/above-the-web/v1-33f402f/" class="wikilink">封面对角平衡构图律_v1</a></li>
+<li><a href="/above-the-web/v1-8af5c76/" class="wikilink">触觉抽象词翻译公式_v1</a></li>
+<li><a href="/above-the-web/v1-b884352/" class="wikilink">短钩子公式_逐渐加动作_v1</a></li>
+<li><a href="/above-the-web/v1-392f19b/" class="wikilink">私人空间道具密度公式_v1</a></li>
+<li><a href="/above-the-web/v1-e00d97e/" class="wikilink">集体作为个体的对比锚_v1</a></li>
+<li><a href="/above-the-web/v1-d073bb8/" class="wikilink">伪央视字幕条视觉范式_v1</a></li>
+</ul>
+<h3 id="03_超现实与主题破局">03_超现实与主题破局</h3>
+<p>超现实题材、红海主题、隐喻转译和媒介稀缺路径。</p>
+<ul>
+<li>⭐ <a href="/above-the-web/v1-8f6325d/" class="wikilink">超现实主题的冷热两种处理路径_v1</a></li>
+<li>⭐ <a href="/above-the-web/v1-1a2f6ac/" class="wikilink">红海主题的三条破局路径_v1</a></li>
+<li><a href="/above-the-web/v1-1d7f9b7/" class="wikilink">表现形式破同质化_媒介即主题_v1</a> ⚠️首次发现</li>
+<li><a href="/above-the-web/v1-192a4d1/" class="wikilink">抽象题面的同构动作对位法_v1</a></li>
+<li><a href="/above-the-web/vs-v1-be4185e/" class="wikilink">浪漫题的两条路线_奇观vs叙事_v1</a> ⚠️首次观察</li>
+<li><a href="/above-the-web/v2-db07ada/" class="wikilink">高辨识二人组的剪影梗图法_v2</a></li>
+<li><a href="/above-the-web/v1-495d30c/" class="wikilink">隐喻身体化升级法_v1</a></li>
+<li><a href="/above-the-web/v1-6fdd726/" class="wikilink">超现实细节的物理锚_v1</a></li>
+<li><a href="/above-the-web/v1-96351ff/" class="wikilink">超现实主体的普通身体律_v1</a></li>
+<li><a href="/above-the-web/v1-1b0019e/" class="wikilink">氛围题的读不清优先律_v1</a> ⚠️首次发现</li>
+<li><a href="/above-the-web/v1-ccee41c/" class="wikilink">夸张表情律_反向_v1</a></li>
+<li><a href="/above-the-web/ai-v1-374c1ce/" class="wikilink">真实摄影手段作为AI时代的稀缺性_v1</a></li>
+</ul>
+<h3 id="04_视频影像与声音">04_视频影像与声音</h3>
+<p>AI 视频、短片、MV、角色 PV、剪辑节奏、配乐和声音工作流。</p>
+<ul>
+<li><a href="/above-the-web/v1-dd98c63/" class="wikilink">锚点只给站位律_动作交给视频模型_v1</a> —— 给视频模型的静态参考只定谁在哪、什么状态，人物自然站姿；动作画死在图上模型只能硬靠（《余温》r1 横臂拦门”太假”→r2 自然站姿”好多了”）⚠️首次</li>
+<li><a href="/above-the-web/v1-c5fded6/" class="wikilink">派生图不进视频输入律_噪点随编辑代数累积_v1</a> —— GPT Image 每派生一代噪点叠一层，挂进全能参考视频会学走；身份只用 MJ 原图/一代定妆，姿势写文字；助手的高频噪点指标没量到作者看到的脏，以目视为准 ⚠️首次</li>
+<li><a href="/above-the-web/2026-09-20-m02-v1-8100c2c/" class="wikilink">2026-09-20_余温_关键帧先行到锚点制_M02四轮试镜复盘_v1</a> —— 85 镜首尾帧→每段 4–6 张锚点→只给站位→身份换 MJ 原图，四轮各 500 分逐变量对照，作者判 r4 配方有效（720p 出片后期超分）；M02 未正式出片，M03–M06 待出；Blender 白模脚本已通，未跑视频验证</li>
+<li><a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/" class="wikilink">2026-09-26_清月_单条15秒角色PV_立项到三平台发布_复盘_v1</a> —— 余温配方缩成单角色 15 秒一条生成（MJ 身份图裁到头部＋一张场景图＋提示词写 6 镜＋Seedance 自主配乐），三轮定稿、本机超分、B站/抖音/快手发布（视频号收口后补发）；<strong>无平台数据、积分未知、三轮都非单变量</strong>；七次气质裁决助手预判零命中（「气质判断不可代理」第四次样本）；含助手误判五条（开工走了余温已放弃的路、为自动上传压缩母版等）⚠️首次</li>
+<li><a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/" class="wikilink">AI视频本机超分_RealESRGAN_x4plus与闪烁检查_v1</a> —— 「720p 出片、后期超分」的做法：逐帧 Real-ESRGAN ×4→Lanczos 缩放→原音轨复制；先三帧对比选模型（CG 用 x4plus），闪烁看静止区域帧差（整帧帧差会误报）；<strong>两例结论分叉</strong>：《清月》国漫 CG 采用，《右下角的池塘》写实胶片感被作者判“质感反而变差”——超分降为可选，先出 5 秒对比片给作者看；</li>
+<li><a href="/above-the-web/2026-09-29-v1-03d7c00/" class="wikilink">2026-09-29_右下角的池塘_游戏宣传微电影_实录混剪到双语字幕发布_复盘_v1</a> —— 游戏宣传微电影：屏幕外 Seedance（一个机位、M04 两人同期对白）+ 屏幕内 Godot 逐帧实录，声音后期缝合，一天内从粗剪到作者发布 B站；五次气质判断助手只对节奏一次（零对白→摸不到头脑、切点截断、超分变差、胶囊字幕廉价），每次都有“合格”的指标；另记 Mac 中文方框 CI 修复、Toy 分享链接、发布后手机布局；</li>
+<li><a href="/above-the-web/2026-10-01-pv-v1-1ddae81/" class="wikilink">2026-10-01_余温_见证者角色PV_立项到四平台发布_复盘_v1</a> —— 《余温》角色 PV 第一支：正片配方（白模＋MJ 原图身份＋一条 30 秒）搬到见证者视角，立项后约 2 小时 47 分四平台发出（B站已过审，其余待回填）；白模 4 条×5 切点全中；同期对白升 ⭐⭐；<strong>写了“没有配乐”仍逐镜垫乐音、跨切点不连贯</strong>，写清起落才连贯；积分 3840；视听类四次判断助手零命中、叙事类五次全被采用（题型不同，⚠️待拆）；含助手误判九条（拉响度前没看频谱、替作者定了不要配乐等）⚠️首次</li>
+<li><a href="/above-the-web/2026-10-05-ep03-libtv-v1-5cd4acf/" class="wikilink">2026-10-05_余温_单元剧EP03瓦尔卡_LibTV样片到正片_阶段复盘_v1</a> —— 《余温》单元剧第 3 集：首次用 LibTV CLI 跑 Seedance 2.5 样片模式。16 条 480P 样片（每条实扣 600）粗剪 v2 作者认可；作者纠正”样片模式就是为了出正片”后，摸通 CLI 样片补网页元数据转 1080P 正片。正片和样片是同一条，切点、台词时间一致，每条实扣 6600。白模朝向欧拉角绕圈升 ⭐⭐；按切点换一镜升 ⭐⭐⭐；白模几何被照画、比喻／生理描写被画成实物 ⚠️首次。含助手误判七条（按单样本推价格多花 1150、绕开产品设计的路等）</li>
+<li><a href="/above-the-web/libass-v1-f10b402/" class="wikilink">影视级双语字幕_中上英下与libass逐镜头烧录_v1</a> —— 作者判 Remotion 式胶囊字幕“廉价”后的规范：中上英下、无框、硬切、按语音定时（Netflix 行长/读速/20 帧/不跨剪切点），思源黑体静态字重（libass 用可变字体会落到 Thin），逐镜头 ASS 烧录，浅色画面按字幕在屏帧的实测亮度垫柔和压暗；</li>
+<li><a href="/above-the-web/v1-5899ba4/" class="wikilink">游戏宣传片实录_引擎逐帧录制与脚本代打_v1</a> —— 游戏画面不录屏、不让 AI 画：Godot Movie Maker 逐帧录制 + 副本里挂驱动脚本 push_input 代打 + 演示存档 + 反推种子让游戏自己抽出指定钓获；只拍真实机制，改剪辑时长可重录，同套路还能复现手机布局截图；</li>
+<li><a href="/above-the-web/v1-ad701a9/" class="wikilink">跨镜道具锁定律_资产图优于形容词_v1</a> —— 道具出现在两个以上镜头就要有专属参考图；形容词治不了跨镜不一致（同一封信的蜡封在四镜里出现三种状态），资产图要成套并先互相比色。⭐⭐</li>
+<li><a href="/above-the-web/v1-5ee9070/" class="wikilink">按切点重拍_省的是生成时长_v1</a> —— 生成按时长计费（1080p 实测 65–70 分/秒），CLI 没有局部重绘；用场景检测找切点、相邻帧锁站位，只重拍出问题的那几秒。⭐⭐</li>
+<li><a href="/above-the-web/2026-09-16-v1-11febd5/" class="wikilink">2026-09-16_余温_持物与行进方向修复复盘_v1</a> —— M02 袖位与转身返回修复：左手持袖、右手摘冠、侧前方让路、沿既定方向前进；作者实片通过，单案观察。M03–M05 动作容量与空间调整仍待实片验证。</li>
+<li><a href="/above-the-web/2026-09-06-v1-47fea6b/" class="wikilink">2026-09-06_余温_分段蒙太奇与原片重配声音_阶段复盘_v1</a> —— 30秒扩至120秒蒙太奇；原生音轨跨段不连续，单次视频参考重配声音、提取音轨配回原片及尾音修整获作者认可。721帧保留；全片声音与发布未完成，单案观察。</li>
+<li><a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a></li>
+<li><a href="/above-the-web/v1-7d210aa/" class="wikilink">白底上的白事件等于没发生_v1</a> —— 选事件前先看底图影调:白气在白雾底上完全执行却几乎不可见(亮度实测 87.6→94.8 悬停到底,整幅仍看不出);高调片的动能只能交给深色主体/硬高光/结构性纹理 ⚠️首次</li>
+<li><a href="/above-the-web/v1-05fe83f/" class="wikilink">氛围曲的结构在音色不在响度_v1</a> —— 无词哼鸣/ambient 没有响度乐段,RMS 找不到结构点,必须用频谱流量测音色变化;判据是<strong>body 跨度</strong>(掐掉首尾淡入淡出),全曲跨度会被淡入撑大而误报(本曲全曲 36dB / body 仅 17dB) ⚠️首次</li>
+<li><a href="/above-the-web/2026-08-26-v1-c69c850/" class="wikilink">2026-08-26_过风_雪雾珍珠人像动态写真_全链路复盘_v1</a> —— <strong>尚未发布、无平台数据</strong>;七次主创裁决我方预判命中 0 次(事实项可代理、气质项一次都不可代理,给「AI 预审≠主创裁决」补第三次验证);含我方误判六条全记录(把归因未完成的库内结论当硬约束/设计了物理上不可见的事件/没查库重复劳动两版封面/用错度量让检查虚假通过)</li>
+<li><a href="/above-the-web/cinemagraph-v1-ce0a684/" class="wikilink">cinemagraph微动作_待机层是真实感引擎_v1</a> ⚠️首次发现</li>
+<li><a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a></li>
+<li><a href="/above-the-web/v1-53f2101/" class="wikilink">音频也能蒙眼剪辑_突然静音是剪出来的_v1</a> —— Suno 给不出突然静音(无声不在生成分布),DROP 是剪出来的;代码读波形找乐章分界线、人审听感 ⚠️首次</li>
+<li><a href="/above-the-web/suno-v1-cb637cc/" class="wikilink">Suno时长控制_结构标签代替秒数_v1</a> —— 无时长参数,秒数写了没用;段落骨架数量≈时长(5-7段≈1min),[Outro]+[End]硬收尾,style词弱偏置 ✅50号快版首验(7段→78.8s一次命中)</li>
+<li><a href="/above-the-web/tts-asr-v1-18cdf62/" class="wikilink">TTS旁白也能蒙眼质检_ASR拼音级评分_v1</a> —— 无调拼音CER量咬字/有调差量声调多音字;多take选优,系统性声调偏差换稿不抽卡 ✅desk-pond首验(34.1%→0.8%) ⚠️首次</li>
+<li><a href="/above-the-web/v1-bf57d38/" class="wikilink">素材审片也能蒙眼_盲选靠标题定案靠眼睛_v1</a> —— 批量爬素材站标题与视频ID会错位,文件名只配盲选;定案靠抽3帧(20%/50%/80%)hstack条带图读图后按实际画面重命名 ✅50号快版素材大转向首验(39审24上场) ⚠️首次</li>
+<li><a href="/above-the-web/v1-9521a52/" class="wikilink">人耳打点吸附_卡点裁决权归人耳_v1</a> —— 选哪些拍归人耳(浏览器打点器),毫秒精度归算法(±0.18s吸附攻击峰-1帧);算法分不清预备拍/主拍,手打点自带乐句结构 ✅50号案例强验证</li>
+<li><a href="/above-the-web/v1-eb37094/" class="wikilink">卡点力度分层_冲击缓落与重刀亮闪_v1</a> —— 敲击感=时机准×力度分层:每刀冲击缓落(107%入画7帧弹回),重刀加2帧亮闪;均匀硬切=没有重点 ⭐⭐二次验证(快版os_v2三档ACCENTS扩展:mega/heavy/punch=缩放+白闪+RGB色散+微抖动+慢推镜)</li>
+<li><a href="/above-the-web/v1-6850112/" class="wikilink">盲剪匹配转场_步进抽帧扫动作相位_v1</a> —— match cut=动作相位对齐:粗扫0.25-0.5s/细扫0.1-0.2s步进抽帧钉顶点时间戳,出刀src_in=顶点-段长;空翻→水花/跳起→抓岩点 ✅50号快版os_v2首验 ⚠️首次</li>
+<li><a href="/above-the-web/2026-07-02-50-v1-657ae63/" class="wikilink">2026-07-02_50号学员作品集混剪_完整链路复盘_v1</a> —— 蒙眼剪辑法首个全链路教学样板(配乐→打点→渲染→文字主题层→迭代);含文字三层结构与”黑框遮字幕截断比露出更差”教训</li>
+<li><a href="/above-the-web/2026-07-16-codex-v1-13b837e/" class="wikilink">2026-07-16_Codex保姆级教学_代码化口播剪辑完整复盘_v1</a> —— 真人口播教学片全链路:26 张卡片+4 组图表+九章节进度条+实操截图,14 次生产记录迭代到最终版;沉淀安全区、截图替录屏和交付验证清单</li>
+<li><a href="/above-the-web/2026-08-24-v1-60852b9/" class="wikilink">2026-08-24_擦干净_从素材到动态化制片_全链路复盘_v1</a> —— 互动短片全链路阶段性复盘:即梦验证→主创否→MJ sref 重出→Suno 六段过审(S4 自动作词意外)→音频先行重排分镜→Seedance 2.5 全能参考动态化 13/17;沉淀”AI 视觉预审≠主创审美”与 <span class="wikilink wikilink--dangling" title="尚未发布的笔记">生成视频接入Remotion_编码先决律_v1</span> ⚠️首次</li>
+<li><a href="/above-the-web/2026-08-26-v1-5c8b145/" class="wikilink">2026-08-26_擦干净_剧本口径审计与补图承接位_复盘_v1</a> —— 互动短片补图轮:剧本同步飞书(知识库 skill 存档补齐链路)→<strong>照剧本审全部资产</strong>→8 条 MJ v8.2 补图 prompt→引擎侧承接位;<code>asset_check</code> 报 70/70 全绿而剧本口径审出 4 条 P0,沉淀 <a href="/above-the-web/v1-69498a6/" class="wikilink">绿勾只覆盖它自己那张清单_v1</a>;镜内切入不拆镜保住 S37=5158f 互动点,沉淀 <a href="/above-the-web/v1-89b7ead/" class="wikilink">镜内切入优于拆镜_保住下游帧锚_v1</a>;并依 <a href="/above-the-web/sref-v1-311be08/" class="wikilink">sref纯净性原则_v1</a> 裁决融合底图不挂 sref ⚠️首次</li>
+<li><a href="/above-the-web/2026-07-31-codex-19-v1-e56ff53/" class="wikilink">2026-07-31_Codex教程实战六_自动化录屏19段复盘_v1</a> —— 上篇的下游:用 humancast 自动录教学素材 19/19;拟人鼠标轨迹、输入法候选框标定回放、看应用状态指示器判 AI 完成、obs-websocket 录完即校验;含”观察行为拖垮被观察应用”(10Hz→4分钟 vs 2Hz→4.1秒) ⚠️首次</li>
+<li><a href="/above-the-web/v1-7f8ce8a/" class="wikilink">自动化产出双重验收_机器验参数人眼验内容_v1</a> —— 绿勾只说明”按脚本做完了”不说明”做对了”;机器验时长/分辨率,人眼抽帧验内容;两批合计拦下6条参数全对内容全错的素材 ⭐⭐⭐三次验证(铁律);2026-08-05 补边界:机器关本身也会失效并吐出”像真值的假数”</li>
+<li><a href="/above-the-web/v1-69498a6/" class="wikilink">绿勾只覆盖它自己那张清单_v1</a> —— <strong>检查项出自实现的体检器只能查「坏了」,永远查不出「少了」</strong>:清单靠正则扫代码里的 asset/video 字段生成,于是剧本要求却从没被引用的东西(露脸三连/卧室闪现/双结局画面)在它视野里连条目都不存在,跑一万次也是 70/70;要查缺项清单必须来自意图。与 <a href="/above-the-web/v1-7f8ce8a/" class="wikilink">自动化产出双重验收_机器验参数人眼验内容_v1</a> 互补(那条管深度,本条管广度)⚠️首次</li>
+<li><a href="/above-the-web/v1-89b7ead/" class="wikilink">镜内切入优于拆镜_保住下游帧锚_v1</a> —— 一镜之内切一下再切回来<strong>不要拆镜</strong>:拆镜会重算全片起点帧表,而下游已对外承诺的帧号(B站互动点 5158f、音频事件表)会跟着漂;改成在本镜时长内部硬切,时间轴一帧不动。含四条细节(硬切不加淡/切走收字卡/素材未到位整段忽略/闪现给 push:1)与「什么时候反而该拆镜」⚠️首次</li>
+<li><a href="/above-the-web/2026-08-05-v1-7db25e0/" class="wikilink">2026-08-05_后室大逃亡配音工序_四音色定版复盘_v1</a> —— Eleven v3 四角色音色定版;把梗当气质参考,12 个候选作废 9 个(与原参考差 6 个半音),改走 IVC 克隆后 0.4 个半音;基频尺子在游戏战斗语音上失效(众数堆搜索区上限);tag 探针 3 音色×4 组零泄漏 ⚠️首次</li>
+<li><a href="/above-the-web/2026-08-08-s45-s48-v1-d4f40a9/" class="wikilink">2026-08-08_后室大逃亡S45-S48_运镜与跨镜一致性返工复盘_v1</a> —— 接手无人认领的收尾段,14 次生成两轮;<strong>构图不变量锁位置不锁幅度</strong>(同套话术全景起手 3/3 成立、近景起手 3/3 全破,主体被推到填满画框);<strong>尾帧接力管不住小尺度面部重建</strong>(250px 大特写尾帧照样一步崩成 35+ 中年脸,必须另挂角色资产图);空间关系是一张网,改运动方向要重算「谁在谁身后」;评审说「读成 X」先问是字还是音(我按错的轴返工一轮);读音修正只动目标音素,否则表演一起被改;改一段 prompt 会引起无关处退化(人群退化成卡通矢量小人) ⭐⭐二次验证 · 🔴复盘写于评审前,结果未知</li>
+<li><a href="/above-the-web/2026-08-01-codex-2-4-19-v1-5f86653/" class="wikilink">2026-08-01_Codex教程清单2-4_三项目19段录屏复盘_v1</a> —— 同工具录清单2/3/4(台风实况站/朱元璋K线/工位池塘)19/19;工具零改动复用,失败全部出在”版面前提”而非动作本身;含”真实线上项目当素材:发完立刻停,双证据复核没被改”</li>
+<li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/" class="wikilink">2026-08-13_Codex教程操作部分_26段重录复盘_v1</a> —— 接手一批「参数 100% 合格、内容几乎 100% 错误」的素材重录,19/26;四个根因(中文打不进去/新开窗口没挪到录制屏/坐标落在空白/窗口找错)全在”舞台上站着谁”;含交接文档与需求原文冲突的发现与裁决;新增 stage.py 窗口调度层 ⚠️首次</li>
+<li><a href="/above-the-web/2026-08-14-codex-v1-c53b251/" class="wikilink">2026-08-14_Codex教程录制链路打磨_复盘_v1</a> —— 战略转向:暂停录新内容,先打磨链路;preflight 11 项自检(—fix 全自动拉起)+ 三道机器关(新增内容指纹)+ 录制看门狗,全部实测;含”判据阈值必须两端实测标定”(白底错页灰度差仅 14.3%,45% 直觉阈值形同虚设)</li>
+<li><a href="/above-the-web/v1-f4e2df1/" class="wikilink">录屏分镜按确定性分层_生成性镜头逐字稿后配_v1</a> —— 录制可靠性由镜头对 AI 随机输出的依赖度决定:确定性镜头才配得上按逐字稿复刻,生成性镜头先录真实输出、逐字稿后配(或降级成”只录下指令”);数据:确定性系列 7/7 一次过 vs 生成性镜头反复失败,工具链恒定 ⚠️首次·补录批次待验证</li>
+<li><a href="/above-the-web/ui-v1-5a2fb47/" class="wikilink">UI自动化的固定坐标必须绑前提断言_v1</a> —— 硬编码坐标的前提不成立时不会报错,它会落在别的控件上照常执行(一次Ctrl+A+Delete清空18KB文档);断言写在动作前,破坏性操作必过;三验把前提从”版面”扩展到「窗口身份」「应用视图」 ⭐⭐⭐三次验证</li>
+<li><a href="/above-the-web/xremotion-v1-27cb9ce/" class="wikilink">短视频批量分发方案_蒙眼剪辑法xRemotion_v1</a> ⭐ 母版+批量分发抖音/B站/快手</li>
+<li><a href="/above-the-web/2026-06-26-pilot-0-1-v1-f82995a/" class="wikilink">2026-06-26_反诈柜台短视频pilot从0到1复盘_v1</a> —— Playwright录屏不吃dsf/确定性?case=入口/音色去机械化双旋钮 ⚠️首次</li>
+<li><a href="/above-the-web/v1-cc1661d/" class="wikilink">知识科普片节奏诊断与重构_v1</a></li>
+<li><a href="/above-the-web/v1-060c5fa/" class="wikilink">资产配对生成传播母题_v1</a></li>
+<li><a href="/above-the-web/ai-totalpixelspace-v1-07886c3/" class="wikilink">概念推演型AI短片_TotalPixelSpace_v1</a></li>
+<li><a href="/above-the-web/ai-jailbird-v1-20e6676/" class="wikilink">现实悖论型AI短片_Jailbird_v1</a></li>
+<li><a href="/above-the-web/ai-thewindshieldwiper-v1-01329e3/" class="wikilink">多线交叉型AI短片_TheWindshieldWiper_v1</a></li>
+<li><a href="/above-the-web/ai-icemerchants-v1-4c02144/" class="wikilink">强对比型AI短片_IceMerchants_v1</a></li>
+<li><a href="/above-the-web/ai-v1-d98a2a3/" class="wikilink">剧情向AI短片创作方法论_丧尸清道夫案例_v1</a></li>
+<li><a href="/above-the-web/ai-pv-v1-6d560e0/" class="wikilink">AI角色PV制作方法_情绪图到设定板_v1</a></li>
+<li><a href="/above-the-web/2026-05-24-30-pv-v1-e4228dd/" class="wikilink">2026-05-24_30项目_角色PV发布复盘_v1</a></li>
+<li><a href="/above-the-web/mv-v1-d1ecf2c/" class="wikilink">青春记忆MV_四镜头组验证法_v1</a></li>
+<li><a href="/above-the-web/v1-787da21/" class="wikilink">图片占位到视频替换的工作流_v1</a></li>
+<li><a href="/above-the-web/2026-06-08-remotion-mj-seedance-v1-5120fe3/" class="wikilink">2026-06-08_Remotion_MJ_Seedance混合动画闭环复盘_v1</a></li>
+<li><a href="/above-the-web/2026-06-08-remotion-v3-v1-092ade9/" class="wikilink">2026-06-08_Remotion正式小片段v3复盘_v1</a></li>
+<li><a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/" class="wikilink">2026-06-09_Remotion全片音频字幕BGM复盘_v1</a></li>
+<li><a href="/above-the-web/remotion-v1-3c6609d/" class="wikilink">Remotion正式小片段实验工作流防偏移_v1</a></li>
+<li><a href="/above-the-web/l-cut-xfade-v1-af75393/" class="wikilink">L-cut卡点+xfade时长抵消_v1</a></li>
+<li><a href="/above-the-web/mv-v1-0be1fac/" class="wikilink">MV 卡点工具 · 画框陷阱</a></li>
+<li><a href="/above-the-web/suno-v1-f32f73e/" class="wikilink">Suno配乐制作分享_v1</a></li>
+<li><a href="/above-the-web/suno-v1-1-0ee403e/" class="wikilink">Suno两阶段工作流_v1.1</a></li>
+<li><a href="/above-the-web/reference-suno-v1-02d748b/" class="wikilink">参考曲复刻法_reference曲到Suno提示词_v1</a> —— 有参考曲时拆「四层配方(乐器/参数/风格血统/气质词)」+ 四杠杆(速度/噪度/编制/留白)按反馈定向逼近;含「大气≠快」子洞察 ⚠️首次</li>
+<li><a href="/above-the-web/suno-v1-6d5ca8c/" class="wikilink">Suno版权过滤器规避_v1</a></li>
+<li><a href="/above-the-web/vocal-gender-prior-v1-8eddad6/" class="wikilink">Vocal_Gender反选_风格prior_v1</a></li>
+<li><a href="/above-the-web/2026-06-10-suno-v1-18c768f/" class="wikilink">2026-06-10_为什么不早说_Suno粉丝梗歌复盘_v1</a></li>
+<li><a href="/above-the-web/2026-06-07-stay-alive-ai-mv-v1-5aba73f/" class="wikilink">2026-06-07_Stay_alive_AI音乐公益MV复盘_v1</a></li>
+</ul>
+<h3 id="05_prompt与工具方法">05_prompt与工具方法</h3>
+<p>Prompt 写法、工具选择、审核机制、LLM 工作流和工具边界。</p>
+<ul>
+<li><a href="/above-the-web/prompt-v1-244d8dc/" class="wikilink">prompt极简化原则_v1</a></li>
+<li><a href="/above-the-web/v1-4c4054a/" class="wikilink">用错度量会给出虚假通过_v1</a> —— 「用了数据」≠「量对了」:查「有没有一处不合格」必须用 min/分位而非 mean,取样要贴真实产物而非外接矩形;同一逻辑在一个项目里连犯两次(写检查时、否定自己脚本告警时) ⚠️首次</li>
+<li><a href="/above-the-web/v1-ceeb9f4/" class="wikilink">默认落点的资产负债判断_v1</a> —— 给「负面词的预防式接种」⭐⭐ 划边界:<strong>接种之前先分类</strong>,同一个默认落点在 A 题材是陷阱、在 B 题材是资产;误把资产当负债压掉 = 自己拆掉唯一免费的机制(1940s 老上海封面 <code>--no calendar girl</code> 一案) ⚠️首次</li>
+<li><a href="/above-the-web/prompt-v1-18bdb30/" class="wikilink">已有prompt的七步体检律_v1</a> —— <strong>综合档,无新证据</strong>:把库里既有规律排成「拿到一条跑不对的 prompt」的体检次序(查冲突→删形容词→数重复→补具体→改打光→清 —no→补参数锁属性);核心是<strong>先减后加</strong>,顺序反了会在臃肿 prompt 上继续加锁</li>
+<li><a href="/above-the-web/mj-v1-8cae35c/" class="wikilink">MJ关键属性三重锁定律_v1</a> —— 关键属性(年龄/衣着/新旧)单弱信号词必漂移;正锚+负排除+环境参照三重锁定(worn→脏污/数字年龄被无视两轮学费) ⭐⭐</li>
+<li><a href="/above-the-web/mj-v1-8cae35c/" class="wikilink">MJ关键属性三重锁定律_v1</a> —— 关键属性(年龄/衣着/新旧/<strong>尺寸·位置</strong>)单弱信号词必漂移;正锚+负排除+环境参照三重锁定(worn→脏污/数字年龄被无视两轮学费;2026-08-23 跨项目第三例 <code>very narrow</code>→四张全偏到17%<strong>且方向一致</strong>,说明不是随机漂移) <strong>漂移侧⭐⭐⭐ / 修法侧⭐⭐</strong></li>
+<li><a href="/above-the-web/v1-85d6168/" class="wikilink">骨架篇幅即权重_v1</a> —— 一组图成套不一定要 sref:骨架里”要锁的那个东西”写到材质+形状+部件+排布四层(53词/占骨架一半),同句骨架自己就是锚;写薄的成分(10词)照样漂——实测装置跨度10点 vs 地平线26点。<strong>要锁的写细,不锁的删掉,中间地带最亏</strong> ⚠️首次(无A/B对照,personalization未控)</li>
+<li><a href="/above-the-web/v2-0865dae/" class="wikilink">动作错做减法_风格错辨顺逆_学员答疑案例_v2</a> —— 出图错先分类:动作错查矛盾指令+弱信号做减法,风格错辨顺逆默认(逆默认换工具或重复+具象+反向);niji6动作漂移/niji7吉卜力失灵一案双坑 ✅✅两项回验全命中(niji6修正版一次中/niji7反默认配方4/4,含去—no消融)</li>
+<li><a href="/above-the-web/v1-17a9e43/" class="wikilink">物品先分档_像素级换工具_学员答疑案例_v1</a> —— 学员问「MJ 怎么控物品一致性」:先分三档(同款调性/跨图可辨认/像素级同一件),前两档 MJ 做得到且<strong>比锁脸容易</strong>(物品是几何+材质+结构,恰好语言能精确传递;装扮件 4/4 vs 五官 0/4),强档无通道必须换工具(oref 仅 v7、sref 管质感不管身份、<code>--sw</code> 拉满补不出图里没有的信息)。<strong>综合档,零新实测</strong>,新增的只有三档编排 + 「物品比脸好锁」推论 ⚠️</li>
+<li><a href="/above-the-web/v1-bc3b75a/" class="wikilink">伪机制解释识别_四层拆解法_v1</a> —— 工具解释按现象/机制/根因/药方四层分开裁决;伪解释形态=“现象对+机制编数字+根因错位+药方半对”,裁决权归实测反证(“70/30算力说”案例) ⚠️首次</li>
+<li><a href="/above-the-web/prompt-v1-b768695/" class="wikilink">prompt的四段式结构_v1</a></li>
+<li><a href="/above-the-web/prompt-v1-e4e840d/" class="wikilink">情绪散文当prompt主体_v1</a> —— 反向玩法:散文独白当主体,发散捞惊喜(↔ 极简化的收敛可控)</li>
+<li><a href="/above-the-web/v1-f9ea0de/" class="wikilink">新模型试跑_硬锁清单先行_v1</a> —— 新模型质感兴奋掩盖设定违规;入库前逐条过角色卡硬锁,修复走最小变量补跑+sref ⚠️首次</li>
+<li><a href="/above-the-web/v1-1364ab6/" class="wikilink">指定对象与气质描述_生成路径分岔律_v1</a> —— 需求里的作品名/角色名分两类:<strong>观众要不要认出来</strong>;要=指定对象只能用克隆/图生图保住原始特征,不要=气质描述才能用生成式;误读方向永远是把指定对象当气质描述,且做出来的东西本身合格所以能一路过自查 ⭐⭐二次验证(图像域梗参考图+声音域音色克隆)</li>
+<li><a href="/above-the-web/v1-36a17cf/" class="wikilink">冷门风格词的压缩律_v1</a> —— 一个冷门载重风格词独自承载整套复合美学,prompt 收到「风格词+主体一句话+景别」(Monnem design 实例 ✅,通则 ⚠️)</li>
+<li><a href="/above-the-web/v1-8900f9c/" class="wikilink">视觉欺骗的影子解耦渲染法_v1</a></li>
+<li><a href="/above-the-web/nano-v1-17ac551/" class="wikilink">Nano场景换机位_四段锚定法_v1</a></li>
+<li><a href="/above-the-web/nano-v1-ce5a83d/" class="wikilink">Nano换屏图像融合_指令式编辑法_v1</a></li>
+<li><a href="/above-the-web/vs-v1-c7b40a4/" class="wikilink">生成式vs编辑式工具选择律_v1</a></li>
+<li><a href="/above-the-web/vs-api-v1-78e5a50/" class="wikilink">出图机制优先律_智能体原生出图vs盲调API_v1</a> ✅100张量产验证 —— 同套prompt,智能体看图自纠出图=参考级,盲调一次成API=错字/截断/脸漂</li>
+<li><a href="/above-the-web/v1-bf40113/" class="wikilink">概念锚定_风格置换迭代法_v1</a></li>
+<li><a href="/above-the-web/v1-2490c43/" class="wikilink">风格基底前置决策_v1</a></li>
+<li><a href="/above-the-web/aigc-v1-cf70ff6/" class="wikilink">AIGC构图意图层_v1</a></li>
+<li><a href="/above-the-web/skill-v1-92b7e40/" class="wikilink">SKILL入门完全指南_v1</a></li>
+<li><a href="/above-the-web/node-js-ai-v1-867c7f9/" class="wikilink">Node.js是什么_AI工具底座常识_v1</a></li>
+<li><a href="/above-the-web/aigc-skill-remotion-v1-ae3aad4/" class="wikilink">AIGC_Skill到Remotion视频闭环_v1</a></li>
+<li><a href="/above-the-web/coze-v1-dfdaae5/" class="wikilink">Coze技能包创建待验证操作路线_v1</a></li>
+<li><a href="/above-the-web/ai-v1-5920834/" class="wikilink">AI图像生成审核机制探索笔记_v1</a></li>
+<li><a href="/above-the-web/prompt-v1-b33fa9c/" class="wikilink">负面词计入prompt浓度_v1</a></li>
+<li><a href="/above-the-web/mj-v1-5effa57/" class="wikilink">MJ出图绕开抠图陷阱_v1</a></li>
+<li><a href="/above-the-web/vsgpt-v1-728d36b/" class="wikilink">代码生成vsGPT图像_工具选择假说_v1</a></li>
+<li><a href="/above-the-web/gpt-v1-ccfda01/" class="wikilink">GPT图像一次性生成中文分镜表_v1</a></li>
+<li><a href="/above-the-web/gptimage2-v1-8e064e4/" class="wikilink">GPTImage2游戏动作精灵图_三段锁定法_v1</a> —— 参考图硬锁+网格排版规范+逐行动作分解,一张定妆图直出绿幕动作关键帧精灵图;四视图定妆表可按行锚定视角 ✅首验(两案例)</li>
+<li>⭐ <a href="/above-the-web/v1-fa343e8/" class="wikilink">标签相同不等于行为相同_第三方代跑平台律_v1</a> —— 一句话律:第三方平台标着同名模型 ≠ 同一份能力,通道/文件级能力(alpha、位深、比例)易被交付层压掉,且模型会画个”看起来对”的伪造品填坑(liblib 内置 GPT 的透明底=画上去的灰白棋盘格,换 GPT 官网即真 alpha);判据靠验通道不靠眼睛 ✅二例(跨工具族,由 <a href="/above-the-web/mj-niji5-v2-1153ad3/" class="wikilink">MJ_niji5_行为档案_v2</a> §10.5 升格)</li>
+<li><a href="/above-the-web/llm-plan-v1-c7edaf7/" class="wikilink">LLM-plan卡点工作流_v1</a></li>
+<li><a href="/above-the-web/webapp-webuploadapp-v1-0dffe3c/" class="wikilink">轻量级WebApp部署尸检_WebUploadApp_v1</a></li>
+<li><a href="/above-the-web/2026-06-11-oref-v1-edd6c13/" class="wikilink">2026-06-11_晴枝发布复盘_oref污染与工具回归_v1</a></li>
+<li><a href="/above-the-web/v1-5d06084/" class="wikilink">代码排版小红书封面工作流_v1</a></li>
+<li><a href="/above-the-web/mac-windows-zip-hevc-v1-35696a3/" class="wikilink">Mac素材包到Windows的两个坑_zip文件名编码与HEVC解码_v1</a> —— 假文件夹伪装mp4(zip文件名UTF-8被GBK读乱)+HEVC缺解码器0xc00d5212；三步排查:验明正身→ffprobe→转码/换播放器</li>
+<li>⭐ <a href="/above-the-web/aa-v1-fecad09/" class="wikilink">模型排名科学性律_五层评估框架与AA拆解_v1</a> —— 完全科学的排名不存在,但比 Artificial Analysis 更科学的框架可定义:任务分层→私有+动态数据集→多裁判交叉→统计严谨→元评测;AA 满足约 2.5 条,LMArena 约 2 条,厂商自报 0 条;榜单用来 narrowing 不用来 choosing ⚠️首次</li>
+<li>⭐ <a href="/above-the-web/gpt-6-astra-v1-b8f3da9/" class="wikilink">推理档位单因归因陷阱_GPT-6_Astra档位与额度六因子官方查证_v1</a> —— 热传「GPT-6 Astra 推理等级怎么选」科普文的技术层查证:文章机制层全对(同模型不同预算 / Ultra=max+自动派发子代理),错在把官方<strong>六因子</strong>(模型/上下文/推理/工具/检索/缓存)讲成单因子、漏掉 <strong>Fast 2.5 倍</strong>、并在 xhigh→max 上给出与 AA 数据相反的建议(53 vs 53,成本 +40%,尴尬的是 max 不是 xhigh);含我自己被费率表纠正的三处(「推理是二阶变量」撤回:输出费率是缓存输入 50 倍,<strong>机制对不等于量级对</strong>);额度体检四问(Fast/会话长度/档位/Ultra 可拆性)⚠️首次 · 对外版已发飞书</li>
+<li><a href="/above-the-web/v1-2b5d5a8/" class="wikilink">断裂网格杂志海报排版工作流_v1</a> —— 一张连续图切进断裂网格、缝隙露底的杂志海报:整图铺满网格区、逐格开窗,不是拼缩略图</li>
+<li><a href="/above-the-web/v1-570ac7a/" class="wikilink">空间关系归几何不归形容词_v1</a> —— 光影、站位这类空间关系由场景几何决定,要改结果就改景别 / 站位 / 光源,不是加词</li>
+<li><a href="/above-the-web/2026-06-04-mj-v1-5567bf4/" class="wikilink">2026-06-04_虚拟形象设计复盘_直播头像MJ迭代_v1</a> —— 直播虚拟形象「双面材质脸」的 MJ 迭代复盘</li>
+<li><a href="/above-the-web/skillisallyouneed-v1-e5aa0cb/" class="wikilink">SkillIsAllYouNeed_视频脚本_v1</a> —— 《Skill Is All You Need》50 秒科普视频脚本</li>
+</ul>
+<h3 id="06_协作运营与发布">06_协作运营与发布</h3>
+<p>Claude / Cowork 协作、复盘机制、平台发布、流量判断和赛制策略。</p>
+<ul>
+<li>
+<p><a href="/above-the-web/claude-code-worktree-v1-7ac707a/" class="wikilink">Claude_Code_Worktree隔离的协作陷阱_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a></p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/v1-ea91460/" class="wikilink">跨阶段决策边界对位核验律_v1</a> —— 复审不是孤立打分,是跨阶段边界对位:评价阶段产物前,先把上一阶段已过审的「什么不做」清单拉过来逐条核验,把「做多了」的预算推回到「缺了」的缺口上;单案提炼,待二次验证 ⚠️首次(《蜉蝣》8/10 设定包品控:学员做了完整军官/陈叔/蜉蝣虫的预算该挪给场景⑤培养舱零素材的缺口)</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-a1d4663/" class="wikilink">交接文档不是需求原文_接手先回溯上游_v1</a> —— 需求转述须对原文，现场状态须重新测量；录屏需求相反与前置音频交接过期两个领域案例，不能把根因假说封成执行前提。</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-09-07-v1-183d96d/" class="wikilink">2026-09-07_前置音频修复_插孔检测与交接复核复盘_v1</a> —— 前置耳机已插却被判为未插入；绕过检测后端点恢复、作者确认左右声道正常。保留单机与未测重启边界，并纠正旧交接的型号、版本和根因推断。</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/2026-09-08-workbuddy-v1-2-v1-d3c41fb/" class="wikilink">2026-09-08_WorkBuddy录屏公告与录制标准v1.2_协作复盘_v1</a> —— 录屏群公告 +《屏幕录制标准》v1.1→v1.2 双写收口（命名/打包/静音录制/脚本非必须/字幕不需要五组改动+变更记录）;头号教训「<strong>指称词≠标题词</strong>」:grep「录屏规范」全库零命中,真身是腾讯文档《屏幕录制标准》且本地无副本——找”上次写过的文档”先扩同义词族、本地两轮 miss 即转云端文档源,报找不到时附占位草稿不空手 ⚠️首次;⭐⭐「程序化编辑自底向上改+每刀 find 复验」在腾讯文档 GCP 坐标系二次验证(残字「发挥挥」被复验抓出);⚠️表格行号 0-based 以 schema 参数为准(工具散文描述写错)首次;⭐⭐「公告口径与标准文档同轮回填」再验证——改口径不改标准=主动制造两个真相源</p>
+</li>
+<li>
+<p><a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/claude-opus-4-8-v1-ea52fea/" class="wikilink">Claude_Opus_4.8行为实测_v1</a></p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/dws-index-v1-c5e1bec/" class="wikilink">dws块级插入_index语义陷阱与倒序插入法_v1</a> —— <code>dws doc block insert --index N</code> 语义是「插入到 N 处」不是「插到 N 之后」,与 <code>--where</code> 混用不报错只静默插错;多段连续插入正解=锚定块 ID + 同一锚点倒序插入,插完 list 校验顺序;附口播脚本只交付纯口播文字、剪辑标注由作者自加的协作边界 ⚠️首次</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/2026-09-15-mention-v1-8393eba/" class="wikilink">2026-09-15_钉钉逐字稿引言与过渡话术补写_占位符原地改写与mention保留_v1</a> —— 上篇续篇(同文档 4 处补写):<strong>正文里写着「过渡话术」的段落是作者预留的槽位,不是任务说明</strong>——用户说”补一段过渡话术”时槽位往往已在那儿,正解是原地改写而非新增(插新段会留下”过渡话术”四字+重复内容),且槽位普遍挂 <code>@某人</code> mention 标注责任人,改写必须把 mention span 原样拼回 JSONML ⚠️首次;逐字稿案例引言骨架=承上→传统做法对比→本节定位+<strong>步骤数预告(往下数正文实际步骤)</strong>→成品展示句→制作步骤,引言插图片位之后、步骤预告插成品句之后的落位决定朗读顺不顺;过渡段只推<strong>一个差异维度</strong>(交付形态/谁先开口),不复述上一节已讲完的方法论;⭐「数字对齐计数源」跨场景二次验证——新写内容同样不能凭印象填数字;附 PowerShell→Python 传中文参数的编码坑(文本硬编码进 .py)、倒序插入法第三次验证</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-26-v1-0e13a0e/" class="wikilink">2026-08-26_周报整合钉钉周会手册_三轮修复与诊断反转复盘_v1</a> —— 周报整合三轮修复:⭐「白名单是场景律」(教程交付的禁表格白名单错套周报场景,表格被压成文本引发返工)+⭐「复诊先推翻上一轮归因」(沿用上轮”列表碎裂”误诊,JSONML 核验 listId 共享后诊断反转,真故障在表格);钉钉列表原生形态=共享 listId 的连续 p 块,判块数必误诊;插表格走 element 通道;同锚点 before 正序/after 倒序互为镜像;AI 交全量结构、作者终审做减法</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/2026-08-26-v1-726c42b/" class="wikilink">2026-08-26_即梦片场活动细则审阅_四类坑点清单_v1</a> —— 字节「即梦片场」长内容扶持细则审阅(电影≥90min/剧集单集≥3min,S/A/B定级):四类坑=文档硬伤(爆款分成「30w封顶5w」与12k/20k/50k阶梯自相矛盾)/利益条款(积分价值未定义致无法核算成本、竞品条款覆盖评论区、作品拿权益后永久禁删、S级收益上限)/法律条款(开场callout单方变更+规则优先于平台协议、核心商业授权全后置到另签协议)/执行操作(报名仅一次、商单排期对齐结算日、爆款72h自提);审阅四步法:数值交叉验证→权益翻译成成本账→划义务边界→识别单方变更组合 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/cowork-v1-2dc55e4/" class="wikilink">Cowork协作的接口文件模式_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-18-deepseekharness-v1-776a9b4/" class="wikilink">2026-08-18_DeepSeekHarness保姆级教程_两日全链路协作复盘_v1</a> —— 教程类两日全链路(口播补写/实操验证/对标移植/dws落库);一句话律「先实操后写稿」;dws 8 坑全记录(并发写/引号转义/JSONML批注/内联图定位/headless限制);真实边界比完美演示更有教学价值;「（跳）」是作者署名标识不是待补标记 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-19-deepseekharness-mcp-v1-a93c3ec/" class="wikilink">2026-08-19_DeepSeekHarness教程收口日_MCP改写与录屏重录交接复盘_v1</a> —— 收口日:(跳)标注清零/25条录屏三分类交接/FAQ对标口播化;⭐「转述链衰减律」:C类”需要Mac”三轮转述越滚越实,读逐字稿原文一次即消解——执行前提的否定结论以原始材料为准,不以转述一致为准;dws 坑+3(\n\n只保留首段/CLI只能产paragraph致heading降级不可逆/正文在element子对象字段)</p>
+</li>
+<li>
+<p><a href="/above-the-web/pr-v1-b896304/" class="wikilink">个人项目免PR直推主分支_v1</a> —— 个人仓库不走 feature 分支+PR 流程，直接 commit &#x26; push main；PR 的价值在协作审核，自审无增量 ⚠️首次</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/git-v1-cc2dcd9/" class="wikilink">生成物不入git_v1</a> —— PDF/exe/pck/zip 等可重建生成物一律不入库:进历史永久占体积,删文件降不回来(v0.7”瘦身57MB”清的只是工作区);放仓库外产物目录或 Release 附件;<strong>已commit未push是最后低成本补救窗口</strong>(reset —soft+移出+gc —prune=now,.git 140M→129M) ✅当场验证</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-afcd606/" class="wikilink">长期更新展示站_两层结构与无头卡片量产_v1</a> —— 系列站首页改「分类封面墙+详情」两层数据驱动;配图卡用 HTML→Chrome 无头截图量产</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-d1440b9/" class="wikilink">知识库网站免备案上线_香港轻量服务器方案_v1</a> —— 免备案让国内可访问=海外(香港)服务器+域名指过去;含云安全组漏开443、代理fake-ip污染诊断、CI构建+rsync等踩坑</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/" class="wikilink">2026-06-26_桌面应用打磨发布闭环复盘_工位池塘v0.5.0_v1</a> —— 打磨→发布→引流工程闭环;含「已验证vs未验证」交付诚实表、审美先出真实尺寸预览、布局量DOM不量像素 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-10-06-v0-6-2-issue-v1-9f291ee/" class="wikilink">2026-10-06_工位池塘v0.6.2_老issue分诊到三端发版_复盘_v1</a> —— 两个开了 82 天的 issue 一次会话关掉并三端发版：<strong>老 issue 在报告者的版本上复现、在 HEAD 上量</strong>(676 坐实「早修好但没发版」,644 抓出更小的同类问题);Godot 布局预算写进注释 + 无头测试守住,测试先改回旧值确认会红;浏览器辅助发版的 10 MB 上限、GitHub 编辑器自动续写列表、作者手动时别并行操作;给作者报的数字从结构化字段读(模板 169 MB 实为 1198 MB 的失误) ⚠️首次</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— 别交付”应该能行”的假方案:交付前写最小探针证伪(TZ环境变量/SAPI当场证伪,避免静默失效);证伪在交付前↔核查在交付后↔复盘在事后 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-02-livelink-v1-02b433b/" class="wikilink">2026-08-02_LiveLink断线重连重做与视觉系统_迭代复盘_v1</a> —— 三条根因全在第三方库(token永不失效/close()停不掉/心跳丢一次即永久停摆),解法是关掉它自己接管;三次自我纠错:旧检出上开发差点回退13个提交、把DPI截图假象当bug写进已发布release notes、整屏截图抓到无关窗口 ⭐⭐</p>
+</li>
+<li>
+<p>⭐⭐ <a href="/above-the-web/v1-2885b47/" class="wikilink">约束型结论先复核律_文档写的不可能会过期_v1</a> —— <strong>写在自己文档里的「不可能」会过期，而它在替你裁剪方案空间</strong>：zombie-world 的 README 长期写着「租公网服务器不成立」，于是两个月的联机设计全在「怎么不用服务器」里打转——SSH 上去发现服务器早就部署好、跑了 23 天，缺的只是域名和证书；同一轮里还复述了一个真机已排除的 iOS 权限猜想。判据是<strong>代价不对称</strong>（复核 5 分钟 vs 否决一个方向）；与 <a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a> 的区别：那条是「我还在找但找不到」，这条是「连找都省了」 ⭐⭐同轮两次</p>
+</li>
+<li>
+<p>⭐⭐ <a href="/above-the-web/v1-63180a1/" class="wikilink">沉默失败先装嘴律_够不到的环境先给它一层能看见的报错_v1</a> —— <strong>失败不报原因时，第一件该修的不是那个 bug，是「它不说话」</strong>：zombie-world 的 iOS 触屏连改两轮都没中，因为手机没有控制台，一处 throw 就是整块功能静默消失，回来的信息永远只有「就是不行」。修法的长期价值不在 try/catch，而在三层观测——<strong>在所有脚本之前</strong>装会显示到屏幕的错误捕获（不是 console）、关键链路做一份能截图的账目并把判读规则写进注释、报错要说「为什么」（拿不到握手状态码就绕去探 healthz）。判据=<strong>你够不到出问题的那个环境</strong>；本机能复现就别装。自带一个反例：诊断按钮做在了「操作说明」最底部，而那一屏在 iOS 上滚不动——<strong>等于装了个够不到的探针</strong> ⭐⭐同项目两轮</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-21-v1-35cad1d/" class="wikilink">2026-08-21_一小时分享会_从设计到投影现场_全链路复盘_v1</a> —— 当天做完当天讲：60 分钟分享的内容设计 + 50 页演示稿 + 现场实操段 + 顺手修 iOS 真机 bug + 追投影发糊。<strong>同一天三次把工具的假象当成产品 bug</strong>，形态完全一样（→ <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> 第四亚型）；唯一一次「先量再改」（投影糊）也是唯一一次一改就中——量出锐度是拉伸参照的 3 倍排除缩放，断网/联网逐像素相同证明字体一直没加载，真因是掉回宋体，修法是 916 字子集内嵌。另含：<strong>主诉描述症状，那条不相干的细节描述机制</strong>（「长按弹拷贝菜单」把范围从整条触摸链缩到「异常吃掉了 preventDefault」）</p>
+</li>
+<li>
+<p>⭐⭐ <a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a> —— 动第一行代码前先 <code>git fetch</code> 对基线:①代码库落后13个提交仍一路开发到写好发布说明,差点用”修复版”覆盖掉全部功能;②同一天知识库落后14个提交,导致穷尽搜索后把本该用的 skill 报告成”库里没有”——<strong>搜不到≠不存在,全库搜索下否定结论前先 fetch</strong> ⭐⭐同日两次;2026-08-10 补第三种形态:工具默认搜索范围限制(Glob 不覆盖 E 盘根目录的 pb-arena,零命中不等于仓库不在);2026-08-15 补自动化形态(SessionStart hook 用 ls-remote 对基线)</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/v1-c08b22e/" class="wikilink">破坏性操作先写停止条件律_v1</a> —— 把不可逆操作交给别人(人或 agent)执行时,<strong>「什么情况下该停」的优先级高于「要做什么」</strong>:步骤写错了会返工,停止条件漏了没法返工。实证=给 agent 的换系统盘交接单里真正起作用的是「红旗检查」一节,它查出机器上跑着别人的在线备案站并中止;停止条件要写成可当场判真假的观察、写清为什么是红旗、把身份核对放第一条、明确停下来之后做什么。<strong>对 agent 尤其必要:它缺的不是能力是立场</strong>;反过来,写不出停止条件说明你自己也不知道什么情况下这事不该做</p>
+</li>
+<li>
+<p><a href="/above-the-web/refs-wip-v1-6fa6b25/" class="wikilink">忘提交的机器兜底_refs-wip快照三件套_v1</a> —— “忘记提交”是三个失败模式(没想起git/commit忘push/开工在旧基线),各配一层机器兜底:计划任务每小时把工作区快照推到 refs/wip/&#x3C;机器名>(commit-tree+临时索引,不碰分支暂存区,force只留最新)+post-commit自动推送+SessionStart对基线;大仓库检查用 ls-remote 不用 fetch;安全分类器拦持久化动作=AI写好实测、人跑一条deploy的分工线 ✅当场验证(家机三层全链路)</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/v1-ff371f2/" class="wikilink">重启才好是缓存了时效凭证的指纹_v1</a> —— 用户说”只能重启才好”=进程内缓存了带时效凭证且无失效路径;三级重来(重连/重开对象/重启进程)的差异把嫌疑压到模块级缓存;失效判断用权威信号不用时间,但要配短TTL防风控 ⚠️首次</p>
+</li>
+<li>
+<p>⭐⭐⭐ <a href="/above-the-web/v1-75dde95/" class="wikilink">可行性生死线前置律_移植先探一票否决约束_v1</a> —— 移植/换平台先探那个”不达标就整件事作废”的杀手级约束(3D游戏→Web=帧率),再修正确性;粗糙构建就能量生死线,别先把字体/精灵/输入打磨完才让它接受判决(LastStand→Toy 修了三四轮外观、用户一句”帧率低”叫停) ⭐⭐⭐三次验证·铁律;2026-08-08 补新维度:<strong>生死线的成本与被遗漏概率成反比</strong>——技术型(帧率/包体/内存)要花力气量,反而被郑重对待;<strong>权限型(账号等级/API配额/区域限制)一条只读命令就能问,便宜到不像任务,于是排到最后</strong>;2026-08-20 补<strong>认证型</strong>第三案(Cloudflare 信令写完 22 条测试才发现 wrangler OAuth 在本机不可能完成——dash 域名对 CLI 返回 bot 挑战页):<strong>选定外部平台后第一件事是跑通 hello-world 级部署,再写业务代码</strong></p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-07-14-vpn-guard-v1-7eff1d0/" class="wikilink">2026-07-14_vpn-guard从工具到宣传片_全链路复盘_v1</a> —— 需求→工具→开源→封面→宣传片全链路;脱敏自己隐私、可复现产线(config逻辑分离/音频先行/占位替换)、克制借势(引现象不点名)、人机共创暗线(真实git Co-Authored-By收据)</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-07-16-librecanvas-v1-4-v1-c9488bc/" class="wikilink">2026-07-16_LibreCanvas开源画布_单日十版从立项到v1.4复盘_v1</a> —— 涨价怒气→调研证伪→MIT自研→单日十版上线;BYOK纯静态=隐私即架构、权限红线变CI降级特性、单版单主题当场验证、README与实物同步是收尾硬步骤 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-07-20-k-v1-4c8ee3b/" class="wikilink">2026-07-20_朱元璋K线人生_历史可视化迭代复盘_v1</a> —— 固定图表→跟随传记;揭示进度/镜头/节点强调/布局占位解耦，稳定焦段消除拉伸，参数面板开放真正的叙事变量 ⚠️首次</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/v1-9c3eb59/" class="wikilink">伪开源三查律_v1</a> —— GitHub公开仓库≠开源:查源码有无/OSI许可/禁衍生条款;三查不过只能拿功能清单当灵感;伪开源扎堆=真开源生态位空(许可证即市场调研) ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-5d049d6/" class="wikilink">浏览器插件自动化的能力边界_v1</a> —— 插件能填表点选,但登录/验证码/发布、文件上传沙箱、被拦域名三类必须人来 ⭐⭐</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-18d2859/" class="wikilink">自动化判据取结构不取文案_v1</a> —— 判页面状态认 DOM 结构别认文案字符串（实测页面写「手机号登录」不是「扫码登录」，按文案判会漏判成已登录并抓回 30 条静态资源当成果）；同域名≠同类资源；<strong>参数「写了」≠「生效」</strong>(URL 重写是空操作却无任何报错,只有比对产物才看得出)；装完依赖立刻跑真实目标；零结果必须吵出来 ⚠️首次</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/prompt-v1-a643718/" class="wikilink">外来prompt不做配方物料_v1</a> —— 建目录第一件事写 prompt 来源:朋友给的 prompt 一律不做配方卡/不逐层拆解/不做「配方拆给你」钩子,只留看图能得出的视觉机制;判据是「别人只看成图能不能自己推出来」;公开来源(MJ 官网)不受此限 ⚠️首次(《满堂》做完整套配方物料才想起来撤,作废 1 图 + 109 行脚本 + 1 篇文档)</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/v1-c2e820d/" class="wikilink">作品线与配方线外壳不串味_v1</a> —— 作品线只给画面和第一人称的声音(散文诗,机制不进正文),配方线才在末尾给可复跑配方;标题/正文/机制三处要一起换,机制降级到评论区别删掉;<strong>证据全是作者主观判定,不能当流量因果</strong> ⭐⭐(晴枝+抽卡十一组沿用侧,《满堂》偏离被否侧)</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-03-v1-9f69b31/" class="wikilink">2026-08-03_满堂_来源约束与文风归位复盘_v1</a> —— 一天三次转向的生产过程复盘(刚发布无数据,不含效果判断);元层教训:《孤鸿》「发布后被限流」两个月没入档,被引用成「惊鸿·违规没发出去」,名字结果双错还让一次改名理由整个不成立 → 发布后 24h 内回填一行结果</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/2026-08-05-v1-a1af0ef/" class="wikilink">2026-08-05_公众号稿送审翻车_弃读点与框架错误复盘_v1</a> —— 人机协作长文送古典文献学专业者实读,原五六节整节被否(未发布,无效果数据)。⚠️首次×4:<strong>弃读点比错误点信息量大</strong>(送审固定加问「你读到哪儿停的」)/ <strong>事实错误能自查·框架错误只能外审</strong>(含三条高危判据)/ <strong>加粗在替句子干活</strong>(删光加粗试读自检)/ 公开仓库工作区即发布面。顺手:<code>git check-ignore</code> 空模式假阳性(→ <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> 第四次现形)、多人聊天记录要逐条核对说话人。元层:批判某种思维错误不使你免疫于它</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-08-s43-v1-656a72b/" class="wikilink">2026-08-08_后室大逃亡S43长镜头_归因未遂与生死线次序复盘_v1</a> —— <strong>实际生成 0 次、额度 0 消耗、归因结论为空</strong>的过程复盘。把 prompt 抽取/三个工具/全部标定/交接文档做完,<strong>最后才登录</strong>:账号 artisan 过不了 CLI 闸 → <a href="/above-the-web/v1-75dde95/" class="wikilink">可行性生死线前置律_移植先探一票否决约束_v1</a> 第二案 ⭐⭐(权限型生死线便宜到不像任务,最易被漏)。含<a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a><strong>第五次现形</strong>:相对阈值在无信号样本上报 26 处假切点,<strong>当工具输出就是结论本身时,假阳性不产生多余的工作、只产生错误的知识</strong>;UTF-8 吞 C1 段不可逆(镜/镖/镗/镘 塌成同一字符),乱码判形态不判长度。⚠️ <strong>「等间隔=程序化拼接」一次都没验证,引用前看清</strong></p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/open-id-v1-d50e7e4/" class="wikilink">飞书应用文档授用户编辑权_唯open_id可靠_v1</a> —— 应用发布的飞书文档授用户可编辑:手机号(99991672身份错配)/邮箱(1063001)/搜人都失效,唯 open_id 授 full_access 稳;open_id 从 wiki 空间成员表读、不用通讯录权限 ⭐⭐反直觉</p>
+</li>
+<li>
+<p><a href="/above-the-web/webhook-v1-7dc6b0b/" class="wikilink">飞书应用发群消息_免webhook直发_v1</a> —— bot在群+IM权限即可 tenant token 直发群,免webhook;chat_id 从 GET /im/v1/chats 自取(“资源表即id字典”同构);content 双重JSON序列化坑;读探测先行再POST ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-cdc8e5f/" class="wikilink">子代理并行批量生成与校验组装_v1</a> —— 大批量结构化内容:多代理按互斥分类产JSON→脚本校验+json.dumps组装+node校验+真机抽测 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-07-28-ultra-v1-e8094ce/" class="wikilink">2026-07-28_Ultra模式个人作品集网站_从附件到部署闭环复盘_v1</a> —— 首次 Ultra 完整建站:附件审计→互斥并行取证→一次审美选案→单线实现→构建测试→Sites 上线;Ultra 放大闭环密度,不替代判断 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-20-zombie-world-v1-7371418/" class="wikilink">2026-08-20_zombie-world_联机重构与局内货币_全链路复盘_v1</a> —— 两日一轮：4 个反馈 bug → 局内货币（击杀掉金币 + 波间商店只卖消耗品）→ 联机从局域网 P2P 重构成自有服务器房间制并上线（2 次提交审核 2 次过审，测试 47→91）。含四次方向被推翻，两次是自己判断错；技术做法：快照按字段白名单瘦身 −64%（80→28 KB/s），<strong>性能对照必须同状态不能同场景</strong>，用户说「偶尔/没能复现」时先找低频但确定的触发条件 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-07-29-laststand-v0-7-1-v1-c30d506/" class="wikilink">2026-07-29_LastStand_v0.7.1_纯修复版开发闭环复盘_v1</a> —— Godot 独立游戏纯修复版全流程:代码审读翻出 5 个 bug(无玩家报告)→ headless 校验器 → 修复 → 构建 → Release → Ultracode 写 B站 → 知识库复盘;核心教训藏在「剩余数 vs 已落地数」「整枪 vs 单弹丸」「当前换弹 vs 被取消的换弹」三组边界语义里 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/h5-v1-959b634/" class="wikilink">H5移植微信小程序的要点与合规红线_v1</a> —— 渲染层重写setData、数据逻辑可复用;游戏须小游戏(企业主体)、小程序禁游戏类目 ⚠️首次</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/2026-07-30-v1-a378a3b/" class="wikilink">2026-07-30_风眼九段线问题地图事故复盘_v1</a> —— 自绘「南海诸岛九段线示意」插图把海南岛与整个北部湾画到线外侧,活了19天(Toy侧1845PV/1510UV)才被群友肉眼发现;法定表达不自绘(标「示意」不免责)、合规缺陷分「能力问题vs资格问题」(资格问题只能下线不能改坐标)、AI审查者结论对但5条论据错3条(当警报器不当依据)、双发布面只推git等于修一半 ⚠️首次</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/v1-938b91e/" class="wikilink">打磨不等于校验律_v1</a> —— 精修一个对象不产生任何关于它内容正确性的证据,却因「看起来经过工序」抬高所有人对它的信任;给错误地图写了讲究的四角避让算法,19天里维护3次没人问过「这9条线画对了吗」;越”看起来专业”的产出(地图/统计口径/法条/剂量)越要单独校验内容源 ⚠️首次反直觉</p>
+</li>
+<li>
+<p><a href="/above-the-web/cjk-v1-205e3ac/" class="wikilink">CJK假斜体语言感知律_v1</a> —— 中文无真斜体,html[lang=zh]转正体、拉丁留斜体,强调改用颜色/字重 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a></p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/v1-880a034/" class="wikilink">有意改动不是故障_v1</a> —— 别把用户/协作方的有意改动当故障还原:三类归因(用户有意→尊重 / 工具越界→还原 / 无害格式化→保留);教程过时战斗图被用户手删,误判成 formatter 越界还原两次 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-9bb7884/" class="wikilink">完结项目反推学员教程_大纲先行两级审核_v1</a> —— 学员教程=完结项目的复盘+git历史反推;大纲先行(附素材缺口/篇幅预估/删改去向)+作者与上级两级审核后才写正文;模糊需求选项式收束;学员版减负三原则 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-6e3df89/" class="wikilink">任务书制作与学员协作需求收口方法论_v1</a> —— 把合作需求收口成可执行任务书:七段结构、先写交付结果再写执行细节、模板化降沟通成本 ✅首个任务书全流程落地(07-21发书→交付→验收→裁决→结算);回验补三条款:范围写实况不写假设(发书前先开包)+公域红线前置(禁个人特征/第三方标识)+结算写周期不写单日;模板字段不留空</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-388f3ab/" class="wikilink">钉钉知识库交付_格式白名单与终版回填闭环_v1</a> —— 富文本平台交付:格式白名单先行(修饰只用加粗+代码块,禁引用块/表格/多级小标题)+过审后平台版是唯一真身、当天verbatim回填git;配图策略跟通道走:md直接导入可带图(公网直链自动抓图),经钉钉文档中转复制才丢图→占位版降为兜底;另含四段式教程体例(成品/工具含幕后引擎/步骤/总结/附件zip) ✅白名单多次使用(2026-07-20三篇Codex教程附件版;07-22实战6四段式版)</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-a82d159/" class="wikilink">范文参考骨架律_v1</a> —— 参考范文=提炼功能骨架(勾兴趣→点AI趋势→引成品),表层句式每篇重造;同一母文档多板块只统一功能句;引言整段加粗;内部术语不入学员正文 ⚠️首次(三篇附件版引言一稿打回二稿过关)</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-e9d7826/" class="wikilink">理论板块教程制作_无源项目反推变体_v1</a> —— 板块无源项目可反推时:主干(大纲先行/审核后写正文/减负三原则)照常,事实锚点换成「最小外部事实点+类比自洽」;配图全量示意卡片且HTML源码入git;引言「引出成品」句换抛问题清单;零基础扫盲=概念配类比+术语后置成小抄 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-07-09-36h-v1-ba4605e/" class="wikilink">2026-07-09_镜像自我人生预演_36h极限开发复盘_v1</a> —— BW展台互动影游:主体36h建成+3天封版全验收;素材插槽即接口、转码闸口、返工终审闸门、诚实包装;两轮素材返工同根(属性弱信号)</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-07-14-ai-v1-507e155/" class="wikilink">2026-07-14_镜像自我_镜中特写AI读心_迭代复盘_v1</a> —— AI读心板块占位稿→gpt-5.5云端个性化当天闭环;纯文本行协议+段名固定客户端⭐⭐、三级降级+文案如实分叉、gpt-5参数按代际适配、LM Studio运维清单;QR密度bug抽出原子律</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-bee1b16/" class="wikilink">展台机易失环境自恢复预案_v1</a> —— 还原机上不在仓库里的一切都会消失(工具盘/node_modules/git身份);依赖入仓+一键恢复脚本,绝对路径当线索不当事实 ⚠️首次(预案当周应验)</p>
+</li>
+<li>
+<p><a href="/above-the-web/emoji-v1-66bfaaf/" class="wikilink">emoji字形版本兼容律_v1</a> —— 公开UI的emoji选Unicode老字形(🪞U13.0旧Windows出豆腐块,换🎭U6.0即愈);关键图标用SVG不赌字体 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-06-18-45-02-v1-5b75a3b/" class="wikilink">2026-06-18_45球星身体第02期夜醒篇制作复盘_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-64d45e7/" class="wikilink">球星睡眠质量选题资料包_睡得浅夜醒入睡难_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v3-1-v1-fffdad7/" class="wikilink">好流量是好作品的产物_v3.1反思_v1</a></p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/v1-4aa7e88/" class="wikilink">入场票框架_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-1-v1-9f69a9f/" class="wikilink">入场票框架_v1.1迭代待办暂存_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-d0d1ada/" class="wikilink">翻车梗作入场票_假说_v1</a> ⚠️假说待验证</p>
+</li>
+<li>
+<p><a href="/above-the-web/sop-v1-36988b5/" class="wikilink">快手分发SOP_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/vimeo-v1-61af8fc/" class="wikilink">Vimeo平台速览_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-a10f201/" class="wikilink">小红书点赞与收藏陷阱_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/1000-v1-2b2c761/" class="wikilink">小红书正文超1000字是拆篇信号_v1</a> —— 1000 字上限不是排版限制,是平台在替你执行「别写大教程」;超了该拆篇不该硬删(删掉的是让笔记像人写的那部分,反而更像保存型内容);结构类条目 ≥5 条必超 ⚠️推论待对照</p>
+</li>
+<li>
+<p><a href="/above-the-web/1-v1-3fb8828/" class="wikilink">小红书导流话术合规红线_扣1领资料_v1</a> —— 「扣1领源码/教程」被判引流广告限流;配图卡+正文+置顶评论都要清掉,改自然交流引导 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/xsec-token-v1-ad1f0f4/" class="wikilink">小红书笔记外链必带xsec_token_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-ad966b4/" class="wikilink">慢热作品识别_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-bd044c5/" class="wikilink">我没想到+我做不到双触发器_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-2067983/" class="wikilink">同行互投赛制的反主流原则_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-f829593/" class="wikilink">个人优势路线优先律_v1</a> —— 红海赛道：回到已验证的个人优势媒介做降维，别在大众维度内卷 ⚠️首次</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/v1-810fdd1/" class="wikilink">闪电战冷读者校准律_v1</a> ⚠️首次发现 —— 美而零票的根因=评估者错位;含「画面阈值≠概念阈值」子条 + 冷读者0.5秒协议</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/v1-03d3c60/" class="wikilink">载体默认语义反噬_v1</a> ⚠️首次发现 —— 上条的<strong>方向侧</strong>姊妹律:载体的常识含义若与题眼相反,prompt 细节锁扳不回来(回转寿司盘塔=「吃了很多」,反噬「时间贫困」);含「载体三问」+「读到反的比读不到更糟」+ 给”嫁接陌生载体”加护栏</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-1193eff/" class="wikilink">闪电战赛前赛中协议_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/vs-v1-f81db28/" class="wikilink">角色卡vs主办方意图_协作元方法论_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-dff6dd3/" class="wikilink">识别工具天花板的时机_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/sop-v1-1311b18/" class="wikilink">网易云音乐人发布SOP_v1</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/note-1060456/" class="wikilink">获奖图复盘方法论合集 · 活合集</a></p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-05-18-19-v1-6f72139/" class="wikilink">获奖图复盘方法论合集_2026-05-18-19_v1</a></p>
+</li>
+<li>
+<p>🆕 <a href="/above-the-web/ai-v1-c522145/" class="wikilink">AI平台定价与可及性观察台账_v1</a> —— <strong>长期台账立项(2026-07-31)</strong>:AI 平台定价 / 可及性动作逐案立档;五条测量口径(比到手不比标价、同渠道同规格、一手截图优先于检索、区分「合规环境施加」与「厂商选择」、结论分成立/已推翻/待验证三档)+ A/B/C 三级判据(C 级「单纯贵/前沿溢价/合规阉割」不立案)+ 每案八项采集清单</p>
+</li>
+<li>
+<p><a href="/above-the-web/dreamina-v1-337cf9b/" class="wikilink">即梦Dreamina跨区定价实测_同产品双账号对照_v1</a> —— 台账首案:同产品双账号对照,国内到手贵 <strong>14.4%</strong>(税前 8%)而非标价显示的 38.9%;<strong>真问题不在价格在通道</strong>——国际侧无中国大陆区域选项 + BIN 段发卡行国别级拦截(同卡 Suno 正常),而 14% 价差本不需要墙来保护,<strong>有墙说明护的是分区不是价格</strong> ⚠️含三轮纠错全记录</p>
+</li>
+<li>
+<p>⭐ <a href="/above-the-web/v1-1b51e5d/" class="wikilink">积分制比价先校购买力律_v1</a> —— 积分不是货币:单价与消耗率是两个独立旋钮,反向拧时单价差是假信号(38.9% 实为 14.4%,误差 2.7 倍);<strong>锁规格→量消耗→算到手</strong>,只有每条实付可比;反向用法=看到单价特别便宜先查消耗率 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/2026-08-10-wechaty-pr-v1-4ede191/" class="wikilink">2026-08-10_微信群反馈机器人与Wechaty博客PR_全链路复盘_v1</a> —— Wechaty+PadLocal 被动监听机器人;PadLocal 付费站502转走 Contributor Program 写博客换Token;核心教训=旧指南仓库地址会过时(fork前<code>gh repo view</code>验真名)+git fetch报成功≠ref写入(Win Git 2.55 bug)+SVG直接用别硬转PNG;配套skill <code>wechaty-blog-pr</code>;个人项目免PR↔第三方开源必走PR互为镜像(见<a href="/above-the-web/pr-v1-b896304/" class="wikilink">个人项目免PR直推主分支_v1</a>) ⚠️首次</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/v1-8b48fc6/" class="wikilink">混合真伪的证据链_最弱一环会拖垮最强一环_v1</a> —— 一条串了多个论据的说法,真伪通常是混在一起的,而决定它命运的是<strong>最容易被单方面证伪的那一环</strong>:五环里 1/3/4 属实、2 需修正、5 假(且第 5 环是当事人自己的工具,唯一能被 git 时间戳一眼推翻),第 5 环一垮会把第 4 环那组真实且重要的伤亡数字一起带走;操作规则=逐环独立定性不做整体判断、先找最弱环、修正要给方向而非只给否定、<strong>量级相符≠说对了</strong>(不同计量对象不可互证)、自己在链上时先自查、公开表达按发布面风险分层 ⚠️首次</p>
+</li>
+<li>
+<p>⚠️ <a href="/above-the-web/memoraxcode-ai-v1-49c1fb0/" class="wikilink">MemoraxCode_AI编程记忆层的架构与数据边界_v1</a> —— 给 AI 编码 Agent 加跨会话记忆层的工具(本地 Backend + 4 客户端适配器 + 云端记忆);重点是<strong>数据边界</strong>:自动写回默认开、自动召回默认关、本地 trace 内容级、api_key 明文、loopback-only、作用域隔离、云端配额;一句话「默认值≠最优值,用前先看清什么上云、本地留了什么」 ⚠️首次</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-f404c4e/" class="wikilink">变通方案不等于故障点_v1</a> —— 别从对方的变通方案反推故障点,要定位就直接问卡在哪一步</p>
+</li>
+<li>
+<p><a href="/above-the-web/v1-fd9700f/" class="wikilink">方向词要用既往选片反推_v1</a> —— 「要高级」「要抢眼」这类方向词,用作者过往选片反推它指向哪边</p>
+</li>
+</ul>
+<h3 id="07_ai理论与创作哲学">07_AI理论与创作哲学</h3>
+<p>外部理论、读书笔记、生成时代创作观、知识传播和创作者定位。</p>
+<ul>
+<li><a href="/above-the-web/v1-a261d91/" class="wikilink">低频退化与频率定律_v1</a></li>
+<li><a href="/above-the-web/v1-5bbb46a/" class="wikilink">压缩保留簇丢弃孤例_v1</a> —— 决定命运的不是”冷门还是大众”,是<strong>簇密度=样本量×同质度</strong>;倒 U 型:大而散被拉平/小而密是甜区(载重风格词)/n=1 压不进也重建不出。统一了 <a href="/above-the-web/v1-36a17cf/" class="wikilink">冷门风格词的压缩律_v1</a> 与 <a href="/above-the-web/v1-a261d91/" class="wikilink">低频退化与频率定律_v1</a>;含 Project Panama 实体书销毁事实核查 + KK《潜空间》四层裁决 ⚠️首次 · <strong>❌同日证伪一个用法:不能拿它判学科/职业存亡(簇与孤例在真实实践内切不开),仅限素材/表达/工序</strong></li>
+<li><a href="/above-the-web/v1-6c0e1d8/" class="wikilink">生成时代作品作者版权重定义_v1</a></li>
+<li><a href="/above-the-web/v1-c082192/" class="wikilink">知识传播与知识付费边界_v1</a></li>
+<li><a href="/above-the-web/v1-4195a1d/" class="wikilink">沉思录读书笔记_关系义务与自足之美_v1</a></li>
+<li><a href="/above-the-web/v1-70154b0/" class="wikilink">故事读书笔记_工具丰饶不等于创造力丰饶_v1</a></li>
+<li><a href="/above-the-web/v1-adba543/" class="wikilink">对话感_关系产生生命力_v1</a></li>
+<li><a href="/above-the-web/v1-da9dbfe/" class="wikilink">语言形式_思维模式_沟通成本_v1</a></li>
+<li><a href="/above-the-web/encoder-decoder-v1-eb438b6/" class="wikilink">语言的 Encoder / Decoder 模型</a></li>
+<li><a href="/above-the-web/v1-2a37e2e/" class="wikilink">沟通成本的第二来源_范围与高度错位_v1</a></li>
+<li><a href="/above-the-web/r-07-v1-1b29bfb/" class="wikilink">R-07 创作内核：克制、天真与减法</a></li>
+</ul>
+<h3 id="08_通识与趣味研究">08_通识与趣味研究</h3>
+<p>创作之外的好玩研究:社会心理学、行为科学等经典实验与通识拆解,存可迁移的行为规律。(2026-07-02 新开方向)</p>
+<ul>
+<li><a href="/above-the-web/v1-ed83347/" class="wikilink">复印机实验_安慰剂式理由与无意识顺从_v1</a> —— Langer 1978:低成本请求下”因为”句式本身就是通行证,顺从的是结构不是理由;高成本请求空洞理由失效(含 Folkes 1985 边界条件)</li>
+<li><a href="/above-the-web/ai-psaich-v1-28c79e3/" class="wikilink">AI心理测量实验PsAIch_角色扮演不是内心独白_v1</a> —— 卢森堡大学 2025 预印本查证:给 LLM 做心理咨询+人类量表,Gemini”创伤拉满”是角色框架下的分布补全,不是内心状态证词;含爆款 AI 帖三步查证法(找原文→查评审→比对作者原话 vs 媒体渲染)</li>
+</ul>
+<h2 id="使用规则">使用规则</h2>
+<ul>
+<li>先按问题域找子目录，再用本索引跳到具体文档。</li>
+<li>新文档优先放入最贴近的问题域，不要继续平铺在 <code>04_方法论与洞察/</code> 根目录。</li>
+<li>如果一个文档跨多个问题域，只放一个主目录，在索引和文末“关联文档”里做双链。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>全库入口:<a href="/above-the-web/readme-7111557/" class="wikilink">README</a></li>
+<li>Prompt 入口:<a href="/above-the-web/03-prompt-987b076/" class="wikilink">03_prompt模板库索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-07T00:58:03+08:00">2026-10-07</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F%E7%B4%A2%E5%BC%95.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F%E7%B4%A2%E5%BC%95.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/03-prompt-987b076/">Prompt 模板库索引</a></li><li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li><li><a href="/above-the-web/ai-niji5-nano-v2-aff7d44/">AI 形象图工作流分层 · niji5 + Nano</a></li><li><a href="/above-the-web/gptimage2-v1-e7fe63b/">GPT Image 2 锁脸的「脸占比上限」</a></li><li><a href="/above-the-web/v1-4478bc8/">严格人脸一致性二创的范式阶梯（假说）</a></li><li><a href="/above-the-web/vs-v1-aad8c40/">装扮签名 vs 五官精度 · IP 角色辨识的真相</a></li><li><a href="/above-the-web/v1-1b0019e/">氛围题的&quot;读不清&quot;优先律</a></li><li><a href="/above-the-web/2026-07-16-codex-v1-13b837e/">Codex 保姆级教学 · 代码化口播剪辑完整复盘（2026-07-16）</a></li><li><a href="/above-the-web/2026-07-31-codex-19-v1-e56ff53/">2026-07-31 Codex 教程实战六 · 自动化录屏 19 段复盘</a></li><li><a href="/above-the-web/2026-08-01-codex-2-4-19-v1-5f86653/">2026-08-01 Codex 教程清单 2/3/4 · 三项目 19 段录屏复盘</a></li><li><a href="/above-the-web/2026-08-05-v1-7db25e0/">《1000人后室大逃亡》配音工序 · 四音色定版复盘（2026-08-05）</a></li><li><a href="/above-the-web/2026-08-14-codex-v1-c53b251/">2026-08-14 Codex 教程录制链路打磨 · 复盘</a></li><li><a href="/above-the-web/2026-08-26-v1-5c8b145/">2026-08-26 《擦干净》剧本口径审计与补图承接位 · 复盘</a></li><li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/">2026-08-13 Codex 教程操作部分 · 26 段重录复盘（19/26）</a></li><li><a href="/above-the-web/2026-09-16-v1-11febd5/">《余温》动作修复：把“自然”写成具体的持物与走位</a></li><li><a href="/above-the-web/2026-09-20-m02-v1-8100c2c/">《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它</a></li><li><a href="/above-the-web/2026-09-06-v1-47fea6b/">《余温》阶段复盘：分段蒙太奇与原片重配声音</a></li><li><a href="/above-the-web/suno-v1-f32f73e/">用 Suno 给视频做定制 BGM —《凝视》配乐制作分享</a></li><li><a href="/above-the-web/tts-asr-v1-18cdf62/">TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优</a></li><li><a href="/above-the-web/cinemagraph-v1-ce0a684/">cinemagraph 微动作：待机层是真实感引擎</a></li><li><a href="/above-the-web/v1-f4e2df1/">录屏分镜按确定性分层：生成性镜头，逐字稿后配</a></li><li><a href="/above-the-web/v1-c5fded6/">派生图不进视频输入律：噪点随编辑代数累积</a></li><li><a href="/above-the-web/v1-bf57d38/">素材审片也能蒙眼 —— 盲选靠标题,定案靠眼睛</a></li><li><a href="/above-the-web/v1-69498a6/">绿勾只覆盖它自己那张清单</a></li><li><a href="/above-the-web/v1-7f8ce8a/">自动化产出双重验收：机器验参数，人眼验内容</a></li><li><a href="/above-the-web/v1-dd98c63/">锚点只给站位律：动作交给视频模型</a></li><li><a href="/above-the-web/v1-89b7ead/">镜内切入优于拆镜：保住下游帧锚</a></li><li><a href="/above-the-web/v1-53f2101/">音频也能蒙眼剪辑:突然静音是剪出来的，不是生成的</a></li><li><a href="/above-the-web/ai-psaich-v1-28c79e3/">AI 心理测量实验 PsAIch:角色扮演不是内心独白</a></li><li><a href="/above-the-web/v1-ed83347/">复印机实验：安慰剂式理由与无意识顺从</a></li><li><a href="/above-the-web/2026-08-26-v1-726c42b/">即梦片场活动细则审阅：四类坑点清单</a></li><li><a href="/above-the-web/2026-08-26-v1-0e13a0e/">周报整合钉钉周会手册：三轮修复与诊断反转复盘</a></li><li><a href="/above-the-web/2026-09-07-v1-183d96d/">前置音频修复：插孔检测与交接复核复盘</a></li><li><a href="/above-the-web/2026-09-15-mention-v1-8393eba/">钉钉逐字稿补写：「过渡话术」是占位符不是待办 + 案例引言体例</a></li><li><a href="/above-the-web/ai-v1-c522145/">AI 平台定价与可及性观察台账</a></li><li><a href="/above-the-web/cowork-v1-2dc55e4/">Cowork 协作的接口文件模式</a></li><li><a href="/above-the-web/ui-v1-5a2fb47/">UI 自动化的固定坐标，必须绑一条可机检的前提断言</a></li><li><a href="/above-the-web/vimeo-v1-61af8fc/">Vimeo 平台速览</a></li><li><a href="/above-the-web/dws-index-v1-c5e1bec/">dws 块级插入：--index 语义陷阱与倒序插入法</a></li><li><a href="/above-the-web/v1-a1d4663/">交接文档不是需求原文，接手第一件事是回溯上游</a></li><li><a href="/above-the-web/v1-6e3df89/">任务书制作：把合作需求变成可执行的学员任务</a></li><li><a href="/above-the-web/dreamina-v1-337cf9b/">即梦 / Dreamina 跨区定价实测:同产品双账号对照</a></li><li><a href="/above-the-web/v1-f404c4e/">变通方案不等于故障点</a></li><li><a href="/above-the-web/v1-9bb7884/">完结项目反推学员教程：大纲先行 + 两级审核</a></li><li><a href="/above-the-web/v1-880a034/">有意改动不是故障</a></li><li><a href="/above-the-web/v1-64d45e7/">球星睡眠质量选题资料包（睡得浅 / 夜里醒 / 入睡难）</a></li><li><a href="/above-the-web/v1-e9d7826/">理论板块教程制作：无源项目可反推时的变体</a></li><li><a href="/above-the-web/git-v1-cc2dcd9/">生成物不入 git</a></li><li><a href="/above-the-web/v1-1b51e5d/">积分制比价先校购买力律</a></li><li><a href="/above-the-web/v1-d0d1ada/">翻车梗 / 过程叙事作入场票 · 假说</a></li><li><a href="/above-the-web/v1-a82d159/">范文参考骨架律：提炼功能骨架，不抄表层句式</a></li><li><a href="/above-the-web/2026-05-18-19-v1-6f72139/">获奖图复盘方法论合集 v1 · 已被活合集取代</a></li><li><a href="/above-the-web/vs-v1-f81db28/">角色卡 vs 主办方意图 · 协作元方法论</a></li><li><a href="/above-the-web/note-1060456/">获奖图复盘方法论合集 · 活合集 v12</a></li><li><a href="/above-the-web/v1-388f3ab/">钉钉知识库交付：格式白名单 + 终版回填闭环</a></li><li><a href="/above-the-web/2026-06-04-mj-v1-5567bf4/">虚拟形象设计复盘 · 直播头像 MJ 迭代</a></li><li><a href="/above-the-web/ai-v1-5920834/">AI 图像生成审核机制探索笔记</a></li><li><a href="/above-the-web/llm-plan-v1-c7edaf7/">AI 辅助音乐 MV 卡点 · LLM-plan 工作流</a></li><li><a href="/above-the-web/mac-windows-zip-hevc-v1-35696a3/">Mac 素材包到 Windows 的两个坑 · zip 文件名编码与 HEVC 解码</a></li><li><a href="/above-the-web/nano-v1-ce5a83d/">Nano 换屏图像融合 · 指令式编辑法</a></li><li><a href="/above-the-web/node-js-ai-v1-867c7f9/">Node.js 是什么 · AI 工具的底座常识</a></li><li><a href="/above-the-web/nano-v1-17ac551/">Nano 场景换机位 · 四段锚定法</a></li><li><a href="/above-the-web/prompt-v1-b768695/">prompt 的四段式结构</a></li><li><a href="/above-the-web/prompt-v1-244d8dc/">prompt 极简化原则 · v1.2（跨工具多场验证版）</a></li><li><a href="/above-the-web/vs-api-v1-78e5a50/">出图机制优先律 · 智能体原生出图 vs 盲调编辑 API</a></li><li><a href="/above-the-web/v1-1364ab6/">指定对象与气质描述：生成路径的分岔律</a></li><li><a href="/above-the-web/v1-fa343e8/">标签相同 ≠ 行为相同 · 第三方代跑平台律</a></li><li><a href="/above-the-web/vs-v1-c7b40a4/">生成式 vs 编辑式工具选择律</a></li><li><a href="/above-the-web/2026-06-03-skill-v1-1eed513/">口语化需求 → 专业提示词:图片 + 视频双 skill 复盘</a></li><li><a href="/above-the-web/2026-06-08-mj-v1-a7096f8/">MJ 混合媒介拼贴霓虹街头人物提示词复盘</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a><a class="card" href="/above-the-web/1000-v1-2b2c761/"> <span class="card-cat">方法论与洞察</span> <h3>小红书正文超 1000 字是拆篇信号</h3> <p>小红书正文 1000 字上限不是排版限制,是平台在替你执行「别写大教程」。 写超了,第一反应不该是删字,该是拆篇——因为逼你超限的那个结构(…</p> </a><a class="card" href="/above-the-web/2026-06-11-oref-v1-edd6c13/"> <span class="card-cat">方法论与洞察</span> <h3>《晴枝》四图发布复盘 —— oref 污染与工具回归（2026-06-11）</h3> <p>- 作品名称：《晴枝》四图组（亮调微笑直视 / 垂眸仰光 / 花影凝视 / 侧目浅笑）</p> </a><a class="card" href="/above-the-web/2026-06-18-45-02-v1-5b75a3b/"> <span class="card-cat">方法论与洞察</span> <h3>45球星身体 第02期夜醒篇 制作复盘</h3> <p>把第01期&quot;睡眠方法&quot;的好反馈,顺着观众评论的真实痛点,深挖成第02期&quot;睡眠质量&quot;,并用&quot;痛点 ↔ 球星解法&quot;映射,把大众痛点焊到明星热点上…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#子目录" data-toc-link="子目录">子目录</a></li><li class="d3"><a href="#01_角色一致性与视觉签名" data-toc-link="01_角色一致性与视觉签名">01_角色一致性与视觉签名</a></li><li class="d3"><a href="#02_风格审美与画面律" data-toc-link="02_风格审美与画面律">02_风格审美与画面律</a></li><li class="d3"><a href="#03_超现实与主题破局" data-toc-link="03_超现实与主题破局">03_超现实与主题破局</a></li><li class="d3"><a href="#04_视频影像与声音" data-toc-link="04_视频影像与声音">04_视频影像与声音</a></li><li class="d3"><a href="#05_prompt与工具方法" data-toc-link="05_prompt与工具方法">05_prompt与工具方法</a></li><li class="d3"><a href="#06_协作运营与发布" data-toc-link="06_协作运营与发布">06_协作运营与发布</a></li><li class="d3"><a href="#07_ai理论与创作哲学" data-toc-link="07_ai理论与创作哲学">07_AI理论与创作哲学</a></li><li class="d3"><a href="#08_通识与趣味研究" data-toc-link="08_通识与趣味研究">08_通识与趣味研究</a></li><li class="d2"><a href="#使用规则" data-toc-link="使用规则">使用规则</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

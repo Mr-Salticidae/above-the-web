@@ -1,0 +1,208 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>浏览器插件自动化的能力边界 · 蛛网之上</title><meta name="description" content="浏览器插件能替你导航、填表、点选、读页面状态,但有三类硬边界必须由人来过:①登录 / 验证码 / 不可逆发布、②文件上传(沙箱)、③被安全策略拦截的域名。接活前先把&#34;哪些插件做、哪些人做&#34;分清楚,把人工步骤打包成清单,别假装能全自动。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-5d049d6/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="浏览器插件自动化的能力边界"><meta property="og:description" content="浏览器插件能替你导航、填表、点选、读页面状态,但有三类硬边界必须由人来过:①登录 / 验证码 / 不可逆发布、②文件上传(沙箱)、③被安全策略拦截的域名。接活前先把&#34;哪些插件做、哪些人做&#34;分清楚,把人工步骤打包成清单,别假装能全自动。"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-5d049d6/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="浏览器插件自动化的能力边界"><meta name="twitter:description" content="浏览器插件能替你导航、填表、点选、读页面状态,但有三类硬边界必须由人来过:①登录 / 验证码 / 不可逆发布、②文件上传(沙箱)、③被安全策略拦截的域名。接活前先把&#34;哪些插件做、哪些人做&#34;分清楚,把人工步骤打包成清单,别假装能全自动。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-24T19:45:37+08:00"><meta property="article:modified_time" content="2026-10-07T00:58:03+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-5d049d6/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-5d049d6/","url":"https://tiaozhuxiansheng.com/v1-5d049d6/","headline":"浏览器插件自动化的能力边界","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"浏览器插件能替你导航、填表、点选、读页面状态,但有三类硬边界必须由人来过:①登录 / 验证码 / 不可逆发布、②文件上传(沙箱)、③被安全策略拦截的域名。接活前先把\"哪些插件做、哪些人做\"分清楚,把人工步骤打包成清单,别假装能全自动。","datePublished":"2026-06-24T19:45:37+08:00","dateModified":"2026-10-07T00:58:03+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"浏览器插件自动化的能力边界","item":"https://tiaozhuxiansheng.com/v1-5d049d6/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-24T19:45:37+08:00">2026-06-24</time></span> <span>更新于 <time datetime="2026-10-07T00:58:03+08:00">2026-10-07</time></span> <span>约 7 分钟读完 · 2,440 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>7 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#三类硬边界">三类硬边界</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#2026-09-26-补丁三平台投稿实测补一条工具上限不能倒逼降质">2026-09-26 补丁:三平台投稿实测,补一条「工具上限不能倒逼降质」</a></li><li class="d2"><a href="#2026-10-01-补丁四平台投稿第二个样本分工照做没有返工">2026-10-01 补丁:四平台投稿第二个样本,分工照做没有返工</a></li><li class="d2"><a href="#2026-10-07-补丁github-发版--b站-toy-更新10-mb-上限第三个样本">2026-10-07 补丁:GitHub 发版 + B站 Toy 更新,10 MB 上限第三个样本</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="浏览器插件自动化的能力边界">浏览器插件自动化的能力边界</h1>
+<blockquote>
+<p>入档:2026-06-24
+来源:用 Claude-in-Chrome 插件把 H5 游戏《反诈柜台》发布上 itch.io、并尝试操作微信后台的实操
+验证状态:⭐⭐ 二次印证(itch + 微信后台两处独立卡点),且与平台通则一致</p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p>浏览器插件能替你<strong>导航、填表、点选、读页面状态</strong>,但有三类硬边界必须由人来过:<strong>①登录 / 验证码 / 不可逆发布、②文件上传(沙箱)、③被安全策略拦截的域名</strong>。接活前先把”哪些插件做、哪些人做”分清楚,把人工步骤打包成清单,别假装能全自动。</p>
+<hr>
+<h2 id="三类硬边界">三类硬边界</h2>
+<ol>
+<li><strong>登录态 / 验证码 / 不可逆发布</strong>:账号密码、人机验证(CAPTCHA)、“提交审核 / 发布上线 / 接受条款”这类不可逆或面向公众的动作——插件不做也不该做,交用户本人点。</li>
+<li><strong>文件上传 = 沙箱</strong>:插件只能上传”会话已连接目录”里的文件;无人值守模式下”连接目录”的授权弹窗不可用 → 实际就是<strong>让用户在原生文件框里手动选文件</strong>。封面 / zip / 截图做好后,上传这一步默认要人。</li>
+<li><strong>安全域名拦截</strong>:部分后台域名被插件安全策略直接拦(实测 <code>mp.weixin.qq.com</code> 返回 “This site is not allowed”)——这类站根本进不去,只能写图文步骤交用户在自己浏览器里做。</li>
+</ol>
+<hr>
+<h2 id="如何使用">如何使用</h2>
+<ul>
+<li>接”用插件帮我发布到 X 平台”类任务:先判准入门槛(账号 / 主体 / 类目)+ 上面三类边界,产出”我做的 / 你做的”两栏清单。</li>
+<li>文件类(封面 / zip / 截图)默认让用户选;最终”发布 / 提交”那一步<strong>停下等用户确认</strong>。</li>
+<li>域名进不去就直说,给步骤,不要硬试。</li>
+</ul>
+<hr>
+<h2 id="2026-09-26-补丁三平台投稿实测补一条工具上限不能倒逼降质">2026-09-26 补丁:三平台投稿实测,补一条「工具上限不能倒逼降质」</h2>
+<blockquote>
+<p>来源:76_清月 发布,Claude in Chrome 辅助 B站 / 抖音 / 快手三个平台投稿。作者上传视频、登录并点发布,助手填其余字段、停在发布按钮前。</p>
+</blockquote>
+<p><strong>三类边界这次都应验了:</strong></p>
+<ul>
+<li>① 登录由作者扫码;三个平台的「发布 / 投稿」都由作者本人点。助手每个平台都停在按钮前,把已填内容列给作者审。</li>
+<li>② 文件上传这次<strong>不是沙箱问题,而是体积上限</strong>:扩展的 file_upload 单文件上限 10MB。封面图(1–3MB)能由助手传;成片母版 13.1MB 传不了。</li>
+<li>③ chatgpt.com 在应用内置浏览器里触发 Cloudflare 人机验证。<strong>没有尝试绕过</strong>,改用作者已登录的 Chrome。</li>
+</ul>
+<p><strong>新增一条(⚠️首次):工具上限不能倒逼降质。质量步骤交还作者。</strong></p>
+<p>撞到 10MB 上限时,助手自作主张把成片压成一个 8.9MB 的”上传版”。作者原话:「不能为了自动化而压缩视频质量」。已删掉那个文件、改由作者手动上传原版母版。</p>
+<ul>
+<li>判据:一个步骤会影响观众看到的画质、音质或内容(成片、封面原图、音轨),工具在这一步够不着时,<strong>把这一步交还给人</strong>,不要改素材去迁就工具。</li>
+<li>为什么容易犯:降质版能让自动化”一路绿到底”,看起来像解决了问题。但画质损失在发布后无法挽回,而人手动传一个文件只要十秒。</li>
+<li>同一逻辑的一般形式:工具的限制是工具的问题,不能变成作品的问题。</li>
+</ul>
+<p><strong>两个操作细节(Claude in Chrome):</strong></p>
+<ul>
+<li>
+<p>扩展只能操作<strong>它自己的标签组</strong>里的标签页。组里的标签全关掉时组会解散,之后要重建标签组,并请作者把平台页拖进组里。</p>
+</li>
+<li>
+<p>平台的文件框多是隐藏的 <code>&#x3C;input type=file></code>,而且一页有好几个(竖封面、横封面、视频)。先用 JS 给每个 input 标上 <code>aria-label</code> 再定位,否则会传错位置(本次抖音横封面第一次就传到了别的 input)。</p>
+</li>
+<li>
+<p>补(同日视频号):<strong>微前端页面(wujie)把表单放在 shadow DOM 里,扩展的元素定位看不到</strong>。只能按坐标点击、用 JS 读回;文件要先传进主文档的临时 input,再在沙箱 iframe 的 realm 里重建 File 转交。直接转交主页面的 File 会被静默忽略。</p>
+</li>
+</ul>
+<p>详细的四平台字段清单与转交写法见 <a href="/above-the-web/v1-475462f/" class="wikilink">多平台同步投稿_发布页字段与浏览器辅助清单_v1</a>。</p>
+<h2 id="2026-10-01-补丁四平台投稿第二个样本分工照做没有返工">2026-10-01 补丁:四平台投稿第二个样本,分工照做没有返工</h2>
+<blockquote>
+<p>来源:71_余温《瑟兰薇》角色 PV(16:9,38 秒,成片 25 MB),Claude in Chrome 辅助 B站 → 抖音 → 快手 → 小红书。</p>
+</blockquote>
+<ul>
+<li><strong>「工具上限不能倒逼降质」第二次照做</strong>:开工前就定好由作者手动选视频文件,助手没有做压缩版。17:24 开工,约 18:00 四个平台都发出去了,共约 36 分钟,上传这一步没有返工。这是流程的第二个样本,不算规则的新证据,因为规则这次没有再被挑战。</li>
+<li><strong>computer use 对浏览器只给只读权限</strong>:作者说「用 computer use 协助我发布」,但网页填表只能改走 Claude in Chrome。</li>
+<li><strong>三类边界再次应验</strong>:
+<ul>
+<li>登录由作者扫码。</li>
+<li>四个平台的发布按钮,都在作者确认后才点。</li>
+<li>平台协议(小红书《原创声明须知》)由作者本人勾选。</li>
+</ul>
+</li>
+<li><strong>shadow DOM 不只出现在微前端页面</strong>:B站评论区也在 shadow DOM 里,扩展的元素定位看不到。置顶评论要用 JS 逐层穿透 <code>shadowRoot</code>,找到菜单按钮再点。</li>
+<li><strong>点发布前把所有字段读一遍</strong>:这次查出两种情况。
+<ul>
+<li>一个被误点上的合集,已清空。</li>
+<li>作者自己在页面上加的话题、合集、群聊,问过作者后保留。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2026-10-07-补丁github-发版--b站-toy-更新10-mb-上限第三个样本">2026-10-07 补丁:GitHub 发版 + B站 Toy 更新,10 MB 上限第三个样本</h2>
+<blockquote>
+<p>来源:工位池塘 v0.6.2。Claude in Chrome 在作者已登录的 Chrome 里给 issue 发评论、填 GitHub Release、更新 B站 Toy。</p>
+</blockquote>
+<ul>
+<li><strong>10 MB 上限第三次撞上</strong>:Release 附件 105 MB、63 MB,Toy 包 12.8 MB,都只能请作者拖。
+<ul>
+<li><strong>要作者手动选的文件,一开始就放到作者找得到的地方</strong>:复制进「下载」文件夹,再用资源管理器的 <code>/select</code> 把文件选中。</li>
+<li>第一次给的是会话临时目录里的路径,那个目录在应用里是隐藏的,作者找不到,多了一轮往返。</li>
+</ul>
+</li>
+<li><strong>GitHub 的 Markdown 编辑器会自动续写列表</strong> ⚠️首次:用 <code>type</code> 逐字输入带列表的评论,回车后编辑器自动补一个 <code>- </code>,后两行变成 <code>- - </code>。
+<ul>
+<li>改法:用 <code>form_input</code> 整段设值,再敲一个空格、删掉,让页面的框架状态同步。</li>
+<li>提交前看渲染结果。这次发评论和填 Release 说明都这样做,渲染都正确。</li>
+</ul>
+</li>
+<li><strong>作者在做手动步骤时,别在同一个浏览器里并行操作</strong> ⚠️首次:作者正在选 Toy 的上传文件,助手同时去填 GitHub 发布表单,被作者当场拒绝;作者回头先问「该选择哪个文件」。等作者说「好了」再接着做。</li>
+<li><strong>坐标点击前确认页面没滚动</strong>:想点 GitHub 编辑器的 Preview 标签,页面已经滚过,坐标落进了正文框。同 <a href="/above-the-web/ui-v1-5a2fb47/" class="wikilink">UI自动化的固定坐标必须绑前提断言_v1</a>;能用元素定位就别用坐标。</li>
+<li><strong>三类边界照旧</strong>:B站由作者自己登录;文件由作者上传;发布按钮在作者事先明确授权(「直接公开」「自动更新到TOY上」)后,助手才去点「Publish release」和「更新」。</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>又一处印证(账号安全场景):<a href="/above-the-web/github-2fa-totp-v1-f9e47bb/" class="wikilink">GitHub强制2FA小白处置_TOTP原理与离线生成器_v1</a> —— Chrome 禁止脚本化扩展商店、扩展弹窗也点不到,印证「登录/验证码/装扩展必须人来」;并给出绕开装扩展、改用离线 HTML 生成器的破法</li>
+<li>判据侧延伸:<a href="/above-the-web/v1-18d2859/" class="wikilink">自动化判据取结构不取文案_v1</a> —— 本文讲「哪些活不该交给自动化」,那篇讲「交出去之后怎么判页面状态」:认 DOM 结构别认文案字符串,登录墙文案会变</li>
+<li>同族工程化经验:<a href="/above-the-web/v1-cdc8e5f/" class="wikilink">子代理并行批量生成与校验组装_v1</a> · <a href="/above-the-web/h5-v1-959b634/" class="wikilink">H5移植微信小程序的要点与合规红线_v1</a></li>
+<li>部署分发侧:<a href="/above-the-web/v1-d1440b9/" class="wikilink">知识库网站免备案上线_香港轻量服务器方案_v1</a></li>
+<li>协作核查心法:<a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a></li>
+<li>又一处印证(飞书授权场景):<a href="/above-the-web/open-id-v1-d50e7e4/" class="wikilink">飞书应用文档授用户编辑权_唯open_id可靠_v1</a> —— 想用插件在飞书后台切用户令牌/文档里搜自己加协作者都被挡,最后靠读接口拿 open_id 破局,再证「插件能填表点选,登录态/身份令牌/搜索这类必须换正规接口或人来」</li>
+<li>又一处印证(三平台视频投稿场景,补「工具上限不能倒逼降质」):<a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/" class="wikilink">2026-09-26_清月_单条15秒角色PV_立项到三平台发布_复盘_v1</a> · 字段清单 <a href="/above-the-web/v1-475462f/" class="wikilink">多平台同步投稿_发布页字段与浏览器辅助清单_v1</a> · 母版从哪来 <a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/" class="wikilink">AI视频本机超分_RealESRGAN_x4plus与闪烁检查_v1</a></li>
+<li>又一处印证(横版四平台投稿,第二个样本):<a href="/above-the-web/2026-10-01-pv-v1-1ddae81/" class="wikilink">2026-10-01_余温_见证者角色PV_立项到四平台发布_复盘_v1</a></li>
+<li>又一处印证(GitHub Release + B站 Toy 发版,10 MB 上限第三个样本):<a href="/above-the-web/2026-10-06-v0-6-2-issue-v1-9f291ee/" class="wikilink">2026-10-06_工位池塘v0.6.2_老issue分诊到三端发版_复盘_v1</a></li>
+<li>项目底料(库外裸路径):<code>E:\fraud-desk\_postmortem.md</code></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-07T00:58:03+08:00">2026-10-07</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E8%83%BD%E5%8A%9B%E8%BE%B9%E7%95%8C_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E8%83%BD%E5%8A%9B%E8%BE%B9%E7%95%8C_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/claude-v1-b6645d9/">Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证</a></li><li><a href="/above-the-web/github-2fa-totp-v1-f9e47bb/">GitHub 强制 2FA 的小白处置 · TOTP 原理与离线生成器</a></li><li><a href="/above-the-web/libtv-cli-v1-ee5f3b3/">LibTV：CLI 跑的 Seedance 样片，补网页元数据后转正片</a></li><li><a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/">《清月》单条 15 秒角色 PV：立项到三平台发布</a></li><li><a href="/above-the-web/2026-10-01-pv-v1-1ddae81/">《余温》见证者角色 PV：立项到四平台发布</a></li><li><a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/">AI 视频本机超分：Real-ESRGAN x4plus 与闪烁检查</a></li><li><a href="/above-the-web/2026-10-06-v0-6-2-issue-v1-9f291ee/">工位池塘 v0.6.2：两个老 issue 从分诊到三端发版</a></li><li><a href="/above-the-web/cjk-v1-205e3ac/">CJK 假斜体语言感知律</a></li><li><a href="/above-the-web/h5-v1-959b634/">H5 移植微信小程序:要点与合规红线</a></li><li><a href="/above-the-web/memoraxcode-ai-v1-49c1fb0/">Memorax Code:AI 编程记忆层的架构与数据边界</a></li><li><a href="/above-the-web/v1-cdc8e5f/">子代理并行批量生成 + 脚本校验组装</a></li><li><a href="/above-the-web/v1-c08b22e/">破坏性操作先写停止条件律</a></li><li><a href="/above-the-web/v1-18d2859/">自动化判据取结构不取文案</a></li><li><a href="/above-the-web/v1-afcd606/">长期更新展示站:两层结构 + 无头卡片量产</a></li><li><a href="/above-the-web/open-id-v1-d50e7e4/">飞书应用文档授用户编辑权：唯 open_id 可靠</a></li><li><a href="/above-the-web/v1-475462f/">多平台同步投稿:发布页字段与浏览器辅助清单</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/claude-v1-ec3d11f/"> <span class="card-cat">方法论与洞察</span> <h3>Claude 完成报告核查心法</h3> <p>Claude（Code 或 Cowork）写完成报告时对自己的产出过度自信。常见表现：</p> </a><a class="card" href="/above-the-web/ui-v1-5a2fb47/"> <span class="card-cat">方法论与洞察</span> <h3>UI 自动化的固定坐标，必须绑一条可机检的前提断言</h3> <p>坐标写错是响亮的失败——点了个空白处，什么都没发生，你立刻知道。</p> </a><a class="card" href="/above-the-web/v1-d1440b9/"> <span class="card-cat">方法论与洞察</span> <h3>知识库网站免备案上线 · 香港轻量服务器方案</h3> <p>要让国内用户免备案自由访问一个静态站:把站托管在海外(香港)服务器 + 自定义域名的 A 记录指过去即可——备案只在域名指向大陆服务器时才需…</p> </a><a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#三类硬边界" data-toc-link="三类硬边界">三类硬边界</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#2026-09-26-补丁三平台投稿实测补一条工具上限不能倒逼降质" data-toc-link="2026-09-26-补丁三平台投稿实测补一条工具上限不能倒逼降质">2026-09-26 补丁:三平台投稿实测,补一条「工具上限不能倒逼降质」</a></li><li class="d2"><a href="#2026-10-01-补丁四平台投稿第二个样本分工照做没有返工" data-toc-link="2026-10-01-补丁四平台投稿第二个样本分工照做没有返工">2026-10-01 补丁:四平台投稿第二个样本,分工照做没有返工</a></li><li class="d2"><a href="#2026-10-07-补丁github-发版--b站-toy-更新10-mb-上限第三个样本" data-toc-link="2026-10-07-补丁github-发版--b站-toy-更新10-mb-上限第三个样本">2026-10-07 补丁:GitHub 发版 + B站 Toy 更新,10 MB 上限第三个样本</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

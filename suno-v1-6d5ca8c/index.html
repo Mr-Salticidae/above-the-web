@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Suno Custom Mode 版权过滤器规避 · 蛛网之上</title><meta name="description" content="Suno Custom Mode 版权过滤器主要拦截三类：副歌 hook 撞名 / 歌词文本撞句 / Style 框具体艺人指向。优先换 hook，不要在歌词文本上反复改字——成本更高、不确定性更大。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/suno-v1-6d5ca8c/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Suno Custom Mode 版权过滤器规避"><meta property="og:description" content="Suno Custom Mode 版权过滤器主要拦截三类：副歌 hook 撞名 / 歌词文本撞句 / Style 框具体艺人指向。优先换 hook，不要在歌词文本上反复改字——成本更高、不确定性更大。"><meta property="og:url" content="https://tiaozhuxiansheng.com/suno-v1-6d5ca8c/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Suno Custom Mode 版权过滤器规避"><meta name="twitter:description" content="Suno Custom Mode 版权过滤器主要拦截三类：副歌 hook 撞名 / 歌词文本撞句 / Style 框具体艺人指向。优先换 hook，不要在歌词文本上反复改字——成本更高、不确定性更大。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-02T13:11:13+08:00"><meta property="article:modified_time" content="2026-09-26T06:55:33+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="工具/Suno_Custom_Mode"><meta property="article:tag" content="重要度/⭐⭐"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/suno-v1-6d5ca8c/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/suno-v1-6d5ca8c/","url":"https://tiaozhuxiansheng.com/suno-v1-6d5ca8c/","headline":"Suno Custom Mode 版权过滤器规避","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"Suno Custom Mode 版权过滤器主要拦截三类：副歌 hook 撞名 / 歌词文本撞句 / Style 框具体艺人指向。优先换 hook，不要在歌词文本上反复改字——成本更高、不确定性更大。","datePublished":"2026-06-02T13:11:13+08:00","dateModified":"2026-09-26T06:55:33+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 工具/Suno_Custom_Mode, 重要度/⭐⭐"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"Suno Custom Mode 版权过滤器规避","item":"https://tiaozhuxiansheng.com/suno-v1-6d5ca8c/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-02T13:11:13+08:00">2026-06-02</time></span> <span>更新于 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time></span> <span>约 4 分钟读完 · 1,287 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>14 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#现象">现象</a></li><li class="d2"><a href="#嫌疑度排查四级法">嫌疑度排查四级法</a></li><li class="d3"><a href="#嫌疑-1--副歌-hook-与现存作品撞名-最高频">嫌疑 1 · 副歌 hook 与现存作品撞名 ⭐⭐⭐（最高频）</a></li><li class="d3"><a href="#嫌疑-2--歌词文本与现存华语歌词撞句">嫌疑 2 · 歌词文本与现存华语歌词撞句</a></li><li class="d3"><a href="#嫌疑-3--style-框包含具体艺人指向的描述">嫌疑 3 · Style 框包含具体艺人指向的描述</a></li><li class="d3"><a href="#嫌疑-4--非标准段落标签">嫌疑 4 · 非标准段落标签</a></li><li class="d2"><a href="#三--终极方案换-hook而非改字">三 · 终极方案：换 hook（而非改字）</a></li><li class="d3"><a href="#为什么换-hook-比改字更好">为什么换 hook 比改字更好</a></li><li class="d3"><a href="#实测换-hook-反而更好">实测：换 hook 反而更好</a></li><li class="d2"><a href="#操作流程">操作流程</a></li><li class="d2"><a href="#给副会话的-brief-必读">给副会话的 brief 必读</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#版本">版本</a></li> </ol> </details> <h1 id="suno-custom-mode-版权过滤器规避">Suno Custom Mode 版权过滤器规避</h1>
+<blockquote>
+<p>入档：2026-05-19
+触发：29《扔掉》Custom Mode 跑歌时副歌 hook “再少年” 撞名拦截
+关联：<a href="/above-the-web/suno-v5-5-v1-b2fa879/" class="wikilink">Suno_v5.5_行为规律_v1</a> / <code>跨会话协作/24_扔掉_音乐共创回执_2026-05-19</code> §五 / <a href="/above-the-web/suno-v1-1-0ee403e/" class="wikilink">Suno两阶段工作流_v1.1</a></p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>Suno Custom Mode 版权过滤器主要拦截三类：副歌 hook 撞名 / 歌词文本撞句 / Style 框具体艺人指向。优先换 hook，不要在歌词文本上反复改字——成本更高、不确定性更大。</strong></p>
+<hr>
+<h2 id="现象">现象</h2>
+<p>29《扔掉》第一次 Custom Mode 跑歌被 Suno 版权过滤器拦截：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Couldn't generate that.</span></span>
+<span class="line"><span>Your lyrics contain copyrighted material. Please change it and try again.</span></span></code></pre>
+<hr>
+<h2 id="嫌疑度排查四级法">嫌疑度排查四级法</h2>
+<p>按出现概率从高到低排查：</p>
+<h3 id="嫌疑-1--副歌-hook-与现存作品撞名-最高频">嫌疑 1 · 副歌 hook 与现存作品撞名 ⭐⭐⭐（最高频）</h3>
+<p><strong>原因</strong>：Suno 平台已有大量华语作品，副歌 hook 是匹配最敏感的位置——平台数据库优先索引 hook 句。</p>
+<p><strong>判断方法</strong>：你的副歌 hook 句搜索 Suno 平台 / 网易云 / QQ 音乐 → 是否已有同名作品。</p>
+<p><strong>实测案例</strong>：</p>
+<ul>
+<li>29《扔掉》副歌 hook “再少年，再少年” 被拦截</li>
+<li>23《再少年》是同名歌曲，已存在于平台</li>
+<li>直接撞名拦截</li>
+</ul>
+<p><strong>应对</strong>：直接换 hook（见 §三）。</p>
+<h3 id="嫌疑-2--歌词文本与现存华语歌词撞句">嫌疑 2 · 歌词文本与现存华语歌词撞句</h3>
+<p><strong>原因</strong>：Suno 训练集包含大量华语歌词，某些非常通用的句子可能被识别为某首具体作品的句子。</p>
+<p><strong>判断方法</strong>：把你歌词的每一句搜索一下，看是否与某首歌的某一句完全相同。</p>
+<p><strong>实测案例</strong>：（暂未在《扔掉》上遇到）</p>
+<p><strong>应对</strong>：找出撞句，微调 3-5 个字（避免完全相同）。</p>
+<h3 id="嫌疑-3--style-框包含具体艺人指向的描述">嫌疑 3 · Style 框包含具体艺人指向的描述</h3>
+<p><strong>原因</strong>：Suno 把 <code>like Taylor Swift</code> 或 <code>group shouts in the style of XXX</code> 等具体艺人提示视为版权风险。</p>
+<p><strong>判断方法</strong>：检查 Style 框是否有具体歌手名 / 乐队名 / 含明确艺人指向的描述（如 “group shouts”——可能指向某些 80s 摇滚团）。</p>
+<p><strong>实测案例</strong>：</p>
+<ul>
+<li>副会话曾在 Style 框写 <code>doubled lead and group shouts</code></li>
+<li>这是潜在嫌疑——<code>group shouts</code> 可能关联具体艺人</li>
+<li>替换为更通用的描述（如 <code>energetic ensemble delivery</code>）即可</li>
+</ul>
+<p><strong>应对</strong>：把所有具体艺人指向描述改为风格描述，避免直接引用艺人。</p>
+<h3 id="嫌疑-4--非标准段落标签">嫌疑 4 · 非标准段落标签</h3>
+<p><strong>原因</strong>：Suno 接受的段落标签是 <code>[Verse]</code> / <code>[Chorus]</code> / <code>[Bridge]</code> / <code>[Pre-Chorus]</code> / <code>[Breakdown]</code> / <code>[Outro]</code> / <code>[Male]</code> / <code>[Female]</code> / <code>[Both]</code> / <code>[Male whisper]</code> 等。非标准标签可能触发安全检测。</p>
+<p><strong>判断方法</strong>：检查 Lyrics 框是否有非标准标签（如 <code>[Singer1]</code> / <code>[CharacterName]</code> / 中文标签 <code>[主歌]</code>）。</p>
+<p><strong>实测案例</strong>：</p>
+<ul>
+<li>副会话曾担心 <code>[Male whisper]</code> 是非标准</li>
+<li>实测发现 v5.5 接受这个标签（不是嫌疑源）</li>
+<li>但 <code>[Singer1]</code> 这种自创标签会被拦截</li>
+</ul>
+<p><strong>应对</strong>：所有标签用标准英文 + Suno 文档允许的修饰词。</p>
+<hr>
+<h2 id="三--终极方案换-hook而非改字">三 · 终极方案：换 hook（而非改字）</h2>
+<p>跳蛛先生 5/19 在《扔掉》上的决策是直接选了终极方案——<strong>换 hook</strong>。</p>
+<h3 id="为什么换-hook-比改字更好">为什么换 hook 比改字更好</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>改字（嫌疑 2 路径）</th><th>换 hook（嫌疑 1 路径）</th></tr></thead><tbody><tr><td>解决速度</td><td>慢（要找撞句 + 微调 + 重跑）</td><td>快（一次决策）</td></tr><tr><td>不确定性</td><td>高（改完可能还撞别的句）</td><td>低（换 hook 通常一次通过）</td></tr><tr><td>创作风险</td><td>中（可能破坏歌词语法对位）</td><td>高（hook 是歌的灵魂）</td></tr><tr><td>创作收益</td><td>低（被动修补）</td><td><strong>可能更好</strong>（换 hook 反而打开新视角）</td></tr></tbody></table>
+<h3 id="实测换-hook-反而更好">实测：换 hook 反而更好</h3>
+<p>29《扔掉》的换 hook 案例：</p>
+<ul>
+<li>原 hook：<strong>“再少年，再少年”</strong> （撞名 23《再少年》）</li>
+<li>新 hook：<strong>“别回头，别回头”</strong>（跳蛛先生直接定）</li>
+</ul>
+<p>新 hook 的意外收益：</p>
+<ol>
+<li><strong>接住起源画面</strong>：“别回头” 直接对应起源画面里”背对镜头” 的物理动作</li>
+<li><strong>闭环 V1</strong>：V1 第 6 句”我说别回到从前” 与”别回头” 形成态度闭环</li>
+<li><strong>改变了整首歌的姿态</strong>：从”乞求过去的不甘”（再少年）变成”对未来的命令式宣告”（别回头），把这首歌的内核从”我还想再来一次” 升级到”我不再回头”</li>
+<li><strong>意外打开了 IP 联结</strong>：与 23《再少年》形成”乞求 → 决绝” 的姐妹篇 IP 弧（见 <code>跨会话协作/IP联结_乞求决绝_再少年与扔掉_v1</code>）</li>
+</ol>
+<p><strong>关键洞察</strong>：<strong>版权过滤器的拦截有时是创作的礼物</strong>——它强制你跳出第一直觉，可能让你找到更好的解。</p>
+<hr>
+<h2 id="操作流程">操作流程</h2>
+<p>跑 Suno Custom Mode 之前，先做”预检”：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>预检 1：副歌 hook 搜索 → Suno 平台 / 网易云 → 是否有同名作品？</span></span>
+<span class="line"><span>   ├─ 是 → 换 hook（不要硬上）</span></span>
+<span class="line"><span>   └─ 否 → 继续</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>预检 2：Style 框扫描 → 是否含具体艺人指向？</span></span>
+<span class="line"><span>   ├─ 是 → 改为通用风格描述</span></span>
+<span class="line"><span>   └─ 否 → 继续</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>预检 3：段落标签扫描 → 是否全部是标准英文标签？</span></span>
+<span class="line"><span>   ├─ 否 → 改为标准标签</span></span>
+<span class="line"><span>   └─ 是 → 继续</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>跑歌</span></span>
+<span class="line"><span>   ├─ 通过 → 收口</span></span>
+<span class="line"><span>   └─ 拦截 → 按嫌疑度 1→2→3→4 排查</span></span></code></pre>
+<hr>
+<h2 id="给副会话的-brief-必读">给副会话的 brief 必读</h2>
+<p>如果你是接手 Suno Custom Mode 跑歌的副会话，遇到版权过滤器拦截时：</p>
+<ol>
+<li><strong>不要立刻改字</strong>——先按嫌疑度 1 排查副歌 hook</li>
+<li><strong>如果副歌 hook 撞名 → 立即问跳蛛先生是否愿意换 hook</strong>——不要试图微调撞名 hook</li>
+<li><strong>换 hook 时给跳蛛先生 2-3 个候选</strong>——但最终决定让他做（参见 <a href="/above-the-web/cowork-v1-2dc55e4/" class="wikilink">Cowork协作的接口文件模式_v1</a> 之”不要替他做最终选择”）</li>
+<li><strong>不要因为版权拦截就放弃这首歌</strong>——大多数情况下换 hook 之后能跑通，且通常更好</li>
+</ol>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>主档：<a href="/above-the-web/suno-v5-5-v1-b2fa879/" class="wikilink">Suno_v5.5_行为规律_v1</a></li>
+<li>工作流：<a href="/above-the-web/suno-v1-1-0ee403e/" class="wikilink">Suno两阶段工作流_v1.1</a></li>
+<li>调味技巧：<a href="/above-the-web/vocal-gender-prior-v1-8eddad6/" class="wikilink">Vocal_Gender反选_风格prior_v1</a></li>
+<li>协作规则：<a href="/above-the-web/cowork-v1-2dc55e4/" class="wikilink">Cowork协作的接口文件模式_v1</a></li>
+<li>案例底料：<code>跨会话协作/24_扔掉_音乐共创回执_2026-05-19</code> §五</li>
+<li>实测案例：<code>29_扔掉_叙事MV/01_音频/Custom_Mode_参数包_v2</code></li>
+</ul>
+<hr>
+<h2 id="版本">版本</h2>
+<ul>
+<li>v1 - 2026-05-19 - 主对话 Claude（第二任）基于 29《扔掉》音乐共创回执 §五 沉淀</li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">工具/Suno_Custom_Mode</span><span class="tag">重要度/⭐⭐</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/Suno%E7%89%88%E6%9D%83%E8%BF%87%E6%BB%A4%E5%99%A8%E8%A7%84%E9%81%BF_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/Suno%E7%89%88%E6%9D%83%E8%BF%87%E6%BB%A4%E5%99%A8%E8%A7%84%E9%81%BF_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/suno-v5-5-v1-b2fa879/">Suno v5.5 行为规律</a></li><li><a href="/above-the-web/niji7-v1-1-fdcb938/">niji 7 行为规律</a></li><li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/suno-v1-1-0ee403e/">Suno 两阶段工作流 · Simple→Custom</a></li><li><a href="/above-the-web/reference-suno-v1-02d748b/">参考曲复刻法 · reference 曲 → Suno 提示词</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/vocal-gender-prior-v1-8eddad6/"> <span class="card-cat">方法论与洞察</span> <h3>Vocal Gender 反选 · 风格 prior</h3> <p>Suno v5.5 的 Vocal Gender 参数不只是声部开关，更是隐藏的&quot;风格 prior&quot;——它在内部激活的是整体编曲/节奏/混音…</p> </a><a class="card" href="/above-the-web/vs-v1-f81db28/"> <span class="card-cat">方法论与洞察</span> <h3>角色卡 vs 主办方意图 · 协作元方法论</h3> <p>Claude 推导的&quot;角色卡设定&quot; 是工作锚点，不是合规标准。当工具反复输出&quot;意外解&quot; 且主办方未明确否决时，先送审让主办方拍板，不要在 C…</p> </a><a class="card" href="/above-the-web/2026-05-24-30-pv-v1-e4228dd/"> <span class="card-cat">方法论与洞察</span> <h3>2026-05-24｜30 项目角色 PV 发布复盘</h3> <p>项目：30伊恩・古德费罗的寓言</p> </a><a class="card" href="/above-the-web/2026-06-07-stay-alive-ai-mv-v1-5aba73f/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-07 Stay alive AI 音乐公益 MV 复盘</h3> <p>- 作品名称：《Stay alive》</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#现象" data-toc-link="现象">现象</a></li><li class="d2"><a href="#嫌疑度排查四级法" data-toc-link="嫌疑度排查四级法">嫌疑度排查四级法</a></li><li class="d3"><a href="#嫌疑-1--副歌-hook-与现存作品撞名-最高频" data-toc-link="嫌疑-1--副歌-hook-与现存作品撞名-最高频">嫌疑 1 · 副歌 hook 与现存作品撞名 ⭐⭐⭐（最高频）</a></li><li class="d3"><a href="#嫌疑-2--歌词文本与现存华语歌词撞句" data-toc-link="嫌疑-2--歌词文本与现存华语歌词撞句">嫌疑 2 · 歌词文本与现存华语歌词撞句</a></li><li class="d3"><a href="#嫌疑-3--style-框包含具体艺人指向的描述" data-toc-link="嫌疑-3--style-框包含具体艺人指向的描述">嫌疑 3 · Style 框包含具体艺人指向的描述</a></li><li class="d3"><a href="#嫌疑-4--非标准段落标签" data-toc-link="嫌疑-4--非标准段落标签">嫌疑 4 · 非标准段落标签</a></li><li class="d2"><a href="#三--终极方案换-hook而非改字" data-toc-link="三--终极方案换-hook而非改字">三 · 终极方案：换 hook（而非改字）</a></li><li class="d3"><a href="#为什么换-hook-比改字更好" data-toc-link="为什么换-hook-比改字更好">为什么换 hook 比改字更好</a></li><li class="d3"><a href="#实测换-hook-反而更好" data-toc-link="实测换-hook-反而更好">实测：换 hook 反而更好</a></li><li class="d2"><a href="#操作流程" data-toc-link="操作流程">操作流程</a></li><li class="d2"><a href="#给副会话的-brief-必读" data-toc-link="给副会话的-brief-必读">给副会话的 brief 必读</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#版本" data-toc-link="版本">版本</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,870 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Kecheng-Yugao-Skill 使用说明书 · 蛛网之上</title><meta name="description" content="自动触发条件：用户输入中只要包含“课程预告”“课程预告文本”或“课程预告海报”中的任一短语，就应自动调用本 Skill。也可以使用 $kecheng-yugao-skill 显式调用。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/note-1862904/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Kecheng-Yugao-Skill 使用说明书"><meta property="og:description" content="自动触发条件：用户输入中只要包含“课程预告”“课程预告文本”或“课程预告海报”中的任一短语，就应自动调用本 Skill。也可以使用 $kecheng-yugao-skill 显式调用。"><meta property="og:url" content="https://tiaozhuxiansheng.com/note-1862904/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Kecheng-Yugao-Skill 使用说明书"><meta name="twitter:description" content="自动触发条件：用户输入中只要包含“课程预告”“课程预告文本”或“课程预告海报”中的任一短语，就应自动调用本 Skill。也可以使用 $kecheng-yugao-skill 显式调用。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-01T14:44:45+08:00"><meta property="article:modified_time" content="2026-10-06T23:49:21+08:00"><meta property="article:section" content="skill存档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/note-1862904/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/note-1862904/","url":"https://tiaozhuxiansheng.com/note-1862904/","headline":"Kecheng-Yugao-Skill 使用说明书","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"自动触发条件：用户输入中只要包含“课程预告”“课程预告文本”或“课程预告海报”中的任一短语，就应自动调用本 Skill。也可以使用 $kecheng-yugao-skill 显式调用。","datePublished":"2026-09-01T14:44:45+08:00","dateModified":"2026-10-06T23:49:21+08:00","articleSection":"skill存档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"skill存档","item":"https://tiaozhuxiansheng.com/notes/?cat=skill%E5%AD%98%E6%A1%A3"},{"@type":"ListItem","position":3,"name":"Kecheng-Yugao-Skill 使用说明书","item":"https://tiaozhuxiansheng.com/note-1862904/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=skill%E5%AD%98%E6%A1%A3" data-pagefind-meta="category" data-pagefind-filter="kind:note">skill存档</a> <span aria-hidden="true">/</span><span>kecheng-yugao-skill</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-01T14:44:45+08:00">2026-09-01</time></span> <span>更新于 <time datetime="2026-10-06T23:49:21+08:00">2026-10-06</time></span> <span>约 24 分钟读完 · 8,922 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>69 节</i></summary> <ol> <li class="d2"><a href="#1-这个-skill-是什么">1. 这个 Skill 是什么</a></li><li class="d2"><a href="#2-可以做什么">2. 可以做什么</a></li><li class="d3"><a href="#21-日常课程预告">2.1 日常课程预告</a></li><li class="d3"><a href="#22-课表临时变更">2.2 课表临时变更</a></li><li class="d3"><a href="#23-文本模板管理">2.3 文本模板管理</a></li><li class="d3"><a href="#24-海报模板管理">2.4 海报模板管理</a></li><li class="d3"><a href="#25-教师人物形象管理">2.5 教师人物形象管理</a></li><li class="d3"><a href="#26-psd-处理和交付保护">2.6 PSD 处理和交付保护</a></li><li class="d2"><a href="#3-适用场景">3. 适用场景</a></li><li class="d2"><a href="#4-安装方式">4. 安装方式</a></li><li class="d3"><a href="#41-推荐安装到课程项目中">4.1 推荐：安装到课程项目中</a></li><li class="d3"><a href="#42-可选安装到用户级-skill-目录">4.2 可选：安装到用户级 Skill 目录</a></li><li class="d3"><a href="#43-skill-文件结构">4.3 Skill 文件结构</a></li><li class="d3"><a href="#44-安装后验证">4.4 安装后验证</a></li><li class="d2"><a href="#5-依赖条件">5. 依赖条件</a></li><li class="d3"><a href="#51-必需依赖">5.1 必需依赖</a></li><li class="d3"><a href="#52-word-渲染依赖">5.2 Word 渲染依赖</a></li><li class="d3"><a href="#53-photoshop-依赖">5.3 Photoshop 依赖</a></li><li class="d3"><a href="#54-可选依赖">5.4 可选依赖</a></li><li class="d2"><a href="#6-第一次使用时用户需要提供什么">6. 第一次使用时，用户需要提供什么</a></li><li class="d2"><a href="#7-推荐项目目录">7. 推荐项目目录</a></li><li class="d2"><a href="#8-如何调用">8. 如何调用</a></li><li class="d3"><a href="#81-完整制作">8.1 完整制作</a></li><li class="d3"><a href="#82-只制作基础信息">8.2 只制作基础信息</a></li><li class="d3"><a href="#83-确认后继续">8.3 确认后继续</a></li><li class="d3"><a href="#84-修改一门课程">8.4 修改一门课程</a></li><li class="d3"><a href="#85-指定模板">8.5 指定模板</a></li><li class="d3"><a href="#86-修改默认模板">8.6 修改默认模板</a></li><li class="d3"><a href="#87-添加新模板">8.7 添加新模板</a></li><li class="d3"><a href="#88-设置人物文件夹">8.8 设置人物文件夹</a></li><li class="d3"><a href="#89-更换教师形象">8.9 更换教师形象</a></li><li class="d3"><a href="#810-验收并清理本次运行残留">8.10 验收并清理本次运行残留</a></li><li class="d2"><a href="#9-完整运行流程">9. 完整运行流程</a></li><li class="d3"><a href="#stage-0配置和运行记录">Stage 0：配置和运行记录</a></li><li class="d3"><a href="#stage-a基础课程信息">Stage A：基础课程信息</a></li><li class="d3"><a href="#课程变更防误改">课程变更防误改</a></li><li class="d3"><a href="#stage-b课程详情">Stage B：课程详情</a></li><li class="d3"><a href="#stage-c海报和-psd">Stage C：海报和 PSD</a></li><li class="d2"><a href="#10-课程详情别名">10. 课程详情别名</a></li><li class="d2"><a href="#11-海报排版保护">11. 海报排版保护</a></li><li class="d3"><a href="#111-标题保护">11.1 标题保护</a></li><li class="d3"><a href="#1111-模板二自适应软件栏与时间栏">11.1.1 模板二自适应软件栏与时间栏</a></li><li class="d3"><a href="#112-课程目标安全区">11.2 课程目标安全区</a></li><li class="d3"><a href="#113-psd-可编辑等级">11.3 PSD 可编辑等级</a></li><li class="d2"><a href="#12-photoshop-utf-8-作业方式">12. Photoshop UTF-8 作业方式</a></li><li class="d2"><a href="#13-文本模板规则">13. 文本模板规则</a></li><li class="d2"><a href="#14-人物形象规则">14. 人物形象规则</a></li><li class="d2"><a href="#15-最终交付条件">15. 最终交付条件</a></li><li class="d2"><a href="#16-常见问题">16. 常见问题</a></li><li class="d3"><a href="#课表看不清怎么办">课表看不清怎么办</a></li><li class="d3"><a href="#为什么同一班当天只记录了一门课">为什么同一班当天只记录了一门课</a></li><li class="d3"><a href="#如何区分直播和录播">如何区分直播和录播</a></li><li class="d3"><a href="#用户只修改直播录播没有说时间怎么办">用户只修改直播/录播，没有说时间怎么办</a></li><li class="d3"><a href="#模糊课程详情每次都要问吗">模糊课程详情每次都要问吗</a></li><li class="d3"><a href="#word-出现第-7-页只有一行怎么办">Word 出现第 7 页只有一行怎么办</a></li><li class="d3"><a href="#为什么同一周出现多个课程预告-word">为什么同一周出现多个课程预告 Word</a></li><li class="d3"><a href="#同一周已有一个带-_final-后缀的-word-怎么办">同一周已有一个带 _FINAL 后缀的 Word 怎么办</a></li><li class="d3"><a href="#海报课程目标碰到日期怎么办">海报课程目标碰到日期怎么办</a></li><li class="d3"><a href="#海报课程目标没有超出画布但被内框或底部装饰挡住怎么办">海报课程目标没有超出画布，但被内框或底部装饰挡住怎么办</a></li><li class="d3"><a href="#海报课程标题没有居中怎么办">海报课程标题没有居中怎么办</a></li><li class="d3"><a href="#海报被命名为-cpngfinalpng-怎么办">海报被命名为 c.png、final.png 怎么办</a></li><li class="d3"><a href="#只有历史-png-可以做吗">只有历史 PNG 可以做吗</a></li><li class="d3"><a href="#photoshop-报中文乱码怎么办">Photoshop 报中文乱码怎么办</a></li><li class="d3"><a href="#png-已完成但缺少-psd-怎么办">PNG 已完成但缺少 PSD 怎么办</a></li><li class="d3"><a href="#为什么制作完成后还有工作-psd">为什么制作完成后还有工作 PSD</a></li><li class="d3"><a href="#同一个课程找到了两个-psd-怎么办">同一个课程找到了两个 PSD 怎么办</a></li><li class="d3"><a href="#同一课程改了教师课程目标或海报模板怎么办">同一课程改了教师、课程目标或海报模板怎么办</a></li><li class="d2"><a href="#17-数据安全与注意事项">17. 数据安全与注意事项</a></li><li class="d2"><a href="#18-本次优化后的关键变化">18. 本次优化后的关键变化</a></li> </ol> </details> <h1 id="kecheng-yugao-skill-使用说明书">Kecheng-Yugao-Skill 使用说明书</h1>
+<blockquote>
+<p>Skill 名称：<code>Kecheng-Yugao-Skill</code>（内部调用 ID：<code>kecheng-yugao-skill</code>）<br>
+当前适用项目：课程预告文本与课程海报批量制作</p>
+</blockquote>
+<p>自动触发条件：用户输入中只要包含“课程预告”“课程预告文本”或“课程预告海报”中的任一短语，就应自动调用本 Skill。也可以使用 <code>$kecheng-yugao-skill</code> 显式调用。</p>
+<blockquote>
+<p>更新时间：2026-08-11</p>
+</blockquote>
+<h2 id="1-这个-skill-是什么">1. 这个 Skill 是什么</h2>
+<p><code>Kecheng-Yugao-Skill</code> 用于把“查看课表、整理 Word 预告、补充课程详情、
+修改课程海报、保存 PSD、检查成品”组织成一个有审批停点和质量检查的重复生产
+流程。</p>
+<p>它不是后台定时任务，也不会在无人确认的情况下自动发布内容。它由用户在 Codex
+中主动调用，每次处理一个明确日期。</p>
+<h2 id="2-可以做什么">2. 可以做什么</h2>
+<h3 id="21-日常课程预告">2.1 日常课程预告</h3>
+<ul>
+<li>检查 <code>课表/</code> 中全部课表的目标日期；</li>
+<li>跳过当天没有课程的班级；</li>
+<li>提取班级、课程、讲师、直播/录播和时间；</li>
+<li>生成基础信息 Word，交用户确认后停止；</li>
+<li>确认后追加工具、作业和课程目标；</li>
+<li>同一周只维护一个规范命名的正式 Word，不在正式目录堆积基础版、待确认版或
+<code>FINAL/new/v2</code> 副本；</li>
+<li>生成每门课程的 PNG 海报；</li>
+<li>每次制作时临时保存工作 PSD；</li>
+<li>每个标准化课程名称只长期保留一个可复用课程 PSD；</li>
+<li>已有课程 PSD 时不重复保存，只有新课程才新增 PSD；</li>
+<li>用户确认 Word 和海报可用后，安全清理本次完整运行目录及本次新增的 Photoshop 暂存文件；</li>
+<li>在交付前检查每张海报是否映射到正确的课程 PSD。</li>
+</ul>
+<h3 id="22-课表临时变更">2.2 课表临时变更</h3>
+<p>适用于：</p>
+<ul>
+<li>直播改为录播；</li>
+<li>录播改为直播；</li>
+<li>教师临时替换；</li>
+<li>上课时间变化；</li>
+<li>课程名称调整。</li>
+</ul>
+<p>Skill 会按“标准化班级＋标准化课程名称”定位课程，不按 Word 段落序号修改。
+修改后会比较前后 manifest，并检查是否误改了其他课程。</p>
+<p>直播/录播和时间会一起展示。例如：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>原状态：直播 19:30</span></span>
+<span class="line"><span>新状态：录播 12:00</span></span></code></pre>
+<p>用户只说“改为录播”但没有可靠新时间时，Skill 会询问时间，不会自行推断。</p>
+<h3 id="23-文本模板管理">2.3 文本模板管理</h3>
+<ul>
+<li>从用户提供的新 DOCX 提取文本模板二、模板三；</li>
+<li>保存原 DOCX、可执行模板、模板合同、示例和说明；</li>
+<li>展示原样式与示例渲染结果；</li>
+<li>用户确认后才启用；</li>
+<li>新模板不会自动成为默认模板；</li>
+<li>用户可以明确指定本次模板或修改默认文本模板。</li>
+</ul>
+<h3 id="24-海报模板管理">2.4 海报模板管理</h3>
+<ul>
+<li>注册模板一、模板二、模板三；</li>
+<li>给某个课程、班级或直播状态分配固定模板；</li>
+<li>没有明确规则时使用当前默认海报模板；</li>
+<li>修改默认模板必须得到用户明确指令；</li>
+<li>编辑具体 PSD 前检查真实图层结构、标题容量和所需字体；</li>
+<li>支持同一海报模板按老师保存多个 PSD 变体；缺少目标老师版本时，默认停止；若模板契约已记录用户批准的基准 PSD 派生规则，则可从该基准仅替换人物和姓名后生成并登记；</li>
+<li>对位置锁定模板，只允许修改契约字段；模板二只允许调整三行主标题字号。</li>
+</ul>
+<h3 id="25-教师人物形象管理">2.5 教师人物形象管理</h3>
+<ul>
+<li>使用用户指定的教师人物参考文件夹；</li>
+<li>通用海报模板从该文件夹搜索并置入对应讲师 PNG；</li>
+<li>已登记的教师专属 PSD 先按老师精确选择；只有用户明确更换形象，或已批准从固定基准 PSD 派生新老师版本时，才替换人物；</li>
+<li>一个教师有多张图片时列出完整文件名，让用户选择；</li>
+<li>PNG 背景不透明时先抠图；</li>
+<li>展示棋盘格、白底和深色底预览；</li>
+<li>用户确认后备份原图，再沿用原文件名替换；</li>
+<li>只使用人物主体，不把原图片背景、矩形底色或场景带入海报；</li>
+<li>禁止用错误老师的 PSD 顶替缺失的教师专属版本。</li>
+</ul>
+<h3 id="26-psd-处理和交付保护">2.6 PSD 处理和交付保护</h3>
+<ul>
+<li>通过 Photoshop 原生接口打开 PSD；</li>
+<li>检查课程标题、日期、时间、状态、课程目标和人物图层；</li>
+<li>修改副本，不覆盖历史 PSD；</li>
+<li>检查标题是否越界；</li>
+<li>检查标题与下方内容至少保留模板要求的间距；</li>
+<li>检查课程目标是否侵入右侧日期/时间安全区域；</li>
+<li>打开标题智能对象，以完整标准化课程名精确识别课程 PSD；</li>
+<li>课程名称相同且已有一个 PSD 时直接复用，不保存新的日期版本；</li>
+<li>一个课程匹配多个 PSD 时停止，不按文件名或修改时间猜测；</li>
+<li>批量发布前检查课程名与 PSD 的唯一映射；</li>
+<li>用户验收前保留完整运行证据；验收后删除本次日期的整个运行目录，并保留目录外清理报告。</li>
+<li>Photoshop 暂存文件按“运行前基线差异”清理，只处理本次新增的 <code>Photoshop Temp*</code> / <code>~PST*.tmp</code>；不会清空整个系统临时目录。</li>
+</ul>
+<h2 id="3-适用场景">3. 适用场景</h2>
+<p>推荐在以下场景使用：</p>
+<ol>
+<li>每天或每周固定制作课程预告；</li>
+<li>多个班级使用不同课表，需要统一整理某一天课程；</li>
+<li>课程介绍分散在多份历史 Word 中；</li>
+<li>海报需要沿用旧设计，只替换课程文字、日期和时间；</li>
+<li>不同课程需要使用不同版本的海报模板；</li>
+<li>教师人物形象会新增或替换；</li>
+<li>需要保留可编辑 PSD，但希望每门课程只长期保存一份；</li>
+<li>需要防止课表临时变更误修改其他课程；</li>
+<li>需要对新 Word 样式或新海报样式进行版本管理。</li>
+</ol>
+<p>不适合的场景：</p>
+<ul>
+<li>在没有课表证据的情况下自动编造课程；</li>
+<li>没有 Photoshop 却要求无损修改复杂 PSD；</li>
+<li>只有扁平 PNG，却要求任意修改课程标题、人物和目标；</li>
+<li>完全取消用户确认，直接批量发布；</li>
+<li>作为 Windows 后台定时服务长期无人值守运行。</li>
+</ul>
+<h2 id="4-安装方式">4. 安装方式</h2>
+<h3 id="41-推荐安装到课程项目中">4.1 推荐：安装到课程项目中</h3>
+<p>把完整 Skill 文件夹放到项目根目录：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>&#x3C;项目根目录>/.codex/skills/kecheng-yugao-skill/</span></span></code></pre>
+<p>项目根目录就是「海报制作」课程资料库所在的文件夹（各机器位置不同，旧机器在桌面下），安装后是：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>&#x3C;项目根目录>\.codex\skills\kecheng-yugao-skill\</span></span></code></pre>
+<p>工作区安装适合本项目，因为 Skill 中的目录约定、模板注册表和项目设置都与该
+课程资料库绑定。</p>
+<h3 id="42-可选安装到用户级-skill-目录">4.2 可选：安装到用户级 Skill 目录</h3>
+<p>如果多个项目都要调用，可复制到：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>C:\Users\&#x3C;用户名>\.codex\skills\kecheng-yugao-skill\</span></span></code></pre>
+<p>不要同时保留名称相同但内容不同的工作区版和用户级版，否则 AI 可能读取到不一致
+的版本。需要跨项目复用时，建议保留一份 Skill，并为每个项目建立独立的模板注册表
+和 <code>project-settings.json</code>。</p>
+<h3 id="43-skill-文件结构">4.3 Skill 文件结构</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>kecheng-yugao-skill/</span></span>
+<span class="line"><span>├─ SKILL.md</span></span>
+<span class="line"><span>├─ 使用说明书.md</span></span>
+<span class="line"><span>├─ agents/</span></span>
+<span class="line"><span>│  └─ openai.yaml</span></span>
+<span class="line"><span>├─ references/</span></span>
+<span class="line"><span>│  ├─ data-contract.md</span></span>
+<span class="line"><span>│  ├─ decision-rules.md</span></span>
+<span class="line"><span>│  ├─ template-registry.md</span></span>
+<span class="line"><span>│  ├─ text-template-workflow.md</span></span>
+<span class="line"><span>│  ├─ weekly-document.md</span></span>
+<span class="line"><span>│  ├─ teacher-assets.md</span></span>
+<span class="line"><span>│  └─ photoshop-posters.md</span></span>
+<span class="line"><span>└─ scripts/</span></span>
+<span class="line"><span>   ├─ course_preview.py</span></span>
+<span class="line"><span>   ├─ workflow_guardrails.py</span></span>
+<span class="line"><span>   ├─ manifest_semantic_diff.py</span></span>
+<span class="line"><span>   ├─ course_aliases.py</span></span>
+<span class="line"><span>   ├─ docx_layout_guard.py</span></span>
+<span class="line"><span>   ├─ manifest_finalize.py</span></span>
+<span class="line"><span>   ├─ delivery_check.py</span></span>
+<span class="line"><span>   ├─ weekly_document.py</span></span>
+<span class="line"><span>   ├─ photoshop_inspect.ps1</span></span>
+<span class="line"><span>   ├─ photoshop_inspect_smartobject.ps1</span></span>
+<span class="line"><span>   ├─ photoshop_edit_poster.ps1</span></span>
+<span class="line"><span>   ├─ photoshop_run_job.ps1</span></span>
+<span class="line"><span>   └─ photoshop_pixel_slot_transplant.ps1</span></span></code></pre>
+<h3 id="44-安装后验证">4.4 安装后验证</h3>
+<p>在项目根目录运行：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">course_preview.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">--</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">help</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">workflow_guardrails.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">--</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">help</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">manifest_semantic_diff.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">--</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">help</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">docx_layout_guard.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">--</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">help</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">delivery_check.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">--</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">help</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">weekly_document.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">--</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">help</span></span></code></pre>
+<p>Skill 结构校验：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">X utf8 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">creator目录</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">>/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">quick_validate.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span></span></code></pre>
+<p>如果 Codex 提供 bundled workspace Python，应优先使用该 Python，不需要用户另外
+创建虚拟环境。</p>
+<h2 id="5-依赖条件">5. 依赖条件</h2>
+<h3 id="51-必需依赖">5.1 必需依赖</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>依赖</th><th>用途</th></tr></thead><tbody><tr><td>Codex Desktop 或可访问本地文件的 Codex 环境</td><td>调用 Skill、查看课表和管理文件</td></tr><tr><td>Python 3.10 或更高版本</td><td>manifest、模板、Word 和交付校验</td></tr><tr><td><code>python-docx</code></td><td>读取和生成 DOCX</td></tr><tr><td>Pillow</td><td>PNG 透明度和人物素材检查</td></tr><tr><td><code>pypdf</code> 或 PyMuPDF</td><td>读取渲染后的 PDF，执行分页守卫</td></tr><tr><td>Windows PowerShell 5.1 或兼容 PowerShell</td><td>调用 Photoshop 自动化脚本</td></tr></tbody></table>
+<p><code>PyYAML</code> 只在运行 <code>skill-creator/scripts/quick_validate.py</code> 检查 Skill 结构时
+需要，不参与日常课程制作。</p>
+<p>独立 Python 环境缺少库时可安装：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">m pip install python</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">docx Pillow pypdf PyYAML</span></span></code></pre>
+<h3 id="52-word-渲染依赖">5.2 Word 渲染依赖</h3>
+<p>至少需要以下一种：</p>
+<ul>
+<li>Microsoft Word：Windows 推荐，能最大限度保留现有 DOCX 效果；</li>
+<li>LibreOffice：可作为跨平台渲染方案。</li>
+</ul>
+<p>如果两者都没有，AI 可以修改 DOCX，但不能完成可靠的逐页视觉验收，因此不应把
+文本阶段报告为正式完成。</p>
+<h3 id="53-photoshop-依赖">5.3 Photoshop 依赖</h3>
+<p>制作可编辑 PSD 海报需要：</p>
+<ul>
+<li>Windows 桌面版 Adobe Photoshop；</li>
+<li>Photoshop COM 自动化接口可用；</li>
+<li>模板使用的字体已经安装；</li>
+<li>PSD 内的链接智能对象没有丢失。</li>
+</ul>
+<p>海报模板二“老师海报 3.0”还要求 Photoshop 可识别 4 个
+<code>AlibabaPuHuiTi 2.0</code> 字重。原稿在缺字体时仍可能显示正常，但编辑文字后会被替换成
+其他字体，因此必须先通过字体预检。当前电脑已从
+<a href="https://www.alibabafonts.com/#/font">阿里巴巴官方字体站</a>安装模板二所需的 75、85、95、115
+四个字重并通过 Photoshop 检查。更换电脑或 Windows 用户后需要重新安装、刷新字体并
+重启 Photoshop。</p>
+<p>没有 Photoshop 时，Skill 仍可完成课表和 Word，但复杂 PSD 海报阶段会停止。</p>
+<h3 id="54-可选依赖">5.4 可选依赖</h3>
+<ul>
+<li>图像编辑或抠图能力：处理不透明教师人物图；</li>
+<li>OCR：辅助读取课表，但最终仍需视觉核对颜色和图例；</li>
+<li>教师形象参考文件夹：通用人物替换或用户要求换形象时使用；当前项目使用“人物”；</li>
+<li>软件图标文件夹：当前项目使用“图标”，并用 <code>图标来源.json</code> 记录网络来源和哈希。</li>
+</ul>
+<h2 id="6-第一次使用时用户需要提供什么">6. 第一次使用时，用户需要提供什么</h2>
+<p>第一次使用建议一次说明以下信息：</p>
+<ol>
+<li>项目根目录；</li>
+<li>课表文件夹；</li>
+<li>历史课程预告 Word 文件夹；</li>
+<li>历史 PSD 和历史 PNG 文件夹；</li>
+<li>当前默认文本模板；</li>
+<li>当前默认海报模板；</li>
+<li>可复用课程 PSD 要保存到哪个文件夹；</li>
+<li>哪个文件夹是人物参考文件夹；当前项目已指定为“人物”；</li>
+<li>软件图标文件夹；当前项目已指定为“图标”；</li>
+<li>如果海报模板按老师管理，提供每位老师对应的 PSD；</li>
+<li>本次目标日期。</li>
+</ol>
+<p>示例：</p>
+<blockquote>
+<p>使用课程预告自动化 Skill。项目根目录是“海报制作”，课表在“课表”，历史课程
+文本在“课程预告文本”，PSD 在“课程预告ps”，历史 PNG 在“课程预告海报”。
+默认使用文本模板一和海报模板一，可复用课程 PSD 保存到“课程预告ps”。制作 8 月 4 日
+的课程预告，先给我基础信息确认。</p>
+</blockquote>
+<p>人物文件夹可以在 Word 阶段稍后指定。通用模板在人物制作前必须完成配置；教师专属
+模板优先使用目标老师的已登记 PSD。若模板契约已记录用户批准的 Jelly 基准派生规则，
+缺少老师版本时可从基准 PSD 生成，但只能改人物智能对象和姓名文字，并先通过锁区 QA。</p>
+<h2 id="7-推荐项目目录">7. 推荐项目目录</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>海报制作/</span></span>
+<span class="line"><span>├─ 课表/</span></span>
+<span class="line"><span>├─ 课程预告文本/                 # 每个周区间只保留一个规范命名的正式 Word</span></span>
+<span class="line"><span>├─ 课程预告ps/</span></span>
+<span class="line"><span>├─ 课程预告海报/</span></span>
+<span class="line"><span>├─ 人物/                         # 教师透明 PNG</span></span>
+<span class="line"><span>├─ 图标/                         # 软件透明图标与图标来源.json</span></span>
+<span class="line"><span>├─ 卡通/                         # 可选，用户明确指定后才生效</span></span>
+<span class="line"><span>├─ 模板库/</span></span>
+<span class="line"><span>│  ├─ 文本模板/</span></span>
+<span class="line"><span>│  │  └─ text-template-registry.json</span></span>
+<span class="line"><span>│  ├─ 海报模板/</span></span>
+<span class="line"><span>│  │  ├─ poster-template-registry.json</span></span>
+<span class="line"><span>│  │  └─ poster-template-2/</span></span>
+<span class="line"><span>│  │     └─ teacher-variants/&#x3C;老师姓名>/</span></span>
+<span class="line"><span>│  ├─ 课程别名/</span></span>
+<span class="line"><span>│  │  └─ course-aliases.json</span></span>
+<span class="line"><span>│  └─ 项目设置/</span></span>
+<span class="line"><span>│     └─ project-settings.json</span></span>
+<span class="line"><span>├─ _course_preview_runs/</span></span>
+<span class="line"><span>└─ .codex/skills/kecheng-yugao-skill/</span></span></code></pre>
+<p>项目设置示例：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "schema_version"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "revision"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">5</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "project_root"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"&#x3C;项目根目录的绝对路径，init 时自动写入>"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "teacher_asset_folder"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"人物"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "software_icon_folder"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"图标"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "poster_psd_output_folder"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"课程预告ps"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "course_alias_registry"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"模板库</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">课程别名</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">course-aliases.json"</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<h2 id="8-如何调用">8. 如何调用</h2>
+<p>当前项目默认模板为：</p>
+<ul>
+<li>文本：<code>text-template-1</code>（文本模板一）；</li>
+<li>海报：<code>poster-template-1</code>（海报模板一）；</li>
+<li>模板一课程 PSD：<code>课程预告ps/</code>。</li>
+</ul>
+<p>文本模板一和海报模板一的可执行基准资产已经同步到 Skill 的 <code>assets/</code>。用户没有明确
+指定模板时使用上述默认值；以后仍可通过明确指令更换默认模板。</p>
+<h3 id="81-完整制作">8.1 完整制作</h3>
+<blockquote>
+<p>使用 <code>$kecheng-yugao-skill</code> 制作 2026 年 8 月 4 日课程预告文本和海报。
+先完成基础信息并给我确认。</p>
+</blockquote>
+<h3 id="82-只制作基础信息">8.2 只制作基础信息</h3>
+<blockquote>
+<p>使用课程预告自动化 Skill，整理 8 月 4 日全部班级的基础课程信息，生成 Word 后
+停止，不要追加详情和海报。</p>
+</blockquote>
+<h3 id="83-确认后继续">8.3 确认后继续</h3>
+<blockquote>
+<p>基础信息确认无误，继续追加课程详情并制作海报。</p>
+</blockquote>
+<h3 id="84-修改一门课程">8.4 修改一门课程</h3>
+<blockquote>
+<p>将“21期 AIGC 灵机班（无基础）”的“留人率飙升！Seedream打造高级直播间”改为
+录播，时间改为 12:00，其他课程不变。给我变更后的基础 Word 再确认。</p>
+</blockquote>
+<h3 id="85-指定模板">8.5 指定模板</h3>
+<blockquote>
+<p>本次 Word 使用文本模板二；“影刀RPA监控并抓取网站数据”使用海报模板三，其他
+海报使用默认模板。</p>
+</blockquote>
+<h3 id="86-修改默认模板">8.6 修改默认模板</h3>
+<blockquote>
+<p>将文本模板二设为默认文本模板。</p>
+</blockquote>
+<blockquote>
+<p>将海报模板三设为默认海报模板。</p>
+</blockquote>
+<h3 id="87-添加新模板">8.7 添加新模板</h3>
+<blockquote>
+<p>根据这个 DOCX 提取文本模板二，先生成示例和使用说明，不要自动设为默认。</p>
+</blockquote>
+<blockquote>
+<p>将这个 PSD 注册为海报模板二，检查图层合同并生成测试海报，先不要设为默认。</p>
+</blockquote>
+<blockquote>
+<p>将“老师海报3.0_Jelly老师.psd”登记为海报模板二的 Jelly 老师版本。所有图层位置
+锁定；只允许三行主标题按内容调整字号，其他文字字号保持不变。其余老师 PSD 到齐
+后按老师姓名继续登记。</p>
+</blockquote>
+<h3 id="88-设置人物文件夹">8.8 设置人物文件夹</h3>
+<blockquote>
+<p>将“人物”文件夹设为教师人物形象参考文件夹。以后所有含人物位置的海报都使用
+该文件夹中的透明人物主体。</p>
+</blockquote>
+<h3 id="89-更换教师形象">8.9 更换教师形象</h3>
+<blockquote>
+<p>本次将卡卡老师换成参考文件夹中的新形象。如果有多张候选，列出完整文件名让我
+选择。</p>
+</blockquote>
+<h3 id="810-验收并清理本次运行残留">8.10 验收并清理本次运行残留</h3>
+<blockquote>
+<p>Word 和全部海报确认可以使用。关闭 Photoshop，保留最终 PNG、正式 Word 和课程
+PSD，清理本次完整运行目录和本次新增的 Photoshop 暂存文件，并给出清理报告。</p>
+</blockquote>
+<h2 id="9-完整运行流程">9. 完整运行流程</h2>
+<h3 id="stage-0配置和运行记录">Stage 0：配置和运行记录</h3>
+<ol>
+<li>读取用户指定日期；</li>
+<li>解析当周 Word：不存在则准备创建，恰好一个则准备更新，两个及以上则停止；</li>
+<li>确定唯一正式文件名 <code>&#x3C;起始M.D>-&#x3C;结束M.D>课程预告.docx</code>；</li>
+<li>建立 schema-v2 manifest；</li>
+<li>给每门课生成稳定 <code>course_key</code>；</li>
+<li>解析文本模板和每门课海报模板；</li>
+<li>读取 PSD 输出目录、课程别名表和人物文件夹配置；</li>
+<li>在第一次调用 Photoshop 前保存 <code>run-cleanup-baseline.json</code>，用于最终只清理本次
+新增的 Photoshop 暂存文件。</li>
+<li>建立本次运行目录。</li>
+</ol>
+<p>解析命令示例：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">weekly_document.py resolve </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">project</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">root </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">.</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> `</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">run</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">dir _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">07</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> `</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">period</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">start </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">03</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> `</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">period</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">end </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">07</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> `</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">out _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">07</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">weekly</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">document</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">plan.json</span></span></code></pre>
+<p>推荐运行目录：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>_course_preview_runs/YYYY-MM-DD/</span></span>
+<span class="line"><span>├─ drafts/</span></span>
+<span class="line"><span>├─ schedule-evidence/</span></span>
+<span class="line"><span>├─ inspections/</span></span>
+<span class="line"><span>├─ measurements/</span></span>
+<span class="line"><span>├─ failed-qa/</span></span>
+<span class="line"><span>├─ working-psd/</span></span>
+<span class="line"><span>├─ backups/weekly-document/</span></span>
+<span class="line"><span>└─ qa/</span></span></code></pre>
+<h3 id="stage-a基础课程信息">Stage A：基础课程信息</h3>
+<ol>
+<li>打开全部课表；</li>
+<li>先读取每张课表自己的直播/录播图例，再查找目标日期；不同课表不得共用颜色规则；</li>
+<li>对目标日期完整单元格做两遍扫描：第一遍只统计色块总数，第二遍再从上到下逐条
+抄录；尽可能把目标单元格截图保存进 <code>schedule-evidence/</code>。若有 N 个课程色块，
+必须建立 N 条课程记录，分别写入第 <code>1…N</code> 块和总数 N；找到第一门课后仍要继续扫描；</li>
+<li>跳过没有课程的班级；</li>
+<li>为每个色块记录班级、课表原始课程名、标准课程名、色块颜色、图例原文、
+直播/录播判定来源和证据；</li>
+<li>直播/录播只允许来自当前课表图例、课表明确文字或用户确认。不得根据课程名中的
+“直播”“直播间”“直播贴片”、教师、时间或历史 Word 推断；</li>
+<li>运行清单校验，确保每班课程编号完整覆盖 <code>1…N</code>，缺少任何一门都停止；</li>
+<li>从历史 Word 确认教师；</li>
+<li>在 <code>drafts/</code> 生成只有基础行的 Word；正式 <code>课程预告文本/</code> 此时不新增
+<code>_基础信息</code> 或 <code>_待确认</code> 文件；</li>
+<li>同班多门课共用一次班级标题，但每门课保留独立课程行；</li>
+<li>直播行按模板一显示为红色粗体；</li>
+<li>渲染所有页面并检查；</li>
+<li>给用户基础 Word、模板选择和不确定项；</li>
+<li>停止等待确认。</li>
+</ol>
+<p>用户确认的是运行目录中的基础 Word。它是审批材料，不是正式目录中的第二份周文档。</p>
+<h3 id="课程变更防误改">课程变更防误改</h3>
+<p>用户修改一门课程时：</p>
+<ol>
+<li>修改 manifest 中对应 <code>course_key</code>；</li>
+<li>不直接编辑 Word 的某个段落序号；</li>
+<li>从 manifest 重新生成目标块；</li>
+<li>运行 <code>manifest_semantic_diff.py</code>；</li>
+<li>检查只发生了用户指定的变化；</li>
+<li>重新生成审批哈希并等待确认。</li>
+</ol>
+<h3 id="stage-b课程详情">Stage B：课程详情</h3>
+<ol>
+<li>校验 Stage A 审批哈希；</li>
+<li>从历史 Word 建立课程目录；</li>
+<li>优先使用精确标准化标题；</li>
+<li>查询已经由用户确认的课程别名；</li>
+<li>模糊候选仍然必须让用户确认；</li>
+<li>分别记录工具、作业和目标的来源；</li>
+<li>追加详细介绍；</li>
+<li>导出 PDF；</li>
+<li>运行分页守卫；</li>
+<li>逐页视觉检查；</li>
+<li>备份旧周文档，通过临时 DOCX 校验和原子替换发布规范文件名；</li>
+<li>检查该周在正式目录中恰好只剩一个规范命名的有效 DOCX。</li>
+</ol>
+<p>发布示例：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">weekly_document.py publish </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">plan _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">07</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">weekly</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">document</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">plan.json </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">source</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">docx _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">07</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">drafts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">8.3</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">8.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">7课程预告.docx </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">out _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">07</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">weekly</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">document</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">publication.json</span></span></code></pre>
+<p>同一天重新运行时，按稳定 <code>course_key</code> 替换该日期的课程块，不能在文末重复追加
+一组 8.7 内容。</p>
+<p>分页守卫会拒绝：</p>
+<ul>
+<li>最后一页只有极少量课程目标；</li>
+<li>新页面从“直播预告通知”或时间行开始；</li>
+<li>即使 PDF 抽取丢失了通知/时间行前面的 emoji，仍按文字语义识别课程块断裂；</li>
+<li>班级标题单独留在上一页；</li>
+<li>课程标题或目标缺失。</li>
+</ul>
+<h3 id="stage-c海报和-psd">Stage C：海报和 PSD</h3>
+<ol>
+<li>搜索模板范围内的候选 PSD/PNG；</li>
+<li>只读打开候选 PSD 的标题智能对象；</li>
+<li>用完整标准化课程名称精确匹配内部标题，不用文件名或子串代替证据；</li>
+<li>零个匹配准备新增课程 PSD，一个匹配直接复用，多个匹配停止；</li>
+<li>若 PSD 含人物位置，强制从“人物”文件夹选择对应讲师 PNG，并检查透明背景；</li>
+<li>建立 UTF-8 海报作业 JSON；</li>
+<li>通过 <code>photoshop_run_job.ps1</code> 修改 PSD；</li>
+<li>检查标题画布、水平视觉中心和标题下方间距；</li>
+<li>检查课程目标与日期时间安全区域；</li>
+<li>检查课程目标是否进入模板内框、页脚或底部装饰的不可用区域；</li>
+<li>导出 PNG 和工作 PSD；</li>
+<li>查看整张海报和修改区域裁切；</li>
+<li>为 PSD 标记可编辑等级；</li>
+<li>批量检查课程名称与 PSD 的唯一映射；</li>
+<li>已有课程 PSD 时不发布；没有时只发布一个 <code>&#x3C;课程名称>.psd</code>；</li>
+<li>按 manifest 生成最终文件名并汇总最终 manifest；</li>
+<li>执行完整交付检查并向用户展示 Word 和 PNG；</li>
+<li>第一次调用 Photoshop 前保存暂存文件基线；</li>
+<li>用户明确确认可以使用并关闭 Photoshop 后，删除本次日期的整个运行目录；</li>
+<li>只删除基线之后新增的 <code>Photoshop Temp*</code> / <code>~PST*.tmp</code>，不清空系统 Temp；</li>
+<li>在 <code>_course_preview_runs/_cleanup_reports/</code> 保存清理报告，并验证正式 Word、最终
+PNG 和课程 PSD 的哈希未变化。</li>
+</ol>
+<p>运行开始时记录基线：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">workflow_guardrails.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  run</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">cleanup</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">baseline </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">project</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">root </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">.</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> `</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">run</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">dir _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> `</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">out _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">run</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">cleanup</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">baseline.json</span></span></code></pre>
+<p>最终验收后清理：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">python .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">workflow_guardrails.py </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  final</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">run</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">cleanup </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">manifest _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">manifest</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">final.json </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">run</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">dir _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> `</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">baseline _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">run</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">cleanup</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">baseline.json </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">out _course_preview_runs</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">_cleanup_reports</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2026</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">08</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">11.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">json </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">user</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">approved</span></span></code></pre>
+<h2 id="10-课程详情别名">10. 课程详情别名</h2>
+<p>当新课名与历史课名含义相同但不是精确匹配时，Skill 会停止。例如：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>本次课程：影刀RPA监控并抓取网站数据</span></span>
+<span class="line"><span>历史课程：全自动竞品数据抓取与监控</span></span></code></pre>
+<p>用户确认一次后，可写入：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>模板库/课程别名/course-aliases.json</span></span></code></pre>
+<p>以后只有课程名和教师约束均匹配时才复用。出现教师冲突或一个别名对应多个标准
+课程时仍会停止。</p>
+<h2 id="11-海报排版保护">11. 海报排版保护</h2>
+<h3 id="111-标题保护">11.1 标题保护</h3>
+<ul>
+<li>保留模板需要的换行；</li>
+<li>海报模板二先清洗标题标点：除 <code>+</code>、<code>-</code> 外的特殊符号不进入海报主标题；Word、文件名和 PSD 课程键保留原名；</li>
+<li>海报模板二所有可见标题行按各自纸条视觉中心对齐；</li>
+<li>清洗后的完整标题少于 8 个可见字符时只使用中间绿色纸条：隐藏第 1、3 行文字及对应纸条，把完整清洗标题作为一整行居中放入绿色纸条；所有字符不得互相接触，也不得与其他文字相连；</li>
+<li>新标题不能超过源标题已有的智能对象越界余量；</li>
+<li>标题段落对齐方式必须与模板合同一致；</li>
+<li>以实际渲染文字边界计算视觉中心，不能只看文字锚点；</li>
+<li>居中模板必须满足
+<code>|标题实际中心 - 模板目标中心| &#x3C;= 最大允许偏差</code>；</li>
+<li>标题与下方课程目标/状态区域默认至少保留 20px；</li>
+<li>候选 PSD 标题结构不匹配时，先换更合适的 PSD，而不是强行移动设计元素。</li>
+</ul>
+<h3 id="1111-模板二自适应软件栏与时间栏">11.1.1 模板二自适应软件栏与时间栏</h3>
+<ul>
+<li>软件图标与名称始终从左侧开始，按固定间距排列；4 个软件沿用原四槽；</li>
+<li>少于 4 个软件时隐藏未用槽位，并按实际软件数缩短软件栏，消除未使用区域的大块空白；</li>
+<li>软件栏右下角紫色贴纸属于模板标志，缩短栏目时必须随新右边缘保留，不能隐藏或拉变形；</li>
+<li>时间栏向左扩展与软件栏缩短相同的宽度；</li>
+<li>由于原模板纸张/边框与大底图合并，自动化必须新增分层的“软件栏压缩底板”和“时间栏延展底板”，不能只移动文字图标，也不能把最终 PSD 压成单层图片；</li>
+<li>重建底板采用左右边缘保形、中段纹理伸缩的切片方式，整体纸张、边框、胶带样式不变；</li>
+<li>日期、周几、时间保持独立文字图层和原字体格式：宽栏用横向单行，较窄栏用日期在上、周几与时间在下的紧凑两行；不得重叠或出现大面积空白。</li>
+</ul>
+<p>模板一在本次 8 月 5 日运行中的标题智能对象宽度为 938px，目标中心为 469px，最大
+允许偏差为 15px。其他模板必须在模板注册时单独记录，不能默认照搬模板一。</p>
+<h3 id="112-课程目标安全区">11.2 课程目标安全区</h3>
+<p>课程目标位于左下区域，日期和时间位于右下区域。Skill 会检查：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>课程目标右边界 + 最小间距 &#x3C;= 日期/时间区域左边界</span></span>
+<span class="line"><span>课程目标下边界 &#x3C;= 模板课程目标安全底线 &#x3C;= 海报画布下边界</span></span></code></pre>
+<p>默认最小间距为 20px。模板课程目标安全底线应位于内框、页脚和底部装饰之上，不能只
+使用原始画布下边界。失败时重新从未修改的源 PSD 开始，并通过语义换行缩短每行；若
+完整文字因此增加一行，可只对课程目标文字层设置经过测量的
+<code>objective_translate_y_px</code>，并同时设置 <code>objective_bottom_limit_px</code>。审计必须记录移动前后
+边界。不能移动无关设计元素，也不能通过隐藏文字、缩小到不可读或跳过检查来通过。</p>
+<h3 id="113-psd-可编辑等级">11.3 PSD 可编辑等级</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>等级</th><th>含义</th><th>是否可交付</th></tr></thead><tbody><tr><td>A</td><td>标题、日期、时间、状态、目标和需要的人物保持可编辑</td><td>可以</td></tr><tr><td>B</td><td>完全同款历史底图＋独立日期时间替换层，仅日期时间不同</td><td>可以，但报告中必须说明</td></tr><tr><td>C</td><td>单层扁平图或缺少必要可编辑结构</td><td>不可以</td></tr></tbody></table>
+<h2 id="12-photoshop-utf-8-作业方式">12. Photoshop UTF-8 作业方式</h2>
+<p>不建议在命令行中直接传递长中文标题和中文引号。海报作业使用 JSON：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "schema_version"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "source_psd"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"源模板.psd"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "out_psd"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"working-psd/成品.psd"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "out_png"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"8.4/成品.png"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "out_audit"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"qa/成品-audit.json"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "source_expected_title"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"源课程标题"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "target_title"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"新课程标题</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">n第二行"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "target_title_justification"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"center"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "center_title_horizontally"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "source_expected_date"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"07/22"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "target_date"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"08/04"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "source_expected_time"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"19:30"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "target_time"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"12:00"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "source_expected_status"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"直播时间"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "target_status"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"录播时间"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "source_expected_objective"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"课程目标</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">n源目标"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "target_objective"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"课程目标</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">n新目标"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  "guards"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: {</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "title_center_target_x_px"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">469</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "maximum_title_center_delta_px"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">15</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "minimum_title_gap_px"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">20</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">    "minimum_objective_time_gap_px"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">20</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<p>运行：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">powershell.exe</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">NoProfile </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">ExecutionPolicy Bypass </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">File </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  .codex</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skills</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">kecheng</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yugao</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">skill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">scripts</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">photoshop_run_job.ps1 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">`</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">JobPath </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">作业JSON</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span></span></code></pre>
+<p><code>source_expected_*</code> 是源 PSD 当前值，<code>target_*</code> 是要写入的新值。两者分开可防止把
+“改后值”误当成“改前校验值”。</p>
+<h2 id="13-文本模板规则">13. 文本模板规则</h2>
+<ul>
+<li>一份周 Word 只使用一个文本模板；</li>
+<li>新模板先进入 <code>pending</code>；</li>
+<li>必须展示直播和录播样例；</li>
+<li>用户确认后变为 <code>confirmed</code>；</li>
+<li>新增模板不会自动改变默认值；</li>
+<li>修改默认值必须由用户明确提出；</li>
+<li>新模板也必须通过分页守卫和逐页视觉检查。</li>
+</ul>
+<p>一个有效文本模板必须能区分：</p>
+<ul>
+<li>班级标题；</li>
+<li>日期、课程、教师；</li>
+<li>直播和录播；</li>
+<li>时间；</li>
+<li>工具；</li>
+<li>可选作业；</li>
+<li>非空课程目标；</li>
+<li>多课程重复和分页规则。</li>
+</ul>
+<h2 id="14-人物形象规则">14. 人物形象规则</h2>
+<ol>
+<li>人物参考文件夹必须由用户指定；</li>
+<li>只选择 PNG；</li>
+<li>多张候选必须回复完整文件名；</li>
+<li>相同文件名出现在不同子目录时必须先重命名；</li>
+<li>PNG 有 Alpha 通道不等于背景已经透明；</li>
+<li>抠图预览必须经过用户确认；</li>
+<li>替换前备份到 <code>_原图备份/</code>；</li>
+<li>通用模板从权威文件夹重新置入人物；教师专属模板先精确选中老师变体，只有用户明确更换形象，或模板已批准从固定基准派生新老师版本时才置入新人物；</li>
+<li>最终人物图层或智能对象只保留人物主体，不保留原图背景。</li>
+</ol>
+<h2 id="15-最终交付条件">15. 最终交付条件</h2>
+<p>只有同时满足以下条件才能报告完成：</p>
+<ul>
+<li>Stage A 已确认；</li>
+<li>课程详情有可靠来源；</li>
+<li>Word 所有页面已渲染并检查；</li>
+<li>没有空白尾页和课程块断裂；</li>
+<li>同一周在 <code>课程预告文本/</code> 中恰好只有一个正式 DOCX；</li>
+<li>正式 Word 使用 <code>&#x3C;起始M.D>-&#x3C;结束M.D>课程预告.docx</code>，没有 <code>_基础信息</code>、
+<code>_待确认</code>、<code>_DRAFT</code>、<code>_FINAL</code>、<code>_new</code>、<code>_v2</code> 等后缀；</li>
+<li>每张海报已检查整图和修改区域；</li>
+<li>标题水平中心、标题下方间距和课程目标几何守卫通过；</li>
+<li>每张海报 PSD 等级为 A 或 B；</li>
+<li>发布前全批次没有目标冲突；</li>
+<li>manifest 课程数量等于 PNG 数量；</li>
+<li>每张 PNG 都映射到一个内部标题精确匹配、非空的课程 PSD；</li>
+<li>同一标准化课程名称只映射一个 PSD；同一课程出现在多个班级时可共享该 PSD；</li>
+<li>不同课程名称不能共享同一个 PSD；</li>
+<li>PNG 文件名包含对应班级、课程、教师、目标日期；直播课还包含“直播”；</li>
+<li>最终文件夹不存在 <code>c.png</code>、<code>final.png</code> 等临时别名或未登记图片；</li>
+<li>用户验收后已按授权清理本次完整运行目录和本次新增的 Photoshop 暂存文件；</li>
+<li>清理报告位于运行目录外，正式 Word、最终 PNG 和课程 PSD 哈希保持不变；</li>
+<li>历史源文档、PSD 和 PNG 没有被覆盖。</li>
+</ul>
+<h2 id="16-常见问题">16. 常见问题</h2>
+<h3 id="课表看不清怎么办">课表看不清怎么办</h3>
+<p>放大并截取目标区域；仍无法确认时报告具体文件和单元格，停止该班级，不猜测。</p>
+<h3 id="为什么同一班当天只记录了一门课">为什么同一班当天只记录了一门课</h3>
+<p>这是目标日期单元格没有完整扫描造成的。现在每班必须先统计课程色块总数 N，再为
+每个色块写入 <code>schedule_entry_index=1…N</code>。校验器发现编号缺失、重复或总数不一致时，
+不会生成基础 Word。</p>
+<h3 id="如何区分直播和录播">如何区分直播和录播</h3>
+<p>先读取当前课表自己的图例，再把课程色块颜色与该图例对应。不同班级课表的直播颜色
+可能不同，不能建立全局固定颜色。课程名出现“直播”不代表直播课；历史 Word 只用于
+教师和详情检索，不得覆盖当天课表的直播/录播判定。</p>
+<h3 id="用户只修改直播录播没有说时间怎么办">用户只修改直播/录播，没有说时间怎么办</h3>
+<p>询问新的可靠时间。不会因为录播通常是 12:00 就自动填写。</p>
+<h3 id="模糊课程详情每次都要问吗">模糊课程详情每次都要问吗</h3>
+<p>首次必须确认。确认后写入课程别名表，满足同一教师约束时可自动复用。</p>
+<h3 id="word-出现第-7-页只有一行怎么办">Word 出现第 7 页只有一行怎么办</h3>
+<p>不能交付。调整模板允许的空白段落和课程块绑定，再重新渲染并运行分页守卫。</p>
+<h3 id="为什么同一周出现多个课程预告-word">为什么同一周出现多个课程预告 Word</h3>
+<p>旧流程把 Stage A 基础版、Stage B 完整版和修订版都发布到了正式目录，并用
+<code>_FINAL/new/v2</code> 区分；候选选择又可能按修改时间或后缀静默挑选，因此副本会越积
+越多。新流程把这些文件全部放进 <code>_course_preview_runs/目标日期/</code>，正式目录只发布
+一个规范文件。</p>
+<p>如果运行前已经检测到同一周有两个及以上 Word，Skill 会列出完整路径并停止，不会
+猜哪一个最新。需要先由用户确认保留内容，再做一次可恢复的合并或整理。</p>
+<h3 id="同一周已有一个带-_final-后缀的-word-怎么办">同一周已有一个带 <code>_FINAL</code> 后缀的 Word 怎么办</h3>
+<p>可以把它作为唯一旧来源复制到运行目录编辑。正式发布前先备份旧文件，再原子发布为
+规范名称；发布成功并复检后才移除旧后缀文件。备份位于本次运行目录的
+<code>backups/weekly-document/</code>。</p>
+<h3 id="海报课程目标碰到日期怎么办">海报课程目标碰到日期怎么办</h3>
+<p>从未修改源 PSD 重新开始，对目标进行语义换行；安全区检查通过后才导出。</p>
+<h3 id="海报课程目标没有超出画布但被内框或底部装饰挡住怎么办">海报课程目标没有超出画布，但被内框或底部装饰挡住怎么办</h3>
+<p>这说明只检查“画布底边”不够。为该模板登记 <code>objective_bottom_limit_px</code>，重新从未修改
+源 PSD 开始；若语义换行导致行数增加，只上移课程目标文字层并记录
+<code>objective_translate_y_px</code>。最终同时检查整图和下半区 100% 局部图。</p>
+<h3 id="海报课程标题没有居中怎么办">海报课程标题没有居中怎么办</h3>
+<p>不能只修改文字锚点。先检查标题智能对象中的段落对齐，再以实际文字边界计算视觉
+中心；按模板记录的目标中心自动平移，重新保存、导出并运行水平中心守卫。</p>
+<h3 id="海报被命名为-cpngfinalpng-怎么办">海报被命名为 <code>c.png</code>、<code>final.png</code> 怎么办</h3>
+<p>临时名称不能交付。最终名称必须由 manifest 中的班级、日期、课程、教师和直播状态
+生成。PNG 不要求与长期保存的课程 PSD 同名。删除或备份临时别名后，重新运行
+manifest、课程PSD映射和交付检查；早先通过的检查不能继续沿用。</p>
+<h3 id="只有历史-png-可以做吗">只有历史 PNG 可以做吗</h3>
+<p>只有标题、教师、状态、目标完全相同，仅日期时间变化时，才能使用 B 级分层日期替换。
+其他变化需要可编辑 PSD，或由用户明确接受近似重建，但近似重建不得冒充 A 级 PSD。</p>
+<h3 id="photoshop-报中文乱码怎么办">Photoshop 报中文乱码怎么办</h3>
+<p>使用 UTF-8 JSON 作业和 <code>photoshop_run_job.ps1</code>，不要把长中文内容直接放进
+Windows PowerShell 命令行；读取 JSON 时显式使用 UTF-8。</p>
+<h3 id="png-已完成但缺少-psd-怎么办">PNG 已完成但缺少 PSD 怎么办</h3>
+<p>先检查 <code>课程预告ps/</code> 中所有候选 PSD 的内部标题。如果存在唯一精确课程标题匹配，
+将 PNG 映射到它，不再复制；如果没有，才从通过 QA 的工作 PSD 新增一个课程 PSD。
+存在多个精确匹配时先整理重复项，不能猜测。</p>
+<h3 id="为什么制作完成后还有工作-psd">为什么制作完成后还有工作 PSD</h3>
+<p>工作 PSD、草稿、渲染图、检查数据、失败输出和运行备份都属于本次运行证据，必须保留到
+用户确认 Word 和海报可以使用。验收后关闭 Photoshop，运行
+<code>final-run-cleanup --user-approved</code>：它删除整个日期运行目录，并记录删除前的路径、大小
+和哈希；同时只删除运行基线之后新增的 Photoshop 暂存文件。课程 PSD、PNG、正式 Word、
+模板库、人物、图标、Skill 文件以及运行前已经存在的临时文件均不会被删除。</p>
+<h3 id="同一个课程找到了两个-psd-怎么办">同一个课程找到了两个 PSD 怎么办</h3>
+<p>停止制作并列出两个 PSD 的完整路径与内部标题。用户需要决定保留哪一个并整理重复
+文件。Skill 不会按文件名、日期或修改时间自动选择。</p>
+<h3 id="同一课程改了教师课程目标或海报模板怎么办">同一课程改了教师、课程目标或海报模板怎么办</h3>
+<p>日期、时间、直播/录播可以只改工作副本，不需要更新课程 PSD。教师、人物、课程目标
+或海报模板属于课程 PSD 的稳定内容；发生变化时停止并让用户确认是否替换唯一课程
+PSD。替换前必须备份旧 PSD，不能静默覆盖。</p>
+<p>如果模板本身按老师分别提供 PSD，先精确选择目标老师变体。没有该老师版本时不能直接
+套用其他老师版本；只有模板契约中已有用户批准的基准派生规则，才可从该基准生成新版本，
+并且只能修改人物和姓名，锁定课程主标题、“90天成为AI全能人才”及其余区域。模板要求的
+字体缺失时也必须停止；不能接受 Photoshop 自动替换字体后继续出图。</p>
+<h2 id="17-数据安全与注意事项">17. 数据安全与注意事项</h2>
+<ol>
+<li>用户指定日期优先于系统日期；</li>
+<li>每个课表都要检查；</li>
+<li>课表负责课程和授课方式证据，历史 Word 负责教师和详情；</li>
+<li>用户确认的临时变更必须写入 override 证据；</li>
+<li>课程修改以 manifest 为准，不按 Word 段落位置操作；</li>
+<li>模糊匹配不能直接生成成品；</li>
+<li>工具、作业、目标分别记录来源；</li>
+<li>文本模板与海报模板分开管理；</li>
+<li>历史 PSD、PNG 和原始资料不可覆盖；正式周 Word 只允许在运行目录备份后原子更新；</li>
+<li>Photoshop 失败后只允许从未修改源文件隔离重试一次；</li>
+<li>失败输出保存在 <code>failed-qa/</code>，不得混入最终文件夹；</li>
+<li>自动化减少重复劳动，但保留课程确认、模板确认、人物选择和抠图确认。</li>
+<li><code>课程预告文本/</code> 可以保存不同周的正式文档，但同一周区间只能有一个；</li>
+<li>最终运行清理必须在用户验收且 Photoshop 关闭后执行，只能作用于本次准确日期的
+<code>_course_preview_runs/YYYY-MM-DD/</code> 和基线之后新增的 Photoshop 暂存文件；</li>
+<li>课程 PSD 以内部完整课程标题为准，文件名只用于帮助搜索。</li>
+<li>教师专属模板必须精确匹配老师；位置锁定模板不得移动图层；</li>
+<li>模板二只有三行主标题可调字号，其他文字字号锁定；</li>
+<li>软件图标必须来自“图标”目录且有来源记录；</li>
+<li>基础版、待确认版、QA 文件和备份只能保存在 <code>_course_preview_runs/</code>。</li>
+</ol>
+<h2 id="18-本次优化后的关键变化">18. 本次优化后的关键变化</h2>
+<p>2026 年 8 月 4 日和 8 月 5 日试运行暴露的问题已转化为以下机制：</p>
+<ul>
+<li>课程稳定键和语义差异检查，防止把修改应用到错误课程；</li>
+<li>直播/录播与时间联合复核；</li>
+<li>用户确认课程别名持久化；</li>
+<li>工具、作业和目标的字段级来源；</li>
+<li>Word 空白尾页、课程块断裂和孤立标题守卫；</li>
+<li>海报目标文字与日期时间区域的像素安全检查；</li>
+<li>PSD 标题容量预判和候选拒绝理由；</li>
+<li>标题智能对象内部内容检查、显式段落对齐和视觉中心硬守卫；</li>
+<li>manifest 驱动的文件名语义校验，拒绝临时别名；</li>
+<li>UTF-8 JSON Photoshop 作业入口；</li>
+<li>PSD A/B/C 可编辑等级；</li>
+<li>PSD 全批次发布预检；</li>
+<li>通用 manifest 汇总和最终交付检查；</li>
+<li>交付检查后的不可变规则；任何后续文件变更都必须重跑检查；</li>
+<li>规范化的运行子目录。</li>
+<li>单周单正式 Word：固定规范文件名、草稿隔离、旧版备份和原子替换；</li>
+<li>同周多文档硬停止，不再按 <code>FINAL</code>、版本号或修改时间猜选；</li>
+<li>历史文本目录跳过带版本后缀的周文档，避免同一课程被重复索引；</li>
+<li>最终交付增加“同周数量为 1、名称规范、DOCX 有效、哈希一致”检查。</li>
+</ul>
+<p>这些规则已写入 Skill 和脚本。新文本模板、新海报模板、新教师、多人物图和抠图
+仍需要在真实素材首次出现时完成对应的实例验证。</p>  <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-06T23:49:21+08:00">2026-10-06</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/07_skill%E5%AD%98%E6%A1%A3/kecheng-yugao-skill/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/07_skill%E5%AD%98%E6%A1%A3/kecheng-yugao-skill/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%E4%B9%A6.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore>  <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/data-contract-a1f05bc/"> <span class="card-cat">skill存档</span> <h3>Manifest data contract (schema version 2)</h3> <p>Use one JSON manifest per target date. Preserve evidence; do not repla…</p> </a><a class="card" href="/above-the-web/decision-rules-fd4c4b9/"> <span class="card-cat">skill存档</span> <h3>Decision rules</h3> <p>- Schedule image: authority for whether a class meets, visible course …</p> </a><a class="card" href="/above-the-web/editable-poster-variants-06f4060/"> <span class="card-cat">skill存档</span> <h3>Editable poster variants</h3> <p>Read this reference when a poster template has one PSD per teacher or …</p> </a><a class="card" href="/above-the-web/note-ee88e68/"> <span class="card-cat">skill存档</span> <h3>海报模板一使用说明</h3> <p>这是 poster-template-1 的 Skill 内置基准资产。画布为 1080×1835，课程标题位于智能对象中，日期、时间、直播…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#1-这个-skill-是什么" data-toc-link="1-这个-skill-是什么">1. 这个 Skill 是什么</a></li><li class="d2"><a href="#2-可以做什么" data-toc-link="2-可以做什么">2. 可以做什么</a></li><li class="d3"><a href="#21-日常课程预告" data-toc-link="21-日常课程预告">2.1 日常课程预告</a></li><li class="d3"><a href="#22-课表临时变更" data-toc-link="22-课表临时变更">2.2 课表临时变更</a></li><li class="d3"><a href="#23-文本模板管理" data-toc-link="23-文本模板管理">2.3 文本模板管理</a></li><li class="d3"><a href="#24-海报模板管理" data-toc-link="24-海报模板管理">2.4 海报模板管理</a></li><li class="d3"><a href="#25-教师人物形象管理" data-toc-link="25-教师人物形象管理">2.5 教师人物形象管理</a></li><li class="d3"><a href="#26-psd-处理和交付保护" data-toc-link="26-psd-处理和交付保护">2.6 PSD 处理和交付保护</a></li><li class="d2"><a href="#3-适用场景" data-toc-link="3-适用场景">3. 适用场景</a></li><li class="d2"><a href="#4-安装方式" data-toc-link="4-安装方式">4. 安装方式</a></li><li class="d3"><a href="#41-推荐安装到课程项目中" data-toc-link="41-推荐安装到课程项目中">4.1 推荐：安装到课程项目中</a></li><li class="d3"><a href="#42-可选安装到用户级-skill-目录" data-toc-link="42-可选安装到用户级-skill-目录">4.2 可选：安装到用户级 Skill 目录</a></li><li class="d3"><a href="#43-skill-文件结构" data-toc-link="43-skill-文件结构">4.3 Skill 文件结构</a></li><li class="d3"><a href="#44-安装后验证" data-toc-link="44-安装后验证">4.4 安装后验证</a></li><li class="d2"><a href="#5-依赖条件" data-toc-link="5-依赖条件">5. 依赖条件</a></li><li class="d3"><a href="#51-必需依赖" data-toc-link="51-必需依赖">5.1 必需依赖</a></li><li class="d3"><a href="#52-word-渲染依赖" data-toc-link="52-word-渲染依赖">5.2 Word 渲染依赖</a></li><li class="d3"><a href="#53-photoshop-依赖" data-toc-link="53-photoshop-依赖">5.3 Photoshop 依赖</a></li><li class="d3"><a href="#54-可选依赖" data-toc-link="54-可选依赖">5.4 可选依赖</a></li><li class="d2"><a href="#6-第一次使用时用户需要提供什么" data-toc-link="6-第一次使用时用户需要提供什么">6. 第一次使用时，用户需要提供什么</a></li><li class="d2"><a href="#7-推荐项目目录" data-toc-link="7-推荐项目目录">7. 推荐项目目录</a></li><li class="d2"><a href="#8-如何调用" data-toc-link="8-如何调用">8. 如何调用</a></li><li class="d3"><a href="#81-完整制作" data-toc-link="81-完整制作">8.1 完整制作</a></li><li class="d3"><a href="#82-只制作基础信息" data-toc-link="82-只制作基础信息">8.2 只制作基础信息</a></li><li class="d3"><a href="#83-确认后继续" data-toc-link="83-确认后继续">8.3 确认后继续</a></li><li class="d3"><a href="#84-修改一门课程" data-toc-link="84-修改一门课程">8.4 修改一门课程</a></li><li class="d3"><a href="#85-指定模板" data-toc-link="85-指定模板">8.5 指定模板</a></li><li class="d3"><a href="#86-修改默认模板" data-toc-link="86-修改默认模板">8.6 修改默认模板</a></li><li class="d3"><a href="#87-添加新模板" data-toc-link="87-添加新模板">8.7 添加新模板</a></li><li class="d3"><a href="#88-设置人物文件夹" data-toc-link="88-设置人物文件夹">8.8 设置人物文件夹</a></li><li class="d3"><a href="#89-更换教师形象" data-toc-link="89-更换教师形象">8.9 更换教师形象</a></li><li class="d3"><a href="#810-验收并清理本次运行残留" data-toc-link="810-验收并清理本次运行残留">8.10 验收并清理本次运行残留</a></li><li class="d2"><a href="#9-完整运行流程" data-toc-link="9-完整运行流程">9. 完整运行流程</a></li><li class="d3"><a href="#stage-0配置和运行记录" data-toc-link="stage-0配置和运行记录">Stage 0：配置和运行记录</a></li><li class="d3"><a href="#stage-a基础课程信息" data-toc-link="stage-a基础课程信息">Stage A：基础课程信息</a></li><li class="d3"><a href="#课程变更防误改" data-toc-link="课程变更防误改">课程变更防误改</a></li><li class="d3"><a href="#stage-b课程详情" data-toc-link="stage-b课程详情">Stage B：课程详情</a></li><li class="d3"><a href="#stage-c海报和-psd" data-toc-link="stage-c海报和-psd">Stage C：海报和 PSD</a></li><li class="d2"><a href="#10-课程详情别名" data-toc-link="10-课程详情别名">10. 课程详情别名</a></li><li class="d2"><a href="#11-海报排版保护" data-toc-link="11-海报排版保护">11. 海报排版保护</a></li><li class="d3"><a href="#111-标题保护" data-toc-link="111-标题保护">11.1 标题保护</a></li><li class="d3"><a href="#1111-模板二自适应软件栏与时间栏" data-toc-link="1111-模板二自适应软件栏与时间栏">11.1.1 模板二自适应软件栏与时间栏</a></li><li class="d3"><a href="#112-课程目标安全区" data-toc-link="112-课程目标安全区">11.2 课程目标安全区</a></li><li class="d3"><a href="#113-psd-可编辑等级" data-toc-link="113-psd-可编辑等级">11.3 PSD 可编辑等级</a></li><li class="d2"><a href="#12-photoshop-utf-8-作业方式" data-toc-link="12-photoshop-utf-8-作业方式">12. Photoshop UTF-8 作业方式</a></li><li class="d2"><a href="#13-文本模板规则" data-toc-link="13-文本模板规则">13. 文本模板规则</a></li><li class="d2"><a href="#14-人物形象规则" data-toc-link="14-人物形象规则">14. 人物形象规则</a></li><li class="d2"><a href="#15-最终交付条件" data-toc-link="15-最终交付条件">15. 最终交付条件</a></li><li class="d2"><a href="#16-常见问题" data-toc-link="16-常见问题">16. 常见问题</a></li><li class="d3"><a href="#课表看不清怎么办" data-toc-link="课表看不清怎么办">课表看不清怎么办</a></li><li class="d3"><a href="#为什么同一班当天只记录了一门课" data-toc-link="为什么同一班当天只记录了一门课">为什么同一班当天只记录了一门课</a></li><li class="d3"><a href="#如何区分直播和录播" data-toc-link="如何区分直播和录播">如何区分直播和录播</a></li><li class="d3"><a href="#用户只修改直播录播没有说时间怎么办" data-toc-link="用户只修改直播录播没有说时间怎么办">用户只修改直播/录播，没有说时间怎么办</a></li><li class="d3"><a href="#模糊课程详情每次都要问吗" data-toc-link="模糊课程详情每次都要问吗">模糊课程详情每次都要问吗</a></li><li class="d3"><a href="#word-出现第-7-页只有一行怎么办" data-toc-link="word-出现第-7-页只有一行怎么办">Word 出现第 7 页只有一行怎么办</a></li><li class="d3"><a href="#为什么同一周出现多个课程预告-word" data-toc-link="为什么同一周出现多个课程预告-word">为什么同一周出现多个课程预告 Word</a></li><li class="d3"><a href="#同一周已有一个带-_final-后缀的-word-怎么办" data-toc-link="同一周已有一个带-_final-后缀的-word-怎么办">同一周已有一个带 _FINAL 后缀的 Word 怎么办</a></li><li class="d3"><a href="#海报课程目标碰到日期怎么办" data-toc-link="海报课程目标碰到日期怎么办">海报课程目标碰到日期怎么办</a></li><li class="d3"><a href="#海报课程目标没有超出画布但被内框或底部装饰挡住怎么办" data-toc-link="海报课程目标没有超出画布但被内框或底部装饰挡住怎么办">海报课程目标没有超出画布，但被内框或底部装饰挡住怎么办</a></li><li class="d3"><a href="#海报课程标题没有居中怎么办" data-toc-link="海报课程标题没有居中怎么办">海报课程标题没有居中怎么办</a></li><li class="d3"><a href="#海报被命名为-cpngfinalpng-怎么办" data-toc-link="海报被命名为-cpngfinalpng-怎么办">海报被命名为 c.png、final.png 怎么办</a></li><li class="d3"><a href="#只有历史-png-可以做吗" data-toc-link="只有历史-png-可以做吗">只有历史 PNG 可以做吗</a></li><li class="d3"><a href="#photoshop-报中文乱码怎么办" data-toc-link="photoshop-报中文乱码怎么办">Photoshop 报中文乱码怎么办</a></li><li class="d3"><a href="#png-已完成但缺少-psd-怎么办" data-toc-link="png-已完成但缺少-psd-怎么办">PNG 已完成但缺少 PSD 怎么办</a></li><li class="d3"><a href="#为什么制作完成后还有工作-psd" data-toc-link="为什么制作完成后还有工作-psd">为什么制作完成后还有工作 PSD</a></li><li class="d3"><a href="#同一个课程找到了两个-psd-怎么办" data-toc-link="同一个课程找到了两个-psd-怎么办">同一个课程找到了两个 PSD 怎么办</a></li><li class="d3"><a href="#同一课程改了教师课程目标或海报模板怎么办" data-toc-link="同一课程改了教师课程目标或海报模板怎么办">同一课程改了教师、课程目标或海报模板怎么办</a></li><li class="d2"><a href="#17-数据安全与注意事项" data-toc-link="17-数据安全与注意事项">17. 数据安全与注意事项</a></li><li class="d2"><a href="#18-本次优化后的关键变化" data-toc-link="18-本次优化后的关键变化">18. 本次优化后的关键变化</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

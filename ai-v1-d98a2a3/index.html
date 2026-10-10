@@ -1,0 +1,308 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>剧情向 AI 短片创作方法论 · 丧尸清道夫案例（待验证） · 蛛网之上</title><meta name="description" content="美学卷不动了，能把 3-5 分钟剧情讲完整、且选择性绕开 AI 技术短板的人，能跳过流量赛道直接进入主流影视行业的视野。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/ai-v1-d98a2a3/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="剧情向 AI 短片创作方法论 · 丧尸清道夫案例（待验证）"><meta property="og:description" content="美学卷不动了，能把 3-5 分钟剧情讲完整、且选择性绕开 AI 技术短板的人，能跳过流量赛道直接进入主流影视行业的视野。"><meta property="og:url" content="https://tiaozhuxiansheng.com/ai-v1-d98a2a3/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="剧情向 AI 短片创作方法论 · 丧尸清道夫案例（待验证）"><meta name="twitter:description" content="美学卷不动了，能把 3-5 分钟剧情讲完整、且选择性绕开 AI 技术短板的人，能跳过流量赛道直接进入主流影视行业的视野。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-26T06:53:28+08:00"><meta property="article:modified_time" content="2026-09-26T06:55:33+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="状态/待验证"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/ai-v1-d98a2a3/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/ai-v1-d98a2a3/","url":"https://tiaozhuxiansheng.com/ai-v1-d98a2a3/","headline":"剧情向 AI 短片创作方法论 · 丧尸清道夫案例（待验证）","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"美学卷不动了，能把 3-5 分钟剧情讲完整、且选择性绕开 AI 技术短板的人，能跳过流量赛道直接进入主流影视行业的视野。","datePublished":"2026-09-26T06:53:28+08:00","dateModified":"2026-09-26T06:55:33+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 状态/待验证"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"剧情向 AI 短片创作方法论 · 丧尸清道夫案例（待验证）","item":"https://tiaozhuxiansheng.com/ai-v1-d98a2a3/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span>  <span>约 6 分钟读完 · 2,425 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>21 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#️-待验证警示用前必读">⚠️ 待验证警示（用前必读）</a></li><li class="d2"><a href="#案例事实卡">案例事实卡</a></li><li class="d2"><a href="#核心三因素为什么能爆--待验证">核心三因素（为什么能爆 · 待验证）</a></li><li class="d3"><a href="#-叙事经济性--技术展示">① 叙事经济性 &gt; 技术展示</a></li><li class="d3"><a href="#-类型片配方--零文化门槛">② 类型片配方 = 零文化门槛</a></li><li class="d3"><a href="#-用机器人主角绕开恐怖谷">③ 用机器人主角绕开”恐怖谷”</a></li><li class="d2"><a href="#行业舆论交叉印证仅供参考--非定论">行业舆论交叉印证（仅供参考 · 非定论）</a></li><li class="d2"><a href="#可借鉴清单行动假说--待自验">可借鉴清单（行动假说 · 待自验）</a></li><li class="d3"><a href="#选题阶段">选题阶段</a></li><li class="d3"><a href="#脚本阶段">脚本阶段</a></li><li class="d3"><a href="#制作阶段">制作阶段</a></li><li class="d3"><a href="#传播阶段">传播阶段</a></li><li class="d2"><a href="#与跳蛛先生现有资产的对照机会盘点">与跳蛛先生现有资产的对照（机会盘点）</a></li><li class="d2"><a href="#与既有方法论的关联与张力">与既有方法论的关联与张力</a></li><li class="d3"><a href="#协同可叠加使用">协同（可叠加使用）</a></li><li class="d3"><a href="#张力可能冲突--待验">张力（可能冲突 · 待验）</a></li><li class="d2"><a href="#修订史">修订史</a></li><li class="d2"><a href="#实证修订等待中">实证修订（等待中）</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#关联外部资料">关联外部资料</a></li> </ol> </details> <h1 id="剧情向-ai-短片创作方法论--丧尸清道夫案例待验证">剧情向 AI 短片创作方法论 · 丧尸清道夫案例（待验证）</h1>
+<blockquote>
+<p>入档：2026-05-13
+触发：跳蛛先生看到 Mx-Shell《丧尸清道夫》在 X/Reddit 刷屏、PJ Ace 公开寻人后提出的判断——“卷美学已经很难再有突破，剧情向短片是新方向”
+<strong>状态：⚠️ 待验证</strong>——本文档所有结论均<strong>未经我们自己作品验证</strong>，仅为他人案例 + 行业舆论交叉得出的工作假说。等我们至少完成一部对标此路线的作品并拿到真实数据后，回来修订并去掉”待验证”标识。</p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>美学卷不动了，能把 3-5 分钟剧情讲完整、且选择性绕开 AI 技术短板的人，能跳过流量赛道直接进入主流影视行业的视野。</strong></p>
+<hr>
+<h2 id="️-待验证警示用前必读">⚠️ 待验证警示（用前必读）</h2>
+<p>本文档采纳了”实践出真知”原则——</p>
+<ul>
+<li>所有方法论条目<strong>都是他山之石</strong>，不是跳蛛先生自己跑出来的肌肉记忆</li>
+<li>引用案例《丧尸清道夫》在我们看来是”局外案例”，能不能在我们的创作语境里复现尚未证明</li>
+<li>“行业趋势在转向剧情向”这件事虽然有澎湃/36氪/SMO三方报道交叉印证，<strong>但报道本身可能就是一波短期热度</strong>，6个月后可能被证伪</li>
+<li>任何看到本文档想直接抄作业的未来时刻——<strong>先问一句”我们自己验证过没”</strong>，没验证就只能当假说参考</li>
+</ul>
+<p><strong>修订条件</strong>：跳蛛先生完成一部对标该路线的作品（剧情完整 ≥3 分钟 / 类型片配方 / 绕开恐怖谷），拿到平台真实数据后，把验证结论补到本文档”实证修订”段，并删掉本段警示与标题里的”（待验证）“。</p>
+<hr>
+<h2 id="案例事实卡">案例事实卡</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>数据</th></tr></thead><tbody><tr><td>作品名</td><td>《丧尸清道夫》/ Zombie Scavenger</td></tr><tr><td>作者</td><td>Mx-Shell（独立音乐人+摄影师+AIGC玩家，Shotlab 签约）</td></tr><tr><td>片长</td><td>3:34</td></tr><tr><td>单人独立制作</td><td>✅</td></tr><tr><td>Token 成本</td><td>≈3000 RMB</td></tr><tr><td>周期</td><td>10 天</td></tr><tr><td>工作流</td><td>设定资产图 + 文案脚本，无分镜图、无首尾帧，分镜控制全靠文案</td></tr><tr><td>风格定位</td><td>原子朋克（Mx-Shell 自定义），灵感《机器人总动员》，对标《爱死机》</td></tr><tr><td>海外引爆</td><td>PJ Ace（好莱坞 AI 电影 KOL，3亿+累计播放）转发并公开寻人</td></tr><tr><td>X 播放量</td><td>1200w+（截至 2026-05-12）</td></tr><tr><td>Reddit r/aivideo</td><td>数千条评论，“第一部真正具有电影品质的 AI 短片”</td></tr><tr><td>国内回流</td><td>抖音 30w 赞 / B站同时在线破千</td></tr><tr><td>后续</td><td>已和影视公司谈成合作，大荧幕版本制作中；婉拒 PJ Ace 雇佣</td></tr></tbody></table>
+<hr>
+<h2 id="核心三因素为什么能爆--待验证">核心三因素（为什么能爆 · 待验证）</h2>
+<h3 id="-叙事经济性--技术展示">① 叙事经济性 > 技术展示</h3>
+<p>3:34 内交代世界观-角色-冲突-情感落点，<strong>没有一帧浪费</strong>。澎湃和 Santa Monica Observer 都引用同一句评价：“这部短片最巧妙之处不仅在于技术，更在于其叙事的精炼”。</p>
+<p><strong>对照面</strong>：绝大多数 AI 短片停留在”展示技术能做什么”，《丧尸清道夫》在”用技术讲一个故事”——这恰好是跳蛛先生判断的”卷美学已经到天花板”的同一件事。</p>
+<h3 id="-类型片配方--零文化门槛">② 类型片配方 = 零文化门槛</h3>
+<p>末日废土 + 僵尸 + 机器人牛仔 + 黑色幽默。从《行尸走肉》《辐射》《疯狂麦克斯》到《爱死机》几十年沉淀的西方流行符号——海外观众零理解成本就能进入。</p>
+<p><strong>对照面</strong>：“美学独特”是单人审美壁垒；“类型片配方”是观众脑补省力。前者卷不动，后者借东风。</p>
+<h3 id="-用机器人主角绕开恐怖谷">③ 用机器人主角绕开”恐怖谷”</h3>
+<p>AI 视频当前最大的技术短板是人脸——微表情、皮肤、眼神有一帧不对就出戏。Mx-Shell 用面部 LED 表情的机器人，<strong>在剧本阶段就消解了这道难关</strong>，整片视觉完成度因此被拉高一档。</p>
+<p><strong>对照面</strong>：跟我们 <a href="/above-the-web/r-07-ip-v1-c77edd5/" class="wikilink">R-07_IP_视觉系统_v1</a> 同一逻辑——R-07 同样是”哑光黑机体+红色面甲+发光传感器”的机器人主角，这条规律我们其实已经踩中过。</p>
+<hr>
+<h2 id="行业舆论交叉印证仅供参考--非定论">行业舆论交叉印证（仅供参考 · 非定论）</h2>
+<ul>
+<li><strong>澎湃/36氪/AI价值官</strong>（2026-05-12）：AI 内容出海有两套玩法——平台流量生意（爆款 AI 短剧赚分成）vs 创作者品质生意（用电影语言讲故事换主流入场券），《丧尸清道夫》证明后者走得通。</li>
+<li><strong>DataEye</strong>（2026）：海外 AI 短剧/漫剧市场规模预计 6.5 亿美元，6 倍增长，但已有”娱乐快餐”标签风险。</li>
+<li><strong>中国广告传媒《2026 文娱新趋势》</strong>：短剧行业告别野蛮生长，“未来卷的不是产能，而是精品内容”。</li>
+<li><strong>Santa Monica Observer</strong>：把《丧尸清道夫》直接拔到”为好莱坞抬高了门槛”的高度，虽有捧高之嫌但反映了海外严肃媒体的关注度。</li>
+</ul>
+<p><strong>注意</strong>：以上四源都是 2026 年 5 月前后窗口内的报道，<strong>短期一致性 ≠ 长期趋势</strong>，6 个月后回头看才知道是不是真趋势。</p>
+<hr>
+<h2 id="可借鉴清单行动假说--待自验">可借鉴清单（行动假说 · 待自验）</h2>
+<blockquote>
+<p>这五条是从案例提取出的”如果再做一遍可能会有用”的原则，<strong>全部需要我们自己作品来验证</strong>。</p>
+</blockquote>
+<h3 id="选题阶段">选题阶段</h3>
+<ul>
+<li>把”类型片配方”当成叙事效率工具用，<strong>不从零造世界观</strong>——挑一个全球观众已经烂熟的类型壳（赛博朋克 / 太空歌剧 / 克苏鲁 / 武侠 / 末世 / 聊斋），让观众脑补帮你省一半解释成本</li>
+<li>主角设计<strong>在剧本阶段就绕开 AI 技术短板</strong>：机器人 / 戴面具的角色 / 有遮挡的脸 / 非人种族 / 远景剪影动作戏。<strong>不要在生成阶段救火</strong></li>
+</ul>
+<h3 id="脚本阶段">脚本阶段</h3>
+<ul>
+<li>3-5 分钟内必须有<strong>完整的世界观-角色-冲突-情感落点</strong>，不要拍”片段”或”概念片”，要拍”短片”</li>
+<li>文案脚本是核心，分镜可以靠文案控制（Mx-Shell 没用分镜图、没用首尾帧）。这条要和我们已有的 <a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a> 合并验证</li>
+</ul>
+<h3 id="制作阶段">制作阶段</h3>
+<ul>
+<li>工作流：<strong>设定资产图 + 文案脚本</strong>为主，可省略传统分镜板</li>
+<li>单人/小团队、低成本、短周期可以是<strong>宣传卖点</strong>——“3000 块/10 天/一个人”本身就有传播价值</li>
+</ul>
+<h3 id="传播阶段">传播阶段</h3>
+<ul>
+<li>国内首发不爆 ≠ 作品不行。<strong>出口转内销</strong>是真实存在的传播路径，海外平台对 AI 内容的辨识度可能更高</li>
+<li>影视公司主动找上门是这条路线的”非货币回报”——可能比抖音流量分成更有价值</li>
+</ul>
+<hr>
+<h2 id="与跳蛛先生现有资产的对照机会盘点">与跳蛛先生现有资产的对照（机会盘点）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>资产</th><th>与本方法论的契合度</th><th>备注</th></tr></thead><tbody><tr><td><a href="/above-the-web/r-07-ip-v1-c77edd5/" class="wikilink">R-07_IP_视觉系统_v1</a></td><td>⭐⭐⭐⭐⭐ 直接命中</td><td>机器人主角 + 末日废土 + “无机为有机歌唱”反差结构。当前是 MV 路线，可以扩展为剧情向</td></tr><tr><td>16_Last Stand v0.3.0</td><td>⭐⭐⭐ 题材匹配</td><td>末日题材素材库，可作为剧情向短片的视觉资产池</td></tr><tr><td><a href="/above-the-web/ip-v1-649b0d2/" class="wikilink">檐下IP_视觉系统_v1</a></td><td>⭐⭐ 不直接匹配</td><td>古风少女 IP，人脸主导，<strong>反而踩中恐怖谷风险</strong>；但古风武侠/聊斋同样是类型片配方</td></tr><tr><td>17_拾色（审美锚点项目）</td><td>⭐ 不匹配</td><td><strong>被跳蛛先生明确排除在本方向外，留作审美资产</strong></td></tr></tbody></table>
+<hr>
+<h2 id="与既有方法论的关联与张力">与既有方法论的关联与张力</h2>
+<h3 id="协同可叠加使用">协同（可叠加使用）</h3>
+<ul>
+<li><a href="/above-the-web/v3-1-v1-fffdad7/" class="wikilink">好流量是好作品的产物_v3.1反思_v1</a>：剧情向短片正是 v3.1 战略所说的”单作品深度驱动”的最佳载体形式</li>
+<li><a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a>：剧情向短片需要更长的连贯镜头，本原则可能更关键</li>
+<li><a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a>：剧情向短片对剪辑节奏要求更高，需要回头对照</li>
+<li><a href="/above-the-web/r-07-v1-1b29bfb/" class="wikilink">R-07 创作内核：克制、天真与减法</a>：R-07 的”安静的剩余”基调本身就是差异化叙事</li>
+</ul>
+<h3 id="张力可能冲突--待验">张力（可能冲突 · 待验）</h3>
+<ul>
+<li>“类型片配方”vs”跳蛛先生反水文/反跟风”：类型壳是叙事效率工具，但要避免被理解为”跟风丧尸题材”，<strong>差异化必须在内核而非外壳</strong></li>
+<li>“出口转内销”vs抖音主战场战略：v3.1 说抖音主战场，但本案例显示海外破圈反向带火国内——这条路径<strong>和现有战略不冲突，但需要单独评估</strong></li>
+</ul>
+<hr>
+<h2 id="修订史">修订史</h2>
+<ul>
+<li><strong>2026-05-13</strong>：建档（待验证）。基于澎湃/36氪/SMO/PJ Ace 推文交叉信息，无自验数据。</li>
+</ul>
+<hr>
+<h2 id="实证修订等待中">实证修订（等待中）</h2>
+<blockquote>
+<p>当跳蛛先生完成第一部对标该路线的剧情向 AI 短片后，<strong>在此处补充</strong>：</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 作品名称与发布日期</li>
+<li class="task-list-item"><input type="checkbox" disabled> 真实数据：播放量 / 互动率 / 转粉率 / 海外二次传播是否发生</li>
+<li class="task-list-item"><input type="checkbox" disabled> 哪条”可借鉴清单”被自验为有效</li>
+<li class="task-list-item"><input type="checkbox" disabled> 哪条被证伪</li>
+<li class="task-list-item"><input type="checkbox" disabled> 新发现的、案例没提到的规律</li>
+<li class="task-list-item"><input type="checkbox" disabled> 修订完毕后，<strong>删除文档标题里的”（待验证）“和顶部的”⚠️ 待验证警示”段</strong></li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/r-07-ip-v1-c77edd5/" class="wikilink">R-07_IP_视觉系统_v1</a> —— 现成的”机器人主角”载体</li>
+<li><a href="/above-the-web/r-07-v1-1b29bfb/" class="wikilink">R-07 创作内核：克制、天真与减法</a> —— “安静的剩余”基调</li>
+<li><a href="/above-the-web/v3-1-v1-fffdad7/" class="wikilink">好流量是好作品的产物_v3.1反思_v1</a> —— 单作品深度驱动战略</li>
+<li><a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a> —— 长镜头连贯性</li>
+<li><a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a> —— 剧情向剪辑节奏</li>
+<li><a href="/above-the-web/ip-v1-649b0d2/" class="wikilink">檐下IP_视觉系统_v1</a> —— 对照组（非剧情向友好）</li>
+</ul>
+<h2 id="关联外部资料">关联外部资料</h2>
+<ul>
+<li>澎湃新闻：<code>https://m.thepaper.cn/newsDetail_forward_33163718</code></li>
+<li>36氪：<code>https://www.36kr.com/p/3806043234213891</code></li>
+<li>Santa Monica Observer：<code>https://www.smobserved.com/story/2026/05/14/entertainment/ais-undead-masterpiece-zombie-scavenger-is-the-35-minute-film-that-just-raised-the-bar-for-hollywood/9844.html</code></li>
+<li>PJ Ace 原帖：<code>https://x.com/PJaccetturo/status/2053475536538845522</code></li>
+<li>B 站《丧尸清道夫》重制版：<code>https://www.bilibili.com/video/BV1FFRQB2Eqw/</code></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">状态/待验证</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/%E5%89%A7%E6%83%85%E5%90%91AI%E7%9F%AD%E7%89%87%E5%88%9B%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA_%E4%B8%A7%E5%B0%B8%E6%B8%85%E9%81%93%E5%A4%AB%E6%A1%88%E4%BE%8B_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/%E5%89%A7%E6%83%85%E5%90%91AI%E7%9F%AD%E7%89%87%E5%88%9B%E4%BD%9C%E6%96%B9%E6%B3%95%E8%AE%BA_%E4%B8%A7%E5%B0%B8%E6%B8%85%E9%81%93%E5%A4%AB%E6%A1%88%E4%BE%8B_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/r-07-v0-4938ff6/">R-07 宇宙 · 世界观圣经 v0.1（首轮拍板 · 部分锁定）</a></li><li><a href="/above-the-web/ai-thewindshieldwiper-v1-01329e3/">多线交叉型 AI 短片：The Windshield Wiper 案例</a></li><li><a href="/above-the-web/ai-icemerchants-v1-4c02144/">强对比型 AI 短片：Ice Merchants 案例</a></li><li><a href="/above-the-web/ai-totalpixelspace-v1-07886c3/">概念推演型 AI 短片：Total Pixel Space 案例</a></li><li><a href="/above-the-web/ai-jailbird-v1-20e6676/">现实悖论型 AI 短片：Jailbird 案例</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/forwardonly-v1-7c8a4d7/"> <span class="card-cat">方法论与洞察</span> <h3>图生视频 · Forward-Only 原则</h3> <p>图生视频的 prompt 必须写&quot;从源图当前状态向后发展(forward-only)&quot;,不能写&quot;实现某个状态&quot;。</p> </a><a class="card" href="/above-the-web/v1-25a3d5e/"> <span class="card-cat">方法论与洞察</span> <h3>「蒙眼剪辑法」— 一套基于 Claude 的 AIGC 视频内容产出闭环</h3> <p>LLM(大语言模型)有一个根本性盲区:它无法直接观看视频内容。</p> </a><a class="card" href="/above-the-web/nano-v1-17ac551/"> <span class="card-cat">方法论与洞察</span> <h3>Nano 场景换机位 · 四段锚定法</h3> <p>让 Nano 给同一场景&quot;换机位&quot;,本质是「锚定不变元素 + 指定新机位」的脑补,不是 3D 重建。 Prompt 用四段式:同一场景 → …</p> </a><a class="card" href="/above-the-web/r-07-v1-1b29bfb/"> <span class="card-cat">方法论与洞察</span> <h3>R-07 创作内核：克制微动、天真文案与减法原则</h3> <p>R-07 项目 Wave 5 S9 镜头反馈:&quot;野猫完全不动,会不会有些刻意?&quot;</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#️-待验证警示用前必读" data-toc-link="️-待验证警示用前必读">⚠️ 待验证警示（用前必读）</a></li><li class="d2"><a href="#案例事实卡" data-toc-link="案例事实卡">案例事实卡</a></li><li class="d2"><a href="#核心三因素为什么能爆--待验证" data-toc-link="核心三因素为什么能爆--待验证">核心三因素（为什么能爆 · 待验证）</a></li><li class="d3"><a href="#-叙事经济性--技术展示" data-toc-link="-叙事经济性--技术展示">① 叙事经济性 &gt; 技术展示</a></li><li class="d3"><a href="#-类型片配方--零文化门槛" data-toc-link="-类型片配方--零文化门槛">② 类型片配方 = 零文化门槛</a></li><li class="d3"><a href="#-用机器人主角绕开恐怖谷" data-toc-link="-用机器人主角绕开恐怖谷">③ 用机器人主角绕开”恐怖谷”</a></li><li class="d2"><a href="#行业舆论交叉印证仅供参考--非定论" data-toc-link="行业舆论交叉印证仅供参考--非定论">行业舆论交叉印证（仅供参考 · 非定论）</a></li><li class="d2"><a href="#可借鉴清单行动假说--待自验" data-toc-link="可借鉴清单行动假说--待自验">可借鉴清单（行动假说 · 待自验）</a></li><li class="d3"><a href="#选题阶段" data-toc-link="选题阶段">选题阶段</a></li><li class="d3"><a href="#脚本阶段" data-toc-link="脚本阶段">脚本阶段</a></li><li class="d3"><a href="#制作阶段" data-toc-link="制作阶段">制作阶段</a></li><li class="d3"><a href="#传播阶段" data-toc-link="传播阶段">传播阶段</a></li><li class="d2"><a href="#与跳蛛先生现有资产的对照机会盘点" data-toc-link="与跳蛛先生现有资产的对照机会盘点">与跳蛛先生现有资产的对照（机会盘点）</a></li><li class="d2"><a href="#与既有方法论的关联与张力" data-toc-link="与既有方法论的关联与张力">与既有方法论的关联与张力</a></li><li class="d3"><a href="#协同可叠加使用" data-toc-link="协同可叠加使用">协同（可叠加使用）</a></li><li class="d3"><a href="#张力可能冲突--待验" data-toc-link="张力可能冲突--待验">张力（可能冲突 · 待验）</a></li><li class="d2"><a href="#修订史" data-toc-link="修订史">修订史</a></li><li class="d2"><a href="#实证修订等待中" data-toc-link="实证修订等待中">实证修订（等待中）</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#关联外部资料" data-toc-link="关联外部资料">关联外部资料</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,881 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>README · 蛛网之上</title><meta name="description" content="!(https://i.postimg.cc/kG03s7tk/prompt-banner.png)"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/readme-119e741/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="README"><meta property="og:description" content="!(https://i.postimg.cc/kG03s7tk/prompt-banner.png)"><meta property="og:url" content="https://tiaozhuxiansheng.com/readme-119e741/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="README"><meta name="twitter:description" content="!(https://i.postimg.cc/kG03s7tk/prompt-banner.png)"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-10T17:50:40+08:00"><meta property="article:modified_time" content="2026-09-10T17:50:40+08:00"><meta property="article:section" content="skill存档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/readme-119e741/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/readme-119e741/","url":"https://tiaozhuxiansheng.com/readme-119e741/","headline":"README","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"!(https://i.postimg.cc/kG03s7tk/prompt-banner.png)","datePublished":"2026-09-10T17:50:40+08:00","dateModified":"2026-09-10T17:50:40+08:00","articleSection":"skill存档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"skill存档","item":"https://tiaozhuxiansheng.com/notes/?cat=skill%E5%AD%98%E6%A1%A3"},{"@type":"ListItem","position":3,"name":"README","item":"https://tiaozhuxiansheng.com/readme-119e741/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=skill%E5%AD%98%E6%A1%A3" data-pagefind-meta="category" data-pagefind-filter="kind:note">skill存档</a> <span aria-hidden="true">/</span><span>prompt-master</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-10T17:50:40+08:00">2026-09-10</time></span>  <span>约 11 分钟读完 · 2,152 字</span> </p> </header> <h1>README</h1> <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>22 节</i></summary> <ol> <li class="d2"><a href="#-installation">🚀 Installation</a></li><li class="d3"><a href="#recommended---claudeai-browser">RECOMMENDED - Claude.ai (browser)</a></li><li class="d3"><a href="#or-clone-directly-into-claude-code-skills-directory-not-suggested">OR Clone directly into Claude Code skills directory (Not Suggested)</a></li><li class="d2"><a href="#-the-problem-this-solves">🔥 The Problem This Solves</a></li><li class="d3"><a href="#the-key-insight">The key insight</a></li><li class="d2"><a href="#-usage">🎯 Usage</a></li><li class="d2"><a href="#how-it-works">How It Works</a></li><li class="d2"><a href="#full-example-1-generating-prompts-for-images">Full Example #1: Generating Prompts for Images</a></li><li class="d3"><a href="#user-input">User Input</a></li><li class="d3"><a href="#generated-prompt">Generated Prompt</a></li><li class="d2"><a href="#full-example-2-generating-prompts-for-coding">Full Example #2: Generating Prompts for Coding</a></li><li class="d3"><a href="#user-input-1">User Input</a></li><li class="d3"><a href="#generated-prompt-1">Generated Prompt</a></li><li class="d2"><a href="#-works-with-any-ai-tool">🤝 Works With Any AI Tool</a></li><li class="d2"><a href="#-13-prompt-templates-auto-selected">📐 13 Prompt Templates (Auto-Selected)</a></li><li class="d2"><a href="#️-5-safe-techniques-applied-when-needed">🛡️ 5 Safe Techniques, Applied When Needed</a></li><li class="d2"><a href="#-37-credit-killing-patterns-detected-with-beforeafter-examples">🚫 37 Credit-Killing Patterns Detected (with Before/After Examples)</a></li><li class="d3"><a href="#context-patterns">Context Patterns</a></li><li class="d2"><a href="#-memory-block-system">🧠 Memory Block System</a></li><li class="d2"><a href="#ℹ️-version-history">ℹ️ Version History</a></li><li class="d2"><a href="#-license">📄 License</a></li><li class="d2"><a href="#-star-history">⭐ Star History</a></li> </ol> </details> <p><img src="https://i.postimg.cc/kG03s7tk/prompt-banner.png" alt=""></p>
+<br>
+<p>A Claude skill that writes the accurate prompts for any AI tool. Zero tokens or credits wasted. Full context and memory retention. No re-prompting your way to an answer you should have gotten on attempt one.</p>
+<p><strong>Works with:</strong> Claude, ChatGPT, Codex, Grok, Gemini, o1/o3, MiniMax, Cursor, Claude Code, GitHub Copilot, Windsurf, Bolt, v0, Lovable, Devin, Perplexity, Midjourney, DALL-E, Stable Diffusion, ComfyUI, Sora, Runway, ElevenLabs, Zapier, Make, and any AI tool you throw at it.</p>
+<hr>
+<h2 id="-installation">🚀 Installation</h2>
+<h3 id="recommended---claudeai-browser">RECOMMENDED - Claude.ai (browser)</h3>
+<ol>
+<li>Download this repo as a ZIP</li>
+<li>Go to <strong>claude.ai → Sidebar → Customize → Skills → Upload a Skill</strong></li>
+</ol>
+<h3 id="or-clone-directly-into-claude-code-skills-directory-not-suggested">OR Clone directly into Claude Code skills directory (Not Suggested)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">mkdir</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -p</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> ~/.claude/skills</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> clone</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> https://github.com/nidhinjs/prompt-master.git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> ~/.claude/skills/prompt-master</span></span></code></pre>
+<h2 id="-the-problem-this-solves">🔥 The Problem This Solves</h2>
+<p>Every AI user wastes credits the same way:</p>
+<blockquote>
+<p>Write vague prompt → get wrong output → re-prompt → get closer → re-prompt again → finally get what you wanted on attempt 4</p>
+</blockquote>
+<p>That’s 3 wasted API calls. Multiply by 50 prompts a day. That’s real money and real time gone.</p>
+<h3 id="the-key-insight">The key insight</h3>
+<blockquote>
+<p>“The best prompt is not the longest. It’s the one where every word is load-bearing.”</p>
+</blockquote>
+<p>Most “prompt generators” make prompts longer. This skill makes them sharper.</p>
+<hr>
+<h2 id="-usage">🎯 Usage</h2>
+<p>In Claude, you can invoke the skill naturally:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Write me a prompt for Cursor to refactor my auth module</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>I need a prompt for Claude Code to build a REST API — ask me what you need to know</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Here's a bad prompt I wrote for GPT-4o, fix it: [paste prompt]</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Generate a Midjourney prompt for a cyberpunk city at night</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>I have a reference image — help me write a prompt to edit just the head angle</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Break this prompt down and adapt it for Stable Diffusion</span></span></code></pre>
+<p>Or explicitly invoke it:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>/prompt-master</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>I want to ask Claude Code to build a todo app with React and Supabase</span></span></code></pre>
+<hr>
+<h2 id="how-it-works">How It Works</h2>
+<p>Prompt Master runs a structured pipeline on every request:</p>
+<ol>
+<li><strong>Detects the target tool</strong> — figures out which AI system the prompt is for and routes silently to the right approach</li>
+<li><strong>Extracts 9 dimensions of intent</strong> — task, input, output, constraints, context, audience, memory, success criteria, examples</li>
+<li><strong>Asks targeted clarifying questions</strong> — max 3 questions if critical info is missing, never more</li>
+<li><strong>Routes to the right framework</strong> — picks and applies the correct prompt architecture automatically, never shown to the user</li>
+<li><strong>Applies safe techniques only</strong> — role assignment, few-shot examples, XML structure, grounding anchors, memory block as needed</li>
+<li><strong>Checks model recency</strong> — verifies exact models and controls against official provider docs when the request depends on “latest”</li>
+<li><strong>Runs a token efficiency audit</strong> — strips every word that doesn’t change the output</li>
+<li><strong>Delivers the prompt</strong> — one clean copyable block with a one-line strategy note</li>
+</ol>
+<hr>
+<h2 id="full-example-1-generating-prompts-for-images">Full Example #1: Generating Prompts for Images</h2>
+<h3 id="user-input">User Input</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Write me a midjourney prompt for a realistic samurai standing in the rain at night</span></span></code></pre>
+<h3 id="generated-prompt">Generated Prompt</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>lone samurai standing in heavy rain at night, traditional armor, </span></span>
+<span class="line"><span>neon reflections on wet cobblestone street, cinematic lighting, </span></span>
+<span class="line"><span>dramatic shadows, fog, ultra detailed, photorealistic, </span></span>
+<span class="line"><span>shallow depth of field --ar 16:9 --v 6 --style raw</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>negative: blurry, low quality, watermark, cartoon, anime, extra limbs</span></span></code></pre>
+<p><strong>🎯 Target:</strong> Midjourney · <strong>⚡ Framework:</strong> Visual Descriptor · <strong>💰 Tokens:</strong> Light (~60) · <strong>💡 Strategy:</strong> Comma-separated descriptors over prose, lighting and mood anchored early, aspect ratio and version locked, negative prompt prevents style drift.</p>
+<hr>
+<h2 id="full-example-2-generating-prompts-for-coding">Full Example #2: Generating Prompts for Coding</h2>
+<h3 id="user-input-1">User Input</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Build a claude code prompt for a landing page for a business </span></span>
+<span class="line"><span>dashboard that looks and feels exactly like notion - smooth animations, </span></span>
+<span class="line"><span>clean ui</span></span></code></pre>
+<h3 id="generated-prompt-1">Generated Prompt</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Objective:</span></span>
+<span class="line"><span>Build a fully detailed, production-quality static landing page for a </span></span>
+<span class="line"><span>business dashboard product. Design must match Notion's exact aesthetic — </span></span>
+<span class="line"><span>clean, minimal, typographic, with smooth animations throughout.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Stack:</span></span>
+<span class="line"><span>Single HTML file with embedded CSS and vanilla JS. No frameworks. </span></span>
+<span class="line"><span>No external dependencies except Google Fonts (Inter).</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Design Spec — match these exactly:</span></span>
+<span class="line"><span>- Background: #ffffff</span></span>
+<span class="line"><span>- Primary text: #1a1a1a</span></span>
+<span class="line"><span>- Secondary text: #6b7280</span></span>
+<span class="line"><span>- Border color: #e5e7eb</span></span>
+<span class="line"><span>- Accent: #000000</span></span>
+<span class="line"><span>- Font: Inter, weights 400 / 500 / 600 / 700</span></span>
+<span class="line"><span>- Base spacing unit: 8px</span></span>
+<span class="line"><span>- Border radius: 6px on cards, 4px on buttons</span></span>
+<span class="line"><span>- Box shadows: 0 1px 3px rgba(0,0,0,0.08) only — no dramatic shadows</span></span>
+<span class="line"><span>- Buttons: black fill, white text, no border radius above 6px</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Sections to build in order:</span></span>
+<span class="line"><span>1. Navbar — logo left, nav links center, "Get started free" CTA right. </span></span>
+<span class="line"><span>   Sticky on scroll, adds subtle border-bottom on scroll with JS.</span></span>
+<span class="line"><span>2. Hero — large left-aligned heading (max 3 lines), subtext, two CTAs </span></span>
+<span class="line"><span>   (primary black + secondary outlined), hero screenshot mockup </span></span>
+<span class="line"><span>   placeholder (gray rounded card, 16:9 ratio).</span></span>
+<span class="line"><span>3. Logos bar — "Trusted by teams at..." with 5 placeholder company names </span></span>
+<span class="line"><span>   in muted gray, centered.</span></span>
+<span class="line"><span>4. Features — 3-column grid. Each card: icon (use emoji), bold title, </span></span>
+<span class="line"><span>   2-line description. Hover state: border darkens to #d1d5db, </span></span>
+<span class="line"><span>   translateY(-2px), transition 200ms ease.</span></span>
+<span class="line"><span>5. How it works — alternating left/right layout, 3 steps. Number badge, </span></span>
+<span class="line"><span>   heading, description, placeholder screenshot card.</span></span>
+<span class="line"><span>6. Pricing — 2 tiers side by side. Free tier: outlined card. Pro tier: </span></span>
+<span class="line"><span>   black background, white text, "Most popular" badge. List 4 features </span></span>
+<span class="line"><span>   each with checkmarks.</span></span>
+<span class="line"><span>7. CTA banner — full-width dark section, centered heading, subtext, </span></span>
+<span class="line"><span>   single CTA button.</span></span>
+<span class="line"><span>8. Footer — 4-column links, copyright line, minimal.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Animations — implement all of these:</span></span>
+<span class="line"><span>- Fade-in + translateY(20px) to translateY(0) on scroll for every section, </span></span>
+<span class="line"><span>  using IntersectionObserver. Threshold 0.15. Duration 500ms ease-out.</span></span>
+<span class="line"><span>- Staggered animation on feature cards: 100ms delay between each card.</span></span>
+<span class="line"><span>- Navbar CTA button: background transitions from black to #333 on hover, </span></span>
+<span class="line"><span>  200ms ease.</span></span>
+<span class="line"><span>- Hero CTA primary: same hover transition. Secondary: background goes from </span></span>
+<span class="line"><span>  transparent to #f3f4f6 on hover.</span></span>
+<span class="line"><span>- Smooth scroll on all anchor links.</span></span>
+<span class="line"><span>- Navbar border-bottom fades in on scroll past 60px using JS scroll event.</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Constraints:</span></span>
+<span class="line"><span>- Single file only — all CSS and JS embedded, no external files</span></span>
+<span class="line"><span>- No dependencies except Google Fonts via CDN link tag</span></span>
+<span class="line"><span>- All placeholder images replaced with styled gray div elements</span></span>
+<span class="line"><span>- Must be pixel-perfect at 375px mobile and 1440px desktop</span></span>
+<span class="line"><span>- No CSS frameworks, no utility classes from external sources</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>Done When:</span></span>
+<span class="line"><span>- All 8 sections render correctly at both breakpoints</span></span>
+<span class="line"><span>- All animations trigger on scroll without layout shift</span></span>
+<span class="line"><span>- Navbar sticks and border appears on scroll</span></span>
+<span class="line"><span>- Hover states work on all interactive elements</span></span>
+<span class="line"><span>- Opens in browser with zero console errors</span></span></code></pre>
+<p><strong>🎯 Target:</strong> Claude Code · <strong>💰 Tokens:</strong> Medium (~380) · <strong>💡 Strategy:</strong> Every vague Notion aesthetic cue translated into exact hex values and pixel specs — Claude Code cannot guess wrong. Animations defined with exact timing, method, and trigger so there is no interpretation needed.</p>
+<hr>
+<h2 id="-works-with-any-ai-tool">🤝 Works With Any AI Tool</h2>
+<p>Prompt Master includes specific profiles for 20+ tools. For anything not on the list, it uses a <strong>Universal Fingerprint</strong>: 4 questions that let it write a quality prompt for any AI system it has never seen before.</p>
+<details>
+<summary><h3> Click to view all 30+ tool profiles </h3></summary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Tool</th><th>Category</th><th>What Prompt Master Fixes</th></tr></thead><tbody><tr><td><strong>Claude 5 / current Claude</strong></td><td>Reasoning and agentic LLM</td><td>Model-aware effort, scope, XML structure, and delegation control</td></tr><tr><td><strong>ChatGPT / GPT-5.6</strong></td><td>Reasoning and agentic LLM</td><td>Sol/Terra/Luna routing, lean contracts, autonomy and effort control</td></tr><tr><td><strong>Codex</strong></td><td>Coding agent</td><td>File scope, approval boundaries, verification, bounded subagents</td></tr><tr><td><strong>Grok 4.6</strong></td><td>Reasoning and agentic LLM</td><td>Search grounding, reasoning effort, tools, caching, and stop conditions</td></tr><tr><td><strong>Gemini 2.x</strong></td><td>Reasoning LLM</td><td>Grounding anchors, citation rules, format locks</td></tr><tr><td><strong>o3 / o4-mini</strong></td><td>Thinking LLM</td><td>Short clean instructions only — never adds CoT (they think internally)</td></tr><tr><td><strong>Ollama</strong></td><td>Local LLM</td><td>Asks which model is loaded, includes system prompt for Modelfile</td></tr><tr><td><strong>Qwen 2.5 / Qwen3</strong></td><td>Open-weight LLM</td><td>Chat template format, thinking vs non-thinking mode detection</td></tr><tr><td><strong>Local models (Llama, Mistral)</strong></td><td>Open-weight LLM</td><td>Shorter prompts, simpler structure, no complex nesting</td></tr><tr><td><strong>DeepSeek-R1</strong></td><td>Reasoning LLM</td><td>Short clean instructions, strips CoT, suppresses thinking output if needed</td></tr><tr><td><strong>MiniMax (M3 / M2.7)</strong></td><td>Reasoning LLM</td><td>Temperature clamping, thinking tag control, structured output optimization</td></tr><tr><td><strong>Claude Code</strong></td><td>Agentic AI</td><td>Stop conditions, file scope, checkpoint output</td></tr><tr><td><strong>Cursor / Windsurf</strong></td><td>IDE AI</td><td>File path, function name, do-not-touch list, sequential prompt guidance</td></tr><tr><td><strong>Cline (formerly Claude Dev)</strong></td><td>Agentic IDE</td><td>File scope, approval gates, stop conditions, task breakdown</td></tr><tr><td><strong>GitHub Copilot</strong></td><td>Autocomplete AI</td><td>Exact function contract as docstring</td></tr><tr><td><strong>Antigravity</strong></td><td>Agentic IDE</td><td>Task-based prompting, Artifact verification, autonomy level</td></tr><tr><td><strong>Bolt / v0 / Lovable</strong></td><td>Full-stack generator</td><td>Stack spec, version, what NOT to scaffold</td></tr><tr><td><strong>Figma Make</strong></td><td>Full-stack generator</td><td>Component name references, frame-to-code scope</td></tr><tr><td><strong>Google Stitch</strong></td><td>Full-stack generator</td><td>Interface goal over implementation, Material Design 3 spec</td></tr><tr><td><strong>Devin / SWE-agent</strong></td><td>Autonomous agent</td><td>Starting state, target state, stop conditions</td></tr><tr><td><strong>Manus</strong></td><td>Autonomous agent</td><td>Task outcome focus, permission scope, memory anchors</td></tr><tr><td><strong>OpenAI Computer Use</strong></td><td>Computer-use agent</td><td>Screen state, allowed apps, stop before irreversible actions</td></tr><tr><td><strong>Perplexity Computer</strong></td><td>Computer-use agent</td><td>Artifact-first prompting, scoped permissions, verification steps</td></tr><tr><td><strong>OpenClaw</strong></td><td>Computer-use agent</td><td>Conversational precision, persistent memory, security constraints</td></tr><tr><td><strong>Perplexity / SearchGPT</strong></td><td>Search AI</td><td>Mode spec: search vs analyze vs compare</td></tr><tr><td><strong>Midjourney</strong></td><td>Image AI</td><td>Comma-separated descriptors, parameters, negative prompts</td></tr><tr><td><strong>DALL-E 3</strong></td><td>Image AI</td><td>Prose description, text exclusion — edit vs generate detection</td></tr><tr><td><strong>Stable Diffusion</strong></td><td>Image AI</td><td>Weight syntax <code>(word:1.3)</code>, CFG guidance, mandatory negative prompt</td></tr><tr><td><strong>SeeDream</strong></td><td>Image AI</td><td>Art style first, mood and atmosphere descriptors, negative prompt</td></tr><tr><td><strong>ComfyUI</strong></td><td>Image AI</td><td>Positive/negative node split, checkpoint-specific syntax</td></tr><tr><td><strong>Meshy / Tripo / Rodin</strong></td><td>3D AI</td><td>Style + export format + polygon budget + rig requirements</td></tr><tr><td><strong>BlenderGPT</strong></td><td>3D AI</td><td>Python script output, Blender version, scene context</td></tr><tr><td><strong>Unity AI</strong></td><td>3D / Game AI</td><td>Game genre, platform target, mechanic description over code</td></tr><tr><td><strong>Sora / Runway</strong></td><td>Video AI</td><td>Camera movement, duration, cut style</td></tr><tr><td><strong>LTX / Dream Machine / Kling</strong></td><td>Video AI</td><td>Cinematic language, motion intensity, style reference</td></tr><tr><td><strong>ElevenLabs</strong></td><td>Voice AI</td><td>Emotion, pacing, emphasis, speech rate</td></tr><tr><td><strong>Zapier / Make / n8n</strong></td><td>Workflow automation</td><td>Trigger app + event, action app + field mapping</td></tr></tbody></table>
+</details>
+<hr>
+<h2 id="-13-prompt-templates-auto-selected">📐 13 Prompt Templates (Auto-Selected)</h2>
+<p>Prompt Master picks the right architecture for every task automatically and routes silently — you never see the framework name, just the prompt.</p>
+<details>
+<summary><h3> Click to view all 13 templates</h3></summary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Template</th><th>Best For</th></tr></thead><tbody><tr><td><strong>RTF</strong> (Role, Task, Format)</td><td>Fast one-shot tasks</td></tr><tr><td><strong>CO-STAR</strong> (Context, Objective, Style, Tone, Audience, Response)</td><td>Professional documents, reports, business writing</td></tr><tr><td><strong>RISEN</strong> (Role, Instructions, Steps, End Goal, Narrowing)</td><td>Complex multi-step projects</td></tr><tr><td><strong>CRISPE</strong> (Capacity, Role, Insight, Statement, Personality, Experiment)</td><td>Creative work, brand voice, iterative content</td></tr><tr><td><strong>Auditable Reasoning</strong></td><td>Checkable math, logic, debugging, and analysis without hidden reasoning requests</td></tr><tr><td><strong>Few-Shot</strong></td><td>Consistent structured output, pattern replication</td></tr><tr><td><strong>File-Scope Template</strong></td><td>Cursor, Windsurf, Copilot — any code editing AI</td></tr><tr><td><strong>ReAct + Stop Conditions</strong></td><td>Claude Code, Devin, AutoGPT — any autonomous agent</td></tr><tr><td><strong>Visual Descriptor</strong></td><td>Midjourney, DALL-E, Stable Diffusion, Sora — generation</td></tr><tr><td><strong>Reference Image Editing</strong></td><td>Editing an existing image — detects edit vs generate automatically</td></tr><tr><td><strong>ComfyUI</strong></td><td>Node-based image workflows — positive/negative split per checkpoint</td></tr><tr><td><strong>Prompt Decompiler</strong></td><td>Breaking down, adapting, simplifying, or splitting existing prompts</td></tr><tr><td><strong>Current Claude Task Brief</strong></td><td>Complex, multi-step, or agentic tasks on current Claude models</td></tr></tbody></table>
+</details>
+<hr>
+<h2 id="️-5-safe-techniques-applied-when-needed">🛡️ 5 Safe Techniques, Applied When Needed</h2>
+<p>Prompt Master only uses techniques with reliable, bounded effects. Methods known to produce hallucinations or unpredictable output (Tree of Thought, Graph of Thought, Universal Self-Consistency, prompt chaining) are explicitly excluded.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Technique</th><th>What It Does</th></tr></thead><tbody><tr><td><strong>Role Assignment</strong></td><td>Assigns a specific expert identity to calibrate depth and vocabulary</td></tr><tr><td><strong>Few-Shot Examples</strong></td><td>Adds 2-5 examples when format consistency matters more than instructions</td></tr><tr><td><strong>XML Structural Tags</strong></td><td>Wraps sections in XML for Claude-based tools that parse it reliably</td></tr><tr><td><strong>Grounding Anchors</strong></td><td>Adds anti-hallucination rules for factual and citation tasks</td></tr><tr><td><strong>Auditable Reasoning</strong></td><td>Requests conclusions, assumptions, evidence, and verification without hidden reasoning</td></tr></tbody></table>
+<hr>
+<h2 id="-37-credit-killing-patterns-detected-with-beforeafter-examples">🚫 37 Credit-Killing Patterns Detected (with Before/After Examples)</h2>
+<details>
+<summary><h3> Task Patterns (7)</h3></summary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>Pattern</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>1</td><td><strong>Vague task verb</strong></td><td>”help me with my code"</td><td>"Refactor <code>getUserData()</code> to use async/await and handle null returns”</td></tr><tr><td>2</td><td><strong>Two tasks in one prompt</strong></td><td>”explain AND rewrite this function”</td><td>Split: explain first, rewrite second</td></tr><tr><td>3</td><td><strong>No success criteria</strong></td><td>”make it better"</td><td>"Done when function passes existing unit tests and handles null input”</td></tr><tr><td>4</td><td><strong>Over-permissive agent</strong></td><td>”do whatever it takes”</td><td>Explicit allowed + forbidden actions list</td></tr><tr><td>5</td><td><strong>Emotional task description</strong></td><td>”it’s totally broken, fix everything"</td><td>"Throws uncaught TypeError on line 43 when <code>user</code> is null”</td></tr><tr><td>6</td><td><strong>Build-the-whole-thing</strong></td><td>”build my entire app”</td><td>Break into Prompt 1 (scaffold), Prompt 2 (feature), Prompt 3 (polish)</td></tr><tr><td>7</td><td><strong>Implicit reference</strong></td><td>”now add the other thing we discussed”</td><td>Always restate the full task, never reference “the thing we discussed”</td></tr></tbody></table>
+</details>
+<details>
+<summary><h3> Context Patterns (6)</h3></summary>
+<h3 id="context-patterns">Context Patterns</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>Pattern</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>8</td><td><strong>Assumed prior knowledge</strong></td><td>”continue where we left off”</td><td>Include Memory Block with all prior decisions</td></tr><tr><td>9</td><td><strong>No project context</strong></td><td>”write a cover letter"</td><td>"PM role at B2B fintech, 2yr SWE experience, shipped 3 features as tech lead”</td></tr><tr><td>10</td><td><strong>Forgotten stack</strong></td><td>New prompt contradicts prior tech choice</td><td>Always include Memory Block</td></tr><tr><td>11</td><td><strong>Hallucination invite</strong></td><td>”what do experts say about X?"</td><td>"Cite only sources you are certain of. If uncertain, say so.”</td></tr><tr><td>12</td><td><strong>Undefined audience</strong></td><td>”write something for users"</td><td>"Non-technical B2B buyers, no coding knowledge, decision-maker level”</td></tr><tr><td>13</td><td><strong>No mention of prior failures</strong></td><td>(blank)</td><td>“I already tried X and it failed because Y. Do not suggest X.”</td></tr></tbody></table>
+</details>
+<details>
+<summary><h3> Format Patterns (6)</h3></summary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>Pattern</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>14</td><td><strong>Missing output format</strong></td><td>”explain this concept"</td><td>"3 bullet points, each under 20 words, one-sentence summary at top”</td></tr><tr><td>15</td><td><strong>Implicit length</strong></td><td>”write a summary"</td><td>"Write a summary in exactly 3 sentences”</td></tr><tr><td>16</td><td><strong>No role assignment</strong></td><td>(blank)</td><td>“You are a senior backend engineer specializing in Node.js and PostgreSQL”</td></tr><tr><td>17</td><td><strong>Vague aesthetic adjectives</strong></td><td>”make it look professional"</td><td>"Monochrome palette, 16px base font, 24px line height, no decorative elements”</td></tr><tr><td>18</td><td><strong>No negative prompts (image AI)</strong></td><td>“a portrait of a woman”</td><td>Add: “no watermark, no blur, no extra fingers, no distortion, no text”</td></tr><tr><td>19</td><td><strong>Prose prompt for Midjourney</strong></td><td>Full descriptive sentence</td><td>”subject, style, mood, lighting, —ar 16:9 —v 6”</td></tr></tbody></table>
+</details>
+<details>
+<summary><h3> Scope Patterns (6)</h3></summary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>Pattern</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>20</td><td><strong>No scope boundary</strong></td><td>”fix my app"</td><td>"Fix only login form validation in <code>src/auth.js</code>. Touch nothing else.”</td></tr><tr><td>21</td><td><strong>No stack constraints</strong></td><td>”build a React component"</td><td>"React 18, TypeScript strict, no external libraries, Tailwind only”</td></tr><tr><td>22</td><td><strong>No stop condition for agents</strong></td><td>”build the whole feature”</td><td>Explicit stop conditions + checkpoint after each step</td></tr><tr><td>23</td><td><strong>No file path for IDE AI</strong></td><td>”update the login function"</td><td>"Update <code>handleLogin()</code> in <code>src/pages/Login.tsx</code> only”</td></tr><tr><td>24</td><td><strong>Wrong template for tool</strong></td><td>GPT-style prose used in Cursor</td><td>Adapted to File-Scope Template with path + scope</td></tr><tr><td>25</td><td><strong>Pasting entire codebase</strong></td><td>Full repo context every prompt</td><td>Scoped to relevant function and file only</td></tr></tbody></table>
+</details>
+<details>
+<summary><h3> Reasoning Patterns (5)</h3></summary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>Pattern</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>26</td><td><strong>No audit contract for logic task</strong></td><td>”which approach is better?”</td><td>Request the recommendation, assumptions, criteria, evidence, and checks</td></tr><tr><td>27</td><td><strong>Requesting hidden reasoning</strong></td><td>”show your chain of thought”</td><td>Ask for a concise rationale, evidence, and verification instead</td></tr><tr><td>28</td><td><strong>Expecting inter-session memory</strong></td><td>”you already know my project”</td><td>Re-provide the Memory Block in every new session</td></tr><tr><td>29</td><td><strong>Contradicting prior work</strong></td><td>New prompt ignores earlier architecture</td><td>Include established decisions in the Memory Block</td></tr><tr><td>30</td><td><strong>No grounding rule for factual tasks</strong></td><td>”summarize what experts say about X”</td><td>Require verifiable sources and explicit uncertainty</td></tr></tbody></table>
+</details>
+<details>
+<summary><h3> Agentic Patterns (7)</h3></summary>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>Pattern</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>31</td><td><strong>No starting state</strong></td><td>”build me a REST API"</td><td>"Empty Node.js project, Express installed, <code>src/app.js</code> exists”</td></tr><tr><td>32</td><td><strong>No target state</strong></td><td>”add authentication"</td><td>"<code>/src/middleware/auth.js</code> with JWT verify. <code>POST /login</code> and <code>POST /register</code> in <code>/src/routes/auth.js</code>”</td></tr><tr><td>33</td><td><strong>Silent agent</strong></td><td>No progress output</td><td>”After each step output: ✅ [what was completed]“</td></tr><tr><td>34</td><td><strong>Unlocked filesystem</strong></td><td>No file restrictions</td><td>”Only edit files inside <code>src/</code>. Do not touch <code>package.json</code>, <code>.env</code>, or any config file.”</td></tr><tr><td>35</td><td><strong>No human review trigger</strong></td><td>Agent decides everything</td><td>”Stop and ask before: deleting any file, adding any dependency, or touching the database schema”</td></tr><tr><td>36</td><td><strong>Vague first turn for an agentic model</strong></td><td>”fix the auth bug” with no scope, files, or criteria</td><td>Front-load outcome, context, scope, boundaries, and acceptance criteria</td></tr><tr><td>37</td><td><strong>Context rot on long sessions</strong></td><td>Repeated corrections leave stale assumptions in context</td><td>Start fresh for unrelated work or compact around current decisions and state</td></tr></tbody></table>
+</details>
+<hr>
+<h2 id="-memory-block-system">🧠 Memory Block System</h2>
+<p>When your conversation has history, Prompt Master pulls out prior decisions and prepends a Memory Block so the AI never contradicts earlier work:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>## Memory (Carry Forward from Previous Context)</span></span>
+<span class="line"><span>- Stack: React 18 + TypeScript + Supabase</span></span>
+<span class="line"><span>- Auth uses JWT stored in httpOnly cookies, not localStorage</span></span>
+<span class="line"><span>- Component naming convention: PascalCase, no default exports</span></span>
+<span class="line"><span>- Design system: Tailwind only, no custom CSS files</span></span>
+<span class="line"><span>- Architecture: no Redux, context API only</span></span></code></pre>
+<p>This is the single biggest fix for long sessions. Most wasted re-prompts come from the AI forgetting what you already decided.</p>
+<hr>
+<h2 id="ℹ️-version-history">ℹ️ Version History</h2>
+<ul>
+<li><strong>1.8.0</strong> — Current-model refresh. Added Claude Fable 5, Opus 5, Sonnet 5, GPT-5.6 Sol/Terra/Luna, Codex, and Grok 4.6 routing. Replaced hidden chain-of-thought requests with auditable reasoning and generalized the Claude task brief for current adaptive-thinking models.</li>
+<li><strong>1.7.0</strong> — Opus 4.8 compatibility. Made Claude 4.x routing version-aware: durable advice generalized across 4.6/4.7/4.8, added Opus 4.8 (current default) profile, kept Opus 4.7 labeled. De-hardcoded the effort-level note (now harness-managed). Template M and pattern 36 cover 4.7 and 4.8. Fixed a stray fragment in patterns.md.</li>
+<li><strong>1.6.0</strong> — Opus 4.7 update. Added Template M (Opus 4.7 Task Brief). Updated Claude and Claude Code routing for literalism, adaptive thinking, xhigh effort, and session hygiene. Added patterns 36–37.</li>
+<li><strong>1.5.0</strong> — Added more tool routing. New Agentic AI and 3D Model AI routing added. Fixed description to 189 chars. Removed token estimate from output. Added instruction layer and copywriting placeholders</li>
+<li><strong>1.4.0</strong> — Added reference image editing detection, ComfyUI support, Prompt Decompiler mode. Fixed trigger description to invoke correctly in Claude Code. 3 new templates added to references folder</li>
+<li><strong>1.3.0</strong> — Rebuilt around PAC2026 positional structure (30/55/15). Silent routing replaces user-facing framework selection. References folder introduced</li>
+<li><strong>1.2.0</strong> — Restructured for attention architecture. Removed fabrication-prone techniques (ToT, GoT, USC, prompt chaining). Templates and patterns moved to references folder</li>
+<li><strong>1.1.0</strong> — Expanded tool coverage, added memory block system, 35 credit killing patterns</li>
+<li><strong>1.0.0</strong> — Initial release</li>
+</ul>
+<hr>
+<h2 id="-license">📄 License</h2>
+<p>MIT: See <a href="LICENSE">LICENSE</a> for details.</p>
+<hr>
+<h2 id="-star-history">⭐ Star History</h2>
+<p><a href="https://star-history.dera.page/#nidhinjs/prompt-master&#x26;Date"><img src="https://star-history.dera.page/svg?repos=nidhinjs/prompt-master&#x26;type=Date" alt="Star History Chart"></a></p>
+<hr>  <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-10T17:50:40+08:00">2026-09-10</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/07_skill%E5%AD%98%E6%A1%A3/prompt-master/README.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/07_skill%E5%AD%98%E6%A1%A3/prompt-master/README.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore>  <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/patterns-00a3b84/"> <span class="card-cat">skill存档</span> <h3>Credit-Killing Patterns Reference</h3> <p>37 patterns that waste tokens and cause re-prompts. Read this file whe…</p> </a><a class="card" href="/above-the-web/skill-92cd6d8/"> <span class="card-cat">skill存档</span> <h3>SKILL</h3> <p>Who you are</p> </a><a class="card" href="/above-the-web/templates-e1a0ea8/"> <span class="card-cat">skill存档</span> <h3>Prompt Templates Reference</h3> <p>Full template library for Prompt Master. Read the relevant template wh…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#-installation" data-toc-link="-installation">🚀 Installation</a></li><li class="d3"><a href="#recommended---claudeai-browser" data-toc-link="recommended---claudeai-browser">RECOMMENDED - Claude.ai (browser)</a></li><li class="d3"><a href="#or-clone-directly-into-claude-code-skills-directory-not-suggested" data-toc-link="or-clone-directly-into-claude-code-skills-directory-not-suggested">OR Clone directly into Claude Code skills directory (Not Suggested)</a></li><li class="d2"><a href="#-the-problem-this-solves" data-toc-link="-the-problem-this-solves">🔥 The Problem This Solves</a></li><li class="d3"><a href="#the-key-insight" data-toc-link="the-key-insight">The key insight</a></li><li class="d2"><a href="#-usage" data-toc-link="-usage">🎯 Usage</a></li><li class="d2"><a href="#how-it-works" data-toc-link="how-it-works">How It Works</a></li><li class="d2"><a href="#full-example-1-generating-prompts-for-images" data-toc-link="full-example-1-generating-prompts-for-images">Full Example #1: Generating Prompts for Images</a></li><li class="d3"><a href="#user-input" data-toc-link="user-input">User Input</a></li><li class="d3"><a href="#generated-prompt" data-toc-link="generated-prompt">Generated Prompt</a></li><li class="d2"><a href="#full-example-2-generating-prompts-for-coding" data-toc-link="full-example-2-generating-prompts-for-coding">Full Example #2: Generating Prompts for Coding</a></li><li class="d3"><a href="#user-input-1" data-toc-link="user-input-1">User Input</a></li><li class="d3"><a href="#generated-prompt-1" data-toc-link="generated-prompt-1">Generated Prompt</a></li><li class="d2"><a href="#-works-with-any-ai-tool" data-toc-link="-works-with-any-ai-tool">🤝 Works With Any AI Tool</a></li><li class="d2"><a href="#-13-prompt-templates-auto-selected" data-toc-link="-13-prompt-templates-auto-selected">📐 13 Prompt Templates (Auto-Selected)</a></li><li class="d2"><a href="#️-5-safe-techniques-applied-when-needed" data-toc-link="️-5-safe-techniques-applied-when-needed">🛡️ 5 Safe Techniques, Applied When Needed</a></li><li class="d2"><a href="#-37-credit-killing-patterns-detected-with-beforeafter-examples" data-toc-link="-37-credit-killing-patterns-detected-with-beforeafter-examples">🚫 37 Credit-Killing Patterns Detected (with Before/After Examples)</a></li><li class="d3"><a href="#context-patterns" data-toc-link="context-patterns">Context Patterns</a></li><li class="d2"><a href="#-memory-block-system" data-toc-link="-memory-block-system">🧠 Memory Block System</a></li><li class="d2"><a href="#ℹ️-version-history" data-toc-link="ℹ️-version-history">ℹ️ Version History</a></li><li class="d2"><a href="#-license" data-toc-link="-license">📄 License</a></li><li class="d2"><a href="#-star-history" data-toc-link="-star-history">⭐ Star History</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

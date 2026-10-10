@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>B站冷知识封面量产复盘 · 出图机制踩坑与回正（2026-06-26） · 蛛网之上</title><meta name="description" content="- 作品/任务：B站冷知识辟谣视频《10个被误解的常识，你全信了》系列封面量产"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-06-26-b-v1-5ccec5f/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="B站冷知识封面量产复盘 · 出图机制踩坑与回正（2026-06-26）"><meta property="og:description" content="- 作品/任务：B站冷知识辟谣视频《10个被误解的常识，你全信了》系列封面量产"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-06-26-b-v1-5ccec5f/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="B站冷知识封面量产复盘 · 出图机制踩坑与回正（2026-06-26）"><meta name="twitter:description" content="- 作品/任务：B站冷知识辟谣视频《10个被误解的常识，你全信了》系列封面量产"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-26T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="prompt模板库"><meta property="article:tag" content="类型/prompt模板"><meta property="article:tag" content="主题/视频封面"><meta property="article:tag" content="工具/GPT-Image"><meta property="article:tag" content="工具/Codex"><meta property="article:tag" content="状态/已验证"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-06-26-b-v1-5ccec5f/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-06-26-b-v1-5ccec5f/","url":"https://tiaozhuxiansheng.com/2026-06-26-b-v1-5ccec5f/","headline":"B站冷知识封面量产复盘 · 出图机制踩坑与回正（2026-06-26）","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 作品/任务：B站冷知识辟谣视频《10个被误解的常识，你全信了》系列封面量产","datePublished":"2026-06-26T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"prompt模板库","keywords":"类型/prompt模板, 主题/视频封面, 工具/GPT-Image, 工具/Codex, 状态/已验证"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"prompt模板库","item":"https://tiaozhuxiansheng.com/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93"},{"@type":"ListItem","position":3,"name":"B站冷知识封面量产复盘 · 出图机制踩坑与回正（2026-06-26）","item":"https://tiaozhuxiansheng.com/2026-06-26-b-v1-5ccec5f/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=prompt%E6%A8%A1%E6%9D%BF%E5%BA%93" data-pagefind-meta="category" data-pagefind-filter="kind:note">prompt模板库</a> <span aria-hidden="true">/</span><span>案例复盘</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-26T00:00:00+08:00">2026-06-26</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 4 分钟读完 · 1,590 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#b-作品回顾">B. 作品回顾</a></li><li class="d3"><a href="#创作思路">创作思路</a></li><li class="d3"><a href="#执行过程含弯路">执行过程（含弯路）</a></li><li class="d3"><a href="#最终输出">最终输出</a></li><li class="d2"><a href="#c-结果分析严格区分两个视角">C. 结果分析（严格区分两个视角）</a></li><li class="d2"><a href="#d-方法论沉淀">D. 方法论沉淀</a></li><li class="d3"><a href="#出图机制优先律已独立成档">出图机制优先律（已独立成档）</a></li><li class="d3"><a href="#量产配套小方法">量产配套（小方法）</a></li><li class="d2"><a href="#e-下次改进agent-自检">E. 下次改进（agent 自检）</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="b站冷知识封面量产复盘--出图机制踩坑与回正2026-06-26">B站冷知识封面量产复盘 · 出图机制踩坑与回正（2026-06-26）</h1>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>作品/任务：B站冷知识辟谣视频《10个被误解的常识，你全信了》系列封面量产</li>
+<li>项目：用 skill <code>aigc-video-cover-gpt</code> 一站式产可发布封面（人物参考图 + 脚本 → 一步出含中文大字的 16:9 封面）</li>
+<li>时间：2026-06-26</li>
+<li>预期目标：先产 10 张测试验证管线，通过后量产；再追加 100 张无人物形象同类型封面</li>
+<li>实际结果：✅ 最终交付 <strong>210 张参考级成图</strong>（10 测试 + 100 有人物 uv_011–110 + 100 无人物 uv_111–210），真 16:9 / 1672×941，0 失败、未触额度，用户每个里程碑验收通过</li>
+<li>过程波折：<strong>第一版 10 张测试被用户连续打回 2 次</strong>（文字错字 / 画面截断 / 人脸漂移），废批 1 次（约 $5.8 沉没）后才定位根因回正</li>
+<li>成本：有人物批 100 张 ≈ 735,698 tokens（~7.4k/张）；无人物批 100 张 ≈ 379,615 tokens（~3.8k/张，无参考图输入约人物批一半）</li>
+<li>数据来源：逐张自测抽检 + 用户验收；token 数来自运行日志；参考质量基准 = <code>output/new</code> 那批 64 张（由 Codex 会话 <code>~/.codex/sessions/.../019ef9d9</code> 出，存档可查）</li>
+</ul>
+<hr>
+<h2 id="b-作品回顾">B. 作品回顾</h2>
+<h3 id="创作思路">创作思路</h3>
+<p>复用既有真人 IP 参考图 + 冷知识辟谣脚本，按 skill 的「商单封面公式」（满配文字系统 + 主题插画背景 + 锁脸 + 暗/亮影调 + 多构图）一步出可直接发布的 B站爆款封面，批量铺量做封标吸引力测试。</p>
+<h3 id="执行过程含弯路">执行过程（含弯路）</h3>
+<ol>
+<li><strong>错误起步</strong>：我没先查「<code>output/new</code> 那批参考级封面是怎么做出来的」，直接自建了一条服务器脚本管线——盲调 <code>api.openai.com</code> 的 <code>images.edit</code>、模型用<strong>老的 gpt-image-1</strong>、出 3:2 再中心裁切到 16:10。</li>
+<li><strong>第一次打回</strong>：用户说效果完全不过关。我以为是 prompt 砍水了，于是把 prompt 写满（主题背景 + 满配文字 + 七分身锁服装 + 真 16:9 不裁切）——质量有提升但<strong>仍不达参考级</strong>（难字错、偶有贴边）。</li>
+<li><strong>第二次打回</strong>：用户明确「你的工作流是不是有问题，去读之前的实验过程」。我才去翻 Codex 会话存档，发现 <code>output/new</code> 是 <strong>Codex(gpt-5.5) 的原生 <code>image_generation</code> 工具</strong>出的——参考图作 <code>input_image</code> 身份参照、原生输出真 16:9、模型看图自纠。</li>
+<li><strong>回正</strong>：用 API 侧的 <strong>Responses API + <code>image_generation</code> 工具 + gpt-5.5 + 参考图作 input_image + 流式</strong>复刻同款机制，实测一张即达参考级。</li>
+<li><strong>量产</strong>：写 specs 生成器（安全字标题钩子池 × 构图 × 影调 组合去重）→ 100 有人物 → 加无人物分支（去人物、主题大物做主视觉、纯文生图）→ 100 无人物。</li>
+</ol>
+<h3 id="最终输出">最终输出</h3>
+<p>210 张 1672×941 封面，文字零错（个别难字偶发错字逐张重出）、无截断、人物/服装跨图一致、背景信息量饱满。</p>
+<hr>
+<h2 id="c-结果分析严格区分两个视角">C. 结果分析（严格区分两个视角）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>视角</th><th>事实</th></tr></thead><tbody><tr><td><strong>我最初的方案</strong></td><td>盲调 <code>images.edit</code>(gpt-image-1) 一次成图 + 裁切：参考图被当编辑底图绑死、模型看不到自己的成图无法自纠、3:2 裁切啃字 → 大标题错字 / 截断 / 脸漂。<strong>prompt 不背锅,机制背锅。</strong></td></tr><tr><td><strong>参考(获胜)路径</strong></td><td><code>output/new</code> 走 Codex 原生 <code>image_generation</code>：参考图作身份参照(非编辑底图)、原生真 16:9、<strong>会看图自纠</strong>(把人工「挑错→重出」内化进一次调用) → 文字/锁脸/版式都稳。</td></tr></tbody></table>
+<p><strong>关键判断</strong>：两条路径的 <strong>prompt 几乎一样</strong>,质量却是两个档次。差距全在「出图机制」,不在提示词。我前期把它误判成 prompt 问题,多走了一版废批。</p>
+<hr>
+<h2 id="d-方法论沉淀">D. 方法论沉淀</h2>
+<h3 id="出图机制优先律已独立成档">出图机制优先律（已独立成档）</h3>
+<p><strong>核心</strong>：出图质量先看机制、再看 prompt。会看图自纠的智能体原生出图工具（Responses + <code>image_generation</code> + 参考图作 input_image、原生 16:9）完胜盲调一次成的 <code>images.edit</code>。</p>
+<p><strong>来源</strong>：本次「同套 prompt 两个档次」的对照。</p>
+<p><strong>验证状态</strong>：⭐⭐ 二次验证——同日 10 张测试 + 100 有人物 + 100 无人物<strong>三批跨场景复现</strong>,质量一致、0 失败。<strong>边界</strong>：尚未在「不同主题 / 不同参考人 / 不同模型」上验证迁移,未升 ⭐⭐⭐ 铁律。</p>
+<p><strong>操作规则</strong>：见 <a href="/above-the-web/vs-api-v1-78e5a50/" class="wikilink">出图机制优先律_智能体原生出图vs盲调API_v1</a>（含 API 复刻配方、排错表、批量 specs 方法）。</p>
+<h3 id="量产配套小方法">量产配套（小方法）</h3>
+<ul>
+<li><strong>批量 specs = curated 安全字标题钩子池 × 构图 × 影调，组合去重</strong>，不让模型自由编标题（避错字 / 尬词）。难字（如「剪」）优先换等义常用字。</li>
+<li><strong>无人物变体</strong>：去掉锁脸/人物构图、不喂参考图（纯文生图）、主题大物升为主视觉，其余满配文字系统不变 → 同机制即可产出。</li>
+</ul>
+<hr>
+<h2 id="e-下次改进agent-自检">E. 下次改进（agent 自检）</h2>
+<p>我（执行的 agent）这次的三个失误，下次同类任务的行动清单：</p>
+<ol>
+<li><strong>先考古，再造轮子</strong>：现成有「参考级成品 + 它的生成会话存档」时，<strong>第一步该去复现它的生成路径</strong>（读 <code>~/.codex/sessions</code> / 看成品元数据），而不是凭经验自建一条管线。我跳过这步,直接走了自己熟的 <code>images.edit</code>,是整段弯路的总根。</li>
+<li><strong>别默认用错代际的模型</strong>：skill 名字就叫「GPT Image <strong>2</strong>」,我却用了老 <strong>gpt-image-1</strong>;key 里明明有 <code>gpt-image-2</code> / <code>gpt-5.5</code>。选模型前先 <code>models.list</code> 看清账号能用什么。</li>
+<li><strong>质量不达标先质疑机制，再质疑 prompt</strong>：第一次打回我惯性归因到 prompt、砍水补满,又耗一版;其实「同套 prompt 出两个档次」本身就是机制问题的信号。</li>
+<li><strong>守住的好习惯</strong>（继续保持）：逐张抽检 + 难字重出 + 断点续产 + 真实成本如实报 + 不把废批粉饰成成功。</li>
+</ol>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/vs-api-v1-78e5a50/" class="wikilink">出图机制优先律_智能体原生出图vs盲调API_v1</a> —— 本复盘提炼的核心律（机制 > prompt）</li>
+<li><a href="/above-the-web/gptimage2-v1-e7fe63b/" class="wikilink">GPTImage2锁脸的脸占比上限_v1</a> —— 锁脸打法来源；「看图自纠」即把三级补救自动化</li>
+<li><a href="/above-the-web/vs-v1-c7b40a4/" class="wikilink">生成式vs编辑式工具选择律_v1</a> —— 工具选择的另一轴（保留占比）</li>
+<li><a href="/above-the-web/v1-dff6dd3/" class="wikilink">识别工具天花板的时机_v1</a> —— 同套 prompt 反复不行时,先换工具/机制</li>
+<li>应用 skill：<code>aigc-video-cover-gpt</code>（v1.3 已据本次补「机制比 prompt 更决定质量」）</li>
+<li>索引入口：<a href="/above-the-web/03-prompt-987b076/" class="wikilink">03_prompt模板库索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/prompt模板</span><span class="tag">主题/视频封面</span><span class="tag">工具/GPT-Image</span><span class="tag">工具/Codex</span><span class="tag">状态/已验证</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/02_%E6%A1%88%E4%BE%8B%E5%A4%8D%E7%9B%98/2026-06-26_B%E7%AB%99%E5%86%B7%E7%9F%A5%E8%AF%86%E5%B0%81%E9%9D%A2%E9%87%8F%E4%BA%A7_%E5%87%BA%E5%9B%BE%E6%9C%BA%E5%88%B6%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/03_prompt%E6%A8%A1%E6%9D%BF%E5%BA%93/02_%E6%A1%88%E4%BE%8B%E5%A4%8D%E7%9B%98/2026-06-26_B%E7%AB%99%E5%86%B7%E7%9F%A5%E8%AF%86%E5%B0%81%E9%9D%A2%E9%87%8F%E4%BA%A7_%E5%87%BA%E5%9B%BE%E6%9C%BA%E5%88%B6%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/03-prompt-987b076/">Prompt 模板库索引</a></li><li><a href="/above-the-web/vs-api-v1-78e5a50/">出图机制优先律 · 智能体原生出图 vs 盲调编辑 API</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-06-08-3x4-v1-61a2582/"> <span class="card-cat">prompt模板库</span> <h3>2026-06-08_晴枝3x4宣传海报复盘_v1</h3> <p>- 作品名称：晴枝B站宣传3x4手工排版FINAL</p> </a><a class="card" href="/above-the-web/v1-fa343e8/"> <span class="card-cat">方法论与洞察</span> <h3>标签相同 ≠ 行为相同 · 第三方代跑平台律</h3> <p>第三方平台标着同一个模型名，不等于同一份能力。 原厂能给的东西（尤其是通道级 / 文件级能力），代跑平台可能在自己的交付流水线里丢掉；更坏的…</p> </a><a class="card" href="/above-the-web/vs-v1-c7b40a4/"> <span class="card-cat">方法论与洞察</span> <h3>生成式 vs 编辑式工具选择律</h3> <p>改一处用编辑式,造全图用生成式。 任务里「必须原样保留」的占比越高,越要用指令式编辑模型(Nano);越是从零造或大幅重构,越用重新生成式模…</p> </a><a class="card" href="/above-the-web/2026-05-12-v1-9ca3327/"> <span class="card-cat">prompt模板库</span> <h3>「告白」获奖图复盘</h3> <p>身体从右上斜切到左下,占据画面绝大部分,没有给观众&quot;喘气&quot;的空间。这种压迫感和&quot;告白前夜的疲惫&quot;主题高度同构——情绪是从画面外溢出来的,不是…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#b-作品回顾" data-toc-link="b-作品回顾">B. 作品回顾</a></li><li class="d3"><a href="#创作思路" data-toc-link="创作思路">创作思路</a></li><li class="d3"><a href="#执行过程含弯路" data-toc-link="执行过程含弯路">执行过程（含弯路）</a></li><li class="d3"><a href="#最终输出" data-toc-link="最终输出">最终输出</a></li><li class="d2"><a href="#c-结果分析严格区分两个视角" data-toc-link="c-结果分析严格区分两个视角">C. 结果分析（严格区分两个视角）</a></li><li class="d2"><a href="#d-方法论沉淀" data-toc-link="d-方法论沉淀">D. 方法论沉淀</a></li><li class="d3"><a href="#出图机制优先律已独立成档" data-toc-link="出图机制优先律已独立成档">出图机制优先律（已独立成档）</a></li><li class="d3"><a href="#量产配套小方法" data-toc-link="量产配套小方法">量产配套（小方法）</a></li><li class="d2"><a href="#e-下次改进agent-自检" data-toc-link="e-下次改进agent-自检">E. 下次改进（agent 自检）</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

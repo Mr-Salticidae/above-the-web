@@ -1,0 +1,181 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>全片 v3.1 封版存档 · 工作日志（2026-06-16） · 蛛网之上</title><meta name="description" content="1. P0（motion 重锚）：以 fullFilmVoiceoverTiming 为时间真相，build 时把 motion 重锚到真实 beat。修复&#34;动画时长靠估算&#34;错位。已单独提交（413815c）+ 旧版全片重渲染验证通过。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/full-film-2026-06-16-worklog-v3-1-checkp-8f3564e/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="全片 v3.1 封版存档 · 工作日志（2026-06-16）"><meta property="og:description" content="1. P0（motion 重锚）：以 fullFilmVoiceoverTiming 为时间真相，build 时把 motion 重锚到真实 beat。修复&#34;动画时长靠估算&#34;错位。已单独提交（413815c）+ 旧版全片重渲染验证通过。"><meta property="og:url" content="https://tiaozhuxiansheng.com/full-film-2026-06-16-worklog-v3-1-checkp-8f3564e/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="全片 v3.1 封版存档 · 工作日志（2026-06-16）"><meta name="twitter:description" content="1. P0（motion 重锚）：以 fullFilmVoiceoverTiming 为时间真相，build 时把 motion 重锚到真实 beat。修复&#34;动画时长靠估算&#34;错位。已单独提交（413815c）+ 旧版全片重渲染验证通过。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-16T19:10:03+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="skill存档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/full-film-2026-06-16-worklog-v3-1-checkp-8f3564e/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/full-film-2026-06-16-worklog-v3-1-checkp-8f3564e/","url":"https://tiaozhuxiansheng.com/full-film-2026-06-16-worklog-v3-1-checkp-8f3564e/","headline":"全片 v3.1 封版存档 · 工作日志（2026-06-16）","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"1. P0（motion 重锚）：以 fullFilmVoiceoverTiming 为时间真相，build 时把 motion 重锚到真实 beat。修复\"动画时长靠估算\"错位。已单独提交（413815c）+ 旧版全片重渲染验证通过。","datePublished":"2026-06-16T19:10:03+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"skill存档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"skill存档","item":"https://tiaozhuxiansheng.com/notes/?cat=skill%E5%AD%98%E6%A1%A3"},{"@type":"ListItem","position":3,"name":"全片 v3.1 封版存档 · 工作日志（2026-06-16）","item":"https://tiaozhuxiansheng.com/full-film-2026-06-16-worklog-v3-1-checkp-8f3564e/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=skill%E5%AD%98%E6%A1%A3" data-pagefind-meta="category" data-pagefind-filter="kind:note">skill存档</a> <span aria-hidden="true">/</span><span>remotion</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-16T19:10:03+08:00">2026-06-16</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 3 分钟读完 · 1,128 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>8 节</i></summary> <ol> <li class="d2"><a href="#今天完成">今天完成</a></li><li class="d2"><a href="#明日接续resume">明日接续（resume）</a></li><li class="d2"><a href="#待办--开放项">待办 / 开放项</a></li><li class="d2"><a href="#续2026-06-27真实音频--真片渲染">续：2026-06-27（真实音频 + 真片渲染）</a></li><li class="d3"><a href="#take22026-06-27-二轮按跳蛛先生听感反馈修">take2（2026-06-27 二轮，按跳蛛先生听感反馈修）</a></li><li class="d3"><a href="#take32026-06-27-三轮又一多音字">take3（2026-06-27 三轮，又一多音字）</a></li><li class="d3"><a href="#仍待办交回跳蛛先生">仍待办（交回跳蛛先生）</a></li><li class="d2"><a href="#关联">关联</a></li> </ol> </details> <h1 id="全片-v31-封版存档--工作日志2026-06-16">全片 v3.1 封版存档 · 工作日志（2026-06-16）</h1>
+<blockquote>
+<p>性质：口播稿大改 + 视觉重写的封版 checkpoint。明日继续调优。
+当前状态：<strong>provisional（估算 timing）预览态，未生成真实 Eleven 音频。</strong></p>
+</blockquote>
+<h2 id="今天完成">今天完成</h2>
+<ol>
+<li><strong>P0（motion 重锚）</strong>：以 <code>fullFilmVoiceoverTiming</code> 为时间真相，build 时把 motion 重锚到真实 beat。修复”动画时长靠估算”错位。已单独提交（<code>413815c</code>）+ 旧版全片重渲染验证通过。</li>
+<li><strong>诊断旧版节奏问题</strong>：作者独白占 49%（107s/216s）喧宾夺主；53 个等长卡片=节拍器；比喻接力无落地。结合 Kurzgesagt / 知识科普脚本规律。</li>
+<li><strong>v3.1 口播稿锁定</strong>（<code>full_film_2026-06-16_script_v3.1_locked.md</code>）：
+<ul>
+<li>母题：<strong>助产(maieutic) ↔ 尸检(postmortem)</strong>，《流浪地球2》“完整的一生”串联。</li>
+<li>贯穿案例：<strong>真实双题复盘翻车</strong>（票数靠前未获奖，却被记成”获奖图复盘”，AI 放大成 11 条假经验）。</li>
+<li>砍掉技术栈点名 / Codex 总指挥 / 工业化愿景 / “无产阶级铡刀”。作者独白 107s → ~18s。</li>
+</ul>
+</li>
+<li><strong>代码重写</strong>：
+<ul>
+<li><code>fullFilmVoiceover.ts</code>：23 beat（旧 53），新音频目录 <code>audio/full_film_20260616</code>。</li>
+<li><code>sceneSpecs.ts</code>：9 个新场景（生死框架→法医铁律→真实翻车→冻结事实→.md形态→三误区→一生收束→作者话），复用现有 subject/layout/motion，无新组件。</li>
+<li>静音预览管线：<code>scripts/estimate-full-film-timing.ts</code>（字数估算 timing，hasGeneratedAudio=false）+ <code>FullFilmVoiceoverAudio</code> 静音守卫 + <code>FullFilmBgmAudio</code> 作者段锚点改 <code>author_01_cant_edit</code> + <code>generate-full-film-voiceover.ts</code> 改用 <code>fullFilmVoiceover.audioPublicDir</code>。</li>
+<li>typecheck 通过；6 张预览抽帧确认新结构 on-message（est 总长 ~154s / 2:34）。</li>
+</ul>
+</li>
+</ol>
+<h2 id="明日接续resume">明日接续（resume）</h2>
+<p><strong>第一步：生成真实 Eleven 音频（用户付费步骤）</strong></p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span># 确认 .env 有 ELEVENLABS_API_KEY 与 ELEVENLABS_VOICE_ID</span></span>
+<span class="line"><span>cd "E:\knowledge-base\07_skill存档\remotion"</span></span>
+<span class="line"><span>npm.cmd run generate:full-film-voiceover</span></span></code></pre>
+<ul>
+<li>会把 23 段 mp3 写入 <code>public/audio/full_film_20260616/</code>，并用<strong>真实时长</strong>覆盖 <code>fullFilmVoiceoverTiming.ts</code>（hasGeneratedAudio=true）。</li>
+<li>motion 自动重锚（P0），无需手调动画。</li>
+</ul>
+<p><strong>第二步：渲染真片审节奏</strong></p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>npx.cmd remotion render src/index.ts SkillIsAllYouNeedFullFilm out/full-film-20260616-v3.1.mp4</span></span></code></pre>
+<p>真实节奏只有这一步能 faithful 判定（估算 timing 不算数）。</p>
+<h2 id="待办--开放项">待办 / 开放项</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 真实音频生成后，审听节奏，按”长短碎交替”继续微调 beat 切分。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 旧 6 张 MJ 图是给旧脚本的，新场景需重做 MJ/Seedance（P1，节奏定稿后）。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 小瑕疵：warning-icon 三角下方白色标签在浅底偏淡，可改深色描边。</li>
+<li class="task-list-item"><input type="checkbox" disabled> BGM：双曲拼接仍在，新片更短，取段点/音量待随新节奏微调。</li>
+</ul>
+<h2 id="续2026-06-27真实音频--真片渲染">续：2026-06-27（真实音频 + 真片渲染）</h2>
+<blockquote>
+<p>时隔搁置，周末续推。把 6-16 checkpoint 的「明日接续」两步实际跑完。</p>
+</blockquote>
+<ol>
+<li><strong>真实 Eleven 音频已生成</strong>：<code>npm run generate:full-film-voiceover</code> → 23 段 mp3 落 <code>public/audio/full_film_20260616/</code>（2.5M）；<code>fullFilmVoiceoverTiming.ts</code> 已写回 <code>hasGeneratedAudio=true</code>，真实 <code>totalFrames=4792</code>（≈2:40，比估算 2:34 略长）。motion 随 P0 自动重锚。</li>
+<li><strong>真片已渲染</strong>：<code>out/full-film-20260616-v3.1.mp4</code>（14.1M / 1920×1080 / h264 + AAC 立体声，含配音 + 双曲 BGM）。</li>
+<li><strong>视觉抽帧验过</strong>（t=4/75/130/150s）：中文渲染、扁平矢量布局、字幕、重锚 motion 均正常。冷开场/冻结事实/完整一生闭环/作者话开源结尾四处 on-message。</li>
+<li><strong>gitignore</strong>：镜像 20260609 先例，白名单放行 <code>full_film_20260616/</code>，把这批付费音频入库（保护不丢失 + 可复现，呼应”代码开源”主题）。</li>
+</ol>
+<h3 id="take22026-06-27-二轮按跳蛛先生听感反馈修">take2（2026-06-27 二轮，按跳蛛先生听感反馈修）</h3>
+<p>反馈：①整体偏慢 ②语调太平太冷静 ③结尾”一起来调”被念成 diào。三处各自独立修，一次重生成全修掉：</p>
+<ul>
+<li><strong>多音字</strong>：<code>fullFilmVoiceover.ts</code> author_03 <code>一起来调</code>→<code>一起来调试</code>（tiáoshì 无歧义；caption=ttsText，字幕同步变「调试」）。</li>
+<li><strong>语调</strong>：<code>generate-full-film-voiceover.ts</code> voice_settings <code>stability 0.52→0.35</code>、<code>style 0.22→0.38</code>（author 0.3→0.48），更有情绪起伏。</li>
+<li><strong>节奏</strong>：重生成时 <code>FULL_FILM_VOICEOVER_PLAYBACK_RATE=1.12</code>（原 1.05）。</li>
+<li>结果：<code>totalFrames 4792→4458</code>（2:40→<strong>2:28</strong>）；真片 <code>out/full-film-20260616-v3.1-take2.mp4</code>（13.4M）；抽帧确认作者话字幕「调试」+ 四卡正常。</li>
+</ul>
+<h3 id="take32026-06-27-三轮又一多音字">take3（2026-06-27 三轮，又一多音字）</h3>
+<p>反馈：结尾外又发现「调研」被念成 tiáo研（应 diào研）。按知识库既有方案修（<a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/" class="wikilink">2026-06-09_Remotion全片音频字幕BGM复盘_v1</a> 问题一：TTS 误读就换无歧义词，caption=ttsText 不分叉）：</p>
+<ul>
+<li><code>调研</code>→<code>研究</code>（fullFilmVoiceover.ts teaching_03 + sceneSpecs scene_02 同步）。</li>
+<li>只重生成 teaching_03 一段（<code>FORCE_BEAT_IDS</code> + 保持 <code>PLAYBACK_RATE=1.12</code>，省钱不全量）。</li>
+<li>结果：<code>totalFrames 4458→4452</code>；真片 <code>out/full-film-20260616-v3.1-take3.mp4</code>（13.4M / 2:28）；抽帧确认字幕「研究」。</li>
+<li>顺手把该复盘文档补强：多音字误读→换词，记下 Eleven v3 对「调」的 tiáo 偏向（两个方向都可能错，最稳绕开「调」字）。</li>
+<li><strong>跳蛛先生确认其余都 OK</strong>（语调、节奏、其它发音）。take3 即”三轮听感反馈”封口版。</li>
+</ul>
+<h3 id="仍待办交回跳蛛先生">仍待办（交回跳蛛先生）</h3>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> <strong>审节奏</strong>（只有亲耳听算数）：作者独白是否压到位、三误区快切是否清楚、真实翻车案例是否讲明白、2:40 整体有无拖段。</li>
+<li class="task-list-item"><input type="checkbox" disabled> 节奏定稿后做 P1：9 个新场景重做 MJ/Seedance（当前全是 Remotion 原生几何图形占位）。</li>
+<li class="task-list-item"><input type="checkbox" disabled> warning-icon 浅底白标签描边、BGM 取段/音量随新节奏微调（旧待办仍在）。</li>
+</ul>
+<h2 id="关联">关联</h2>
+<ul>
+<li>文稿：<code>production/full_film_2026-06-16_script_v3.1_locked.md</code></li>
+<li>旧版工作日志：<code>production/full_film_2026-06-10_worklog_archive.md</code></li>
+<li>案例真身：<code>{知识库}/03_prompt模板库/02_案例复盘/2026-05-15_灵光一现+风花雪月双题复盘_v1.md</code></li>
+<li>两个 Skill：<code>aigc-postmortem/SKILL.md</code>（尸检）、<code>maieutic-skill/SKILL.md</code>（助产）</li>
+</ul>  <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/07_skill%E5%AD%98%E6%A1%A3/remotion/production/full_film_2026-06-16_worklog_v3.1_checkpoint.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/07_skill%E5%AD%98%E6%A1%A3/remotion/production/full_film_2026-06-16_worklog_v3.1_checkpoint.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore>  <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-09 Remotion 全片音频字幕 BGM 复盘</h3> <p>- 项目名称:Skill Is All You Need</p> </a><a class="card" href="/above-the-web/formal-clip-2026-06-08-mj-asset-intake-63fb3d1/"> <span class="card-cat">skill存档</span> <h3>2026-06-08 正式小片段全链路归档包</h3> <p>- 项目:Skill is All You Need</p> </a><a class="card" href="/above-the-web/formal-clip-2026-06-08-seedance-prompt-s-dc80f4f/"> <span class="card-cat">skill存档</span> <h3>2026-06-08 正式小片段 Seedance 2.0 Prompt 套装</h3> <p>- 每条 prompt 单独生成一段视频。</p> </a><a class="card" href="/above-the-web/full-film-2026-06-09-bgm-edit-notes-a93e025/"> <span class="card-cat">skill存档</span> <h3>Skill Is All You Need · BGM 剪辑记录</h3> <p>两首 Suno 成品不直接从完整版开头播放，而是作为素材库取用其中更适合旁白的片段。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#今天完成" data-toc-link="今天完成">今天完成</a></li><li class="d2"><a href="#明日接续resume" data-toc-link="明日接续resume">明日接续（resume）</a></li><li class="d2"><a href="#待办--开放项" data-toc-link="待办--开放项">待办 / 开放项</a></li><li class="d2"><a href="#续2026-06-27真实音频--真片渲染" data-toc-link="续2026-06-27真实音频--真片渲染">续：2026-06-27（真实音频 + 真片渲染）</a></li><li class="d3"><a href="#take22026-06-27-二轮按跳蛛先生听感反馈修" data-toc-link="take22026-06-27-二轮按跳蛛先生听感反馈修">take2（2026-06-27 二轮，按跳蛛先生听感反馈修）</a></li><li class="d3"><a href="#take32026-06-27-三轮又一多音字" data-toc-link="take32026-06-27-三轮又一多音字">take3（2026-06-27 三轮，又一多音字）</a></li><li class="d3"><a href="#仍待办交回跳蛛先生" data-toc-link="仍待办交回跳蛛先生">仍待办（交回跳蛛先生）</a></li><li class="d2"><a href="#关联" data-toc-link="关联">关联</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

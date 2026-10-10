@@ -1,0 +1,396 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>工位池塘 v0.6.2：两个老 issue 从分诊到三端发版 · 蛛网之上</title><meta name="description" content="- 作品名称：工位池塘 Desk Pond v0.6.2"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-10-06-v0-6-2-issue-v1-9f291ee/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="工位池塘 v0.6.2：两个老 issue 从分诊到三端发版"><meta property="og:description" content="- 作品名称：工位池塘 Desk Pond v0.6.2"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-10-06-v0-6-2-issue-v1-9f291ee/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="工位池塘 v0.6.2：两个老 issue 从分诊到三端发版"><meta name="twitter:description" content="- 作品名称：工位池塘 Desk Pond v0.6.2"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-10-06T00:00:00+08:00"><meta property="article:modified_time" content="2026-10-07T00:58:03+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="主题/发布"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-10-06-v0-6-2-issue-v1-9f291ee/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-10-06-v0-6-2-issue-v1-9f291ee/","url":"https://tiaozhuxiansheng.com/2026-10-06-v0-6-2-issue-v1-9f291ee/","headline":"工位池塘 v0.6.2：两个老 issue 从分诊到三端发版","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 作品名称：工位池塘 Desk Pond v0.6.2","datePublished":"2026-10-06T00:00:00+08:00","dateModified":"2026-10-07T00:58:03+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 主题/发布"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"工位池塘 v0.6.2：两个老 issue 从分诊到三端发版","item":"https://tiaozhuxiansheng.com/2026-10-06-v0-6-2-issue-v1-9f291ee/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-10-06T00:00:00+08:00">2026-10-06</time></span> <span>更新于 <time datetime="2026-10-07T00:58:03+08:00">2026-10-07</time></span> <span>约 10 分钟读完 · 3,601 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>16 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#已验证-vs-未验证">已验证 vs 未验证</a></li><li class="d2"><a href="#作品回顾">作品回顾</a></li><li class="d3"><a href="#思路">思路</a></li><li class="d3"><a href="#执行过程">执行过程</a></li><li class="d3"><a href="#最终输出">最终输出</a></li><li class="d2"><a href="#结果分析">结果分析</a></li><li class="d2"><a href="#方法论沉淀">方法论沉淀</a></li><li class="d3"><a href="#老-issue-分诊在报告者的版本上复现再在-head-上量">老 issue 分诊：在报告者的版本上复现，再在 HEAD 上量</a></li><li class="d3"><a href="#桌面布局要算预算并用会变红的测试守住">桌面布局要算预算，并用会变红的测试守住</a></li><li class="d3"><a href="#要作者手动选的文件一开始就放到作者找得到的地方">要作者手动选的文件，一开始就放到作者找得到的地方</a></li><li class="d3"><a href="#要作者据此做决定的数字从结构化字段读">要作者据此做决定的数字，从结构化字段读</a></li><li class="d3"><a href="#长路径工作目录下的-git-和原生程序">长路径工作目录下的 git 和原生程序</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#一句话提炼">一句话提炼</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="工位池塘-v062两个老-issue-从分诊到三端发版">工位池塘 v0.6.2：两个老 issue 从分诊到三端发版</h1>
+<blockquote>
+<p>入档：2026-10-07
+来源：desk-pond（工位池塘），issue #1 #2 → 提交 <code>738911b</code> <code>9cfa20b</code> → GitHub Release v0.6.2 + B站 Toy 更新。一次会话做完，执行者是助手（Claude），在一台临时电脑上从克隆仓库开始
+性质：工程闭环复盘。可复用的是 issue 分诊、桌面布局预算、浏览器辅助发版三类经验；发版当天没有下载和反馈数据</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li><strong>作品名称</strong>：工位池塘 Desk Pond v0.6.2</li>
+<li><strong>项目</strong>：desk-pond 两个开放 issue 的分诊与修复，加三端发版（Windows / macOS / B站 Toy）</li>
+<li><strong>提交时间</strong>：
+<ul>
+<li><code>738911b</code>：2026-10-06 23:40</li>
+<li><code>9cfa20b</code> 和 tag <code>v0.6.2</code>：10-07 00:30</li>
+<li>Toy 更新提交：00:40</li>
+<li>GitHub Release 公开：00:43</li>
+</ul>
+</li>
+<li><strong>预期目标</strong>（作者三次下达的原话）：
+<ol>
+<li>「先来检查issue是否都修复了，如果没有则优先修复，若修复完成则更新issue状态」</li>
+<li>「发个新版本 v0.6.2」</li>
+<li>「生成上传包，然后自动更新到TOY上」</li>
+</ol>
+</li>
+<li><strong>起点</strong>：两个 issue 都是 07-16 提的，开了 82 天，没有回复。
+<ul>
+<li>#1：Win10 下进水族馆，「今日任务苗圃」变宽，按钮显示不全。</li>
+<li>#2：建议加正计时、窗口大小可拖动调整。</li>
+</ul>
+</li>
+<li><strong>分诊实测</strong>：
+<ul>
+<li>#1 在代码里早就修好了。07-10 的自检提交 <code>759f3d4</code> 把水族馆子标签移出了顶栏，但这个修复要到 09-29 的 v0.6.0 才发版；报告者 07-16 能下到的是 v0.5.0。</li>
+<li>在 v0.5.0 上复现：进水族馆后顶栏最小宽度从 570 涨到 676，整列被撑到 676 宽，任务区拉到 422，右边缘到 668 px，超出 640 px 的窗口 28 px。</li>
+<li>HEAD 上还有一个更小的同类问题：所有房间的整列都是 644×528，比 640×520 的窗口宽 4、高 8。</li>
+<li>#2 没做。</li>
+</ul>
+</li>
+<li><strong>最终结果</strong>：
+<ul>
+<li><strong>符合预期</strong>：
+<ul>
+<li>#1 评论根因后关闭；#2 由提交信息里的 <code>Closes #2</code> 自动关闭，并补了用法评论。</li>
+<li>Release v0.6.2 公开，两个附件和本地构建逐字节一致；发布触发的 macOS 冒烟测试 arm64 和 Intel 全绿。</li>
+<li>Toy 5 分钟内过审上线，内层路径 <code>…-v23165</code>，线上 <code>index.data</code> 5,999,956 字节，和本地一致。</li>
+</ul>
+</li>
+<li><strong>不符合 / 有偏离</strong>：
+<ul>
+<li>「自动更新到 Toy」没能全自动：Toy 包和 Release 附件都超过浏览器扩展 10 MB 的上传上限，作者手动拖了两次文件。</li>
+<li>助手报给作者的导出模板大小是 169 MB，实际 1198 MB。下载途中发现并更正。</li>
+<li>「用鼠标真拖窗口边缘」没有验证。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>数据来源</strong>：Godot 4.6.3 无头测试和探针输出、真窗口渲染截图、GitHub API、<code>curl --compressed</code> 抓 Toy 外层和内层页。全部是自测；没有下载量和用户反馈。</li>
+<li><strong>获奖作品</strong>：不适用</li>
+</ul>
+<h2 id="已验证-vs-未验证">已验证 vs 未验证</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>状态</th><th>手段</th></tr></thead><tbody><tr><td>#1 根因</td><td>✅</td><td>v0.5.0 的 worktree 上跑无头探针，量出 676 / 422 / 668</td></tr><tr><td>当前版本不再溢出</td><td>✅</td><td>布局测试：5 个视图 × 4 种窗口尺寸，逐个检查按钮是否在窗口内（690 项）</td></tr><tr><td>布局测试真能抓到溢出</td><td>✅</td><td>分别把任务区改回 390、场景改回 200，两次都报 FAIL</td></tr><tr><td>正计时逻辑</td><td>✅</td><td>29 项：收竿、不满 1 分钟空竿、暂停后续算、180 分钟上限、计时中不能切换、Web 按真实时钟补算</td></tr><tr><td>界面观感</td><td>✅</td><td>编辑器真窗口渲染截图：640×520、1000×600、1280×1040、手机 390×844</td></tr><tr><td>窗口大小的记忆和限制</td><td>✅</td><td>真窗口里存 900×700，重开后恢复并居中；超大的值被限制到屏幕 1920×1040</td></tr><tr><td><strong>用鼠标真拖窗口边缘</strong></td><td>⚠️ 未验证</td><td>没有真实的鼠标操作，只验了处理函数和尺寸限制；无边框窗口的系统边缘本身能不能拖，也不知道</td></tr><tr><td>导出的 exe 能启动</td><td>✅</td><td>文件版本 0.6.2.0；无头启动退出码 0，日志没有报错</td></tr><tr><td>导出 exe 的实际画面</td><td>⚠️ 未看</td><td>截图来自编辑器运行，不是导出的 exe</td></tr><tr><td>macOS 两种芯片</td><td>✅</td><td>发布触发的 CI 全绿，包括 arm64 的截图步骤</td></tr><tr><td>Gatekeeper 首次放行</td><td>⚠️ 未验证</td><td>CI 下载的文件没有隔离属性，测不到</td></tr><tr><td>Toy 新版上线</td><td>✅</td><td>预览里能看到新的「倒计时」开关；线上内层 <code>index.data</code> 字节数和本地一致</td></tr><tr><td>Toy 在 B站 App 真机上</td><td>⚠️ 未测</td><td></td></tr></tbody></table>
+<h2 id="作品回顾">作品回顾</h2>
+<h3 id="思路">思路</h3>
+<ul>
+<li>先判断 issue 是「没修」「修了没发版」还是「修了但没修全」，再决定动不动代码。#1 不能只看提交记录下结论，要在报告者用的版本和 HEAD 上各量一次。</li>
+<li>#2 是功能需求。三个设计取舍由作者拍板，助手给选项并标出推荐：
+<ul>
+<li>是否下载 Godot 来验证：作者选下载。</li>
+<li>窗口放大时内容怎么变：作者选等比放大、多出的空间给场景。</li>
+<li>正计时怎么结算：作者选满 1 分钟算一次专注。</li>
+</ul>
+</li>
+</ul>
+<h3 id="执行过程">执行过程</h3>
+<ol>
+<li>克隆，跑原有测试打底（115 + 45 项通过）。</li>
+<li>用无头探针在 HEAD 和 v0.5.0 的 worktree 上量布局，定位 #1 的根因和残留问题。</li>
+<li>实现：
+<ul>
+<li><strong>正计时</strong>：钓竿标题行加一个小开关，不另占行高。专注中主按钮变成「收竿」；点池塘不会收竿；计时中不能切换方式；数到 180 分钟自动收竿。网页版按真实时钟补算，因为页面切到后台时计时会被冻结。</li>
+<li><strong>窗口缩放</strong>：窗口是无边框的，所以在右边、下边各留一条 5 px 的拖拽区，右下角加一个手柄。stretch aspect 设为 <code>expand</code>。记住上次的大小，启动时限制在屏幕内并居中。</li>
+<li><strong>布局预算</strong>：任务区最小宽度 390 → 386，场景最小高度 200 → 180，桌面版控制台不再分摊多出来的高度。</li>
+<li><strong>测试基建</strong>：<code>SaveManager.save_path</code> 改成 static var，测试写临时存档，不碰玩家的真实存档。新增布局测试和计时测试。</li>
+</ul>
+</li>
+<li>验证：
+<ul>
+<li>无头测试全过。</li>
+<li>故意改回旧值，确认布局测试会变红。</li>
+<li>真窗口截图：<code>extends SceneTree</code> 的脚本里，<code>await RenderingServer.frame_post_draw</code> 之后调用 <code>root.get_texture().get_image().save_png()</code>。</li>
+</ul>
+</li>
+<li><strong>issue</strong>：作者选择直推 main。评论稿先给作者确认；用作者已登录 GitHub 的 Chrome 发评论并关闭 #1。</li>
+<li><strong>发版</strong>：
+<ul>
+<li>改版本号（导出配置 6 处、<code>project.godot</code>、README 徽章），打 tag。</li>
+<li>本机导出三个包；Web 包再跑仓库自带的 <code>make_toy_package.ps1</code>。</li>
+<li>作者选择直接公开，不挂草稿。</li>
+</ul>
+</li>
+<li><strong>Toy 和 Release 上传</strong>：
+<ul>
+<li>作者把文件拖进 Toy 的更新页和 GitHub 发布页。</li>
+<li>助手看过 Toy 预览后点「更新」，核对附件后点「Publish release」。</li>
+<li>两边都按字节核对线上产物。</li>
+</ul>
+</li>
+<li><strong>清理</strong>：作者授权后，删掉导出模板、编辑器、测试存档、给作者拖文件用的副本，共约 1.8 GB。</li>
+</ol>
+<h3 id="最终输出">最终输出</h3>
+<ul>
+<li>代码：<code>738911b</code>（功能 + 测试）、<code>9cfa20b</code>（版本号）。</li>
+<li>发布：Release v0.6.2（<code>DeskPond-v0.6.2.exe</code> 110,522,208 字节，<code>DeskPond-macOS-v0.6.2.zip</code> 66,534,035 字节）；Toy 内层版本 <code>-v23165</code>。</li>
+<li>issue：#1、#2 都已关闭并附说明。</li>
+</ul>
+<h2 id="结果分析">结果分析</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>视角</th><th>写法</th></tr></thead><tbody><tr><td>工程交付</td><td>三个目标都做到了：issue 关闭、三端上线，每个产物都核对过字节。「自动更新到 Toy」只做到半自动：传文件这一步要作者动手</td></tr><tr><td>作品是否被接受</td><td><strong>不知道</strong>。发版当天没有下载、留言或报告者的回复；不能把「上线了」写成「用户满意了」</td></tr></tbody></table>
+<ul>
+<li>#1 真正的问题不在代码，在<strong>发版节奏</strong>。修复在报告前 6 天就进了 main，之后 82 天里既没发版，也没人回复；在报告者看来，这个 bug 一直没修。</li>
+<li>计划外的消耗主要是三处：
+<ul>
+<li>本机缺工具链，要下载约 1.4 GB。</li>
+<li>文件位置对作者不可见，多了一轮往返。</li>
+<li>助手在作者手动操作时并行操作浏览器，被叫停一次。</li>
+</ul>
+</li>
+</ul>
+<h2 id="方法论沉淀">方法论沉淀</h2>
+<h3 id="老-issue-分诊在报告者的版本上复现再在-head-上量">老 issue 分诊：在报告者的版本上复现，再在 HEAD 上量</h3>
+<p><strong>核心</strong>：开了很久的 issue，要在报告者当时用的版本和当前 HEAD 上各量一次，才能分清「没修」「修了没发版」「修了没修全」。</p>
+<p><strong>来源</strong>：#1。提交记录只能说明「可能修了」。v0.5.0 上量到 676，坐实根因；HEAD 上量到 644，抓出一个更小的同类问题。</p>
+<p><strong>验证状态</strong>：⚠️ 首次发现</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>报告者用的版本 = issue 日期之前最近的那个 <strong>Release</strong>，不是之前最近的那个提交。</li>
+<li><code>git worktree add ../&#x3C;目录> &#x3C;tag></code> 切出那一版，和 HEAD 跑同一个探针，输出数字而不是截图。</li>
+<li>回复 issue 时写清「从哪个版本起修好」；修复合进 main 不等于到了用户手里。</li>
+</ol>
+<p><strong>反例/边界</strong>：issue 没写复现条件、本机无法复现报告者环境（比如特定 DPI、特定显卡）时，这一招只能排除，不能定案。</p>
+<h3 id="桌面布局要算预算并用会变红的测试守住">桌面布局要算预算，并用会变红的测试守住</h3>
+<p><strong>核心</strong>：Godot 容器的最小尺寸会一层层往上累加；子节点的最小宽度加起来超过窗口最小宽度时，根容器就比窗口宽，最右边的按钮被裁掉，而且不报任何错。</p>
+<p><strong>来源</strong>：HEAD 上整列 644×528 > 640×520。顶栏图标把顶栏撑到 48 高；钓竿 230 + 任务 390 + 间距边距超过 640。</p>
+<p><strong>验证状态</strong>：⚠️ 首次发现（Godot）。「量盒子，别量像素」这一条的再验，见 <a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/" class="wikilink">2026-06-26_桌面应用打磨发布闭环复盘_工位池塘v0.5.0_v1</a></p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>把预算算式写进代码注释：宽度 <code>8 + 230 + 8 + 386 + 8 = 640</code>，高度 <code>48 + 180 + 280 ≤ 520</code>。</li>
+<li>无头测试逐个房间、逐个窗口尺寸断言两件事：整列不超出窗口，每个按钮都在窗口内。无头模式下 <code>get_combined_minimum_size()</code> 和 <code>get_global_rect()</code> 照样能算。</li>
+<li>写完测试，故意把值改回旧的，确认它会变红。测试自己先被证伪过，才算数。</li>
+</ol>
+<p><strong>反例/边界</strong>：只覆盖桌面最小窗口和几种放大尺寸；手机版是另一套布局，这个测试没覆盖。</p>
+<h3 id="要作者手动选的文件一开始就放到作者找得到的地方">要作者手动选的文件，一开始就放到作者找得到的地方</h3>
+<p><strong>核心</strong>：浏览器扩展传不了的文件，交给作者拖之前，先复制到作者熟悉的位置并在资源管理器里选中。</p>
+<p><strong>来源</strong>：Toy 包 12.8 MB、Release 附件 105 MB 和 63 MB，都超过扩展 10 MB 的上传上限。助手第一次给的是会话临时目录里的路径，那个目录在应用里是隐藏的，作者找不到，多了一轮往返。</p>
+<p><strong>验证状态</strong>：⚠️ 首次发现。10 MB 上限本身是第三次碰到，见 <a href="/above-the-web/v1-5d049d6/" class="wikilink">浏览器插件自动化的能力边界_v1</a></p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>开始发版前就判断哪些文件超过 10 MB。</li>
+<li>把这些文件一次性复制到「下载」下的独立文件夹，用 <code>explorer /select,&#x3C;文件></code> 打开并选中。</li>
+<li>一次说清每个文件拖到哪一页的哪个区域；作者做完之前，助手不在同一个浏览器里并行操作。</li>
+</ol>
+<p><strong>反例/边界</strong>：文件放在页面能跨域读到的地址上时，可以改用页面内 fetch 注入，不必人工；见 <a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/" class="wikilink">2026-07-11_B站Toy同步事故复盘_版本指纹与外部cron兜底_v1</a> 附录。</p>
+<h3 id="要作者据此做决定的数字从结构化字段读">要作者据此做决定的数字，从结构化字段读</h3>
+<p><strong>核心</strong>：大小、费用、时长这类要作者同意的数字，必须按字段取值，不能用文本行去配对。</p>
+<p><strong>来源</strong>：助手失误。下载 Godot 导出模板前，用 <code>grep | paste - -</code> 把接口 JSON 里的 name 和 size 两两配对，配错了行，报给作者「169 MB」，实际 1198 MB。下载到 734 MB 时发现，当场更正。</p>
+<p><strong>验证状态</strong>：⚠️ 首次发现</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>用能按字段取值的方式读：PowerShell 对象、<code>jq</code>。</li>
+<li>报数字时顺带写出它对应的名字，方便自己核对。</li>
+</ol>
+<p><strong>反例/边界</strong>：只是给自己看的估算，可以粗略；进了「请作者确认」这一步的数字，不行。</p>
+<h3 id="长路径工作目录下的-git-和原生程序">长路径工作目录下的 git 和原生程序</h3>
+<p><strong>核心</strong>：Windows 下当前目录太长时，<code>git clone</code> 和部分原生 exe 会直接失败。</p>
+<p><strong>来源</strong>：会话目录约 165 字符。<code>git clone</code> 报 <code>'$GIT_DIR' too big</code>；在过长的当前目录下启动原生程序，报「path longer than allowed for a Win32 working directory」。</p>
+<p><strong>验证状态</strong>：⚠️ 首次发现</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>用 <code>git init</code> 建仓，再 <code>git config core.longpaths true</code>，然后 <code>git fetch</code>，代替 <code>git clone</code>。</li>
+<li>下载、解压这类命令不 <code>cd</code> 进长路径，直接给完整的输出路径。</li>
+</ol>
+<p><strong>反例/边界</strong>：路径较短的工作目录不需要这么做。</p>
+<h2 id="下次改进">下次改进</h2>
+<ul>
+<li><strong>如果重来，最想改的一步</strong>：报导出模板大小那一步。作者是按 169 MB 同意下载的，实际是 1.2 GB；同意依据错了，比下载慢更严重。</li>
+<li><strong>下次同类任务的行动清单</strong>：
+<ol>
+<li>修复合进 main 以后，回头看有没有对应的 issue；发版时在 Release 说明里点名 issue，并在 issue 下回复版本号。</li>
+<li>发版开头就把超过 10 MB 的文件一次放进下载文件夹，让作者一次拖完。</li>
+<li>可以考虑用 tag 触发 CI，自动导出三个包，省掉本机 1.2 GB 的模板和手动上传。还没试过。</li>
+<li>请作者真机终验：拖窗口边缘缩放；手机 Toy 上的正计时。</li>
+</ol>
+</li>
+</ul>
+<h2 id="一句话提炼">一句话提炼</h2>
+<blockquote>
+<p>分诊老 issue，最快的办法是在报告者的版本上复现一次、在 HEAD 上量一次。这次两个数字（676 和 644）同时说清了两件事：「早就修好但没发版」，以及「还剩一个更小的同类问题」。工程上三端都上线了，用户是否满意还没有数据。</p>
+</blockquote>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>同一个游戏的前两次发布：<a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/" class="wikilink">2026-06-26_桌面应用打磨发布闭环复盘_工位池塘v0.5.0_v1</a> · <a href="/above-the-web/2026-09-29-v1-03d7c00/" class="wikilink">2026-09-29_右下角的池塘_游戏宣传微电影_实录混剪到双语字幕发布_复盘_v1</a></li>
+<li>本次补丁：<a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/" class="wikilink">2026-07-11_B站Toy同步事故复盘_版本指纹与外部cron兜底_v1</a> · <a href="/above-the-web/mac-macos-githubactions-v1-3b7ddc1/" class="wikilink">无Mac冒烟测试macOS版_GitHubActions截图验字体_v1</a> · <a href="/above-the-web/v1-5d049d6/" class="wikilink">浏览器插件自动化的能力边界_v1</a></li>
+<li>同族纪律：<a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— 回归测试自己也要先被证伪</li>
+<li>复盘方法：<a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 工程成功不写成作品成功</li>
+<li>推送方式：<a href="/above-the-web/pr-v1-b896304/" class="wikilink">个人项目免PR直推主分支_v1</a></li>
+<li>临时环境：<a href="/above-the-web/v1-bee1b16/" class="wikilink">展台机易失环境自恢复预案_v1</a> —— git 身份和工具链在临时机器上都得现装</li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">主题/发布</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-07T00:58:03+08:00">2026-10-07</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/2026-10-06_%E5%B7%A5%E4%BD%8D%E6%B1%A0%E5%A1%98v0.6.2_%E8%80%81issue%E5%88%86%E8%AF%8A%E5%88%B0%E4%B8%89%E7%AB%AF%E5%8F%91%E7%89%88_%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/2026-10-06_%E5%B7%A5%E4%BD%8D%E6%B1%A0%E5%A1%98v0.6.2_%E8%80%81issue%E5%88%86%E8%AF%8A%E5%88%B0%E4%B8%89%E7%AB%AF%E5%8F%91%E7%89%88_%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/">B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</a></li><li><a href="/above-the-web/mac-macos-githubactions-v1-3b7ddc1/">没有 Mac 也能冒烟测试 macOS 版：GitHub Actions 截图验字体</a></li><li><a href="/above-the-web/2026-09-29-v1-03d7c00/">《右下角的池塘》游戏宣传微电影：AI 屏幕外 + 游戏实录混剪，到双语字幕发布</a></li><li><a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/">桌面应用打磨发布闭环复盘 · 工位池塘 Desk Pond v0.5.0</a></li><li><a href="/above-the-web/pr-v1-b896304/">个人项目免 PR 直推主分支</a></li><li><a href="/above-the-web/v1-3fce0f1/">交付前实测证伪律</a></li><li><a href="/above-the-web/v1-78108ee/">复盘事实先行原则</a></li><li><a href="/above-the-web/v1-bee1b16/">展台机易失环境自恢复预案 _v1</a></li><li><a href="/above-the-web/v1-5d049d6/">浏览器插件自动化的能力边界</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/xsec-token-v1-ad1f0f4/"> <span class="card-cat">方法论与洞察</span> <h3>小红书笔记外链必带 xsec_token</h3> <p>往任何站外页面(画廊 / 网站 / 文档 / README)放小红书笔记链接时,必须用带 xsectoken 的完整分享链接,或 App「分…</p> </a><a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a><a class="card" href="/above-the-web/1000-v1-2b2c761/"> <span class="card-cat">方法论与洞察</span> <h3>小红书正文超 1000 字是拆篇信号</h3> <p>小红书正文 1000 字上限不是排版限制,是平台在替你执行「别写大教程」。 写超了,第一反应不该是删字,该是拆篇——因为逼你超限的那个结构(…</p> </a><a class="card" href="/above-the-web/2026-05-18-19-v1-6f72139/"> <span class="card-cat">方法论与洞察</span> <h3>获奖图复盘方法论合集 v1 · 已被活合集取代</h3> <p>核心:让一个物件同时承载两种身份——观众的脑子需要 0.4 秒来切换,这 0.4 秒就是反讽。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#已验证-vs-未验证" data-toc-link="已验证-vs-未验证">已验证 vs 未验证</a></li><li class="d2"><a href="#作品回顾" data-toc-link="作品回顾">作品回顾</a></li><li class="d3"><a href="#思路" data-toc-link="思路">思路</a></li><li class="d3"><a href="#执行过程" data-toc-link="执行过程">执行过程</a></li><li class="d3"><a href="#最终输出" data-toc-link="最终输出">最终输出</a></li><li class="d2"><a href="#结果分析" data-toc-link="结果分析">结果分析</a></li><li class="d2"><a href="#方法论沉淀" data-toc-link="方法论沉淀">方法论沉淀</a></li><li class="d3"><a href="#老-issue-分诊在报告者的版本上复现再在-head-上量" data-toc-link="老-issue-分诊在报告者的版本上复现再在-head-上量">老 issue 分诊：在报告者的版本上复现，再在 HEAD 上量</a></li><li class="d3"><a href="#桌面布局要算预算并用会变红的测试守住" data-toc-link="桌面布局要算预算并用会变红的测试守住">桌面布局要算预算，并用会变红的测试守住</a></li><li class="d3"><a href="#要作者手动选的文件一开始就放到作者找得到的地方" data-toc-link="要作者手动选的文件一开始就放到作者找得到的地方">要作者手动选的文件，一开始就放到作者找得到的地方</a></li><li class="d3"><a href="#要作者据此做决定的数字从结构化字段读" data-toc-link="要作者据此做决定的数字从结构化字段读">要作者据此做决定的数字，从结构化字段读</a></li><li class="d3"><a href="#长路径工作目录下的-git-和原生程序" data-toc-link="长路径工作目录下的-git-和原生程序">长路径工作目录下的 git 和原生程序</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#一句话提炼" data-toc-link="一句话提炼">一句话提炼</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

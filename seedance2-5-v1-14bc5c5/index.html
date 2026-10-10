@@ -1,0 +1,688 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Seedance 2.5 行为规律 · 蛛网之上</title><meta name="description" content="这条不是 Seedance 2.5 的模型行为，不该留在本档。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/seedance2-5-v1-14bc5c5/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Seedance 2.5 行为规律"><meta property="og:description" content="这条不是 Seedance 2.5 的模型行为，不该留在本档。"><meta property="og:url" content="https://tiaozhuxiansheng.com/seedance2-5-v1-14bc5c5/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Seedance 2.5 行为规律"><meta name="twitter:description" content="这条不是 Seedance 2.5 的模型行为，不该留在本档。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-08T19:36:37+08:00"><meta property="article:modified_time" content="2026-10-05T09:48:45+08:00"><meta property="article:section" content="参数行为档案"><meta property="article:tag" content="类型/档案"><meta property="article:tag" content="工具/Seedance"><meta property="article:tag" content="工具/Flova"><meta property="article:tag" content="主题/图生视频"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/seedance2-5-v1-14bc5c5/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/seedance2-5-v1-14bc5c5/","url":"https://tiaozhuxiansheng.com/seedance2-5-v1-14bc5c5/","headline":"Seedance 2.5 行为规律","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"这条不是 Seedance 2.5 的模型行为，不该留在本档。","datePublished":"2026-08-08T19:36:37+08:00","dateModified":"2026-10-05T09:48:45+08:00","articleSection":"参数行为档案","keywords":"类型/档案, 工具/Seedance, 工具/Flova, 主题/图生视频"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"参数行为档案","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88"},{"@type":"ListItem","position":3,"name":"Seedance 2.5 行为规律","item":"https://tiaozhuxiansheng.com/seedance2-5-v1-14bc5c5/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88" data-pagefind-meta="category" data-pagefind-filter="kind:note">参数行为档案</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-08T19:36:37+08:00">2026-08-08</time></span> <span>更新于 <time datetime="2026-10-05T09:48:45+08:00">2026-10-05</time></span> <span>约 16 分钟读完 · 6,026 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>33 节</i></summary> <ol> <li class="d2"><a href="#一结构性行为">一、结构性行为</a></li><li class="d3"><a href="#长视频内部按约-6-秒自动分段--已作废2026-08-25">长视频内部按约 6 秒自动分段 🔴 已作废（2026-08-25）</a></li><li class="d3"><a href="#内部景别切换跨度不够大就不切---️-降级存疑2026-08-25">内部景别切换：跨度不够大就不切 ⭐⭐ → ⚠️ 降级存疑（2026-08-25）</a></li><li class="d3"><a href="#反复强调同机位保持连贯会压掉你要的切换---️-降级存疑2026-08-25">反复强调「同机位／保持连贯」会压掉你要的切换 ⭐⭐ → ⚠️ 降级存疑（2026-08-25）</a></li><li class="d3"><a href="#直连侧的多镜头样本按时间表写的镜头都切出来了还会自己多加一镜-️2026-09-26">直连侧的多镜头样本：按时间表写的镜头都切出来了，还会自己多加一镜 ⚠️（2026-09-26）</a></li><li class="d2"><a href="#二画面内文字判据是字号不是字数">二、画面内文字：判据是字号，不是字数 ⭐⭐⭐</a></li><li class="d3"><a href="#一次性解错然后稳定保持那个错误">一次性解错，然后稳定保持那个错误 ⭐⭐</a></li><li class="d3"><a href="#原生比后期更协调反直觉但有实证️--2026-09-18-二次验证">原生比后期更协调（反直觉，但有实证）⚠️ → ⭐⭐（2026-09-18 二次验证）</a></li><li class="d3"><a href="#一个结构性死局要认出来-️">一个结构性死局要认出来 ⚠️</a></li><li class="d3"><a href="#有台词就可能自己烧一条中文字幕进画面-️2026-09-18">有台词就可能自己烧一条中文字幕进画面 ⚠️（2026-09-18）</a></li><li class="d2"><a href="#三运镜要劝退的是性质不是长度或有无">三、运镜：要劝退的是性质，不是长度或有无</a></li><li class="d3"><a href="#构图不变量锁得住位置锁不住幅度">构图不变量锁得住位置，锁不住幅度 ⭐⭐</a></li><li class="d3"><a href="#空间关系是一张网-️">空间关系是一张网 ⚠️</a></li><li class="d3"><a href="#从脚跟到脸的上移会在胸前停一下-️2026-09-26">从脚跟到脸的上移，会在胸前停一下 ⚠️（2026-09-26）</a></li><li class="d2"><a href="#四参考图与文字的优先级">四、参考图与文字的优先级</a></li><li class="d3"><a href="#参考图里有的东西prompt-与负面词都压不住">参考图里有的东西，prompt 与负面词都压不住 ⭐⭐⭐</a></li><li class="d3"><a href="#镜头景别和身份图一样时模型会把身份图整张复现连画种一起-️2026-09-26">镜头景别和身份图一样时，模型会把身份图整张复现，连画种一起 ⚠️（2026-09-26）</a></li><li class="d3"><a href="#没有服装参考图时服装文字锁输给模型的默认造型-️2026-09-26">没有服装参考图时，服装文字锁输给模型的默认造型 ⚠️（2026-09-26）</a></li><li class="d3"><a href="#但冲突属性上文字赢过参考图">但冲突属性上，文字赢过参考图 ⭐⭐</a></li><li class="d3"><a href="#参考图脏了视频就脏gpt-多轮派生图会把噪点交给视频-️2026-09-20">参考图脏了，视频就脏：GPT 多轮派生图会把噪点交给视频 ⚠️（2026-09-20）</a></li><li class="d3"><a href="#小尺度下的面部重建需要专门的面部锚点">小尺度下的面部重建需要专门的面部锚点 ⭐⭐</a></li><li class="d3"><a href="#比喻里的实物情绪的生理描写会被画成实物-️2026-10-05">比喻里的实物、情绪的生理描写，会被画成实物 ⚠️（2026-10-05）</a></li><li class="d2"><a href="#五否定句的用法分界线清楚">五、否定句的用法（分界线清楚）</a></li><li class="d3"><a href="#️-管线特性不是模型特性">⚠️ 管线特性（不是模型特性）</a></li><li class="d2"><a href="#六控人数与群体">六、控人数与群体</a></li><li class="d2"><a href="#七其他实测数据">七、其他实测数据</a></li><li class="d2"><a href="#八自主配乐enablesoundon">八、自主配乐（enableSound=on）</a></li><li class="d3"><a href="#事件卡点跟得上提示词硬切要单独写一句才贴拍-️首次2026-09-26">事件卡点跟得上提示词；硬切要单独写一句才贴拍 ⚠️首次（2026-09-26）</a></li><li class="d3"><a href="#同期对白两人-8-句写进一条逐字一致时间跟得上-️首次2026-09-29--2026-10-01-二次验证">同期对白：两人 8 句写进一条，逐字一致、时间跟得上 ⚠️首次（2026-09-29） → ⭐⭐（2026-10-01 二次验证）</a></li><li class="d3"><a href="#写了没有配乐仍会按镜头各垫一段乐音跨切点不连贯-️首次2026-10-01">写了”没有配乐”，仍会按镜头各垫一段乐音，跨切点不连贯 ⚠️首次（2026-10-01）</a></li><li class="d3"><a href="#写清配乐跟着画面怎么起落跨切点就连贯-️首次2026-10-01">写清配乐跟着画面怎么起落，跨切点就连贯 ⚠️首次（2026-10-01）</a></li><li class="d2"><a href="#验证等级说明">验证等级说明</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="seedance-25-行为规律">Seedance 2.5 行为规律</h1>
+<blockquote>
+<p><strong>数据来源</strong>：主体为《1000人后室大逃亡》项目 2026-08-05 ～ 08-08 的实测，
+原始记录在 <code>E:\backrooms-1000\production\README.md</code>（第一～第十一条）与 <code>production/prompts/</code>。
+两条入口都跑过 Seedance 2.5：<strong>Flova</strong>（自然语言 + 上传参考图）与
+<strong>Dreamina CLI</strong>（<code>multimodal2video</code>）。下文标注了哪些结论是管线特性、哪些是模型特性。</p>
+<p><strong>2026-08-25 补充来源</strong>：65_过风 项目，<strong>LibTV CLI 直连 <code>star-video2.5</code></strong>（不经 Flova / 即梦）。
+这是本档第一次拿到<strong>不经任何编排层</strong>的样本，因此也是第一次能把「模型行为」与「管线行为」分开——
+第一节有一条据此作废、两条据此降级。</p>
+<p><strong>2026-09-26 补充来源</strong>：76_清月 项目，<strong>LibTV Remote MCP</strong> 调 <code>star-video2.5</code>（image2video 多图参考，9:16 / 720p / 15s，三条试镜 r1–r3）。
+第一次拿到直连侧的<strong>多镜头</strong>样本与<strong>自主配乐</strong>（<code>enableSound=on</code>）样本；见第一、三、四节带日期的条目与第八节。</p>
+<p><strong>2026-10-01 补充来源</strong>：71_余温 见证者角色 PV，<strong>即梦画布 CLI 国际版</strong>全能参考（白模视频 + MJ 原图，16:9 / 720p / 30s，瑟兰薇、守灯人各 2 条）。
+第一次拿到”写了没有配乐”与”写了配乐起落”的两种声音样本；见第七节两行与第八节两条带日期的条目。</p>
+<p>⚠️ 本档案记录的是<strong>模型行为</strong>。怎么写 prompt 的完整规范在项目仓库，不在这里重复。</p>
+</blockquote>
+<h2 id="一结构性行为">一、结构性行为</h2>
+<h3 id="长视频内部按约-6-秒自动分段--已作废2026-08-25"><del>长视频内部按约 6 秒自动分段</del> 🔴 已作废（2026-08-25）</h3>
+<p><strong>这条不是 Seedance 2.5 的模型行为，不该留在本档。</strong></p>
+<p>原记录（2026-08-08，Flova 侧观察）：25 秒长镜切点落在 6.00 / 12.00 / 18.00 秒帧级精确，
+判为「模型内部的生成分段，prompt 层完全触及不到」，标 ⭐⭐。
+<strong>归因越位</strong>——<a href="/above-the-web/flova-v1-a30ae63/" class="wikilink">Flova_平台档案_编排层不是模型层_v1</a> 第六节当时就把这次观察挂成了
+「三臂对照已设计、实际生成 0 次、<strong>结论待回填</strong>」，归因没做完，结论已经先落进模型层档案。</p>
+<p><strong>推翻它的实测（65_过风 项目，2026-08-25）</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>路线</td><td>LibTV CLI 直连 <code>star-video2.5</code>，不经 Flova</td></tr><tr><td>参数</td><td><code>image2video</code> / 9:16 / 1080p / <strong>duration=30</strong> / 单条</td></tr><tr><td>硬切检测</td><td><code>ffmpeg select='gt(scene,0.3)'</code> → <strong>输出为空，0 处切点</strong></td></tr><tr><td>逐秒亮度</td><td>143.9 → 117.9，<strong>单调平滑，无跳变</strong>（下降是推近导致主体占比上升，不是切点）</td></tr></tbody></table>
+<p>→ <strong>Seedance 2.5 单条 30 秒不分段。</strong> 6 / 12 / 18 / 24s 一个切点都没有。</p>
+<p>⚠️ <strong>但 Flova 那次分段的根因仍未定案</strong>，本次数据区分不了这两个解释：</p>
+<ol>
+<li><strong>Flova 编排层自己切的</strong>（主创当前判断）</li>
+<li><strong>Flova 上游是 Seedance 2.0</strong>，而 2.0 系时长上限 4–15s，<strong>25 秒的请求必须被拆</strong>
+—— 这个反解释是 Flova 档第六节自己写下的，并指出它「恰好是判据 1 预测的那种误判」</li>
+</ol>
+<p>本次只跑了直连臂（LibTV 代替即梦 CLI），<strong>没有回 Flova 重跑</strong>，所以两个解释都还站着。
+同日的一个旁证偏向要认真对待解释 2：<a href="/above-the-web/minimaxh3-v1-29d13d7/" class="wikilink">MiniMaxH3_行为规律_v1</a> §四 新补的实测显示，
+H3 在 LibTV 上卡 15s <strong>不是平台限速、是 362 帧的训练边界</strong>——
+「上限来自模型不来自平台」这件事今天刚独立发生过一次。</p>
+<p><strong>当前可用的口径</strong>：</p>
+<ul>
+<li>✅ 可以说：<strong>Seedance 2.5 直连单条 30s 不分段</strong>，不要再按 6 秒节拍去设计长镜。</li>
+<li>❌ 不要说：「6 秒分段是 Flova 的问题」——这一半还没测。</li>
+<li>待补的一臂：在 Flova 上跑一条 <strong>15 秒以内</strong>的镜头看它切不切。切 → 解释 1；不切 → 解释 2。</li>
+</ul>
+<h3 id="内部景别切换跨度不够大就不切---️-降级存疑2026-08-25">内部景别切换：跨度不够大就不切 <del>⭐⭐</del> → ⚠️ 降级存疑（2026-08-25）</h3>
+<ul>
+<li>✅ 切成功：微距↔中景、特写→反应镜头→中景（<strong>换主体</strong>：人↔物、主角↔围观者）</li>
+<li>❌ 切失败：同场景内的中景→特写，连续两次、反复强调都没切</li>
+</ul>
+<p>⚠️ <strong>连带降级</strong>：这条与上面那条<strong>同一台仪器（Flova）、同一批观察</strong>得出。
+上面那条已确认不是模型行为，本条的层级归属因此一并存疑——
+观察到的「切/不切」可能同样是编排层的行为。<strong>在直连侧复跑之前不要当模型规律用。</strong></p>
+<h3 id="反复强调同机位保持连贯会压掉你要的切换---️-降级存疑2026-08-25">反复强调「同机位／保持连贯」会压掉你要的切换 <del>⭐⭐</del> → ⚠️ 降级存疑（2026-08-25）</h3>
+<p>某版 prompt 强调四遍同机位，结果 8 秒全程一个机位没切。
+要切换就把段落写简洁、切点写明确，<strong>别同时写连贯性要求</strong>。</p>
+<p>⚠️ <strong>同上，同批仪器，一并存疑。</strong> 附一个反向数据点：65_过风 的直连 30s prompt 里
+写了「整支片子只有一个镜头」「从头到尾保持同一个速度」这类连贯性要求，
+出片确实零切点——但该片本来就<strong>不要求</strong>任何切换，所以这不构成对本条的检验，只是不矛盾。</p>
+<h3 id="直连侧的多镜头样本按时间表写的镜头都切出来了还会自己多加一镜-️2026-09-26">直连侧的多镜头样本：按时间表写的镜头都切出来了，还会自己多加一镜 ⚠️（2026-09-26）</h3>
+<p>76_清月 r1：一条 15 秒，提示词按秒写了 6 个镜头（切点 2.0 / 4.5 / 6.0 / 8.5 / 11.5），无音频、无白模。</p>
+<ul>
+<li>6 镜<strong>全部切出、顺序对</strong>；第 2 镜比计划长约 0.7 秒。</li>
+<li>模型<strong>自己多加了一镜</strong>（7.0 秒一个云海空镜全景），15 秒里实际 7 段。</li>
+<li>写了”衣袖扫过镜头”，模型顺手把它做成<strong>遮挡叠化转场</strong>接下一场景。</li>
+<li>r2 / r3 同样写法、各 6～7 处硬切，镜头都在；r2 两个场景（月夜 → 竹林）作者判”没有衔接”，r3 改单场景。</li>
+</ul>
+<p>这是本档第一条”直连 + 多镜头”数据，与上面两条存疑的”切/不切”规律<strong>不构成对照</strong>（镜头跨度都大：大特写 ↔ 全景）。
+能说的只有：直连 Seedance 2.5 会执行提示词里的时间表切镜，且不保证镜数。</p>
+<hr>
+<h2 id="二画面内文字判据是字号不是字数">二、画面内文字：判据是<strong>字号</strong>，不是字数 ⭐⭐⭐</h2>
+<p>原来的口径「AI 生成的文字几乎必崩」和后来的「长中文必崩」<strong>都被实测推翻</strong>。
+把六个样本的笔画外接高度量出来之后，规律是干净的（全部按 1280×720 成片测）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>字高</th><th>占画幅高</th><th>判定</th></tr></thead><tbody><tr><td><strong>≥45px</strong></td><td>≥6.0%</td><td>✅ 大胆原生出，长中文一样一字不差</td></tr><tr><td>约 20px</td><td>约 2.8%</td><td>⚠️ 临界区，先出一条验</td></tr><tr><td><strong>≤20px</strong></td><td>≤2.8%</td><td>🔴 一律后期叠加，写什么都会崩</td></tr></tbody></table>
+<p><strong>关键实证</strong>：</p>
+<ul>
+<li>同一行 10 字中文、同一块资产图，只把铭牌在画面里放大约 2.5 倍 → 从错 4 字变成一字不差。
+而且放大那一版<strong>还多了一个推近运镜</strong>，按老规则应该更糟，结果反而对了。</li>
+<li>广角 + 有纵深 + 同屏七处文字 + 含电话号码 <code>138-8888-8888</code> → <strong>一处没崩</strong>。</li>
+<li>最小的失败样本：英文 <strong>6px（0.83%）</strong>、中文 <strong>16px（2.22%）</strong> → 英文丢字母、中文糊成一团。</li>
+</ul>
+<p><strong>推论</strong>：字数看起来像原因，是因为<strong>铭牌宽度固定——字多了每个字就小</strong>。
+要问的不是「几个字」，而是「<strong>这个字在成片里有多少像素高</strong>」。</p>
+<h3 id="一次性解错然后稳定保持那个错误">一次性解错，然后稳定保持那个错误 ⭐⭐</h3>
+<p>错字在相隔 3.3 秒的两帧之间<strong>一模一样、没有变形</strong>。
+说明它不是逐帧抖动，而是一开始就把字形解错、之后忠实复现。
+→ <strong>抽两帧对照就能判</strong>，不用逐帧看。</p>
+<h3 id="原生比后期更协调反直觉但有实证️--2026-09-18-二次验证">原生比后期更协调（反直觉，但有实证）<del>⚠️</del> → ⭐⭐（2026-09-18 二次验证）</h3>
+<p>原生出来的字自带四件事：半透明（背景从字后透出）、和载体同一种辉光、
+跟着载体斜面走透视、载体明暗变化时字跟着亮暗。
+这四件后期都能做，但<strong>每一件都要单独对齐一次</strong>。</p>
+<p><strong>二次验证（《余温》宣发片 2026-09-18）</strong>：同一个动作——“字迹在一张空白羊皮纸上出现”——做了三版：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>版本</th><th>做法</th><th>作者判断</th></tr></thead><tbody><tr><td>v2</td><td>整帧交叉叠化（空白信纸溶到带字信纸）</td><td>否。“像是字从上面浮出来的，质感不对”</td></tr><tr><td>v3</td><td>本地只合成墨层，按文字基线逐行扫出，带洇散噪声、笔速控制</td><td>否。“完全错误的，看起来太廉价了”</td></tr><tr><td>v4</td><td>交给 Seedance 2.5 生成同样 8 秒</td><td>过</td></tr></tbody></table>
+<p>v3 是把后期能做的都做了（只动墨层像素、逐行落笔、低频噪声扰动落笔时间），<strong>仍然一眼假</strong>。
+→ 口径扩大：<strong>涉及材质变化的动作（墨渗进纸、火漆融化、布料撕裂），优先交给模型生成，不要本地合成。</strong>
+后期留给”不该变的东西”：擦除模型烧录的字幕、补丁、调色、剪辑。</p>
+<p>⚠️ 仍有边界：<strong>文字内容必须精确时，字本身要图像模型出静帧</strong>（视频模型写中文不可靠），
+再让视频模型接管显影动作。本次的分工是「GPT Image 出带字静帧 → Seedance 生成显影」。</p>
+<h3 id="一个结构性死局要认出来-️">一个结构性死局要认出来 ⚠️</h3>
+<p>如果镜头的运镜是「推到某个 logo 占满画面」，那么<strong>等字够大的时候铭牌已经被推出画外</strong>——
+<strong>不存在「又在画内又够大」的窗口</strong>。遇到这种镜头不要反复试，直接做成空白板 + 后期叠字。</p>
+<hr>
+<h3 id="有台词就可能自己烧一条中文字幕进画面-️2026-09-18">有台词就可能自己烧一条中文字幕进画面 ⚠️（2026-09-18）</h3>
+<p>prompt 里写了”画面无文字、分格或水印”<strong>也没挡住</strong>：一句中文台词被模型同时生成了语音和
+一条白色硬字幕，烧在画面底部（实测 10.50–12.55 秒、x740–1412、y988–1052，硬出硬收，位置固定）。
+→ <strong>交付前必须逐帧扫一遍画面上的意外文字</strong>。补救不用模糊：取同一镜头里字幕出现前的干净帧，
+按羽化遮罩贴回去（遮罩要放大到让羽化带落在字的外面，否则首尾两个字会从边缘透出来）。
+→ 2026-09-29 反向样本：77 M04 两人 8 句对白，抽帧没见到硬字幕（没逐帧扫），见第八节”同期对白”。</p>
+<hr>
+<h2 id="三运镜要劝退的是性质不是长度或有无">三、运镜：要劝退的是<strong>性质</strong>，不是长度或有无</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>安全</th><th>劝退</th></tr></thead><tbody><tr><td>匀速轨道式跟拍 · 匀速弧线环绕 · 匀速缓推 · 匀速垂直升起 · 穿越机匀速穿行</td><td>甩镜 · 快推 · 手持抖动 · 中途变速</td></tr></tbody></table>
+<p>长镜运动的安全区<strong>实测至少 25 秒</strong>。原来「连续长镜运动劝退」那条太粗。</p>
+<h3 id="构图不变量锁得住位置锁不住幅度">构图不变量锁得住位置，锁不住幅度 ⭐⭐</h3>
+<p>写「主体在画框哪个位置」能生效；<strong>不约束推进的量</strong>。
+模型把「匀速推到底」当主目标、不变量当软约束，冲突时先满足前者——
+于是一路推到主体填满画框，位置关系全对、景别全丢。</p>
+<p>按起手景别完全分成两组（同批 6 条，无例外）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>起手景别</th><th>不变量结果</th></tr></thead><tbody><tr><td>全景 / 大远景</td><td>✅ 全部成立</td></tr><tr><td>中近景 / 近景</td><td>❌ 全破，主体被切出画框</td></tr></tbody></table>
+<p><strong>写法</strong>：</p>
+<ol>
+<li>不变量除了「主体在哪」，要写「<strong>全程还要看得见什么</strong>」，列到边缘物件。</li>
+<li>给幅度显式上限并明说宁可推少：「如果再推这条就要破了，就在破之前停下。」</li>
+</ol>
+<p>⚠️ 三条失败同批次发生，不算独立样本；修复句只验证过一次。</p>
+<blockquote>
+<p><strong>2026-08-25 补第二组数据（65_过风 项目，LibTV 直连 Seedance 2.5，30s / 1080p / 中近景起手）</strong>：
+上面那两条「写法」全部照做了——列了三件必须全程可见的边缘物件（头顶发际线 / 两侧肩线 / 珍珠最下面那串），
+也写了「如果再推近就要把头顶或肩线推出画外，就在那之前停下——宁可推得少一点」。结果：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>不变量</th><th>29s 时</th></tr></thead><tbody><tr><td>整个头顶发际线</td><td>❌ 已推出画外</td></tr><tr><td>两侧肩线</td><td>✅ 守住</td></tr><tr><td>珍珠最下面那一串</td><td>✅ 守住</td></tr></tbody></table>
+<p><strong>从「全破」改善到「破一项」——写法有效，但锁不死。</strong> 中近景起手这一组的判定维持 ❌，不升级。
+<strong>想彻底守住只有一条路：机位锁死。</strong> 同项目的 MiniMax H3 版写「机位从第一帧到最后一帧一模一样」，
+15s 全程零位移（逐秒亮度 145.5→142.6 波动 ±2；对照组 Seedance 推近版是 143.9→117.9 单调降）。
+→ 凡是<strong>中近景起手且构图不可牺牲</strong>的镜头，不要用「限幅」，直接放弃运镜。</p>
+</blockquote>
+<h3 id="空间关系是一张网-️">空间关系是一张网 ⚠️</h3>
+<p>改了主体的运动方向，「谁在谁身后」「摄影机在哪一侧」「威胁从哪来」全都要重算。
+实测事故：改了奔跑方向却留着「怪物从画面深处涌出」，变成主体朝威胁来的方向跑。</p>
+<p><strong>写法</strong>：追逐／进出画／正反打的镜头，**先单写一段【空间关系】**把
+摄影机／主体／威胁三者钉死，再写动作。</p>
+<h3 id="从脚跟到脸的上移会在胸前停一下-️2026-09-26">从脚跟到脸的上移，会在胸前停一下 ⚠️（2026-09-26）</h3>
+<p>76_清月 要一镜”镜头从赤足跟随、自下而上直到面部特写”（约 2 秒到 6 秒）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>轮</th><th>路线写法</th><th>结果</th></tr></thead><tbody><tr><td>r2</td><td>”依次经过……胸前”（写了胸前这一站）</td><td>上移成立、不切；<strong>4.0–4.5 秒停在胸部近景</strong></td></tr><tr><td>r3</td><td>删掉胸前一站，改”赤足 → 袍摆 → 握杖的手 → 下颌 → 脸，经过上身时镜头不停留”</td><td>上移成立；<strong>仍在 3.5 秒胸部、4.0 秒领口各停一下</strong></td></tr></tbody></table>
+<ul>
+<li>r2 的停留有助手措辞的责任（写了”胸前”就被当成落点）；但 r3 去掉落点、加了”不停留”也没消掉，
+说明这是模型对”全身上移”这个运镜的默认节奏，不全是措辞问题。</li>
+<li>同一项目两条，不是独立样本。</li>
+<li>没验证的修法：不要一镜到底，拆成”脚部 → 硬切 → 脸”两个镜头。</li>
+</ul>
+<hr>
+<h2 id="四参考图与文字的优先级">四、参考图与文字的优先级</h2>
+<h3 id="参考图里有的东西prompt-与负面词都压不住">参考图里有的东西，prompt 与负面词都压不住 ⭐⭐⭐</h3>
+<p>模型会忠实复现参考图。对策是<strong>换图／裁图／不挂图</strong>，不是加负面词。
+反过来也成立：<strong>图干净了，生成就干净。</strong></p>
+<blockquote>
+<p><strong>2026-09-26「裁图」一例（76_清月）</strong>：身份图 A01 露肩。进视频前本地无损裁到只剩头部（只裁不改像素），
+三轮试镜都没出现 A01 那种露肩。服装候选图 A04 领口垂着黑发，<strong>干脆不挂</strong>，三轮银发也没被带黑。</p>
+</blockquote>
+<h3 id="镜头景别和身份图一样时模型会把身份图整张复现连画种一起-️2026-09-26">镜头景别和身份图一样时，模型会把身份图整张复现，连画种一起 ⚠️（2026-09-26）</h3>
+<p>76_清月 身份图 A01 是 MJ 出的<strong>写实摄影感</strong>近景（挂了 <code>--profile</code> 尾巴，见 <a href="/above-the-web/mj-v8-2-v1-4cf28a0/" class="wikilink">MJ_v8.2_行为档案_v1</a> 第 14 条），
+视频整体却是<strong>国漫 3D CG</strong> 质感，A01 的照片感没带进来。唯一的例外是结尾”低头侧脸近景”：
+r2、r3 两条的 12–15 秒都<strong>几乎就是 A01 的构图和雾化照片质感</strong>，和前面的 CG 段接不上。</p>
+<ul>
+<li>推测：镜头景别 / 角度与身份图一致时，模型倾向直接复现那张图，而不只取身份。</li>
+<li>作者两次都判”还好”、保留，所以没有验证修法。r2 时记下的候选修法：收尾换一个与身份图不同的机位（如侧后方回眸）。</li>
+</ul>
+<h3 id="没有服装参考图时服装文字锁输给模型的默认造型-️2026-09-26">没有服装参考图时，服装文字锁输给模型的默认造型 ⚠️（2026-09-26）</h3>
+<p>76_清月 三轮都没挂服装图，服装全写文字（高立领扣到下颌下方、双臂被广袖盖住、袍身完整不开衩）：</p>
+<ul>
+<li>r1 大体守住（双肩被肩甲盖住、高领广袖都在），只有袍摆没盖住脚（作者判”赤脚是加分项”，回写角色卡）。</li>
+<li>r2 改成低机位仰拍、足到脸上移后：高领丢、双肩外露、裙摆高开衩。</li>
+<li>r3 把三条服装锁<strong>重新写明</strong>：仍是手臂只罩薄纱、腿部透纱、8.0 秒高开衩。</li>
+</ul>
+<p>→ 与本节首条同一个方向的另一面：<strong>参考图里没有的东西，文字也未必锁得住</strong>，模型对这类仙侠服装有稳定的默认落点。
+修法（挂服装资产图）没跑——作者裁定”衣服不用管了”。本节第二条”冲突属性上文字赢过参考图”讲的是全画面级<strong>删除</strong>禁令，与这里的<strong>构造性</strong>服装细节不是一回事。</p>
+<h3 id="但冲突属性上文字赢过参考图">但冲突属性上，<strong>文字赢过参考图</strong> ⭐⭐</h3>
+<p>一句全画面级禁令（「画面里不要出现任何文字或商标」）
+会<strong>把资产图上的贴纸／招牌／标识全铲干净</strong>，即使挂的是带标识的原图。</p>
+<p>实证：某辆标志性摩托的整套贴纸就是它的辨识度，删掉那句禁令 + 换回带贴纸原图，
+一次就对，连中文字都一字不差。</p>
+<p><strong>落地</strong>：不写全画面级禁令。只针对具体那一处写，且用<strong>肯定式描述期望状态</strong>。
+资产图上本来就有的标识，要在镜头内容里<strong>正面点名要求出现</strong>，
+并注明「字母生成得不精确也没关系，有比准更重要」。</p>
+<h3 id="参考图脏了视频就脏gpt-多轮派生图会把噪点交给视频-️2026-09-20">参考图脏了，视频就脏：GPT 多轮派生图会把噪点交给视频 ⚠️（2026-09-20）</h3>
+<p>《余温》M02 四条 25 秒试镜逐变量对照（提示词逐字不变）：站位锚点与身份图走 GPT Image 四五代派生链时作者判”画面很脏”；
+只换锚点（改用视频自身抽帧）没变化，<strong>换身份图为 MJ 原图后作者判”不脏了，只是分辨率低”</strong>。
+本节首条”参考图里有的东西压不住”的另一面——图上的噪点也压不住。
+落地：身份图只用 MJ 原图或一代定妆；锚点用视频抽帧或 Blender 白模；姿势规则写文字。
+见 <a href="/above-the-web/v1-c5fded6/" class="wikilink">派生图不进视频输入律_噪点随编辑代数累积_v1</a>。</p>
+<h3 id="小尺度下的面部重建需要专门的面部锚点">小尺度下的面部重建需要专门的面部锚点 ⭐⭐</h3>
+<p>上一镜的尾帧<strong>管不住脸</strong>。尾帧是一张脸高约 250px 的大特写，
+下一镜里主体在奔跑、脸小又在动 → <strong>一步崩成另一个人</strong>（年龄感差 15 岁），
+不是渐进漂移。</p>
+<p><strong>落地</strong>：凡有锚点角色出镜，角色资产图一律挂上，不管上一镜尾帧多清楚；
+同时用文字写死年龄段／脸型／脸颊／下颌线／法令纹有无／眉形／发量，
+并补一句动态约束「他在奔跑／大喊／侧身躲闪时也必须还是同一张脸」。</p>
+<h3 id="比喻里的实物情绪的生理描写会被画成实物-️2026-10-05">比喻里的实物、情绪的生理描写，会被画成实物 ⚠️（2026-10-05）</h3>
+<ul>
+<li>“一小团暖光——像一捧没有烛台的烛火”：段1 r1 两条都画出了<strong>带蜡身的蜡烛</strong>。
+<ul>
+<li>r2 改成”不是蜡烛：没有蜡身、烛芯、烛台……一团拳头大小、边缘柔软的暖光，悬空飘在合拢的掌心上方”，两条就都是悬空的光团了。</li>
+<li>这正是第五节说的写法：对照式反例，加正面的物理描述。</li>
+</ul>
+</li>
+<li>“眼眶发红，但声音没有抖”：段3 r1 两条都画成了<strong>红色虹膜</strong>，其中一条是发光的红瞳。
+<ul>
+<li>r2 改成”眼睛湿了，但没有哭”，再锁一句”眼睛始终灰蓝色，不要红眼、红色虹膜”，两条眼睛都恢复正常。</li>
+</ul>
+</li>
+<li>写法：不拿实物打比方，直接写形态；情绪只写神态，并把颜色锁死。来源 <a href="/above-the-web/2026-10-05-ep03-libtv-v1-5cd4acf/" class="wikilink">2026-10-05_余温_单元剧EP03瓦尔卡_LibTV样片到正片_阶段复盘_v1</a></li>
+</ul>
+<hr>
+<h2 id="五否定句的用法分界线清楚">五、否定句的用法（分界线清楚）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>写法</th><th>判定</th></tr></thead><tbody><tr><td>✅ 肯定式定量 + 站位（「画面里只有两名围观的男大学生并排站着」）</td><td>有效</td></tr><tr><td>✅ 收尾否定但<strong>不点名新实体</strong>（「除这两人外画面里没有别人」）</td><td>有效</td></tr><tr><td>✅ <strong>对照式反例</strong>，用来封住已知的漂移方向（「不要做成方下颌的中年男人」）</td><td>有效</td></tr><tr><td>❌ <strong>列举不想要的元素</strong>（「没有标题栏、没有侧栏、没有输入框…」13 个否定）</td><td>五版全崩</td></tr><tr><td>🔴 <strong>点名高先验实体去否定它</strong>（「不要孙悟空」）</td><td>最糟，等于凭空引入</td></tr></tbody></table>
+<p><strong>「肯定式锁定句」已三次验证有效</strong> ⭐⭐⭐。要点是<strong>给出正面的物理解释</strong>——
+「刚拆封、还没进过打印机的空白复印纸」比单说「空白的」有效，
+模型需要一个理由去渲染空白。</p>
+<h3 id="️-管线特性不是模型特性">⚠️ 管线特性（不是模型特性）</h3>
+<p><strong>Dreamina 的 <code>multimodal2video</code> 没有 negative prompt 通道</strong>，
+flag 里只有一根 <code>--prompt</code>。所以「加负面词排除 X」落地就是把 X 拼进正向 prompt。
+Flova 走自然语言，这条不适用；但 Flova <strong>会自动追加负面提示词</strong>，
+归档要存追加后的完整原文。</p>
+<hr>
+<h2 id="六控人数与群体">六、控人数与群体</h2>
+<ul>
+<li>必须给<strong>具体数字和站位</strong>（「左边一个右边一个」「只有三个远小剪影」）。</li>
+<li>写「密集但看不清脸」这类形容词<strong>无效</strong>——实测背景冒出几十个人做整齐划一的动作。</li>
+<li>同框人物 ≤3 且优先剪影／背影／远景／局部。</li>
+<li>大规模人群可行的唯一写法是<strong>重运动模糊 + 高速穿行</strong>，让五官根本无法解析。</li>
+</ul>
+<hr>
+<h2 id="七其他实测数据">七、其他实测数据</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>Flova 直出</td><td><strong>CFR 24</strong>，1280×720</td></tr><tr><td>Dreamina 直出</td><td><strong>VFR</strong>（标称 <code>60/1</code>，实际平均 24.03–24.15）→ 进时间线前要转 CFR</td></tr><tr><td>积分消耗</td><td>720p 实测约 <strong>59 分/秒</strong>；<strong>1080p 实测 65–70 分/秒</strong>（同账号同日：30s 2060、25s 1698、14s 896、8s 512）。分辨率不同要分开记</td></tr><tr><td>积分消耗（即梦 CLI，2026-09-18～20）</td><td><strong>720p 实测 20 分/秒</strong>：<code>multimodal2video</code> seedance2.5 25s 六次都是 500 分（含 9/18 补拍 5s＝100）。与上一行的”720p 约 59 分/秒”来源不同（那行来自 Flova/后室时期），按管线分开记</td></tr><tr><td>参考输入上限（seedance2.5）</td><td>图 ≤30、视频 ≤10、音频 ≤10，合计 ≤50；每段及合计视频/音频时长 2–30s；输出 4–30s；<code>--image</code> 顺序即 @ImageN 编号</td></tr><tr><td>镜头结构控制（官方）</td><td>四种，控制力由低到高：<strong>首尾帧 &#x3C; 多关键帧序列 &#x3C; 分镜网格 &#x3C; 3D 白模</strong>。白模视频当参考只取运镜、节奏、景别、轨迹、站位，材质/光/人物自己渲；灰色人形要在提示词里按名对应角色。多关键帧控的是”阶段顺序”不是逐帧复现——实测 25s 里后半段锚点晚到 2–3 秒</td></tr><tr><td>白模切点（2026-10-01）</td><td>30s 6 镜白模，<strong>4 条输出 × 5 个切点全部对上（偏差 ≤0.03 秒），没有多加镜头</strong>（对照：不挂白模、只写时间表时，第一节记过模型会自己多加一镜）。白模里的几何体在”参考分工”里写明对应什么，就会被读成道具与动作：竖杆＝弓、横杆＝箭、举到眼高＝拉满、脸前小竖条＝竖在唇前的食指；镂空框里的白块缩小＝灯火变暗；门洞里出现深色板＝雾退开露出黑暗。来源 <a href="/above-the-web/2026-10-01-pv-v1-1ddae81/" class="wikilink">2026-10-01_余温_见证者角色PV_立项到四平台发布_复盘_v1</a></td></tr><tr><td>局部重绘</td><td>❌ CLI 没有涂抹式局部编辑。<code>multimodal2video --video</code> 是”拿旧视频当参考重新生成”，不是”只改这一块”。要省积分靠<a href="/above-the-web/v1-5ee9070/" class="wikilink">按切点重拍_省的是生成时长_v1</a></td></tr><tr><td>首尾帧 vs 全能参考＋关键帧</td><td>同一需求（空白信纸→带字信纸，8 秒）两条路都跑通、字都逐行显影。<code>frames2video</code> 首帧与原片末帧差 <strong>2.3</strong>（可直切）；<code>multimodal2video</code> 两张关键帧那版整幅偏约 17 像素、差 <strong>19.6</strong>（要 0.15 秒叠化吸收）。作者侧反馈偏好全能参考</td></tr><tr><td>跨镜道具</td><td>没有专属参考图的道具，<strong>每一镜会被重新想象一次</strong>（实测：同一封信的蜡封在四镜里出现三种状态）。见<a href="/above-the-web/v1-ad701a9/" class="wikilink">跨镜道具锁定律_资产图优于形容词_v1</a></td></tr><tr><td>中文台词 + audio tags</td><td>✅ 零泄漏（3 音色 × 4 组 = 12 次）；<code>stability: creative</code> 下 tag 响应最强</td></tr><tr><td>视频模型自带 TTS</td><td>⚠️ <strong>只当占位</strong>。读音错了不要在视频模型里反复调——改一段读音要求会引起画面退化（实测背景人群退化成扁平卡通矢量小人）。台词走 Eleven v3。<strong>2026-09-29 反例</strong>：闲聊语气、无读音难点的两人对白一次就能用，进了成片，见第八节”同期对白”</td></tr><tr><td>积分消耗（即梦画布 CLI 国际版，2026-10-01）</td><td>全能参考（5–7 张图 + 1 条白模视频）720p 30s <strong>每条 960 分（32 分/秒）</strong>，count 2 报价 1920，4 条实扣都是 960。比上一行即梦 CLI 的 20 分/秒高；那条通道挂白模视频参考时是 25s 600 分（24 分/秒，71_余温 9/21 试镜），也解释不了全部差价。两者不是同一条通道（这次是画布 CLI 国际版、另一个账号），按通道分开记</td></tr><tr><td>”AI”角标（即梦画布国际版，2026-10-01）</td><td>输出左上角的”AI”角标<strong>由账号设置控制</strong>：dreamina 设置里关掉后，同一 resourceId 重新下载就是无角标版，画面其余部分只差重编码。CLI 没有对应参数；提示词写”画面无角标或水印”不起作用</td></tr><tr><td>LibTV Remote MCP 直出（2026-09-26）</td><td><code>generate_video</code> → image2video 多图参考；9:16 / 720p / 15s 实得 720×1280、<strong>CFR 24</strong>、15.04–15.07 秒；<code>enableSound=on</code> 时音轨 AAC 32 kHz 立体声。三条都一次成功，<strong>回执不返回积分消耗</strong>，本轮也没查余额，所以这条通道的单价未知</td></tr><tr><td>LibTV CLI 样片模式（2026-10-05）</td><td>模型 <code>star-video2.5-draft</code>，只出 480P，<strong>每个节点只能 1 条</strong>，30 秒一条约 3–4 分钟出片，4 条并行没问题。输出 854×480、CFR 24、721 帧，音轨 AAC 32 kHz。mixed2video 挂白模视频加 MJ 图，<strong>算价 1,200，实扣 600</strong>：算价把参考视频时长也算进去了，实扣只按成片时长。来源 <a href="/above-the-web/2026-10-05-ep03-libtv-v1-5cd4acf/" class="wikilink">2026-10-05_余温_单元剧EP03瓦尔卡_LibTV样片到正片_阶段复盘_v1</a></td></tr><tr><td>白模切点（LibTV，2026-10-05）</td><td>4 段白模，切点数 5／10／3／5。16 条样片的切点检测没有一处偏差超过 0.04 秒，也没有多加镜头。漏报的都是两边色调接近、没超过检测阈值的切点，画面里切点都在。10 个切点、最短 1 秒一镜的蒙太奇段也照切。<strong>换平台（即梦画布 → LibTV）照样成立</strong></td></tr><tr><td>白模几何会被照画 ⚠️（2026-10-05）</td><td>白模里的光团用立方体，近景特写里光被画成发光方块（段2 r1 两条都是）。改成球以后变成圆形光团。r2 同时也改了提示词，两个因素没拆开。白模道具用和实物同形的几何体</td></tr><tr><td>样片转正片：是同一条 ⚠️（2026-10-05）</td><td>网页”生成正片 1080P”= 普通 <code>star-video2.5</code> 生成，加 <code>draftTaskId</code>。3 条对照：构图、动作、切点、台词时间与样片完全一致，只是清晰度到了 1920×1080（HEVC）。音轨不是原样拷贝，响度 -26.3 → -27.7 LUFS。<strong>算价 6,600，实扣 6,600</strong>，约 20 分钟出片，样片 7 天内有效。CLI 样片要补元数据才有按钮，见 <a href="/above-the-web/libtv-cli-v1-ee5f3b3/" class="wikilink">LibTV_CLI样片转正片_补网页元数据_v1</a></td></tr><tr><td>视频编辑高清重绘（LibTV，2026-10-05）</td><td>videoEdit2video 把 480P 样片的 10 秒片段重绘成 720P：画面几乎逐帧保住了，但<strong>输出 9.708 秒，时长短了 3%</strong>，有台词就会口型错位。算价 1,150，实扣 1,150。要保留样片，走样片转正片，不走这条</td></tr></tbody></table>
+<h2 id="八自主配乐enablesoundon">八、自主配乐（<code>enableSound=on</code>）</h2>
+<h3 id="事件卡点跟得上提示词硬切要单独写一句才贴拍-️首次2026-09-26">事件卡点跟得上提示词；硬切要单独写一句才贴拍 ⚠️首次（2026-09-26）</h3>
+<p>76_清月 r2 起让模型随画面自己配乐：提示词只给风格（古筝、竹笛、无词女声吟唱）和五个卡点事件（电弧重音、抬眼收住、剑阵重拍、衣袖上扬、结尾收束）。
+测量用浏览器 Web Audio 解码算响度包络与起音，画面切点用逐帧亮度差检测；<strong>没有人耳试听</strong>，听感以作者为准。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>r2（只写卡点事件）</th><th>r3（加一句”每一次镜头硬切都正好落在一个鼓点上”）</th></tr></thead><tbody><tr><td>事件卡点</td><td>5 个全对上：电弧重音 0.72 秒 vs 闪光 0.75；抬眼处响度跌到 −37.5 dB；剑阵重拍全片最响；衣袖起音 8.9 vs 遮满 9.0；结尾渐弱</td><td>3 个全对上：抬眼跌到 −33.8 dB；月光斩开云海全片最响；结尾渐弱</td></tr><tr><td>硬切与最近起音的差</td><td>0.58 / 0.23 / 0.45 / 0.1–0.27 秒，一处切点附近没有起音 → <strong>事件对拍、硬切不对拍</strong></td><td>7 处中 <strong>6 处在 0.10–0.22 秒内</strong>，一处 0.41</td></tr></tbody></table>
+<ul>
+<li>峰值 −4.4 / −3.9 dBFS，无削波、无静音段。作者保留 r3 原声进成片，没提歌词或人声问题（是否有词未测）。</li>
+<li><strong>不是单变量对照</strong>：r3 同时去掉了剑阵和竹林场景。那句”硬切落在鼓点上”是最直接的解释，但不能排除画面变简单的影响。</li>
+<li>写法：卡点写成”画面事件 + 声音动作”成对出现；要切点贴拍，另写一句全局要求，不要指望事件卡点顺带把硬切也对上。</li>
+</ul>
+<h3 id="同期对白两人-8-句写进一条逐字一致时间跟得上-️首次2026-09-29--2026-10-01-二次验证">同期对白：两人 8 句写进一条，逐字一致、时间跟得上 <del>⚠️首次（2026-09-29）</del> → ⭐⭐（2026-10-01 二次验证）</h3>
+<p>77《右下角的池塘》M04：LibTV <code>generate_video</code>，image2video（@图片1 身份、@图片2 工位机位），16:9 / 720p / 28 秒 / <code>enableSound=on</code>，一次成功。
+提示词写了两个角色的外形和声音（小满”年轻女声，轻、松弛，带一点没睡醒的笑意，不是播音腔”；朋友”比小满低一点、爽快、随口”），再按秒给出时间表：几秒到几秒、谁说哪一句。</p>
+<ul>
+<li><strong>台词逐字一致</strong>：faster-whisper 转写和提示词的 8 句完全一致，没有漏句、加句。</li>
+<li><strong>时间跟得上</strong>：实测起音和提示词时间表几乎重合（朋友问 2.36–4.50 秒，写的是 2–5 秒；“B站上就能玩，你也养一个呗”24.48–26.24 秒，写的是 24–28 秒）。</li>
+<li><strong>音色一致</strong>：两个人的声音在一条生成里前后一致。所以多句台词要合在一条里生成，剪辑时再拆（本片拆成开头 0–8.9 秒、结尾 10.5–28 秒两段），不要分句单独生成。</li>
+<li><strong>能进成片</strong>：作者接受了原生对白，直接用于定稿。这比第七节”视频模型自带 TTS 只当占位”要好。区别可能在于本片台词是闲聊语气，没有读音难点，也没反复改读音要求。</li>
+<li><strong>没有自己烧字幕</strong>：提示词写了”画面干净，没有任何文字、字幕或水印”，抽帧没见到硬字幕（没逐帧扫）。第二节”有台词就可能烧字幕”的条目要继续观察。</li>
+<li><strong>光线没照做</strong>：写的是”清晨淡淡的灰蓝天光、顶灯没开”，出来的是窗外城市灯还亮着、台灯开着，更像天快亮的蓝调时刻。</li>
+<li>字幕时间不要直接用 ASR 的词起点，见 <a href="/above-the-web/tts-asr-v1-18cdf62/" class="wikilink">TTS旁白也能蒙眼质检_ASR拼音级评分_v1</a> 的 2026-09-29 新实例。</li>
+</ul>
+<p><strong>→ 2026-10-01 二次验证，升 ⭐⭐</strong>（71_余温 见证者角色 PV，即梦画布 CLI，30 秒一条、只有一句台词）：</p>
+<ul>
+<li>瑟兰薇：提示词写”约 27.8 秒轻声说’嘘。‘，普通话，女声，压低的气声”，两条都在约 26.4–28.1 秒念出，并对着口型。单字气声 ASR 拿不准，以作者听感为准；成片字幕入点用能量包络起音 27.79 秒。</li>
+<li>守灯人：提示词写”约 26.9 秒起说’每过一道门，就要留下一样东西。‘，苍老的男声，低沉、慢”。B 条 26.32–29.80 秒逐字一致；A 条开头咬字不清（被识别成”美国一到门”），<strong>两条里有一条能用</strong>。</li>
+<li>两个项目、三种情形（两人闲聊 8 句、单字气声、一句 13 字长台词）都能用。仍是两个项目，不到铁律。</li>
+</ul>
+<h3 id="写了没有配乐仍会按镜头各垫一段乐音跨切点不连贯-️首次2026-10-01">写了”没有配乐”，仍会按镜头各垫一段乐音，跨切点不连贯 ⚠️首次（2026-10-01）</h3>
+<p>71_余温 瑟兰薇 r1：声音段写死”没有旁白、没有画外音、没有演唱、<strong>没有配乐</strong>”，只列环境声。作者选的 B 条：</p>
+<ul>
+<li>镜 1、4、6 底下有一层约 117/137/196 Hz 的低持续音（像低音弦乐垫底）。</li>
+<li>镜 5（19–24 秒）从 21.6 秒起换成一组降B–C–G 和弦（谱峰 233/261/391/466/521/784 Hz），低频比镜 4、镜 6 空 15–20 dB。</li>
+<li>24.0 秒一切，和弦断掉、低频猛涌回来。<strong>作者听出”23-24s切镜时BGM突然变了，很怪”</strong>。</li>
+<li>原片整体只有 -37.2 LUFS，这层乐音埋在风声里听不出；loudnorm 拉到 -16 LUFS 后才露出来。</li>
+<li>处理：镜 5 换成同一条里镜 6 之后的风声（正放、倒放循环），两头 0.3 秒交叉。</li>
+</ul>
+<p><strong>写法与检查</strong>：</p>
+<ul>
+<li>“没有配乐”挡不住模型垫乐音。真要纯环境声，只能后期换底；或者干脆按下一条写清配乐。</li>
+<li><strong>拉响度之前先看频谱</strong>，逐个对比切点前后的谱峰。响度越低的原片越要查。</li>
+</ul>
+<h3 id="写清配乐跟着画面怎么起落跨切点就连贯-️首次2026-10-01">写清配乐跟着画面怎么起落，跨切点就连贯 ⚠️首次（2026-10-01）</h3>
+<p>71_余温 守灯人 r1（同一系列的第二支）：声音段改成”配乐由你来作”，给方向（冷、克制、低音弦乐或低沉人声吟唱，不要史诗鼓点和铜管），再按画面写起落：</p>
+<ul>
+<li>开头只有风；火矮下去、他睁眼时进一个很低的长音；门洞雾退开时展开；王走过时最满。</li>
+<li>台词前约 26.5 秒退到几乎听不见，说完只留余音。</li>
+</ul>
+<p>B 条实测：一条约 230 Hz 的低持续音从开头贯穿到 26 秒，10 秒切大远景时整体涌起，26.3 秒台词前退下去，<strong>5 个切点都没断</strong>。原片 -28.6 LUFS（A 条 -30.6），比瑟兰薇那条响得多。</p>
+<ul>
+<li><strong>不是对照</strong>：换了角色、场景、台词，只量了 B 条。和上一条对着看，“有没有写清起落”是最直接的解释，但不能排除别的差异。</li>
+<li>写法与第八节第一条一致：起落写成”画面事件 → 音乐动作”成对出现，台词前要单独写一句”退下去”。</li>
+</ul>
+<h2 id="验证等级说明">验证等级说明</h2>
+<p>⭐⭐⭐ = 三次以上跨场景成立，可用于指导决策；
+⭐⭐ = 二次验证；
+⚠️ = 初次发现，<strong>只作为值得继续观察的假设，不能当铁律用</strong>。</p>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-08-08-s45-s48-v1-d4f40a9/" class="wikilink">2026-08-08_后室大逃亡S45-S48_运镜与跨镜一致性返工复盘_v1</a> —— 本档案第三、四节的主要来源</li>
+<li><a href="/above-the-web/2026-08-05-v1-7db25e0/" class="wikilink">2026-08-05_后室大逃亡配音工序_四音色定版复盘_v1</a></li>
+<li><a href="/above-the-web/eleven-v3-v1-d87db20/" class="wikilink">Eleven_v3_行为规律_v1</a></li>
+<li><a href="/above-the-web/kling3-0-v1-8b6096c/" class="wikilink">可灵Kling3_0_行为规律_v1</a></li>
+<li><a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a></li>
+<li><a href="/above-the-web/v1-ad701a9/" class="wikilink">跨镜道具锁定律_资产图优于形容词_v1</a> —— 第四节「参考图 > 文字」在道具上的应用：跨镜道具要资产图，不要形容词</li>
+<li><a href="/above-the-web/v1-5ee9070/" class="wikilink">按切点重拍_省的是生成时长_v1</a> —— 计费按秒、没有局部重绘之后，怎么只重拍出问题的那几秒</li>
+<li><a href="/above-the-web/flova-v1-a30ae63/" class="wikilink">Flova_平台档案_编排层不是模型层_v1</a> —— <strong>编排层的对应档案</strong>。本文只写模型行为，平台能力边界与项目记忆机制看那边</li>
+<li><a href="/above-the-web/2026-08-08-s43-v1-656a72b/" class="wikilink">2026-08-08_后室大逃亡S43长镜头_归因未遂与生死线次序复盘_v1</a> —— 同项目、同日；6 秒自动分段这条的原始归因过程在那边</li>
+<li><a href="/above-the-web/2026-09-20-m02-v1-8100c2c/" class="wikilink">2026-09-20_余温_关键帧先行到锚点制_M02四轮试镜复盘_v1</a> —— 第四节”参考图脏了视频就脏”与第七节 720p 计费、官方四种镜头结构控制的来源</li>
+<li><a href="/above-the-web/v1-dd98c63/" class="wikilink">锚点只给站位律_动作交给视频模型_v1</a> / <a href="/above-the-web/v1-c5fded6/" class="wikilink">派生图不进视频输入律_噪点随编辑代数累积_v1</a> —— 静态参考给什么、从哪来</li>
+<li><a href="/above-the-web/2026-09-29-v1-03d7c00/" class="wikilink">2026-09-29_右下角的池塘_游戏宣传微电影_实录混剪到双语字幕发布_复盘_v1</a> —— 第八节”同期对白”与第七节 TTS 反例的来源</li>
+<li><a href="/above-the-web/2026-10-01-pv-v1-1ddae81/" class="wikilink">2026-10-01_余温_见证者角色PV_立项到四平台发布_复盘_v1</a> —— 第七节白模切点、画布 CLI 积分与角标，第八节”同期对白”升 ⭐⭐、“写了没有配乐仍垫乐音”、“写清起落就连贯”的来源</li>
+<li><a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/" class="wikilink">2026-09-26_清月_单条15秒角色PV_立项到三平台发布_复盘_v1</a> —— 第一节直连多镜头、第三节足到脸胸前停留、第四节裁图 / 身份图整张复现 / 服装文字锁、第七节 LibTV Remote MCP 与第八节自主配乐的来源</li>
+<li><a href="/above-the-web/claude-libtv-mcp-v1-285995f/" class="wikilink">Claude桌面版接入LibTV远程MCP_临时电脑环境与会话重连_v1</a> —— LibTV Remote MCP 通道怎么接、怎么提交、掉线怎么重连</li>
+<li><a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/" class="wikilink">AI视频本机超分_RealESRGAN_x4plus与闪烁检查_v1</a> —— 720p 直出之后的超分做法（第七节帧率一行决定能否直接按 24 帧重组）</li>
+<li><a href="/above-the-web/2026-10-05-ep03-libtv-v1-5cd4acf/" class="wikilink">2026-10-05_余温_单元剧EP03瓦尔卡_LibTV样片到正片_阶段复盘_v1</a> —— 第四节”比喻／生理描写被画成实物”，第七节 LibTV 样片模式价格、白模切点跨平台成立、白模几何被照画、样片转正片同一条、高清重绘时长压缩的来源</li>
+<li><a href="/above-the-web/libtv-cli-v1-ee5f3b3/" class="wikilink">LibTV_CLI样片转正片_补网页元数据_v1</a> —— CLI 样片转 1080P 正片的操作文档</li>
+<li><a href="/above-the-web/minimaxh3-v1-29d13d7/" class="wikilink">MiniMaxH3_行为规律_v1</a> —— <strong>开源权重路线的对应档案</strong>。被会员门槛挡住时的另一条路，prompt 规范与本文完全不通用（H3 是六段式结构 + <picture n=""> 引用）</picture></li>
+</ul> <div class="tags"> <span class="tag">类型/档案</span><span class="tag">工具/Seedance</span><span class="tag">工具/Flova</span><span class="tag">主题/图生视频</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-05T09:48:45+08:00">2026-10-05</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/Seedance2_5_%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%BE%8B_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/Seedance2_5_%E8%A1%8C%E4%B8%BA%E8%A7%84%E5%BE%8B_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/02-33115ae/">参数行为档案索引</a></li><li><a href="/above-the-web/flova-v1-a30ae63/">Flova 平台档案：编排层不是模型层</a></li><li><a href="/above-the-web/mj-v8-2-v1-4cf28a0/">MJ v8.2 行为档案</a></li><li><a href="/above-the-web/minimaxh3-v1-29d13d7/">MiniMax H3 (Ref2VA) 行为规律</a></li><li><a href="/above-the-web/claude-libtv-mcp-v1-285995f/">Claude 桌面版接入 LibTV 远程 MCP:临时电脑环境与会话重连</a></li><li><a href="/above-the-web/libtv-cli-v1-ee5f3b3/">LibTV：CLI 跑的 Seedance 样片，补网页元数据后转正片</a></li><li><a href="/above-the-web/v1-44939f6/">主体不看镜头律</a></li><li><a href="/above-the-web/2026-08-08-s45-s48-v1-d4f40a9/">《1000人后室大逃亡》S45–S48 收尾段 · 运镜与跨镜一致性返工复盘（2026-08-08）</a></li><li><a href="/above-the-web/2026-08-26-v1-c69c850/">2026-08-26 《过风》雪雾珍珠人像动态写真 · 全链路复盘</a></li><li><a href="/above-the-web/2026-09-20-m02-v1-8100c2c/">《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它</a></li><li><a href="/above-the-web/2026-09-26-15-pv-v1-bb6060b/">《清月》单条 15 秒角色 PV：立项到三平台发布</a></li><li><a href="/above-the-web/2026-09-29-v1-03d7c00/">《右下角的池塘》游戏宣传微电影：AI 屏幕外 + 游戏实录混剪，到双语字幕发布</a></li><li><a href="/above-the-web/2026-10-01-pv-v1-1ddae81/">《余温》见证者角色 PV：立项到四平台发布</a></li><li><a href="/above-the-web/2026-10-05-ep03-libtv-v1-5cd4acf/">《余温》单元剧 EP03《瓦尔卡·静院》：LibTV 样片到正片</a></li><li><a href="/above-the-web/ai-realesrgan-x4plus-v1-d00e5e4/">AI 视频本机超分：Real-ESRGAN x4plus 与闪烁检查</a></li><li><a href="/above-the-web/v1-5ee9070/">按切点重拍：省的是生成时长，不是&quot;局部编辑功能&quot;</a></li><li><a href="/above-the-web/v1-c5fded6/">派生图不进视频输入律：噪点随编辑代数累积</a></li><li><a href="/above-the-web/v1-7d210aa/">白底上的白事件等于没发生</a></li><li><a href="/above-the-web/v1-ad701a9/">跨镜道具锁定律：资产图优于形容词</a></li><li><a href="/above-the-web/v1-dd98c63/">锚点只给站位律：动作交给视频模型</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-08-08-s43-v1-656a72b/"> <span class="card-cat">方法论与洞察</span> <h3>S43 长镜头分段归因 · 归因未遂与生死线次序（2026-08-08）</h3> <p>换平台时的生死线未必是技术指标，也可能是一条只读命令就能问出来的账号权限；成本越低的生死线越容易被排到最后——因为它不像个难题，于是不被当成…</p> </a><a class="card" href="/above-the-web/eleven-v3-v1-d87db20/"> <span class="card-cat">参数行为档案</span> <h3>Eleven v3 行为规律</h3> <p>PVC 不支持 v3 但 IVC 支持——所以要克隆不必退回 v2，audio tags 和 Text to Dialogue 都保得住。这…</p> </a><a class="card" href="/above-the-web/kling3-0-v1-8b6096c/"> <span class="card-cat">参数行为档案</span> <h3>可灵 Kling 3.0 / Omni 行为规律</h3> <p>关键约束:景别是单选(其他可多选)。</p> </a><a class="card" href="/above-the-web/2026-08-24-v1-60852b9/"> <span class="card-cat">方法论与洞察</span> <h3>2026-08-24 《擦干净》从素材到动态化制片 · 全链路阶段性复盘</h3> <p>- 作品名称:《擦干净》(B 站互动短片,悬疑/荒诞/社畜,主线 3:12 + 结局 A/B 各带 36s 片尾)</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一结构性行为" data-toc-link="一结构性行为">一、结构性行为</a></li><li class="d3"><a href="#长视频内部按约-6-秒自动分段--已作废2026-08-25" data-toc-link="长视频内部按约-6-秒自动分段--已作废2026-08-25">长视频内部按约 6 秒自动分段 🔴 已作废（2026-08-25）</a></li><li class="d3"><a href="#内部景别切换跨度不够大就不切---️-降级存疑2026-08-25" data-toc-link="内部景别切换跨度不够大就不切---️-降级存疑2026-08-25">内部景别切换：跨度不够大就不切 ⭐⭐ → ⚠️ 降级存疑（2026-08-25）</a></li><li class="d3"><a href="#反复强调同机位保持连贯会压掉你要的切换---️-降级存疑2026-08-25" data-toc-link="反复强调同机位保持连贯会压掉你要的切换---️-降级存疑2026-08-25">反复强调「同机位／保持连贯」会压掉你要的切换 ⭐⭐ → ⚠️ 降级存疑（2026-08-25）</a></li><li class="d3"><a href="#直连侧的多镜头样本按时间表写的镜头都切出来了还会自己多加一镜-️2026-09-26" data-toc-link="直连侧的多镜头样本按时间表写的镜头都切出来了还会自己多加一镜-️2026-09-26">直连侧的多镜头样本：按时间表写的镜头都切出来了，还会自己多加一镜 ⚠️（2026-09-26）</a></li><li class="d2"><a href="#二画面内文字判据是字号不是字数" data-toc-link="二画面内文字判据是字号不是字数">二、画面内文字：判据是字号，不是字数 ⭐⭐⭐</a></li><li class="d3"><a href="#一次性解错然后稳定保持那个错误" data-toc-link="一次性解错然后稳定保持那个错误">一次性解错，然后稳定保持那个错误 ⭐⭐</a></li><li class="d3"><a href="#原生比后期更协调反直觉但有实证️--2026-09-18-二次验证" data-toc-link="原生比后期更协调反直觉但有实证️--2026-09-18-二次验证">原生比后期更协调（反直觉，但有实证）⚠️ → ⭐⭐（2026-09-18 二次验证）</a></li><li class="d3"><a href="#一个结构性死局要认出来-️" data-toc-link="一个结构性死局要认出来-️">一个结构性死局要认出来 ⚠️</a></li><li class="d3"><a href="#有台词就可能自己烧一条中文字幕进画面-️2026-09-18" data-toc-link="有台词就可能自己烧一条中文字幕进画面-️2026-09-18">有台词就可能自己烧一条中文字幕进画面 ⚠️（2026-09-18）</a></li><li class="d2"><a href="#三运镜要劝退的是性质不是长度或有无" data-toc-link="三运镜要劝退的是性质不是长度或有无">三、运镜：要劝退的是性质，不是长度或有无</a></li><li class="d3"><a href="#构图不变量锁得住位置锁不住幅度" data-toc-link="构图不变量锁得住位置锁不住幅度">构图不变量锁得住位置，锁不住幅度 ⭐⭐</a></li><li class="d3"><a href="#空间关系是一张网-️" data-toc-link="空间关系是一张网-️">空间关系是一张网 ⚠️</a></li><li class="d3"><a href="#从脚跟到脸的上移会在胸前停一下-️2026-09-26" data-toc-link="从脚跟到脸的上移会在胸前停一下-️2026-09-26">从脚跟到脸的上移，会在胸前停一下 ⚠️（2026-09-26）</a></li><li class="d2"><a href="#四参考图与文字的优先级" data-toc-link="四参考图与文字的优先级">四、参考图与文字的优先级</a></li><li class="d3"><a href="#参考图里有的东西prompt-与负面词都压不住" data-toc-link="参考图里有的东西prompt-与负面词都压不住">参考图里有的东西，prompt 与负面词都压不住 ⭐⭐⭐</a></li><li class="d3"><a href="#镜头景别和身份图一样时模型会把身份图整张复现连画种一起-️2026-09-26" data-toc-link="镜头景别和身份图一样时模型会把身份图整张复现连画种一起-️2026-09-26">镜头景别和身份图一样时，模型会把身份图整张复现，连画种一起 ⚠️（2026-09-26）</a></li><li class="d3"><a href="#没有服装参考图时服装文字锁输给模型的默认造型-️2026-09-26" data-toc-link="没有服装参考图时服装文字锁输给模型的默认造型-️2026-09-26">没有服装参考图时，服装文字锁输给模型的默认造型 ⚠️（2026-09-26）</a></li><li class="d3"><a href="#但冲突属性上文字赢过参考图" data-toc-link="但冲突属性上文字赢过参考图">但冲突属性上，文字赢过参考图 ⭐⭐</a></li><li class="d3"><a href="#参考图脏了视频就脏gpt-多轮派生图会把噪点交给视频-️2026-09-20" data-toc-link="参考图脏了视频就脏gpt-多轮派生图会把噪点交给视频-️2026-09-20">参考图脏了，视频就脏：GPT 多轮派生图会把噪点交给视频 ⚠️（2026-09-20）</a></li><li class="d3"><a href="#小尺度下的面部重建需要专门的面部锚点" data-toc-link="小尺度下的面部重建需要专门的面部锚点">小尺度下的面部重建需要专门的面部锚点 ⭐⭐</a></li><li class="d3"><a href="#比喻里的实物情绪的生理描写会被画成实物-️2026-10-05" data-toc-link="比喻里的实物情绪的生理描写会被画成实物-️2026-10-05">比喻里的实物、情绪的生理描写，会被画成实物 ⚠️（2026-10-05）</a></li><li class="d2"><a href="#五否定句的用法分界线清楚" data-toc-link="五否定句的用法分界线清楚">五、否定句的用法（分界线清楚）</a></li><li class="d3"><a href="#️-管线特性不是模型特性" data-toc-link="️-管线特性不是模型特性">⚠️ 管线特性（不是模型特性）</a></li><li class="d2"><a href="#六控人数与群体" data-toc-link="六控人数与群体">六、控人数与群体</a></li><li class="d2"><a href="#七其他实测数据" data-toc-link="七其他实测数据">七、其他实测数据</a></li><li class="d2"><a href="#八自主配乐enablesoundon" data-toc-link="八自主配乐enablesoundon">八、自主配乐（enableSound=on）</a></li><li class="d3"><a href="#事件卡点跟得上提示词硬切要单独写一句才贴拍-️首次2026-09-26" data-toc-link="事件卡点跟得上提示词硬切要单独写一句才贴拍-️首次2026-09-26">事件卡点跟得上提示词；硬切要单独写一句才贴拍 ⚠️首次（2026-09-26）</a></li><li class="d3"><a href="#同期对白两人-8-句写进一条逐字一致时间跟得上-️首次2026-09-29--2026-10-01-二次验证" data-toc-link="同期对白两人-8-句写进一条逐字一致时间跟得上-️首次2026-09-29--2026-10-01-二次验证">同期对白：两人 8 句写进一条，逐字一致、时间跟得上 ⚠️首次（2026-09-29） → ⭐⭐（2026-10-01 二次验证）</a></li><li class="d3"><a href="#写了没有配乐仍会按镜头各垫一段乐音跨切点不连贯-️首次2026-10-01" data-toc-link="写了没有配乐仍会按镜头各垫一段乐音跨切点不连贯-️首次2026-10-01">写了”没有配乐”，仍会按镜头各垫一段乐音，跨切点不连贯 ⚠️首次（2026-10-01）</a></li><li class="d3"><a href="#写清配乐跟着画面怎么起落跨切点就连贯-️首次2026-10-01" data-toc-link="写清配乐跟着画面怎么起落跨切点就连贯-️首次2026-10-01">写清配乐跟着画面怎么起落，跨切点就连贯 ⚠️首次（2026-10-01）</a></li><li class="d2"><a href="#验证等级说明" data-toc-link="验证等级说明">验证等级说明</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

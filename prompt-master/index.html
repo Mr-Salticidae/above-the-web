@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>目标是成为 Prompt 大师</title>
+<meta name="description" content="面向 AIGC 小白的 prompt 拆解系列:每期一个主题,讲清难在哪、怎么破题、完整 prompt 与四层拆解。不追结果,记录过程。">
+<style>
+  :root{
+    --bg:#F4EEE7; --ink:#2F2D2A; --muted:#8C8479; --hair:#D5CBBE; --card:#FBF7F1;
+    --narr:#2E8B73; --style:#6A6FB5; --trans:#C68A33; --neg:#BF5638;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg); color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.8; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 24px}
+
+  /* 刊头 */
+  header{position:relative; text-align:center; padding:72px 24px 28px}
+  .site-back{position:absolute; top:20px; left:24px; display:inline-flex; align-items:center; gap:6px;
+    color:var(--muted); font-size:13.5px; text-decoration:none; padding:6px 0; transition:color .2s}
+  .site-back:hover{color:var(--ink)}
+  .masthead{display:flex; align-items:center; justify-content:center; gap:18px;
+    color:var(--muted); font-size:13px; letter-spacing:.34em; margin-bottom:30px}
+  .masthead::before,.masthead::after{content:""; width:54px; height:1px; background:var(--hair)}
+  h1{font-size:clamp(34px,7vw,60px); font-weight:600; letter-spacing:.08em; cursor:pointer}
+  .tagline{color:var(--muted); margin-top:16px; font-size:15px}
+  .accent{display:flex; justify-content:center; gap:10px; margin-top:26px}
+  .accent span{width:46px; height:5px; border-radius:3px}
+  .intro{max-width:680px; margin:14px auto 0; text-align:center; color:#5f5a52; font-size:15.5px; padding:0 24px}
+
+  /* 分类筛选 */
+  .filters{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; padding:34px 0 6px}
+  .chip-f{font:inherit; font-size:14px; cursor:pointer; background:transparent; color:var(--muted);
+    border:1px solid var(--hair); border-radius:999px; padding:7px 16px;
+    transition:background .2s, border-color .2s, color .2s}
+  .chip-f:hover{border-color:var(--muted); color:var(--ink)}
+  .chip-f.on{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+  .chip-f .dot{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:7px; vertical-align:middle}
+
+  /* 目录:封面墙 */
+  .catalog{display:grid; grid-template-columns:repeat(3,1fr); gap:26px; padding:30px 0 8px}
+  @media(max-width:820px){.catalog{grid-template-columns:repeat(2,1fr); gap:18px}}
+  @media(max-width:520px){.catalog{grid-template-columns:1fr}}
+  .card{cursor:pointer; display:flex; flex-direction:column; background:var(--card);
+    border:1px solid var(--hair); border-radius:14px; overflow:hidden;
+    transition:transform .25s ease, box-shadow .25s ease}
+  .card:hover{transform:translateY(-4px); box-shadow:0 16px 36px rgba(80,60,40,.16)}
+  .card .cover{width:100%; aspect-ratio:3/4; overflow:hidden; background:#e9e1d6}
+  .card .cover img{width:100%; height:100%; object-fit:cover; display:block}
+  .card-foot{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:13px 15px}
+  .card-no{color:var(--muted); font-size:12.5px; letter-spacing:.14em}
+  .tag{font-size:12px; padding:3px 10px; border-radius:999px; color:#fff; white-space:nowrap}
+
+  /* 详情页 */
+  .back{display:inline-flex; align-items:center; gap:7px; margin:30px 0 6px; cursor:pointer;
+    color:var(--muted); font-size:14px; background:none; border:none; font:inherit; padding:6px 0; transition:color .2s}
+  .back:hover{color:var(--ink)}
+  .detail{padding:6px 0 24px}
+  .ep{padding:18px 0 36px}
+  .ep-head{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-bottom:6px}
+  .ep-no{color:var(--muted); font-size:13px; letter-spacing:.18em}
+  .ep-title{font-size:28px; font-weight:600; letter-spacing:.04em}
+  .ep-sub{color:var(--muted); font-size:15px; margin-bottom:26px}
+
+  .gallery{display:grid; grid-template-columns:repeat(2,1fr); gap:20px}
+  @media(max-width:640px){.gallery{grid-template-columns:1fr}}
+  figure{margin:0}
+  figure img{width:100%; height:auto; display:block; border-radius:12px; border:1px solid var(--hair);
+    cursor:zoom-in; transition:transform .25s ease, box-shadow .25s ease}
+  figure img:hover{transform:translateY(-3px); box-shadow:0 12px 30px rgba(80,60,40,.14)}
+  figcaption{text-align:center; color:var(--muted); font-size:13px; margin-top:10px}
+  .original{margin-top:24px}
+  .original img{border-radius:14px}
+  figcaption a{color:var(--trans); text-decoration:none; border-bottom:1px solid transparent}
+  figcaption a:hover{border-bottom-color:var(--trans)}
+
+  /* 操作区 */
+  .actions{display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:26px}
+  .btn{font:inherit; font-size:14px; cursor:pointer; text-decoration:none; color:var(--ink);
+    background:transparent; border:1px solid var(--hair); border-radius:999px; padding:9px 18px;
+    transition:background .2s ease, border-color .2s ease, transform .1s ease; white-space:nowrap}
+  .btn:hover{background:#fff; border-color:var(--muted)}
+  .btn:active{transform:scale(.97)}
+  .btn.primary{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+  .btn.primary:hover{background:#403c37}
+  .btn .ic{color:var(--muted); margin-right:7px}
+  .btn.primary .ic{color:#cfc7ba}
+  .spacer{flex:1 1 auto}
+
+  /* 点赞 */
+  .like{position:relative; display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+    background:transparent; border:1px solid var(--hair); border-radius:999px; padding:8px 16px;
+    color:var(--muted); font:inherit; font-size:14px; transition:border-color .2s ease, color .2s ease}
+  .like:hover{border-color:var(--neg)}
+  .like svg{width:18px; height:18px; overflow:visible}
+  .like-count{font-size:13px; font-variant-numeric:tabular-nums; color:inherit; min-width:6px}
+  .like.liked{cursor:default}
+  .like svg path{fill:none; stroke:var(--neg); stroke-width:1.7; transition:fill .25s ease}
+  .like.liked{color:var(--neg)}
+  .like.liked svg path{fill:var(--neg)}
+  .like.pop svg{animation:pop .42s ease}
+  @keyframes pop{0%{transform:scale(1)}35%{transform:scale(1.32)}60%{transform:scale(.9)}100%{transform:scale(1)}}
+  .float-heart{position:absolute; left:14px; top:6px; width:16px; height:16px; pointer-events:none;
+    color:var(--neg); animation:floatup .9s ease-out forwards}
+  .float-heart svg{width:16px;height:16px} .float-heart svg path{fill:var(--neg); stroke:none}
+  @keyframes floatup{0%{opacity:.9; transform:translateY(0) scale(.8)}100%{opacity:0; transform:translateY(-46px) scale(1.1)}}
+
+  footer{border-top:1px solid var(--hair); margin-top:40px; padding:40px 24px 64px; text-align:center; color:var(--muted); font-size:13px}
+  footer a{color:var(--trans); text-decoration:none}
+
+  /* 灯箱 */
+  .lb{position:fixed; inset:0; background:rgba(35,30,26,.86); display:none; align-items:center; justify-content:center; padding:28px; z-index:60; cursor:zoom-out}
+  .lb.open{display:flex}
+  .lb img{max-width:100%; max-height:100%; border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,.4)}
+
+  /* 笔记弹窗 */
+  .modal{position:fixed; inset:0; background:rgba(35,30,26,.5); display:flex; align-items:center; justify-content:center;
+    padding:24px; z-index:70; opacity:0; visibility:hidden; transition:opacity .28s ease, visibility .28s ease}
+  .modal.open{opacity:1; visibility:visible}
+  .panel{background:var(--card); width:min(780px,100%); max-height:88vh; border-radius:16px; overflow:hidden;
+    display:flex; flex-direction:column; box-shadow:0 30px 80px rgba(50,35,20,.32);
+    transform:translateY(14px) scale(.985); transition:transform .28s ease}
+  .modal.open .panel{transform:translateY(0) scale(1)}
+  .panel-bar{display:flex; align-items:center; justify-content:space-between; padding:16px 22px; border-bottom:1px solid var(--hair); flex:0 0 auto}
+  .panel-bar .t{font-size:14px; color:var(--muted); letter-spacing:.12em}
+  .panel-close{background:transparent; border:none; cursor:pointer; color:var(--muted); font-size:22px; line-height:1; padding:4px 8px; border-radius:8px}
+  .panel-close:hover{background:rgba(0,0,0,.05); color:var(--ink)}
+  .note-body{overflow-y:auto; padding:28px 34px 40px; -webkit-overflow-scrolling:touch}
+  .note-body h1{font-size:24px; letter-spacing:0; margin:.2em 0 .5em; text-align:left; cursor:auto}
+  .note-body h2{font-size:19px; font-weight:600; margin:1.6em 0 .6em; padding-top:.4em; border-top:1px solid var(--hair)}
+  .note-body h2:first-of-type{border-top:none; padding-top:0}
+  .note-body h3{font-size:16px; font-weight:600; margin:1.2em 0 .4em}
+  .note-body p{margin:.7em 0; font-size:15px}
+  .note-body ul,.note-body ol{margin:.6em 0 .6em 1.3em} .note-body li{margin:.3em 0; font-size:15px}
+  .note-body img{max-width:100%; height:auto; border-radius:10px; border:1px solid var(--hair); margin:.8em 0; display:block}
+  .note-body blockquote{margin:1em 0; padding:.4em 1em; border-left:3px solid var(--trans); background:rgba(198,138,51,.07); color:#5f5a52; border-radius:0 8px 8px 0}
+  .note-body code{background:rgba(0,0,0,.06); padding:.12em .4em; border-radius:5px; font-family:Consolas,Menlo,monospace; font-size:.9em}
+  .note-body pre{background:#2f2d2a; color:#f2ece2; padding:16px; border-radius:10px; overflow-x:auto; margin:1em 0}
+  .note-body pre code{background:none; padding:0; color:inherit; font-size:13px; line-height:1.7}
+  .note-body table{width:100%; border-collapse:collapse; margin:1em 0; font-size:14px}
+  .note-body th,.note-body td{border:1px solid var(--hair); padding:8px 10px; text-align:left}
+  .note-body th{background:rgba(0,0,0,.04); font-weight:600}
+  .note-loading{padding:48px; text-align:center; color:var(--muted)}
+
+  .toast{position:fixed; left:50%; bottom:36px; transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--bg);
+    padding:10px 20px; border-radius:999px; font-size:14px; opacity:0; transition:opacity .25s ease, transform .25s ease; z-index:80; pointer-events:none}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<header>
+  <a class="site-back" href="../">← 返回蛛网之上</a>
+  <div class="masthead">目标是成为 PROMPT 大师</div>
+  <h1 id="home-link">目标是成为 Prompt 大师</h1>
+  <p class="tagline">面向 AIGC 小白的 prompt 拆解系列 · 不追结果,记录过程</p>
+  <div class="accent">
+    <span style="background:var(--narr)"></span><span style="background:var(--style)"></span>
+    <span style="background:var(--trans)"></span><span style="background:var(--neg)"></span>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- 目录视图 -->
+  <section id="catalog-view">
+    <p class="intro">每一期挑一个 prompt battle 主题,讲清楚四件事:难在哪 → 怎么破题 → 完整 prompt → 四层拆解与可复用的思路。点开任意一期即读,不需要前置知识。</p>
+    <div class="filters" id="filters"></div>
+    <div class="catalog" id="catalog"></div>
+  </section>
+
+  <!-- 详情视图 -->
+  <section id="detail-view" class="detail" hidden>
+    <button class="back" id="back-btn"><span>←</span> 返回目录</button>
+    <div id="detail-body"></div>
+  </section>
+</main>
+
+<footer>源文件与每期归档 · <a href="https://github.com/Mr-Salticidae/becoming-a-prompt-master">GitHub 仓库</a> · <a href="../">↩ 返回蛛网之上</a><br>© 目标是成为 Prompt 大师</footer>
+
+<div class="lb" id="lb"><img id="lb-img" src="" alt=""></div>
+
+<div class="modal" id="modal">
+  <div class="panel">
+    <div class="panel-bar"><span class="t" id="modal-title">小白笔记</span><button class="panel-close" id="modal-close" aria-label="关闭">×</button></div>
+    <div class="note-body" id="note-body"><div class="note-loading">正在加载…</div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script>
+(function(){
+  /* ===================== 期目数据(新增一期:加一个文件夹 + 在此加一条)===================== */
+  // cat 用分类 key;分类的中文名与颜色在 CATS 里定义。每期资产统一放在 folder 下。
+  var CATS = {
+    abstract:{name:"抽象词破题", color:"var(--narr)"},
+    object:  {name:"物件与尺度", color:"var(--trans)"},
+    style:   {name:"画风与张力", color:"var(--style)"},
+    surreal: {name:"超现实破题", color:"var(--neg)"},
+    irony:   {name:"概念反讽",   color:"#b06a78"},
+    readable: {name:"可读性校准", color:"#5b8a9e"},
+    allusion: {name:"典故破题",  color:"#996b4d"},
+    portrait: {name:"写实人像",  color:"#7d8ba1"},
+    revise:   {name:"改写诊断",  color:"#5f8a72"}
+  };
+  var EPISODES = [
+    {
+      id:"ep01", no:"第 1 期", title:"《对话》", cat:"abstract",
+      sub:"不画两个人说话,让两个时代做同一个动作——书写。",
+      folder:"01_对话",
+      cover:"对话_封面卡.png", breakdown:"对话_prompt拆解卡.png", original:"对话_原图.png",
+      note:"对话_笔记.md", noteTitle:"第 1 期《对话》· 小白笔记",
+      xhs:"http://xhslink.com/o/7bGNayYvE4f",
+      prompt:"one continuous conceptual editorial illustration, a dialogue between two eras of writing, on the left an ancient robed scribe seated at a low wooden table carving oracle bone script into a large turtle shell with a bone stylus, on the right a modern figure seated at a workstation typing on a keyboard with binary digits drifting above the monitor, the two figures facing each other within the same shared room, warm pastel terracotta tones on the left melting gradually into cool periwinkle and lavender tones on the right, soft gradient color transition with no hard dividing line, a cloud of glowing oracle characters and binary digits floating between them, the glyph cloud gently bridging and blending the two color worlds, clean isometric perspective, flat color blocks, thin precise linework, controlled detail density, polished editorial article style, minimal background --no watermark, logo, blurry, low quality, photorealistic, 3d render, hard split line, frame border"
+    },
+    {
+      id:"ep02", no:"第 2 期", title:"《童话镇里的纸飞机》", cat:"object",
+      sub:"不让纸飞机飞,让它落地变成一座可攀爬的山——题眼物件,不当道具,当地貌。",
+      folder:"02_纸飞机",
+      cover:"纸飞机_封面卡.png", breakdown:"纸飞机_prompt拆解卡.png", original:"纸飞机_原图.png",
+      note:"纸飞机_笔记.md", noteTitle:"第 2 期《童话镇里的纸飞机》· 小白笔记",
+      xhs:"http://xhslink.com/o/7fSE1oGq5Ad",
+      prompt:"a colorful LEGO fairy-tale town built around a gigantic handmade paper airplane that has landed in the town square, tiny LEGO villagers climbing onto the folded wings, children exploring the paper creases like mountains and valleys, colorful LEGO houses and castles surrounding the scene, bright blue sky, vivid primary colors, visible pencil doodles on the paper airplane made by a real child, joyful discovery, whimsical storytelling, photorealistic miniature photography, tilt-shift effect, vibrant palette, childhood imagination, magical realism --ar 3:4 --raw --v 8.1"
+    },
+    {
+      id:"ep03", no:"第 3 期", title:"《马里奥 × JOJO》", cat:"style",
+      sub:"二创想要张力?借一个自带张力的强画风——风格点名,角色不点名,一眼还认得出。",
+      folder:"03_马里奥JOJO",
+      cover:"马里奥JOJO_封面卡.png", breakdown:"马里奥JOJO_prompt拆解卡.png", original:"马里奥JOJO_原图.png",
+      note:"马里奥JOJO_笔记.md", noteTitle:"第 3 期《马里奥 × JOJO》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a387aa3000000001503d1b7?source=webshare&xhsshare=pc_web&xsec_token=YBBR00RPuQ_3owDJP8z3p0xxgRDSh0m6ZWWrezw7F6ot8=&xsec_source=pc_share",
+      prompt:"in the style of Hirohiko Araki, JoJo's Bizarre Adventure manga, two heroic plumber brothers striking extreme dramatic poses, twisted contrapposto muscle torque with splayed dramatic fingers, the first short stout and round-bellied with a big bushy mustache, round red cap, red shirt and blue overalls, the second tall lean and chiseled with a big mustache, round green cap, green shirt and blue overalls, bold confident inking, flamboyant high-couture detail, vivid clashing colors, fashion-photo color grading, glowing aura halos and ornate background symbols radiating menace, dramatic foreshortening, intense glare, overwhelming tension, a green pipe and flying gold coins behind them --ar 3:4 --niji 7 --no text, watermark, logo, blurry, dark gloomy"
+    },
+    {
+      id:"ep04", no:"第 4 期", title:"《不受控制的床》", cat:"surreal",
+      sub:"失控不画乱象,让床做它绝不该做的事——一张床自己长腿在深夜空街奔逃,主人狂追。",
+      folder:"04_床长腿",
+      cover:"床长腿_封面卡.png", breakdown:"床长腿_prompt拆解卡.png", original:"床长腿_原图.png",
+      note:"床长腿_笔记.md", noteTitle:"第 4 期《不受控制的床》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a387b89000000001603fa97?source=webshare&xhsshare=pc_web&xsec_token=YBBR00RPuQ_3owDJP8z3p0x_N25RuvOd2coOIMZoiBrsA=&xsec_source=pc_share",
+      prompt:"candid documentary street photograph, an ordinary wooden bed galloping on its four bent legs like a startled animal down an empty residential street at night, white bedsheets and blanket streaming behind it like a wake, a barefoot man in pajamas chasing it mid-stride, single dominant subject, low-angle shot, strong foreground scale, diagonal composition, long dramatic shadow cast by a single sodium streetlight, warm amber light against cold blue night color grading, subtle motion blur on the legs, shallow depth of field, cinematic 35mm photography, gritty realistic texture --ar 3:2 --v 8.1 --style raw --no text, watermark, logo, blurry, low quality, cartoon, cute, disney, extra human limbs, gore"
+    },
+    {
+      id:"ep05", no:"第 5 期", title:"《梦游困境》", cat:"surreal",
+      sub:"题面两个词,别只做「梦游」做「困境」——踏空+身后楼梯还在消失=进退两难;被嫌暗就整组换亮调复古未来,美裹着险。",
+      folder:"05_梦游困境",
+      cover:"梦游困境_封面卡.png", breakdown:"梦游困境_prompt拆解卡.png", original:"梦游困境_原图.png",
+      note:"梦游困境_笔记.md", noteTitle:"第 5 期《梦游困境》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a39cb28000000001c027972?source=webshare&xhsshare=pc_web&xsec_token=YB-EmIdfJKDIE990vK-rF0vjqROhgmJznCaO6cAZY5Y4E=&xsec_source=pc_share",
+      prompt:"retro-futuristic photograph, 1960s space-age aesthetic, a sleepwalker in pajamas calmly stepping off the last step of a glossy white mid-century staircase, eyes closed and serene, beyond the edge a sheer vertiginous drop to a bright pastel retro-city impossibly far below, the staircase already dissolving into nothing behind him so he cannot turn back, caught mid-step over the void, soft bright daylight, Kubrick 2001 aesthetic, pastel coral and cream color grading --no text, watermark, logo, dark, gritty, neon, cyberpunk --ar 3:4 --raw --hd"
+    },
+    {
+      id:"ep06", no:"第 6 期", title:"《叫不醒人的闹钟》", cat:"irony",
+      sub:"主语是闹钟,但赢的不是闹钟——把「叫不醒」重新解释:钟没坏,是人装睡;原子时代亮调裹窗外蘑菇云,亮裹险的反讽。",
+      folder:"06_叫不醒人的闹钟",
+      cover:"闹钟_封面卡.png", breakdown:"闹钟_prompt拆解卡.png", original:"闹钟_原图.png",
+      note:"闹钟_笔记.md", noteTitle:"第 6 期《叫不醒人的闹钟》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a3b1fad000000001c025030?source=webshare&xhsshare=pc_web&xsec_token=YBlr_Cg9a-Gp-8pW0ulChpG4lJ0Y84suleY1Imo8qhL1g=&xsec_source=pc_share",
+      prompt:"1960s atomic-age advertising illustration, halftone screen-print texture, a cheerful pastel mid-century living room, a smiling family on a coral sofa, all wearing black sleep masks, serene smiles, hands folded in their laps, a sleeping cat curled at the end of the sofa, a big bright red alarm clock in the foreground center of the table, ringing violently with bold vibration lines and sound bursts, through the large window behind them a towering mushroom cloud blooms on the horizon like a flower, flat editorial lighting, pastel teal coral mustard cream color grading --ar 4:3 --v 8.1 --no photorealistic, 3d render, text, watermark, logo, calm cloud"
+    },
+    {
+      id:"ep07", no:"第 7 期", title:"《深夜幻想家》", cat:"surreal",
+      sub:"唯美诱饵题反题眼,不飘梦改用影子——保洁拄拖把,墙上影子却是拄剑骑士;写实里影子默认贴本体,靠 transforms into + 硬光 + 同构动作把它掰开。",
+      folder:"07_深夜幻想家",
+      cover:"幻想家_封面卡.png", breakdown:"幻想家_prompt拆解卡.png", original:"幻想家_原图.png",
+      note:"幻想家_笔记.md", noteTitle:"第 7 期《深夜幻想家》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a3b2069000000001603efb5?source=webshare&xhsshare=pc_web&xsec_token=ABfZnBFy6TuVlAp3IcRGneAsgXya2NIyJGBYdPsZ9Bvts=&xsec_source=pc_share",
+      prompt:"cinematic photograph, a convenience store at 3am, glossy tiled floor, a tired night-shift cleaner in uniform leaning on his mop, head bowed, small and weary, a single hard light throws his huge shadow onto the clean bright wall behind him, the wall shadow transforms into a proud towering knight in a flowing cape, both hands resting on a great planted sword, the mop handle becoming the sword, crisp sharp-edged shadow, high contrast, clean readable wall, warm amber light, photographic, fine film grain --ar 3:4 --v 8.1 --style raw --no text, watermark, logo, blurry shadow, matching shadow, haze, floating dream imagery, stars"
+    },
+    {
+      id:"ep08", no:"第 8 期", title:"《空》", cat:"readable",
+      sub:"我自认为的满分答卷,评委给了 0 分——美不是入场票,「一眼看懂」才是;附一个冷读者 0.5 秒自测。",
+      folder:"08_零票神图",
+      cover:"零票神图_封面卡.png", breakdown:"零票神图_冷读者测试卡.png", breakdownLabel:"冷读者 0.5 秒测试", original:"零票神图_原图.png",
+      note:"零票神图_笔记.md", noteTitle:"第 8 期《空》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a3dcf36000000001c025e76?source=webshare&xhsshare=pc_web&xsec_token=YB4gmiFT8XuVjtysCo6pZAzAb2wQQqYppjvn7mQwKJAUs=&xsec_source=pc_share",
+      prompt:"flat editorial illustration, retrofuturism mid-century, a supermarket shelf lined with vacuum-sealed plastic packs each holding a square of bright blue sky and white clouds, plain blank price tags left empty, a shopper's hand reaching for one, clean optimistic pastel palette teal coral cream, halftone screen-print texture --no photorealistic, 3d render, text, letters, numbers, garbled characters, fake script, watermark, signature, caption --ar 3:2"
+    },
+    {
+      id:"ep09", no:"第 9 期", title:"《无根据颂歌》", cat:"abstract",
+      sub:"抽象题两步翻译:「颂歌」翻成人人秒懂的颁奖仪式,「无根据」=被歌颂的人不存在——火星荒原上,一排宇航员向没人敬礼,空位比人物更响。",
+      folder:"09_无根据颂歌",
+      cover:"无根据颂歌_封面卡.png", breakdown:"无根据颂歌_prompt拆解卡.png", original:"无根据颂歌_原图.png",
+      note:"无根据颂歌_笔记.md", noteTitle:"第 9 期《无根据颂歌》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a4ba644000000000f015fb6?source=webshare&xhsshare=pc_web&xsec_token=YBMgZArAfybMHsPGpfaej6jfzEPPu1N_2WhZVm9fLHRfw=&xsec_source=pc_share",
+      prompt:"cinematic photograph, an empty medal podium on a vast Martian plain, three flags rising on poles, a row of astronauts saluting no one, confetti drifting slowly in low gravity, pale distant sun, huge negative space --no athletes, people on podium, text, spaceship --ar 3:4 --raw --hd"
+    },
+    {
+      id:"ep10", no:"第 10 期", title:"《同根同源》", cat:"allusion",
+      sub:"成语题不画字面,画典故的出处现场——空灶间煮豆燃萁,屋里无人,火光把「一大一小牵手」的影子投上土墙;观众预装的《七步诗》替你完成解码,道具(釜/豆/萁)就是识别码。",
+      folder:"10_同根同源",
+      cover:"同根同源_封面卡.png", breakdown:"同根同源_prompt拆解卡.png", original:"同根同源_原图.png",
+      note:"同根同源_笔记.md", noteTitle:"第 10 期《同根同源》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a5a131f000000000f02a028?source=webshare&xhsshare=pc_web&xsec_token=YB8gjjHQG91XR2U3b84KG8GDoVmEq98hu6XwarNiPRQ9Q=&xsec_source=pc_share",
+      prompt:"empty ancient chinese kitchen at night, bronze cauldron of soybeans boiling over a fire of dried bean stalks, bean pods bursting in crackling flames, rising steam, no one present, firelight casting two sharp shadows onto the rough earthen wall behind, shadows clearly shaped as two little brothers holding hands playing, cauldron and burning stalks dominant in foreground, cinematic chiaroscuro lighting, warm amber flame glow against deep darkness, subtle ink-wash painting undertone, fine art photography, magical realism, restrained composition, large dark negative space above --ar 3:4 --preview --style raw --no text, watermark, logo, blurry, low quality, horror, ghost"
+    },
+    {
+      id:"ep11", no:"第 11 期", title:"《幻想面基》", cat:"style",
+      sub:"面基不画拥抱,画认出的前一秒——深夜到达口,来接你的网友是一位发光的异界来客,符文接机牌只有你认识,周围无人注意;prompt 写的是纪实摄影,画风却整个外包给了一个 sref 编号,出成 90 年代赛璐璐怀旧动画,而这正是想要的。",
+      folder:"11_接机",
+      cover:"接机_封面卡.png", breakdown:"接机_prompt拆解卡.png", original:"接机_原图.png",
+      note:"接机_笔记.md", noteTitle:"第 11 期《幻想面基》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a637329000000001303ee45?source=webshare&xhsshare=pc_web&xsec_token=YByXjXvGM_JUHt8EUNiAsreSptUCLHCKUroOOOw85hfZQ=&xsec_source=pc_share",
+      prompt:"cinematic documentary film photography, airport arrivals gate at night, a long row of ordinary greeters holding paper name signs, standing quietly among them a translucent softly glowing otherworldly creature round, gentle, faintly luminous holding up a sign of floating glowing runes, none of the surrounding passengers noticing it, foreground seen from behind: a lone traveler with a rolling suitcase stopped mid-step, facing the creature across the barrier, cold fluorescent terminal light against the creature's warm ethereal glow, background greeters and signs softly out of focus, single focal point on the glowing runic sign, Kodak film grain, shallow depth of field, quiet magical realism, heartwarming --no readable text, watermark, logo, horror, creepy, blurry, low quality --ar 16:9 --sref 3282860382 --raw --hd"
+    },
+    {
+      id:"ep12", no:"第 12 期", title:"《霜瞳》", cat:"portrait",
+      sub:"即兴抽卡出身的仙侠 cosplay 写真:全中文长 prompt 直喂 MJ v8.1,服饰道具工笔式罗列喂出 cos 质感;小红书发布 6 天曝光 5400+、获官方推广,系列首篇「发布侧」复盘。",
+      folder:"12_霜瞳",
+      cover:"霜瞳_封面卡.png", breakdown:"霜瞳_prompt拆解卡.png", original:"霜瞳_原图.png",
+      note:"霜瞳_笔记.md", noteTitle:"第 12 期《霜瞳》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a66f132000000001d0232ab?source=webshare&xhsshare=pc_web&xsec_token=YBuLI_q5xoQa7t6U17gfr_AEAosq-vu2EMWQNac1Xkv7E=&xsec_source=pc_share",
+      prompt:"一张精致的写实摄影作品，图中描绘了一位银发蓝瞳的稚嫩少女，她似乎平静地仰靠在巨大半透明伞状物体前，神情清幽而专注。她的长发如瀑布般垂落，发间点缀着金色与黑红相间的装饰，额前几缕碎发轻轻摇曳，右腕微动，左腕高抬指远方，透露出一种灵动又略带孤寂的韵味。她身穿融合传统与现代风格的服饰:上身是白色紧身衣，外搭黑色带绗与金色镶边的肩甲，胸前系着红色绳结与精致金属，腰间挂着流苏；下身搭配深紫色紧身长裤，裤脚外翻饰有金色云纹纹样，腰间同色系长靴。整体造型既优雅又充满战斗感。她的右手自然搭在弯曲的膝头，指尖轻握一把淡蓝色短刃，刀身泛光，其上刻有白色抽象符文，仿佛蕴含某种神秘力量。背景是静谧的远山与缥缈云层，数只飞鸟掠过天际，增添画面动感与空间纵深。少女身后那把巨型伞具呈放射状撑开，似为某种飞行或防御装置，与她轻盈的形态形成视觉张力。整幅画面色调以冷灰、白、金为主，辅以红蓝点缀，光影柔和，营造出梦幻与现实交织的氛围，展现出角色在静谧环境中随时战斗的从容与优雅。 --ar 9:16 --raw --v 8.1 --hd"
+    },
+    {
+      id:"ep13", no:"第 13 期", title:"《月白》", cat:"revise",
+      sub:"系列首个「改写诊断」期:不从零写,拿一条一百三十词的「网上流传款」逐条改——唐服配泰宫两个锚打架、形容词零信息、画质词说了六遍、光写成天气、--no 里塞人体词反而顶高审核线;删掉一半,图反而对了。",
+      folder:"13_月白",
+      cover:"月白_封面卡.png", breakdown:"月白_prompt拆解卡.png", original:"月白_原图.png",
+      note:"月白_笔记.md", noteTitle:"第 13 期《月白》· 小白笔记",
+      xhs:"https://www.xiaohongshu.com/discovery/item/6a8462c2000000002403f286?source=webshare&xhsshare=pc_web&xsec_token=YBXuBswNKdn1V2_D8jqn92Rx_nPpD1U8jXqk92_ZgpOTw=&xsec_source=pc_share",
+      prompt:"Museum quality fine art portrait photography, cinematic film still, medium close-up, a chinese period-drama heroine, delicate oval face, soft jawline, slightly raised cheekbones, porcelain warm skin with natural crimson, almond shaped slightly drooping dark brown eyes with a dewy gaze, distant mountain eyebrows, small refined nose, soft pale rose matte lips, a cold and ethereal elegant temperament, head turned three-quarters, gaze past the camera toward the courtyard, chin level, lips softly closed, jet black hair in a soft Tang double-loop updo with wispy nape strands, small gold filigree hairpins, powder-pink silk collar and sheer pibo stole at her shoulder, softly blurred vermilion pillars behind, low late-afternoon backlight rim-lighting her hair strands, soft bounced fill on her face, warm neutral cinematic color grading, deep shadow vignette, 35mm film, fine natural grain, shallow depth of field, natural skin texture with visible fine pores not airbrushed plastic skin, fashion editorial aesthetic --ar 3:4 --v 8.2 --style raw --stylize 80 --no text, watermark, logo, low quality, out of focus face"
+    }
+  ];
+  /* ============================================================================ */
+
+  var $=function(s,r){return (r||document).querySelector(s);};
+  var catalogView=$("#catalog-view"), detailView=$("#detail-view"),
+      catalogEl=$("#catalog"), filtersEl=$("#filters"), detailBody=$("#detail-body");
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function epById(id){for(var i=0;i<EPISODES.length;i++){if(EPISODES[i].id===id)return EPISODES[i];}return null;}
+  var heartSVG='<svg viewBox="0 0 24 24"><path d="M12 20.5C5.5 16 3 12.5 3 9.2 3 6.6 5 4.7 7.4 4.7c1.6 0 3 .8 3.8 2.1.2.3.6.3.8 0 .8-1.3 2.2-2.1 3.8-2.1C21 4.7 23 6.6 23 9.2c0 3.3-2.5 6.8-9 11.3-.6.4-1.4.4-2 0z" transform="translate(-1,0)"/></svg>';
+
+  /* ---------- 目录:筛选 + 封面墙 ---------- */
+  var activeFilter="all";
+  function usedCats(){var seen={},out=[];EPISODES.forEach(function(e){if(!seen[e.cat]){seen[e.cat]=1;out.push(e.cat);}});return out;}
+  function renderFilters(){
+    var html='<button class="chip-f'+(activeFilter==="all"?" on":"")+'" data-f="all">全部</button>';
+    usedCats().forEach(function(k){
+      var c=CATS[k]||{name:k,color:"var(--muted)"};
+      html+='<button class="chip-f'+(activeFilter===k?" on":"")+'" data-f="'+k+'"><span class="dot" style="background:'+c.color+'"></span>'+esc(c.name)+'</button>';
+    });
+    filtersEl.innerHTML=html;
+  }
+  function renderCatalog(){
+    var list=EPISODES.slice().reverse().filter(function(e){return activeFilter==="all"||e.cat===activeFilter;});
+    catalogEl.innerHTML=list.map(function(e){
+      var c=CATS[e.cat]||{name:e.cat,color:"var(--muted)"};
+      return '<article class="card" data-go="'+e.id+'">'+
+        '<div class="cover"><img src="'+e.folder+'/'+e.cover+'" alt="'+esc(e.title)+'" loading="lazy"></div>'+
+        '<div class="card-foot"><span class="card-no">'+esc(e.no)+'</span>'+
+        '<span class="tag" style="background:'+c.color+'">'+esc(c.name)+'</span></div></article>';
+    }).join("");
+  }
+
+  /* ---------- 详情页 ---------- */
+  function renderDetail(e){
+    var xhsBtn = e.xhs ? '<a class="btn" href="'+e.xhs+'" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer"><span class="ic">↗</span>小红书原帖</a>' : '';
+    detailBody.innerHTML =
+      '<article class="ep" data-folder="'+e.folder+'">'+
+        '<div class="ep-head"><span class="ep-no">'+esc(e.no)+'</span><span class="ep-title">'+esc(e.title)+'</span></div>'+
+        '<p class="ep-sub">'+esc(e.sub)+'</p>'+
+        '<div class="gallery">'+
+          '<figure><img src="'+e.folder+'/'+e.cover+'" alt="'+esc(e.title)+'封面" loading="lazy"><figcaption>封面</figcaption></figure>'+
+          '<figure><img src="'+e.folder+'/'+e.breakdown+'" alt="'+esc(e.breakdownLabel||'prompt 四层拆解')+'" loading="lazy"><figcaption>'+esc(e.breakdownLabel||'prompt 四层拆解')+'</figcaption></figure>'+
+        '</div>'+
+        '<figure class="original"><img src="'+e.folder+'/'+e.original+'" alt="'+esc(e.title)+'原图" loading="lazy">'+
+          '<figcaption>原图 · 点击放大,或 <a href="'+e.folder+'/'+e.original+'" download>下载原图</a></figcaption></figure>'+
+        '<div class="actions">'+
+          '<button class="btn primary copy-btn"><span class="ic">⧉</span>一键复制 Prompt</button>'+
+          '<button class="btn note-btn" data-folder="'+e.folder+'" data-file="'+esc(e.note)+'" data-title="'+esc(e.noteTitle)+'"><span class="ic">▤</span>小白笔记</button>'+
+          xhsBtn+
+          '<span class="spacer"></span>'+
+          '<button class="like" data-counter="'+e.id+'" aria-label="点赞">'+heartSVG+'<span class="like-txt">喜欢</span><span class="like-count" aria-hidden="true"></span></button>'+
+        '</div>'+
+        '<pre hidden class="prompt-src">'+esc(e.prompt)+'</pre>'+
+      '</article>';
+    initLike($(".like",detailBody));
+  }
+
+  /* ---------- 路由 ---------- */
+  function showCatalog(){
+    detailView.hidden=true; catalogView.hidden=false;
+    renderFilters(); renderCatalog();
+  }
+  function showDetail(e){
+    catalogView.hidden=true; detailView.hidden=false;
+    renderDetail(e); window.scrollTo(0,0);
+  }
+  function route(){
+    var h=location.hash.replace(/^#\/?/,"");
+    var e=h?epById(h):null;
+    if(e) showDetail(e); else showCatalog();
+  }
+  window.addEventListener("hashchange",route);
+  $("#home-link").addEventListener("click",function(){location.hash="";});
+  $("#back-btn").addEventListener("click",function(){location.hash="";});
+
+  /* ---------- 全局事件委托 ---------- */
+  // 进入详情
+  catalogEl.addEventListener("click",function(ev){
+    var card=ev.target.closest("[data-go]"); if(card) location.hash="#"+card.dataset.go;
+  });
+  // 筛选
+  filtersEl.addEventListener("click",function(ev){
+    var b=ev.target.closest("[data-f]"); if(!b)return; activeFilter=b.dataset.f; renderFilters(); renderCatalog();
+  });
+
+  // 灯箱
+  var lb=$("#lb"), lbImg=$("#lb-img");
+  document.addEventListener("click",function(ev){
+    var im=ev.target.closest("figure img"); if(im){ lbImg.src=im.src; lb.classList.add("open"); }
+  });
+  lb.addEventListener("click",function(){ lb.classList.remove("open"); lbImg.src=""; });
+
+  // Toast
+  var toast=$("#toast"), tTimer;
+  function showToast(msg){ toast.textContent=msg; toast.classList.add("show"); clearTimeout(tTimer); tTimer=setTimeout(function(){toast.classList.remove("show");},1600); }
+
+  // 复制 Prompt
+  document.addEventListener("click",function(ev){
+    var btn=ev.target.closest(".copy-btn"); if(!btn)return;
+    var pre=btn.closest(".ep").querySelector(".prompt-src"); var txt=pre.textContent.trim();
+    var done=function(){ var old=btn.innerHTML; btn.innerHTML='<span class="ic">✓</span>已复制'; showToast("Prompt 已复制,去试试吧"); setTimeout(function(){btn.innerHTML=old;},1600); };
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done).catch(function(){fallback(txt,done);}); }
+    else fallback(txt,done);
+  });
+  function fallback(txt,done){ var ta=document.createElement("textarea"); ta.value=txt; ta.style.position="fixed"; ta.style.opacity=0; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy");done();}catch(e){} document.body.removeChild(ta); }
+
+  // 笔记弹窗
+  var modal=$("#modal"), noteBody=$("#note-body"), modalTitle=$("#modal-title"), modalClose=$("#modal-close");
+  function closeModal(){ modal.classList.remove("open"); }
+  modalClose.addEventListener("click",closeModal);
+  modal.addEventListener("click",function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"){ closeModal(); lb.classList.remove("open"); }});
+  document.addEventListener("click",function(ev){
+    var btn=ev.target.closest(".note-btn"); if(!btn)return;
+    var folder=btn.dataset.folder, file=btn.dataset.file;
+    modalTitle.textContent=btn.dataset.title||"小白笔记";
+    noteBody.innerHTML='<div class="note-loading">正在加载…</div>';
+    modal.classList.add("open");
+    fetch(folder+"/"+encodeURIComponent(file)).then(function(r){ if(!r.ok) throw 0; return r.text(); })
+      .then(function(md){
+        noteBody.innerHTML = (window.marked?marked.parse(md):("<pre>"+md.replace(/[<>&]/g,"")+"</pre>"));
+        noteBody.querySelectorAll("img").forEach(function(im){
+          var raw=im.getAttribute("src")||"";
+          if(!/^https?:|^\//.test(raw) && raw.indexOf(folder+"/")!==0){ im.src=folder+"/"+raw; }
+        });
+        noteBody.querySelectorAll("a[href]").forEach(function(a){ a.target="_blank"; a.rel="noopener"; });
+        noteBody.scrollTop=0;
+      })
+      .catch(function(){ noteBody.innerHTML='<div class="note-loading">笔记加载失败,可前往 <a href="https://github.com/Mr-Salticidae/becoming-a-prompt-master/blob/main/'+folder+"/"+encodeURIComponent(file)+'" target="_blank" rel="noopener">GitHub 查看</a>。</div>'; });
+  });
+
+  // 点赞(全局计数:Abacus serverless · 每浏览器一次 · 轻动画)
+  var ABACUS="https://abacus.jasoncameron.dev", NS="becoming-a-prompt-master";
+  function initLike(btn){
+    if(!btn)return;
+    var counter=btn.dataset.counter, txt=btn.querySelector(".like-txt"), cnt=btn.querySelector(".like-count");
+    var likedKey="liked_"+counter, liked=localStorage.getItem(likedKey)==="1";
+    function setCount(n){ cnt.textContent = (typeof n==="number" && n>0) ? n : ""; }
+    if(liked){ btn.classList.add("liked"); txt.textContent="已喜欢"; }
+    fetch(ABACUS+"/get/"+NS+"/"+counter).then(function(r){ return r.ok?r.json():{value:0}; })
+      .then(function(d){ setCount(d.value||0); }).catch(function(){});
+    btn.addEventListener("click",function(){
+      if(btn.classList.contains("liked")) return;
+      btn.classList.add("liked"); txt.textContent="已喜欢"; localStorage.setItem(likedKey,"1");
+      btn.classList.remove("pop"); void btn.offsetWidth; btn.classList.add("pop");
+      var fh=document.createElement("span"); fh.className="float-heart"; fh.innerHTML=heartSVG;
+      btn.appendChild(fh); setTimeout(function(){ fh.remove(); },900);
+      setCount((parseInt(cnt.textContent,10)||0)+1);
+      fetch(ABACUS+"/hit/"+NS+"/"+counter).then(function(r){ return r.json(); })
+        .then(function(d){ if(d&&typeof d.value==="number") setCount(d.value); }).catch(function(){});
+    });
+  }
+
+  route();
+})();
+</script>
+</body>
+</html>

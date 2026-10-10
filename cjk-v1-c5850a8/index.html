@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>导出运行时无系统字体回退律 · CJK 豆腐块 · 蛛网之上</title><meta name="description" content="桌面端会用操作系统字体自动补全字体里缺失的字形,导出到 Web/移动/嵌入式运行时后没有系统字体可借,凡是用「不含目标字形的字体」渲染的文本一律变豆腐块(□)。 跨字体、跨语言的项目必须给每个「主力字体」显式挂 fallbacks,把桌面那…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/cjk-v1-c5850a8/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="导出运行时无系统字体回退律 · CJK 豆腐块"><meta property="og:description" content="桌面端会用操作系统字体自动补全字体里缺失的字形,导出到 Web/移动/嵌入式运行时后没有系统字体可借,凡是用「不含目标字形的字体」渲染的文本一律变豆腐块(□)。 跨字体、跨语言的项目必须给每个「主力字体」显式挂 fallbacks,把桌面那…"><meta property="og:url" content="https://tiaozhuxiansheng.com/cjk-v1-c5850a8/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="导出运行时无系统字体回退律 · CJK 豆腐块"><meta name="twitter:description" content="桌面端会用操作系统字体自动补全字体里缺失的字形,导出到 Web/移动/嵌入式运行时后没有系统字体可借,凡是用「不含目标字形的字体」渲染的文本一律变豆腐块(□)。 跨字体、跨语言的项目必须给每个「主力字体」显式挂 fallbacks,把桌面那…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-24T15:39:31+08:00"><meta property="article:modified_time" content="2026-09-29T16:18:43+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/字体"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/cjk-v1-c5850a8/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/cjk-v1-c5850a8/","url":"https://tiaozhuxiansheng.com/cjk-v1-c5850a8/","headline":"导出运行时无系统字体回退律 · CJK 豆腐块","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"桌面端会用操作系统字体自动补全字体里缺失的字形,导出到 Web/移动/嵌入式运行时后没有系统字体可借,凡是用「不含目标字形的字体」渲染的文本一律变豆腐块(□)。 跨字体、跨语言的项目必须给每个「主力字体」显式挂 fallbacks,把桌面那…","datePublished":"2026-07-24T15:39:31+08:00","dateModified":"2026-09-29T16:18:43+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/字体"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"导出运行时无系统字体回退律 · CJK 豆腐块","item":"https://tiaozhuxiansheng.com/cjk-v1-c5850a8/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-24T15:39:31+08:00">2026-07-24</time></span> <span>更新于 <time datetime="2026-09-29T16:18:43+08:00">2026-09-29</time></span> <span>约 5 分钟读完 · 1,857 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>8 节</i></summary> <ol> <li class="d2"><a href="#一句话律">一句话律</a></li><li class="d2"><a href="#踩坑现场">踩坑现场</a></li><li class="d2"><a href="#修法把隐式-os-回退固化成显式-fallbacks">修法:把隐式 OS 回退固化成显式 fallbacks</a></li><li class="d2"><a href="#配套坑同场次">配套坑(同场次)</a></li><li class="d2"><a href="#如何使用--判断">如何使用 / 判断</a></li><li class="d2"><a href="#第二例macos-桌面版也借不到系统字体2026-09-29">第二例:macOS 桌面版也借不到系统字体(2026-09-29)</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#版本">版本</a></li> </ol> </details> <h1 id="导出运行时无系统字体回退律--cjk-豆腐块">导出运行时无系统字体回退律 · CJK 豆腐块</h1>
+<blockquote>
+<p>入档:2026-07-24
+来源:LastStand(Godot 4.7 FPS)Web 导出验证 —— 设置界面档位值中文全变豆腐块,桌面版一切正常
+验证状态:⭐⭐ 两例——LastStand Web 导出(2026-07-24)· desk-pond macOS 导出(2026-09-29,见文末「第二例」);两例都已修复
+性质:导出/嵌入式运行时的字体坑,跨引擎通用(Godot Web/移动/<strong>macOS 桌面</strong>、任何 WASM/无系统字体沙箱)</p>
+</blockquote>
+<hr>
+<h2 id="一句话律">一句话律</h2>
+<p><strong>桌面端会用操作系统字体自动补全字体里缺失的字形,导出到 Web/移动/嵌入式运行时后没有系统字体可借,凡是用「不含目标字形的字体」渲染的文本一律变豆腐块(□)。</strong> 跨字体、跨语言的项目必须给每个「主力字体」显式挂 <code>fallbacks</code>,把桌面那份隐式 OS 回退<strong>固化进导出</strong>——桌面测不出来,只有到目标运行时才现形。</p>
+<hr>
+<h2 id="踩坑现场">踩坑现场</h2>
+<p>LastStand 首次 Web 验证导出,进游戏 → 设置 → DISPLAY:</p>
+<ul>
+<li><strong>左侧标签</strong>(显示模式 / 分辨率 / 垂直同步 / 帧率限制)—— 正常</li>
+<li><strong>右侧红框里的值</strong>(窗口 / 全屏 / 无边框、关闭 / 启用、无限制……)—— 全是豆腐块 □□□□</li>
+</ul>
+<p>桌面版这些值中文完全正常,只有 Web 出问题。</p>
+<p>根因:值由 <code>CustomCycleButton</code> 用 <code>draw_string(font, …)</code> 绘制,其 <code>font</code> 硬编码为 <strong>JetBrains Mono</strong>(纯拉丁等宽,无 CJK 字形)。标签用的是 NotoSansSC(自带中文)所以没事。</p>
+<p><strong>为什么桌面看不出来</strong>:Godot 桌面端 TextServer 找不到字形时会<strong>回退到操作系统字体</strong>(Windows 有一大堆中文字体),悄悄把「窗口」画出来了。Web 导出的运行时<strong>没有任何系统字体</strong>可借,回退链一空,直接吐豆腐。这层 OS 回退是隐式的、不进包的,所以桌面自测<strong>永远测不出这个 bug</strong>。</p>
+<hr>
+<h2 id="修法把隐式-os-回退固化成显式-fallbacks">修法:把隐式 OS 回退固化成显式 fallbacks</h2>
+<p>给每个可能用来画非本字符集文本的「主力字体」显式挂 fallback。LastStand 的做法——4 个拉丁 FontVariation(JBMono ×2、Oswald ×2)各加一条 NotoSansSC 回退:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[gd_resource type="FontVariation" load_steps=3 format=3]</span></span>
+<span class="line"><span>[ext_resource type="FontFile" path="res://assets/fonts/JetBrainsMono-VF.ttf" id="1_ttf"]</span></span>
+<span class="line"><span>[ext_resource type="FontFile" path="res://assets/fonts/NotoSansSC-VF.ttf" id="2_noto"]</span></span>
+<span class="line"><span>[resource]</span></span>
+<span class="line"><span>base_font = ExtResource("1_ttf")</span></span>
+<span class="line"><span>fallbacks = Array[Font]([ExtResource("2_noto")])</span></span>
+<span class="line"><span>variation_opentype = { "wght": 500 }</span></span></code></pre>
+<p>要点:</p>
+<ul>
+<li><strong>在拉丁字体上挂 CJK 回退</strong>(而非反过来):拉丁字体负责数字/百分号的等宽观感,遇到中文自动落到 Noto,视觉设计不变。</li>
+<li><strong>一次改全局主力字体,不要逐控件修</strong>:病在字体资源层,改 4 个 <code>.tres</code> 就覆盖了全游戏所有「拉丁字体画中文」的地方,比一个个界面补更稳。</li>
+<li><strong>零体积代价</strong>:回退字体(NotoSansSC)本就因别处在用已打进包,<code>fallbacks</code> 只是加个引用,pck 只涨了 0.5KB。前提是回退字体已在导出资源里——若是新引入的大 CJK 字体,记得配子集控体积。</li>
+</ul>
+<hr>
+<h2 id="配套坑同场次">配套坑(同场次)</h2>
+<p>同一次 Godot Web 导出还踩了两个,一并记:</p>
+<ol>
+<li><strong>headless <code>--export</code> 的 “configuration errors” 不吐细节</strong> —— 命令行只报「因配置错误无法导出」,不说缺什么。我据此手搓猜了半天「preset 字段不全」,全错。<strong>真相是编辑器 GUI 一打开就逐条红字点破</strong>(此处是「目标平台需要 ETC2/ASTC 纹理压缩」)。教训:<strong>卡在笼统配置错误时,别在 headless 里猜字段,开一次编辑器 GUI 是最快的诊断器</strong>。参见 <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> 的反面——我把「诊断不足」当成了「结论确定」。</li>
+<li><strong>Web/Compatibility 渲染要求纹理 ETC2/ASTC 压缩</strong> —— 项目需开 <code>textures/vram_compression/import_etc2_astc=true</code>,会给每张贴图再存一份 ETC2 变体(与桌面 s3tc 并存)。这是上面那条笼统报错的实际内容。</li>
+</ol>
+<hr>
+<h2 id="如何使用--判断">如何使用 / 判断</h2>
+<p>出现「桌面正常、导出后部分文字变豆腐块」时,先怀疑<strong>字体缺字形 + 运行时无系统回退</strong>,而不是编码/乱码:</p>
+<ul>
+<li>症状特征:<strong>同一界面有的文字正常、有的豆腐</strong>——正常的那些用了含字形的字体,豆腐的用了缺字形的字体(常是等宽/标题类拉丁字体拿去画了中文)。</li>
+<li>适用范围不止 Godot:任何「桌面/编辑器有系统字体兜底、目标端没有」的场景都会中招(WASM、嵌入式、精简容器、无 fontconfig 的 Linux 镜像)。</li>
+<li>修的方向永远是「<strong>把兜底显式化并打进产物</strong>」,不是「换一种编码」。</li>
+</ul>
+<hr>
+<h2 id="第二例macos-桌面版也借不到系统字体2026-09-29">第二例:macOS 桌面版也借不到系统字体(2026-09-29)</h2>
+<p>desk-pond(工位池塘)v0.6.0 的 macOS 导出版,界面中文<strong>全部</strong>是豆腐块。Windows 版一直正常,Web 版早就打包了像素中文字体,也正常。作者没有 Mac,是用 GitHub Actions 的 macOS runner 录帧截图才看到的(见 <a href="/above-the-web/mac-macos-githubactions-v1-3b7ddc1/" class="wikilink">无Mac冒烟测试macOS版_GitHubActions截图验字体_v1</a>)。</p>
+<p>这一例把律的适用范围从”没有系统字体的运行时”扩大了:</p>
+<ul>
+<li>**有系统字体,也不等于引擎会去借。**macOS 明明装着苹方,但导出版的默认字体(引擎内置字体,不含 CJK)在 macOS 上没有自动回退到它。桌面系统之间行为也不一样:Windows 能自动回退,macOS 不能。只在 Windows 上测,永远测不出来。</li>
+<li>**显式点名系统字体更危险。**第一次修复用 <code>SystemFont</code> 点名 “PingFang SC” 等字体,结果在 CI 的 macOS 上解析成一个 FreeType 加载不了的空路径字体集(name 为空、32 个 face),整个默认字体失效,<strong>连数字都不画了</strong>,比豆腐块还糟。系统字体的名字、路径、打包格式随系统版本变,不可控。</li>
+<li><strong>修法仍然是”把兜底打进产物”</strong>:<code>default_font = FontVariation(base_font = ThemeDB.fallback_font, fallbacks = [打包的中文字体])</code>。拉丁字符走引擎默认字体,中文落到打包的像素中文字体,和 Web / 手机版同一套字形。零新增体积,因为像素字体本来就为 Web 版打进了包。</li>
+<li><strong>判断顺序</strong>:先加一个调试参数(<code>--font-debug</code>),把各字体的解析结果、是否包含”中”字打印出来,再动手修。第一次修复就是没打印、凭经验点名系统字体,才修坏的。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>
+<p>第二例的发现方法:<a href="/above-the-web/mac-macos-githubactions-v1-3b7ddc1/" class="wikilink">无Mac冒烟测试macOS版_GitHubActions截图验字体_v1</a> · 来源复盘 <a href="/above-the-web/2026-09-29-v1-03d7c00/" class="wikilink">2026-09-29_右下角的池塘_游戏宣传微电影_实录混剪到双语字幕发布_复盘_v1</a></p>
+</li>
+<li>
+<p>字形家族姊妹律:<a href="%E5%AD%97%E5%BD%A2%E9%9A%8F%E5%B9%B3%E5%8F%B0/%E7%89%88%E6%9C%AC%E7%BC%BA%E5%A4%B1">[emoji字形版本兼容律_v1]</a>· <a href="/above-the-web/cjk-v1-205e3ac/" class="wikilink">CJK假斜体语言感知律_v1</a>(CJK 无真斜体)</p>
+</li>
+<li>
+<p>所见非真相家族:<a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a> —— 同样是「本机环境悄悄替你做了事,换环境就露馅」</p>
+</li>
+<li>
+<p>诊断心法:<a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> · <a href="/above-the-web/v1-f404c4e/" class="wikilink">变通方案不等于故障点_v1</a> —— headless 笼统报错别当定论,换更强工具复现</p>
+</li>
+<li>
+<p>同线工程(LastStand→Toy):<a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/" class="wikilink">2026-07-11_B站Toy同步事故复盘_版本指纹与外部cron兜底_v1</a></p>
+</li>
+<li>
+<p>Web 侧应用:⚠️ <a href="/above-the-web/v1-ffe7a6e/" class="wikilink">美工改稿全站落地_跨稿重复才是规范_v1</a> —— 该次把 PB Arena 正文字体从 Noto Serif SC 换成 Noto Sans SC 时,没有只写一个网络字体名,而是显式挂 <code>system-ui, -apple-system, "PingFang SC", "Microsoft YaHei"</code> 兜底栈;同一条「把兜底固化进产物」在 Web 端的形态——网络字体加载失败时不至于掉到无 CJK 字形的默认族</p>
+</li>
+<li>
+<p>库外底料(裸路径):<code>E:\last-stand</code> commit <code>511184d</code>(字体回退)+ <code>9a46d7f</code>(Web preset)· <code>assets/fonts/font_*.tres</code></p>
+</li>
+</ul>
+<hr>
+<h2 id="版本">版本</h2>
+<ul>
+<li>v1(2026-07-24):首次入档,基于 LastStand Web 验证导出的豆腐块定位与修复。</li>
+<li>v1 补丁(2026-09-29):第二例 desk-pond macOS 导出,升 ⭐⭐;补”有系统字体也不等于会借""显式点名系统字体更危险”。</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/字体</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-29T16:18:43+08:00">2026-09-29</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E5%AF%BC%E5%87%BA%E8%BF%90%E8%A1%8C%E6%97%B6%E6%97%A0%E7%B3%BB%E7%BB%9F%E5%AD%97%E4%BD%93%E5%9B%9E%E9%80%80%E5%BE%8B_CJK%E8%B1%86%E8%85%90%E5%9D%97_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E5%AF%BC%E5%87%BA%E8%BF%90%E8%A1%8C%E6%97%B6%E6%97%A0%E7%B3%BB%E7%BB%9F%E5%AD%97%E4%BD%93%E5%9B%9E%E9%80%80%E5%BE%8B_CJK%E8%B1%86%E8%85%90%E5%9D%97_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li><li><a href="/above-the-web/skill-index-b155e36/">SKILL_INDEX — Skill 使用索引</a></li><li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/mac-macos-githubactions-v1-3b7ddc1/">没有 Mac 也能冒烟测试 macOS 版：GitHub Actions 截图验字体</a></li><li><a href="/above-the-web/v4-v1-a4608a7/">美工改稿 V4 四屏落地 · 禁止项是待办不是护栏</a></li><li><a href="/above-the-web/v1-ffe7a6e/">美工改稿全站落地 · 跨稿重复才是规范</a></li><li><a href="/above-the-web/2026-09-29-v1-03d7c00/">《右下角的池塘》游戏宣传微电影：AI 屏幕外 + 游戏实录混剪，到双语字幕发布</a></li><li><a href="/above-the-web/2026-07-29-laststand-v0-7-1-v1-c30d506/">LastStand v0.7.1 纯修复版：开发闭环复盘</a></li><li><a href="/above-the-web/v1-75dde95/">可行性生死线前置律 · 移植先探一票否决约束，再修正确性</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/"> <span class="card-cat">平台工程</span> <h3>B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</h3> <p>- 项目:风眼 · Typhoon Eye(台风实况 + 分级应急预案,零依赖静态单页;仓库 Mr-Salticidae/typhoon-e…</p> </a><a class="card" href="/above-the-web/cjk-v1-205e3ac/"> <span class="card-cat">方法论与洞察</span> <h3>CJK 假斜体语言感知律</h3> <p>中文没有真斜体,浏览器对 CJK 合成的倾斜(faux-italic)很丑;双语界面别全局上 font-style:italic——用 ht…</p> </a><a class="card" href="/above-the-web/emoji-v1-66bfaaf/"> <span class="card-cat">方法论与洞察</span> <h3>emoji 字形版本兼容律 _v1</h3> <p>对外 UI 里的 emoji 是在赌用户系统字体——Unicode 新版本字形(约 12.0/2019 之后)在旧 Windows 上渲染成…</p> </a><a class="card" href="/above-the-web/v1-3fce0f1/"> <span class="card-cat">方法论与洞察</span> <h3>交付前实测证伪律</h3> <p>别交付未验证的&quot;应该能行&quot;。任何&quot;X 应该有效&quot;的假设，交付前先写最小探针去证伪它——尤其跨平台、跨环境、跨版本的行为假设，它们最爱静默失效…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话律" data-toc-link="一句话律">一句话律</a></li><li class="d2"><a href="#踩坑现场" data-toc-link="踩坑现场">踩坑现场</a></li><li class="d2"><a href="#修法把隐式-os-回退固化成显式-fallbacks" data-toc-link="修法把隐式-os-回退固化成显式-fallbacks">修法:把隐式 OS 回退固化成显式 fallbacks</a></li><li class="d2"><a href="#配套坑同场次" data-toc-link="配套坑同场次">配套坑(同场次)</a></li><li class="d2"><a href="#如何使用--判断" data-toc-link="如何使用--判断">如何使用 / 判断</a></li><li class="d2"><a href="#第二例macos-桌面版也借不到系统字体2026-09-29" data-toc-link="第二例macos-桌面版也借不到系统字体2026-09-29">第二例:macOS 桌面版也借不到系统字体(2026-09-29)</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#版本" data-toc-link="版本">版本</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

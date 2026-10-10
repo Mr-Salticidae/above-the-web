@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>ChatGPT Windows 桌面版安装排障与账号合规边界 · 蛛网之上</title><meta name="description" content="ChatGPT Windows 版安装失败时，按 使用资格 → Microsoft Store 分发 → 网络链路 → 账号与会话 四层排查；一次机器上的地区、TUN、DNS 或 403 现象只能证明当前层发生了什么，不能直接推导成“封号规…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/chatgpt-windows-v1-8152abb/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="ChatGPT Windows 桌面版安装排障与账号合规边界"><meta property="og:description" content="ChatGPT Windows 版安装失败时，按 使用资格 → Microsoft Store 分发 → 网络链路 → 账号与会话 四层排查；一次机器上的地区、TUN、DNS 或 403 现象只能证明当前层发生了什么，不能直接推导成“封号规…"><meta property="og:url" content="https://tiaozhuxiansheng.com/chatgpt-windows-v1-8152abb/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="ChatGPT Windows 桌面版安装排障与账号合规边界"><meta name="twitter:description" content="ChatGPT Windows 版安装失败时，按 使用资格 → Microsoft Store 分发 → 网络链路 → 账号与会话 四层排查；一次机器上的地区、TUN、DNS 或 403 现象只能证明当前层发生了什么，不能直接推导成“封号规…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-14T21:45:30+08:00"><meta property="article:modified_time" content="2026-09-03T16:01:24+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/账号安全"><meta property="article:tag" content="主题/Windows桌面应用"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/chatgpt-windows-v1-8152abb/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/chatgpt-windows-v1-8152abb/","url":"https://tiaozhuxiansheng.com/chatgpt-windows-v1-8152abb/","headline":"ChatGPT Windows 桌面版安装排障与账号合规边界","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"ChatGPT Windows 版安装失败时，按 使用资格 → Microsoft Store 分发 → 网络链路 → 账号与会话 四层排查；一次机器上的地区、TUN、DNS 或 403 现象只能证明当前层发生了什么，不能直接推导成“封号规…","datePublished":"2026-07-14T21:45:30+08:00","dateModified":"2026-09-03T16:01:24+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/账号安全, 主题/Windows桌面应用"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"ChatGPT Windows 桌面版安装排障与账号合规边界","item":"https://tiaozhuxiansheng.com/chatgpt-windows-v1-8152abb/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a> <span aria-hidden="true">/</span><span>账号与访问</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-14T21:45:30+08:00">2026-07-14</time></span> <span>更新于 <time datetime="2026-09-03T16:01:24+08:00">2026-09-03</time></span> <span>约 7 分钟读完 · 2,544 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#先划清边界">先划清边界</a></li><li class="d2"><a href="#四层排障法">四层排障法</a></li><li class="d3"><a href="#第一层先确认产品与系统资格">第一层：先确认产品与系统资格</a></li><li class="d3"><a href="#第二层分清商店不可用和网络失败">第二层：分清“商店不可用”和“网络失败”</a></li><li class="d3"><a href="#第三层把网络检测当证据不当占卜">第三层：把网络检测当证据，不当占卜</a></li><li class="d3"><a href="#第四层安装成功后处理账号与会话">第四层：安装成功后处理账号与会话</a></li><li class="d2"><a href="#对原始实测的校正">对原始实测的校正</a></li><li class="d2"><a href="#最短处置清单">最短处置清单</a></li><li class="d2"><a href="#官方参考">官方参考</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="chatgpt-windows-桌面版安装排障与账号合规边界">ChatGPT Windows 桌面版安装排障与账号合规边界</h1>
+<blockquote>
+<p>入档：2026-07-14
+来源：<code>D:\Users\Administrator\Desktop\ChatGPT安装失败修复与防封号防护指南.md</code> 的一次 Windows 11 + Clash Verge 实测，经 OpenAI / Microsoft 官方资料校正（<code>C:\Users\Administrator\Downloads\</code> 下另有同源副本，内容一致，不另立档）
+状态：安装诊断顺序可复用；地区、代理与风控结论已按官方口径收紧
+补记 2026-08-03：回读原始副本，补入第三层的只读读数命令与判读经验——原文里这部分属于可靠读数，此前随风控主张一起被整段略去了</p>
+</blockquote>
+<h2 id="一句话总结">一句话总结</h2>
+<p>ChatGPT Windows 版安装失败时，按 <strong>使用资格 → Microsoft Store 分发 → 网络链路 → 账号与会话</strong> 四层排查；一次机器上的地区、TUN、DNS 或 403 现象只能证明当前层发生了什么，不能直接推导成“封号规则”。</p>
+<h2 id="先划清边界">先划清边界</h2>
+<ul>
+<li>OpenAI 官方列有 ChatGPT 支持的国家和地区；<strong>从未列出的地区访问或向其提供访问，可能导致账号被封锁或暂停</strong>。</li>
+<li>Microsoft 建议只在本人确实长期迁往新国家或地区时修改 Microsoft Store 地区；商店余额、订阅与已购内容可能受影响。</li>
+<li>OpenAI 官方把异常地点登录、使用模式突变、多会话并发列为可疑活动信号；遇到相关警告时，官方排障建议反而包括<strong>停用 VPN / 代理、退出全部设备、改密码、开 2FA，并在单一可信设备和网络上重试</strong>。</li>
+</ul>
+<p>因此，本文只用于<strong>合法、受支持地区内的安装与连接排障</strong>，不把伪装地区、绕过访问限制或频繁切换出口包装成“防封号”。</p>
+<h2 id="四层排障法">四层排障法</h2>
+<h3 id="第一层先确认产品与系统资格">第一层：先确认产品与系统资格</h3>
+<ol>
+<li>只从 OpenAI 官方下载页或 Microsoft Store 获取安装程序，不用第三方重打包版本。</li>
+<li>核对系统要求：OpenAI 当前帮助页写明 Windows 10（x64 / arm64）17763.0 或更高版本。</li>
+<li>核对本人当前所在地是否在 OpenAI 官方支持列表内；若不在，停止把后续问题当成普通网络故障。</li>
+<li>公司或学校设备还要核对 IT 管理策略；ChatGPT 通过 Microsoft Store 分发，能否安装会受组织的商店策略控制。</li>
+</ol>
+<h3 id="第二层分清商店不可用和网络失败">第二层：分清“商店不可用”和“网络失败”</h3>
+<p>先记录完整报错文字，不要只凭“安装不了”下结论：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>现象</th><th>优先检查</th><th>不应直接推断</th></tr></thead><tbody><tr><td>“此产品在你的市场中未提供”</td><td>Windows / Microsoft 账号商店地区是否与本人实际长期所在地一致</td><td>不能仅凭这一句断定是代理坏了</td></tr><tr><td>商店页面打不开、下载一直转圈</td><td>Store 服务、系统更新、组织策略、网络链路</td><td>不能先把地区改成与本人不符的国家</td></tr><tr><td>安装完成但登录页打不开</td><td>OpenAI 服务可达性、代理 / 安全软件、账号会话</td><td>不能回头认定安装包损坏</td></tr></tbody></table>
+<p>若本人确实已经长期迁居，按 Microsoft 官方路径更新真实地区：Windows 11 的“设置 → 时间和语言 → 语言和区域 → 国家或地区”。不要用脚本把“改地区”当成通用安装按钮。</p>
+<h3 id="第三层把网络检测当证据不当占卜">第三层：把网络检测当证据，不当占卜</h3>
+<p>可做的只读检查：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 系统版本</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">winver</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># Windows 当前地区</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">Get-WinHomeLocation</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 系统代理配置</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">reg query </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> /</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">v ProxyEnable</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">reg query </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> /</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">v ProxyServer</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># DNS 结果</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">Resolve-DnsName</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> chatgpt.com</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 指定代理仅验证是否收到 HTTP 响应</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">curl.exe</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">x http:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">127.0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0.1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">7897</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">I https:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">chatgpt.com</span></span></code></pre>
+<p>读结果时遵守三条：</p>
+<ol>
+<li><strong>HTTP 403 只说明请求到达了一个会返回 403 的服务端 / 边缘节点</strong>。它可能与 VPN、IP 地理位置或可疑流量有关，但单次 403 不能独立证明“IP 已被 OpenAI 风控”。应结合页面正文、Cloudflare Ray ID、时间戳和官方报错说明。</li>
+<li>Clash 的 <code>fake-ip</code> 模式可能让 DNS 返回 <code>198.18.0.0/15</code> 保留网段地址；这通常是代理内部映射，不等于 DNS 泄露。判断泄露要比较系统解析、代理解析和真实出口，而不是看到假 IP 就判定安全或危险。</li>
+<li>本地 HTTP 代理与 TUN 是两种接管路径。一次实测里“开 TUN 后 Store 能下载”可以记录为<strong>该环境的有效修复</strong>，但不能泛化成“所有 Microsoft Store / UWP 应用都必须开 TUN”。企业代理、应用容器权限、安全软件和 Store 自身状态都可能造成相同表象。</li>
+</ol>
+<h4 id="只读读数确认链路到底走的哪条路">只读读数：确认链路到底走的哪条路</h4>
+<p>上面三条说的是“不要过度解读”，但链路本身通没通、走的哪一侧，是能读出来的。以下命令只产生<strong>读数</strong>，不产生风控结论：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="powershell"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 代理端口是否真的在听（Clash 没起来或换过端口时，先用这条排除）</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">netstat </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">ano </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">|</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> findstr </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">":7897"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># TUN 虚拟网卡是否已装上（开 TUN 会创建 wintun 适配器）</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">ipconfig </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">|</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> findstr </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">i </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"tun"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 代理侧 vs 直连侧对照：同一个 URL 打两次，定位失败发生在哪一侧</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">curl.exe</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">x http:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">127.0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0.1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">7897</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">I https:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">chatgpt.com</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">curl.exe</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">noproxy </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"*"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">I https:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">chatgpt.com</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 当前实际出口 IP 与归属（确认自己从哪出网、换节点有没有生效）</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">curl.exe</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> -</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">x http:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">127.0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">.</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0.1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">7897</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> https:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">ipinfo.io</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">json</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 直连 IPv6 出口是否为空（非空说明 IPv6 绕开了代理）</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">curl.exe</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> --</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">noproxy </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"*"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> https:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">api64.ipify.org</span></span></code></pre>
+<p>三条判读经验：</p>
+<ol>
+<li><strong>“直连也能出网”是 TUN 已接管全局的证据。</strong> 纯系统代理模式下，<code>--noproxy "*"</code> 打受限域名应当超时；开 TUN 后这条也通了，说明流量在网卡层被接管——这正是那些不走 <code>127.0.0.1</code> 环回地址的应用（如 Microsoft Store）能恢复下载的机制。反过来，TUN 开着但直连仍不通，就该怀疑 TUN 没真正生效，而不是继续往下改别的设置。</li>
+<li><strong>解析结果落在明显属于其他大厂的 IP 段，是污染指纹。</strong> 本次 <code>nslookup chatgpt.com</code> 一度返回 Meta 的地址段——既不是 OpenAI 的，也不是 fake-ip 的保留网段，属于典型的解析被投毒。这与 <code>198.18.0.0/15</code> 要分开看：后者是 Clash 内部映射，前者才是异常。</li>
+<li><strong>一次只改一个变量，改完把上面几条重跑一遍。</strong> 开 TUN、换节点、改 DNS 三件事同时做，事后无法归因是哪一件修好的——这也是本文所有结论都只敢写成“该环境有效”而非“普遍定律”的原因。</li>
+</ol>
+<h3 id="第四层安装成功后处理账号与会话">第四层：安装成功后处理账号与会话</h3>
+<p>日常安全纪律应优先采用 OpenAI 明确建议的做法：</p>
+<ul>
+<li>使用唯一强密码并开启 2FA；</li>
+<li>不共享账号，不维持异常数量的并发会话；</li>
+<li>收到“Suspicious Activity”时先退出全部设备、改密码、清理会话，再用一个可信设备和网络重试；</li>
+<li>保存报错截图、发生时间（含时区）、设备 / 系统信息、Ray ID 或 Request ID，持续失败再交给 OpenAI Support；</li>
+<li>不把“系统时区必须与出口 IP 完全一致”“中文语言会触发封号”“数据中心 IP 一定封号”等未经官方证实的说法写成规则。</li>
+</ul>
+<h2 id="对原始实测的校正">对原始实测的校正</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>原始判断</th><th>入库后的结论</th></tr></thead><tbody><tr><td>中国区 Microsoft Store 必然拒载 ChatGPT</td><td>单次环境可能出现地区不可用；先按完整报错核对 Store 可用性与真实地区，不写成无条件因果</td></tr><tr><td>UWP 默认连不上 <code>127.0.0.1</code>，所以必须开 TUN</td><td>TUN 在本次机器上修复了下载链路；是否为根因仍需应用级证据，作为案例经验而非普遍定律</td></tr><tr><td>代理请求返回 403 = IP 被风控</td><td>证据不足；403 需结合响应正文、标识与官方故障说明定性</td></tr><tr><td>TLS 1.0 / 1.1 / 1.2 / 1.3 全部勾选更稳</td><td>删除。TLS 1.0 / 1.1 已被弃用；现代客户端应优先 TLS 1.2+，不要为排障无差别重开旧协议</td></tr><tr><td>时区与节点差一小时会触发封号</td><td>OpenAI 未公开这条确定规则；异常地点与使用模式可能触发安全提醒，但不要伪造系统环境</td></tr><tr><td>保持固定代理、伪装地区就是防封号</td><td>错误 framing。官方底线是从受支持地区使用、遵守条款、保护账号；收到可疑活动提醒时官方建议可能包括停用 VPN / 代理</td></tr></tbody></table>
+<h2 id="最短处置清单">最短处置清单</h2>
+<ol>
+<li>截下完整报错，不急着改系统设置。</li>
+<li>核对官方支持地区、Windows 版本与 Store / IT 策略。</li>
+<li>判断失败发生在商店展示、下载、安装、启动还是登录。</li>
+<li>用只读命令核对地区、代理、DNS 和 HTTP 响应；一次只改一个变量。</li>
+<li>若本人真实地区配置错误，按 Microsoft 官方界面修正；否则不要伪造地区。</li>
+<li>保留现代 TLS 默认值，不开启 TLS 1.0 / 1.1。</li>
+<li>遇到账号安全提醒，按 OpenAI 官方流程收敛到单设备、单可信网络，并处理密码、2FA 和会话。</li>
+</ol>
+<h2 id="官方参考">官方参考</h2>
+<ul>
+<li><a href="https://help.openai.com/en/articles/9982051-using-the-chatgpt-windows-app">OpenAI：Using the ChatGPT Windows app</a></li>
+<li><a href="https://help.openai.com/en/articles/7947663-chatgpt-supported-countries">OpenAI：ChatGPT Supported Countries</a></li>
+<li><a href="https://help.openai.com/en/articles/10471992-why-am-i-receiving-a-suspicious-activity-alert">OpenAI：Why am I receiving a Suspicious Activity Alert?</a></li>
+<li><a href="https://help.openai.com/en/articles/7967834-why-am-i-getting-sorry-you-have-been-blocked-error">OpenAI：Why am I getting “Sorry, you have been blocked”?</a></li>
+<li><a href="https://help.openai.com/en/articles/10562188">OpenAI：Why Was My OpenAI Account Deactivated?</a></li>
+<li><a href="https://support.microsoft.com/en-us/accounts-billing/change-your-country-or-region-in-microsoft-store">Microsoft：Change your country or region in Microsoft Store</a></li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/secauthn/tls-10-11-deprecation-in-windows">Microsoft：TLS 1.0 and TLS 1.1 deprecation in Windows</a></li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 平台工程区入口；本文归入“账号与访问”</li>
+<li><a href="/above-the-web/2026-07-14-vpn-guard-v1-7eff1d0/" class="wikilink">2026-07-14_vpn-guard从工具到宣传片_全链路复盘_v1</a> —— 本次原始排障引用的网络体检来源；本文补上“检测结果不等于账号风控规则”的边界</li>
+<li><a href="/above-the-web/github-2fa-totp-v1-f9e47bb/" class="wikilink">GitHub强制2FA小白处置_TOTP原理与离线生成器_v1</a> —— 同属账号访问问题；对照“技术排障、账号安全与平台合规要分层处理”</li>
+<li>⚠️ <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> —— 同目录、同一台机器的 Clash 环境，是本文第三层「把网络检测当证据，不当占卜」的展开：本文记下 fake-ip 会让 DNS 返回 <code>198.18.0.0/15</code> 保留网段（内部映射，不等于泄露），那篇补上它的另一面——<strong>这同时让 ping / tracert 等一切基于 IP 的连通性测试失效</strong>，且这类假信号永远是绿的，最容易被当成健康证明</li>
+<li>⭐ <a href="/above-the-web/vs-v1-a9977f1/" class="wikilink">信任资产保得住造不出_账号基线vs人群先验_v1</a> —— 同域互补:本篇校正「403=风控」「改地区/时区即可防封号」等<strong>过度推断</strong>(否定侧),那篇给出正面解释——真正起作用的是账号基线与人群先验的差别,而那一层任何脚本都碰不到</li>
+<li><a href="/above-the-web/ubr-win10-v1-f778c67/" class="wikilink">炉石传说安装被拒_UBR判断假正常系统与Win10原地升级_v1</a> —— 同为 Windows 桌面软件「装不上」的排障,但根因在<strong>另一层</strong>:本篇纠偏的是账号/网络链路层的过度归因,那篇补上「系统版本资格」层——版本号看着正常但 UBR 异常低(假正常系统),最低系统要求判定会静默拒绝安装</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/账号安全</span><span class="tag">主题/Windows桌面应用</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-03T16:01:24+08:00">2026-09-03</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/ChatGPT_Windows%E6%A1%8C%E9%9D%A2%E7%89%88%E5%AE%89%E8%A3%85%E6%8E%92%E9%9A%9C%E4%B8%8E%E8%B4%A6%E5%8F%B7%E5%90%88%E8%A7%84%E8%BE%B9%E7%95%8C_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/ChatGPT_Windows%E6%A1%8C%E9%9D%A2%E7%89%88%E5%AE%89%E8%A3%85%E6%8E%92%E9%9A%9C%E4%B8%8E%E8%B4%A6%E5%8F%B7%E5%90%88%E8%A7%84%E8%BE%B9%E7%95%8C_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/github-2fa-totp-v1-f9e47bb/">GitHub 强制 2FA 的小白处置 · TOTP 原理与离线生成器</a></li><li><a href="/above-the-web/ubr-win10-v1-f778c67/">炉石传说安装被拒：UBR 判断假正常系统与 Win10 原地升级</a></li><li><a href="/above-the-web/2026-07-14-vpn-guard-v1-7eff1d0/">vpn-guard 全链路复盘：从一个防护需求，到开源工具，到宣传片</a></li><li><a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/">2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</a></li><li><a href="/above-the-web/dns-fake-ip-dns-v1-90e0c85/">DNS 防泄露五层修复 · fake-ip 形同虚设与物理网卡 DNS 绕过</a></li><li><a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/">ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型</a></li><li><a href="/above-the-web/vs-v1-a9977f1/">信任资产保得住、造不出 · 账号基线 vs 人群先验</a></li><li><a href="/above-the-web/tun-codex-cli-v1-4cbeae3/">代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-09-17-vpn-guard-v1-06d9964/"> <span class="card-cat">平台工程</span> <h3>2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘</h3> <p>- 根目录下受 git 跟踪的文件从 30 个减到 20 个。主脚本、residential-asn.txt、webrtc-leak-tes…</p> </a><a class="card" href="/above-the-web/2026-09-06-tun-agent-gui-v1-a8056b4/"> <span class="card-cat">平台工程</span> <h3>2026-09-06 · TUN 开关状态漂移复发 · 三层真相源与 agent 起 GUI 边界 · 复盘</h3> <p>- 截图：Codex CLI「你在 0 秒后停止了」+「正在重新连接 3/5」</p> </a><a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a><a class="card" href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/"> <span class="card-cat">平台工程</span> <h3>B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底</h3> <p>- 项目:风眼 · Typhoon Eye(台风实况 + 分级应急预案,零依赖静态单页;仓库 Mr-Salticidae/typhoon-e…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#先划清边界" data-toc-link="先划清边界">先划清边界</a></li><li class="d2"><a href="#四层排障法" data-toc-link="四层排障法">四层排障法</a></li><li class="d3"><a href="#第一层先确认产品与系统资格" data-toc-link="第一层先确认产品与系统资格">第一层：先确认产品与系统资格</a></li><li class="d3"><a href="#第二层分清商店不可用和网络失败" data-toc-link="第二层分清商店不可用和网络失败">第二层：分清“商店不可用”和“网络失败”</a></li><li class="d3"><a href="#第三层把网络检测当证据不当占卜" data-toc-link="第三层把网络检测当证据不当占卜">第三层：把网络检测当证据，不当占卜</a></li><li class="d3"><a href="#第四层安装成功后处理账号与会话" data-toc-link="第四层安装成功后处理账号与会话">第四层：安装成功后处理账号与会话</a></li><li class="d2"><a href="#对原始实测的校正" data-toc-link="对原始实测的校正">对原始实测的校正</a></li><li class="d2"><a href="#最短处置清单" data-toc-link="最短处置清单">最短处置清单</a></li><li class="d2"><a href="#官方参考" data-toc-link="官方参考">官方参考</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

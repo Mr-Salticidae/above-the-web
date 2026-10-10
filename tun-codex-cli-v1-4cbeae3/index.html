@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障 · 蛛网之上</title><meta name="description" content="- 用户主诉：Codex CLI 在执行指令时反复遇到网络错误，界面显示&#34;正在重新连接 2/5&#34;。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/tun-codex-cli-v1-4cbeae3/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障"><meta property="og:description" content="- 用户主诉：Codex CLI 在执行指令时反复遇到网络错误，界面显示&#34;正在重新连接 2/5&#34;。"><meta property="og:url" content="https://tiaozhuxiansheng.com/tun-codex-cli-v1-4cbeae3/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障"><meta name="twitter:description" content="- 用户主诉：Codex CLI 在执行指令时反复遇到网络错误，界面显示&#34;正在重新连接 2/5&#34;。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-04T18:47:21+08:00"><meta property="article:modified_time" content="2026-09-28T12:15:47+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/网络排障"><meta property="article:tag" content="主题/代理链路"><meta property="article:tag" content="主题/Codex CLI"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/tun-codex-cli-v1-4cbeae3/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/tun-codex-cli-v1-4cbeae3/","url":"https://tiaozhuxiansheng.com/tun-codex-cli-v1-4cbeae3/","headline":"代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 用户主诉：Codex CLI 在执行指令时反复遇到网络错误，界面显示\"正在重新连接 2/5\"。","datePublished":"2026-08-04T18:47:21+08:00","dateModified":"2026-09-28T12:15:47+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/网络排障, 主题/代理链路, 主题/Codex CLI"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障","item":"https://tiaozhuxiansheng.com/tun-codex-cli-v1-4cbeae3/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a> <span aria-hidden="true">/</span><span>账号与访问</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-04T18:47:21+08:00">2026-08-04</time></span> <span>更新于 <time datetime="2026-09-28T12:15:47+08:00">2026-09-28</time></span> <span>约 11 分钟读完 · 4,035 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>23 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d3"><a href="#症状与首轮诊断">症状与首轮诊断</a></li><li class="d3"><a href="#关键发现codex-的-api-端点不是-apiopenaicom">关键发现：Codex 的 API 端点不是 api.openai.com</a></li><li class="d3"><a href="#根因tun--http_proxy-双重路由">根因：TUN + HTTP_PROXY 双重路由</a></li><li class="d3"><a href="#对照实测5-次--2-组">对照实测（5 次 × 2 组）</a></li><li class="d3"><a href="#修复">修复</a></li><li class="d3"><a href="#修复后验证10-次取平均">修复后验证（10 次取平均）</a></li><li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#四条可复用-insight">四条可复用 insight</a></li><li class="d3"><a href="#1-tun--代理环境变量--双重路由有-tun-就不该设代理变量-️首次">1. TUN + 代理环境变量 = 双重路由，有 TUN 就不该设代理变量 ⚠️首次</a></li><li class="d3"><a href="#2-sse--websocket-长连接对握手延迟远比短请求敏感-️首次">2. SSE / WebSocket 长连接对握手延迟远比短请求敏感 ⚠️首次</a></li><li class="d3"><a href="#3-测错了端点就看不到问题--首次">3. 测错了端点就看不到问题 ⭐ 首次</a></li><li class="d3"><a href="#4-用户级环境变量是全局的vpn-guard-注入只影响它启动的那个进程注册表里的影响所有进程-️首次">4. 用户级环境变量是全局的——vpn-guard 注入只影响它启动的那个进程，注册表里的影响所有进程 ⚠️首次</a></li><li class="d2"><a href="#顺手教训">顺手教训</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#复发记录2026-09-08同症状不同根因">复发记录（2026-09-08）：同症状，不同根因</a></li><li class="d2"><a href="#复发记录续2026-09-08-下午二阶根因26mb-大会话--ws-传输">复发记录·续（2026-09-08 下午）：二阶根因——26MB 大会话 × WS 传输</a></li><li class="d3"><a href="#错误本体与故障画像">错误本体与故障画像</a></li><li class="d3"><a href="#排除过程每项都有实测">排除过程（每项都有实测）</a></li><li class="d3"><a href="#机制结论">机制结论</a></li><li class="d3"><a href="#修复按优先级">修复（按优先级）</a></li><li class="d3"><a href="#四条增量判据">四条增量判据</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="代理环境变量遇-tun-双重路由--codex-cli-流式超时排障">代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障</h1>
+<blockquote>
+<p>入档：2026-08-04
+来源：一次「Codex CLI 执行指令时反复显示『正在重新连接 2/5』」的排障会话；本机 Windows 10 Pro + Mihomo Party（mihomo v1.x，TUN 模式 + 系统代理 127.0.0.1:7890 同时开启），Codex CLI 0.146.0-alpha.9.2
+状态：已定位并修复，注册表 + 启动脚本 + vpn-guard 三处落地；验证 10 次取平均，WSS 重连端点延迟下降 85%</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<h3 id="症状与首轮诊断">症状与首轮诊断</h3>
+<ul>
+<li>用户主诉：Codex CLI 在执行指令时反复遇到网络错误，界面显示”正在重新连接 2/5”。</li>
+<li>机器环境：Mihomo Party 运行中，出口 IP 103.151.173.208（东京，日本，UTC+9），TUN 模式活跃，系统代理 127.0.0.1:7890 同时开启。</li>
+<li><code>codex doctor</code> 诊断：数据库健康，219 个 active rollout 文件（2.1 GB），logs_2.sqlite 达 701 MB；无网络层报错。</li>
+<li>日志数据库（<code>logs_2.sqlite</code>）检索到关键条目：
+<ul>
+<li><code>codex_app_server_transport::transport::remote_control::websocket</code> — 反复 “connecting to app-server remote control websocket”（<code>wss://chatgpt.com/backend-api/wham/remote/control/server</code>）</li>
+<li><code>codex_models_manager::manager</code> — ERROR: “failed to refresh available models: timeout waiting for child process to exit”</li>
+<li><code>codex_memories_write::guard</code> — “failed to fetch rate limits err=error sending request for url (<a href="https://chatgpt.com/backend-api/wham/usage">https://chatgpt.com/backend-api/wham/usage</a>)“</li>
+</ul>
+</li>
+</ul>
+<h3 id="关键发现codex-的-api-端点不是-apiopenaicom">关键发现：Codex 的 API 端点不是 api.openai.com</h3>
+<p>日志里所有请求都打向 <code>chatgpt.com/backend-api/...</code>，而非 <code>api.openai.com</code>。首轮测试只测了 <code>api.openai.com</code>，延迟正常（0.85s），差点误判”网络没问题”。切换到 <code>chatgpt.com</code> 端点后才暴露问题。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>端点</th><th>HTTP</th><th>TLS 握手</th><th>首字节</th></tr></thead><tbody><tr><td><code>api.openai.com/v1/models</code></td><td>401</td><td>0.85s</td><td>1.24s</td></tr><tr><td><code>chatgpt.com/</code></td><td>403</td><td>1.09s</td><td>1.39s</td></tr><tr><td><code>chatgpt.com/backend-api/codex/models</code></td><td>401</td><td>2.54s</td><td><strong>3.83s</strong></td></tr><tr><td><code>chatgpt.com/backend-api/wham/usage</code></td><td>401</td><td>1.55s</td><td>2.01s</td></tr><tr><td>WSS <code>chatgpt.com/wham/remote/control/server</code></td><td>400</td><td><strong>3.47s</strong></td><td><strong>4.57s</strong></td></tr></tbody></table>
+<p>WSS 端点 4.57 秒——这正是日志中反复重连的那个连接。</p>
+<h3 id="根因tun--http_proxy-双重路由">根因：TUN + HTTP_PROXY 双重路由</h3>
+<p>注册表 <code>HKCU\Environment</code> 中存有用户级环境变量：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>HTTP_PROXY=http://127.0.0.1:7890</span></span>
+<span class="line"><span>HTTPS_PROXY=http://127.0.0.1:7890</span></span>
+<span class="line"><span>ALL_PROXY=http://127.0.0.1:7890</span></span></code></pre>
+<p>Clash Party 配置同时开启了系统代理（<code>sysProxy.enable: true</code>）和 TUN 模式。于是 Codex CLI 的请求走了<strong>双重路由</strong>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Codex → HTTP CONNECT 隧道(127.0.0.1:7890) → mihomo 代理解析 → TUN 虚拟网卡 → VPN 隧道 → 目标</span></span></code></pre>
+<p>而 TUN 直连只需：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Codex → TUN 虚拟网卡 → VPN 隧道 → 目标</span></span></code></pre>
+<p>多出的 HTTP CONNECT 隧道层增加了 0.4–2.3 秒延迟。对短请求尚可忍受，但 <strong>SSE 长连接和 WebSocket 连接对延迟极敏感</strong>——握手阶段多出 2–4 秒，会触发客户端的超时重连逻辑，表现为”正在重新连接 2/5”。</p>
+<h3 id="对照实测5-次--2-组">对照实测（5 次 × 2 组）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>组</th><th>chatgpt.com/backend-api/codex/models 首字节平均</th></tr></thead><tbody><tr><td>有 <code>HTTP_PROXY</code>（代理路径）</td><td>1.660s</td></tr><tr><td>无 <code>HTTP_PROXY</code>（TUN 直连）</td><td>1.231s</td></tr><tr><td>差值</td><td><strong>0.429s</strong></td></tr></tbody></table>
+<p>WSS 端点差距更大：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>有 <code>HTTP_PROXY</code></th><th>无 <code>HTTP_PROXY</code></th></tr></thead><tbody><tr><td>WSS 总耗时</td><td>4.57s</td><td><strong>0.70s</strong></td></tr><tr><td>改善</td><td>—</td><td><strong>85%</strong></td></tr></tbody></table>
+<h3 id="修复">修复</h3>
+<ol>
+<li>从 <code>HKCU\Environment</code> 移除 <code>HTTP_PROXY</code>、<code>HTTPS_PROXY</code>、<code>ALL_PROXY</code>（TUN 已在内核层路由，代理环境变量冗余）。</li>
+<li>更新 <code>NO_PROXY</code> 加入 <code>chatgpt.com,api.openai.com,*.openai.com</code>（安全网）。</li>
+<li>vpn-guard 脚本（<code>app-vpn.ps1</code>）增加 TUN 活跃分支：显式将代理环境变量置空，避免子进程继承残留值。</li>
+<li>Codex CLI 启动脚本（<code>launch-codex-cli.ps1</code>、<code>codex.cmd</code>）和 ChatGPT 桌面应用启动脚本（<code>launch-codex.ps1</code>）启动前清除代理环境变量。</li>
+</ol>
+<h3 id="修复后验证10-次取平均">修复后验证（10 次取平均）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>端点</th><th>修复前</th><th>修复后</th><th>改善</th></tr></thead><tbody><tr><td>WSS 重连端点</td><td>4.57s</td><td>0.70s</td><td>85% ↓</td></tr><tr><td>codex/models API</td><td>2.30s</td><td>1.47s</td><td>36% ↓</td></tr><tr><td>wham/usage API</td><td>2.01s</td><td>1.01s</td><td>50% ↓</td></tr><tr><td>api.openai.com</td><td>1.73s</td><td>0.77s</td><td>55% ↓</td></tr></tbody></table>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>TUN 已在内核层接管全部流量时，HTTP_PROXY 环境变量不会让请求”更安全”——它只会让请求多走一层 HTTP CONNECT 隧道，对 SSE / WebSocket 长连接来说，多出的 2–4 秒就是”正在重新连接”和”正常工作”的区别。</strong></p>
+<h2 id="四条可复用-insight">四条可复用 insight</h2>
+<h3 id="1-tun--代理环境变量--双重路由有-tun-就不该设代理变量-️首次">1. TUN + 代理环境变量 = 双重路由，有 TUN 就不该设代理变量 ⚠️首次</h3>
+<p>TUN 模式在内核层创建虚拟网卡，接管<strong>所有</strong>出站流量（TCP / UDP / ICMP）。应用不需要知道代理的存在——它的数据包到了 TUN 网卡，mihomo 自然会路由。</p>
+<p>但如果同时设了 <code>HTTP_PROXY</code> / <code>HTTPS_PROXY</code>，应用会<strong>先</strong>走 HTTP CONNECT 隧道连到代理端口（127.0.0.1:7890），<strong>再</strong>由 mihomo 代理解析后送入 TUN。这比 TUN 直连多了：</p>
+<ul>
+<li>一次本地 TCP 连接（应用 → 127.0.0.1:7890）</li>
+<li>一次 HTTP CONNECT 请求解析</li>
+<li>代理层的连接管理和队列调度</li>
+</ul>
+<p>实测代价：普通 API 请求多 0.4 秒，WSS 握手多 3.9 秒。</p>
+<p>判据：<strong>TUN 活跃时，代理环境变量是冗余的负担而非安全保障。</strong> 只有在 TUN 关闭、仅靠系统代理时，代理环境变量才对 CLI 工具有意义（因为 Node / Rust / Go 写的 CLI 不读 Windows 注册表里的系统代理）。</p>
+<blockquote>
+<p>与 <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> 互补：那篇讲”代理接管了 DNS 导致 ping 假绿”，本篇讲”代理接管了路由导致请求多走一跳”。共同点是——<strong>多出来的代理层不总是好事，它有自己的代价。</strong></p>
+</blockquote>
+<h3 id="2-sse--websocket-长连接对握手延迟远比短请求敏感-️首次">2. SSE / WebSocket 长连接对握手延迟远比短请求敏感 ⚠️首次</h3>
+<p>一次 API GET 请求多 0.4 秒，用户感知不到。但 SSE 流式连接和 WebSocket 连接的<strong>建立阶段</strong>如果多 2–4 秒：</p>
+<ul>
+<li>客户端有连接超时阈值（Codex CLI 的重连逻辑：5 次重试）</li>
+<li>握手期间没有任何数据流过，客户端无法区分”正在握手”和”连接挂了”</li>
+<li>每次重连都要重新走 TLS 握手 + 认证，延迟叠加</li>
+</ul>
+<p>本次 WSS 端点 4.57 秒 → 0.70 秒的改善，不是”快了一点”，而是<strong>从”必然超时重连”到”稳定不重连”的质变</strong>。</p>
+<p>判据：<strong>诊断流式连接问题时，不能只看”能不能连通”（HTTP code），必须测”握手要多久”（<code>time_appconnect</code>）和”首字节要多久”（<code>time_starttransfer</code>）。</strong> 一个 200 的响应如果用了 5 秒才到，对 SSE 来说就是坏的。</p>
+<h3 id="3-测错了端点就看不到问题--首次">3. 测错了端点就看不到问题 ⭐ 首次</h3>
+<p>Codex CLI 的 API 端点是 <code>chatgpt.com/backend-api/codex/...</code>，不是 <code>api.openai.com</code>。首轮测试只测了 <code>api.openai.com</code>，延迟 0.85 秒，完全正常——差点收工。</p>
+<p>是日志数据库里的 <code>codex_http_client::client</code> 模块记录了真实请求 URL（<code>url=https://chatgpt.com/backend-api/codex/models?client_version=0.14...</code>），才发现测错了目标。</p>
+<p>判据：<strong>诊断”应用网络慢”时，必须从应用日志里确认它实际请求的 URL，不能凭文档或直觉假设。</strong> 同一个服务（OpenAI）的不同域名（<code>api.openai.com</code> vs <code>chatgpt.com</code>）可能走不同的 CDN 路径、不同的 TLS 配置，延迟可以差好几倍。</p>
+<blockquote>
+<p>这与 <a href="/above-the-web/openai-key-v1-7ad7e8a/" class="wikilink">OpenAI兼容止于对话端点_多提供商视频接口分流与真key首测_v1</a> 的”模型名不许猜要拉列表”同族：<strong>别假设你知道应用在调哪个端点，去日志里看。</strong></p>
+</blockquote>
+<h3 id="4-用户级环境变量是全局的vpn-guard-注入只影响它启动的那个进程注册表里的影响所有进程-️首次">4. 用户级环境变量是全局的——vpn-guard 注入只影响它启动的那个进程，注册表里的影响所有进程 ⚠️首次</h3>
+<p>vpn-guard 脚本（<code>app-vpn.ps1</code>）的设计是”只作用于被启动的那一个进程”——通过 <code>$inject</code> 字典在子进程启动前设置环境变量，退出后还原。这没问题。</p>
+<p>但 <code>HKCU\Environment</code> 里的 <code>HTTP_PROXY</code> / <code>HTTPS_PROXY</code> / <code>ALL_PROXY</code> 是<strong>全局</strong>的——<strong>所有</strong>从资源管理器、终端、桌面快捷方式启动的进程都会继承。vpn-guard 不启动的进程（比如用户直接在终端里敲 <code>codex</code>）也受影响。</p>
+<p>判据：<strong>进程级注入和系统级设置是两回事。</strong> vpn-guard 的进程级注入是”给需要代理的程序额外加一层”，系统级环境变量是”给所有程序默认加一层”。当 TUN 已全局接管时，后者是多余的，且 vpn-guard 的进程级还原逻辑管不到它。</p>
+<h2 id="顺手教训">顺手教训</h2>
+<ul>
+<li><strong><code>codex doctor</code> 是第一步</strong>。它检查配置、认证、数据库完整性、搜索工具等，能快速排除”不是网络的问题”。本次 doctor 报告了 219 个 rollout 文件（2.1 GB）和 logs_2.sqlite 701 MB——虽然不是本次故障的直接原因，但说明日志清理是长期维护项。</li>
+<li><strong><code>curl -w</code> 的 <code>time_appconnect</code> 和 <code>time_starttransfer</code> 是诊断代理延迟的金标准</strong>。<code>time_appconnect</code> 测 TLS 握手完成时间（含代理 CONNECT 隧道），<code>time_starttransfer</code> 测首字节到达时间。这两个值一对比就能看出代理层加了多少钱。<a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> 已提出过这条判据，本次是第二次验证——它对”代理路径 vs 直连路径”的对比同样有效。</li>
+<li><strong>Windows 环境变量改了之后要广播 <code>WM_SETTINGCHANGE</code></strong>。用 <code>winreg.SetValueEx</code> 改了 <code>HKCU\Environment</code> 后，已运行的进程不会自动感知；新开的终端会。用 <code>user32.SendMessageTimeoutW(HWND_BROADCAST, WM_SETTINGCHANGE, ...)</code> 可以通知 Explorer 等托盘应用刷新，但 CLI 进程仍需重启。</li>
+<li><strong>Mihomo Party 的 <code>external-controller</code> 可能是空字符串</strong>（本次实测为 <code>""</code>），这意味着 Clash API 端口（9090/9097 等）不可用。不能依赖 API 来查节点信息或切换节点——得直接读配置文件。</li>
+<li><strong><code>codex --help</code> 有 <code>doctor</code> 子命令</strong>，但不接受 <code>config list</code> / <code>config show</code> 等子命令——配置覆盖通过 <code>-c key=value</code> 在命令行传入。Codex 的配置文件是 <code>~/.codex/config.toml</code>（TOML 格式），不是 JSON。</li>
+</ul>
+<h2 id="下次改进">下次改进</h2>
+<ul>
+<li>诊断 Codex CLI 网络问题时，第一步跑 <code>codex doctor</code>，第二步查 <code>~/.codex/logs_2.sqlite</code> 里的 <code>logs</code> 表（按 <code>feedback_log_body</code> 列搜关键词），第三步才跑网络测试。</li>
+<li>网络测试必须测日志里记录的真实 URL，不能假设端点。<code>SELECT DISTINCT feedback_log_body FROM logs WHERE feedback_log_body LIKE '%url=%' ORDER BY id DESC LIMIT 20</code> 是快速取真实端点的方法。</li>
+<li>改完代理配置后，验证问句是”<strong>重启终端后</strong>还正常吗”——当前进程的环境变量不会变，新进程才反映注册表修改。</li>
+<li>给 TUN + 系统代理同时开启的环境做排障时，先检查 <code>HKCU\Environment</code> 有没有 <code>HTTP_PROXY</code> / <code>HTTPS_PROXY</code> / <code>ALL_PROXY</code>——有就是双重路由，去掉就是 TUN 直连。</li>
+</ul>
+<h2 id="复发记录2026-09-08同症状不同根因">复发记录（2026-09-08）：同症状，不同根因</h2>
+<p><strong>症状</strong>：Codex CLI（v0.153.4）再次反复「正在重新连接 4/5」，与本文主案一致。</p>
+<p><strong>诊断顺序与实测</strong>：</p>
+<ol>
+<li>先复查旧根因是否回滚：<code>HKCU\Environment</code> 仍无 <code>HTTP_PROXY</code>/<code>HTTPS_PROXY</code>/<code>ALL_PROXY</code>（本文修复保持完好），TUN 在线（Meta Tunnel，198.18.0.1）——双重路由<strong>未复发</strong>。</li>
+<li>端点小包测试：WSS 端点 TLS 握手 1.44s、首字节 1.9s，401/426 正常返回——<strong>偏慢但能通，容易误判为”没大问题”</strong>。</li>
+<li>吞吐实测现形：<code>speed.cloudflare.com</code> 仅 <strong>11.4 KB/s</strong>（≈0.09 Mbps），TLS 握手 8.99s——命中对外手册第五节「节点带宽垫底」。</li>
+</ol>
+<p><strong>修复与验证</strong>：Clash Verge GUI 手动切节点后复测：吞吐 11.4 KB/s → <strong>8.49 MB/s（≈68 Mbps，745 倍）</strong>；WSS 首字节 1.9s → 0.63-0.77s；models 端点 → 0.69-0.88s，全部回到或优于本文修复后基准。</p>
+<p><strong>环境变化记录</strong>：代理客户端已从 Mihomo Party 迁移至 <strong>Clash Verge</strong>（D:\Clash Verge\，verge-mihomo，混合端口 7897）；<code>external-controller</code> API（9090/9097）依然不可用，切节点只能 GUI 手点（脚本切换不落盘 + 全节点扫描造成账号跨国跳变，均不可用）。</p>
+<p><strong>三条增量判据</strong>：</p>
+<ul>
+<li><strong>同一症状复发时，先复查旧根因是否回滚，再按排查手册顺序下探</strong>——本例旧根因未回滚，下探两节命中节点带宽。不要凭”上次修过什么”直接套修法。</li>
+<li><strong>小包能通 ≠ 链路健康</strong>：401/426 错误页只有几 KB，11 KB/s 的链路也能 2 秒内返回；但 models 刷新、SSE/WSS 长连接必然超时。诊断流式应用问题，吞吐实测不可省略——这是「<code>time_appconnect</code>/<code>time_starttransfer</code> 金标准」的互补面（第三次实证）：时延字段看握手，吞吐字段看载重，缺一不可。</li>
+<li><strong>诊断环境自身可能注入代理</strong>：在 IDE/沙箱类工具（如 WorkBuddy）的终端里测用户真实链路时，会话可能自带 <code>HTTP_PROXY</code>（本次为 127.0.0.1:64519），必须 <code>curl --noproxy '*'</code> 才能复刻 Codex 进程（无代理变量、走 TUN）的真实视角。</li>
+</ul>
+<h2 id="复发记录续2026-09-08-下午二阶根因26mb-大会话--ws-传输">复发记录·续（2026-09-08 下午）：二阶根因——26MB 大会话 × WS 传输</h2>
+<p>换节点后用户反馈「修复失败，还在转圈」。深挖后锁定<strong>第二阶根因</strong>，比节点问题更本质：</p>
+<h3 id="错误本体与故障画像">错误本体与故障画像</h3>
+<ul>
+<li>日志金句：<code>stream disconnected before completion: failed to send websocket request: IO error: 远程主机强迫关闭了一个现有的连接。 (os error 10054)</code></li>
+<li>画像：<strong>WSS 握手每次成功（1-2 秒 101 升级），发送 responses 请求时被 RST</strong>，5/5 重试稳定复现，无一幸免。</li>
+<li>关键数据（日志 <code>Compressed request body</code> 记录）：出问题的 turn 属于 9/7 开启的长会话，<strong>请求体 26.4MB → zstd 压缩后 19.3MB</strong>（≈168K tokens 上下文）；同时段轻量 turn 仅 0.1MB，全部正常。</li>
+</ul>
+<h3 id="排除过程每项都有实测">排除过程（每项都有实测）</h3>
+<ol>
+<li><strong>WS 帧存活探针</strong>（Python 纯 socket 复刻 Codex 握手+发帧，绕过 IDE 沙箱代理注入）：4KB 未压缩帧、协商 permessage-deflate 后的压缩帧，三轮全部收发正常——<strong>小帧过、大流死</strong>。</li>
+<li><strong>代理变量路径分歧</strong>：HKCU/HKLM 注册表均无 PROXY 变量；Codex（Rust reqwest）与探针（Python socket）同走 TUN 直连——路径一致，排除。</li>
+<li><strong>自动回退验证</strong>：重试 5/5 耗尽后触发 <code>falling back to HTTP</code>（codex_core::client WARN），随后 <code>POST /backend-api/codex/responses 200 OK</code>，turn 正常推进——<strong>HTTP 通道能传 19MB，WS 通道不能</strong>。</li>
+</ol>
+<h3 id="机制结论">机制结论</h3>
+<ul>
+<li>Codex 0.153.4 的默认传输由服务端 models 清单的 <code>prefer_websockets: true</code> 驱动（0.146 时代是 SSE）——<strong>版本升级把流式传输从 HTTP/SSE 换成了 WebSocket</strong>。</li>
+<li>大会话（≈20MB 级上行）的 WS 流在当前代理隧道上被 RST；HTTP/SSE 大上传稳定。8 月同机同链路无此问题，正是 SSE 时代的缘故。</li>
+<li>用户感知的「转圈」= 每次 turn 先烧 ~15 秒 WS 重试（5 次退避）→ 回退 HTTP → 19MB 上行 → 168K token 大上下文推理，分钟级。</li>
+</ul>
+<h3 id="修复按优先级">修复（按优先级）</h3>
+<ol>
+<li><strong><code>/compact</code> 或开新会话</strong>——请求体降回 0.1MB 级，WS 传输恢复秒级响应（轻量 turn 已实证正常）。</li>
+<li>长会话必须继续时：容忍每 turn 的「15 秒重试 + 分钟级回退传输」，别在重试中途 Esc（中断会丢掉自动回退的机会）。</li>
+<li>会话上下文逼近 <code>auto_compact_scope_limit</code>（本例 244800）前主动 compact。</li>
+</ol>
+<h3 id="四条增量判据">四条增量判据</h3>
+<ul>
+<li><strong>「握手通、发送 RST」先查请求体大小</strong>（日志搜 <code>Compressed request body</code>），别只怀疑链路杀协议——本例链路对小帧完全放行。</li>
+<li><strong>探针体量要对标真实负载</strong>：4KB 探针通过 ≠ 20MB 流通过。诊断工具复刻的是「应用行为」而不只是「协议握手」。</li>
+<li><strong>TUN 模式下的 10054「远程主机强迫关闭」要按分层解读</strong>：可能是隧道上游、节点出口或服务端网关的 RST 被转发下来，不等于「目标服务器拒绝你」。</li>
+<li><strong>feature flag 扫描先行</strong>：怀疑新版客户端行为时，先扫二进制里的配置键/环境变量（本例确认 0.153.4 无禁用 WS 的官方开关），再决定修链路还是修用法。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⚠️ <a href="/above-the-web/2026-09-06-tun-agent-gui-v1-a8056b4/" class="wikilink">2026-09-06_TUN开关状态漂移复发_三层真相源与agent起GUI边界_v1</a> —— <strong>本篇的复发续篇(2026-09-06)</strong>:同症状但病灶换了位置——本篇修复方案的「TUN 在跑」前提在某次客户端更新中静默失效(<code>tun.enable</code> 回落 false 而意图层仍 true),复发排查第一步应是重测全部前提而非重走修复路径;新增「意图层≠配置层≠运行态」三真相源与「前提要进验收清单」</li>
+<li><a href="/above-the-web/dns-fake-ip-dns-v1-90e0c85/" class="wikilink">DNS防泄露五层修复_fake-ip形同虚设与物理网卡DNS绕过_v1</a> —— 同机同环境续篇(2026-08-11):本篇修复第 2 条把 OpenAI 域名加进 NO_PROXY 当「安全网」,续篇在「TUN 全权 + 用户级代理变量已不存在」的新架构下将其清回标准值——前提已消失,属架构演进不是纠错;续篇讲 DNS 解析层,本篇讲路由层</li>
+<li>⭐ <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> —— 同族”代理层的代价”：那篇讲 fake-ip 让 ping 假绿（代理接管 DNS 的副作用），本篇讲 HTTP_PROXY 让请求多走一跳（代理接管路由的副作用）；共同判据=<strong><code>curl -w</code> 的 <code>time_appconnect</code> 和 <code>time_starttransfer</code> 是诊断代理延迟的金标准</strong>（那篇首次提出，本篇第二次验证）</li>
+<li><a href="/above-the-web/chatgpt-windows-v1-8152abb/" class="wikilink">ChatGPT_Windows桌面版安装排障与账号合规边界_v1</a> —— 同目录、同一台机器的 Clash 环境；那篇讲四层排障法（资格 → 商店 → 网络 → 账号），本篇是其”网络链路”层的深入：代理环境变量与 TUN 的冲突</li>
+<li>⚠️ <a href="/above-the-web/openai-worker-do-v1-d6b8be3/" class="wikilink">OpenAI区域封锁与Worker就近执行陷阱_北美DO跳板_v1</a> —— 同族”出口链路决定一切”：那篇讲调用方 IP 决定能否访问，本篇讲代理路径决定延迟高低</li>
+<li>⭐ <a href="/above-the-web/openai-key-v1-7ad7e8a/" class="wikilink">OpenAI兼容止于对话端点_多提供商视频接口分流与真key首测_v1</a> —— 同族”别假设你知道端点”：那篇讲”OpenAI 兼容”只到对话端点，本篇讲 Codex CLI 的端点是 chatgpt.com 而非 api.openai.com；共同判据=<strong>从日志里确认实际请求 URL，不靠文档假设</strong></li>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 平台工程区入口；本文归入「账号与访问」</li>
+<li>📤 对外版：<code>08_对外分发/GPT和Codex一直转圈连不上_网络排查手册_小白版.md</code> —— 以本篇症状（Codex CLI「正在重新连接」）为头号元凶，合流同目录另五篇与 vpn-guard README 的小白排查手册；2026-08-31 经飞书助理小桁发布为云文档（互联网可阅读只读）：<a href="https://ncnnb044q88x.feishu.cn/docx/OvFidNmQjoyMgpxsP7Ac9iEznke%EF%BC%9B%E5%8F%A6%E6%9C%89%E5%85%AC%E4%BC%97%E5%8F%B7%E7%89%88%E4%B8%8E">https://ncnnb044q88x.feishu.cn/docx/OvFidNmQjoyMgpxsP7Ac9iEznke；另有公众号版与</a> 8 张 MJ 配图提示词（同目录 <code>_公众号版.md</code> / <code>_公众号配图MJ提示词.md</code>，沿用 sref 5692463053 navy 现代极简）</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/网络排障</span><span class="tag">主题/代理链路</span><span class="tag">主题/Codex CLI</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-28T12:15:47+08:00">2026-09-28</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%81%87TUN%E5%8F%8C%E9%87%8D%E8%B7%AF%E7%94%B1_Codex_CLI%E6%B5%81%E5%BC%8F%E8%B6%85%E6%97%B6%E6%8E%92%E9%9A%9C_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/%E4%BB%A3%E7%90%86%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%81%87TUN%E5%8F%8C%E9%87%8D%E8%B7%AF%E7%94%B1_Codex_CLI%E6%B5%81%E5%BC%8F%E8%B6%85%E6%97%B6%E6%8E%92%E9%9A%9C_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/2026-10-09-aigc-12gb-33b-v1-02f1adf/">新工作电脑 AIGC 环境从零搭建：单域名分流失败与 12GB 跑 33B 视频模型</a></li><li><a href="/above-the-web/2026-09-06-tun-agent-gui-v1-a8056b4/">2026-09-06 · TUN 开关状态漂移复发 · 三层真相源与 agent 起 GUI 边界 · 复盘</a></li><li><a href="/above-the-web/dns-fake-ip-dns-v1-90e0c85/">DNS 防泄露五层修复 · fake-ip 形同虚设与物理网卡 DNS 绕过</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/ping-fake-ip-v1-9bfe0c8/"> <span class="card-cat">平台工程</span> <h3>ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型</h3> <p>- 用户主诉：ping coursera.org 通，浏览器看课程极卡。</p> </a><a class="card" href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/"> <span class="card-cat">平台工程</span> <h3>2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</h3> <p>Top10 低延迟节点里 9 个是机房出口，其中 6 个直接租自公有云：</p> </a><a class="card" href="/above-the-web/chatgpt-windows-v1-8152abb/"> <span class="card-cat">平台工程</span> <h3>ChatGPT Windows 桌面版安装排障与账号合规边界</h3> <p>ChatGPT Windows 版安装失败时，按 使用资格 → Microsoft Store 分发 → 网络链路 → 账号与会话 四层排查…</p> </a><a class="card" href="/above-the-web/openai-key-v1-7ad7e8a/"> <span class="card-cat">平台工程</span> <h3>OpenAI 兼容止于对话端点：多提供商视频接口分流与真 key 首测连环坑</h3> <p>- 项目：LibreCanvas（E:\libre-canvas），起点 v1.4.0 → 收口 v1.5.0，commit 940b3ed</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d3"><a href="#症状与首轮诊断" data-toc-link="症状与首轮诊断">症状与首轮诊断</a></li><li class="d3"><a href="#关键发现codex-的-api-端点不是-apiopenaicom" data-toc-link="关键发现codex-的-api-端点不是-apiopenaicom">关键发现：Codex 的 API 端点不是 api.openai.com</a></li><li class="d3"><a href="#根因tun--http_proxy-双重路由" data-toc-link="根因tun--http_proxy-双重路由">根因：TUN + HTTP_PROXY 双重路由</a></li><li class="d3"><a href="#对照实测5-次--2-组" data-toc-link="对照实测5-次--2-组">对照实测（5 次 × 2 组）</a></li><li class="d3"><a href="#修复" data-toc-link="修复">修复</a></li><li class="d3"><a href="#修复后验证10-次取平均" data-toc-link="修复后验证10-次取平均">修复后验证（10 次取平均）</a></li><li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#四条可复用-insight" data-toc-link="四条可复用-insight">四条可复用 insight</a></li><li class="d3"><a href="#1-tun--代理环境变量--双重路由有-tun-就不该设代理变量-️首次" data-toc-link="1-tun--代理环境变量--双重路由有-tun-就不该设代理变量-️首次">1. TUN + 代理环境变量 = 双重路由，有 TUN 就不该设代理变量 ⚠️首次</a></li><li class="d3"><a href="#2-sse--websocket-长连接对握手延迟远比短请求敏感-️首次" data-toc-link="2-sse--websocket-长连接对握手延迟远比短请求敏感-️首次">2. SSE / WebSocket 长连接对握手延迟远比短请求敏感 ⚠️首次</a></li><li class="d3"><a href="#3-测错了端点就看不到问题--首次" data-toc-link="3-测错了端点就看不到问题--首次">3. 测错了端点就看不到问题 ⭐ 首次</a></li><li class="d3"><a href="#4-用户级环境变量是全局的vpn-guard-注入只影响它启动的那个进程注册表里的影响所有进程-️首次" data-toc-link="4-用户级环境变量是全局的vpn-guard-注入只影响它启动的那个进程注册表里的影响所有进程-️首次">4. 用户级环境变量是全局的——vpn-guard 注入只影响它启动的那个进程，注册表里的影响所有进程 ⚠️首次</a></li><li class="d2"><a href="#顺手教训" data-toc-link="顺手教训">顺手教训</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#复发记录2026-09-08同症状不同根因" data-toc-link="复发记录2026-09-08同症状不同根因">复发记录（2026-09-08）：同症状，不同根因</a></li><li class="d2"><a href="#复发记录续2026-09-08-下午二阶根因26mb-大会话--ws-传输" data-toc-link="复发记录续2026-09-08-下午二阶根因26mb-大会话--ws-传输">复发记录·续（2026-09-08 下午）：二阶根因——26MB 大会话 × WS 传输</a></li><li class="d3"><a href="#错误本体与故障画像" data-toc-link="错误本体与故障画像">错误本体与故障画像</a></li><li class="d3"><a href="#排除过程每项都有实测" data-toc-link="排除过程每项都有实测">排除过程（每项都有实测）</a></li><li class="d3"><a href="#机制结论" data-toc-link="机制结论">机制结论</a></li><li class="d3"><a href="#修复按优先级" data-toc-link="修复按优先级">修复（按优先级）</a></li><li class="d3"><a href="#四条增量判据" data-toc-link="四条增量判据">四条增量判据</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

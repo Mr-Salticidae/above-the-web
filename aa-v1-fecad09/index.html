@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>模型排名科学性律：五层评估框架与 AA 拆解 · 蛛网之上</title><meta name="description" content="完全科学的模型排名不存在（&#34;智能&#34;无统一定义、任何指标都被 Goodhart 定律侵蚀）；但比 Artificial Analysis 现行做法更科学的框架是可定义的——从「单分数排名」转向「多维能力画像 + 元评测」,五层缺一不可。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/aa-v1-fecad09/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="模型排名科学性律：五层评估框架与 AA 拆解"><meta property="og:description" content="完全科学的模型排名不存在（&#34;智能&#34;无统一定义、任何指标都被 Goodhart 定律侵蚀）；但比 Artificial Analysis 现行做法更科学的框架是可定义的——从「单分数排名」转向「多维能力画像 + 元评测」,五层缺一不可。"><meta property="og:url" content="https://tiaozhuxiansheng.com/aa-v1-fecad09/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="模型排名科学性律：五层评估框架与 AA 拆解"><meta name="twitter:description" content="完全科学的模型排名不存在（&#34;智能&#34;无统一定义、任何指标都被 Goodhart 定律侵蚀）；但比 Artificial Analysis 现行做法更科学的框架是可定义的——从「单分数排名」转向「多维能力画像 + 元评测」,五层缺一不可。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-10T17:55:36+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="主题/AI评测方法论"><meta property="article:tag" content="主题/模型选型"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/aa-v1-fecad09/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/aa-v1-fecad09/","url":"https://tiaozhuxiansheng.com/aa-v1-fecad09/","headline":"模型排名科学性律：五层评估框架与 AA 拆解","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"完全科学的模型排名不存在（\"智能\"无统一定义、任何指标都被 Goodhart 定律侵蚀）；但比 Artificial Analysis 现行做法更科学的框架是可定义的——从「单分数排名」转向「多维能力画像 + 元评测」,五层缺一不可。","datePublished":"2026-08-10T17:55:36+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 主题/AI评测方法论, 主题/模型选型"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"模型排名科学性律：五层评估框架与 AA 拆解","item":"https://tiaozhuxiansheng.com/aa-v1-fecad09/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>prompt与工具方法</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-10T17:55:36+08:00">2026-08-10</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 9 分钟读完 · 3,110 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>29 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#背景为什么写这个">背景：为什么写这个</a></li><li class="d2"><a href="#一aa-intelligence-index-v41-是怎么排名的">一、AA Intelligence Index v4.1 是怎么排名的</a></li><li class="d2"><a href="#二做得好的部分值得肯定的">二、做得好的部分（值得肯定的）</a></li><li class="d2"><a href="#三结构性缺陷需要带着批判眼光的">三、结构性缺陷（需要带着批判眼光的）</a></li><li class="d3"><a href="#️-1-llm-as-judge-的循环论证">⚠️ 1. LLM-as-Judge 的循环论证</a></li><li class="d3"><a href="#️-2-自研基准占比过高">⚠️ 2. 自研基准占比过高</a></li><li class="d3"><a href="#️-3-权重分配是编辑选择不是客观真理">⚠️ 3. 权重分配是编辑选择，不是客观真理</a></li><li class="d3"><a href="#️-4-仅英语纯文本">⚠️ 4. 仅英语、纯文本</a></li><li class="d3"><a href="#️-5-goodhart-定律无法逃避">⚠️ 5. Goodhart 定律无法逃避</a></li><li class="d3"><a href="#️-6-单分数的误导性">⚠️ 6. 单分数的误导性</a></li><li class="d2"><a href="#四video-arena-类榜单的额外问题">四、Video Arena 类榜单的额外问题</a></li><li class="d2"><a href="#五宣传噱头辨析">五、宣传噱头辨析</a></li><li class="d3"><a href="#-不是噱头的">🟢 不是噱头的</a></li><li class="d3"><a href="#-介于宣传与实质之间的">🟡 介于宣传与实质之间的</a></li><li class="d3"><a href="#-存在实质性问题的">🔴 存在实质性问题的</a></li><li class="d2"><a href="#六科学的模型排名应该长什么样五层架构">六、科学的模型排名应该长什么样：五层架构</a></li><li class="d3"><a href="#第-1-层--任务定义task-stratification">第 1 层 · 任务定义（Task Stratification）</a></li><li class="d3"><a href="#第-2-层--数据集设计dataset-engineering">第 2 层 · 数据集设计（Dataset Engineering）</a></li><li class="d3"><a href="#第-3-层--多裁判交叉验证triangulated-judging">第 3 层 · 多裁判交叉验证（Triangulated Judging）</a></li><li class="d3"><a href="#第-4-层--统计严谨性statistical-rigor">第 4 层 · 统计严谨性（Statistical Rigor）</a></li><li class="d3"><a href="#第-5-层--元评测与真实性校验meta-evaluation">第 5 层 · 元评测与真实性校验（Meta-Evaluation）</a></li><li class="d2"><a href="#七输出形态的根本转变">七、输出形态的根本转变</a></li><li class="d2"><a href="#八务实结论个人团队怎么选模型">八、务实结论：个人/团队怎么选模型</a></li><li class="d3"><a href="#短期现成可用">短期（现成可用）</a></li><li class="d3"><a href="#中期自建评测">中期（自建评测）</a></li><li class="d3"><a href="#何时可以相信一个排名">何时可以相信一个排名</a></li><li class="d2"><a href="#可复用心法">可复用心法</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="模型排名科学性律五层评估框架与-aa-拆解">模型排名科学性律：五层评估框架与 AA 拆解</h1>
+<blockquote>
+<p>入档:2026-08-10
+来源:跳蛛先生与桓（WorkBuddy）关于 Artificial Analysis 排名方法论的对话分析
+性质:AI 评测体系拆解 / 工具认知律 / 模型选型前置方法论
+关联信源:artificialanalysis.ai/methodology/intelligence-benchmarking · benjaminhan.net · gentic.news（Ethan Mollick 批评）· aiwiki.ai</p>
+</blockquote>
+<h2 id="一句话">一句话</h2>
+<p><strong>完全科学的模型排名不存在（“智能”无统一定义、任何指标都被 Goodhart 定律侵蚀）；但比 Artificial Analysis 现行做法更科学的框架是可定义的——从「单分数排名」转向「多维能力画像 + 元评测」,五层缺一不可。</strong></p>
+<h2 id="背景为什么写这个">背景：为什么写这个</h2>
+<p>跳蛛先生看到 Artificial Analysis（下称 AA）的 Video Editing Leaderboard（8 个模型、盲投 Elo），质疑”这个排名是否科学”。对话从”AA 怎么排名”推到”它的方法论是否科学”，再推到”那怎么排才科学”。本档把三轮推演的结论沉淀下来，作为日后看到任何 AI 模型榜单时的前置认知律。</p>
+<h2 id="一aa-intelligence-index-v41-是怎么排名的">一、AA Intelligence Index v4.1 是怎么排名的</h2>
+<p>核心指标是一个 0-100 分，由 <strong>9 项评估 × 4 大类别加权平均</strong> 合成：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类别</th><th>权重</th><th>包含评估</th><th>评分方法</th></tr></thead><tbody><tr><td>Agents</td><td>34%</td><td>GDPval-AA v2 (20%) + τ³-Banking (14%)</td><td>Elo(Bradley-Terry) / pass@1</td></tr><tr><td>Coding</td><td>24%</td><td>Terminal-Bench v2.1 (16%) + SciCode (8%)</td><td>pass@1</td></tr><tr><td>Scientific Reasoning</td><td>24%</td><td>HLE (12%) + GPQA Diamond (6%) + CritPt (6%)</td><td>pass@1</td></tr><tr><td>General</td><td>18%</td><td>AA-Omniscience (12%) + AA-LCR (6%)</td><td>准确率+抗幻觉 / pass@1</td></tr></tbody></table>
+<p><strong>关键执行细节</strong>：</p>
+<ul>
+<li>统一测试条件：非推理模型 T=0，推理模型 T=0.6；零样本提示</li>
+<li>pass@1 为主（首次尝试正确率）</li>
+<li>GDPval-AA v2 特殊：3 位前沿 LLM 法官盲评 → Bradley-Terry 模型 → 锚定人类专家 Elo=1000</li>
+<li>神秘顾客策略：匿名账号调用 API，防”特供版”</li>
+<li>95% CI &#x3C; ±1%（基于 >10 次重复实验）</li>
+<li>动态淘汰：饱和 benchmark（MMLU、GSM8K 已被移除）会被替换</li>
+</ul>
+<h2 id="二做得好的部分值得肯定的">二、做得好的部分（值得肯定的）</h2>
+<ol>
+<li><strong>独立运行评测</strong>：不依赖厂商自报。创始人正是因为 2023 年 Google 用 32-shot CoT 在 MMLU 上刷分（使 Gemini 1.0 Ultra 看起来超过 GPT-4）才创建这个平台。</li>
+<li><strong>方法论透明</strong>：完整公开 prompt 模板、评分标准、温度参数、重试逻辑。</li>
+<li><strong>抗污染设计</strong>：CritPt 用未发表物理难题；AA-Omniscience 自建私有数据集；GDPval-AA 用内部副本。</li>
+<li><strong>统计严谨</strong>：置信区间、Bradley-Terry 模型、sandwich estimator。</li>
+<li><strong>动态更新</strong>：顶级模型得分 >90% 时主动替换 benchmark（Ceiling Effect）。</li>
+<li><strong>“不可付费买排名”原则</strong>：商业模式靠企业订阅，而非卖排名。</li>
+</ol>
+<h2 id="三结构性缺陷需要带着批判眼光的">三、结构性缺陷（需要带着批判眼光的）</h2>
+<h3 id="️-1-llm-as-judge-的循环论证">⚠️ 1. LLM-as-Judge 的循环论证</h3>
+<p>GDPval-AA v2（占 20% 权重）用 3 位前沿 LLM 法官盲评。宾大沃顿教授 Ethan Mollick 公开批评这个方法”tells us nothing”——用一个模型评判另一个模型，分数反映的可能是裁判模型的偏好而非被评模型的真实能力。如果裁判模型来自 Google（Gemini），而 Google 的模型也在被评之列，是否存在 self-preference bias？AA 声称测过无此偏差，但这个测试本身也用 LLM 做，存在循环论证。</p>
+<h3 id="️-2-自研基准占比过高">⚠️ 2. 自研基准占比过高</h3>
+<p>9 项评估中 4 项是 AA 自研（AA-Omniscience 12%、AA-LCR 6%、GDPval-AA 20%、τ³-Banking 大量定制化），合计约 <strong>32% 权重由 AA 自己设计的数据集构成</strong>。AA 既是规则制定者又是裁判。数据集具体内容不完全透明（AA-Omniscience 的 6000 题具体是什么？），存在结构性风险。</p>
+<h3 id="️-3-权重分配是编辑选择不是客观真理">⚠️ 3. 权重分配是编辑选择，不是客观真理</h3>
+<p>Agents 占 34% 而 General 只占 18%——反映 AA 团队对”什么更重要”的主观判断。如果你的使用场景是翻译、多语言或创意写作，这个权重不代表你的需求。官方自己也承认：“it has limitations and may not apply directly to every use case”。</p>
+<h3 id="️-4-仅英语纯文本">⚠️ 4. 仅英语、纯文本</h3>
+<p>多语言、图像、语音能力都不在 Intelligence Index 内，单独评测。对中文用户，排名参考价值需打折。</p>
+<h3 id="️-5-goodhart-定律无法逃避">⚠️ 5. Goodhart 定律无法逃避</h3>
+<p>一旦 benchmark 成为行业事实标准，AI 实验室就会针对性优化。AA 的应对是频繁更换 benchmark，但新 benchmark 也终将饱和或被针对性训练。开发者社区（LessWrong、Reddit）已观察：GDPval 盲评”对表面流畅度比对实质性准确性更敏感”。</p>
+<h3 id="️-6-单分数的误导性">⚠️ 6. 单分数的误导性</h3>
+<p>两个 Intelligence Index 相同的模型，能力分布可能完全不同。头部模型分差（如 57.3 vs 57.2 vs 56.8）在 ±1% 置信区间内，统计上无法区分，但 AA 仍按精确排名展示，制造”冠军”叙事。</p>
+<h2 id="四video-arena-类榜单的额外问题">四、Video Arena 类榜单的额外问题</h2>
+<p>AA 的视频/图像竞技场用盲投 Elo，看似比 Intelligence Index 更”民主”，但有额外短板：</p>
+<ul>
+<li><strong>样本量往往极小</strong>（Video Editing 榜单仅 8 模型）</li>
+<li><strong>头部分差无统计意义</strong>（1135 vs 1125 = 10 Elo，典型 CI ±15-30）</li>
+<li><strong>任务定义过粗</strong>（“Video Editing”混合了 inpainting/延展/风格迁移/镜头切换等不同能力）</li>
+<li><strong>投票人构成未披露</strong>（大众？专家？标注员？）</li>
+<li><strong>基准锚点选择可疑</strong>（Kling=1000 恰好是基准模型，所有分数相对它算）</li>
+</ul>
+<p>→ 把这类榜单当”产品陈列卡片”看没问题；当科学评测看，证据不足。</p>
+<h2 id="五宣传噱头辨析">五、宣传噱头辨析</h2>
+<h3 id="-不是噱头的">🟢 不是噱头的</h3>
+<ul>
+<li>“独立第三方评测”：确实独立运行，投资方（Nat Friedman、Daniel Gross、Andrew Ng / AI Grant）不接受厂商付费买排名</li>
+<li>神秘顾客策略：真实执行</li>
+<li>方法论公开：不是空话</li>
+</ul>
+<h3 id="-介于宣传与实质之间的">🟡 介于宣传与实质之间的</h3>
+<ul>
+<li><strong>“比现存任何其他指标都更有用”</strong>（官方原话）：自我营销式断言，方法论虽严谨但绝对化表述带宣传性质</li>
+<li><strong>频繁版本迭代 + “NEW” 标签</strong>：方法论上必要（防饱和），商业上维持话题度和订阅价值</li>
+<li><strong>“AI 世界的新 Gartner”定位</strong>：品牌塑造意图</li>
+</ul>
+<h3 id="-存在实质性问题的">🔴 存在实质性问题的</h3>
+<ul>
+<li><strong>95% CI &#x3C; ±1% 的声明</strong>：基于”某些模型”做”>10 次重复”得出，非所有模型都做了这么多重复，个别 benchmark 实际 CI 可能宽得多</li>
+<li><strong>头部模型分差无统计意义但仍排名</strong>：制造”冠军”叙事，尽管统计上这几个模型是并列的</li>
+</ul>
+<h2 id="六科学的模型排名应该长什么样五层架构">六、科学的模型排名应该长什么样：五层架构</h2>
+<p>完全科学的排名不存在，但比 AA 更科学的框架是可定义的：</p>
+<h3 id="第-1-层--任务定义task-stratification">第 1 层 · 任务定义（Task Stratification）</h3>
+<ul>
+<li>按<strong>真实使用场景</strong>分层：编程 / 推理 / Agent / 多语言 / 长上下文 / 多模态</li>
+<li>每层细分到具体<strong>任务类型</strong>（如编程 → 代码生成 / 调试 / 重构 / 终端操作）</li>
+<li>权重按<strong>目标用户群体的真实分布</strong>设定，而非评测机构的主观判断</li>
+<li><strong>关键改进</strong>：拒绝”Video Editing”这种粗粒度分类；两个模型在不同子任务上各有所长时<strong>不应该被强制排名</strong></li>
+</ul>
+<h3 id="第-2-层--数据集设计dataset-engineering">第 2 层 · 数据集设计（Dataset Engineering）</h3>
+<ul>
+<li><strong>公开题 ≤ 30%</strong>（仅作可比性锚点）</li>
+<li><strong>私有 held-out 集 ≥ 50%</strong>（从未公开发布，模型从未见过）</li>
+<li><strong>动态 LLM 生成题 ≥ 20%</strong>（每次评测用新题，防针对性训练）</li>
+<li>CritPt 模式（未发表难题）是正确方向，但 AA 只用了 70 题、占 6% 权重——远远不够</li>
+<li><strong>关键改进</strong>：任何公开 benchmark 最终都会失效，私有 + 动态生成是必要条件</li>
+</ul>
+<h3 id="第-3-层--多裁判交叉验证triangulated-judging">第 3 层 · 多裁判交叉验证（Triangulated Judging）</h3>
+<p>三种裁判<strong>并行</strong>，强制交叉验证：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>裁判类型</th><th>适用场景</th><th>优势</th><th>局限</th></tr></thead><tbody><tr><td>自动化单元测试</td><td>编程、数学</td><td>完全客观</td><td>仅适用于有标准答案的任务</td></tr><tr><td>多家 LLM 法官交叉</td><td>开放式回答</td><td>可规模化</td><td>需披露每家模型的自家偏好测试</td></tr><tr><td>人类专家盲评</td><td>复杂任务、创意类</td><td>真实性强</td><td>成本高、样本小</td></tr></tbody></table>
+<ul>
+<li>强制 inter-rater reliability ≥ 0.7</li>
+<li>披露裁判模型对自家模型的偏好测试结果</li>
+<li>三方结果不一致时标注”争议样本”而非强行取均值</li>
+<li><strong>关键改进</strong>：单一裁判来源都有系统性偏差，三角验证是唯一解</li>
+</ul>
+<h3 id="第-4-层--统计严谨性statistical-rigor">第 4 层 · 统计严谨性（Statistical Rigor）</h3>
+<ul>
+<li>完整披露：每个对比的<strong>样本量</strong>、<strong>95% CI</strong>、<strong>效应量（Cohen’s d）</strong>、<strong>贝叶斯后验</strong></li>
+<li>头部模型分差 &#x3C; CI 时<strong>不排名</strong>，显示”统计并列”（statistical tie）</li>
+<li>多重比较时做 <strong>Bonferroni 校正</strong></li>
+<li>用<strong>贝叶斯方法</strong>补充频率派 Elo——前者能直接回答”模型 A 优于 B 的概率是多少”</li>
+<li><strong>关键改进</strong>：展示无统计意义的排名本身就是误导。这是 AA 当前最容易修复、但最不愿修复的问题——因为”冠军”叙事有商业价值</li>
+</ul>
+<h3 id="第-5-层--元评测与真实性校验meta-evaluation">第 5 层 · 元评测与真实性校验（Meta-Evaluation）</h3>
+<ul>
+<li><strong>测评测本身</strong>：排名 vs 真实部署 A/B 测试结果的相关性（至少 r ≥ 0.6）</li>
+<li><strong>时间序列</strong>：30/90 天 Elo 趋势、票数累积曲线，而非单点快照</li>
+<li><strong>公开反例</strong>：主动披露”何时排名是错的”——科学态度的标志</li>
+<li><strong>任务迁移性测试</strong>：在 A 任务上排名高的模型，在 B 任务上是否也高？如果不是，说明评测维度设计有问题</li>
+<li><strong>关键改进</strong>：一个不自证有效的评测系统，只是数字游戏</li>
+</ul>
+<h2 id="七输出形态的根本转变">七、输出形态的根本转变</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>现状（AA）</th><th>理想</th></tr></thead><tbody><tr><td>形态</td><td>单一 0-100 分排名</td><td>多维能力向量 + 置信带</td></tr><tr><td>表述</td><td>”模型 A 第1 · 模型 B 第2"</td><td>"A 在编程强(stat并列)·B 在 Agent 强”</td></tr><tr><td>问题</td><td>隐藏能力分布 · 误导选型</td><td>按用例匹配 · 透明可追溯</td></tr></tbody></table>
+<h2 id="八务实结论个人团队怎么选模型">八、务实结论：个人/团队怎么选模型</h2>
+<p>完全科学的排名不存在，但可以做以下<strong>降级使用</strong>：</p>
+<h3 id="短期现成可用">短期（现成可用）</h3>
+<ol>
+<li>AA 作为<strong>初筛工具</strong>——看模型大致落在哪个梯队（frontier / mid / budget），<strong>不要看精确排名</strong></li>
+<li>交叉参考 <strong>LMArena</strong>（人类盲投 Elo）和 <strong>SELiveBench</strong>（防污染的编程实时榜）</li>
+<li>看 <strong>per-benchmark 分数</strong>而非 Intelligence Index 总分——尤其关注你实际用到的维度</li>
+</ol>
+<h3 id="中期自建评测">中期（自建评测）</h3>
+<ol>
+<li>构建自己的<strong>私有评测集</strong>——50-100 道你真实业务场景的题，永不公开</li>
+<li>用同一套 prompt 跑 3-5 个候选模型，记录<strong>失败模式</strong>而非只看通过率</li>
+<li><strong>A/B 测试</strong>——在生产环境用 5% 流量跑候选模型，对比真实用户反馈</li>
+</ol>
+<h3 id="何时可以相信一个排名">何时可以相信一个排名</h3>
+<p>只有当它<strong>同时满足</strong>以下条件时：</p>
+<ul>
+<li>✅ 任务定义细到你的使用场景</li>
+<li>✅ 数据集有 ≥50% 私有 held-out</li>
+<li>✅ 多裁判交叉验证</li>
+<li>✅ 披露完整置信区间且并列时不排名</li>
+<li>✅ 公开过排名与真实部署结果的相关性验证</li>
+</ul>
+<p><strong>目前没有任何公开榜单同时满足这五条。</strong> AA 满足约 2.5 条，LMArena 满足约 2 条，各家厂商自报的 system card 满足 0 条。</p>
+<h2 id="可复用心法">可复用心法</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>榜单用来 narrowing（缩小候选范围）</span></span>
+<span class="line"><span>不用来 choosing（做最终决策）</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>最终决策必须基于你自己的数据</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>看到任何 AI 模型榜单，先问五个问题：</span></span>
+<span class="line"><span>1. 任务定义细到我的使用场景吗？</span></span>
+<span class="line"><span>2. 数据集有多少是模型没见过的私有题？</span></span>
+<span class="line"><span>3. 裁判是谁？有没有自家模型当裁判？</span></span>
+<span class="line"><span>4. 头部分差的置信区间是多少？统计上能区分吗？</span></span>
+<span class="line"><span>5. 这个排名跟真实部署结果的相关性验证过吗？</span></span></code></pre>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>"比任何其他指标都更有用"这种话</span></span>
+<span class="line"><span>本身就是需要被验证的断言</span></span>
+<span class="line"><span>而不是被相信的结论</span></span></code></pre>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/v1-fa343e8/" class="wikilink">标签相同不等于行为相同_第三方代跑平台律_v1</a> —— 同属”对 AI 工具/模型行为的认知律”：同名模型 ≠ 同一份能力，判据靠验通道不靠眼睛</li>
+<li><a href="/above-the-web/vs-api-v1-78e5a50/" class="wikilink">出图机制优先律_智能体原生出图vs盲调API_v1</a> —— 同属”工具能力边界认知”：同套 prompt，智能体看图自纠 vs 盲调 API 表现天差地别</li>
+<li><a href="/above-the-web/v1-bc3b75a/" class="wikilink">伪机制解释识别_四层拆解法_v1</a> —— 同属”识别伪权威”：伪解释形态=现象对+机制编数字+根因错位+药方半对，裁决权归实测反证</li>
+<li><a href="/above-the-web/v1-938b91e/" class="wikilink">打磨不等于校验律_v1</a> —— “看起来经过工序”抬高信任但不产生正确性证据；AA 的”95% CI &#x3C; ±1%“也是同理：看起来精确 ≠ 真的精确</li>
+<li><a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— 别交付”应该能行”的假方案；选模型同理，别信”应该能行”的榜单</li>
+<li><a href="/above-the-web/v1-70154b0/" class="wikilink">故事读书笔记_工具丰饶不等于创造力丰饶_v1</a> —— 工具的丰饶不等于创造力的丰饶；榜单的精确不等于模型的真实能力分布</li>
+<li><a href="/above-the-web/pr-v1-b896304/" class="wikilink">个人项目免PR直推主分支_v1</a> —— 本文档入库遵循此律（个人仓库直接 commit &#x26; push main）</li>
+<li><a href="/above-the-web/gpt-6-astra-v1-b8f3da9/" class="wikilink">推理档位单因归因陷阱_GPT-6_Astra档位与额度六因子官方查证_v1</a> —— 本律的一次应用:用 AA 分档数据只判 xhigh≈max 的相对关系(narrowing),不拿绝对分选模型;两版指数数字不同(low 46 vs 49)正是「统计严谨」层的提醒</li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">主题/AI评测方法论</span><span class="tag">主题/模型选型</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/%E6%A8%A1%E5%9E%8B%E6%8E%92%E5%90%8D%E7%A7%91%E5%AD%A6%E6%80%A7%E5%BE%8B_%E4%BA%94%E5%B1%82%E8%AF%84%E4%BC%B0%E6%A1%86%E6%9E%B6%E4%B8%8EAA%E6%8B%86%E8%A7%A3_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/%E6%A8%A1%E5%9E%8B%E6%8E%92%E5%90%8D%E7%A7%91%E5%AD%A6%E6%80%A7%E5%BE%8B_%E4%BA%94%E5%B1%82%E8%AF%84%E4%BC%B0%E6%A1%86%E6%9E%B6%E4%B8%8EAA%E6%8B%86%E8%A7%A3_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/memoraxcode-ai-v1-49c1fb0/">Memorax Code:AI 编程记忆层的架构与数据边界</a></li><li><a href="/above-the-web/gpt-6-astra-v1-b8f3da9/">推理档位单因归因陷阱：GPT-6 Astra 档位与额度六因子官方查证</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-bc3b75a/"> <span class="card-cat">方法论与洞察</span> <h3>伪机制解释识别 · 四层拆解法</h3> <p>一段 AI 工具解释要按四层分开裁决——现象描述/机制解释/根因诊断/药方;伪解释的典型形态是&quot;现象大致对 + 机制编数字 + 根因错位 +…</p> </a><a class="card" href="/above-the-web/v1-fa343e8/"> <span class="card-cat">方法论与洞察</span> <h3>标签相同 ≠ 行为相同 · 第三方代跑平台律</h3> <p>第三方平台标着同一个模型名，不等于同一份能力。 原厂能给的东西（尤其是通道级 / 文件级能力），代跑平台可能在自己的交付流水线里丢掉；更坏的…</p> </a><a class="card" href="/above-the-web/vs-api-v1-78e5a50/"> <span class="card-cat">方法论与洞察</span> <h3>出图机制优先律 · 智能体原生出图 vs 盲调编辑 API</h3> <p>出图质量先看「机制」,再看 prompt。 同一条提示词,用「会看着自己的成图反复自纠的智能体原生出图工具」和用「脚本盲调一次成图的 API…</p> </a><a class="card" href="/above-the-web/pr-v1-b896304/"> <span class="card-cat">方法论与洞察</span> <h3>个人项目免 PR 直推主分支</h3> <p>个人项目不要走 PR 流程——自己写代码、自己审核、自己合并，这套仪式没有实际价值，反而拖慢迭代。直接 commit &amp; push 到 ma…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#背景为什么写这个" data-toc-link="背景为什么写这个">背景：为什么写这个</a></li><li class="d2"><a href="#一aa-intelligence-index-v41-是怎么排名的" data-toc-link="一aa-intelligence-index-v41-是怎么排名的">一、AA Intelligence Index v4.1 是怎么排名的</a></li><li class="d2"><a href="#二做得好的部分值得肯定的" data-toc-link="二做得好的部分值得肯定的">二、做得好的部分（值得肯定的）</a></li><li class="d2"><a href="#三结构性缺陷需要带着批判眼光的" data-toc-link="三结构性缺陷需要带着批判眼光的">三、结构性缺陷（需要带着批判眼光的）</a></li><li class="d3"><a href="#️-1-llm-as-judge-的循环论证" data-toc-link="️-1-llm-as-judge-的循环论证">⚠️ 1. LLM-as-Judge 的循环论证</a></li><li class="d3"><a href="#️-2-自研基准占比过高" data-toc-link="️-2-自研基准占比过高">⚠️ 2. 自研基准占比过高</a></li><li class="d3"><a href="#️-3-权重分配是编辑选择不是客观真理" data-toc-link="️-3-权重分配是编辑选择不是客观真理">⚠️ 3. 权重分配是编辑选择，不是客观真理</a></li><li class="d3"><a href="#️-4-仅英语纯文本" data-toc-link="️-4-仅英语纯文本">⚠️ 4. 仅英语、纯文本</a></li><li class="d3"><a href="#️-5-goodhart-定律无法逃避" data-toc-link="️-5-goodhart-定律无法逃避">⚠️ 5. Goodhart 定律无法逃避</a></li><li class="d3"><a href="#️-6-单分数的误导性" data-toc-link="️-6-单分数的误导性">⚠️ 6. 单分数的误导性</a></li><li class="d2"><a href="#四video-arena-类榜单的额外问题" data-toc-link="四video-arena-类榜单的额外问题">四、Video Arena 类榜单的额外问题</a></li><li class="d2"><a href="#五宣传噱头辨析" data-toc-link="五宣传噱头辨析">五、宣传噱头辨析</a></li><li class="d3"><a href="#-不是噱头的" data-toc-link="-不是噱头的">🟢 不是噱头的</a></li><li class="d3"><a href="#-介于宣传与实质之间的" data-toc-link="-介于宣传与实质之间的">🟡 介于宣传与实质之间的</a></li><li class="d3"><a href="#-存在实质性问题的" data-toc-link="-存在实质性问题的">🔴 存在实质性问题的</a></li><li class="d2"><a href="#六科学的模型排名应该长什么样五层架构" data-toc-link="六科学的模型排名应该长什么样五层架构">六、科学的模型排名应该长什么样：五层架构</a></li><li class="d3"><a href="#第-1-层--任务定义task-stratification" data-toc-link="第-1-层--任务定义task-stratification">第 1 层 · 任务定义（Task Stratification）</a></li><li class="d3"><a href="#第-2-层--数据集设计dataset-engineering" data-toc-link="第-2-层--数据集设计dataset-engineering">第 2 层 · 数据集设计（Dataset Engineering）</a></li><li class="d3"><a href="#第-3-层--多裁判交叉验证triangulated-judging" data-toc-link="第-3-层--多裁判交叉验证triangulated-judging">第 3 层 · 多裁判交叉验证（Triangulated Judging）</a></li><li class="d3"><a href="#第-4-层--统计严谨性statistical-rigor" data-toc-link="第-4-层--统计严谨性statistical-rigor">第 4 层 · 统计严谨性（Statistical Rigor）</a></li><li class="d3"><a href="#第-5-层--元评测与真实性校验meta-evaluation" data-toc-link="第-5-层--元评测与真实性校验meta-evaluation">第 5 层 · 元评测与真实性校验（Meta-Evaluation）</a></li><li class="d2"><a href="#七输出形态的根本转变" data-toc-link="七输出形态的根本转变">七、输出形态的根本转变</a></li><li class="d2"><a href="#八务实结论个人团队怎么选模型" data-toc-link="八务实结论个人团队怎么选模型">八、务实结论：个人/团队怎么选模型</a></li><li class="d3"><a href="#短期现成可用" data-toc-link="短期现成可用">短期（现成可用）</a></li><li class="d3"><a href="#中期自建评测" data-toc-link="中期自建评测">中期（自建评测）</a></li><li class="d3"><a href="#何时可以相信一个排名" data-toc-link="何时可以相信一个排名">何时可以相信一个排名</a></li><li class="d2"><a href="#可复用心法" data-toc-link="可复用心法">可复用心法</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

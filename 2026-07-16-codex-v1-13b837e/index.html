@@ -1,0 +1,272 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Codex 保姆级教学 · 代码化口播剪辑完整复盘（2026-07-16） · 蛛网之上</title><meta name="description" content="- 作品名称：《Codex 保姆级教学》"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-07-16-codex-v1-13b837e/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Codex 保姆级教学 · 代码化口播剪辑完整复盘（2026-07-16）"><meta property="og:description" content="- 作品名称：《Codex 保姆级教学》"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-07-16-codex-v1-13b837e/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Codex 保姆级教学 · 代码化口播剪辑完整复盘（2026-07-16）"><meta name="twitter:description" content="- 作品名称：《Codex 保姆级教学》"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-16T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="主题/蒙眼剪辑法"><meta property="article:tag" content="主题/口播教学"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-07-16-codex-v1-13b837e/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-07-16-codex-v1-13b837e/","url":"https://tiaozhuxiansheng.com/2026-07-16-codex-v1-13b837e/","headline":"Codex 保姆级教学 · 代码化口播剪辑完整复盘（2026-07-16）","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 作品名称：《Codex 保姆级教学》","datePublished":"2026-07-16T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 主题/蒙眼剪辑法, 主题/口播教学"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"Codex 保姆级教学 · 代码化口播剪辑完整复盘（2026-07-16）","item":"https://tiaozhuxiansheng.com/2026-07-16-codex-v1-13b837e/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-16T00:00:00+08:00">2026-07-16</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 7 分钟读完 · 2,470 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>16 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一作品回顾">一、作品回顾</a></li><li class="d3"><a href="#1-当时想做什么">1. 当时想做什么</a></li><li class="d3"><a href="#2-实际执行">2. 实际执行</a></li><li class="d3"><a href="#3-最终输出">3. 最终输出</a></li><li class="d2"><a href="#二结果分析">二、结果分析</a></li><li class="d3"><a href="#做到的">做到的</a></li><li class="d3"><a href="#没有一次做对的">没有一次做对的</a></li><li class="d2"><a href="#三方法论沉淀">三、方法论沉淀</a></li><li class="d3"><a href="#截图反馈就是可执行规格">[截图反馈就是可执行规格]</a></li><li class="d3"><a href="#先划安全区再增加动效密度">[先划安全区，再增加动效密度]</a></li><li class="d3"><a href="#讲结构时真截图可以优于失稳录屏">[讲结构时，真截图可以优于失稳录屏]</a></li><li class="d3"><a href="#交付验证必须同时看文件声音和代表帧">[交付验证必须同时看文件、声音和代表帧]</a></li><li class="d2"><a href="#四下次改进">四、下次改进</a></li><li class="d2"><a href="#五一句话结论">五、一句话结论</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="codex-保姆级教学--代码化口播剪辑完整复盘2026-07-16">Codex 保姆级教学 · 代码化口播剪辑完整复盘（2026-07-16）</h1>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>作品名称：《Codex 保姆级教学》</li>
+<li>项目：真人口播教学视频的 Python + ffmpeg 代码化剪辑</li>
+<li>提交时间：2026-07-16 20:34（最终版归档记录）</li>
+<li>预期目标：保留 229.778 秒口播结构，用卡片、递进图表、章节进度条和实操画面做成可交付的 1080p 教学片</li>
+<li>最终结果：用户审核“完美”，指定归档为最终版；另交付一个连续 30 秒高质量预览片段</li>
+<li>最终交付：1080p、30fps、H.264、48kHz 双声道 AAC；全片 229.778 秒，预览 30.000 秒 / 900 帧</li>
+<li>数据来源：用户逐轮截图反馈、<code>edit/project.md</code> 14 次生产记录、Git 13 个连续实现提交、ffprobe、全片解码、EBU R128 响度和 SHA-256 哈希检查</li>
+<li>工作区：<code>{AIGC工作站}/ai-editing-course</code>（视频文件不进入知识库）</li>
+</ul>
+<h2 id="一作品回顾">一、作品回顾</h2>
+<h3 id="1-当时想做什么">1. 当时想做什么</h3>
+<p>目标不是把真人口播堆满装饰，而是验证一条可复用产线：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>校对字幕 + 审核时间轴 + 参考片校准</span></span>
+<span class="line"><span>→ config 驱动卡片 / 图表 / 进度条 / 录屏</span></span>
+<span class="line"><span>→ Python 生成资产</span></span>
+<span class="line"><span>→ ffmpeg 合成</span></span>
+<span class="line"><span>→ 创作者看成片截图反馈</span></span>
+<span class="line"><span>→ AI 精确改参数并重渲染</span></span></code></pre>
+<p>第一版已经能完整渲染，但视觉语言不统一。参考片带来的关键修正不是“多加特效”，而是统一为深灰半透明卡片、荧光绿强调、关键词字幕和持续章节导航。</p>
+<h3 id="2-实际执行">2. 实际执行</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阶段</th><th>关键动作</th><th>结果</th></tr></thead><tbody><tr><td>v1 产线</td><td>配置与渲染逻辑分离，完成口播、字幕、BGM、录屏和覆盖层合成</td><td>建立可迭代基线</td></tr><tr><td>v2 视觉重构</td><td>对标视频，收敛为统一 UI 卡片系统</td><td>用户认可方向</td></tr><tr><td>v2.1-v2.2</td><td>修字幕位置；卡片增至 26 张；加入 4 组递进图表；透明度约 80%</td><td>信息密度和趣味性提升</td></tr><tr><td>v2.3</td><td>九章节近等长重分段；Genji 像素小人作为匀速进度游标</td><td>导航更直观</td></tr><tr><td>v2.3.1-v2.3.8</td><td>修小字、演示框选和进度条末端</td><td>解决缩放后可读性与边界错误</td></tr><tr><td>v2.3.9-v2.4.3</td><td>去字幕黑底；交换字幕/进度条；流程图移到两侧；修文字裁切；清理字幕尾标点</td><td>中心人物不再被大图表遮挡</td></tr><tr><td>v2.5</td><td>用真实结果截图替换失稳录屏，重新量取三个讲解区域</td><td>实操段与口播精准对应</td></tr><tr><td>归档</td><td>最终版哈希保真复制；截取 02:54.900-03:24.900 连续 30 秒预览</td><td>正片与预览双交付</td></tr></tbody></table>
+<h3 id="3-最终输出">3. 最终输出</h3>
+<ul>
+<li>正片：<code>Codex保姆级教学_最终版_1080p.mp4</code></li>
+<li>预览：<code>Codex保姆级教学_30s预览版_1080p.mp4</code></li>
+<li>音频质检：综合响度 -14.2 LUFS，True Peak -1.5 dBFS</li>
+<li>字幕质检：106 条 ASS Dialogue 均无末尾标点残留</li>
+<li>画面质检：实操段 144.1s / 145.6s / 147.0s 三帧分别命中任务列表、对话结果、来源与输出区</li>
+</ul>
+<h2 id="二结果分析">二、结果分析</h2>
+<h3 id="做到的">做到的</h3>
+<ol>
+<li><strong>代码化剪辑经受住高频视觉反馈。</strong> 位置、尺寸、透明度、时段和文案都能落到 config 或生成资产，不需要手动拖时间线。</li>
+<li><strong>视觉密度增加但系统没有散。</strong> 卡片、图表、字幕和进度条共享颜色、圆角、字体和动效节奏。</li>
+<li><strong>最终交付可验证。</strong> 不只“能播放”，还检查了全片解码、响度、帧数、画面抽帧和归档哈希。</li>
+<li><strong>预览不是拼贴预告。</strong> 选取一个 30 秒连续语义单元，保留完整讲解和动效递进。</li>
+</ol>
+<h3 id="没有一次做对的">没有一次做对的</h3>
+<ol>
+<li>初版字幕基线过低，黑底后来也被否定。</li>
+<li>语义分段长度差异过大时，章节游标出现分段变速观感；后来改为相邻字幕边界上的近等长章节。</li>
+<li>大流程图放在画面中心会遮挡讲师；最终缩成 640×300 并左右交替。</li>
+<li>录屏内容与口播描述并不完全对应，单纯移动高亮框无法变真；最终改用与讲解一致的结果截图。</li>
+<li>小字“看不清”与“下方被截断”不是同一个问题：前者是字号/对比度，后者是透明 PNG 内部画布高度不足。</li>
+<li>30 秒预览第一次转码时，输入后 seek 导致 AAC 体积异常；日志检查发现后改为输入级 seek，并用响度复验。</li>
+</ol>
+<h2 id="三方法论沉淀">三、方法论沉淀</h2>
+<h3 id="截图反馈就是可执行规格">[截图反馈就是可执行规格]</h3>
+<p><strong>核心</strong>：代码化剪辑的高质量迭代，不靠“AI 猜审美”，而靠创作者把不满意的位置变成截图、箭头、时间点和一句明确目标。</p>
+<p><strong>来源</strong>：本项目的字幕位置、演示框选、进度条末端、流程图遮挡和文字裁切，均由截图反馈直接映射为参数修复。</p>
+<p><strong>验证状态</strong>：⭐⭐ 二次验证；与 <a href="/above-the-web/2026-07-02-50-v1-657ae63/" class="wikilink">2026-07-02_50号学员作品集混剪_完整链路复盘_v1</a> 的精确反馈链再次成立。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>反馈至少包含“哪一帧 / 哪一层 / 希望移到哪里”。</li>
+<li>先判断是坐标、尺寸、内部画布、时间还是素材真值问题。</li>
+<li>每次只修一个视觉因果，再抽同一时间点复核。</li>
+<li>审核通过后再进入下一类改动，避免多变量混在一起。</li>
+</ol>
+<p><strong>反例/边界</strong>：如果不满来自脚本结构或内容密度，移动几个像素不会解决，先回到 <a href="/above-the-web/v1-cc1661d/" class="wikilink">知识科普片节奏诊断与重构_v1</a> 判断是不是稿件问题。</p>
+<h3 id="先划安全区再增加动效密度">[先划安全区，再增加动效密度]</h3>
+<p><strong>核心</strong>：口播教学片不是“哪里空就塞哪里”；先锁定人物、字幕、进度导航三块安全区，卡片和图表只能在剩余左右侧栏轮换。</p>
+<p><strong>来源</strong>：大流程图遮挡人物、字幕与进度条竞争底部空间后，最终采用“字幕在上、进度条贴底、图表左右交替”的稳定布局。</p>
+<p><strong>验证状态</strong>：⚠️ 首次发现，待更多真人口播项目验证。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>先画人物主体禁入区。</li>
+<li>再固定字幕与章节导航的纵向层级。</li>
+<li>信息卡优先左右交替，不连续压同一侧。</li>
+<li>复杂图表按侧栏宽度重排节点，不把桌面尺寸硬缩小。</li>
+<li>同时检查 1080p 成片和 540p 审核版，防止小字只在大屏可读。</li>
+</ol>
+<p><strong>反例/边界</strong>：屏幕录制、PPT 或无人物解释片没有中心人物禁入区，可以让图表占据主画面。</p>
+<h3 id="讲结构时真截图可以优于失稳录屏">[讲结构时，真截图可以优于失稳录屏]</h3>
+<p><strong>核心</strong>：如果旁白讲的是界面结构和结果，而不是操作过程，准确的静态截图加顺序高亮，往往比内容不匹配或状态跳变的录屏更真实。</p>
+<p><strong>来源</strong>：原录屏既有局部更新失稳，也没有完整呈现旁白描述的区域；用结果截图替换后，三个高亮框都能精准命中真实界面。</p>
+<p><strong>验证状态</strong>：⚠️ 首次发现。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>先判定旁白是在讲“过程”还是“结构/结果”。</li>
+<li>讲过程才用录屏；讲结构可用截图。</li>
+<li>截图等比缩放，不为铺满画面牺牲关键区域。</li>
+<li>高亮框按最终 1080p 坐标重新测量，不能沿用源图坐标。</li>
+<li>至少抽查每个高亮窗口中点帧。</li>
+</ol>
+<p><strong>反例/边界</strong>：旁白包含点击、输入、等待、结果出现等时间因果时，截图无法替代录屏。</p>
+<h3 id="交付验证必须同时看文件声音和代表帧">[交付验证必须同时看文件、声音和代表帧]</h3>
+<p><strong>核心</strong>：ffmpeg 返回 0 只证明命令结束，不证明交付正确；必须组合容器探测、全片解码、响度和代表帧检查。</p>
+<p><strong>来源</strong>：进度条动态宽度、PNG 文字裁切、演示框选和预览音频 seek 都属于“渲染成功但结果错误”。</p>
+<p><strong>验证状态</strong>：⚠️ 本项目系统化首验。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>ffprobe 检查时长、分辨率、帧率、音频采样率和帧数。</li>
+<li>全片 decode 到 null，排除尾部损坏和解码错误。</li>
+<li>EBU R128 检查综合响度与 True Peak。</li>
+<li>在所有关键覆盖层窗口抽代表帧。</li>
+<li>归档复制后比较 SHA-256，确认“最终版”没有二次变化。</li>
+</ol>
+<p><strong>反例/边界</strong>：短暂草稿可以缩减抽帧数量，但正式交付不能只靠播放器肉眼快进。</p>
+<h2 id="四下次改进">四、下次改进</h2>
+<p>如果重来，最应该前移的是“版面安全区 + 演示素材真值核对”，而不是等卡片和图表都做完再返工。</p>
+<p>下次同类型任务的行动清单：</p>
+<ol>
+<li>第一版先做 15-30 秒视觉系统样片，锁字幕、进度条、人物禁入区和卡片尺寸。</li>
+<li>把所有演示素材逐句对照旁白，先确认“讲的东西确实在画面里”。</li>
+<li>章节分段同时满足语义边界与近等长，不在渲染后再补救游标速度。</li>
+<li>生成透明 PNG 时，把字体描边和下降部计入内部画布高度。</li>
+<li>把“ffprobe + 全解码 + 响度 + 关键帧 + 哈希”固化为一键交付检查。</li>
+<li>预览片先从字幕句界选择连续窗口，再精确到目标时长。</li>
+</ol>
+<h2 id="五一句话结论">五、一句话结论</h2>
+<blockquote>
+<p>真人口播也能蒙眼剪辑：创作者用截图裁决画面，AI 把裁决翻译成参数、资产和可重复验证的成片。</p>
+</blockquote>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a>（母方法论；本案例为真人口播教学片扩展）</li>
+<li><a href="/above-the-web/2026-07-02-50-v1-657ae63/" class="wikilink">2026-07-02_50号学员作品集混剪_完整链路复盘_v1</a>（同为 config 驱动、多轮人审的全链路案例）</li>
+<li><a href="/above-the-web/v1-cc1661d/" class="wikilink">知识科普片节奏诊断与重构_v1</a>（边界：剪辑层问题与稿件层问题必须分开）</li>
+<li><a href="/above-the-web/v1-9bb7884/" class="wikilink">完结项目反推学员教程_大纲先行两级审核_v1</a>（下游应用：本复盘 + git 历史被反推为学员教程《实战6-自动化口播剪辑》大纲）</li>
+<li><a href="/above-the-web/2026-07-31-codex-19-v1-e56ff53/" class="wikilink">2026-07-31_Codex教程实战六_自动化录屏19段复盘_v1</a>(下游:本片对应的教学素材录屏改为自动化,19/19 产出;含”出片不等于合格”双重验收)</li>
+<li><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">主题/蒙眼剪辑法</span><span class="tag">主题/口播教学</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-07-16_Codex%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E5%AD%A6_%E4%BB%A3%E7%A0%81%E5%8C%96%E5%8F%A3%E6%92%AD%E5%89%AA%E8%BE%91%E5%AE%8C%E6%95%B4%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-07-16_Codex%E4%BF%9D%E5%A7%86%E7%BA%A7%E6%95%99%E5%AD%A6_%E4%BB%A3%E7%A0%81%E5%8C%96%E5%8F%A3%E6%92%AD%E5%89%AA%E8%BE%91%E5%AE%8C%E6%95%B4%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-07-02-50-v1-657ae63/">50 号学员作品集混剪 · 蒙眼剪辑完整链路复盘（2026-07-02）</a></li><li><a href="/above-the-web/2026-07-31-codex-19-v1-e56ff53/">2026-07-31 Codex 教程实战六 · 自动化录屏 19 段复盘</a></li><li><a href="/above-the-web/2026-08-01-codex-2-4-19-v1-5f86653/">2026-08-01 Codex 教程清单 2/3/4 · 三项目 19 段录屏复盘</a></li><li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/">2026-08-13 Codex 教程操作部分 · 26 段重录复盘（19/26）</a></li><li><a href="/above-the-web/v1-cc1661d/">知识科普片节奏诊断与重构</a></li><li><a href="/above-the-web/v1-25a3d5e/">「蒙眼剪辑法」— 一套基于 Claude 的 AIGC 视频内容产出闭环</a></li><li><a href="/above-the-web/v1-9bb7884/">完结项目反推学员教程：大纲先行 + 两级审核</a></li><li><a href="/above-the-web/v1-388f3ab/">钉钉知识库交付：格式白名单 + 终版回填闭环</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-6850112/"> <span class="card-cat">方法论与洞察</span> <h3>盲剪匹配转场 —— 步进抽帧扫动作相位，看不见视频也能做帧级 match cut</h3> <p>匹配转场的本质是&quot;动作相位对齐&quot;：出刀素材停在动作顶点，入刀素材从同相位续接。AI 看不见视频，但可以对动作窗口做步进抽帧拼图目检，把&quot;顶点…</p> </a><a class="card" href="/above-the-web/2026-08-14-codex-v1-c53b251/"> <span class="card-cat">方法论与洞察</span> <h3>2026-08-14 Codex 教程录制链路打磨 · 复盘</h3> <p>- 项目：《Codex 保姆级教学》操作部分录屏，上接 2026-08-13Codex教程操作部分26段重录复盘v1（19/26）</p> </a><a class="card" href="/above-the-web/v1-f4e2df1/"> <span class="card-cat">方法论与洞察</span> <h3>录屏分镜按确定性分层：生成性镜头，逐字稿后配</h3> <p>《Codex 保姆级教学》的生产顺序是：内容组先写逐字稿 → 录制侧照稿复刻画面。</p> </a><a class="card" href="/above-the-web/2026-05-24-30-pv-v1-e4228dd/"> <span class="card-cat">方法论与洞察</span> <h3>2026-05-24｜30 项目角色 PV 发布复盘</h3> <p>项目：30伊恩・古德费罗的寓言</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一作品回顾" data-toc-link="一作品回顾">一、作品回顾</a></li><li class="d3"><a href="#1-当时想做什么" data-toc-link="1-当时想做什么">1. 当时想做什么</a></li><li class="d3"><a href="#2-实际执行" data-toc-link="2-实际执行">2. 实际执行</a></li><li class="d3"><a href="#3-最终输出" data-toc-link="3-最终输出">3. 最终输出</a></li><li class="d2"><a href="#二结果分析" data-toc-link="二结果分析">二、结果分析</a></li><li class="d3"><a href="#做到的" data-toc-link="做到的">做到的</a></li><li class="d3"><a href="#没有一次做对的" data-toc-link="没有一次做对的">没有一次做对的</a></li><li class="d2"><a href="#三方法论沉淀" data-toc-link="三方法论沉淀">三、方法论沉淀</a></li><li class="d3"><a href="#截图反馈就是可执行规格" data-toc-link="截图反馈就是可执行规格">[截图反馈就是可执行规格]</a></li><li class="d3"><a href="#先划安全区再增加动效密度" data-toc-link="先划安全区再增加动效密度">[先划安全区，再增加动效密度]</a></li><li class="d3"><a href="#讲结构时真截图可以优于失稳录屏" data-toc-link="讲结构时真截图可以优于失稳录屏">[讲结构时，真截图可以优于失稳录屏]</a></li><li class="d3"><a href="#交付验证必须同时看文件声音和代表帧" data-toc-link="交付验证必须同时看文件声音和代表帧">[交付验证必须同时看文件、声音和代表帧]</a></li><li class="d2"><a href="#四下次改进" data-toc-link="四下次改进">四、下次改进</a></li><li class="d2"><a href="#五一句话结论" data-toc-link="五一句话结论">五、一句话结论</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

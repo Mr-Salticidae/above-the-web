@@ -1,0 +1,418 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>推理档位单因归因陷阱：GPT-6 Astra 档位与额度六因子官方查证 · 蛛网之上</title><meta name="description" content="推理档位是额度六因子之一，不是唯一因子。 把「额度没了」单归到档位，会漏掉 Fast 2.5 倍和上下文体积这两个同量级项，并在 xhigh 与 max 的取舍上给出与实测数据相反的建议。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/gpt-6-astra-v1-b8f3da9/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="推理档位单因归因陷阱：GPT-6 Astra 档位与额度六因子官方查证"><meta property="og:description" content="推理档位是额度六因子之一，不是唯一因子。 把「额度没了」单归到档位，会漏掉 Fast 2.5 倍和上下文体积这两个同量级项，并在 xhigh 与 max 的取舍上给出与实测数据相反的建议。"><meta property="og:url" content="https://tiaozhuxiansheng.com/gpt-6-astra-v1-b8f3da9/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="推理档位单因归因陷阱：GPT-6 Astra 档位与额度六因子官方查证"><meta name="twitter:description" content="推理档位是额度六因子之一，不是唯一因子。 把「额度没了」单归到档位，会漏掉 Fast 2.5 倍和上下文体积这两个同量级项，并在 xhigh 与 max 的取舍上给出与实测数据相反的建议。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-09T10:59:46+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="主题/模型选型"><meta property="article:tag" content="主题/查证与核查"><meta property="article:tag" content="工具/Codex"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/gpt-6-astra-v1-b8f3da9/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/gpt-6-astra-v1-b8f3da9/","url":"https://tiaozhuxiansheng.com/gpt-6-astra-v1-b8f3da9/","headline":"推理档位单因归因陷阱：GPT-6 Astra 档位与额度六因子官方查证","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"推理档位是额度六因子之一，不是唯一因子。 把「额度没了」单归到档位，会漏掉 Fast 2.5 倍和上下文体积这两个同量级项，并在 xhigh 与 max 的取舍上给出与实测数据相反的建议。","datePublished":"2026-09-09T10:59:46+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 主题/模型选型, 主题/查证与核查, 工具/Codex"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"推理档位单因归因陷阱：GPT-6 Astra 档位与额度六因子官方查证","item":"https://tiaozhuxiansheng.com/gpt-6-astra-v1-b8f3da9/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>prompt与工具方法</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-09T10:59:46+08:00">2026-09-09</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 9 分钟读完 · 3,079 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>16 节</i></summary> <ol> <li class="d2"><a href="#一句话律">一句话律</a></li><li class="d2"><a href="#事实冻结官方口径2026-09-09-核">事实冻结（官方口径，2026-09-09 核）</a></li><li class="d3"><a href="#推理档位reasoning-effort">推理档位（reasoning effort）</a></li><li class="d3"><a href="#codex--chatgpt-界面命名">Codex / ChatGPT 界面命名</a></li><li class="d3"><a href="#ultra">Ultra</a></li><li class="d3"><a href="#额度怎么扣learnchatgptcomdocspricing">额度怎么扣（learn.chatgpt.com/docs/pricing）</a></li><li class="d3"><a href="#tibo-原推2026-09-07">Tibo 原推（2026-09-07）</a></li><li class="d3"><a href="#artificial-analysis-分档数据gpt-6-astra-发布页">Artificial Analysis 分档数据（GPT-6 Astra 发布页）</a></li><li class="d2"><a href="#文章裁决表">文章裁决表</a></li><li class="d2"><a href="#我自己被纠正的三处诚实记录">我自己被纠正的三处（诚实记录）</a></li><li class="d2"><a href="#可复用额度体检四问">可复用：额度体检四问</a></li><li class="d2"><a href="#举一反三单因归因的识别信号">举一反三：单因归因的识别信号</a></li><li class="d2"><a href="#未核实--边界">未核实 / 边界</a></li><li class="d2"><a href="#资料来源">资料来源</a></li><li class="d2"><a href="#关联文档">关联文档</a></li><li class="d2"><a href="#版本">版本</a></li> </ol> </details> <h1 id="推理档位单因归因陷阱gpt-6-astra-档位与额度六因子官方查证">推理档位单因归因陷阱：GPT-6 Astra 档位与额度六因子官方查证</h1>
+<blockquote>
+<p>入档：2026-09-09
+触发：跳蛛先生转来一篇热传的 GPT-6 Astra「推理等级怎么选」科普文（作者是 Pro 20x 用户，两个号额度烧光），直觉「他在错误归因」，要求从技术层评估并查证
+验证状态：⚠️ <strong>首次</strong>（OpenAI 官方文档 + Tibo 原推 + Artificial Analysis 分档数据交叉核对；Ultra 实耗只有一例 GitHub issue，未自测）
+性质：AI 编码工具的<strong>成本机制档案</strong> + <strong>归因纠偏案例</strong>（含我自己被官方数据纠正的三处）
+对外版：<code>08_对外分发/GPT-6_Astra推理档位怎么选_额度为什么没了_同好版.md</code>（飞书云文档见文末）</p>
+</blockquote>
+<hr>
+<h2 id="一句话律">一句话律</h2>
+<p><strong>推理档位是额度六因子之一，不是唯一因子。</strong> 把「额度没了」单归到档位，会漏掉 Fast 2.5 倍和上下文体积这两个同量级项，并在 xhigh 与 max 的取舍上给出与实测数据相反的建议。</p>
+<hr>
+<h2 id="事实冻结官方口径2026-09-09-核">事实冻结（官方口径，2026-09-09 核）</h2>
+<h3 id="推理档位reasoning-effort">推理档位（reasoning effort）</h3>
+<ul>
+<li>API 支持 <code>low / medium / high / xhigh / max</code> 五档；GPT-6 Astra <strong>不支持 <code>none</code></strong>（传了返 HTTP 400）。</li>
+<li>官方推理指南原话：<strong>the same model with different reasoning token budgets</strong>；并说模型会 reason adaptively，简单任务少用、复杂任务多用。</li>
+<li><strong>推理 token 按输出 token 计费</strong>，不可见但占上下文窗口。</li>
+<li>会话中途可用 <code>configuration_update</code> 改档位，<strong>仅限标准单代理模式</strong>（即 Ultra 下不可改）。</li>
+<li>官方对各档定位：low「高效推理、延迟略增」/ medium「质量与可靠性并重」（默认）/ high「困难推理、复杂调试、深度规划」/ xhigh「深度研究、异步工作流、需要很长 rollout 的 agent 任务，<strong>只在 evals 证明有收益时用</strong>」/ max「最复杂任务的最大推理」。</li>
+</ul>
+<h3 id="codex--chatgpt-界面命名">Codex / ChatGPT 界面命名</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>界面档位</th><th>API 值</th><th>官方说明</th></tr></thead><tbody><tr><td>Light（CLI 里叫 Low）</td><td>low</td><td>Fast responses with lighter reasoning</td></tr><tr><td>Medium（默认）</td><td>medium</td><td>Balances speed and reasoning depth for everyday tasks</td></tr><tr><td>High</td><td>high</td><td>Greater reasoning depth for complex problems</td></tr><tr><td>Extra High</td><td>xhigh</td><td>Extra high reasoning depth for complex problems</td></tr><tr><td>Max</td><td>max</td><td>more time to reason about a single task</td></tr><tr><td>Ultra</td><td>非档位，是模式</td><td><strong>Maximum reasoning with automatic task delegation</strong></td></tr></tbody></table>
+<h3 id="ultra">Ultra</h3>
+<ul>
+<li>官方定义：<strong>Ultra uses maximum reasoning and lets ChatGPT proactively delegate suitable work to subagents.</strong> 即 max 推理 + 自动派发子代理。不是并行采样，是任务分解编排。</li>
+<li>子代理<strong>各自做自己的模型和工具调用</strong>，因此 subagent workflows consume more tokens than comparable single-agent runs；未显式配置时子代理继承父代理设置。</li>
+<li>官方适用场景：<strong>读密集、可拆分</strong>的任务（探索、测试、分诊、总结）；<strong>写密集并行会冲突</strong>，官方明确警告。</li>
+<li>Ultra 仅对 eligible accounts and supported models 开放。</li>
+<li>实耗样本（GitHub openai/codex #43029）：Pro 20x 用户，Astra Ultra 跑一个 SwiftUI 加载指示器重构，1 小时 11 分，3 个子代理，<strong>消耗周额度约 30%</strong>。无官方回复。</li>
+</ul>
+<h3 id="额度怎么扣learnchatgptcomdocspricing">额度怎么扣（learn.chatgpt.com/docs/pricing）</h3>
+<ul>
+<li>订阅侧按 <strong>token 积分</strong> 计：输入 / 缓存输入 / 输出三类。官方原话：<strong>Your prompt, files, chat history, tool results, and ChatGPT’s response all use tokens.</strong></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>模型</th><th>输入</th><th>缓存输入</th><th>输出（含推理）</th></tr></thead><tbody><tr><td>GPT-6 Astra</td><td>250</td><td>25</td><td>1250</td></tr><tr><td>GPT-5.6 Sol</td><td>100</td><td>10</td><td>500</td></tr><tr><td>GPT-5.6 Terra</td><td>50</td><td>5</td><td>300</td></tr><tr><td>GPT-5.6 Luna</td><td>5</td><td>0.5</td><td>30</td></tr></tbody></table>
+<p>（单位：积分 / 百万 token）</p>
+<ul>
+<li>官方列出的消耗因子：<strong>Model choice, context, reasoning, tool use, retrieval, and caching all affect usage, so prompt length alone isn’t a reliable estimate.</strong> 六个因子。</li>
+<li><strong>Fast 模式：Astra 按 Standard 的 2.5 倍计</strong>（订阅侧）。API 侧另有 Priority processing 2 倍。</li>
+<li>Pro 是 Plus 的 <strong>5 倍或 20 倍</strong>（官方定价页原文 Pro 5x or 20x higher rate limits than Plus）。</li>
+<li><strong>ChatGPT Work 和 Codex 共用额度</strong>；2026-08-24 Tibo 宣布 Plus 恢复 5 小时限额时，范围是「ChatGPT Work 和 Codex」，<strong>普通聊天单独计量</strong>。</li>
+<li>Plus 的 Astra 额度官方只给估计区间：每 5 小时约 5 到 45 条本地消息，按任务权重浮动；周上限未公布。</li>
+<li>Astra 在 Codex 订阅侧<strong>免除 272K 长上下文加价</strong>（二手报道引用企业版费率卡；API 侧保留 2 倍输入 / 1.5 倍输出）。</li>
+</ul>
+<h3 id="tibo-原推2026-09-07">Tibo 原推（2026-09-07）</h3>
+<blockquote>
+<p>To calibrate you all on which reasoning effort to use for Astra, know that GPT-6 Astra on low performs better than GPT-5.6 Sol on high. If you were using high reasoning efforts with Sol and were happy, I suggest you move down to low or medium for Astra.</p>
+</blockquote>
+<h3 id="artificial-analysis-分档数据gpt-6-astra-发布页">Artificial Analysis 分档数据（GPT-6 Astra 发布页）</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>档位</th><th>智能指数</th><th>每任务成本</th></tr></thead><tbody><tr><td>low</td><td>46</td><td>$0.82</td></tr><tr><td>medium</td><td>50</td><td>$1.54</td></tr><tr><td>high</td><td>51</td><td>$1.72</td></tr><tr><td>xhigh</td><td>53</td><td>$2.31</td></tr><tr><td>max</td><td>53</td><td>$3.26</td></tr></tbody></table>
+<p>另一版本指数（paddo.dev 转引）：low 49 / medium 52 / high 53 / xhigh 54 / max 55，跑完指数的输出 token 分别为 5.4M / 12M / 19M / 30M / 49M。两版排序一致：<strong>xhigh 到 max 分数持平或 +1，成本多四到六成，token 多六成。</strong></p>
+<hr>
+<h2 id="文章裁决表">文章裁决表</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>文章说法</th><th>裁决</th><th>依据</th></tr></thead><tbody><tr><td>档位＝同一模型不同思考预算，不是模型档位</td><td>✅ 对</td><td>官方原话 same model with different reasoning token budgets</td></tr><tr><td>Ultra＝「成立专项工作组」</td><td>✅ 对</td><td>官方定义 maximum reasoning + automatic task delegation</td></tr><tr><td>Plus 用户聊天走 ChatGPT 不走 Codex，额度分开</td><td>✅ 对</td><td>5h 限额范围＝Work + Codex，普通聊天单独计</td></tr><tr><td>Pro 是 Plus 的 5 倍 / 20 倍</td><td>✅ 对</td><td>官方定价页</td></tr><tr><td>引 Tibo「Astra low 优于 Sol high」</td><td>✅ 对</td><td>原推核实</td></tr><tr><td>「最高出计划、降到高执行」</td><td>✅ 流程可行</td><td>configuration_update 单代理模式下可中途改档，上下文延续</td></tr><tr><td><strong>额度烧快＝推理档位太高</strong></td><td>❌ <strong>单因归因</strong></td><td>官方六因子；作者自己的样本（测试 + 演示 + 全栈重构 + Fast）被工作量与倍率混淆</td></tr><tr><td><strong>Fast 只是「拉满」的姿势</strong></td><td>❌ <strong>漏掉倍率项</strong></td><td>Fast 2.5 倍；基准任务上 medium→high 成本差仅约一成，Fast 一个开关顶三档</td></tr><tr><td><strong>「极高没意义，直接最高」</strong></td><td>❌ <strong>与数据相反</strong></td><td>xhigh 53 vs max 53，成本 $2.31 vs $3.26；官方把 xhigh 定位给长 rollout agent 任务；「max 一轮解决更省」的前提（max 一轮成功率明显高于 xhigh）无数据支持</td></tr><tr><td>Pro 用户「高」常驻</td><td>🟡 与官方建议相反</td><td>Tibo 建议降到 low/medium；Codex 提示指南推荐 medium；作者自认心理因素</td></tr><tr><td>Ultra「不是更聪明只是更贵」</td><td>🟡 半对</td><td>Ultra 内含 max，至少和 max 一样聪明；Sol Ultra 在 Terminal-Bench 2.1 上 +3.1 个百分点（88.8→91.9）；<strong>该不该用取决于任务可不可拆</strong>，作者的顺序写密集 Vibe Coding 确实不适合，但理由错了</td></tr><tr><td>Ultra 只在额度快重置时清仓用</td><td>🟡 浪费用法</td><td>官方适用场景是可拆分的读密集任务；清仓＝max × 子代理数 × Fast 2.5，是最贵组合</td></tr><tr><td>大号被风控是 OpenAI「莫名其妙」</td><td>❓ 未核实</td><td>两个 Pro 号同机高强度自动化是常见触发条件，但无证据</td></tr></tbody></table>
+<p>用 <a href="/above-the-web/v1-bc3b75a/" class="wikilink">伪机制解释识别_四层拆解法_v1</a> 的四层看：<strong>现象✅（额度确实烧得快）/ 机制✅（同模型不同预算是官方口径）/ 根因❌（六因子讲成单因子）/ 药方🟡（档位匹配任务对，xhigh→max 反向）</strong>。这是四层框架第三次复用，形态与前两次不同：前两次是「机制编数字」，这次机制层是对的，错在根因层的<strong>遗漏</strong>而非捏造。</p>
+<hr>
+<h2 id="我自己被纠正的三处诚实记录">我自己被纠正的三处（诚实记录）</h2>
+<p>上一轮凭经验给出的评估，有三处被官方文档推翻，一并留档，防止下次再犯：</p>
+<ol>
+<li><strong>「推理档位只是二阶变量，上下文重发才是主因」→ 撤回。</strong> 推理 token 按输出计费，Astra 输出费率是未缓存输入的 5 倍、缓存输入的 50 倍；max 的输出 token 约为 medium 的 4 倍。推理档位是<strong>一阶</strong>变量。正确表述：推理与上下文<strong>同为一阶</strong>，短会话推理主导，长会话上下文主导。</li>
+<li><strong>「档位是训练出来的策略，不是同一段计算跑久一点」→ 撤回。</strong> 官方口径就是 same model, different reasoning token budgets。文章的比喻是对的，我加的修饰是多余的。</li>
+<li><strong>「Ultra 可能是并行采样，若是则更聪明」→ 撤回。</strong> 官方定义是任务派发编排。文章的「工作组」比喻准确。</li>
+</ol>
+<p>教训：<strong>对成本机制的判断，先查费率表再下结论</strong>。凭「agent 循环每回合重发上下文」这个正确的机制，推出「上下文主导」这个错误的量级，是因为没查输出与输入的费率比。机制对不等于量级对。</p>
+<hr>
+<h2 id="可复用额度体检四问">可复用：额度体检四问</h2>
+<p>额度掉得快，按顺序问：</p>
+<ol>
+<li><strong>开 Fast 了吗？</strong> 2.5 倍，先关。</li>
+<li><strong>会话多长、上下文多大？</strong> 每回合重发全部上下文，缓存也按 1/10 计；大日志、大 JSON 整段吐进对话是常见肥源。一个任务一个会话。</li>
+<li><strong>档位高于任务需要吗？</strong> 官方默认 medium；Astra low 已优于 Sol high。日常 medium，困难调试 high，长 rollout 的 agent 任务 xhigh，max 极少。</li>
+<li><strong>Ultra 用在可拆分的读密集任务上了吗？</strong> 探索、测试、分诊、总结可拆；顺序写代码不可拆，开了就是纯多付。</li>
+</ol>
+<p>前两问是文章漏掉的，后两问文章讲了但第三问的档位排序要修正（xhigh 不是鸡肋，max 才是）。</p>
+<hr>
+<h2 id="举一反三单因归因的识别信号">举一反三：单因归因的识别信号</h2>
+<ul>
+<li><strong>官方列了 N 个因子，文章只讲 1 个。</strong> 先找官方的因子清单，再看文章覆盖率。</li>
+<li><strong>作者自身样本被工作量混淆。</strong> 「我两个号烧光了」的工作内容是测试 + 演示 + 全栈重构，换任何档位都省不了多少。</li>
+<li><strong>「一轮解决更省」这类推论依赖未验证前提。</strong> 前提是高档一轮成功率显著更高，数据显示 xhigh 与 max 持平。</li>
+<li><strong>比喻准确不等于建议正确。</strong> 文章的两个比喻（思考预算、工作组）都对，建议层仍可以反向。</li>
+</ul>
+<hr>
+<h2 id="未核实--边界">未核实 / 边界</h2>
+<ul>
+<li>风控原因无公开信息。</li>
+<li>Plus 的 Astra 精确额度未公布，只有估计区间。</li>
+<li>272K 长上下文加价在 Codex 订阅侧免除：二手报道引企业版费率卡，原页面 403，未直接核实。</li>
+<li>Ultra 实耗只有一例社区报告，无官方账单结构说明。</li>
+<li>Artificial Analysis 两版指数数字不同（46 vs 49 等），系指数版本差异，只取相对关系。</li>
+<li>本篇未自测任何档位的真实消耗，全部为官方与第三方公开数据。</li>
+</ul>
+<hr>
+<h2 id="资料来源">资料来源</h2>
+<ul>
+<li>OpenAI Reasoning guide：<a href="https://developers.openai.com/api/docs/guides/reasoning">https://developers.openai.com/api/docs/guides/reasoning</a></li>
+<li>GPT-6 Astra 模型页：<a href="https://developers.openai.com/api/docs/models/gpt-6-astra">https://developers.openai.com/api/docs/models/gpt-6-astra</a></li>
+<li>ChatGPT Learn · Pricing：<a href="https://learn.chatgpt.com/docs/pricing">https://learn.chatgpt.com/docs/pricing</a></li>
+<li>ChatGPT Learn · Speed / Fast mode：<a href="https://learn.chatgpt.com/docs/agent-configuration/speed">https://learn.chatgpt.com/docs/agent-configuration/speed</a></li>
+<li>ChatGPT Learn · Subagents：<a href="https://learn.chatgpt.com/docs/agent-configuration/subagents">https://learn.chatgpt.com/docs/agent-configuration/subagents</a></li>
+<li>ChatGPT Learn · Models：<a href="https://learn.chatgpt.com/docs/models">https://learn.chatgpt.com/docs/models</a></li>
+<li>Tibo Sottiaux 原推：<a href="https://x.com/thsottiaux/status/2096688770523467947">https://x.com/thsottiaux/status/2096688770523467947</a></li>
+<li>Artificial Analysis · GPT-6 Astra 发布页：<a href="https://artificialanalysis.ai/models/releases/gpt-6-astra">https://artificialanalysis.ai/models/releases/gpt-6-astra</a></li>
+<li>paddo.dev 分档数据转引：<a href="https://paddo.dev/blog/gpt-6-astra-critical-generally-available/">https://paddo.dev/blog/gpt-6-astra-critical-generally-available/</a></li>
+<li>openai/codex issue #43029：<a href="https://github.com/openai/codex/issues/43029">https://github.com/openai/codex/issues/43029</a></li>
+<li>9to5Mac · Plus 恢复 5 小时限额：<a href="https://9to5mac.com/2026/08/24/openai-restores-5-hour-codex-and-work-limits-for-chatgpt-plus-users/">https://9to5mac.com/2026/08/24/openai-restores-5-hour-codex-and-work-limits-for-chatgpt-plus-users/</a></li>
+<li>MindStudio · GPT-5.6 Ultra：<a href="https://www.mindstudio.ai/blog/what-is-gpt-5-6-ultra-mode-multi-agent-coordination">https://www.mindstudio.ai/blog/what-is-gpt-5-6-ultra-mode-multi-agent-coordination</a></li>
+<li>Lookonchain · Codex 免长上下文加价：<a href="https://m.lookonchain.com/feeds/71419">https://m.lookonchain.com/feeds/71419</a></li>
+<li>codexusage.dev · Astra 额度：<a href="https://www.codexusage.dev/limits/astra">https://www.codexusage.dev/limits/astra</a></li>
+<li>kingy.ai · Codex 档位说明：<a href="https://kingy.ai/news/openai-codex-reasoning-levels-low-medium-high-extra-high/">https://kingy.ai/news/openai-codex-reasoning-levels-low-medium-high-extra-high/</a></li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⭐ <a href="/above-the-web/v1-bc3b75a/" class="wikilink">伪机制解释识别_四层拆解法_v1</a> —— 四层框架<strong>第三次复用</strong>：现象✅ / 机制✅ / 根因❌（遗漏型而非捏造型）/ 药方🟡；新增形态「机制对、根因漏」</li>
+<li>⭐ <a href="/above-the-web/aa-v1-fecad09/" class="wikilink">模型排名科学性律_五层评估框架与AA拆解_v1</a> —— 本篇用 Artificial Analysis 分档数据时遵循「榜单用来 narrowing」：只取 xhigh≈max 的相对关系，不拿绝对分选模型</li>
+<li><a href="/above-the-web/claude-opus-4-8-v1-ea52fea/" class="wikilink">Claude_Opus_4.8行为实测_v1</a> —— 同族「模型版本行为档案」：那篇记 Claude 侧 effort 分级与 Fast 降价，本篇记 OpenAI 侧的档位结构与 2.5 倍 Fast</li>
+<li><a href="/above-the-web/2026-07-28-ultra-v1-e8094ce/" class="wikilink">2026-07-28_Ultra模式个人作品集网站_从附件到部署闭环复盘_v1</a> —— Ultra 的实战面「放大闭环密度、不替代判断」与本篇「派发不等于更聪明、任务可拆才值」互为印证</li>
+<li><a href="/above-the-web/ai-v1-fbcd3c9/" class="wikilink">任务书接AI辅助填写_模型只产草稿与思考额度陷阱_v1</a> —— 同族「思考型模型额度陷阱」：那篇是 API 侧千问的思考 token 账单，本篇是订阅侧的六因子</li>
+<li><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 本篇先冻结官方事实再裁决文章，我自己被纠正的三处单列</li>
+<li><a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— 上一轮凭机制推量级的结论被费率表证伪：机制对不等于量级对，查证要在交付前</li>
+<li><a href="/above-the-web/v1-f9ea0de/" class="wikilink">新模型试跑_硬锁清单先行_v1</a> —— 同属「新模型上手先过清单」：那篇是出图硬锁，本篇是额度体检四问</li>
+<li>对外版（裸路径，不进图谱）：<code>08_对外分发/GPT-6_Astra推理档位怎么选_额度为什么没了_同好版.md</code>；飞书云文档（组织内可读）：<a href="https://ncnnb044q88x.feishu.cn/docx/S7yrdMKZjo290Exqae9cjeMunTc">https://ncnnb044q88x.feishu.cn/docx/S7yrdMKZjo290Exqae9cjeMunTc</a></li>
+</ul>
+<hr>
+<h2 id="版本">版本</h2>
+<ul>
+<li>v1 · 2026-09-09 · 首次沉淀（官方文档 + Tibo 原推 + AA 数据交叉；含自我纠偏三处）</li>
+</ul>
+<p>升级触发：</p>
+<ul>
+<li>自测任一档位的真实消耗（同任务跑 medium / high / xhigh / max 记 token）后补实测节</li>
+<li>Ultra 官方账单结构公布，或积累 3 例以上实耗样本</li>
+<li>OpenAI 调整 Fast 倍率或档位定义</li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">主题/模型选型</span><span class="tag">主题/查证与核查</span><span class="tag">工具/Codex</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/%E6%8E%A8%E7%90%86%E6%A1%A3%E4%BD%8D%E5%8D%95%E5%9B%A0%E5%BD%92%E5%9B%A0%E9%99%B7%E9%98%B1_GPT-6_Astra%E6%A1%A3%E4%BD%8D%E4%B8%8E%E9%A2%9D%E5%BA%A6%E5%85%AD%E5%9B%A0%E5%AD%90%E5%AE%98%E6%96%B9%E6%9F%A5%E8%AF%81_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/%E6%8E%A8%E7%90%86%E6%A1%A3%E4%BD%8D%E5%8D%95%E5%9B%A0%E5%BD%92%E5%9B%A0%E9%99%B7%E9%98%B1_GPT-6_Astra%E6%A1%A3%E4%BD%8D%E4%B8%8E%E9%A2%9D%E5%BA%A6%E5%85%AD%E5%9B%A0%E5%AD%90%E5%AE%98%E6%96%B9%E6%9F%A5%E8%AF%81_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/ai-v1-fbcd3c9/">任务书接 AI 辅助填写：模型只产草稿，与思考型模型的额度陷阱</a></li><li><a href="/above-the-web/2026-07-28-ultra-v1-e8094ce/">Ultra 模式个人作品集网站：从附件到部署闭环复盘</a></li><li><a href="/above-the-web/claude-opus-4-8-v1-ea52fea/">Claude Opus 4.8 行为实测</a></li><li><a href="/above-the-web/v1-bc3b75a/">伪机制解释识别 · 四层拆解法</a></li><li><a href="/above-the-web/v1-f9ea0de/">新模型试跑 · 硬锁清单先行律</a></li><li><a href="/above-the-web/aa-v1-fecad09/">模型排名科学性律：五层评估框架与 AA 拆解</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/vs-api-v1-78e5a50/"> <span class="card-cat">方法论与洞察</span> <h3>出图机制优先律 · 智能体原生出图 vs 盲调编辑 API</h3> <p>出图质量先看「机制」,再看 prompt。 同一条提示词,用「会看着自己的成图反复自纠的智能体原生出图工具」和用「脚本盲调一次成图的 API…</p> </a><a class="card" href="/above-the-web/2026-08-05-v1-a1af0ef/"> <span class="card-cat">方法论与洞察</span> <h3>公众号稿送专业方审阅翻车 · 弃读点与框架错误（2026-08-05）</h3> <p>跨领域断言的错误分两种：事实错误可以自查（核对来源就行），框架错误自查不出来——因为它在框架内部完全自洽，只有领域内的人实读全文才会撞上；而…</p> </a><a class="card" href="/above-the-web/2026-08-08-s43-v1-656a72b/"> <span class="card-cat">方法论与洞察</span> <h3>S43 长镜头分段归因 · 归因未遂与生死线次序（2026-08-08）</h3> <p>换平台时的生死线未必是技术指标，也可能是一条只读命令就能问出来的账号权限；成本越低的生死线越容易被排到最后——因为它不像个难题，于是不被当成…</p> </a><a class="card" href="/above-the-web/v1-3fce0f1/"> <span class="card-cat">方法论与洞察</span> <h3>交付前实测证伪律</h3> <p>别交付未验证的&quot;应该能行&quot;。任何&quot;X 应该有效&quot;的假设，交付前先写最小探针去证伪它——尤其跨平台、跨环境、跨版本的行为假设，它们最爱静默失效…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话律" data-toc-link="一句话律">一句话律</a></li><li class="d2"><a href="#事实冻结官方口径2026-09-09-核" data-toc-link="事实冻结官方口径2026-09-09-核">事实冻结（官方口径，2026-09-09 核）</a></li><li class="d3"><a href="#推理档位reasoning-effort" data-toc-link="推理档位reasoning-effort">推理档位（reasoning effort）</a></li><li class="d3"><a href="#codex--chatgpt-界面命名" data-toc-link="codex--chatgpt-界面命名">Codex / ChatGPT 界面命名</a></li><li class="d3"><a href="#ultra" data-toc-link="ultra">Ultra</a></li><li class="d3"><a href="#额度怎么扣learnchatgptcomdocspricing" data-toc-link="额度怎么扣learnchatgptcomdocspricing">额度怎么扣（learn.chatgpt.com/docs/pricing）</a></li><li class="d3"><a href="#tibo-原推2026-09-07" data-toc-link="tibo-原推2026-09-07">Tibo 原推（2026-09-07）</a></li><li class="d3"><a href="#artificial-analysis-分档数据gpt-6-astra-发布页" data-toc-link="artificial-analysis-分档数据gpt-6-astra-发布页">Artificial Analysis 分档数据（GPT-6 Astra 发布页）</a></li><li class="d2"><a href="#文章裁决表" data-toc-link="文章裁决表">文章裁决表</a></li><li class="d2"><a href="#我自己被纠正的三处诚实记录" data-toc-link="我自己被纠正的三处诚实记录">我自己被纠正的三处（诚实记录）</a></li><li class="d2"><a href="#可复用额度体检四问" data-toc-link="可复用额度体检四问">可复用：额度体检四问</a></li><li class="d2"><a href="#举一反三单因归因的识别信号" data-toc-link="举一反三单因归因的识别信号">举一反三：单因归因的识别信号</a></li><li class="d2"><a href="#未核实--边界" data-toc-link="未核实--边界">未核实 / 边界</a></li><li class="d2"><a href="#资料来源" data-toc-link="资料来源">资料来源</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li><li class="d2"><a href="#版本" data-toc-link="版本">版本</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

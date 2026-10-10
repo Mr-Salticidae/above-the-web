@@ -1,0 +1,1050 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>本机 Skill 部署与调用手册 · 蛛网之上</title><meta name="description" content="本机的 skill 分布在 6 个宿主（Claude Code / Codex / WorkBuddy / OpenClaw / 项目级 / 源仓库），"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/skill-541db8f/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="本机 Skill 部署与调用手册"><meta property="og:description" content="本机的 skill 分布在 6 个宿主（Claude Code / Codex / WorkBuddy / OpenClaw / 项目级 / 源仓库），"><meta property="og:url" content="https://tiaozhuxiansheng.com/skill-541db8f/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="本机 Skill 部署与调用手册"><meta name="twitter:description" content="本机的 skill 分布在 6 个宿主（Claude Code / Codex / WorkBuddy / OpenClaw / 项目级 / 源仓库），"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-28T13:40:44+08:00"><meta property="article:modified_time" content="2026-10-09T22:06:25+08:00"><meta property="article:section" content="skill存档"><meta property="article:tag" content="类型/skill存档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/skill-541db8f/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/skill-541db8f/","url":"https://tiaozhuxiansheng.com/skill-541db8f/","headline":"本机 Skill 部署与调用手册","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"本机的 skill 分布在 6 个宿主（Claude Code / Codex / WorkBuddy / OpenClaw / 项目级 / 源仓库），","datePublished":"2026-07-28T13:40:44+08:00","dateModified":"2026-10-09T22:06:25+08:00","articleSection":"skill存档","keywords":"类型/skill存档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"skill存档","item":"https://tiaozhuxiansheng.com/notes/?cat=skill%E5%AD%98%E6%A1%A3"},{"@type":"ListItem","position":3,"name":"本机 Skill 部署与调用手册","item":"https://tiaozhuxiansheng.com/skill-541db8f/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=skill%E5%AD%98%E6%A1%A3" data-pagefind-meta="category" data-pagefind-filter="kind:note">skill存档</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-28T13:40:44+08:00">2026-07-28</time></span> <span>更新于 <time datetime="2026-10-09T22:06:25+08:00">2026-10-09</time></span> <span>约 13 分钟读完 · 4,664 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>19 节</i></summary> <ol> <li class="d2"><a href="#零先看这一段怎么调用-skill">零、先看这一段：怎么调用 Skill</a></li><li class="d2"><a href="#一claude-code-内置-skill14-个无本地文件">一、Claude Code 内置 Skill（14 个，无本地文件）</a></li><li class="d2"><a href="#二claude-code-用户级-skill86-个">二、Claude Code 用户级 Skill（86 个）</a></li><li class="d3"><a href="#21-飞书-lark--系列27-个openclaw-官方源">2.1 飞书 lark-* 系列（27 个，OpenClaw 官方源）</a></li><li class="d3"><a href="#22-飞书-feishu--系列10-个openclaw-lark-扩展">2.2 飞书 feishu-* 系列（10 个，OpenClaw Lark 扩展）</a></li><li class="d3"><a href="#23-seedance-20-视频提示词系列28-个">2.3 Seedance 2.0 视频提示词系列（28 个）</a></li><li class="d3"><a href="#24-aigc-创作工作流11-个自研为主">2.4 AIGC 创作工作流（11 个，自研为主）</a></li><li class="d3"><a href="#25-通用--元工具10-个">2.5 通用 / 元工具（10 个）</a></li><li class="d2"><a href="#三codex-用户级-skill28-个">三、Codex 用户级 Skill（28 个）</a></li><li class="d3"><a href="#31-codex-独有自研-skill12-个">3.1 Codex 独有自研 skill（12 个）</a></li><li class="d3"><a href="#32-codex-系统-skill6-个">3.2 Codex 系统 skill（6 个）</a></li><li class="d3"><a href="#33-与-claude-重复的-16-个">3.3 与 Claude 重复的 16 个</a></li><li class="d2"><a href="#四workbuddy-skill6-个">四、WorkBuddy Skill（6 个）</a></li><li class="d2"><a href="#五openclaw-skill38-个飞书宿主">五、OpenClaw Skill（38 个，飞书宿主）</a></li><li class="d2"><a href="#六项目级-skillknowledge-base-仓库内">六、项目级 Skill（knowledge-base 仓库内）</a></li><li class="d2"><a href="#七源仓库--未安装作为素材存在">七、源仓库 / 未安装（作为素材存在）</a></li><li class="d2"><a href="#八未安装的市场缓存1600-个不可调用">八、未安装的市场缓存（1600+ 个，不可调用）</a></li><li class="d2"><a href="#九维护待办扫描中发现的问题">九、维护待办（扫描中发现的问题）</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="本机-skill-部署与调用手册">本机 Skill 部署与调用手册</h1>
+<blockquote>
+<p>扫描日期：2026-07-28
+扫描机器：Windows 10 Pro（<code>C:\Users\1</code>）
+扫描方法：全盘递归 <code>SKILL.md</code>（排除 <code>node_modules</code>），逐个解析 YAML frontmatter 的 <code>name</code> / <code>description</code> / <code>version</code> / <code>disable-model-invocation</code>
+结果规模：全盘 1867 个 <code>SKILL.md</code> → <strong>已装 186 处条目（去重 100 个不同 skill）+ 14 个 Claude Code 内置</strong>，其余约 1640 个是未加载的市场缓存
+替代：本文档取代根目录旧版 <code>skills-inventory.md</code>（2026-07-17，已过期，当时统计 70 个）
+⚠️ <strong>本文是 2026-07-28 对旧机器的扫描结果。</strong> 2026-10-06 起换了新机器：skill 改为目录联接装载（见 <a href="/above-the-web/skill-index-b155e36/" class="wikilink">SKILL_INDEX</a> 的「路径约定」），旧机器上 Seedance、飞书 lark-* 等外部来源的 skill 在新机器上还没装。</p>
+</blockquote>
+<hr>
+<h2 id="零先看这一段怎么调用-skill">零、先看这一段：怎么调用 Skill</h2>
+<p>本机的 skill 分布在 <strong>6 个宿主</strong>（Claude Code / Codex / WorkBuddy / OpenClaw / 项目级 / 源仓库），
+但<strong>调用方式只有四种</strong>：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>调用方式</th><th>怎么用</th><th>适用于</th></tr></thead><tbody><tr><td><strong>① 自动触发（主流）</strong></td><td>什么都不用做，正常说话即可。你的话命中 skill <code>description</code> 里的触发词时，宿主自动把 SKILL.md 塞进上下文</td><td>绝大多数 skill</td></tr><tr><td><strong>② 斜杠命令</strong></td><td>输入 <code>/&#x3C;skill名></code>，如 <code>/grill-me</code>、<code>/code-review</code>、<code>/simplify</code></td><td>内置命令 + 标了 <code>disable-model-invocation: true</code> 的 skill</td></tr><tr><td><strong>③ 显式点名</strong></td><td>直接说「用 <code>lark-sheets</code> 帮我……」「查一下 SKILL_INDEX，用 <code>insight-public-post</code>……」</td><td>触发词没命中、或你想强制指定某个 skill 时</td></tr><tr><td><strong>④ 直接 Read</strong>（不安装）</td><td>告诉 AI「读 <code>07_skill存档/SKILL_INDEX.md</code>，然后用 X」</td><td>本知识库自研 skill 的兜底调用法，见 <a href="/above-the-web/skill-index-b155e36/" class="wikilink">SKILL_INDEX</a></td></tr></tbody></table>
+<p><strong>三个必须知道的坑：</strong></p>
+<ol>
+<li><strong>目录名 ≠ skill 名</strong>。触发和点名用的是 frontmatter 里的 <code>name</code>，不是文件夹名。本机有 3 处不一致：
+<ul>
+<li><code>~/.claude/skills/remotion-skill/</code> → 真名 <code>remotion-explainer-workflow</code></li>
+<li><code>~/.codex/skills/remotion/</code> → 真名 <code>remotion-card-video</code></li>
+<li><code>~/Desktop/seedance-2.0/SKILL.md</code> → 真名 <code>seedance-20</code>（总入口，未安装）</li>
+</ul>
+</li>
+<li><strong><code>grill-me</code> 模型叫不动</strong>。它标了 <code>disable-model-invocation: true</code>，只能由你手打 <code>/grill-me</code>；它内部再委托给 <code>grilling</code>（<code>grilling</code> 可自动触发）。</li>
+<li><strong>Claude 和 Codex 装的不是同一套</strong>。有 12 个 skill 只在 Codex 里，Claude 会话中说破天也调不出来，详见第三节。</li>
+</ol>
+<hr>
+<h2 id="一claude-code-内置-skill14-个无本地文件">一、Claude Code 内置 Skill（14 个，无本地文件）</h2>
+<p>由 Claude Code 客户端自带，<strong>磁盘上没有 SKILL.md</strong>，随版本更新而变。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Skill 名称</th><th>一句话用途</th><th>调用方法</th></tr></thead><tbody><tr><td><code>dataviz</code></td><td>任何图表 / 仪表盘 / 数据可视化的设计规范（配色、图元、无障碍、明暗主题）</td><td>自动：说到「图表」「chart」「可视化」「dashboard」</td></tr><tr><td><code>artifact-design</code></td><td>Artifact 网页的设计规范</td><td>自动：发布 Artifact 前</td></tr><tr><td><code>artifact-capabilities</code></td><td>Artifact 的运行时能力（实时数据、共享状态、自更新）</td><td>自动：要做「会动的」网页时</td></tr><tr><td><code>claude-api</code></td><td>Claude API / Anthropic SDK 速查：模型 ID、定价、参数、流式、工具调用、缓存</td><td>自动：提到 Claude / Anthropic / 模型选型</td></tr><tr><td><code>update-config</code></td><td>改 <code>settings.json</code>：hooks 自动化、权限、环境变量</td><td>自动：说「以后每次 X 就 Y」「允许 npm 命令」</td></tr><tr><td><code>keybindings-help</code></td><td>自定义快捷键 <code>~/.claude/keybindings.json</code></td><td>自动 / <code>/keybindings-help</code></td></tr><tr><td><code>fewer-permission-prompts</code></td><td>扫历史会话，生成只读命令白名单塞进项目 settings，减少授权弹窗</td><td><code>/fewer-permission-prompts</code></td></tr><tr><td><code>simplify</code></td><td>只做质量清理（复用 / 简化 / 效率），不找 bug</td><td><code>/simplify</code></td></tr><tr><td><code>security-review</code></td><td>当前分支待提交改动的安全审查</td><td><code>/security-review</code></td></tr><tr><td><code>review</code></td><td>审查 GitHub PR（本地 diff 请用 <code>/code-review</code>）</td><td><code>/review</code></td></tr><tr><td><code>run</code></td><td>启动本项目应用、截图，确认改动在真实环境生效</td><td>自动 / <code>/run</code></td></tr><tr><td><code>init</code></td><td>生成项目 <code>CLAUDE.md</code></td><td><code>/init</code></td></tr><tr><td><code>loop</code></td><td>按间隔重复跑一个提示或命令，如 <code>/loop 5m /foo</code>；不给间隔则模型自己定节奏</td><td><code>/loop &#x3C;间隔> &#x3C;命令></code></td></tr><tr><td><code>schedule</code></td><td>创建 / 管理 cron 定时云端 agent（routines），也支持一次性定时</td><td>自动 / <code>/schedule</code></td></tr></tbody></table>
+<blockquote>
+<p>另有 <code>/code-review</code>（本地 diff 审查，支持 <code>/code-review ultra</code> 多 agent 云端审查）属于内置命令。
+<strong>注意</strong>：旧版清单里的 <code>deep-research</code>、<code>verify</code>、<code>code-review</code> 三条已不在当前会话的 skill 列表中，属客户端版本变动。</p>
+</blockquote>
+<hr>
+<h2 id="二claude-code-用户级-skill86-个">二、Claude Code 用户级 Skill（86 个）</h2>
+<p><strong>根目录</strong>：<code>C:\Users\1\.claude\skills\</code>
+<strong>本体文件</strong>：<code>C:\Users\1\.claude\skills\&#x3C;目录名>\SKILL.md</code>
+<strong>这是本次会话真正能调用的那一套</strong>，下面 86 个按来源分 5 组。</p>
+<h3 id="21-飞书-lark--系列27-个openclaw-官方源">2.1 飞书 lark-* 系列（27 个，OpenClaw 官方源）</h3>
+<p>全部依赖 <code>lark-cli</code> 二进制；认证 / 身份 / 权限统一走 <code>lark-shared</code>。
+<strong>本体</strong>：<code>~/.claude/skills/lark-&#x3C;xx>/SKILL.md</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Skill</th><th>版本</th><th>用途</th><th>触发方式</th></tr></thead><tbody><tr><td><code>lark-shared</code></td><td>1.0.0</td><td><strong>底座</strong>：<code>auth login/status/logout</code>、user vs bot 身份、业务域权限 <code>--domain</code>、缺 scope 处理</td><td>被其他 lark-* 依赖，一般不直接叫</td></tr><tr><td><code>lark-doc</code></td><td>2.0.0</td><td>云文档 Docx / Wiki 读写、插入下载图片附件；也管思维笔记</td><td>给出文档 URL 或 token</td></tr><tr><td><code>lark-sheets</code></td><td>3.0.0</td><td>电子表格：建表、行列、单元格值/公式/样式、查找替换、图表、透视表、条件格式、财务建模</td><td>「电子表格」「Sheets」「公式」</td></tr><tr><td><code>lark-base</code></td><td>1.2.2</td><td>多维表格：建表、字段、记录、视图、公式 lookup、表单、仪表盘、workflow、角色权限</td><td>「多维表格」「Base」「bitable」</td></tr><tr><td><code>lark-im</code></td><td>1.0.0</td><td>收发消息、搜聊天记录、群成员、上传下载文件、表情回复、加急、交互卡片及回调</td><td>「发消息」「群里」「聊天记录」</td></tr><tr><td><code>lark-drive</code></td><td>1.0.0</td><td>云空间：上传下载、建文件夹、复制移动删除、权限订阅、版本、导入 Word/Excel/CSV/PPTX</td><td>「云盘」「云空间」「导入文件」</td></tr><tr><td><code>lark-wiki</code></td><td>1.0.2</td><td>知识空间、空间成员、节点层级、快捷方式</td><td>「知识库」「Wiki」「知识空间」</td></tr><tr><td><code>lark-calendar</code></td><td>1.0.0</td><td>日历日程、参会人、忙闲、推荐时段、会议室预定</td><td>「日程」「安排会议」「订会议室」</td></tr><tr><td><code>lark-task</code></td><td>1.0.0</td><td>任务清单、子任务、协作成员、附件、任务智能体注册</td><td>「待办」「任务」「清单」</td></tr><tr><td><code>lark-mail</code></td><td>1.0.0</td><td>起草/发送/回复/转发/搜索邮件、文件夹标签、收信规则、监听新邮件</td><td>「写邮件」「查邮件」</td></tr><tr><td><code>lark-approval</code></td><td>1.2.0</td><td>审批待办/已办/实例，搜索审批定义并发起原生审批</td><td>「审批」（<strong>注</strong>：审批待办 ≠ 飞书任务）</td></tr><tr><td><code>lark-contact</code></td><td>1.0.0</td><td>通讯录：姓名/邮箱 → open_id，或 open_id 反查部门联系方式</td><td>提到某人姓名要发消息/排日程</td></tr><tr><td><code>lark-slides</code></td><td>1.0.0</td><td>幻灯片创建、读取、页面增删改</td><td>「幻灯片」「PPT」</td></tr><tr><td><code>lark-whiteboard</code></td><td>1.0.0</td><td>画板导出预览图 / 原始节点结构、编辑画板</td><td>「画板」「白板」</td></tr><tr><td><code>lark-minutes</code></td><td>1.0.0</td><td>妙记：搜索、下载上传音视频、读改产物、换说话人；<strong>本地音视频转写优先走它，别用 ffmpeg/whisper</strong></td><td>「妙记」「转逐字稿」</td></tr><tr><td><code>lark-note</code></td><td>1.0.0</td><td>已知 <code>note_id</code> 时直查会议纪要详情与原始逐字记录</td><td>手里有 note_id 时</td></tr><tr><td><code>lark-vc</code></td><td>1.0.0</td><td>搜历史会议、查纪要（总结/待办/章节/逐字稿）、参会人快照</td><td>「上次那个会」「会议纪要」</td></tr><tr><td><code>lark-vc-agent</code></td><td>1.0.0</td><td>机器人真实加入/离开进行中的会议，读会中事件、发会中消息表情</td><td>「现在这个会在说什么」</td></tr><tr><td><code>lark-okr</code></td><td>1.0.0</td><td>OKR 周期、目标、KR、对齐关系、量化指标、进展记录</td><td>「OKR」「目标管理」</td></tr><tr><td><code>lark-attendance</code></td><td>1.0.0</td><td>查自己的考勤打卡记录</td><td>「考勤」「打卡」</td></tr><tr><td><code>lark-markdown</code></td><td>1.2.2</td><td>飞书侧 Markdown 文件的查看/创建/上传/局部 patch/diff 比较</td><td>「Markdown 文件」</td></tr><tr><td><code>lark-event</code></td><td>1.0.0</td><td>实时事件流：<code>lark-cli event consume &#x3C;EventKey></code> 输出 NDJSON，支持 <code>--max-events</code>/<code>--timeout</code></td><td>做机器人、长驻订阅</td></tr><tr><td><code>lark-apps</code></td><td>1.0.0</td><td>妙搭（Spark/Miaoda）应用开发托管：建应用、HTML 站点发布、云端迭代、日志/Trace/PV/UV、环境变量</td><td>「妙搭」「做个应用」「拿分享链接」</td></tr><tr><td><code>lark-openapi-explorer</code></td><td>1.0.0</td><td>现有 skill 覆盖不到时，从官方文档挖原生 OpenAPI 裸调</td><td>需求超出封装范围时</td></tr><tr><td><code>lark-skill-maker</code></td><td>1.0.0</td><td>把飞书 API 操作封装成新的可复用 skill</td><td>「做一个飞书 skill」</td></tr><tr><td><code>lark-workflow-meeting-summary</code></td><td>1.0.0</td><td><strong>工作流</strong>：汇总指定时间范围的会议纪要 → 结构化报告</td><td>「整理这周会议纪要」「会议周报」</td></tr><tr><td><code>lark-workflow-standup-report</code></td><td>1.0.0</td><td><strong>工作流</strong>：编排 <code>calendar +agenda</code> + <code>task +get-my-tasks</code> → 日程待办摘要</td><td>「今天什么安排」「早报」</td></tr></tbody></table>
+<h3 id="22-飞书-feishu--系列10-个openclaw-lark-扩展">2.2 飞书 feishu-* 系列（10 个，OpenClaw Lark 扩展）</h3>
+<p>和 lark-* 是<strong>两套并行实现</strong>（feishu-* 走扩展内工具，lark-* 走 lark-cli）。功能重叠，优先用 lark-*。
+<strong>本体</strong>：<code>~/.claude/skills/feishu-&#x3C;xx>/SKILL.md</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Skill</th><th>用途</th><th>触发方式</th></tr></thead><tbody><tr><td><code>feishu-channel-rules</code></td><td>Lark 频道输出规则，<strong>始终激活</strong></td><td>在飞书对话中自动加载</td></tr><tr><td><code>feishu-bitable</code></td><td>多维表格：27 种字段类型、高级筛选、批量操作、视图管理</td><td>「多维表格」「bitable」</td></tr><tr><td><code>feishu-calendar</code></td><td>日历日程、参会人、忙闲查询</td><td>「日历」「日程」</td></tr><tr><td><code>feishu-create-doc</code></td><td>用 Lark-flavored Markdown 新建云文档，可指定文件夹/知识库</td><td>「创建飞书文档」</td></tr><tr><td><code>feishu-fetch-doc</code></td><td>拉云文档内容为 Markdown，处理图片/文件/画板</td><td>「读飞书文档」</td></tr><tr><td><code>feishu-update-doc</code></td><td>更新云文档，7 种模式：追加/覆盖/定位替换/全文替换/前后插入/删除</td><td>「更新飞书文档」</td></tr><tr><td><code>feishu-im-read</code></td><td>IM 读取：会话消息、话题回复、跨会话搜索、图片文件下载</td><td>「群里说了什么」「搜消息」</td></tr><tr><td><code>feishu-task</code></td><td>任务与清单的创建查询更新、负责人截止时间、附件、Agent 注册</td><td>「飞书任务」</td></tr><tr><td><code>feishu-troubleshoot</code></td><td>飞书插件排障 FAQ + 深度诊断 <code>/feishu_doctor</code></td><td>多次授权仍失败时</td></tr><tr><td><code>feishu-doc-publish</code></td><td><strong>自研</strong>：本地 md → 飞书云文档 + 可分享链接（零依赖 Node CLI <code>sync.mjs</code>）</td><td>「发布到飞书」「同步到飞书」</td></tr></tbody></table>
+<h3 id="23-seedance-20-视频提示词系列28-个">2.3 Seedance 2.0 视频提示词系列（28 个）</h3>
+<p>字节 Seedance 2.0 视频生成的完整提示词工程套件，<strong>来自 <code>~/Desktop/seedance-2.0/</code> 源仓库</strong>。
+<strong>本体</strong>：<code>~/.claude/skills/seedance-&#x3C;xx>/SKILL.md</code>
+调用无需点名——描述你要拍什么、或贴出失败的 prompt，对应 skill 自动进场。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>分组</th><th>Skill</th><th>用途</th></tr></thead><tbody><tr><td><strong>入口 / 创作</strong></td><td><code>seedance-interview</code></td><td>导演式访谈，把想法问成可制作的 prompt（从「毫无头绪」到「专业分镜」都适配）</td></tr><tr><td></td><td><code>seedance-interview-short</code></td><td>快速版访谈，压缩式需求收集</td></tr><tr><td></td><td><code>seedance-prompt</code></td><td><strong>主力</strong>：写 / 改进 / 翻译 / 压缩 / 调试 Seedance prompt（T2V、I2V、V2V、R2V）</td></tr><tr><td></td><td><code>seedance-prompt-short</code></td><td>30–100 词紧凑版 prompt</td></tr><tr><td></td><td><code>seedance-recipes</code></td><td>类型模板：产品广告、生活方式、剧情、MV、风景、商业片、动画</td></tr><tr><td></td><td><code>seedance-sequence</code></td><td>长故事 / 多镜头 / 分镜密集 → 拆成有状态的连续片段</td></tr><tr><td></td><td><code>seedance-continuation</code></td><td>续拍、接尾、修补尾帧、重锚漂移</td></tr><tr><td><strong>镜头语言</strong></td><td><code>seedance-camera</code></td><td>运镜、景别、镜头感、构图、一镜到底、推拉摇移、手持、航拍、微距</td></tr><tr><td></td><td><code>seedance-lighting</code></td><td>布光、氛围、时间、色温、阴影、反射、天气光、实用光源</td></tr><tr><td></td><td><code>seedance-motion</code></td><td>肢体动作、编舞、物理、物体运动、动作连贯、特技</td></tr><tr><td></td><td><code>seedance-style</code></td><td>视觉风格、美术方向、渲染质感、年代美学、写实程度</td></tr><tr><td></td><td><code>seedance-vfx</code></td><td>特效：粒子、能量、破坏、变形、天气、魔法、爆炸、烟火水</td></tr><tr><td></td><td><code>seedance-characters</code></td><td>角色一致性、身份锁定、多角色走位、服装连续性、手部安全</td></tr><tr><td></td><td><code>seedance-audio</code></td><td>对白、口型同步、音乐、音效、环境声、卡点、音画同步排障</td></tr><tr><td><strong>质量 / 合规</strong></td><td><code>seedance-antislop</code></td><td>清除 AI 套话、空洞形容词、含糊影视黑话，换成精确制作术语</td></tr><tr><td></td><td><code>seedance-filter</code></td><td>prompt 被拦截 / 静默降级时的安全改写</td></tr><tr><td></td><td><code>seedance-copyright</code></td><td>涉及知名角色、IP、名人、真人、品牌 logo、版权曲时的合规改写</td></tr><tr><td></td><td><code>seedance-troubleshoot</code></td><td>出片模糊、抖动、跑题、变形、不稳、失同步的根因诊断</td></tr><tr><td><strong>词表</strong></td><td><code>seedance-vocab-zh</code></td><td>中文运镜/布光/动作/VFX/音频术语表与压缩</td></tr><tr><td></td><td><code>seedance-vocab-en</code></td><td>英文精确制作词汇，去 slop</td></tr><tr><td></td><td><code>seedance-vocab-ja</code> / <code>-ko</code> / <code>-ru</code> / <code>-es</code></td><td>日 / 韩 / 俄 / 西 语术语表</td></tr><tr><td><strong>示例</strong></td><td><code>seedance-examples-zh</code> / <code>-ja</code> / <code>-ko</code></td><td>中 / 日 / 韩 可用 prompt 样例与改写</td></tr><tr><td><strong>工程</strong></td><td><code>seedance-pipeline</code></td><td>工作流与 API：BytePlus ModelArk、即梦 Dreamina、国内通道、ComfyUI、后期、批量、拼接</td></tr></tbody></table>
+<h3 id="24-aigc-创作工作流11-个自研为主">2.4 AIGC 创作工作流（11 个，自研为主）</h3>
+<p><strong>本体</strong>：<code>~/.claude/skills/&#x3C;目录名>/SKILL.md</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Skill</th><th>目录名</th><th>用途</th><th>触发词</th></tr></thead><tbody><tr><td><code>aigc-prompt-optimizer</code> v1.5</td><td>同名</td><td>口语需求 → 专业 prompt；prompt battle 发散、MJ 出图反馈、二选一、视觉诊断、构图意图层</td><td>「优化 prompt」「改成 MJ prompt」「prompt battle」「这张图哪里不好」「二选一」</td></tr><tr><td><code>prompt-master-skill</code></td><td>同名</td><td>通用 prompt 生成：视频 / 图片 / 文本，覆盖报告文案 PPT 邮件脚本</td><td>「写个 prompt」</td></tr><tr><td><code>character-consistency-mj</code></td><td>同名</td><td>MJ 角色一致性「四层金字塔」，sref / oref 锁脸</td><td>「保持角色一致」「sref 怎么用」「oref 锁脸」</td></tr><tr><td><code>storydiffusion</code></td><td>同名</td><td>StoryDiffusion（NeurIPS 2024）跨帧角色一致漫画 / 视频生成</td><td>「分镜角色统一」「漫画分镜生成」「图生视频」</td></tr><tr><td><code>ai-short-film-breakdown</code></td><td>同名</td><td>AI 短片类型判断与创作策略，拉片、规避 AI 技术短板</td><td>「帮我拉片」「分析这部 AI 视频的结构」</td></tr><tr><td><code>ai-short-film-screenwriting</code></td><td>同名</td><td>灵感 / 主题 / 素材 → 可制作短片方案；诊断故事单薄、情绪闭环</td><td>「这个故事能不能拍」「诊断这个剧本」</td></tr><tr><td><code>blind-editing-workflow</code></td><td>同名</td><td>蒙眼剪辑法：Python + ffmpeg 精确剪辑，图片/视频素材合成 MV、角色 PV</td><td>「把这些图做成视频」「按卡点剪辑」</td></tr><tr><td><code>song-caption-mv-workflow</code></td><td>同名</td><td>歌曲 MV + 字幕自动化：无字版导出、Demucs 人声分离、WhisperX 词级对齐、中英双语 SRT</td><td>「给这首歌做 MV」「生成 SRT」「哼唱太多识别不准」</td></tr><tr><td><code>suno-music-brief</code></td><td>同名</td><td>Suno 两阶段配乐：Simple Mode 探索 brief + Custom Mode 固化 brief</td><td>「用 Suno 做一首歌」「给这个项目配乐」</td></tr><tr><td><code>remotion-explainer-workflow</code></td><td><strong><code>remotion-skill</code></strong> ⚠️</td><td>Remotion 扁平矢量科普解释视频：sceneSpecs / sceneAssets / 跨 skill 干跑协议</td><td>「Remotion」「做科普视频」</td></tr><tr><td><code>content-publish-sop</code></td><td>同名</td><td>发布前入场票审计 + 平台适配（快手 / 网易云 / B站）</td><td>「这个作品发哪里」「快手标题怎么写」</td></tr></tbody></table>
+<h3 id="25-通用--元工具10-个">2.5 通用 / 元工具（10 个）</h3>
+<p><strong>本体</strong>：<code>~/.claude/skills/&#x3C;目录名>/SKILL.md</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Skill</th><th>用途</th><th>调用方法</th></tr></thead><tbody><tr><td><code>excalidraw-diagram</code></td><td>生成 Excalidraw 流程图 / 架构图，输出 <code>.excalidraw</code> + PNG，自带 Playwright 渲染做视觉 QA</td><td>自动：「画个流程图」「架构图」</td></tr><tr><td><code>maieutic-skill</code></td><td>苏格拉底式共学：问题澄清、学习路径、迷茫反思、研究辅助；输出 Insight / Beacon</td><td>自动：「助产术」「苏格拉底式共学」「我很迷茫」</td></tr><tr><td><code>grilling</code></td><td>无情拷问一个计划 / 决策 / 想法，压力测试思维</td><td>自动：「grill」「拷问我」</td></tr><tr><td><code>grill-me</code></td><td><code>grilling</code> 的手动入口（<code>disable-model-invocation: true</code>）</td><td><strong>只能 <code>/grill-me</code></strong></td></tr><tr><td><code>imagegen</code></td><td>生成 / 编辑位图：照片、插画、纹理、精灵、样机、透明底抠图</td><td>自动：「生成一张图」</td></tr><tr><td><code>openai-docs</code></td><td>OpenAI 产品 / API / Codex 官方文档带引用查询、模型选型与升级建议</td><td>自动：提到 OpenAI / Codex</td></tr><tr><td><code>skill-creator</code></td><td>创建或升级 skill 的规范指南</td><td>自动：「做一个 skill」</td></tr><tr><td><code>skill-installer</code></td><td>从精选列表或 GitHub repo 安装 skill 到 <code>$CODEX_HOME/skills</code></td><td>自动：「装个 skill」</td></tr><tr><td><code>install-skill-from-source</code></td><td>从 GitHub / URL / 文件夹手工安装 skill（含安全审计、依赖检查），SkillManage 不可用时的兜底</td><td>自动：「从这个仓库装 skill」</td></tr><tr><td><code>plugin-creator</code></td><td>脚手架 Codex 插件目录：<code>.codex-plugin/plugin.json</code>、清单默认值、个人市场条目</td><td>自动：「做个 Codex 插件」</td></tr></tbody></table>
+<hr>
+<h2 id="三codex-用户级-skill28-个">三、Codex 用户级 Skill（28 个）</h2>
+<p><strong>根目录</strong>：<code>C:\Users\1\.codex\skills\</code>
+<strong>只在 Codex 里能用</strong>（Claude Code 不读这个目录）。其中 16 个与 <code>.claude/skills</code> 重名重复，<strong>下面只列 Codex 独有的 12 个</strong>。</p>
+<h3 id="31-codex-独有自研-skill12-个">3.1 Codex 独有自研 skill（12 个）</h3>
+<p><strong>本体</strong>：<code>C:\Users\1\.codex\skills\&#x3C;目录名>\SKILL.md</code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Skill</th><th>版本</th><th>用途</th><th>触发词</th></tr></thead><tbody><tr><td><code>prompt-master</code></td><td>1.8.0</td><td>全工具 prompt 路由（LLM / Cursor / MJ / 图片 / 视频 / 代码 Agent）。<strong>仅在明确要求写改 prompt 时激活</strong></td><td>「帮我写 prompt」</td></tr><tr><td><code>prompt-master-series</code></td><td>1.4.0</td><td>《目标是成为 Prompt 大师》系列内容生产：破题拆解 + 小红书双卡 + 正文 + 小白笔记 + 系列归档</td><td>「做成一期 Prompt 大师」「出四层拆解卡」</td></tr><tr><td><code>knowledge-base-curator</code></td><td>1.0</td><td><strong>本知识库专属</strong>四阶段策展：答疑 → 小白笔记 → 内核存档（双链+索引+MOC）→ 学员版分发</td><td>「沉淀进知识库」「按知识库规范归档」</td></tr><tr><td><code>insight-public-post</code></td><td>1.1</td><td>知识库内核档 → B站 AI 开发者小站公开版对外帖，发布后回收终稿保持库内外一致</td><td>「发小站」「写公开版」「分发出去」</td></tr><tr><td><code>work-weekly-report</code></td><td>1.0</td><td>跨工作区所有仓库一周 git 活动 → 公司标准三段式周报，写入并推送 work-reports 仓库</td><td>「写周报」「提交给公司的周报」</td></tr><tr><td><code>aigc-poster-layout</code></td><td>0.4.0</td><td>作品宣传海报排版（B站/小红书/快手/朋友圈）；封面精修首选选帧 + GPT Image 2 叠排不重绘主体</td><td>「做张宣传海报」</td></tr><tr><td><code>aigc-video-cover-gpt</code></td><td>1.3</td><td>人物参考图 + 脚本 → GPT Image 2 一步出 16:9 商单封面（含锁脸 + 中文大字策略）</td><td>「给这个视频做封面」</td></tr><tr><td><code>aigc-postmortem</code></td><td>—</td><td>创作复盘工作流，事实先行防自我归因偏差</td><td>「帮我复盘这次比赛」「整理项目经验」</td></tr><tr><td><code>subtask-receipt-writer</code></td><td>—</td><td>子任务完成后写交接回执 / 回函 / 收口简报，回报给 GPT 主会话 / Claude / Cowork</td><td>「写个回执」「回函」</td></tr><tr><td><code>maieutic-deepseek-adapter</code></td><td>—</td><td>Maieutic 的国内平台适配 prompt 包（DeepSeek / Dify / Coze / 通义 / 豆包 / Kimi）</td><td>要迁到国内模型时</td></tr><tr><td><code>remotion-card-video</code></td><td>—</td><td>目录 <strong><code>remotion</code></strong> ⚠️ · Remotion + React 生成「极简知识卡片流」视频，内置设计系统与场景模板</td><td>「把这篇文章做成卡片视频」「出 TSX 代码」</td></tr><tr><td><code>review-agent</code></td><td>—</td><td>位于 <code>.system/</code> · 只读、缺陷优先的代码审查，供其他 agent 委派</td><td>由 agent 委派，不直接叫</td></tr></tbody></table>
+<h3 id="32-codex-系统-skill6-个">3.2 Codex 系统 skill（6 个）</h3>
+<p><strong>本体</strong>：<code>C:\Users\1\.codex\skills\.system\&#x3C;名>\SKILL.md</code>
+含 <code>imagegen</code>、<code>openai-docs</code>、<code>plugin-creator</code>、<code>skill-creator</code>、<code>skill-installer</code>、<code>review-agent</code>。
+前 5 个与 <code>~/.claude/skills/</code> 同名副本一致，第 6 个 <code>review-agent</code> 是 Codex 独有（见上表）。</p>
+<h3 id="33-与-claude-重复的-16-个">3.3 与 Claude 重复的 16 个</h3>
+<p><code>ai-short-film-breakdown</code>、<code>ai-short-film-screenwriting</code>、<code>aigc-prompt-optimizer</code>、<code>blind-editing-workflow</code>、
+<code>character-consistency-mj</code>、<code>content-publish-sop</code>、<code>feishu-doc-publish</code>、<code>maieutic-skill</code>、
+<code>remotion-explainer-workflow</code>、<code>song-caption-mv-workflow</code>、<code>suno-music-brief</code> +
+系统 5 件套 <code>imagegen</code> / <code>openai-docs</code> / <code>plugin-creator</code> / <code>skill-creator</code> / <code>skill-installer</code>。</p>
+<blockquote>
+<p><strong>版本可能不一致</strong>：两边是独立副本，改一边不会同步另一边。改动后请两边都更新，或以 <code>07_skill存档/</code> 为唯一真身。</p>
+</blockquote>
+<hr>
+<h2 id="四workbuddy-skill6-个">四、WorkBuddy Skill（6 个）</h2>
+<p><strong>根目录</strong>：<code>C:\Users\1\.workbuddy\skills\</code>
+<strong>本体</strong>：<code>C:\Users\1\.workbuddy\skills\&#x3C;名>\SKILL.md</code>
+6 个全部已复制到 <code>~/.claude/skills/</code>，Claude 会话中直接可用：
+<code>excalidraw-diagram</code>、<code>feishu-doc-publish</code>、<code>grill-me</code>、<code>grilling</code>、<code>install-skill-from-source</code>、<code>maieutic-skill</code>。</p>
+<hr>
+<h2 id="五openclaw-skill38-个飞书宿主">五、OpenClaw Skill（38 个，飞书宿主）</h2>
+<p>OpenClaw 是飞书侧的 agent 宿主，skill 分三处：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>位置</th><th>数量</th><th>内容</th><th>本体路径</th></tr></thead><tbody><tr><td><code>~/.openclaw/workspace/.agents/skills/</code></td><td>27</td><td>lark-* 全家桶（与第 2.1 节同源）</td><td><code>&#x3C;该目录>/&#x3C;名>/SKILL.md</code></td></tr><tr><td><code>~/.openclaw/extensions/openclaw-lark/skills/</code></td><td>9</td><td>feishu-* 系列（与第 2.2 节同源，不含 feishu-doc-publish）</td><td><code>&#x3C;该目录>/&#x3C;名>/SKILL.md</code></td></tr><tr><td><code>~/.openclaw/plugin-skills/</code></td><td>11</td><td><strong>全部是 Junction 链接</strong>，不是实体</td><td>见下</td></tr></tbody></table>
+<p><code>~/.openclaw/plugin-skills/</code> 的链接指向：</p>
+<ul>
+<li><code>browser-automation</code> → <code>%APPDATA%\npm\node_modules\openclaw\dist\extensions\browser\skills\browser-automation</code>（<strong>浏览器自动化，本机唯一一份</strong>）</li>
+<li><code>canvas</code> → <code>%APPDATA%\npm\node_modules\openclaw\dist\extensions\canvas\skills\canvas</code>（<strong>画布，本机唯一一份</strong>）</li>
+<li>其余 9 个 <code>feishu-*</code> → 指回 <code>~/.openclaw/extensions/openclaw-lark/skills/</code></li>
+</ul>
+<blockquote>
+<p><code>browser-automation</code> 和 <code>canvas</code> <strong>只在 OpenClaw（飞书对话）里可用</strong>，Claude Code 和 Codex 都没装。</p>
+</blockquote>
+<hr>
+<h2 id="六项目级-skillknowledge-base-仓库内">六、项目级 Skill（knowledge-base 仓库内）</h2>
+<p><strong>本体真身</strong>：<code>&#x3C;仓库>/.agents/skills/&#x3C;名>/SKILL.md</code>（28 个：27 个 lark-* + <code>grill-me</code>）</p>
+<p>同一套在仓库里有 <strong>3 个入口</strong>，后两个是 Junction 链接，不占额外空间：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>路径</th><th>形态</th><th>说明</th></tr></thead><tbody><tr><td><code>.agents/skills/</code></td><td><strong>实体目录</strong></td><td>唯一真身</td></tr><tr><td><code>.codebuddy/skills/</code></td><td>Junction → <code>.agents/skills/</code></td><td>CodeBuddy 宿主入口</td></tr><tr><td><code>skills/</code></td><td>Junction → <code>.agents/skills/</code></td><td>通用入口</td></tr></tbody></table>
+<p><code>skills-lock.json</code> 记录每个 skill 的来源与哈希：<code>lark-*</code> 来自 <code>open.feishu.cn</code>（well-known），<code>grill-me</code> 来自 GitHub <code>mattpocock/skills</code>。</p>
+<blockquote>
+<p>⚠️ <strong>项目级版本比用户级新</strong>：<code>lark-sheets</code> 项目级 v3.0.2 vs 用户级 v3.0.0；<code>lark-wiki</code> 项目级 v1.0.3 vs 用户级 v1.0.2。在本仓库工作时以项目级为准。</p>
+</blockquote>
+<hr>
+<h2 id="七源仓库--未安装作为素材存在">七、源仓库 / 未安装（作为素材存在）</h2>
+<p>这些位置有 SKILL.md，但<strong>不是任何宿主的加载目录</strong>，只是源码 / 存档 / 学员分发包：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>位置</th><th>数量</th><th>说明</th></tr></thead><tbody><tr><td><code>~/Desktop/seedance-2.0/</code></td><td>29</td><td>Seedance 套件源仓库（含总入口 <code>seedance-20</code>）。已安装的 28 个是它的副本</td></tr><tr><td><code>~/Desktop/ai-editing-course/.claude/skills/</code></td><td>4</td><td>AI 剪辑课程项目级（课程目录下打开时才生效）</td></tr><tr><td><code>~/Desktop/ai-editing-course/00_学员包_工作流入门/skills/</code></td><td>9</td><td>学员分发包，给学员自己装</td></tr><tr><td><code>&#x3C;本仓库>/07_skill存档/</code></td><td>23 目录</td><td><strong>自研 skill 的唯一真身与版本存档</strong>，见 <a href="/above-the-web/07-skill-8c697c0/" class="wikilink">07_skill存档索引</a>、<a href="/above-the-web/skill-index-b155e36/" class="wikilink">SKILL_INDEX</a></td></tr><tr><td><code>&#x3C;本仓库>/08_对外分发/AI视频工作流_学员包/</code></td><td>9</td><td>对外学员包副本</td></tr></tbody></table>
+<blockquote>
+<p><code>07_skill存档/</code> 里有 3 个 skill <strong>没装到任何宿主</strong>，只能靠「④ 直接 Read」调用：
+<code>dingtalk-doc-delivery</code>（钉钉知识库交付）、<code>aigc-poster-layout</code> 的存档版、<code>insight-public-post_v1.0</code>（旧版留档）。</p>
+</blockquote>
+<hr>
+<h2 id="八未安装的市场缓存1600-个不可调用">八、未安装的市场缓存（1600+ 个，<strong>不可调用</strong>）</h2>
+<p>全盘共扫到 <strong>1867 个 SKILL.md</strong>，其中约 1640 个属于市场 / 插件缓存，<strong>没有被任何宿主加载</strong>，仅占磁盘：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>缓存位置</th><th>量级</th><th>内容</th></tr></thead><tbody><tr><td><code>~/.workbuddy/plugins/marketplaces/codebuddy-plugins-official/</code></td><td>~340</td><td>CodeBuddy 官方插件市场（+ 一份同等大小的 <code>.tmp</code> 残留副本，可删）</td></tr><tr><td><code>~/.workbuddy/plugins/marketplaces/cb_teams_marketplace/</code></td><td>~90</td><td>团队市场：金融、投行、私募、股票研究、产品管理等</td></tr><tr><td><code>~/.workbuddy/connectors-marketplace/connectors/</code></td><td>~45</td><td>连接器：feishu、wecom、cloudbase 等</td></tr><tr><td><code>~/.codex/.tmp/plugins/plugins/</code></td><td>~250</td><td>Codex 插件缓存：vercel、superpowers、supabase、stripe、slack、teams、sentry、render、netlify、expo、cloudflare、hugging-face 等</td></tr><tr><td><code>~/.codex/plugins/cache/openai-curated-remote/</code></td><td>~80</td><td>OpenAI 官方精选远程插件：investment-banking、data-analytics、openai-templates 等</td></tr><tr><td><code>~/.cache/codex-runtimes/</code></td><td>~8</td><td>Codex 运行时自带：documents、pdf、presentations、spreadsheets、template-creator</td></tr></tbody></table>
+<p><strong>想用其中某个</strong>：走 <code>skill-installer</code> 或 <code>install-skill-from-source</code> 正式安装到 <code>~/.claude/skills</code> 或 <code>$CODEX_HOME/skills</code>。</p>
+<hr>
+<h2 id="九维护待办扫描中发现的问题">九、维护待办（扫描中发现的问题）</h2>
+<ol>
+<li><strong><code>~/.codex/skills/</code> 混入了 12 个空目录</strong>：<code>.github</code>、<code>.obsidian</code>、<code>00_仓库维护</code>、<code>01_sref档案</code>、<code>02_参数行为档案</code>、<code>03_prompt模板库</code>、<code>04_方法论与洞察</code>、<code>05_视觉系统</code>、<code>06_代码</code>、<code>07_skill存档</code>、<code>08_对外分发</code>、<code>09_平台工程</code> —— 是知识库目录骨架被误同步过去的残留，全空，可直接删。</li>
+<li><strong><code>~/.workbuddy/plugins/marketplaces/codebuddy-plugins-official.1784097135841-hzssgt.tmp/</code></strong> 是一份完整的市场副本残留（138+34+28 个 SKILL.md），安装中断留下的，可删。</li>
+<li><strong>根目录 <code>skills-inventory.md</code> 已过期</strong>（2026-07-17，70 个，路径还写着 <code>~/.openclaw/workspace/</code>），已被本文档取代，可删。</li>
+<li><strong>Claude / Codex 双装的 16 个 skill 会版本漂移</strong>，建议约定以 <code>07_skill存档/</code> 为唯一真身，改完再同步两边。</li>
+<li><strong>项目级 lark-sheets / lark-wiki 比用户级新</strong>，可考虑把用户级也升上去。</li>
+</ol>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>自研 skill 存档与版本记录：<a href="/above-the-web/07-skill-8c697c0/" class="wikilink">07_skill存档索引</a></li>
+<li>自研 skill 触发词与免安装调用法：<a href="/above-the-web/skill-index-b155e36/" class="wikilink">SKILL_INDEX</a></li>
+<li>新工作电脑装载实录（2026-10-09，30 个自研 skill 以目录联接装进 <code>~/.claude/skills</code>、联接按 frontmatter <code>name</code> 命名、只装用户级不建项目级以免重复加载）：<a href="/above-the-web/2026-10-09-aigc-12gb-33b-v1-02f1adf/" class="wikilink">2026-10-09_新工作电脑AIGC环境从零搭建_单域名分流失败与12GB跑33B视频模型_复盘_v1</a></li>
+<li>全库入口：<a href="/above-the-web/readme-7111557/" class="wikilink">README</a></li>
+<li>知识库协作规范：<code>CLAUDE.md</code></li>
+</ul> <div class="tags"> <span class="tag">类型/skill存档</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-09T22:06:25+08:00">2026-10-09</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/07_skill%E5%AD%98%E6%A1%A3/%E6%9C%AC%E6%9C%BASkill%E9%83%A8%E7%BD%B2%E4%B8%8E%E8%B0%83%E7%94%A8%E6%89%8B%E5%86%8C.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/07_skill%E5%AD%98%E6%A1%A3/%E6%9C%AC%E6%9C%BASkill%E9%83%A8%E7%BD%B2%E4%B8%8E%E8%B0%83%E7%94%A8%E6%89%8B%E5%86%8C.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li><li><a href="/above-the-web/skill-index-b155e36/">SKILL_INDEX — Skill 使用索引</a></li><li><a href="/above-the-web/2026-10-09-aigc-12gb-33b-v1-02f1adf/">新工作电脑 AIGC 环境从零搭建：单域名分流失败与 12GB 跑 33B 视频模型</a></li><li><a href="/above-the-web/memoraxcode-ai-v1-49c1fb0/">Memorax Code:AI 编程记忆层的架构与数据边界</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/maieuticskill-v0-1-20260605-321df56/"> <span class="card-cat">skill存档</span> <h3>测试复盘 · Maieutic Skill v0.1</h3> <p>maieutic-skill v0.1 已完成首轮五个 MVP 用例测试，覆盖知识解释、学习路径澄清、迷茫反思、AI 公益项目方向澄清、Cl…</p> </a><a class="card" href="/above-the-web/maieuticskill-v0-2-64d3b30/"> <span class="card-cat">skill存档</span> <h3>Maieutic Skill v0.2 路线图：国内可用适配</h3> <p>maieutic-skill v0.1 已完成首轮测试，但 Claude / GPT Skill 形态对国内普通用户存在可访问性限制。</p> </a><a class="card" href="/above-the-web/readme-7111557/"> <span class="card-cat">skill存档</span> <h3>Maieutic DeepSeek Adapter</h3> <p>maieutic-deepseek-adapter 是一组可复制到国内模型平台的 prompt 包。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#零先看这一段怎么调用-skill" data-toc-link="零先看这一段怎么调用-skill">零、先看这一段：怎么调用 Skill</a></li><li class="d2"><a href="#一claude-code-内置-skill14-个无本地文件" data-toc-link="一claude-code-内置-skill14-个无本地文件">一、Claude Code 内置 Skill（14 个，无本地文件）</a></li><li class="d2"><a href="#二claude-code-用户级-skill86-个" data-toc-link="二claude-code-用户级-skill86-个">二、Claude Code 用户级 Skill（86 个）</a></li><li class="d3"><a href="#21-飞书-lark--系列27-个openclaw-官方源" data-toc-link="21-飞书-lark--系列27-个openclaw-官方源">2.1 飞书 lark-* 系列（27 个，OpenClaw 官方源）</a></li><li class="d3"><a href="#22-飞书-feishu--系列10-个openclaw-lark-扩展" data-toc-link="22-飞书-feishu--系列10-个openclaw-lark-扩展">2.2 飞书 feishu-* 系列（10 个，OpenClaw Lark 扩展）</a></li><li class="d3"><a href="#23-seedance-20-视频提示词系列28-个" data-toc-link="23-seedance-20-视频提示词系列28-个">2.3 Seedance 2.0 视频提示词系列（28 个）</a></li><li class="d3"><a href="#24-aigc-创作工作流11-个自研为主" data-toc-link="24-aigc-创作工作流11-个自研为主">2.4 AIGC 创作工作流（11 个，自研为主）</a></li><li class="d3"><a href="#25-通用--元工具10-个" data-toc-link="25-通用--元工具10-个">2.5 通用 / 元工具（10 个）</a></li><li class="d2"><a href="#三codex-用户级-skill28-个" data-toc-link="三codex-用户级-skill28-个">三、Codex 用户级 Skill（28 个）</a></li><li class="d3"><a href="#31-codex-独有自研-skill12-个" data-toc-link="31-codex-独有自研-skill12-个">3.1 Codex 独有自研 skill（12 个）</a></li><li class="d3"><a href="#32-codex-系统-skill6-个" data-toc-link="32-codex-系统-skill6-个">3.2 Codex 系统 skill（6 个）</a></li><li class="d3"><a href="#33-与-claude-重复的-16-个" data-toc-link="33-与-claude-重复的-16-个">3.3 与 Claude 重复的 16 个</a></li><li class="d2"><a href="#四workbuddy-skill6-个" data-toc-link="四workbuddy-skill6-个">四、WorkBuddy Skill（6 个）</a></li><li class="d2"><a href="#五openclaw-skill38-个飞书宿主" data-toc-link="五openclaw-skill38-个飞书宿主">五、OpenClaw Skill（38 个，飞书宿主）</a></li><li class="d2"><a href="#六项目级-skillknowledge-base-仓库内" data-toc-link="六项目级-skillknowledge-base-仓库内">六、项目级 Skill（knowledge-base 仓库内）</a></li><li class="d2"><a href="#七源仓库--未安装作为素材存在" data-toc-link="七源仓库--未安装作为素材存在">七、源仓库 / 未安装（作为素材存在）</a></li><li class="d2"><a href="#八未安装的市场缓存1600-个不可调用" data-toc-link="八未安装的市场缓存1600-个不可调用">八、未安装的市场缓存（1600+ 个，不可调用）</a></li><li class="d2"><a href="#九维护待办扫描中发现的问题" data-toc-link="九维护待办扫描中发现的问题">九、维护待办（扫描中发现的问题）</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

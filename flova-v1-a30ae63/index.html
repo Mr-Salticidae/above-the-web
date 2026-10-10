@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Flova 平台档案：编排层不是模型层 · 蛛网之上</title><meta name="description" content="Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点："><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/flova-v1-a30ae63/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Flova 平台档案：编排层不是模型层"><meta property="og:description" content="Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点："><meta property="og:url" content="https://tiaozhuxiansheng.com/flova-v1-a30ae63/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Flova 平台档案：编排层不是模型层"><meta name="twitter:description" content="Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点："><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-08T10:16:37+08:00"><meta property="article:modified_time" content="2026-09-26T06:55:33+08:00"><meta property="article:section" content="参数行为档案"><meta property="article:tag" content="类型/档案"><meta property="article:tag" content="工具/Flova"><meta property="article:tag" content="主题/AI视频"><meta property="article:tag" content="来源/公开调研"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/flova-v1-a30ae63/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/flova-v1-a30ae63/","url":"https://tiaozhuxiansheng.com/flova-v1-a30ae63/","headline":"Flova 平台档案：编排层不是模型层","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点：","datePublished":"2026-08-08T10:16:37+08:00","dateModified":"2026-09-26T06:55:33+08:00","articleSection":"参数行为档案","keywords":"类型/档案, 工具/Flova, 主题/AI视频, 来源/公开调研"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"参数行为档案","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88"},{"@type":"ListItem","position":3,"name":"Flova 平台档案：编排层不是模型层","item":"https://tiaozhuxiansheng.com/flova-v1-a30ae63/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88" data-pagefind-meta="category" data-pagefind-filter="kind:note">参数行为档案</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-08T10:16:37+08:00">2026-08-08</time></span> <span>更新于 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time></span> <span>约 8 分钟读完 · 2,873 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#一它是什么">一、它是什么</a></li><li class="d2"><a href="#二谁在做">二、谁在做</a></li><li class="d2"><a href="#三钱从哪来">三、钱从哪来</a></li><li class="d2"><a href="#四跟别的平台什么关系">四、跟别的平台什么关系</a></li><li class="d2"><a href="#五可迁移的三条判据">五、可迁移的三条判据</a></li><li class="d3"><a href="#1-评估一个-ai-创作平台先分清它是模型层还是编排层">1. 评估一个 AI 创作平台，先分清它是模型层还是编排层</a></li><li class="d3"><a href="#2-平台的原生一致性能力优先于-prompt-复述">2. 平台的原生一致性能力优先于 prompt 复述</a></li><li class="d3"><a href="#3-供应链风险是叠加的凭证必须自己留">3. 供应链风险是叠加的，凭证必须自己留</a></li><li class="d2"><a href="#六边界与未验证">六、边界与未验证</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="flova-平台档案编排层不是模型层">Flova 平台档案：编排层不是模型层</h1>
+<blockquote>
+<p>入档：2026-08-08
+触发：《1000人后室大逃亡》项目全链路走 Flova，回答「这平台什么来路、能力边界在哪」时做的一次全网背景调研。
+<strong>性质：桌面调研</strong>（公开报道 + 官方文档），不是实测档。实测层看 08 分发区那篇使用教程与项目现场记录。
+时效：资本与模型接入两栏变动极快，<strong>引用前先看日期</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="一它是什么">一、它是什么</h2>
+<p>Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是<strong>视频创作 Agent 工作台</strong>，不是一个生成器界面。官方文档给的三个支点：</p>
+<ul>
+<li><strong>项目级记忆</strong>：script / shot / media / edit 全程写进项目上下文，「你的反馈、修改、最终选定」会被记住；</li>
+<li><strong>多版本管理</strong>：每个阶段可出多版比选，选定后的版本成为后续生成的前置；</li>
+<li><strong>Skills</strong>：把创作者自己的方法固化成可复用、可分享的技能包。</li>
+</ul>
+<p>域名两个都在用：<code>flova.ai</code>（官网与 docs 的规范域名）与 <code>flova.tv</code>（同一产品，08 分发区教程里用的就是它）。</p>
+<h2 id="二谁在做">二、谁在做</h2>
+<p><strong>创始人兼 CEO 郭列</strong>，履历是一条很清楚的「爆款 C 端产品」线：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>年份</th><th>事</th></tr></thead><tbody><tr><td>2013</td><td>创办<strong>脸萌</strong></td></tr><tr><td>之后</td><td><strong>FaceU 激萌</strong></td></tr><tr><td>2018</td><td>FaceU 被<strong>字节跳动以 3 亿美金收购</strong></td></tr><tr><td>字节期间</td><td>孵化<strong>轻颜相机、剪映、醒图</strong></td></tr><tr><td>2025</td><td>离开字节，创业做 Flova</td></tr></tbody></table>
+<p>团队很轻：增长与商业化负责人<strong>瑞瑞尔</strong>（95 后）、Agent 产品负责人<strong>唐果</strong>（00 后）。</p>
+<p>时间线：2025 年 5 月做 Demo → 9 月初开始产品测试 → <strong>2025 年 10 月上线</strong>。</p>
+<p><strong>产品设计的学习对象不是同行视频工具，是 Claude Code 和 Codex</strong>——郭列的原话是「Coding 以及通用 Agent 确实在 Agent 上走得比较靠前，所以我们对 Coding 产品的设计会研究得多一点」。这解释了 Flova 为什么长成「项目 + 上下文记忆 + Skills + 多版本」这套形态：<strong>它是照着编码 Agent 的骨架抄的，不是照着剪辑软件抄的</strong>。用过 Claude Code 的人对它的交互直觉是可迁移的。</p>
+<h2 id="三钱从哪来">三、钱从哪来</h2>
+<p>两轮融资<strong>累计超 8000 万美元</strong>，投资方<strong>红杉中国 / IDG / 云九资本</strong>，被媒体称为「目前视频 Agent 产品的最大融资」。</p>
+<p>但放进赛道看，这个数字<strong>很小</strong>。2026 年 7 月同期（单月赛道融资额超过过去两年总和）：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>家</th><th>融资</th><th>备注</th></tr></thead><tbody><tr><td>可灵 AI</td><td><strong>30 亿美元</strong> A 轮</td><td>腾讯 / 阿里云 / 百度同投，投后约 180 亿美元</td></tr><tr><td>生数科技（Vidu）</td><td>5 个月三轮，超 50 亿人民币</td><td></td></tr><tr><td>爱诗科技</td><td>C 轮 29.8 亿人民币</td><td>投后超 20 亿美元</td></tr><tr><td>智象未来</td><td>C 轮 15 亿人民币</td><td></td></tr><tr><td><strong>Flova</strong></td><td><strong>8000 万美元</strong></td><td>应用层，非模型层</td></tr></tbody></table>
+<p>另一个背景数字：<strong>字节 Seedance 月营收超 10 亿，份额超 80%</strong>。</p>
+<p>→ <strong>Flova 是这场大战里的应用层小额选手</strong>，钱花在编排与产品，不在算力与模型。这不是缺点，是定位——但它决定了下面第四节。</p>
+<h2 id="四跟别的平台什么关系">四、跟别的平台什么关系</h2>
+<p><strong>寄生 / 编排关系，不是竞争关系。Flova 不训练自己的视频模型。</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>类别</th><th>它调用的上游</th></tr></thead><tbody><tr><td>视频</td><td><strong>Seedance 2.0（字节）、可灵 Kling、Veo 3.1（Google）、Sora 2（OpenAI）</strong></td></tr><tr><td>图像</td><td>Midjourney、GPT Image</td></tr><tr><td>语音</td><td><strong>ElevenLabs</strong></td></tr><tr><td>音乐</td><td><strong>Suno</strong></td></tr></tbody></table>
+<p>宣传里的「智能模型调度引擎」= 按镜头描述自动派最合适的底层模型。郭列本人否认「聚合平台」的标签，理由是「做 Agent 产品，不是直接满足用户需求，是通过 Agent 去更好地满足」——<strong>这个否认针对的是产品价值，不是技术事实</strong>。技术事实上，上表里没有一行是 Flova 自己的。</p>
+<p>与字节的关系值得单列：创始人出自字节、做过剪映，Flova 重度依赖字节的 Seedance 2.0，但公开资料里<strong>没有股权或合作关系</strong>，是独立创业公司。</p>
+<h2 id="五可迁移的三条判据">五、可迁移的三条判据</h2>
+<h3 id="1-评估一个-ai-创作平台先分清它是模型层还是编排层">1. 评估一个 AI 创作平台，先分清它是<strong>模型层</strong>还是<strong>编排层</strong></h3>
+<p>因为两层的能力边界归属完全不同：</p>
+<ul>
+<li><strong>编排层平台的死区、画质上限、涨价风险，全部由底层模型决定，不由平台决定。</strong> 说「Flova 做不出多人同框 / 画面内文字 / 精细手部」是不准确的表述，准确表述是「Seedance 2.0 这一版做不出」。</li>
+<li>由此推出一条实操结论：<strong>编排层平台的能力清单有保质期</strong>，上游换代它就变。凡是写进团队规范的「这类镜头默认劝退」，都要挂上「基于哪个上游模型的哪一版」这个前提，否则规范会在上游升级后无声地过期。</li>
+<li>反过来，<strong>编排层真正自己的东西是上下文、版本管理、Skills 和工作流</strong>——评估它值不值得用，应该只评这几样，画质好坏是在评上游。</li>
+</ul>
+<h3 id="2-平台的原生一致性能力优先于-prompt-复述">2. 平台的原生一致性能力优先于 prompt 复述</h3>
+<p>Flova 主推的 Ingredients 360° 角色一致性（正背视图建角色后绕拍锁脸）、以及默认 skills 里「人物形象直接给四视图 + 自动追加负面词」，都是<strong>平台层机制</strong>。项目里已经有一套自建的锚点角色 / 四视图规范时，正确动作是<strong>把它喂进平台的原生槽位</strong>，不是在 prompt 里再文字复述一遍——后者是在跟机制抢方向盘（同 <a href="/above-the-web/vs-v1-c7b40a4/" class="wikilink">生成式vs编辑式工具选择律_v1</a> 的逻辑：顺着工具的默认行为走）。</p>
+<h3 id="3-供应链风险是叠加的凭证必须自己留">3. 供应链风险是叠加的，凭证必须自己留</h3>
+<p>用编排层平台 = 同时承受「平台自身」+「每一个上游」的风险。Flova 这一侧的具体风险画像：成立不到一年、上线不到十个月、融资体量在赛道里偏小，而使用者往往把整条创作链路压上去。</p>
+<p>对应的动作只有一个方向——<strong>把回溯凭证留在自己手里</strong>：</p>
+<ul>
+<li><strong>导出文件的原始文件名不许改</strong>（那串时间戳 + hash 是回溯生成记录的唯一凭证）；</li>
+<li><strong>语音的 <code>voice_id</code> 定版后写进自己的文档</strong>（丢了，同一个角色下次生成就是另一个人）；</li>
+<li>素材与资产图的真源留在自己的仓库/表格里，不依赖平台的项目上下文长期存活。</li>
+</ul>
+<h2 id="六边界与未验证">六、边界与未验证</h2>
+<ul>
+<li><strong>全部为公开信息</strong>：官方文档、创始人访谈、财经报道。没有一条是实测。</li>
+<li><strong>模型接入清单是宣传与媒体口径</strong>，各家报道的版本号互相打架（Kling 2.5 / 2.6 / 3.0 都有人写）。要引用具体版本号，以平台内当时的实际可选项为准。</li>
+<li>**「Flova 会自动追加负面提示词」「一幕一个项目、项目记忆不跨项目」**这类现场行为来自使用侧观察，不在本档的调研范围内——那些属于实测层。</li>
+<li>判据 1 的「上游换代 → 平台能力清单过期」目前是结构性推理，<strong>尚无本库内的换代前后对照案例</strong> ⚠️ 待验证。
+→ <strong>2026-08-08 更新：对照案例已设计，尚未执行。</strong> 《1000人后室大逃亡》S43 长镜头（25 秒）在 Flova 上于 6.00/12.00/18.00 秒各硬切一刀，用三臂对照（Flova vs 即梦 Web vs 即梦 CLI 直连 Seedance 2.5）判定分段来自编排层还是模型层——正是本条缺的那个换代前后对照。设计与仪器见 <a href="/above-the-web/2026-08-08-s43-v1-656a72b/" class="wikilink">2026-08-08_后室大逃亡S43长镜头_归因未遂与生死线次序复盘_v1</a>，<strong>该次实际生成 0 次，结论待回填</strong>。
+→ <strong>2026-08-25 回填（三臂只跑了一臂）</strong>：65_过风 项目用 <strong>LibTV CLI 直连 <code>star-video2.5</code></strong> 代替
+「即梦 CLI 直连」那一臂，单条 30s / 1080p 实测 <strong>0 处切点</strong>（<code>scene>0.3</code> 检测为空，
+逐秒亮度单调平滑无跳变）。→ <strong>Seedance 2.5 本身不做 6 秒分段</strong>，
+<a href="/above-the-web/seedance2-5-v1-14bc5c5/" class="wikilink">Seedance2_5_行为规律_v1</a> §一那条据此作废、移出模型层档案。
+⚠️ <strong>但本条判据 1 的验证仍未完成</strong>：Flova 臂与即梦 Web 臂都没跑，
+所以「Flova 编排层切的」与「Flova 上游是 2.0、15s 上限被迫拆」<strong>仍未区分</strong>——
+也就是说下面那条推论<strong>没有被排除</strong>。<strong>最省事的判决实验</strong>：在 Flova 上跑一条 <strong>15 秒以内</strong>的镜头，
+切 → 是编排层；不切 → 是上游版本上限，本条判据 1 反而被自己预测的误判验证。
+⚠️ 一个可能一步定案的推论：本档第四节记 Flova 上游为 <strong>Seedance 2.0</strong>，而即梦 CLI 的参数校验器写死 <code>seedance2.0 系 → 时长 4–15s</code>。<strong>25 秒的镜头在 15 秒上限的模型上必须被切</strong>。若属实，按判据 1 的措辞，准确表述是「Seedance 2.0 这一版做不到 25 秒单次生成」，而非「Flova 有问题」——<strong>这恰好是判据 1 自己预测的那种误判</strong>。但第四节的模型清单是桌面调研、非实测，所以这只是强先验，不是该次生成的事实。</li>
+</ul>
+<h2 id="如何使用">如何使用</h2>
+<ul>
+<li>有人问「Flova 是什么来路 / 靠不靠谱 / 跟可灵什么关系」→ 直接给第一、三、四节。</li>
+<li>要判断某个镜头做不做得出来 → <strong>不要查本档</strong>，去查对应上游模型的行为档案（<a href="/above-the-web/kling3-0-v1-8b6096c/" class="wikilink">可灵Kling3_0_行为规律_v1</a> 等）。本档只告诉你该去查谁。</li>
+<li>接任何一个新的「一体化 / 全流程 / Agent」创作平台时 → 过一遍第五节三条判据。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/kling3-0-v1-8b6096c/" class="wikilink">可灵Kling3_0_行为规律_v1</a> —— Flova 的上游之一；「能不能生成」的答案在这类档案里，不在平台档案里</li>
+<li><a href="/above-the-web/suno-v5-5-v1-b2fa879/" class="wikilink">Suno_v5.5_行为规律_v1</a> —— 同为 Flova 上游（音乐侧）</li>
+<li><a href="/above-the-web/eleven-v3-v1-d87db20/" class="wikilink">Eleven_v3_行为规律_v1</a> —— 同为 Flova 上游（语音侧）。<strong>自建直连还是走平台内置，取舍点在 <code>voice_id</code> 归谁掌握</strong>：直连时定版 voice_id 是自己的回溯凭证，走内置则落到平台侧</li>
+<li><a href="/above-the-web/v1-f9ea0de/" class="wikilink">新模型试跑_硬锁清单先行_v1</a> —— 上游换代时的配套动作：新模型质感兴奋会掩盖设定违规，入库前逐条过硬锁</li>
+<li><a href="/above-the-web/vs-v1-c7b40a4/" class="wikilink">生成式vs编辑式工具选择律_v1</a> —— 工具选择的另一轴：那条看「保留占比」，本档看「模型层还是编排层」</li>
+<li>⭐⭐ <a href="/above-the-web/v1-75dde95/" class="wikilink">可行性生死线前置律_移植先探一票否决约束_v1</a> —— 编排层平台上，那条一票否决约束通常长在上游模型身上，先探它。<strong>2026-08-08 补：从编排层换到上游直连时，生死线可能根本不是技术指标，而是账号等级</strong></li>
+<li><a href="/above-the-web/2026-08-08-s43-v1-656a72b/" class="wikilink">2026-08-08_后室大逃亡S43长镜头_归因未遂与生死线次序复盘_v1</a> —— 为本档第六节 ⚠️ 待验证 设计的换代前后对照；含「等间隔+帧级精确=程序化拼接」这条<strong>尚未验证</strong>的判据，引用前看清它的验证状态</li>
+<li><a href="/above-the-web/v1-9c3eb59/" class="wikilink">伪开源三查律_v1</a> —— 同族的「宣传口径 vs 技术事实」核查姿势</li>
+<li><a href="/above-the-web/ai-v1-c522145/" class="wikilink">AI平台定价与可及性观察台账_v1</a> —— 平台侧的另一条观察线（定价 / 可及性）；本档不立案，只作背景</li>
+<li><a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a> —— 视频生成侧的通用约束，跨平台成立</li>
+<li>使用教程（对外分发区，无双链）：<code>08_对外分发/Flova_AI简单使用教程/Flova_AI简单使用教程.md</code></li>
+<li><a href="/above-the-web/seedance2-5-v1-14bc5c5/" class="wikilink">Seedance2_5_行为规律_v1</a> —— <strong>模型层的对应档案</strong>。本文写编排层，Seedance 2.5 的生成行为（6 秒自动分段、字号判据、运镜安全区）在那边</li>
+</ul> <div class="tags"> <span class="tag">类型/档案</span><span class="tag">工具/Flova</span><span class="tag">主题/AI视频</span><span class="tag">来源/公开调研</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/Flova_%E5%B9%B3%E5%8F%B0%E6%A1%A3%E6%A1%88_%E7%BC%96%E6%8E%92%E5%B1%82%E4%B8%8D%E6%98%AF%E6%A8%A1%E5%9E%8B%E5%B1%82_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/Flova_%E5%B9%B3%E5%8F%B0%E6%A1%A3%E6%A1%88_%E7%BC%96%E6%8E%92%E5%B1%82%E4%B8%8D%E6%98%AF%E6%A8%A1%E5%9E%8B%E5%B1%82_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/02-33115ae/">参数行为档案索引</a></li><li><a href="/above-the-web/seedance2-5-v1-14bc5c5/">Seedance 2.5 行为规律</a></li><li><a href="/above-the-web/kling3-0-v1-8b6096c/">可灵 Kling 3.0 / Omni 行为规律</a></li><li><a href="/above-the-web/2026-08-08-s45-s48-v1-d4f40a9/">《1000人后室大逃亡》S45–S48 收尾段 · 运镜与跨镜一致性返工复盘（2026-08-08）</a></li><li><a href="/above-the-web/2026-08-26-v1-c69c850/">2026-08-26 《过风》雪雾珍珠人像动态写真 · 全链路复盘</a></li><li><a href="/above-the-web/2026-08-08-s43-v1-656a72b/">S43 长镜头分段归因 · 归因未遂与生死线次序（2026-08-08）</a></li><li><a href="/above-the-web/v1-f9ea0de/">新模型试跑 · 硬锁清单先行律</a></li><li><a href="/above-the-web/vs-v1-c7b40a4/">生成式 vs 编辑式工具选择律</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/eleven-v3-v1-d87db20/"> <span class="card-cat">参数行为档案</span> <h3>Eleven v3 行为规律</h3> <p>PVC 不支持 v3 但 IVC 支持——所以要克隆不必退回 v2，audio tags 和 Text to Dialogue 都保得住。这…</p> </a><a class="card" href="/above-the-web/suno-v5-5-v1-b2fa879/"> <span class="card-cat">参数行为档案</span> <h3>Suno v5.5 行为规律</h3> <p>Suno v5.5 的自动作词能力 = 跳蛛先生原创草案的能力。当 prompt 里的&quot;风格描述 + 情境暗示&quot;足够精确，Suno 自己作的…</p> </a><a class="card" href="/above-the-web/minimaxh3-v1-29d13d7/"> <span class="card-cat">参数行为档案</span> <h3>MiniMax H3 (Ref2VA) 行为规律</h3> <p>值得，前提是你被会员门槛挡住了。项目 61 依次撞了三道墙：</p> </a><a class="card" href="/above-the-web/mj-niji5-v2-1153ad3/"> <span class="card-cat">参数行为档案</span> <h3>MJ niji 5 · 行为档案</h3> <p>niji 5 是有&quot;两个分支&quot;的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定&quot;触发词…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一它是什么" data-toc-link="一它是什么">一、它是什么</a></li><li class="d2"><a href="#二谁在做" data-toc-link="二谁在做">二、谁在做</a></li><li class="d2"><a href="#三钱从哪来" data-toc-link="三钱从哪来">三、钱从哪来</a></li><li class="d2"><a href="#四跟别的平台什么关系" data-toc-link="四跟别的平台什么关系">四、跟别的平台什么关系</a></li><li class="d2"><a href="#五可迁移的三条判据" data-toc-link="五可迁移的三条判据">五、可迁移的三条判据</a></li><li class="d3"><a href="#1-评估一个-ai-创作平台先分清它是模型层还是编排层" data-toc-link="1-评估一个-ai-创作平台先分清它是模型层还是编排层">1. 评估一个 AI 创作平台，先分清它是模型层还是编排层</a></li><li class="d3"><a href="#2-平台的原生一致性能力优先于-prompt-复述" data-toc-link="2-平台的原生一致性能力优先于-prompt-复述">2. 平台的原生一致性能力优先于 prompt 复述</a></li><li class="d3"><a href="#3-供应链风险是叠加的凭证必须自己留" data-toc-link="3-供应链风险是叠加的凭证必须自己留">3. 供应链风险是叠加的，凭证必须自己留</a></li><li class="d2"><a href="#六边界与未验证" data-toc-link="六边界与未验证">六、边界与未验证</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

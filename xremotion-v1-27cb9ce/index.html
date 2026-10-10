@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手 · 蛛网之上</title><meta name="description" content="1. 图文流量天花板低,视频是增量入口。小红书图文已就绪(见 小红书导流话术合规红线扣1领资料v1 同项目),但抖音/B站/快手是视频平台,图文几乎没有自然流量。要拿这三个平台的量,必须出视频。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/xremotion-v1-27cb9ce/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手"><meta property="og:description" content="1. 图文流量天花板低,视频是增量入口。小红书图文已就绪(见 小红书导流话术合规红线扣1领资料v1 同项目),但抖音/B站/快手是视频平台,图文几乎没有自然流量。要拿这三个平台的量,必须出视频。"><meta property="og:url" content="https://tiaozhuxiansheng.com/xremotion-v1-27cb9ce/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手"><meta name="twitter:description" content="1. 图文流量天花板低,视频是增量入口。小红书图文已就绪(见 小红书导流话术合规红线扣1领资料v1 同项目),但抖音/B站/快手是视频平台,图文几乎没有自然流量。要拿这三个平台的量,必须出视频。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-26T07:38:23+08:00"><meta property="article:modified_time" content="2026-09-26T08:50:48+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="工具/Remotion"><meta property="article:tag" content="工具/ElevenLabs"><meta property="article:tag" content="工具/Whisper"><meta property="article:tag" content="平台/抖音"><meta property="article:tag" content="平台/B站"><meta property="article:tag" content="平台/快手"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/xremotion-v1-27cb9ce/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/xremotion-v1-27cb9ce/","url":"https://tiaozhuxiansheng.com/xremotion-v1-27cb9ce/","headline":"短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"1. 图文流量天花板低,视频是增量入口。小红书图文已就绪(见 小红书导流话术合规红线扣1领资料v1 同项目),但抖音/B站/快手是视频平台,图文几乎没有自然流量。要拿这三个平台的量,必须出视频。","datePublished":"2026-06-26T07:38:23+08:00","dateModified":"2026-09-26T08:50:48+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 工具/Remotion, 工具/ElevenLabs, 工具/Whisper, 平台/抖音, 平台/B站, 平台/快手"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手","item":"https://tiaozhuxiansheng.com/xremotion-v1-27cb9ce/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-26T07:38:23+08:00">2026-06-26</time></span> <span>更新于 <time datetime="2026-09-26T08:50:48+08:00">2026-09-26</time></span> <span>约 7 分钟读完 · 2,729 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>13 节</i></summary> <ol> <li class="d2"><a href="#零为什么是这套组合战略判断">零、为什么是这套组合(战略判断)</a></li><li class="d2"><a href="#一蒙眼剪辑法-v4从单片精修到母版--批量">一、蒙眼剪辑法 v4:从”单片精修”到”母版 + 批量”</a></li><li class="d2"><a href="#二技术管线四块拼装每块有现成代码">二、技术管线:四块拼装,每块有现成代码</a></li><li class="d3"><a href="#21-竖屏母版-composition新能力916">2.1 竖屏母版 Composition(新能力①:9:16)</a></li><li class="d3"><a href="#22-游戏素材playwright-录屏--offthreadvideo新能力">2.2 游戏素材:Playwright 录屏 → OffthreadVideo(新能力②)</a></li><li class="d3"><a href="#23-配音--逐词字幕新能力whisper-tiktok-蹦字">2.3 配音 + 逐词字幕(新能力③:Whisper TikTok 蹦字)</a></li><li class="d3"><a href="#24-批量bundle-一次--dataset-render-串行新能力规模">2.4 批量:bundle 一次 + dataset-render 串行(新能力③:规模)</a></li><li class="d2"><a href="#三单条视频的成片公式短视频留存硬规律落地">三、单条视频的”成片公式”(短视频留存硬规律落地)</a></li><li class="d2"><a href="#四平台分发-playbook抖音b站快手差异">四、平台分发 playbook(抖音/B站/快手差异)</a></li><li class="d2"><a href="#五反诈柜台首批落地执行具体可做">五、《反诈柜台》首批落地执行(具体可做)</a></li><li class="d2"><a href="#六复用-checklist">六、复用 checklist</a></li><li class="d2"><a href="#七风险与合规">七、风险与合规</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="短视频批量分发方案--蒙眼剪辑法--remotion--抖音b站快手">短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手</h1>
+<blockquote>
+<p>入档:2026-06-26
+触发项目:《反诈柜台 The Fraud Desk》(单文件 HTML/JS 反诈 web 游戏,314 案件,竖屏手机界面)
+性质:<strong>方案书 / 可复用 SOP</strong>。以反诈柜台为首个落地样例,但管线对任何”有结构化数据 + 网页/图文素材”的项目通用。
+一句话:<strong>把蒙眼剪辑法从”单片精修”升级为”母版 + 批量”,用 Remotion 把 314 个案件程序化批量出竖屏短视频,一稿母版过审、代码批量分发抖音/B站/快手。</strong></p>
+</blockquote>
+<hr>
+<h2 id="零为什么是这套组合战略判断">零、为什么是这套组合(战略判断)</h2>
+<ol>
+<li><strong>图文流量天花板低,视频是增量入口</strong>。小红书图文已就绪(见 <a href="/above-the-web/1-v1-3fb8828/" class="wikilink">小红书导流话术合规红线_扣1领资料_v1</a> 同项目),但抖音/B站/快手是视频平台,图文几乎没有自然流量。要拿这三个平台的量,必须出视频。</li>
+<li><strong>反诈题材 + 314 案件 = 程序化批量的完美场景</strong>。每个案件本身就是一条 15–30 秒短视频的天然脚本(一条诈骗/真消息 → 审 → 判 → 揭红旗)。内容是结构化数据,不是需要逐条手工创意的素材——这正是 Remotion <code>dataset-render</code> 最擅长的形态。</li>
+<li><strong>已有 Remotion 实战基建可直接复用</strong>。本人已跑通 Eleven 分段旁白 → 真实 duration 反推 timing → Suno 取段 → 全片字幕 BGM(见 <a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/" class="wikilink">2026-06-09_Remotion全片音频字幕BGM复盘_v1</a> / <a href="/above-the-web/2026-06-08-remotion-mj-seedance-v1-5120fe3/" class="wikilink">2026-06-08_Remotion_MJ_Seedance混合动画闭环复盘_v1</a>)。本方案<strong>不重教基础</strong>,只在已验证管线上加三块新能力。</li>
+<li><strong>反诈受众与短视频下沉人群高度重叠</strong>。快手/抖音的中老年、下沉用户正是诈骗高危人群,“转给爸妈”的传播场景天然成立,公益属性也利于平台推荐。</li>
+</ol>
+<hr>
+<h2 id="一蒙眼剪辑法-v4从单片精修到母版--批量">一、蒙眼剪辑法 v4:从”单片精修”到”母版 + 批量”</h2>
+<p>蒙眼剪辑法的内核不变(见 <a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a>):<strong>AI 看不见视频,所以人做感性判断、AI 做精确执行;配置与逻辑分离;音频先行;字幕=逐字口播。</strong> 批量化只是把”人的判断”放在不同的位置:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th></th><th>单片模式(凝视/Skill 全片)</th><th>批量模式(反诈柜台 314 条)</th></tr></thead><tbody><tr><td>人审核的对象</td><td>每一条成片,迭代到 v17</td><td><strong>一个竖屏母版模板</strong>(1 条样片审到满意)</td></tr><tr><td>AI 执行</td><td>按反馈逐条改代码</td><td>母版过审后,<strong>314 条 <code>renderMedia</code> 批量出片</strong></td></tr><tr><td>感性判断密度</td><td>高(每条都看)</td><td>前移、集中(只在母版 + 抽检若干条)</td></tr><tr><td>风险</td><td>慢</td><td>母版有缺陷会被放大 314 倍 → <strong>母版必须审狠</strong></td></tr></tbody></table>
+<blockquote>
+<p><strong>关键洞察(v4 新增)</strong>:批量化没有违背蒙眼剪辑法,而是把”人不可见但必须判断”的成本<strong>前移并复用</strong>——人把一条母版看到极致,模板内的变量位(案件文本、录屏、旁白)交给数据驱动。代价是:母版阶段的反馈必须比单片更苛刻,因为它会被复制 N 次。</p>
+</blockquote>
+<p><strong>两条铁律照搬,不打折</strong>(已在全片复盘二次验证):</p>
+<ul>
+<li><strong>音频先行</strong>:先定稿每条案件的旁白文稿 → TTS 生成 → 读真实 duration → <code>calculateMetadata</code> 反推帧数。绝不手数帧。</li>
+<li><strong>字幕=逐字口播</strong>:短视频字幕首先是听觉校验层。本方案用 Whisper 对<strong>实际 TTS 音频</strong>转写生成逐词字幕——天然满足”字幕=口播”,还顺带拿到 TikTok 蹦字效果。技术英文名词留画面、不进 TTS。</li>
+</ul>
+<hr>
+<h2 id="二技术管线四块拼装每块有现成代码">二、技术管线:四块拼装,每块有现成代码</h2>
+<p>整体数据流(faceless 五层管线的反诈柜台版):</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>案件数据(314 条,已在 script.js LIBRARY)</span></span>
+<span class="line"><span>  → 旁白文稿(LLM 按案件生成 3-4 句钩子+判读)</span></span>
+<span class="line"><span>  → TTS 中文配音(Eleven / Fish Audio)→ narration.wav + 真实 duration</span></span>
+<span class="line"><span>  → Whisper 逐词转写 → captions.json(逐词时间戳)</span></span>
+<span class="line"><span>  → Playwright 录屏(竖屏游戏操作)→ recording.mp4</span></span>
+<span class="line"><span>  → Remotion 母版 Composition(props=案件)→ renderMedia 批量</span></span>
+<span class="line"><span>  → out/{caseId}.mp4(1080×1920 母版,三平台共用)</span></span></code></pre>
+<p>合成结构固定三层(从下到上):</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>┌─────────────────────────────────────┐</span></span>
+<span class="line"><span>│  顶层  &#x3C;Audio> 旁白 + 低音量 BGM(Suno 取段)│</span></span>
+<span class="line"><span>│  中层  TikTok 逐词字幕(安全带内,蹦字高亮)   │</span></span>
+<span class="line"><span>│  底层  &#x3C;OffthreadVideo> 游戏竖屏录屏 / 卡片背景 │</span></span>
+<span class="line"><span>└─────────────────────────────────────┘</span></span></code></pre>
+<h3 id="21-竖屏母版-composition新能力916">2.1 竖屏母版 Composition(新能力①:9:16)</h3>
+<p>竖屏只是把尺寸换成 1080×1920;关键是 <code>calculateMetadata</code> 按音频反推时长——这正是已验证的”音频先行”在批量场景的落地:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="tsx"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">Composition</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  id</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"FraudDeskShort"</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  component</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{FraudDeskShort}</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  fps</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">30</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  width</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1080</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  height</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1920</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  defaultProps</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{{ caseId: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'001'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> }}</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  calculateMetadata</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">async</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ({ </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">props</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> }) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> {</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> dur</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> getAudioDuration</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">`audio/${</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">props</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">caseId</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">}.wav`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">); </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 真实音频长度</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">    return</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> { durationInFrames: Math.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">ceil</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(dur </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">*</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 30</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">), props };</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  }}</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">/></span></span></code></pre>
+<h3 id="22-游戏素材playwright-录屏--offthreadvideo新能力">2.2 游戏素材:Playwright 录屏 → OffthreadVideo(新能力②)</h3>
+<p>游戏是 localhost 单文件网页,<strong>不重写进 React</strong>(成本高),而是 Playwright 脚本化录”审案→盖章”这段操作,产出干净竖屏 webm,再喂 Remotion。一个脚本配不同案件数据 = 一批确定性录屏(无真人鼠标抖动):</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="js"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> context</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> browser.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">newContext</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  viewport: { width: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1080</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, height: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1920</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  recordVideo: { dir: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'recordings/'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, size: { width: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1080</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, height: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1920</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> } },</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">});</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> page</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> context.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">newPage</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> page.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">goto</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'http://localhost:5273'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> page.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">click</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'#startBtn'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">);</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// …脚本化走到目标案件,点"诈骗/属实",停在判定页</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">await</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> context.</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">close</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">();   </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// close 时才落盘 webm → ffmpeg 转 mp4</span></span></code></pre>
+<p>Remotion 里用 <code>&#x3C;OffthreadVideo></code>(渲染期 FFmpeg 外部抽帧,比 <code>&#x3C;Video></code> 准):</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="tsx"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">&#x3C;</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">OffthreadVideo</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> src</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">staticFile</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">`rec/${</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">caseId</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">}.mp4`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)}</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  trimBefore</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">30</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">} </span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">style</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{{ width: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1080</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, height: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1920</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> }} /></span></span></code></pre>
+<blockquote>
+<p>为什么不直接 Playwright 录全片:浏览器录制的时长/FPS 不稳定、看机器性能。正确分工 = <strong>Playwright 只录”游戏操作”素材,整片合成交给 Remotion 逐帧渲染</strong>。这与蒙眼剪辑法”AI 用代码精确执行”一脉相承。</p>
+</blockquote>
+<h3 id="23-配音--逐词字幕新能力whisper-tiktok-蹦字">2.3 配音 + 逐词字幕(新能力③:Whisper TikTok 蹦字)</h3>
+<p>沿用已有 Eleven 管线;新增 <code>@remotion/install-whisper-cpp</code> + <code>@remotion/captions</code>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 1) 对实际 TTS 音频转写,逐词时间戳</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">transcription</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> transcribe</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  inputPath: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'narration.wav'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,  </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 16kHz WAV</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  whisperPath: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'./whisper.cpp'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, model: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'medium'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,   </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 中文用 medium/large</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  tokenLevelTimestamps: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">true</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">});</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">captions</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> toCaptions</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({ whisperCppOutput: transcription }); </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 注意:convertToCaptions 已废弃</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 2) 切页 + 逐词高亮(TikTok 风格)</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> { </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">pages</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> } </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> createTikTokStyleCaptions</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">  captions, combineTokensWithinMilliseconds: </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1000</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,  </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 小=逐字蹦,大=整句一页</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">});</span></span></code></pre>
+<p>最省事起点:<strong>clone 官方 TikTok 模板做底座</strong>(内置 Whisper 自动安装 + <code>node sub.mjs &#x3C;video></code> 一键转写 + <code>&#x3C;TikTokPage></code> 逐词组件),把 <code>WHISPER_MODEL</code> 改中文即可,不要从零搭字幕。</p>
+<h3 id="24-批量bundle-一次--dataset-render-串行新能力规模">2.4 批量:bundle 一次 + dataset-render 串行(新能力③:规模)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="ts"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> serveUrl</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> bundle</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({ entryPoint: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'./src/index.ts'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> });   </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 打包一次</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">for</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> c</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> of</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> cases) {                                            </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D">// 串行,勿并发</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  const</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> comp</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> =</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> selectComposition</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({ serveUrl, id: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'FraudDeskShort'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, inputProps: c });</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">  await</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> renderMedia</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">({ composition: comp, serveUrl, codec: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'h264'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    outputLocation: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">`out/${</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">c</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">.</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">id</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">}.mp4`</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, inputProps: c });</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">}</span></span></code></pre>
+<blockquote>
+<p>官方明确:<strong>不要并发渲染多条</strong>(资源竞争);串行循环,单条内用 <code>--concurrency</code> 吃满 CPU。Windows 下 <code>--props</code> 必须传文件名,不能内联 JSON(shell 吃引号)。</p>
+</blockquote>
+<p><strong>链接附录(均已核实可访问)</strong></p>
+<ul>
+<li>dataset 批量渲染 <a href="https://www.remotion.dev/docs/dataset-render">https://www.remotion.dev/docs/dataset-render</a> ·calculateMetadata <a href="https://www.remotion.dev/docs/calculate-metadata">https://www.remotion.dev/docs/calculate-metadata</a></li>
+<li>TikTok 字幕模板 <a href="https://github.com/remotion-dev/template-tiktok">https://github.com/remotion-dev/template-tiktok</a> ·toCaptions <a href="https://www.remotion.dev/docs/install-whisper-cpp/to-captions">https://www.remotion.dev/docs/install-whisper-cpp/to-captions</a> ·createTikTokStyleCaptions <a href="https://www.remotion.dev/docs/captions/create-tiktok-style-captions">https://www.remotion.dev/docs/captions/create-tiktok-style-captions</a></li>
+<li>OffthreadVideo <a href="https://www.remotion.dev/docs/offthreadvideo">https://www.remotion.dev/docs/offthreadvideo</a> ·Playwright 录像 <a href="https://playwright.dev/docs/videos">https://playwright.dev/docs/videos</a></li>
+<li>参考管线:claude-video-kit(中文 TTS,音频反推时长)<a href="https://github.com/runesleo/claude-video-kit">https://github.com/runesleo/claude-video-kit</a> ·ClawVid(TTS-first)<a href="https://github.com/neur0map/clawvid">https://github.com/neur0map/clawvid</a></li>
+</ul>
+<hr>
+<h2 id="三单条视频的成片公式短视频留存硬规律落地">三、单条视频的”成片公式”(短视频留存硬规律落地)</h2>
+<p>有数据支撑的硬规律(来源:OpusClip 完播率复盘、TikTok 安全区/3 秒规则指南):</p>
+<ul>
+<li><strong>时长 20–34 秒</strong>完播率最高(21–34s 平均 62%,60s+ 掉到 48%)。反诈柜台单案例做成 <strong>22–30 秒</strong>。</li>
+<li><strong>前 3 秒痛点钩子</strong>留住 80–90% 观众;痛点型钩子比泛开场多 23% 留存。反诈题材天生适合(“这条短信能让你倾家荡产”)。</li>
+<li><strong>字幕全程在屏</strong>:带字幕留存高 12%,60–70% 用户静音看。字幕不是可选项。</li>
+<li><strong>每 3–5 秒一次画面变化 / pattern interrupt</strong>;录屏要勤切镜、配蹦字。</li>
+<li><strong>结论/反转前置</strong>:前 15 秒给”答案”留存高 20%——别把”这是诈骗”全憋到最后。</li>
+<li><strong>竖屏安全区</strong>:字幕和关键动作留中央安全带,避开顶部/底部平台 UI(点赞、文案、进度条)遮挡。</li>
+<li><strong>CTA 放后段</strong>(payoff 之后),别在前 3 秒打断钩子。</li>
+</ul>
+<p><strong>反诈柜台 30 秒母版分镜(模板,变量位用 <code>{}</code>)</strong>:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>0.0–3.0s  钩子   黑底大字 + 旁白:"{这条 95 开头的短信,让她三分钟转走 8 万}"</span></span>
+<span class="line"><span>                 ↓ 画面闪现案件短信(障眼)</span></span>
+<span class="line"><span>3.0–8.0s  入场   游戏录屏:案件物证页推入,倒计时跳动,旁白读关键句</span></span>
+<span class="line"><span>8.0–18s   审读   录屏:逐条划过红旗/障眼点,逐词字幕同步高亮("链接域名差一个字")</span></span>
+<span class="line"><span>18–24s    判决   录屏:盖章瞬间(FRAUD/属实)+ 反转旁白("它其实是真的——你刚误伤了客户")</span></span>
+<span class="line"><span>24–30s    收尾   信任/止损数字 + CTA:"{关注,练成反诈肌肉记忆}" + 小站水印</span></span></code></pre>
+<hr>
+<h2 id="四平台分发-playbook抖音b站快手差异">四、平台分发 playbook(抖音/B站/快手差异)</h2>
+<p><strong>同一条 1080×1920 母版三平台通用</strong>,差异只在<strong>封面 / 标题 / 标签 / 时长取舍 / 调性文案</strong>——这些都是发布层参数,不需要重渲染。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>抖音</th><th>B站</th><th>快手</th></tr></thead><tbody><tr><td>核心指标</td><td>完播 + 互动,推荐流为王</td><td>标题点击 + 弹幕 + 三连,可沉淀</td><td>关注 + 私域,老铁文化</td></tr><tr><td>最佳时长</td><td>22–30s,越短越易完播</td><td>可 60–90s,知识区容忍长</td><td>20–35s,接地气</td></tr><tr><td>标题调性</td><td>痛点钩子党(“我把它改到能骗过你”)</td><td>知识党+悬念(“用代码做了个会骗你的反诈游戏”)</td><td>大白话(“爸妈千万别信这条短信”)</td></tr><tr><td>标签</td><td>话题挑战 #反诈 #vibecoding</td><td>分区=科技/编程,合集归档</td><td>#反诈 #老铁 接地气词</td></tr><tr><td>链接</td><td>简介不放链接(限流),引导主页</td><td>简介可放小站链接</td><td>引导关注私域,家人转发</td></tr><tr><td>内容微调</td><td>钩子更狠、节奏更快</td><td>可加”怎么做的”技术钩子</td><td>真实感、家人口吻</td></tr></tbody></table>
+<p><strong>统一动作</strong>:① 三平台都用同一母版 MP4;② 各自做 1 张竖屏封面(可用 Remotion 抽帧或单独 Composition);③ 标题/标签按上表换;④ 评论区自己先发一条”我是怎么用 AI 把它做难的”引导讨论(<strong>禁”扣1领资料”导流话术</strong>,见 <a href="/above-the-web/1-v1-3fb8828/" class="wikilink">小红书导流话术合规红线_扣1领资料_v1</a>,三平台同理会限流)。</p>
+<p><strong>首发顺序建议</strong>:快手/抖音先发(受众=反诈高危 + 传播快),B站做”技术 + 公益”长尾沉淀和合集。</p>
+<hr>
+<h2 id="五反诈柜台首批落地执行具体可做">五、《反诈柜台》首批落地执行(具体可做)</h2>
+<ol>
+<li><strong>选题</strong>:从 314 案件挑 <strong>10 条最反直觉的</strong>做首批——优先”障眼真消息”(真盗刷预警/真验证码)与”隐形诈骗”(安全账户/一字差域名),因为反转最强、最适合做 hook。每条一支视频。</li>
+<li><strong>搭母版</strong>:独立工程在 <code>fraud-desk-demo/_video/</code>(与游戏同仓),竖屏 <code>FraudDeskShort</code> Composition + 三层结构;可参考官方 TikTok 模板做逐词字幕升级。</li>
+<li><strong>跑通 1 条 pilot</strong>:先把 1 条案件从”文稿→Eleven→Whisper→Playwright 录屏→母版渲染”全链路跑通,<strong>人审到满意</strong>(这是蒙眼剪辑法的关键判断点)。</li>
+<li><strong>母版审核清单</strong>(人必须看的):
+<ul>
+<li>前 3 秒钩子能不能在静音下看懂?</li>
+<li>逐词字幕是否=实际口播?有无技术名词被 TTS 误读?</li>
+<li>字幕/关键动作有没有越出竖屏安全带?</li>
+<li>反转点(payoff)是否在 18s 前给出?</li>
+<li>BGM 是否取段而非整首铺底、音量是否压在旁白之下?</li>
+</ul>
+</li>
+<li><strong>母版过审 → 批量</strong>:把 10 条(再 314 条)交给 <code>renderMedia</code> 循环出片,抽检 3–5 条。</li>
+<li><strong>发布</strong>:按第四节 playbook 三平台分发。</li>
+</ol>
+<hr>
+<h2 id="六复用-checklist">六、复用 checklist</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>[ ] 1. 数据 → 文稿:每个条目生成 3-4 句(钩子 + 判读 + 反转 + CTA)</span></span>
+<span class="line"><span>[ ] 2. 配音先行:Eleven/Fish 中文 TTS → 读真实 duration</span></span>
+<span class="line"><span>[ ] 3. 逐词字幕:Whisper 转写实际音频(token 级)→ captions.json</span></span>
+<span class="line"><span>[ ] 4. 素材:Playwright 竖屏录屏 → ffmpeg 转 mp4 → OffthreadVideo</span></span>
+<span class="line"><span>[ ] 5. 母版:9:16 Composition + calculateMetadata 按音频反推 + 三层结构</span></span>
+<span class="line"><span>[ ] 6. 人审母版(用第五节审核清单,审狠——它会被复制 N 倍)</span></span>
+<span class="line"><span>[ ] 7. 批量:bundle 一次 + dataset-render 串行循环</span></span>
+<span class="line"><span>[ ] 8. 分发:同母版 + 各平台换封面/标题/标签(第四节表)</span></span></code></pre>
+<hr>
+<h2 id="七风险与合规">七、风险与合规</h2>
+<ul>
+<li><strong>反诈题材边界</strong>:演示诈骗话术要点到为止,<strong>不把完整可复制的诈骗操作流程演全</strong>(平台对”教骗术”敏感);落点始终是”如何识别/防范”。强调公益、未用真实人名品牌(沿用游戏 footer 口径)。</li>
+<li><strong>导流合规</strong>:三平台均禁”扣1/私信领源码”式导流,易判广告限流。用评论区自然分享代替。见 <a href="/above-the-web/1-v1-3fb8828/" class="wikilink">小红书导流话术合规红线_扣1领资料_v1</a>。</li>
+<li><strong>批量同质化限流</strong>:母版若千篇一律,平台会判搬运/批量号限流。对策:母版预留足够变量位(不同案件文本/录屏/钩子/封面),且<strong>不要 314 条一天发完</strong>,按节奏放。</li>
+<li><strong>音乐版权</strong>:BGM 用 Suno 自生成取段(见 <a href="/above-the-web/suno-v1-f32f73e/" class="wikilink">Suno配乐制作分享_v1</a>),不用平台外热门曲。</li>
+<li><strong>水印</strong>:小站水印放安全区内、不挡字幕;抖音简介不放外链以免限流。</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a>(v4 是其批量化延伸)</li>
+<li><a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/" class="wikilink">2026-06-09_Remotion全片音频字幕BGM复盘_v1</a> / <a href="/above-the-web/2026-06-08-remotion-mj-seedance-v1-5120fe3/" class="wikilink">2026-06-08_Remotion_MJ_Seedance混合动画闭环复盘_v1</a> / <a href="/above-the-web/remotion-v1-3c6609d/" class="wikilink">Remotion正式小片段实验工作流防偏移_v1</a></li>
+<li><a href="/above-the-web/v1-787da21/" class="wikilink">图片占位到视频替换的工作流_v1</a> / <a href="/above-the-web/suno-v1-f32f73e/" class="wikilink">Suno配乐制作分享_v1</a> / <a href="/above-the-web/suno-v1-1-0ee403e/" class="wikilink">Suno两阶段工作流_v1.1</a></li>
+<li><a href="%E5%90%8C%E9%A1%B9%E7%9B%AE%E5%8F%91%E5%B8%83%E5%90%88%E8%A7%84">[小红书导流话术合规红线_扣1领资料_v1]</a></li>
+<li><a href="/above-the-web/v1-475462f/" class="wikilink">多平台同步投稿_发布页字段与浏览器辅助清单_v1</a>(2026-09-26 实测补正第四节「各做 1 张竖屏封面」:B站要 4:3 + 16:9 两张、抖音要竖 3:4 + 横 4:3 两张,快手一张 3:4)</li>
+</ul>
+<hr>
+<p><em>v1 (2026-06-26):反诈柜台短视频分发触发,整合蒙眼剪辑法母本 + 国际 Remotion 短视频自动化管线(官方 TikTok 模板 / Whisper 逐词字幕 / OffthreadVideo 录屏 / dataset-render 批量 / OpusClip 留存数据)。落地路径已给,待 pilot 验证后回填实测数据。</em></p> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">工具/Remotion</span><span class="tag">工具/ElevenLabs</span><span class="tag">工具/Whisper</span><span class="tag">平台/抖音</span><span class="tag">平台/B站</span><span class="tag">平台/快手</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T08:50:48+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/%E7%9F%AD%E8%A7%86%E9%A2%91%E6%89%B9%E9%87%8F%E5%88%86%E5%8F%91%E6%96%B9%E6%A1%88_%E8%92%99%E7%9C%BC%E5%89%AA%E8%BE%91%E6%B3%95xRemotion_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/%E7%9F%AD%E8%A7%86%E9%A2%91%E6%89%B9%E9%87%8F%E5%88%86%E5%8F%91%E6%96%B9%E6%A1%88_%E8%92%99%E7%9C%BC%E5%89%AA%E8%BE%91%E6%B3%95xRemotion_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-06-26-pilot-0-1-v1-f82995a/">2026-06-26 反诈柜台短视频 pilot 从 0 到 1 复盘</a></li><li><a href="/above-the-web/v1-25a3d5e/">「蒙眼剪辑法」— 一套基于 Claude 的 AIGC 视频内容产出闭环</a></li><li><a href="/above-the-web/v1-475462f/">多平台同步投稿:发布页字段与浏览器辅助清单</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/remotion-v1-3c6609d/"> <span class="card-cat">方法论与洞察</span> <h3>Remotion 正式小片段实验工作流防偏移</h3> <p>本次偏移发生在用户明确要求进入&quot;20-30s 连续小片段正式实验&quot;之后。</p> </a><a class="card" href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-09 Remotion 全片音频字幕 BGM 复盘</h3> <p>- 项目名称:Skill Is All You Need</p> </a><a class="card" href="/above-the-web/tts-asr-v1-18cdf62/"> <span class="card-cat">方法论与洞察</span> <h3>TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优</h3> <p>ElevenLabs 生成的中文旁白,创作者审听报出三个问题:咬字含糊、口水音重、多音字读错。AI 无法听音频,以往只能&quot;改参数→请人再听&quot;…</p> </a><a class="card" href="/above-the-web/2026-06-08-remotion-v3-v1-092ade9/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-08 Remotion 正式小片段 v3 复盘</h3> <p>- 成片 Composition:FormalClip20260608</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#零为什么是这套组合战略判断" data-toc-link="零为什么是这套组合战略判断">零、为什么是这套组合(战略判断)</a></li><li class="d2"><a href="#一蒙眼剪辑法-v4从单片精修到母版--批量" data-toc-link="一蒙眼剪辑法-v4从单片精修到母版--批量">一、蒙眼剪辑法 v4:从”单片精修”到”母版 + 批量”</a></li><li class="d2"><a href="#二技术管线四块拼装每块有现成代码" data-toc-link="二技术管线四块拼装每块有现成代码">二、技术管线:四块拼装,每块有现成代码</a></li><li class="d3"><a href="#21-竖屏母版-composition新能力916" data-toc-link="21-竖屏母版-composition新能力916">2.1 竖屏母版 Composition(新能力①:9:16)</a></li><li class="d3"><a href="#22-游戏素材playwright-录屏--offthreadvideo新能力" data-toc-link="22-游戏素材playwright-录屏--offthreadvideo新能力">2.2 游戏素材:Playwright 录屏 → OffthreadVideo(新能力②)</a></li><li class="d3"><a href="#23-配音--逐词字幕新能力whisper-tiktok-蹦字" data-toc-link="23-配音--逐词字幕新能力whisper-tiktok-蹦字">2.3 配音 + 逐词字幕(新能力③:Whisper TikTok 蹦字)</a></li><li class="d3"><a href="#24-批量bundle-一次--dataset-render-串行新能力规模" data-toc-link="24-批量bundle-一次--dataset-render-串行新能力规模">2.4 批量:bundle 一次 + dataset-render 串行(新能力③:规模)</a></li><li class="d2"><a href="#三单条视频的成片公式短视频留存硬规律落地" data-toc-link="三单条视频的成片公式短视频留存硬规律落地">三、单条视频的”成片公式”(短视频留存硬规律落地)</a></li><li class="d2"><a href="#四平台分发-playbook抖音b站快手差异" data-toc-link="四平台分发-playbook抖音b站快手差异">四、平台分发 playbook(抖音/B站/快手差异)</a></li><li class="d2"><a href="#五反诈柜台首批落地执行具体可做" data-toc-link="五反诈柜台首批落地执行具体可做">五、《反诈柜台》首批落地执行(具体可做)</a></li><li class="d2"><a href="#六复用-checklist" data-toc-link="六复用-checklist">六、复用 checklist</a></li><li class="d2"><a href="#七风险与合规" data-toc-link="七风险与合规">七、风险与合规</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

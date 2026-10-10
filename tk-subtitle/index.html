@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TK 中英文字幕转换器 v2.0 —— 蒙眼剪辑法字幕环节配套工具</title>
+<meta name="description" content="把 SRT / TXT 按剪映单行像素宽度自动拆条：英文 TK 格式与中文智能分词双模式，保留原起止时间、自动重编号、转换前后全量校验不丢字，导出 UTF-8 SRT 直接进剪映。Windows 免安装。">
+<meta property="og:title" content="TK 中英文字幕转换器 v2.0">
+<meta property="og:description" content="一份字幕，两种模式，剪映直接吃。英文 TK 格式 / 中文分词自动拆条，不丢字、不错行。">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+<!-- 默认亮屏；读取与主站共用的偏好，避免主题闪烁 -->
+<script>
+  (() => {
+    try {
+      const saved = localStorage.getItem('atw-theme');
+      document.documentElement.setAttribute('data-theme', saved === 'dark' ? 'dark' : 'light');
+    } catch (_) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+<style>
+  /* 亮色为默认；配色沿用主站纸墨底，强调色换成靛蓝 + 琥珀，与池塘(青)、打点器(金)区分开 */
+  :root, :root[data-theme="light"]{
+    --paper:#f6f1e6; --paper-2:#fbf8f0; --paper-3:#ece6da;
+    --ink:#1f2a2b; --ink-soft:#5c655e; --ink-faint:#8a938a;
+    --line:rgba(31,42,43,.12);
+    --iris:#5f56b8; --amber:#c07a2c; --iris-ink:#f7f5ff;
+    --deco-iris:rgba(95,86,184,.15); --deco-amber:rgba(192,122,44,.14);
+    --code-bg:#f1ece0; --del:#b1422f; --add:#3f7a4a;
+    --shadow:0 26px 60px -38px rgba(31,42,43,.5);
+  }
+  :root[data-theme="dark"]{
+    --paper:#141420; --paper-2:#1b1b29; --paper-3:#202032;
+    --ink:#e9eaf2; --ink-soft:#a6a8bd; --ink-faint:#767a92;
+    --line:rgba(233,234,242,.12);
+    --iris:#9b8ff0; --amber:#dfa361; --iris-ink:#16121f;
+    --deco-iris:rgba(155,143,240,.14); --deco-amber:rgba(223,163,97,.12);
+    --code-bg:#12121c; --del:#e08272; --add:#7fc08f;
+    --shadow:0 26px 60px -38px rgba(0,0,0,.7);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"PingFang SC","Noto Sans SC",-apple-system,"Segoe UI",system-ui,sans-serif;
+    color:var(--ink); line-height:1.7;
+    background:linear-gradient(165deg, var(--paper) 0%, var(--paper-3) 100%);
+    background-attachment:fixed; min-height:100vh;
+    transition:background-color .4s ease, color .4s ease;
+  }
+  /* 固定装饰层：两侧淡色「字幕条」横线，呼应工具本身，不随滚动移动 */
+  .bg-deco{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
+  .bg-deco i{position:absolute; height:10px; border-radius:999px; background:var(--deco-iris);}
+  .bg-deco .a{width:300px; left:-90px; top:16%;}
+  .bg-deco .b{width:190px; left:-40px; top:calc(16% + 26px); background:var(--deco-amber);}
+  .bg-deco .c{width:340px; right:-120px; top:38%;}
+  .bg-deco .d{width:220px; right:-60px; top:calc(38% + 26px); background:var(--deco-amber);}
+  .bg-deco .e{width:280px; left:-100px; bottom:18%;}
+  .bg-deco .f{width:360px; right:-140px; bottom:9%; background:var(--deco-amber);}
+
+  .wrap{max-width:880px; margin:0 auto; padding:0 24px;}
+  a{color:var(--iris); text-decoration:none;}
+  .topbar{display:flex; justify-content:space-between; align-items:center; padding:20px 0; font-size:.92rem; gap:14px;}
+  .topbar .home{color:var(--ink-soft); display:flex; align-items:center; gap:8px;}
+  .topbar .home:hover{color:var(--iris);}
+  .topbar .right{display:flex; align-items:center; gap:14px;}
+  .topbar .sib{color:var(--ink-soft);}
+  .topbar .sib:hover{color:var(--ink);}
+  /* 主题切换按钮（复用主站交互：默认显示月亮=点了变暗，暗色显示太阳） */
+  .theme-toggle{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;
+    border:1px solid var(--line); background:var(--paper-2); color:var(--ink-soft); cursor:pointer; transition:color .2s, border-color .2s;}
+  .theme-toggle:hover{color:var(--iris); border-color:var(--iris);}
+  .theme-toggle svg{width:19px;height:19px;}
+  .theme-toggle .i-sun{display:none;} .theme-toggle .i-moon{display:block;}
+  :root[data-theme="dark"] .theme-toggle .i-sun{display:block;}
+  :root[data-theme="dark"] .theme-toggle .i-moon{display:none;}
+
+  /* Hero */
+  .hero{display:flex; flex-direction:column; align-items:center; text-align:center; gap:16px; padding:48px 0 20px;}
+  .hero .ico{width:100px; height:100px; border-radius:26px; display:grid; place-items:center; font-size:52px; line-height:1;
+    background:var(--paper-2); border:1px solid var(--line); box-shadow:var(--shadow); flex:0 0 auto;}
+  .hero .htxt{max-width:660px;}
+  .eyebrow{font-size:.86rem; letter-spacing:.22em; color:var(--amber); font-weight:700;}
+  h1{font-family:Georgia,"Songti SC","Noto Serif SC",serif; font-size:2.4rem; line-height:1.18; margin:.18em 0 .1em; letter-spacing:.01em;}
+  .tagline{font-size:1.2rem; color:var(--ink); font-weight:600; margin-top:.2em;}
+  .sub{color:var(--ink-soft); margin:.5em auto 0; max-width:48ch;}
+  .cta-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:22px; justify-content:center;}
+  .btn{display:inline-flex; align-items:center; gap:9px; font-weight:700; font-size:1rem;
+    padding:13px 22px; border-radius:999px; border:1px solid var(--line); transition:transform .12s ease, box-shadow .12s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.primary{background:var(--iris); color:var(--iris-ink); border-color:var(--iris); box-shadow:0 16px 34px -18px var(--iris);}
+  .btn.ghost{background:var(--paper-2); color:var(--ink);}
+  .btn.big{font-size:1.1rem; padding:16px 30px;}
+  .btn small{font-weight:600; opacity:.82;}
+  .pills{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; justify-content:center;}
+  .pill{font-size:.82rem; font-weight:700; color:var(--ink-soft); background:var(--paper-2);
+    border:1px solid var(--line); border-radius:999px; padding:6px 14px;}
+
+  /* Section */
+  section{margin:56px 0;}
+  h2{font-family:Georgia,"Songti SC","Noto Serif SC",serif; font-size:1.5rem; margin-bottom:.2em; display:flex; align-items:baseline; justify-content:center; gap:.5rem;}
+  h2 .en{font-size:.9rem; color:var(--ink-faint); font-weight:400; letter-spacing:.1em;}
+  .lead{color:var(--ink-soft); margin:0 auto 26px; max-width:62ch; text-align:center;}
+  .lead b{color:var(--ink);}
+
+  /* 两种模式 */
+  .modes{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .mode{background:var(--paper-2); border:1px solid var(--line); border-radius:20px; padding:24px; box-shadow:var(--shadow);}
+  .mode .tag{display:inline-block; font-size:.78rem; font-weight:700; letter-spacing:.08em; padding:4px 11px; border-radius:999px;
+    background:var(--deco-iris); color:var(--iris);}
+  .mode.b .tag{background:var(--deco-amber); color:var(--amber);}
+  .mode h3{font-size:1.16rem; margin:.6em 0 .1em;}
+  .mode .who{color:var(--ink-faint); font-size:.88rem; margin-bottom:.9em;}
+  .mode ul{list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .mode li{position:relative; padding-left:20px; color:var(--ink-soft); font-size:.94rem;}
+  .mode li::before{content:''; position:absolute; left:2px; top:.62em; width:8px; height:8px; border-radius:2px; background:var(--iris);}
+  .mode.b li::before{background:var(--amber);}
+  .mode li b{color:var(--ink);}
+
+  /* 示例：转换前后 */
+  .demo{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px;}
+  /* display:grid 会盖掉浏览器默认的 [hidden]{display:none}，未切换的那份必须显式收起 */
+  .demo[hidden]{display:none;}
+  .demo .box{background:var(--paper-2); border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow);}
+  .demo .box h4{font-size:.85rem; letter-spacing:.06em; padding:11px 16px; border-bottom:1px solid var(--line); color:var(--ink-soft); font-weight:700;}
+  .demo .box.out h4{color:var(--iris);}
+  .demo pre{margin:0; padding:14px 16px; background:var(--code-bg); overflow-x:auto;
+    font-family:"Cascadia Mono",Consolas,"SF Mono",Menlo,monospace; font-size:.82rem; line-height:1.75; color:var(--ink);}
+  .demo .t{color:var(--ink-faint);}
+  .demo .cut{color:var(--del); text-decoration:line-through;}
+  .demo .hit{color:var(--add); font-weight:700;}
+  .demo-note{color:var(--ink-faint); font-size:.86rem; text-align:center; margin-top:14px;}
+  .demo-switch{display:flex; gap:10px; justify-content:center; margin-top:6px;}
+  .demo-switch button{font:inherit; font-size:.88rem; font-weight:700; cursor:pointer; padding:8px 18px; border-radius:999px;
+    border:1px solid var(--line); background:var(--paper-2); color:var(--ink-soft); transition:color .2s, border-color .2s, background .2s;}
+  .demo-switch button[aria-pressed="true"]{background:var(--iris); border-color:var(--iris); color:var(--iris-ink);}
+
+  /* 共同规则 */
+  .feat{display:grid; grid-template-columns:1fr 1fr; gap:16px 26px;}
+  .feat .it{display:flex; gap:13px; align-items:flex-start;}
+  .feat .dot{flex:0 0 auto; width:11px; height:11px; border-radius:50%; background:var(--amber); margin-top:9px;}
+  .feat .it b{display:block; color:var(--ink); font-size:1.02rem;}
+  .feat .it span{color:var(--ink-soft); font-size:.92rem;}
+
+  /* 三步 */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  .step{background:var(--paper-2); border:1px solid var(--line); border-radius:18px; padding:22px; text-align:center;}
+  .step .n{font-family:Georgia,serif; font-size:1.7rem; color:var(--iris); font-weight:700; line-height:1;}
+  .step b{display:block; margin:.5em 0 .2em;}
+  .step span{color:var(--ink-soft); font-size:.9rem;}
+
+  .callout{background:var(--paper-2); border:1px solid var(--line); border-left:4px solid var(--amber);
+    border-radius:0 14px 14px 0; padding:18px 22px; color:var(--ink-soft); font-size:.95rem;}
+  .callout b{color:var(--ink);}
+
+  /* Download */
+  .dl{background:var(--paper-2); border:1px solid var(--line); border-radius:24px; padding:32px; box-shadow:var(--shadow); text-align:center;}
+  .dl h2{margin-bottom:.3em;}
+  .dl .dl-lead{color:var(--ink-soft); max-width:60ch; margin:0 auto 22px;}
+  .dl .dl-lead b{color:var(--iris);}
+  .dl .dl-alt{color:var(--ink-faint); font-size:.9rem; margin-top:18px;}
+  .dl .dl-alt code{font-family:"Cascadia Mono",Consolas,monospace; font-size:.85em; background:var(--code-bg); padding:2px 6px; border-radius:5px;}
+
+  footer{border-top:1px solid var(--line); margin-top:60px; padding:30px 0 50px; color:var(--ink-faint); font-size:.88rem;
+    display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+  footer a{color:var(--ink-soft);}
+
+  @media (max-width:680px){
+    h1{font-size:2rem;}
+    .modes, .demo, .feat{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .hero .ico{width:84px; height:84px; font-size:44px;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-deco"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i></div>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="home" href="../">← 跳蛛先生 · 蛛网之上</a>
+    <div class="right">
+      <a class="sib" href="../beat-tapper/">🥁 卡点标记器</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="ico" aria-hidden="true">💬</div>
+    <div class="htxt">
+      <div class="eyebrow">蒙眼剪辑法 · 字幕环节</div>
+      <h1>TK 中英文字幕转换器 <span style="font-size:.55em;color:var(--ink-faint);font-family:inherit;">v2.0</span></h1>
+      <div class="tagline">一份字幕，两种模式，剪映直接吃。</div>
+      <p class="sub">识别出来的整段字幕，按你设定的单行像素宽度自动拆条——英文按单词、中文按词，不拆词、不错行、不丢字。导出的 SRT 拖进剪映就是排好的。</p>
+      <div class="cta-row">
+        <a class="btn primary" href="./download/TK-Subtitle-Converter-Windows.exe" download="TK中英文字幕转换器_v2.0.exe">↓ 下载 Windows 版 <small>· 免安装 · 22KB</small></a>
+        <a class="btn ghost" href="#howto">怎么用</a>
+      </div>
+      <div class="pills">
+        <span class="pill">Windows</span>
+        <span class="pill">双击即用</span>
+        <span class="pill">不联网</span>
+        <span class="pill">SRT / TXT 导入</span>
+        <span class="pill">导出剪映 SRT</span>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <h2>它解决什么 <span class="en">/ what it fixes</span></h2>
+    <p class="lead">语音识别吐出来的字幕，一条能有两三行长；手动断句断到眼花，还常常一不小心把内容删了自己都不知道。这个工具做一件事：<b>按剪映里那一行实际能放下的像素宽度，把长字幕拆成连续的短条</b>，时间轴按字数比例切开，编号重排，UTF-8 导出。转换前后对整份字幕做一次词元级校验——<b>只要有一个字对不上就停手，不覆盖原结果</b>。</p>
+  </section>
+
+  <section>
+    <h2>两种模式 <span class="en">/ two modes</span></h2>
+    <p class="lead">v2.0 把原来两个独立程序（英文格式 v1.6、中文分词 v1.0）合进了一个界面。两种模式各走各的规则，<b>互不串味</b>。</p>
+    <div class="modes">
+      <div class="mode a">
+        <span class="tag">模式一</span>
+        <h3>英文 TK 格式</h3>
+        <p class="who">中文自动删除 · 适合发 TikTok / 海外版的英文轨</p>
+        <ul>
+          <li>每条最终字幕<b>只大写第一个英文字母</b>，其余全部小写</li>
+          <li>按<b>单词</b>和像素宽度拆到下一条，<b>不从单词中间断开</b></li>
+          <li>检测到中文<b>自动删除</b>，并弹窗列出删掉了哪些片段</li>
+          <li>纯数字对白正常保留，不会被误判成字幕序号</li>
+          <li>英文、数字、标点、重音字母、表情<b>全部参与防消失校验</b></li>
+        </ul>
+      </div>
+      <div class="mode b">
+        <span class="tag">模式二</span>
+        <h3>中文智能分词</h3>
+        <p class="who">保留全部内容 · 适合国内平台的中英混排轨</p>
+        <ul>
+          <li>中文按<b>实际像素宽度</b>自动拆条</li>
+          <li>中文、英文、数字、标点、表情<b>一个不删</b></li>
+          <li>英文单词和数字<b>不从中间拆开</b></li>
+          <li>逗号句号问号右括号等<b>闭合标点不出现在下一条开头</b></li>
+          <li>左括号、左引号、书名号<b>尽量跟着后面的字走</b></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>拆成什么样 <span class="en">/ before &amp; after</span></h2>
+    <p class="lead">下面是同一条超长字幕，两种模式各自的处理结果（示意，实际断点取决于你设的宽度、字体和字号）。</p>
+    <div class="demo-switch">
+      <button type="button" id="tab-en" aria-pressed="true">英文 TK 格式</button>
+      <button type="button" id="tab-cn" aria-pressed="false">中文分词</button>
+    </div>
+    <div class="demo" id="demo-en">
+      <div class="box"><h4>转换前 · 1 条</h4><pre>1
+<span class="t">00:00:01,000 --&gt; 00:00:04,200</span>
+<span class="cut">开场先说一句，</span>Everyone KNOWS
+that the best time to plant a tree
+was twenty years ago</pre></div>
+      <div class="box out"><h4>转换后 · 2 条</h4><pre>1
+<span class="t">00:00:01,000 --&gt; 00:00:02,700</span>
+<span class="hit">E</span>veryone knows that the best time to
+
+2
+<span class="t">00:00:02,700 --&gt; 00:00:04,200</span>
+<span class="hit">P</span>lant a tree was twenty years ago</pre></div>
+    </div>
+    <div class="demo" id="demo-cn" hidden>
+      <div class="box"><h4>转换前 · 1 条</h4><pre>1
+<span class="t">00:00:01,000 --&gt; 00:00:05,000</span>
+在开始之前，请先确认你的素材已经全部
+导入（包括 BGM 和 4 段 B-roll）。</pre></div>
+      <div class="box out"><h4>转换后 · 3 条</h4><pre>1
+<span class="t">00:00:01,000 --&gt; 00:00:02,600</span>
+在开始之前<span class="hit">，</span>请先确认你的素材
+
+2
+<span class="t">00:00:02,600 --&gt; 00:00:04,000</span>
+已经全部导入<span class="hit">（</span>包括 BGM 和 4 段
+
+3
+<span class="t">00:00:04,000 --&gt; 00:00:05,000</span>
+B-roll<span class="hit">）。</span></pre></div>
+    </div>
+    <p class="demo-note">注意第 2 条结尾的「（」跟着后文走、第 3 条开头没有孤零零的闭合标点，<code>B-roll</code> 和「4 段」也没被从中间劈开。</p>
+  </section>
+
+  <section>
+    <h2>两种模式都守的规矩 <span class="en">/ common rules</span></h2>
+    <div class="feat">
+      <div class="it"><span class="dot"></span><div><b>导入不挑格式</b><span>标准 SRT、无空行的紧凑 SRT、无序号 SRT，以及纯 TXT，都能读。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>时间轴不跑偏</b><span>保留原字幕整体起止时间，拆出来的新条按内容切分，不生成 0 毫秒字幕。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>编号自动重排</b><span>拆分后重新生成连续 SRT 序号，不用手动补。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>防静默丢字</b><span>转换前后做整份字幕完整性校验，校验不过就停手、不覆盖原结果。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>导入即体检</b><span>发现结束时间不晚于开始时间的坏条目会直接停止导入并报出来，而不是悄悄跳过。</span></div></div>
+      <div class="it"><span class="dot"></span><div><b>导出即用</b><span>UTF-8 编码 SRT，剪映直接识别，不用再转码。</span></div></div>
+    </div>
+  </section>
+
+  <section id="howto">
+    <h2>三步走完 <span class="en">/ how to use</span></h2>
+    <p class="lead">双击 <b>TK中英文字幕转换器_v2.0.exe</b>，先选模式，再走三个按钮。</p>
+    <div class="steps">
+      <div class="step"><div class="n">①</div><b>导入 SRT / TXT</b><span>选中语音识别出来的原始字幕文件。</span></div>
+      <div class="step"><div class="n">②</div><b>自动整理字幕</b><span>先设好单行可用宽度、测量字体和字号，再点这个。</span></div>
+      <div class="step"><div class="n">③</div><b>导出剪映 SRT</b><span>检查右侧结果和状态栏的完整性提示，没问题就导出。</span></div>
+    </div>
+    <p class="lead" style="margin-top:26px;">第 ② 步的<b>单行可用宽度 / 字体 / 字号</b>要和你在剪映里真正用的字幕样式对上——工具就是拿这三个参数去量像素宽度决定在哪断的。量错了不会报错，只会断得不像你想要的那样。</p>
+    <div class="callout">
+      <b>中途换模式是安全的。</b>导入之后再切模式，程序会重新读取<b>最初导入的那份字幕</b>，并清空上一模式的处理结果——不会拿英文模式删过中文的结果再去跑中文分词，也不会重复转换。
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="dl">
+      <h2>拿走用 <span class="en">/ download</span></h2>
+      <p class="dl-lead">文件就放在这个站点上，<b>国内直连</b>、免安装、双击即用。Windows 独立 EXE，<b>不需要装 Python</b>，全程本地处理、不联网。</p>
+      <a class="btn primary big" href="./download/TK-Subtitle-Converter-Windows.exe" download="TK中英文字幕转换器_v2.0.exe">↓ 下载 Windows 版 <small>· 22KB · 免安装</small></a>
+      <p class="dl-alt">
+        需要 Windows 自带的 .NET Framework 4.0+（Win10 / Win11 默认已有）。首次运行若被 SmartScreen 拦下，点「更多信息 → 仍要运行」即可——程序未做代码签名。<br>
+        校验用 SHA-256：<code>98097d0c8267129dc3a3644732a76186b8f45018c334e3d3681c18e831285d8f</code>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <span>TK 中英文字幕转换器 v2.0 —— 由 <b>X-nian</b> 贡献，蒙眼剪辑法字幕环节配套工具。</span>
+    <span><a href="../beat-tapper/">卡点标记器</a> · <a href="../">返回主页</a></span>
+  </footer>
+
+</div>
+
+<script>
+  (() => {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('atw-theme', next); } catch (_) {}
+    });
+  })();
+</script>
+
+<script>
+  // 示例区两种模式切换：纯显隐，无 JS 也能看到英文那份（中文那份带 hidden）
+  (() => {
+    const tabs = { en: document.getElementById('tab-en'), cn: document.getElementById('tab-cn') };
+    const panes = { en: document.getElementById('demo-en'), cn: document.getElementById('demo-cn') };
+    if (!tabs.en || !tabs.cn || !panes.en || !panes.cn) return;
+    const show = (k) => {
+      for (const key of ['en', 'cn']) {
+        tabs[key].setAttribute('aria-pressed', String(key === k));
+        panes[key].hidden = key !== k;
+      }
+    };
+    tabs.en.addEventListener('click', () => show('en'));
+    tabs.cn.addEventListener('click', () => show('cn'));
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘 · 蛛网之上</title><meta name="description" content="- 验证场景:scene04repeattoskill"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-06-08-remotion-mj-seedance-v1-5120fe3/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘"><meta property="og:description" content="- 验证场景:scene04repeattoskill"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-06-08-remotion-mj-seedance-v1-5120fe3/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘"><meta name="twitter:description" content="- 验证场景:scene04repeattoskill"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-08T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="工具/Remotion"><meta property="article:tag" content="工具/Midjourney"><meta property="article:tag" content="工具/Seedance"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-06-08-remotion-mj-seedance-v1-5120fe3/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-06-08-remotion-mj-seedance-v1-5120fe3/","url":"https://tiaozhuxiansheng.com/2026-06-08-remotion-mj-seedance-v1-5120fe3/","headline":"2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 验证场景:scene04repeattoskill","datePublished":"2026-06-08T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 工具/Remotion, 工具/Midjourney, 工具/Seedance"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘","item":"https://tiaozhuxiansheng.com/2026-06-08-remotion-mj-seedance-v1-5120fe3/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-08T00:00:00+08:00">2026-06-08</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 3 分钟读完 · 1,029 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>12 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#本轮结论">本轮结论</a></li><li class="d2"><a href="#为什么这次成立">为什么这次成立</a></li><li class="d3"><a href="#1-先有视觉锚seedance-才没有乱跑">1. 先有视觉锚,Seedance 才没有乱跑</a></li><li class="d3"><a href="#2-动的是机制不是镜头炫技">2. 动的是机制,不是镜头炫技</a></li><li class="d3"><a href="#3-remotion-保留了信息层控制权">3. Remotion 保留了信息层控制权</a></li><li class="d2"><a href="#可迁移方法论">可迁移方法论</a></li><li class="d3"><a href="#ai-视频不要直接全权接管叙事">AI 视频不要直接全权接管叙事</a></li><li class="d3"><a href="#静态图变视频前要问动哪里">静态图变视频前要问”动哪里”</a></li><li class="d3"><a href="#remotion-是总控台不是普通剪辑器">Remotion 是总控台,不是普通剪辑器</a></li><li class="d2"><a href="#后续方向">后续方向</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="2026-06-08-remotion--mj--seedance-混合动画闭环复盘">2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘</h1>
+<blockquote>
+<p>入档:2026-06-08
+项目:Skill is All You Need / Remotion v0.2 单场景验证
+关联 Skill:<span class="wikilink wikilink--dangling" title="尚未发布的笔记">remotion-skill/SKILL.md</span>、<span class="wikilink wikilink--dangling" title="尚未发布的笔记">aigc-prompt-optimizer</span>、seedance-prompt-en</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>验证场景:<code>scene_04_repeat_to_skill</code></li>
+<li>目标命题:反复教 AI 的内容,值得压缩成可复用 Skill。</li>
+<li>Midjourney 主图:<code>07_skill存档/remotion/public/assets/scene_04/mj_prompt_to_skill_key_visual.png</code></li>
+<li>Seedance 视频:<code>07_skill存档/remotion/public/assets/scene_04/seedance_prompt_to_skill_motion.mp4</code></li>
+<li>Seedance 参数:约 <code>4.06s</code>、<code>1280x720</code>、<code>60fps</code>、H.264。</li>
+<li>Remotion 合成输出:<code>07_skill存档/remotion/out/scene04-seedance-remotion-composite.mp4</code></li>
+<li>验证结果:Remotion 类型检查通过,单帧检查通过,短视频导出成功。</li>
+</ul>
+<h2 id="本轮结论">本轮结论</h2>
+<p>这次验证证明了一个可用链路:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Remotion sceneSpecs</span></span>
+<span class="line"><span>→ Midjourney 生成关键视觉锚</span></span>
+<span class="line"><span>→ Seedance 让图内机制动起来</span></span>
+<span class="line"><span>→ Remotion 叠字幕、背景、边框和最终时间线</span></span></code></pre>
+<p>这不是简单的”拿 AI 视频做素材”,而是三种工具分工清楚:</p>
+<ul>
+<li><strong>MJ</strong> 负责概念关系和高端静态图解。</li>
+<li><strong>Seedance</strong> 负责图内机制运动,把 PPT 式推拉变成真实动画。</li>
+<li><strong>Remotion</strong> 负责信息秩序,包括字幕、安全区、包装和可重复渲染。</li>
+</ul>
+<h2 id="为什么这次成立">为什么这次成立</h2>
+<h3 id="1-先有视觉锚seedance-才没有乱跑">1. 先有视觉锚,Seedance 才没有乱跑</h3>
+<p>Seedance 直接从文字生成,很容易把漏斗、气泡、手册重画成另一套风格。用 MJ 主图作为 <code>@Image1</code> 后,它保留了纸面颗粒、厚描边、漏斗结构和蓝色 Skill 手册。</p>
+<p>这说明视频生成前最好先有一张高质量关键帧。关键帧不是装饰图,而是后续动画的视觉边界。</p>
+<h3 id="2-动的是机制不是镜头炫技">2. 动的是机制,不是镜头炫技</h3>
+<p>这段视频最有效的运动不是推镜,而是图内机制:</p>
+<ul>
+<li>气泡靠近漏斗;</li>
+<li>彩色粒子进入透明腔体;</li>
+<li>粒子沿管道流向手册;</li>
+<li><code>SKILL</code> 手册形成稳定输出。</li>
+</ul>
+<p>这类运动直接服务概念。相比 Remotion 只做轻微缩放,Seedance 把”压缩成 Skill”这件事变成了可看见的过程。</p>
+<h3 id="3-remotion-保留了信息层控制权">3. Remotion 保留了信息层控制权</h3>
+<p>Seedance 视频本身不负责讲完整道理。Remotion 仍然叠加三段字幕:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>重复输入,不是经验</span></span>
+<span class="line"><span>经过压缩,才变成流程</span></span>
+<span class="line"><span>Skill 是可复用的工作手册</span></span></code></pre>
+<p>这让画面和论点分工清楚。Seedance 提供直觉,Remotion 提供语言和节奏。</p>
+<h2 id="可迁移方法论">可迁移方法论</h2>
+<h3 id="ai-视频不要直接全权接管叙事">AI 视频不要直接全权接管叙事</h3>
+<p><strong>核心</strong>:Seedance 适合做局部机制动画,不适合在第一轮就接管整条叙事线。</p>
+<p><strong>来源</strong>:本案例只让 Seedance 处理一个 4 秒机制段,再由 Remotion 统一包装。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>先用 Remotion 定 scene goal 和字幕逻辑。</li>
+<li>用 MJ 生成该 scene 的关键视觉锚。</li>
+<li>用 Seedance 只动图内最关键的机制。</li>
+<li>回到 Remotion 做字幕、外框、节奏和导出。</li>
+</ol>
+<h3 id="静态图变视频前要问动哪里">静态图变视频前要问”动哪里”</h3>
+<p><strong>核心</strong>:不是所有静态图都需要动。只有当运动能解释概念关系时,才值得接 Seedance。</p>
+<p><strong>来源</strong>:本案例的运动点非常明确:输入进入漏斗,被压缩,输出到手册。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>先列出画面中的输入、处理器、输出。</li>
+<li>只让这三者之间的关系动起来。</li>
+<li>限制镜头运动为 very subtle push-in 或 locked camera。</li>
+<li>不要求额外转场、人物、光效或背景变化。</li>
+</ol>
+<h3 id="remotion-是总控台不是普通剪辑器">Remotion 是总控台,不是普通剪辑器</h3>
+<p><strong>核心</strong>:Remotion 的价值不是把素材拼起来,而是把所有 AI 资产纳入可复用的结构。</p>
+<p><strong>来源</strong>:本案例通过 <code>sceneAssets</code> 管理 MJ 图和 Seedance 视频状态,通过 composition 控制字幕、时长和包装。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li><code>sceneSpecs</code> 只管”这一段讲什么”。</li>
+<li><code>sceneAssets</code> 记录”素材从哪里来、状态是什么、如何绑定”。</li>
+<li>MJ / Seedance 文件进入 <code>public/assets</code> 后再标记 <code>linked</code>。</li>
+<li>最终输出仍由 Remotion render 生成,不要把时间线交给外部工具。</li>
+</ol>
+<h2 id="后续方向">后续方向</h2>
+<ol>
+<li>把 <code>scene_04</code> 的视频插入逻辑推广到其它概念 scene。</li>
+<li>每个 scene 先判断是否需要 Seedance:只有机制运动明确的才接。</li>
+<li>为 Seedance 输出建立”主视频 / 失败版 / 风格参考”归档规则。</li>
+<li>后续全片制作时,每 20-30 秒只放 1-2 个 Seedance 强动画段,其余保留 Remotion 原生解释节奏。</li>
+</ol>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/aigc-skill-remotion-v1-ae3aad4/" class="wikilink">AIGC_Skill到Remotion视频闭环_v1</a></li>
+<li><a href="/above-the-web/2026-06-08-remotion-skill-mj-v1-4dd9223/" class="wikilink">2026-06-08_Remotion_Skill压缩漏斗MJ资产复盘_v1</a></li>
+<li><a href="/above-the-web/v1-787da21/" class="wikilink">图片占位到视频替换的工作流_v1</a></li>
+<li><a href="/above-the-web/forwardonly-v1-7c8a4d7/" class="wikilink">图生视频_ForwardOnly原则_v1</a></li>
+<li><a href="/above-the-web/v1-da9dbfe/" class="wikilink">语言形式_思维模式_沟通成本_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">工具/Remotion</span><span class="tag">工具/Midjourney</span><span class="tag">工具/Seedance</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-06-08_Remotion_MJ_Seedance%E6%B7%B7%E5%90%88%E5%8A%A8%E7%94%BB%E9%97%AD%E7%8E%AF%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-06-08_Remotion_MJ_Seedance%E6%B7%B7%E5%90%88%E5%8A%A8%E7%94%BB%E9%97%AD%E7%8E%AF%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-06-08-remotion-v3-v1-092ade9/">2026-06-08 Remotion 正式小片段 v3 复盘</a></li><li><a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/">2026-06-09 Remotion 全片音频字幕 BGM 复盘</a></li><li><a href="/above-the-web/2026-06-26-pilot-0-1-v1-f82995a/">2026-06-26 反诈柜台短视频 pilot 从 0 到 1 复盘</a></li><li><a href="/above-the-web/remotion-v1-3c6609d/">Remotion 正式小片段实验工作流防偏移</a></li><li><a href="/above-the-web/xremotion-v1-27cb9ce/">短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手</a></li><li><a href="/above-the-web/formal-clip-2026-06-08-mj-asset-intake-63fb3d1/">2026-06-08 正式小片段全链路归档包</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/full-film-2026-06-10-mj-seedance-replace-a7c9fc8/"> <span class="card-cat">skill存档</span> <h3>Skill Is All You Need · 全片 MJ / Seedance 素材替换生产包</h3> <p>在已验证通过的 SkillIsAllYouNeedFullFilm 框架视频上，用 Midjourney 关键视觉和 Seedance 2.…</p> </a><a class="card" href="/above-the-web/full-film-2026-06-10-worklog-archive-2eaf249/"> <span class="card-cat">skill存档</span> <h3>Skill Is All You Need · 2026-06-10 收工复盘</h3> <p>SkillIsAllYouNeedFullFilm 已从“框架视频验证”推进到“MJ / Seedance 素材替换准备完成”的阶段。</p> </a><a class="card" href="/above-the-web/2026-08-08-s45-s48-v1-d4f40a9/"> <span class="card-cat">方法论与洞察</span> <h3>《1000人后室大逃亡》S45–S48 收尾段 · 运镜与跨镜一致性返工复盘（2026-08-08）</h3> <p>- 执行：2026-08-08 傍晚，两轮，2 个提交（2dad6d1、a2e00a0）</p> </a><a class="card" href="/above-the-web/2026-08-26-v1-5c8b145/"> <span class="card-cat">方法论与洞察</span> <h3>2026-08-26 《擦干净》剧本口径审计与补图承接位 · 复盘</h3> <p>assetcheck.cjs 报 70/70 全绿，同一批资产按剧本审出 4 条 P0。两个结论都是对的，因为它们验的根本不是同一件事。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#本轮结论" data-toc-link="本轮结论">本轮结论</a></li><li class="d2"><a href="#为什么这次成立" data-toc-link="为什么这次成立">为什么这次成立</a></li><li class="d3"><a href="#1-先有视觉锚seedance-才没有乱跑" data-toc-link="1-先有视觉锚seedance-才没有乱跑">1. 先有视觉锚,Seedance 才没有乱跑</a></li><li class="d3"><a href="#2-动的是机制不是镜头炫技" data-toc-link="2-动的是机制不是镜头炫技">2. 动的是机制,不是镜头炫技</a></li><li class="d3"><a href="#3-remotion-保留了信息层控制权" data-toc-link="3-remotion-保留了信息层控制权">3. Remotion 保留了信息层控制权</a></li><li class="d2"><a href="#可迁移方法论" data-toc-link="可迁移方法论">可迁移方法论</a></li><li class="d3"><a href="#ai-视频不要直接全权接管叙事" data-toc-link="ai-视频不要直接全权接管叙事">AI 视频不要直接全权接管叙事</a></li><li class="d3"><a href="#静态图变视频前要问动哪里" data-toc-link="静态图变视频前要问动哪里">静态图变视频前要问”动哪里”</a></li><li class="d3"><a href="#remotion-是总控台不是普通剪辑器" data-toc-link="remotion-是总控台不是普通剪辑器">Remotion 是总控台,不是普通剪辑器</a></li><li class="d2"><a href="#后续方向" data-toc-link="后续方向">后续方向</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

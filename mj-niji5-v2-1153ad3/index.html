@@ -1,0 +1,513 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MJ niji 5 · 行为档案 · 蛛网之上</title><meta name="description" content="niji 5 是有&#34;两个分支&#34;的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定&#34;触发词&#34;。理解这两个分支的边界 + 6 条已知坑，决定你能不能稳定出图。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/mj-niji5-v2-1153ad3/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="MJ niji 5 · 行为档案"><meta property="og:description" content="niji 5 是有&#34;两个分支&#34;的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定&#34;触发词&#34;。理解这两个分支的边界 + 6 条已知坑，决定你能不能稳定出图。"><meta property="og:url" content="https://tiaozhuxiansheng.com/mj-niji5-v2-1153ad3/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MJ niji 5 · 行为档案"><meta name="twitter:description" content="niji 5 是有&#34;两个分支&#34;的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定&#34;触发词&#34;。理解这两个分支的边界 + 6 条已知坑，决定你能不能稳定出图。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-04T15:39:27+08:00"><meta property="article:modified_time" content="2026-09-26T06:55:33+08:00"><meta property="article:section" content="参数行为档案"><meta property="article:tag" content="类型/档案"><meta property="article:tag" content="模型/niji5"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/mj-niji5-v2-1153ad3/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/mj-niji5-v2-1153ad3/","url":"https://tiaozhuxiansheng.com/mj-niji5-v2-1153ad3/","headline":"MJ niji 5 · 行为档案","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"niji 5 是有\"两个分支\"的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定\"触发词\"。理解这两个分支的边界 + 6 条已知坑，决定你能不能稳定出图。","datePublished":"2026-06-04T15:39:27+08:00","dateModified":"2026-09-26T06:55:33+08:00","articleSection":"参数行为档案","keywords":"类型/档案, 模型/niji5"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"参数行为档案","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88"},{"@type":"ListItem","position":3,"name":"MJ niji 5 · 行为档案","item":"https://tiaozhuxiansheng.com/mj-niji5-v2-1153ad3/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88" data-pagefind-meta="category" data-pagefind-filter="kind:note">参数行为档案</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-04T15:39:27+08:00">2026-06-04</time></span> <span>更新于 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time></span> <span>约 7 分钟读完 · 2,456 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>30 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#一双分支结构最核心">一、双分支结构（最核心）</a></li><li class="d3"><a href="#分支-a--3d-cgi-渲染推荐路径">分支 A · 3D CGI 渲染（推荐路径）</a></li><li class="d3"><a href="#分支-b--二次元立绘默认--不推荐">分支 B · 二次元立绘（默认 / 不推荐）</a></li><li class="d3"><a href="#实战教训">实战教训</a></li><li class="d2"><a href="#二6-条已知坑">二、6 条已知坑</a></li><li class="d3"><a href="#坑-1--否定语义失效">坑 1 · 否定语义失效</a></li><li class="d3"><a href="#坑-2--描述层过载注意力争夺">坑 2 · 描述层过载（注意力争夺）</a></li><li class="d3"><a href="#坑-3--red-accent-的贪婪解读">坑 3 · red accent 的”贪婪解读”</a></li><li class="d3"><a href="#坑-4--单数-vs-复数手部描述">坑 4 · 单数 vs 复数手部描述</a></li><li class="d3"><a href="#坑-5--半身全身扩图的物理限制">坑 5 · 半身→全身扩图的物理限制</a></li><li class="d3"><a href="#坑-6--颜值锚定的尺度依赖">坑 6 · 颜值锚定的尺度依赖</a></li><li class="d2"><a href="#三稳定输出-prompt-配方实测可用">三、稳定输出 prompt 配方（实测可用）</a></li><li class="d3"><a href="#31-半身像基底配方3d-cgi-风格">3.1 半身像基底配方（3D CGI 风格）</a></li><li class="d3"><a href="#32-第一次扩图半身34-身">3.2 第一次扩图（半身→3/4 身）</a></li><li class="d3"><a href="#33-第二次扩图34-身全身">3.3 第二次扩图（3/4 身→全身）</a></li><li class="d2"><a href="#四style-子模式默认-expressive">四、style 子模式（默认 expressive）</a></li><li class="d2"><a href="#五niji-5-vs-niji-6-的取舍">五、niji 5 vs niji 6 的取舍</a></li><li class="d2"><a href="#六配套工作流关键">六、配套工作流（关键）</a></li><li class="d2"><a href="#七什么时候不要用-niji-5">七、什么时候不要用 niji 5</a></li><li class="d2"><a href="#八风格-dna-反推的常见错误元教训">八、风格 DNA 反推的常见错误（元教训）</a></li><li class="d2"><a href="#九信息密度速查表">九、信息密度速查表</a></li><li class="d2"><a href="#十--悠船-niji-5-特性补充-v2">十 · 悠船 niji 5 特性补充（🆕 v2）</a></li><li class="d3"><a href="#101-悠船-vs-mj-官方-niji-5-差异对照表">10.1 悠船 vs MJ 官方 niji 5 差异对照表</a></li><li class="d3"><a href="#102-悠船胜利配方本次会话验证">10.2 悠船胜利配方（本次会话验证）</a></li><li class="d3"><a href="#103-与-三-mj-官方配方的核心差异">10.3 与 §三 MJ 官方配方的核心差异</a></li><li class="d3"><a href="#104-何时回-mj-官方--何时悠船够用">10.4 何时回 MJ 官方 / 何时悠船够用</a></li><li class="d3"><a href="#105-元教训标签相同--行为相同">10.5 元教训：标签相同 ≠ 行为相同</a></li><li class="d2"><a href="#十一版本">十一、版本</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="mj-niji-5--行为档案">MJ niji 5 · 行为档案</h1>
+<blockquote>
+<p>入档：2026-05-15（v1）/ 升级 v2：2026-05-20
+触发 v1：Prompt Battle 比赛冠军形象图项目，副会话 13 轮实测后沉淀
+触发 v2：副会话 #4 涂图儿+良伞会话验证悠船 niji 5 与 MJ 官方 niji 5 的实测差异 + Nano 同样吃极简 prompt
+实测对象：冠军 #1（v1）+ 冠军 #4 涂图儿（兽人）+ 冠军 #5 良伞（人形山海经神祇）
+关联：<a href="/above-the-web/ai-niji5-nano-v2-aff7d44/" class="wikilink">AI形象图工作流分层_niji5+Nano_v2</a> / <a href="/above-the-web/mj-v8-1-oref-v1-5d5f854/" class="wikilink">MJ_v8.1_无oref_混合工作流_v1</a> / <code>复盘记录/复盘笔记_涂图儿良伞_悠船niji5_Nano极简_2026-05-20</code></p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p><strong>niji 5 是有”两个分支”的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定”触发词”。理解这两个分支的边界 + 6 条已知坑，决定你能不能稳定出图。</strong></p>
+<hr>
+<h2 id="一双分支结构最核心">一、双分支结构（最核心）</h2>
+<p>niji 5 默认不是稳定的”动漫风”，而是会在以下两个分支间漂移：</p>
+<h3 id="分支-a--3d-cgi-渲染推荐路径">分支 A · 3D CGI 渲染（推荐路径）</h3>
+<p><strong>视觉特征</strong>：3D 高级渲染感、PBR 材质、SSS 皮肤、金属高光、布料褶皱、电影级光影
+<strong>适合</strong>：游戏角色立绘、虚拟偶像、潮流人物形象、高质量插画</p>
+<p><strong>稳定触发条件</strong>：</p>
+<ul>
+<li>✅ 镜头描述：<code>half body shot</code> / <code>three quarter body shot</code>（<strong>半身或 3/4 身</strong>，全身不稳定）</li>
+<li>✅ 视角锚定：<code>frontal view, symmetric</code></li>
+<li>✅ 摄影锚定：<code>Panoramic lens, Long shot</code></li>
+<li>✅ 渲染词堆叠（完整版必带）：<code>C4D, blender, unreal engine, octane render, global illumination, ray traced reflections, SSAO, shaders, FXAA, CGI, RTX, VFX, 4K</code></li>
+<li>✅ 质量词：<code>best quality, ultra detailed, hyperrealistic</code></li>
+</ul>
+<h3 id="分支-b--二次元立绘默认--不推荐">分支 B · 二次元立绘（默认 / 不推荐）</h3>
+<p><strong>视觉特征</strong>：动漫角色立绘、平涂、卡通比例、二次元线条
+<strong>适合</strong>：纯萌系 / Chibi / 表情包</p>
+<p><strong>误触发关键词</strong>（<strong>会切到立绘分支</strong>）：</p>
+<ul>
+<li>❌ <code>floating</code> / <code>soaring</code> / <code>mid-air</code> / <code>no ground</code> / <code>bare feet</code> / <code>leaping</code></li>
+<li>❌ 任何”飞升 / 漂浮 / 不踩地”语义</li>
+<li>❌ 删除上述”摄影锚定词”（<code>frontal view, symmetric</code>）</li>
+</ul>
+<h3 id="实战教训">实战教训</h3>
+<p><strong>项目里要 3D CGI 风</strong>，但加 <code>floating</code> 制造漂浮感 → 100% 切到二次元立绘分支。
+<strong>正确做法</strong>：3D 分支稳定渲染 + 漂浮感<strong>留给后期工具（Nano）做</strong>。</p>
+<hr>
+<h2 id="二6-条已知坑">二、6 条已知坑</h2>
+<h3 id="坑-1--否定语义失效">坑 1 · 否定语义失效</h3>
+<p>niji 5 对 <code>no X</code> 类否定描述<strong>近乎无效</strong>：</p>
+<ul>
+<li><code>no ground</code> → MJ 仍会画地面</li>
+<li><code>no shadow</code> → 仍会画阴影</li>
+<li><code>feet not touching ground</code> → 双脚仍然落地</li>
+</ul>
+<p><strong>这不是 niji 5 独有的问题</strong>（MJ 系列普遍弱），但 niji 5 上特别严重。</p>
+<p><strong>结论</strong>：想要”不踩地” / “无地面” / “无阴影”——<strong>靠 prompt 无解，必须靠后期工具</strong>。</p>
+<h3 id="坑-2--描述层过载注意力争夺">坑 2 · 描述层过载（注意力争夺）</h3>
+<p>niji 5 prompt 描述层 <strong>> 10 个特征词</strong>时：</p>
+<ul>
+<li>模型注意力被吃满</li>
+<li><strong>颜值 / 解剖细节会被牺牲</strong></li>
+<li>例：在已有人物描述基础上加 <code>sharp piercing gaze + looking at camera + intense + eyes open + sharp eyes</code> 5 个眼神词 → 4 张图全部丢失麦克风（虽然 prompt 里写了 holding microphone）</li>
+</ul>
+<p><strong>原则</strong>：每加一个新约束，<strong>就要删一个旧约束</strong>。不能堆叠。</p>
+<h3 id="坑-3--red-accent-的贪婪解读">坑 3 · <code>red accent</code> 的”贪婪解读”</h3>
+<p>写 <code>red accent</code> 时 niji 5 <strong>强制把红色落到鞋上</strong>（100% 撞同一陷阱）。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>✅ <code>red highlights in hair only</code> —— 锁定红色位置</li>
+<li>✅ 完全删除”red”描述 —— 让头发自然挑染</li>
+<li>❌ <code>red accent</code> / <code>red detail</code> / <code>red color pop</code> —— 都会落鞋</li>
+</ul>
+<p><strong>推广</strong>：任何颜色 accent 必须<strong>明确指定位置</strong>，否则 niji 5 会贪婪解读到一个奇怪的位置。</p>
+<h3 id="坑-4--单数-vs-复数手部描述">坑 4 · 单数 vs 复数手部描述</h3>
+<p><strong>侧脸视角下</strong>：</p>
+<ul>
+<li>❌ <code>hands by sides</code>（复数）—— niji 5 强行画两只手 → 解剖崩坏概率 100%</li>
+<li>✅ <code>one hand visible in pocket</code>（单数 + 明确位置）—— 解剖正确率显著提高</li>
+</ul>
+<p><strong>结论</strong>：侧脸视角下，<strong>所有手部描述必须用单数 + 明确位置</strong>。</p>
+<h3 id="坑-5--半身全身扩图的物理限制">坑 5 · 半身→全身扩图的物理限制</h3>
+<p>半身像扩图到全身：</p>
+<ul>
+<li><strong>补全区域必须 ≥ 原图区域</strong>（腿+脚占人体一半）</li>
+<li>这违反 MJ 扩图”补全 ≤ 原图”的安全区原则 → 必然激进扩图</li>
+</ul>
+<p><strong>解决</strong>：<strong>两次扩图</strong></p>
+<ol>
+<li>半身 → 3/4 身（Aspect 2:3 / Scale 65% / 原图垂直顶部留 3%）</li>
+<li>3/4 身 → 全身（Aspect 2:3 / Scale 70-72%）</li>
+</ol>
+<p>但每次扩图都有：</p>
+<ul>
+<li>画质衰减</li>
+<li>风格漂移 1 次（增加触发到立绘分支的概率）</li>
+</ul>
+<p><strong>这条坑是 “niji 5 全身像下脸糊” 的根因</strong>——脸在画面占比 &#x3C; 5% 时分辨率不够，<strong>全身像下五官精致几乎不可避免</strong>。</p>
+<h3 id="坑-6--颜值锚定的尺度依赖">坑 6 · 颜值锚定的尺度依赖</h3>
+<ul>
+<li>半身像下：加 <code>beautiful + sharp jawline + delicate features</code> 颜值显著提升 ✓</li>
+<li>全身像下：颜值锚定<strong>几乎无效</strong>（脸占比太小）</li>
+</ul>
+<p><strong>结论</strong>：冠军形象图 / 高颜值需求项目，<strong>必须走”半身先渲染颜值 → 扩图保留颜值”工作流</strong>，<strong>不能直接出全身</strong>。</p>
+<hr>
+<h2 id="三稳定输出-prompt-配方实测可用">三、稳定输出 prompt 配方（实测可用）</h2>
+<h3 id="31-半身像基底配方3d-cgi-风格">3.1 半身像基底配方（3D CGI 风格）</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>3D high fashion illustration by nick knight and rick owens,</span></span>
+<span class="line"><span>Panoramic lens, Long shot, half body shot,</span></span>
+<span class="line"><span>a beautiful young Asian woman with sharp jawline, side profile view,</span></span>
+<span class="line"><span>[人物特征：长发/服装/配色],</span></span>
+<span class="line"><span>[场景：black background / 简单背景],</span></span>
+<span class="line"><span>frontal view, symmetric,</span></span>
+<span class="line"><span>C4D, blender, unreal engine, octane render, global illumination,</span></span>
+<span class="line"><span>ray traced reflections, SSAO, shaders, FXAA, CGI, RTX, VFX, 4K,</span></span>
+<span class="line"><span>best quality, ultra detailed, hyperrealistic</span></span>
+<span class="line"><span>--fast --style expressive --niji 5</span></span></code></pre>
+<p><strong>Aspect 默认 1:1</strong>（不指定 <code>--ar</code>）。</p>
+<h3 id="32-第一次扩图半身34-身">3.2 第一次扩图（半身→3/4 身）</h3>
+<p><strong>网页端参数</strong>：Aspect Ratio 2:3 / Scale 65% / 原图垂直顶部留 3%</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>3D high fashion illustration by nick knight and rick owens,</span></span>
+<span class="line"><span>Panoramic lens, Long shot, three quarter body shot,</span></span>
+<span class="line"><span>a beautiful young Asian woman with sharp jawline, side profile view,</span></span>
+<span class="line"><span>[人物特征同上],</span></span>
+<span class="line"><span>one leg stepping forward as if walking,</span></span>
+<span class="line"><span>one hand visible in pocket,</span></span>
+<span class="line"><span>black background, no ground, no shadow,</span></span>
+<span class="line"><span>[渲染词堆叠 + 质量词 同上]</span></span>
+<span class="line"><span>--fast --style expressive --niji 5</span></span></code></pre>
+<p>注意：</p>
+<ul>
+<li><code>one leg stepping forward</code> → 制造动势（不要用 floating）</li>
+<li><code>one hand visible in pocket</code> → 单数手部描述，避免解剖错误</li>
+</ul>
+<h3 id="33-第二次扩图34-身全身">3.3 第二次扩图（3/4 身→全身）</h3>
+<p><strong>网页端参数</strong>：Aspect 2:3 / Scale 70-72%</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>3D high fashion illustration by nick knight and rick owens,</span></span>
+<span class="line"><span>Panoramic lens, Long shot, full body shot,</span></span>
+<span class="line"><span>[人物特征同上],</span></span>
+<span class="line"><span>walking forward dynamically, [鞋款描述如 black combat boots],</span></span>
+<span class="line"><span>black background, no ground, no shadow,</span></span>
+<span class="line"><span>[渲染词堆叠 + 质量词 同上]</span></span>
+<span class="line"><span>--fast --style expressive --niji 5</span></span></code></pre>
+<hr>
+<h2 id="四style-子模式默认-expressive">四、style 子模式（默认 expressive）</h2>
+<p>niji 5 的四个 style 子模式：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>子模式</th><th>视觉特征</th><th>适用</th></tr></thead><tbody><tr><td><code>--style original</code>（默认）</td><td>niji 5 原生风格</td><td>平衡稳，不知道选啥就先用这个</td></tr><tr><td><code>--style cute</code></td><td>Chibi / 可爱 / Q 版</td><td>表情包 / 二次元卡通</td></tr><tr><td><strong><code>--style expressive</code></strong></td><td><strong>大眼睛 / 现代日漫 / 立绘感</strong></td><td><strong>首选：个人形象图、海报、立绘</strong></td></tr><tr><td><code>--style scenic</code></td><td>场景丰富 / 电影感 / 偏后景</td><td>全身 + 环境图</td></tr></tbody></table>
+<p><strong>实战推荐：<code>--style expressive</code></strong> —— 立绘感最强，最适合人物形象图。</p>
+<hr>
+<h2 id="五niji-5-vs-niji-6-的取舍">五、niji 5 vs niji 6 的取舍</h2>
+<ul>
+<li><strong>niji 5</strong>（2023-12）：原汁原味日漫感、绘画感强、不太”AI”</li>
+<li><strong>niji 6</strong>（2024-01）：更细腻但偏现代，少了”手绘”质感</li>
+</ul>
+<p>跳蛛先生在 Prompt Battle 项目里<strong>选 niji 5 而不是 niji 6</strong> —— 因为想要”手绘 / 角色绘”质感。</p>
+<p>如果项目需要”更现代 / 更细腻”的二次元感 → 切 niji 6 测试。</p>
+<hr>
+<h2 id="六配套工作流关键">六、配套工作流（关键）</h2>
+<p>niji 5 <strong>不是孤立工具</strong>。它的物理上限决定了必须分层使用：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Layer 1: niji 5  → 主体出图（画风、服装、构图、颜值）</span></span>
+<span class="line"><span>Layer 2: Nano    → 后期精修（加道具、改局部、制造漂浮感、调动势）</span></span>
+<span class="line"><span>Layer 3: PS（可选）→ 微调（局部颜色、印刷分辨率）</span></span></code></pre>
+<p>niji 5 物理上做不到的事（必须后期）：</p>
+<ul>
+<li>漂浮 / 不踩地 / 无阴影</li>
+<li>特定道具（麦克风 / 剑 / 卡牌等的精确位置）</li>
+<li>鞋款细节（战术靴 → 骑士靴等替换）</li>
+<li>头发动势加强 / 红色挑染比例调整</li>
+</ul>
+<p>详见配套方法论 <a href="/above-the-web/ai-niji5-nano-v2-aff7d44/" class="wikilink">AI形象图工作流分层_niji5+Nano_v2</a>。</p>
+<hr>
+<h2 id="七什么时候不要用-niji-5">七、什么时候不要用 niji 5</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>替代方案</th></tr></thead><tbody><tr><td>需要写实风（非二次元）</td><td>MJ v7 / v8.1</td></tr><tr><td>需要 cref / oref 锁脸</td><td>MJ v7 + oref（niji 5 时期 cref 较弱）</td></tr><tr><td>多人构图（>2 人）</td><td>单独跑每人再合成（niji 5 多人必翻车）</td></tr><tr><td>写实手部细节</td><td>任何工具都不擅长，但 niji 5 是手部软肋之一</td></tr><tr><td>复杂服装图案 / 文字 logo</td><td>niji 6 比 niji 5 处理更好</td></tr></tbody></table>
+<hr>
+<h2 id="八风格-dna-反推的常见错误元教训">八、风格 DNA 反推的常见错误（元教训）</h2>
+<p>副会话在做这次项目时，最初基于 10 张往期作品反推风格 DNA，犯了 2 处误判，被跳蛛先生纠正：</p>
+<ol>
+<li><strong>“几乎不直视镜头”</strong> ❌ → 实际有部分直视，只是侧脸占比偏多</li>
+<li><strong>“全部漂浮 / 不踩地”</strong> ❌ → 实际”漂浮”是少数派（~30%），站立/行走/裙摆吞脚才是主流</li>
+</ol>
+<p><strong>元教训</strong>：</p>
+<ul>
+<li><strong>基于第一次提取的特征直接推进，容易把”少数派特征”过度泛化</strong></li>
+<li>必须和用户<strong>多轮确认</strong> style DNA，不能一次反推就上手做</li>
+<li>“不踩地”的本质是 <strong>不画地面/阴影/重心明显</strong>，不是必须真腾空——本质 ≠ 表象</li>
+</ul>
+<p>详见 <a href="/above-the-web/ai-niji5-nano-v2-aff7d44/" class="wikilink">AI形象图工作流分层_niji5+Nano_v2</a> §五·风格 DNA 反推陷阱。</p>
+<hr>
+<h2 id="九信息密度速查表">九、信息密度速查表</h2>
+<p>如果你只看一节，看这个：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>关键规律</th></tr></thead><tbody><tr><td><strong>画风触发</strong></td><td>3D 渲染词堆叠 + 摄影锚定 + 半身/3-4 身 → 3D 分支；任何”漂浮”语义 → 立绘分支</td></tr><tr><td><strong>否定语义</strong></td><td><code>no X</code> 失效，<strong>用后期工具替代</strong></td></tr><tr><td><strong>描述层</strong></td><td>> 10 词过载，颜值/解剖被牺牲。<strong>加一删一</strong></td></tr><tr><td><strong>颜色</strong></td><td><code>red accent</code> 落鞋；必须 <strong>明确位置</strong>（如 <code>red in hair only</code>）</td></tr><tr><td><strong>手部</strong></td><td>侧脸视角必须<strong>单数 + 明确位置</strong>（如 <code>one hand in pocket</code>）</td></tr><tr><td><strong>扩图</strong></td><td>半身→全身<strong>两次</strong>扩图，每次 ≤ 30% 补全</td></tr><tr><td><strong>颜值</strong></td><td>半身渲染颜值后扩图保留，<strong>不能直接出全身</strong></td></tr><tr><td><strong>style</strong></td><td>默认 <code>expressive</code>（个人形象图）</td></tr></tbody></table>
+<hr>
+<h2 id="十--悠船-niji-5-特性补充-v2">十 · 悠船 niji 5 特性补充（🆕 v2）</h2>
+<blockquote>
+<p>入档：2026-05-20
+触发：副会话 #4 跳蛛先生 MJ 额度耗尽后切换到悠船（一个第三方 MJ 调用平台），实测发现”niji 5” 标签下的实际行为与 MJ 官方 niji 5 存在显著差异。
+含义：本档案 §一~§九 基于 MJ 官方实测，<strong>迁移到悠船时不能 100% 套用</strong>。</p>
+</blockquote>
+<h3 id="101-悠船-vs-mj-官方-niji-5-差异对照表">10.1 悠船 vs MJ 官方 niji 5 差异对照表</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>维度</th><th>MJ 官方 niji 5（§一~§九）</th><th>悠船 niji 5（实测）</th></tr></thead><tbody><tr><td>默认 Aspect</td><td>1:1（不写 <code>--ar</code> 即方形）</td><td><strong>偏纵向构图</strong>（不写 <code>--ar</code> 大概率出全身）</td></tr><tr><td><code>half body shot</code> 响应度</td><td>强，能稳定锁定半身</td><td><strong>弱</strong>，常被忽略，需要 <code>close-up portrait</code> 双重强化</td></tr><tr><td>渲染词堆叠（C4D/blender/octane…）</td><td>稳定触发 3D CGI 分支（§一）</td><td><strong>响应较弱</strong>，易回到 niji 立绘分支</td></tr><tr><td>否定语义（<code>no X</code>）</td><td>弱（§坑 1）</td><td>同样弱，程度类似</td></tr><tr><td>描述层过载阈值</td><td>>10 词颜值下降（§坑 2）</td><td><strong>同款规律，但阈值更低（>8 词就开始漂移）</strong></td></tr><tr><td><strong>质感天花板</strong></td><td>能稳定出 nick knight 时装大片渲染感</td><td><strong>天花板更低</strong>，稳定出 niji 立绘感，需要”半身像 + 极简” 才能勉强触及大片渲染</td></tr></tbody></table>
+<h3 id="102-悠船胜利配方本次会话验证">10.2 悠船胜利配方（本次会话验证）</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>3D high fashion illustration by nick knight and rick owens,</span></span>
+<span class="line"><span>Panoramic lens, Long shot, half body shot, close-up portrait,  ← 双重强化半身</span></span>
+<span class="line"><span>[人物核心 1 句],</span></span>
+<span class="line"><span>[配色/服装 1-2 句],</span></span>
+<span class="line"><span>[气质 1 句],</span></span>
+<span class="line"><span>clean black background / off-white background,</span></span>
+<span class="line"><span>[渲染词堆叠]</span></span>
+<span class="line"><span>[质量词]</span></span>
+<span class="line"><span>--ar 1:1 --fast --style expressive --niji 5</span></span></code></pre>
+<p>总词数 ≤ 8 个核心描述词。良伞 v3/v4/v5 都按这个走通了。</p>
+<h3 id="103-与-三-mj-官方配方的核心差异">10.3 与 §三 MJ 官方配方的核心差异</h3>
+<ul>
+<li>✅ 加 <code>close-up portrait</code> 双重强化半身（悠船对单一 <code>half body shot</code> 不敏感）</li>
+<li>✅ 强制 <code>--ar 1:1</code>（悠船默认非方形）</li>
+<li>✅ 砍掉所有”奇幻复合元素细节”（种族/翅膀/鳞片/特定生物结构）—— 复杂奇幻题材在悠船 niji 5 上会被渲染成简化立绘</li>
+<li>✅ 总词数控制在 8-10 个核心描述词内（比 MJ 官方更严格）</li>
+</ul>
+<h3 id="104-何时回-mj-官方--何时悠船够用">10.4 何时回 MJ 官方 / 何时悠船够用</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>推荐</th><th>理由</th></tr></thead><tbody><tr><td>高质感时装大片（潮流风格）</td><td>MJ 官方</td><td>悠船质感天花板低</td></tr><tr><td>复杂奇幻题材（兽人/异形生物/神祇）</td><td>MJ 官方</td><td>悠船易回到 niji 立绘分支</td></tr><tr><td>简洁人物形象图（半身+清背景）</td><td>悠船够用</td><td>极简配方在悠船能跑通</td></tr><tr><td>应急（MJ 官方额度耗尽）</td><td>悠船</td><td>但要降低质感预期</td></tr></tbody></table>
+<h3 id="105-元教训标签相同--行为相同">10.5 元教训：标签相同 ≠ 行为相同</h3>
+<p>第三方 MJ 调用平台（如悠船）虽然标注使用同一模型（niji 5），但<strong>因渲染管线 / 默认参数 / 模型版本快照 等差异，实际行为可能显著不同</strong>。</p>
+<p>未来遇到任何”标签声称的模型”，应该：</p>
+<ol>
+<li>用工作站既有档案（如本档案 §一~§九）作为<strong>起点假设</strong></li>
+<li>但<strong>实测验证差异</strong>，不要盲目套用</li>
+<li>发现差异时<strong>分别建立档案章节</strong>（不要污染原档案的实测结论）</li>
+</ol>
+<p>这条规律对所有”第三方 AI 工具平台”都成立——Suno 第三方调用、MJ 第三方调用、Claude API vs Claude Code 等场景都适用。</p>
+<blockquote>
+<p>⬆️ <strong>本节已升格独立档：<a href="/above-the-web/v1-fa343e8/" class="wikilink">标签相同不等于行为相同_第三方代跑平台律_v1</a></strong>（2026-08-07）。升格由第二例触发：liblib.tv 内置 GPT 出的”透明背景”是<strong>把灰白棋盘格画进像素</strong>的假透明，换 GPT 官网即得真 alpha。那一例比悠船更硬——悠船是<strong>降质</strong>（能出，差一档），liblib 的 GPT 是<strong>能力缺失 + 伪造</strong>（给不了，还交出骗过验收的替代品）。判据与验收动作看新档。</p>
+</blockquote>
+<hr>
+<h2 id="十一版本">十一、版本</h2>
+<ul>
+<li><strong>v1 - 2026-05-15 - 主对话 Claude 沉淀</strong>（基于副会话 niji 5 共创者 13 轮实测）</li>
+<li><strong>v2 - 2026-05-20 - 主对话 Claude（第二任）补充</strong>（基于副会话 #4 涂图儿+良伞会话的悠船 niji 5 实测差异）</li>
+</ul>
+<p>继承链：</p>
+<ul>
+<li>副会话 v1 原始材料：<code>跨会话协作/项目阶段性回执_运营经理_2026-05-15.md</code></li>
+<li>副会话 v1 复盘：<code>复盘记录/复盘笔记_冠军1_prompt_battle形象图_2026-05-15.md</code></li>
+<li><strong>副会话 v2 复盘</strong>：<code>复盘记录/复盘笔记_涂图儿良伞_悠船niji5_Nano极简_2026-05-20</code></li>
+<li>配套工作流：<a href="/above-the-web/ai-niji5-nano-v2-aff7d44/" class="wikilink">AI形象图工作流分层_niji5+Nano_v2</a>（v2 同步升级，加 Nano 极简原则）</li>
+</ul>
+<p>后续更新触发：</p>
+<ul>
+<li>第三个独立悠船 niji 5 案例后，§十 可独立成档为 悠船niji5_行为档案_v1</li>
+<li><del>验证其他第三方 MJ 平台（liblib MJ V7 等）后，§10.5”标签相同 ≠ 行为相同” 升格为独立元方法论</del> → <strong>已完成（2026-08-07）</strong>：由 liblib.tv 的 GPT Image 假透明一例触发（跨工具族，非 MJ），升格为 <a href="/above-the-web/v1-fa343e8/" class="wikilink">标签相同不等于行为相同_第三方代跑平台律_v1</a></li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>所属索引:<a href="/above-the-web/02-33115ae/" class="wikilink">02_参数行为档案索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/档案</span><span class="tag">模型/niji5</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:55:33+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/MJ_niji5_%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88_v2.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/02_%E5%8F%82%E6%95%B0%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88/MJ_niji5_%E8%A1%8C%E4%B8%BA%E6%A1%A3%E6%A1%88_v2.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/02-33115ae/">参数行为档案索引</a></li><li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/ai-niji5-nano-v2-aff7d44/">AI 形象图工作流分层 · niji5 + Nano</a></li><li><a href="/above-the-web/v1-fa343e8/">标签相同 ≠ 行为相同 · 第三方代跑平台律</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/mj-v8-1-oref-v1-5d5f854/"> <span class="card-cat">参数行为档案</span> <h3>MJ v8.1 无 oref/cref · 混合工作流</h3> <p>v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。 解法不是二选一，是按镜头需要分工：</p> </a><a class="card" href="/above-the-web/eleven-v3-v1-d87db20/"> <span class="card-cat">参数行为档案</span> <h3>Eleven v3 行为规律</h3> <p>PVC 不支持 v3 但 IVC 支持——所以要克隆不必退回 v2，audio tags 和 Text to Dialogue 都保得住。这…</p> </a><a class="card" href="/above-the-web/flova-v1-a30ae63/"> <span class="card-cat">参数行为档案</span> <h3>Flova 平台档案：编排层不是模型层</h3> <p>Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点：</p> </a><a class="card" href="/above-the-web/kling3-0-v1-8b6096c/"> <span class="card-cat">参数行为档案</span> <h3>可灵 Kling 3.0 / Omni 行为规律</h3> <p>关键约束:景别是单选(其他可多选)。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#一双分支结构最核心" data-toc-link="一双分支结构最核心">一、双分支结构（最核心）</a></li><li class="d3"><a href="#分支-a--3d-cgi-渲染推荐路径" data-toc-link="分支-a--3d-cgi-渲染推荐路径">分支 A · 3D CGI 渲染（推荐路径）</a></li><li class="d3"><a href="#分支-b--二次元立绘默认--不推荐" data-toc-link="分支-b--二次元立绘默认--不推荐">分支 B · 二次元立绘（默认 / 不推荐）</a></li><li class="d3"><a href="#实战教训" data-toc-link="实战教训">实战教训</a></li><li class="d2"><a href="#二6-条已知坑" data-toc-link="二6-条已知坑">二、6 条已知坑</a></li><li class="d3"><a href="#坑-1--否定语义失效" data-toc-link="坑-1--否定语义失效">坑 1 · 否定语义失效</a></li><li class="d3"><a href="#坑-2--描述层过载注意力争夺" data-toc-link="坑-2--描述层过载注意力争夺">坑 2 · 描述层过载（注意力争夺）</a></li><li class="d3"><a href="#坑-3--red-accent-的贪婪解读" data-toc-link="坑-3--red-accent-的贪婪解读">坑 3 · red accent 的”贪婪解读”</a></li><li class="d3"><a href="#坑-4--单数-vs-复数手部描述" data-toc-link="坑-4--单数-vs-复数手部描述">坑 4 · 单数 vs 复数手部描述</a></li><li class="d3"><a href="#坑-5--半身全身扩图的物理限制" data-toc-link="坑-5--半身全身扩图的物理限制">坑 5 · 半身→全身扩图的物理限制</a></li><li class="d3"><a href="#坑-6--颜值锚定的尺度依赖" data-toc-link="坑-6--颜值锚定的尺度依赖">坑 6 · 颜值锚定的尺度依赖</a></li><li class="d2"><a href="#三稳定输出-prompt-配方实测可用" data-toc-link="三稳定输出-prompt-配方实测可用">三、稳定输出 prompt 配方（实测可用）</a></li><li class="d3"><a href="#31-半身像基底配方3d-cgi-风格" data-toc-link="31-半身像基底配方3d-cgi-风格">3.1 半身像基底配方（3D CGI 风格）</a></li><li class="d3"><a href="#32-第一次扩图半身34-身" data-toc-link="32-第一次扩图半身34-身">3.2 第一次扩图（半身→3/4 身）</a></li><li class="d3"><a href="#33-第二次扩图34-身全身" data-toc-link="33-第二次扩图34-身全身">3.3 第二次扩图（3/4 身→全身）</a></li><li class="d2"><a href="#四style-子模式默认-expressive" data-toc-link="四style-子模式默认-expressive">四、style 子模式（默认 expressive）</a></li><li class="d2"><a href="#五niji-5-vs-niji-6-的取舍" data-toc-link="五niji-5-vs-niji-6-的取舍">五、niji 5 vs niji 6 的取舍</a></li><li class="d2"><a href="#六配套工作流关键" data-toc-link="六配套工作流关键">六、配套工作流（关键）</a></li><li class="d2"><a href="#七什么时候不要用-niji-5" data-toc-link="七什么时候不要用-niji-5">七、什么时候不要用 niji 5</a></li><li class="d2"><a href="#八风格-dna-反推的常见错误元教训" data-toc-link="八风格-dna-反推的常见错误元教训">八、风格 DNA 反推的常见错误（元教训）</a></li><li class="d2"><a href="#九信息密度速查表" data-toc-link="九信息密度速查表">九、信息密度速查表</a></li><li class="d2"><a href="#十--悠船-niji-5-特性补充-v2" data-toc-link="十--悠船-niji-5-特性补充-v2">十 · 悠船 niji 5 特性补充（🆕 v2）</a></li><li class="d3"><a href="#101-悠船-vs-mj-官方-niji-5-差异对照表" data-toc-link="101-悠船-vs-mj-官方-niji-5-差异对照表">10.1 悠船 vs MJ 官方 niji 5 差异对照表</a></li><li class="d3"><a href="#102-悠船胜利配方本次会话验证" data-toc-link="102-悠船胜利配方本次会话验证">10.2 悠船胜利配方（本次会话验证）</a></li><li class="d3"><a href="#103-与-三-mj-官方配方的核心差异" data-toc-link="103-与-三-mj-官方配方的核心差异">10.3 与 §三 MJ 官方配方的核心差异</a></li><li class="d3"><a href="#104-何时回-mj-官方--何时悠船够用" data-toc-link="104-何时回-mj-官方--何时悠船够用">10.4 何时回 MJ 官方 / 何时悠船够用</a></li><li class="d3"><a href="#105-元教训标签相同--行为相同" data-toc-link="105-元教训标签相同--行为相同">10.5 元教训：标签相同 ≠ 行为相同</a></li><li class="d2"><a href="#十一版本" data-toc-link="十一版本">十一、版本</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

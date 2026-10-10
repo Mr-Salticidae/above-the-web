@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘 · 蛛网之上</title><meta name="description" content="- 根目录下受 git 跟踪的文件从 30 个减到 20 个。主脚本、residential-asn.txt、webrtc-leak-test.html、一键体检. 都没动，用户侧命令一条没变。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-09-17-vpn-guard-v1-06d9964/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘"><meta property="og:description" content="- 根目录下受 git 跟踪的文件从 30 个减到 20 个。主脚本、residential-asn.txt、webrtc-leak-test.html、一键体检. 都没动，用户侧命令一条没变。"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-09-17-vpn-guard-v1-06d9964/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘"><meta name="twitter:description" content="- 根目录下受 git 跟踪的文件从 30 个减到 20 个。主脚本、residential-asn.txt、webrtc-leak-test.html、一键体检. 都没动，用户侧命令一条没变。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-09-17T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/账号安全"><meta property="article:tag" content="主题/回归测试"><meta property="article:tag" content="主题/CI"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-09-17-vpn-guard-v1-06d9964/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-09-17-vpn-guard-v1-06d9964/","url":"https://tiaozhuxiansheng.com/2026-09-17-vpn-guard-v1-06d9964/","headline":"2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 根目录下受 git 跟踪的文件从 30 个减到 20 个。主脚本、residential-asn.txt、webrtc-leak-test.html、一键体检. 都没动，用户侧命令一条没变。","datePublished":"2026-09-17T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/账号安全, 主题/回归测试, 主题/CI"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘","item":"https://tiaozhuxiansheng.com/2026-09-17-vpn-guard-v1-06d9964/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a> <span aria-hidden="true">/</span><span>账号与访问</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-09-17T00:00:00+08:00">2026-09-17</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 8 分钟读完 · 2,979 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>14 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d3"><a href="#改动">改动</a></li><li class="d3"><a href="#验证">验证</a></li><li class="d2"><a href="#弧线文件散不是要解决的问题">弧线：「文件散」不是要解决的问题</a></li><li class="d2"><a href="#发现">发现</a></li><li class="d3"><a href="#1-挪脚本等于挪状态对账号工具来说等于换了一台设备-️首次">1. 挪脚本等于挪状态，对账号工具来说等于换了一台设备 ⚠️首次</a></li><li class="d3"><a href="#2-四处没报错就当成功了">2. 四处「没报错就当成功了」</a></li><li class="d2"><a href="#方法论">方法论</a></li><li class="d3"><a href="#移动类改动的验证前后对照而不是跑一下没报错">移动类改动的验证：前后对照，而不是「跑一下没报错」</a></li><li class="d3"><a href="#不能实际运行的入口用替身来验证">不能实际运行的入口，用替身来验证</a></li><li class="d3"><a href="#升级-ci-依赖逐个大版本读不兼容项对照自己的用法">升级 CI 依赖：逐个大版本读不兼容项，对照自己的用法</a></li><li class="d3"><a href="#记忆里的状态会过期">记忆里的「状态」会过期</a></li><li class="d2"><a href="#收口状态">收口状态</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="2026-09-17--vpn-guard-目录整理收口--挪脚本等于挪状态与四处静默放行--迭代复盘">2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘</h1>
+<blockquote>
+<p>入档：2026-09-17
+来源：作者一句「整理一下项目架构，现在文件有点散」，最后做成了 vpn-guard 的一轮目录整理，外加 CI 维护和分支清理，之后项目收口
+状态：已落地并推送。main = <code>7191a14</code>，与 origin 同步；CI 两轮 ubuntu + macOS 全部通过；已合并分支全部删除
+环境：Windows 11 Pro，Git Bash + PowerShell 5.1，GitHub Actions（ubuntu-latest / macos-latest）</p>
+</blockquote>
+<hr>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<h3 id="改动">改动</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>commit</th><th>内容</th></tr></thead><tbody><tr><td><code>96f80ca</code></td><td>7 个 <code>browse-XX.ps1</code> 和 <code>launch-claude-desktop.cmd</code> 移入 <code>shortcuts/</code>；<code>verify-classifier.sh</code>、<code>verify-unix.sh</code> 移入 <code>tests/</code>；CI、中英 README、CONTRIBUTING 同步更新。共 14 个文件，+88 / −28</td></tr><tr><td><code>7191a14</code></td><td><code>actions/checkout@v4</code> → <code>@v7</code>（v4 跑在已弃用的 Node 20 上）</td></tr></tbody></table>
+<ul>
+<li>根目录下受 git 跟踪的文件从 30 个减到 20 个。主脚本、<code>residential-asn.txt</code>、<code>webrtc-leak-test.html</code>、<code>一键体检.*</code> 都没动，用户侧命令一条没变。</li>
+<li>删除两个已合并分支：<code>chore/tidy-layout</code>（本轮）、<code>feat/exit-provenance-gate</code>（08-19 那轮的，早已合入 main，远端没有这个分支）。</li>
+</ul>
+<h3 id="验证">验证</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>检查</th><th>改前（本机）</th><th>改后（本机）</th><th>CI</th></tr></thead><tbody><tr><td><code>verify-classifier.sh</code></td><td>49/49</td><td>49/49，输出与改前逐字节一致；在仓库外的目录运行，结果也一致</td><td>两平台 49/49</td></tr><tr><td><code>verify-unix.sh</code></td><td>通过 7 / 失败 4</td><td>通过、失败的清单与改前逐行一致（4 项失败是它在 Windows 上本来就有的环境项）</td><td>两平台通过 15 / 失败 0</td></tr><tr><td>shellcheck</td><td>本机未安装</td><td>—</td><td>ubuntu 实际执行，无 warning 及以上问题；macOS 未预装，跳过</td></tr><tr><td><code>shortcuts\browse-jp.ps1 -DryRun</code></td><td>—</td><td>正常调到 <code>browse-vpn.ps1</code> 并输出决策</td><td>—</td></tr><tr><td><code>launch-claude-desktop.cmd</code></td><td>—</td><td>没有实际运行（会拉起正在使用的 Claude 桌面版），用替身验证了路径和参数</td><td>—</td></tr></tbody></table>
+<ul>
+<li>CI run：<code>35227000953</code>（目录整理后，ubuntu 25s / macOS 1m6s）；<code>35227790159</code>（升级 checkout 后，49s / 1m14s，Node 20 弃用告警消失）。</li>
+<li>两个归因入档前补做了复现：缩写提交号查 run 返回空、完整 SHA 立刻查到；<code>printf '%s\n' 'a\\b'</code> 在本环境打印出 <code>a\b</code>。</li>
+<li>数据来源：git log、本机测试改前改后的输出 diff、<code>gh run view</code> 与 job 日志。</li>
+</ul>
+<hr>
+<h2 id="弧线文件散不是要解决的问题">弧线：「文件散」不是要解决的问题</h2>
+<p>作者要的是整理结构，但真正要先回答的是：<strong>哪些文件能动。</strong> 读完代码，能动的范围很窄：</p>
+<ul>
+<li>主脚本从<strong>自身所在目录</strong>读取 <code>residential-asn.txt</code> 和 <code>webrtc-leak-test.html</code>；</li>
+<li><code>browse-vpn</code> 把 Chrome 配置目录 <code>chrome-XX-profile/</code> 也建在<strong>自身所在目录</strong>；</li>
+<li>CONTRIBUTING 规定分发方式是「拷一个脚本走就能用」，不能引入共享库。</li>
+</ul>
+<p>于是我列了三个方案（只挪杂项 / 按平台拆 / 按工具拆），每个都写明代价，交给作者选：</p>
+<ul>
+<li><strong>按平台拆</strong>：要改 5 个脚本的文件查找逻辑，Chrome 配置目录要重新定位，README 里每份约 60 条命令路径全部失效。</li>
+<li><strong>按工具拆</strong>：除了上面这些，还多一个结构问题：<code>webrtc-leak-test.html</code> 同时被自查和浏览会话读取，拆开后要么复制两份，要么跨目录查找。</li>
+</ul>
+<p>作者选了只挪杂项。</p>
+<p><strong>判据：重构目录前，先列出所有「靠位置定位的东西」：同目录读取的文件、写在脚本旁边的状态、被别人按路径调用的入口。能不能动由这份清单决定，不由审美决定。</strong></p>
+<p>动手前还核查了一遍现状：桌面、开始菜单、启动项、任务栏固定项和计划任务里，有没有快捷方式指向这个目录（结果是没有）。这些东西不在仓库里，grep 看不见，文件一挪就会悄悄失效。这是 <a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a> 第五种形态（环境基线）的一次正面应用。</p>
+<hr>
+<h2 id="发现">发现</h2>
+<h3 id="1-挪脚本等于挪状态对账号工具来说等于换了一台设备-️首次">1. 挪脚本等于挪状态，对账号工具来说等于换了一台设备 ⚠️首次</h3>
+<p><code>$BaseDir = $PSScriptRoot</code> 这一行，让 Chrome 配置目录跟着脚本走。假如把 <code>browse-vpn.ps1</code> 挪进 <code>windows/</code>，下次启动就会在 <code>windows/</code> 下建一个<strong>空配置</strong>：</p>
+<ul>
+<li>登录态全部丢失，这是看得见的代价；</li>
+<li>用一个全新的浏览器配置重新登录各平台，在风控眼里就是<strong>一台新设备</strong>，正好落在 <a href="/above-the-web/vs-v1-a9977f1/" class="wikilink">信任资产保得住造不出_账号基线vs人群先验_v1</a> 权重表第 3 层「一号多设备」。</li>
+</ul>
+<p>更隐蔽的是，这个过程<strong>不报错</strong>：脚本照常运行，时区和语言照常对齐，只是身份悄悄换了。一个为了保护账号基线而写的工具，一次「整理目录」就能替用户制造一次基线跳变。</p>
+<p><strong>判据：当状态目录的位置跟着代码走时，重构目录就等于迁移数据。</strong> 要么不动，要么显式迁移，并在发布说明里写清楚。本轮选择不动，并把这条约束写进了中英 README 和 CONTRIBUTING，免得下一个整理的人再踩。</p>
+<p>顺带验证了一个细节：快捷入口改成 <code>"$PSScriptRoot\..\browse-vpn.ps1"</code> 之后，被调脚本拿到的 <code>$PSScriptRoot</code> 是否还是干净路径（不含 <code>..</code>）？这决定 Chrome 配置目录的路径字符串会不会变。我先在临时目录写了一个两行的探针，确认是干净路径，才采用这种最小改法。</p>
+<h3 id="2-四处没报错就当成功了">2. 四处「没报错就当成功了」</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>位置</th><th>表现</th><th>怎么发现的</th><th>处理</th></tr></thead><tbody><tr><td>①</td><td>CI 的多字节变量检查</td><td>用 <code>./*.sh</code> 通配，脚本挪进 <code>tests/</code> 后<strong>自动掉出检查范围</strong>，检查照样通过</td><td>挪文件前逐条读了 CI 步骤</td><td>事先预防：通配补上 <code>tests/*.sh</code></td></tr><tr><td>②</td><td>用 Git Bash 的 <code>sed -i</code> 批量改引用</td><td>7 个 <code>.ps1</code> 的替换<strong>没生效</strong>（sed 匹配不到也不报错）；<code>.cmd</code> 里的 <code>\a</code> 变成了响铃控制字符；被处理的文件 CRLF 全变成 LF</td><td><code>git diff --stat</code> 只列出 1 个文件（应该是 8 个）；<code>cat -A</code> 看到 <code>^G</code>；<code>file</code> 显示换行符变了</td><td>还原后改用 Edit 工具逐个修改，改完用 <code>file</code> 核对 BOM 和换行符</td></tr><tr><td>③</td><td>CI 的 shellcheck 步骤</td><td>找不到工具时 <code>echo</code> 一句「跳过」然后<strong>正常退出</strong>；macOS runner 没预装，所以它在 macOS 上从来没执行过</td><td>翻 job 日志，确认 ubuntu 实际执行了、macOS 是跳过</td><td>原有行为，记为遗留项</td></tr><tr><td>④</td><td>在后台等 CI 结果的任务</td><td>用缩写提交号查 run，<code>gh run list --commit</code> 返回空，后面的 <code>watch</code> 和 <code>view</code> 全失败，<strong>但整条后台命令以退出码 0 结束</strong>（最后一段 <code>head</code> 成功了），通知显示「已完成」</td><td>读了任务的实际输出，而不是只看完成通知</td><td>改用完整 SHA 重查，在前台等到真实结果</td></tr></tbody></table>
+<p>关于 ②：我在命令里写的是 <code>\\</code>，到 bash 手里只剩一个 <code>\</code>。事后用 <code>printf '%s\n' 'a\\b'</code> 复现：单引号里写了两个反斜杠，打印出来只有一个。可见<strong>这一层反斜杠在命令交给 shell 之前就被折叠了</strong>，不是 sed 或 MSYS 的问题。结果是：模式里的 <code>\b</code> 被 sed 当成词边界，静默匹配不到；替换里的 <code>\a</code> 被当成响铃符。结论：在这个环境里，<strong>用 shell 命令改带反斜杠的 Windows 路径，不能相信命令里写的转义</strong>，改用文件编辑工具。已补进 <a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a>，作为第八次验证。</p>
+<p>关于 ④：<code>--commit</code> 只认完整 SHA，缩写查不到，但也不报错。入档前复现过：缩写返回空，完整 SHA 立刻查到。</p>
+<p>关于 ③：它和 <a href="/above-the-web/2026-07-03-v1-2d712fc/" class="wikilink">2026-07-03_云端定时内容生产连环坑复盘_全绿不等于已发_v1</a> 里「当日文件已存在 → 跳过 → 显示成功」是同一个问题：<strong>在 CI 面板上，「跳过」和「通过」长得一模一样。</strong> 这是跨项目的第二次验证。</p>
+<p><strong>判据（四条合并）：一个动作没报错，只能说明它没崩，不能说明它做了该做的事。验收要看产物：</strong> diff 里该有几个文件、日志里那条命令是不是真的执行了、查询是不是真的拿到了对象。</p>
+<hr>
+<h2 id="方法论">方法论</h2>
+<h3 id="移动类改动的验证前后对照而不是跑一下没报错">移动类改动的验证：前后对照，而不是「跑一下没报错」</h3>
+<ol>
+<li><strong>改之前先跑一遍，把输出存下来</strong>（分类器测试的全文输出、verify-unix 的通过/失败清单）；</li>
+<li>改完再跑，<strong>和基线逐字节 diff</strong>。要确认的不是「还是全过」，而是「和原来一模一样」；</li>
+<li><strong>换一个工作目录再跑一次</strong>：测试脚本改成了先切到仓库根目录，这个改动只有从别的目录运行才验证得到。</li>
+</ol>
+<p><code>verify-unix.sh</code> 在 Windows 上本来就有 4 项失败。只看「有没有失败」会得出错误结论；和基线清单对照，才能确认「失败的还是原来那 4 项」。</p>
+<h3 id="不能实际运行的入口用替身来验证">不能实际运行的入口，用替身来验证</h3>
+<p><code>launch-claude-desktop.cmd</code> 会拉起 Claude 桌面版，而执行这次任务的正是这个程序，不能真跑。做法：在临时目录里复刻 <code>shortcuts/</code> 这一级结构，放一个只打印参数的假 <code>app-vpn.ps1</code>，再把真的 <code>.cmd</code> 拷进去执行。输出是 <code>reached app-vpn.ps1 args=claude-desktop -SystemTz</code>，路径解析和参数传递都得到了证实，被测程序一次都没启动。</p>
+<p><strong>替身验证的是调用链，不是被调程序本身。</strong> 被调程序这一轮没有改动，不需要重测。</p>
+<h3 id="升级-ci-依赖逐个大版本读不兼容项对照自己的用法">升级 CI 依赖：逐个大版本读不兼容项，对照自己的用法</h3>
+<p>v4 → v7 跨了三个大版本，逐个读发布说明：</p>
+<ul>
+<li>v5 改用 Node 24，要求 runner ≥ 2.327.1；</li>
+<li>v6 把 Git 凭据改存到单独的文件，只影响检出后还要带认证执行 git 命令的工作流；</li>
+<li>v7 禁止在 <code>pull_request_target</code> / <code>workflow_run</code> 事件里检出 fork 的 PR。</li>
+</ul>
+<p>本工作流只由 <code>push</code> / <code>pull_request</code> / <code>workflow_dispatch</code> 触发，检出后也不推送，三条都不沾边，所以直接升到 v7。推送后以「告警消失」作为验收。<strong>「有新版」不是升级的理由，「不兼容项和我无关」才是。</strong></p>
+<h3 id="记忆里的状态会过期">记忆里的「状态」会过期</h3>
+<p>会话开头读到的项目记忆写着「<code>feat/exit-provenance-gate</code> 未合入 main」。用 <code>git merge-base --is-ancestor</code> 一查，早就合进去了。这次没有据此做任何事；但如果信了它，会以为还有一条没收尾的工作线。记忆已更正。这是 <a href="/above-the-web/v1-2885b47/" class="wikilink">约束型结论先复核律_文档写的不可能会过期_v1</a> 里「状态比约束更容易过期」在 AI 记忆上的表现。</p>
+<hr>
+<h2 id="收口状态">收口状态</h2>
+<ul>
+<li><strong>代码</strong>：main = <code>7191a14</code>，与 origin 同步；本地只剩 main 分支；CI 两个平台全部通过。</li>
+<li><strong>结构约定已写进文档</strong>：中英 README 的目录结构段，CONTRIBUTING 里的「主脚本留在根目录」。</li>
+<li><strong>遗留项（本轮发现，未处理）</strong>：
+<ul>
+<li>根目录有一个被 git 忽略的 <code>chrome-#-profile/</code>（2026-07-31 创建），看起来是某次运行拿到的国家码是 <code>#</code>，原因未查；</li>
+<li><code>residential-asn.txt</code> 的头注释说只有 <code>auto-select-node.ps1</code> 读它，实际上两个自查脚本也读；</li>
+<li><code>field-report.sh</code> 不在 CI 的语法检查和 shellcheck 名单里；</li>
+<li>多字节检查用的 <code>perl -ne</code> 跨文件时 <code>$.</code> 不会归零，报出的行号是累计值；</li>
+<li>shellcheck 在 macOS 上从来没执行过（见发现 2 的第 ③ 条）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⚠️ <a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/" class="wikilink">2026-08-19_vpn-guard出口归属门槛与四处假绿修复_迭代复盘_v1</a> —— 直接前篇：那一轮留下的分支在本轮清理。那一轮的教训是「测试不投毒，就等于没测试」，本轮是「移动文件不做前后对照，就等于没验证」</li>
+<li><a href="/above-the-web/2026-07-14-vpn-guard-v1-7eff1d0/" class="wikilink">2026-07-14_vpn-guard从工具到宣传片_全链路复盘_v1</a> —— 同一工具的第一段弧线</li>
+<li>⭐ <a href="/above-the-web/vs-v1-a9977f1/" class="wikilink">信任资产保得住造不出_账号基线vs人群先验_v1</a> —— 发现 1 的风险落点：新配置 = 新设备 = 第 3 层「一号多设备」</li>
+<li><a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a> —— 动手前核查快捷方式、改前先存测试基线，都是它「环境基线」形态的应用</li>
+<li><a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a> —— 发现 2 的第 ② 条已补为该文第八次验证</li>
+<li><a href="/above-the-web/2026-07-03-v1-2d712fc/" class="wikilink">2026-07-03_云端定时内容生产连环坑复盘_全绿不等于已发_v1</a> —— 发现 2 第 ③ 条「跳过也显示成功」的前例</li>
+<li><a href="/above-the-web/v1-2885b47/" class="wikilink">约束型结论先复核律_文档写的不可能会过期_v1</a> —— 记忆里的「未合并」是状态过期</li>
+<li><a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> —— <code>$PSScriptRoot</code> 探针、替身验证、入档前复现两个归因，都是按它执行的</li>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 平台工程区入口；本文归入「账号与访问」</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/账号安全</span><span class="tag">主题/回归测试</span><span class="tag">主题/CI</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/2026-09-17_vpn-guard%E7%9B%AE%E5%BD%95%E6%95%B4%E7%90%86%E6%94%B6%E5%8F%A3_%E6%8C%AA%E8%84%9A%E6%9C%AC%E7%AD%89%E4%BA%8E%E6%8C%AA%E7%8A%B6%E6%80%81%E4%B8%8E%E5%9B%9B%E5%A4%84%E9%9D%99%E9%BB%98%E6%94%BE%E8%A1%8C_%E8%BF%AD%E4%BB%A3%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/2026-09-17_vpn-guard%E7%9B%AE%E5%BD%95%E6%95%B4%E7%90%86%E6%94%B6%E5%8F%A3_%E6%8C%AA%E8%84%9A%E6%9C%AC%E7%AD%89%E4%BA%8E%E6%8C%AA%E7%8A%B6%E6%80%81%E4%B8%8E%E5%9B%9B%E5%A4%84%E9%9D%99%E9%BB%98%E6%94%BE%E8%A1%8C_%E8%BF%AD%E4%BB%A3%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/2026-07-03-v1-2d712fc/">云端定时内容生产连环坑复盘:全绿不等于已发</a></li><li><a href="/above-the-web/2026-07-14-vpn-guard-v1-7eff1d0/">vpn-guard 全链路复盘：从一个防护需求，到开源工具，到宣传片</a></li><li><a href="/above-the-web/windows-dpi-v1-c276e21/">Windows 下编码与 DPI 的「所见非真相」</a></li><li><a href="/above-the-web/v1-3fce0f1/">交付前实测证伪律</a></li><li><a href="/above-the-web/v1-043b6e8/">开工前先对基线律</a></li><li><a href="/above-the-web/v1-2885b47/">约束型结论先复核律 · 文档写的「不可能」会过期</a></li><li><a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/">2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</a></li><li><a href="/above-the-web/vs-v1-a9977f1/">信任资产保得住、造不出 · 账号基线 vs 人群先验</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/chatgpt-windows-v1-8152abb/"> <span class="card-cat">平台工程</span> <h3>ChatGPT Windows 桌面版安装排障与账号合规边界</h3> <p>ChatGPT Windows 版安装失败时，按 使用资格 → Microsoft Store 分发 → 网络链路 → 账号与会话 四层排查…</p> </a><a class="card" href="/above-the-web/mac-macos-githubactions-v1-3b7ddc1/"> <span class="card-cat">平台工程</span> <h3>没有 Mac 也能冒烟测试 macOS 版：GitHub Actions 截图验字体</h3> <p>作者手上没有 Mac，Mac 版只能发出去等用户反馈。</p> </a><a class="card" href="/above-the-web/github-2fa-totp-v1-f9e47bb/"> <span class="card-cat">平台工程</span> <h3>GitHub 强制 2FA 的小白处置 · TOTP 原理与离线生成器</h3> <p>GitHub 弹的「Enable two-factor authentication」不是收费,是强制两步验证(对上传过代码的账号强制,免费…</p> </a><a class="card" href="/above-the-web/2026-09-06-tun-agent-gui-v1-a8056b4/"> <span class="card-cat">平台工程</span> <h3>2026-09-06 · TUN 开关状态漂移复发 · 三层真相源与 agent 起 GUI 边界 · 复盘</h3> <p>- 截图：Codex CLI「你在 0 秒后停止了」+「正在重新连接 3/5」</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d3"><a href="#改动" data-toc-link="改动">改动</a></li><li class="d3"><a href="#验证" data-toc-link="验证">验证</a></li><li class="d2"><a href="#弧线文件散不是要解决的问题" data-toc-link="弧线文件散不是要解决的问题">弧线：「文件散」不是要解决的问题</a></li><li class="d2"><a href="#发现" data-toc-link="发现">发现</a></li><li class="d3"><a href="#1-挪脚本等于挪状态对账号工具来说等于换了一台设备-️首次" data-toc-link="1-挪脚本等于挪状态对账号工具来说等于换了一台设备-️首次">1. 挪脚本等于挪状态，对账号工具来说等于换了一台设备 ⚠️首次</a></li><li class="d3"><a href="#2-四处没报错就当成功了" data-toc-link="2-四处没报错就当成功了">2. 四处「没报错就当成功了」</a></li><li class="d2"><a href="#方法论" data-toc-link="方法论">方法论</a></li><li class="d3"><a href="#移动类改动的验证前后对照而不是跑一下没报错" data-toc-link="移动类改动的验证前后对照而不是跑一下没报错">移动类改动的验证：前后对照，而不是「跑一下没报错」</a></li><li class="d3"><a href="#不能实际运行的入口用替身来验证" data-toc-link="不能实际运行的入口用替身来验证">不能实际运行的入口，用替身来验证</a></li><li class="d3"><a href="#升级-ci-依赖逐个大版本读不兼容项对照自己的用法" data-toc-link="升级-ci-依赖逐个大版本读不兼容项对照自己的用法">升级 CI 依赖：逐个大版本读不兼容项，对照自己的用法</a></li><li class="d3"><a href="#记忆里的状态会过期" data-toc-link="记忆里的状态会过期">记忆里的「状态」会过期</a></li><li class="d2"><a href="#收口状态" data-toc-link="收口状态">收口状态</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

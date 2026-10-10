@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>代码排版小红书封面 · 工作流与复盘 · 蛛网之上</title><meta name="description" content="用 Pillow 代码排版做封面，比丢进设计软件更适合&#34;批量、可复现、参数化微调&#34;的封面生产——但前提是先解决三个隐形卡点：找回原图、保住高光、去掉水印。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-5d06084/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="代码排版小红书封面 · 工作流与复盘"><meta property="og:description" content="用 Pillow 代码排版做封面，比丢进设计软件更适合&#34;批量、可复现、参数化微调&#34;的封面生产——但前提是先解决三个隐形卡点：找回原图、保住高光、去掉水印。"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-5d06084/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="代码排版小红书封面 · 工作流与复盘"><meta name="twitter:description" content="用 Pillow 代码排版做封面，比丢进设计软件更适合&#34;批量、可复现、参数化微调&#34;的封面生产——但前提是先解决三个隐形卡点：找回原图、保住高光、去掉水印。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-17T19:02:55+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-5d06084/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-5d06084/","url":"https://tiaozhuxiansheng.com/v1-5d06084/","headline":"代码排版小红书封面 · 工作流与复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"用 Pillow 代码排版做封面，比丢进设计软件更适合\"批量、可复现、参数化微调\"的封面生产——但前提是先解决三个隐形卡点：找回原图、保住高光、去掉水印。","datePublished":"2026-06-17T19:02:55+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"代码排版小红书封面 · 工作流与复盘","item":"https://tiaozhuxiansheng.com/v1-5d06084/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>prompt与工具方法</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-17T19:02:55+08:00">2026-06-17</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 9 分钟读完 · 3,378 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>20 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#卡点-1粘贴进对话的图不在磁盘上">卡点 1：粘贴进对话的图，不在磁盘上</a></li><li class="d2"><a href="#卡点-2暗角要保高光不能全图压暗">卡点 2：暗角要保高光，不能全图压暗</a></li><li class="d2"><a href="#卡点-3边缘水印裁切--克隆">卡点 3：边缘水印——裁切 &gt; 克隆</a></li><li class="d2"><a href="#完整排版流程pillow">完整排版流程（Pillow）</a></li><li class="d2"><a href="#归档纪律这次的运营教训">归档纪律（这次的运营教训）</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#封标要随主题切设计语言2026-06-23-即兴抽卡-0708-补充">封标要随主题切设计语言（2026-06-23 即兴抽卡 07/08 补充）</a></li><li class="d2"><a href="#深色背景的文字辨识度柔投影会失效改柔光晕2026-06-25-噤声封面补充">深色背景的文字辨识度：柔投影会失效，改”柔光晕”（2026-06-25 噤声封面补充）</a></li><li class="d2"><a href="#一张英雄图--多比例封面按画幅分治2026-06-25-噤声封面补充">一张英雄图 → 多比例封面：按画幅分治（2026-06-25 噤声封面补充）</a></li><li class="d2"><a href="#字位必须实测不能目测2026-08-20-雨里旧信补充️">字位必须实测，不能目测（2026-08-20 雨里旧信补充）⚠️</a></li><li class="d3"><a href="#四步定字位">四步定字位</a></li><li class="d3"><a href="#顺带能算出来的值不要留成参数">顺带：能算出来的值不要留成参数</a></li><li class="d2"><a href="#从单图排版到批量封面矩阵版式必须先量后仿2026-09-09-补充️">从单图排版到批量封面矩阵：版式必须先量后仿（2026-09-09 补充）⚠️</a></li><li class="d3"><a href="#1-层级靠颜色和行长不靠字号反直觉">1. 层级靠颜色和行长，不靠字号（反直觉）</a></li><li class="d3"><a href="#2-多行共用字号时基准取-min-不取-max">2. 多行共用字号时，基准取 min 不取 max</a></li><li class="d3"><a href="#3-单行--10-个汉字宽是几何约束不是风格偏好">3. 单行 ≤ 10 个汉字宽是几何约束，不是风格偏好</a></li><li class="d3"><a href="#三个实现坑">三个实现坑</a></li><li class="d3"><a href="#验证招拿对标图当背景复刻同一份文案">验证招：拿对标图当背景复刻同一份文案</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="代码排版小红书封面--工作流与复盘">代码排版小红书封面 · 工作流与复盘</h1>
+<blockquote>
+<p>首次记录：2026-06-17
+来源：「牧云人」独立作品封面制作（一张 MJ 雾山牧羊原图 → 小红书封面 + 无字壁纸 + 发布文案）
+状态：<strong>流程已跑通</strong>，跨”单张原图 → 排版封面”场景通用
+配套代码：<code>06_代码/46_牧云人封面/make_cover.py</code> / <code>06_代码/46_牧云人封面/make_clean.py</code>（镜像于 <code>06_代码/46_牧云人封面/</code>）</p>
+</blockquote>
+<hr>
+<h2 id="一句话">一句话</h2>
+<p>用 <strong>Pillow 代码排版</strong>做封面，比丢进设计软件更适合”批量、可复现、参数化微调”的封面生产——但前提是<strong>先解决三个隐形卡点</strong>：找回原图、保住高光、去掉水印。</p>
+<hr>
+<h2 id="卡点-1粘贴进对话的图不在磁盘上">卡点 1：粘贴进对话的图，不在磁盘上</h2>
+<p>用户把图<strong>直接粘贴到对话</strong>里时，它<strong>不会落成一个可访问的文件</strong>。实测排查路径：</p>
+<ul>
+<li><code>%TEMP%</code> 下的 <code>.tmp</code> / <code>.webp</code>：要么被进程独占（<code>PermissionError</code>），要么是 UI 切片、图标缩略（48×4032、100×100），都不是原图。</li>
+<li>会话临时目录 <code>…/claude/&#x3C;session>/</code>：只有 <code>tasks/</code>，没有图。</li>
+</ul>
+<p><strong>结论</strong>：别在 temp 里捞。可靠做法是去<strong>用户指定的真实目录</strong>（这次是 <code>Downloads</code>）做<strong>视觉检索</strong>——</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 对目录里最近 N 张图拼一张 6×4 缩略接触表, 一眼定位</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">files </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> sorted</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(imgs, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">key</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">os.path.getmtime, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">reverse</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">True</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)[:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">24</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">sheet </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Image.new(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'RGB'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, (</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">6</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">*</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">200</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">4</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">*</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">200</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">), (</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">30</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">30</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">30</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">))</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">for</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> i,p </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">in</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> enumerate</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(files):</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    t </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Image.open(p).convert(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">'RGB'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">); t.thumbnail((</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">192</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">174</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    sheet.paste(t, ((i</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">%</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">*</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">200</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, (i</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">//</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">6</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">*</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">200</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">4</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    draw.text(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">...</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">str</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(i)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">':'</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">os.path.basename(p)[:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">22</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">])  </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 标号+文件名</span></span></code></pre>
+<p>靠文件名猜会漏（MJ 文件名是 <code>a_tiny_lost_cloud_resting_on_a_grassy_hills_…</code>，跟”牧羊/老人”对不上），<strong>接触表一眼就锁定</strong>。这是本次最省时间的一招。</p>
+<hr>
+<h2 id="卡点-2暗角要保高光不能全图压暗">卡点 2：暗角要保高光，不能全图压暗</h2>
+<p>封面文字压在画面上要保证可读，但<strong>全图盖一层暗色 scrim 会把云朵/主体高光一起压灰</strong>，破坏氛围。</p>
+<p>做法：<strong>以”文字所在的角”为中心的椭圆衰减暗角</strong>，只压那个角，云朵（画面中心）和人物（右侧）原样保留。</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 左上角椭圆暗角: alpha = clip(1 - ((x-cx)/rx)^2 - ((y-cy)/ry)^2, 0,1)^1.6 * amax</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">yy, xx </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> np.mgrid[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:h, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">:w]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">d </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ((xx</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">cx)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">rx)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> +</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> ((yy</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">cy)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">ry)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">2</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">a </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> np.clip(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">d, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">**</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">1.6</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> *</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> amax        </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 指数 1.6 让边缘更柔</span></span></code></pre>
+<p>颜色用<strong>深蓝灰 (18,26,36) 而非纯黑</strong>，跟雾蓝调一致，不发脏。</p>
+<hr>
+<h2 id="卡点-3边缘水印裁切--克隆">卡点 3：边缘水印——裁切 > 克隆</h2>
+<p>原图右下角有作者水印「Z」。处理水印的两条路：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>方案</th><th>适用</th><th>代价</th></tr></thead><tbody><tr><td>inpaint / clone 涂抹</td><td>水印压在主体上、不能裁</td><td>易留痕，参数难调</td></tr><tr><td><strong>百分比裁切</strong></td><td><strong>水印在画面边缘</strong>（底部中心/角落）</td><td>几乎零成本，可参数化</td></tr></tbody></table>
+<p>水印在底部边缘 ~96% 高度，<code>TRIM_BOTTOM = 0.06</code> <strong>先裁底再 cover-fit</strong> 到 3:4，水印连同冗余前景一起消失，主体不受影响。封面版和无字壁纸版<strong>共用同一个裁切参数</strong>，保证两张图主体一致。</p>
+<hr>
+<h2 id="完整排版流程pillow">完整排版流程（Pillow）</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>原图</span></span>
+<span class="line"><span> └─ 裁底去水印 (TRIM_BOTTOM)</span></span>
+<span class="line"><span>     └─ 2× supersample 画布 (抗锯齿: 全程 2 倍尺寸, 最后 LANCZOS 缩回)</span></span>
+<span class="line"><span>         └─ cover-fit 等比裁 3:4 (max scale + 居中裁)</span></span>
+<span class="line"><span>             └─ 椭圆暗角 (只压文字角)</span></span>
+<span class="line"><span>                 └─ 竖排中文排版</span></span>
+<span class="line"><span>                 │    ├─ 主标题 牧云人  → 宋体 simsun (编辑感、清晰)</span></span>
+<span class="line"><span>                 │    └─ 副标落款       → 楷体 simkai (柔、诗意) · 错落下沉</span></span>
+<span class="line"><span>                 └─ 文字柔和投影 (由文字层 alpha 派生 → 染深色 → 高斯模糊 → 垫底)</span></span>
+<span class="line"><span>                     └─ 缩回 1080×1440 导出</span></span></code></pre>
+<p>要点：</p>
+<ul>
+<li><strong>竖排</strong>靠逐字 <code>draw.text(anchor='mm')</code> 按步长下落实现，不是一次画一串。</li>
+<li><strong>投影别重画一遍文字</strong>：取文字层 alpha → <code>point(v*0.6)</code> 染深色 → <code>GaussianBlur</code> → 偏移垫在文字下。一行搞定，且压在亮处也读得清。</li>
+<li>Windows 自带可用字体：宋体 <code>simsun.ttc</code> / 楷体 <code>simkai.ttf</code> / 等线 <code>Deng*.ttf</code>（拉丁小字用 <code>Dengl.ttf</code> 细体 + 字间距）。<strong>无思源宋体</strong>，别假设它在。</li>
+</ul>
+<hr>
+<h2 id="归档纪律这次的运营教训">归档纪律（这次的运营教训）</h2>
+<ul>
+<li><strong>别把作品塞进语义不符的目录</strong>。一开始顺手建在 <code>盘丝洞/</code>，但那是”AI 女性写真”专属文件夹——独立作品要<strong>建独立编号项目目录</strong>（沿用 <code>44_ / 45_ / 46_</code> 习惯）。</li>
+<li>标准结构：<code>01_素材原图 / 02_成品封面 / 03_发布文案 / _脚本</code>。</li>
+<li>一张原图可派生<strong>多个成品</strong>：带字封面（主图）+ 无字壁纸（多图第 2 张/下载钩子）+ 发布文案，都归同一项目目录。</li>
+</ul>
+<hr>
+<h2 id="如何使用">如何使用</h2>
+<ul>
+<li>下次”单张原图 → 小红书封面”直接拷 <code>make_cover.py</code> 改 <code>SRC / 文案 / TRIM_BOTTOM</code>。</li>
+<li>先肉眼看原图的<strong>留白在哪个角</strong>，文字和暗角就放哪个角；<strong>云朵/人脸/主体高光所在的区域不要压</strong>。</li>
+<li>水印先判断在不在边缘：在边缘 → 裁；压主体 → 才考虑 inpaint。</li>
+<li>找不到原图别死磕 temp → 直接做缩略接触表视觉检索。</li>
+</ul>
+<h2 id="封标要随主题切设计语言2026-06-23-即兴抽卡-0708-补充">封标要随主题切设计语言（2026-06-23 即兴抽卡 07/08 补充）</h2>
+<p>同一抽卡合集里，<strong>主题跳出古风时，别套用统一模板</strong>（宋体竖排+楷体+暖金那套是”古风专用”，套到时尚/暗黑题材会立刻失味）。做法：保留 cover-fit / 柔投影 / 2x 超采样 脚手架不变，<strong>只换文本层的设计</strong>，并先上网查该题材的成功封标范式：</p>
+<ul>
+<li><strong>暗调戏剧（红衣裂面）</strong>：骨白宋体竖排主标 + <strong>朱红</strong>细竖线（弃暖金）+ 朱砂方印（白字戏/面，<code>simhei</code> 实心字）+ <strong>角落柔暗</strong>（右上强、向下 taper，护住下方面具/主体）。大留白 + 血红是这一路的张力来源。</li>
+<li><strong>时尚编辑（白西装 OL）</strong>：仿 Vogue 封面——<strong>Playfair Display（Didone 高反差衬线）报头置顶</strong>（可半隐于发丝，正是 Vogue 标志性手法），衬线报头 + <strong>无衬线封面语</strong>（Didot 小字会断笔，故封面语另用无衬线）。报头下加细横线 + 期号小字，刊名/署名压右下。</li>
+</ul>
+<p>落坑提醒：</p>
+<ul>
+<li><strong><code>HYZhongHeiTi-197.ttf</code>（汉仪中黑）缺大量中文字形</strong>，PIL 渲染中文会出豆腐块 □□□。要现代无衬线中文，用 <strong><code>msyh.ttc</code>（微软雅黑）</strong> 才稳。</li>
+<li><strong>Windows 无 Didot/Playfair</strong>，需自取。Playfair Display 是 OFL，可 <code>curl</code> 直拉 Google Fonts 变体字（<code>PlayfairDisplay[wght].ttf</code>），Pillow≥8 用 <code>font.set_variation_by_name('Black')</code> 选重量；字体随项目存 <code>_fonts/</code> 保证可复现。</li>
+<li>配套代码：<code>{AIGC工作站}/48_即兴抽卡.../_build_covers_0708.py</code>（mask / vogue 两套文本层 + numpy 角落渐变）。</li>
+</ul>
+<h2 id="深色背景的文字辨识度柔投影会失效改柔光晕2026-06-25-噤声封面补充">深色背景的文字辨识度：柔投影会失效，改”柔光晕”（2026-06-25 噤声封面补充）</h2>
+<p>前文「文字柔和投影」是<strong>深字 + 同色偏移阴影</strong>——在<strong>亮背景</strong>上很好用。但封面文字压在<strong>深色/杂乱</strong>背景（如人物深发、暗调汉服）上时，<strong>柔投影直接失效</strong>：深影压深背景，对比还是不够，字糊成一团。先试”把字色加得更深”也救不回来——<strong>深字压深背景，加深没有意义</strong>。</p>
+<p><strong>解法：深墨 + 逐字柔光晕（halo）</strong>。不是在字下方偏移投影，而是给字<strong>铺一圈全向的浅色光晕</strong>把它从背景里”托”起来：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">def</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> _put</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(canvas, xy, text, font, fill, halo):   </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># canvas 为 RGBA</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    layer </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Image.new(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"RGBA"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, canvas.size, (</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    ImageDraw.Draw(layer).text(xy, text, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">font</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">font, </span><span style="--shiki-light:#E36209;--shiki-dark:#FFAB70">fill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">fill</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">255</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    a </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> layer.split()[</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">3</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    hc, hr, ha </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> halo                            </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># (光晕色, 模糊半径, 不透明度0-255)</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    glow </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> Image.new(</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"RGBA"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, canvas.size, hc</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">+</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">0</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">,))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    glow.putalpha(a.filter(ImageFilter.GaussianBlur(hr)).point(</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">lambda</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> v:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">int</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">(v</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">*</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">ha</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">255</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)))</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    canvas.alpha_composite(glow)                 </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 先铺光晕</span></span>
+<span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">    canvas.alpha_composite(layer)                </span><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 再压实字</span></span></code></pre>
+<p><strong>判据（一句话记法）</strong>：</p>
+<ul>
+<li>背景<strong>亮</strong> → 深字 + 柔投影（前文做法）</li>
+<li>背景<strong>暗 / 杂</strong> → 深字 + <strong>浅光晕</strong>（米白，半径≈字号 3%，副标题光晕做得更实更稳）</li>
+<li><strong>浅字</strong>（如 HUSH 米白小字）→ 反过来配<strong>深光晕</strong>，浅模糊背景上也立得住</li>
+</ul>
+<p>光晕半径别太大（会糊成一团雾），刚好够勾一圈边即可；它和柔投影是<strong>互补</strong>不是替代。</p>
+<h2 id="一张英雄图--多比例封面按画幅分治2026-06-25-噤声封面补充">一张英雄图 → 多比例封面：按画幅分治（2026-06-25 噤声封面补充）</h2>
+<p>同一张原图要出 3-4 / 16-9 / 4-3 三比例时，<strong>别用同一种裁法硬套</strong>——按画幅取向分两套：</p>
+<ul>
+<li><strong>竖屏满版（3-4）</strong>：竖图比 3:4 还窄时，<strong>收紧裁成贴脸特写</strong>，并把人物推向一侧、另一侧让出干净文字栏（前 3 秒识别度最高）。牧云人也是满版思路。</li>
+<li><strong>横屏模糊填充（16-9 / 4-3）</strong>：竖条居中/靠右摆，背后垫<strong>同图放大 + 高斯模糊 + 压暗</strong>的虚化层，<strong>保留完整电影感构图与水墨留白</strong>。横屏强行 cover-fit 会把竖构图的头尾切光，模糊填充是更稳的解。</li>
+</ul>
+<p>配套衍生招：<strong>采样复刻既有品牌</strong>。续做/改某系列封面时，先把旧封面裁出文字区 <code>getpixel</code> 取字色、比对字体、量版式坐标再复刻——比目测对齐快且准（字体尤其容易认错宋体分支）。</p>
+<blockquote>
+<p>配套代码：<code>{AIGC工作站}/aigc-creative-archive/48_即兴抽卡.../05_噤声_水墨红梅汉服/封面/封面生成器_底图05_01.py</code>（满版 + 模糊填充两套 + <code>_put</code> 光晕）。复盘见 2026-06-25_噤声封面重制_文字辨识度与一图多比例复盘。</p>
+</blockquote>
+<h2 id="字位必须实测不能目测2026-08-20-雨里旧信补充️">字位必须实测，不能目测（2026-08-20 雨里旧信补充）⚠️</h2>
+<p>来源：<a href="/above-the-web/2026-08-20-v1-6ba2bb4/" class="wikilink">2026-08-20_雨里旧信_东方美人封面四轮复盘_v1</a>。</p>
+<p>前文说”先肉眼看原图的<strong>留白在哪个角</strong>，文字和暗角就放哪个角”。该案证明<strong>肉眼这一步会错</strong>——同一个判断错了两次（先判左侧，换素材后判右侧），实测才确认是左上灯光区。</p>
+<p>人眼对”哪边看起来空”的判断会被主体位置的印象带偏；<strong>头发吹散、灯光晕开这类东西尤其骗人</strong>。</p>
+<h3 id="四步定字位">四步定字位</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 1. 8x8 亮度网格，看明暗分布</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 2. 暗部重心 → 主体偏哪边 → 文字放对角侧（见 [[封面对角平衡构图律_v1]]）</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 3. 候选字框扫描：算每个候选框的 mean + std，取 std 最低的</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 4. 落区亮度决定字色（见本文「深色背景」一节的判据）</span></span></code></pre>
+<p>第 3 步是关键。该案的扫描结果：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>x60-460  / y150-380    L=242.7  std=18.7  ✅ 唯一干净框</span></span>
+<span class="line"><span>x60-500  / y120-420    L=231.9  std=34.3  BUSY</span></span>
+<span class="line"><span>x40-300  / y500-1100   L=179.8  std=27.0  BUSY</span></span>
+<span class="line"><span>x60-460  / y1450-1750  L=156.4  std=28.1  BUSY</span></span></code></pre>
+<p><strong>std 是干净度指标</strong>，mean 只说明亮暗。灯光晕开的区域 mean 很高但 std 也可能很高（渐变），要两个一起看。</p>
+<p>⚠️ <strong>两个配方别张冠李戴</strong>：该案给 L=243 的<strong>亮底</strong>误用了浅色阴影——浅光晕是<strong>暗底 / 杂底</strong>的配方。亮底走深字 + 深色柔投影，且<strong>亮底上只要一点点</strong>（半径 6、不透明度 80 量级），重了会脏。</p>
+<h3 id="顺带能算出来的值不要留成参数">顺带：能算出来的值不要留成参数</h3>
+<p>老唱片封套版式要求主标 / 细线 / 拉丁副名<strong>三者同宽、左右都齐</strong>。该案第一版把三者的宽度和字距各自手填，结果拉丁副名和中文主标对不齐——<strong>中文方块字与拉丁字母的自然宽度不同，任何手填字距都不可能刚好对齐，换个字号就又错开</strong>。</p>
+<p>正解是主标宽度即本版「字宽」（measure），其余元素对齐到它，副名字距反算：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">tracking </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (measure </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> 自然宽度) </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">/</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> (字符数 </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">-</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 1</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span></span></code></pre>
+<p>改完后把 <code>rule.w</code> 和 <code>sub.tk</code> 两个手填参数直接删掉。<strong>能算出来的值不要留成参数，它迟早会被填错。</strong></p>
+<p><strong>边界</strong>：底图是纯色 / 大面积单调背景时，目测足够，不必跑扫描。</p>
+<h2 id="从单图排版到批量封面矩阵版式必须先量后仿2026-09-09-补充️">从单图排版到批量封面矩阵：版式必须先量后仿（2026-09-09 补充）⚠️</h2>
+<p>来源：给 Codex 做 <code>aigc-topic-cover-factory</code> skill，对标 65 张 B 站大字封面（10 份文案 × 5 张背景 + 正片 15 张，全 960×600）。</p>
+<p>前文各节都是「一张英雄图 → 一张精修封面」。这次是另一种活：<strong>N 条选题 × M 张背景 = 可 A/B 的封面矩阵</strong>，单张质感不是目标，吞吐和可对比才是。版式因此必须<strong>参数化</strong>——而参数只能从对标里<strong>量</strong>，不能目测。</p>
+<p>这是 <a href="/above-the-web/2026-08-20-v1-6ba2bb4/" class="wikilink">2026-08-20_雨里旧信_东方美人封面四轮复盘_v1</a>「字位必须实测」那条律的延伸：那次实测的是<strong>字位</strong>，这次把整套版式（字号 / 描边 / 行距 / 字距 / 色值）全部逐像素量了一遍。量出来的三条跟常识相反：</p>
+<h3 id="1-层级靠颜色和行长不靠字号反直觉">1. 层级靠颜色和行长，不靠字号（反直觉）</h3>
+<p>对标三行文案的墨迹高<strong>都是 75px</strong>——同一个字号。我第一版按常识「主标题该更大」实现，出来立刻是 PPT 标题页的味道。</p>
+<p>这套版式的层级全由**「霓虹色 vs 白色」+「行的长短」**承担。字号一旦分主次，那股「信息流大字」的劲就没了。</p>
+<h3 id="2-多行共用字号时基准取-min-不取-max">2. 多行共用字号时，基准取 min 不取 max</h3>
+<p>每行先算「撑到自己目标宽度所需的字号」，然后<strong>取最小值</strong>作为全块基准。</p>
+<p>取 max 会把<strong>短行</strong>算出的巨大字号套到长行上，长行直接冲出画布——第一轮渲染就是这么炸的。</p>
+<h3 id="3-单行--10-个汉字宽是几何约束不是风格偏好">3. 单行 ≤ 10 个汉字宽是几何约束，不是风格偏好</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>字号 ≈ 目标宽度 / 该行的 em 数</span></span>
+<span class="line"><span>缩略图要可读 → 字号 ≥ 80 → 单行 ≤ 10 个汉字宽（"AI" 算 1.1 字）</span></span></code></pre>
+<p><strong>超了排版救不回来，只能改文案。</strong> 所以这条得在写选题时就守住,不是排版阶段再补救——把它写进选题规范里,比写进排版脚本里有用。</p>
+<hr>
+<h3 id="三个实现坑">三个实现坑</h3>
+<p><strong>墨迹比要实测，别套通用值。</strong> 粗黑体汉字几乎填满 em 框：<code>NotoSansSC</code> 切 Black 实测墨迹高 ≈ <strong>0.96 × 字号</strong>，且 <code>anchor="lt"</code> 时墨迹顶就落在绘制点上。我按常识给了 0.88 并额外上提 16%，行距全歪。正解是 <code>font.getbbox(text)</code> 取真实墨迹盒，别自己估。</p>
+<p><strong>逐字绘制必须分两趟。</strong> 要字距就得逐字画（Pillow 无 letter-spacing）。若每个字「描边 + 填充」一起画，<strong>后一个字的描边会啃掉前一个字的字面</strong>。正解：先把整行的描边画完，再画整行的填充。</p>
+<p><strong>蒙版必须羽化。</strong> 第一版用 <code>rounded_rectangle</code> 垫暗带，左右两条硬边一眼廉价，改高斯羽化才对。但更该记住的是：<strong>对标绝大多数图根本不上蒙版，只靠厚描边（≈ 0.075 × 字号）扛</strong>——描边才是这套版式的命根子，砍它等于砍掉整套版式。</p>
+<hr>
+<h3 id="验证招拿对标图当背景复刻同一份文案">验证招：拿对标图当背景复刻同一份文案</h3>
+<p>参数对不对，别用肉眼比。把<strong>对标图本身</strong>当背景，喂进自己的脚本复刻同一份文案——</p>
+<ul>
+<li>字压在原字上、几乎盖住 → 参数对了</li>
+<li>偏大 / 偏小 / 位置偏 → 一眼看出差在哪、差多少</li>
+</ul>
+<p>比左右对照两张图准得多，也比量完就信要稳。这招同样适用于任何「仿一套既有版式」的活。</p>
+<blockquote>
+<p>配套：skill 存档 <a href="/above-the-web/aigc-topic-cover-factory-v1-0-skill-a0616e2/" class="wikilink">aigc-topic-cover-factory_v1.0_SKILL</a>；代码 <code>06_代码/AI选题封面工厂/</code>。
+采集侧的坑另见 <a href="/above-the-web/v1-18d2859/" class="wikilink">自动化判据取结构不取文案_v1</a>。</p>
+</blockquote>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>字位实测增量：<a href="/above-the-web/2026-08-20-v1-6ba2bb4/" class="wikilink">2026-08-20_雨里旧信_东方美人封面四轮复盘_v1</a>（亮度网格 + 字框 std 扫描；亮底 / 暗底两套字色配方别张冠李戴）</li>
+<li>构图依据：<a href="/above-the-web/v1-33f402f/" class="wikilink">封面对角平衡构图律_v1</a>（文字放主体对角侧）</li>
+<li>同源网格分支：<a href="/above-the-web/v1-2b5d5a8/" class="wikilink">断裂网格杂志海报排版工作流_v1</a>（同是 Pillow 代码排版，本文做”单图满版封面”，那篇做”一张图切进断裂网格的杂志海报”）</li>
+<li>工具选择心法：<a href="/above-the-web/vsgpt-v1-728d36b/" class="wikilink">代码生成vsGPT图像_工具选择假说_v1</a>（代码排版 vs 生成式出图，何时用哪个）</li>
+<li>同源后期心法：<a href="/above-the-web/mj-v1-5effa57/" class="wikilink">MJ出图绕开抠图陷阱_v1</a>（边缘/背景问题在源头解决，别迷信后期算法）</li>
+<li>署名规范实现：<code>06_代码/14_我的一天/封面水印/make_watermark.py</code>（中英双字体 + supersample 的更早版本）</li>
+<li>多图封面母版：<code>06_代码/11_凝视/Day_1_v17/封面生成/make_xhs_cover.py</code>（保人脸裁剪 + footer 署名）</li>
+<li>批量矩阵分支：<a href="/above-the-web/aigc-topic-cover-factory-v1-0-skill-a0616e2/" class="wikilink">aigc-topic-cover-factory_v1.0_SKILL</a>（选题批产 + 素材采集 + 封面矩阵；本文做「单图精修」，那条做「N 选题 × M 背景」）</li>
+<li>采集侧判据：<a href="/above-the-web/v1-18d2859/" class="wikilink">自动化判据取结构不取文案_v1</a>（爬素材时按结构元素判页面状态，别按文案字符串）</li>
+<li>本作项目目录：<code>{AIGC工作站}/46_牧云人_小红书封面/</code></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/%E4%BB%A3%E7%A0%81%E6%8E%92%E7%89%88%E5%B0%8F%E7%BA%A2%E4%B9%A6%E5%B0%81%E9%9D%A2%E5%B7%A5%E4%BD%9C%E6%B5%81_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/%E4%BB%A3%E7%A0%81%E6%8E%92%E7%89%88%E5%B0%8F%E7%BA%A2%E4%B9%A6%E5%B0%81%E9%9D%A2%E5%B7%A5%E4%BD%9C%E6%B5%81_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/skill-index-b155e36/">SKILL_INDEX — Skill 使用索引</a></li><li><a href="/above-the-web/v1-18d2859/">自动化判据取结构不取文案</a></li><li><a href="/above-the-web/v1-2b5d5a8/">断裂网格杂志海报排版 · 工作流与母版</a></li><li><a href="/above-the-web/2026-08-20-v1-6ba2bb4/">雨里旧信 东方美人封面四轮复盘</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/mj-v1-5effa57/"> <span class="card-cat">方法论与洞察</span> <h3>MJ 出图 · 绕开抠图陷阱</h3> <p>用 MJ 出&quot;白底 + 主体 + 投影&quot;的图标设计原图后，算法抠图永远剔不干净阴影。</p> </a><a class="card" href="/above-the-web/vsgpt-v1-728d36b/"> <span class="card-cat">方法论与洞察</span> <h3>代码生成 vs GPT Image 2 · 工具选择假说</h3> <p>本文档不是&quot;规律&quot;,是&quot;线索&quot;。</p> </a><a class="card" href="/above-the-web/2026-06-04-mj-v1-5567bf4/"> <span class="card-cat">方法论与洞察</span> <h3>虚拟形象设计复盘 · 直播头像 MJ 迭代</h3> <p>- 作品类型：直播用虚拟形象头像</p> </a><a class="card" href="/above-the-web/2026-06-11-oref-v1-edd6c13/"> <span class="card-cat">方法论与洞察</span> <h3>《晴枝》四图发布复盘 —— oref 污染与工具回归（2026-06-11）</h3> <p>- 作品名称：《晴枝》四图组（亮调微笑直视 / 垂眸仰光 / 花影凝视 / 侧目浅笑）</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#卡点-1粘贴进对话的图不在磁盘上" data-toc-link="卡点-1粘贴进对话的图不在磁盘上">卡点 1：粘贴进对话的图，不在磁盘上</a></li><li class="d2"><a href="#卡点-2暗角要保高光不能全图压暗" data-toc-link="卡点-2暗角要保高光不能全图压暗">卡点 2：暗角要保高光，不能全图压暗</a></li><li class="d2"><a href="#卡点-3边缘水印裁切--克隆" data-toc-link="卡点-3边缘水印裁切--克隆">卡点 3：边缘水印——裁切 &gt; 克隆</a></li><li class="d2"><a href="#完整排版流程pillow" data-toc-link="完整排版流程pillow">完整排版流程（Pillow）</a></li><li class="d2"><a href="#归档纪律这次的运营教训" data-toc-link="归档纪律这次的运营教训">归档纪律（这次的运营教训）</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#封标要随主题切设计语言2026-06-23-即兴抽卡-0708-补充" data-toc-link="封标要随主题切设计语言2026-06-23-即兴抽卡-0708-补充">封标要随主题切设计语言（2026-06-23 即兴抽卡 07/08 补充）</a></li><li class="d2"><a href="#深色背景的文字辨识度柔投影会失效改柔光晕2026-06-25-噤声封面补充" data-toc-link="深色背景的文字辨识度柔投影会失效改柔光晕2026-06-25-噤声封面补充">深色背景的文字辨识度：柔投影会失效，改”柔光晕”（2026-06-25 噤声封面补充）</a></li><li class="d2"><a href="#一张英雄图--多比例封面按画幅分治2026-06-25-噤声封面补充" data-toc-link="一张英雄图--多比例封面按画幅分治2026-06-25-噤声封面补充">一张英雄图 → 多比例封面：按画幅分治（2026-06-25 噤声封面补充）</a></li><li class="d2"><a href="#字位必须实测不能目测2026-08-20-雨里旧信补充️" data-toc-link="字位必须实测不能目测2026-08-20-雨里旧信补充️">字位必须实测，不能目测（2026-08-20 雨里旧信补充）⚠️</a></li><li class="d3"><a href="#四步定字位" data-toc-link="四步定字位">四步定字位</a></li><li class="d3"><a href="#顺带能算出来的值不要留成参数" data-toc-link="顺带能算出来的值不要留成参数">顺带：能算出来的值不要留成参数</a></li><li class="d2"><a href="#从单图排版到批量封面矩阵版式必须先量后仿2026-09-09-补充️" data-toc-link="从单图排版到批量封面矩阵版式必须先量后仿2026-09-09-补充️">从单图排版到批量封面矩阵：版式必须先量后仿（2026-09-09 补充）⚠️</a></li><li class="d3"><a href="#1-层级靠颜色和行长不靠字号反直觉" data-toc-link="1-层级靠颜色和行长不靠字号反直觉">1. 层级靠颜色和行长，不靠字号（反直觉）</a></li><li class="d3"><a href="#2-多行共用字号时基准取-min-不取-max" data-toc-link="2-多行共用字号时基准取-min-不取-max">2. 多行共用字号时，基准取 min 不取 max</a></li><li class="d3"><a href="#3-单行--10-个汉字宽是几何约束不是风格偏好" data-toc-link="3-单行--10-个汉字宽是几何约束不是风格偏好">3. 单行 ≤ 10 个汉字宽是几何约束，不是风格偏好</a></li><li class="d3"><a href="#三个实现坑" data-toc-link="三个实现坑">三个实现坑</a></li><li class="d3"><a href="#验证招拿对标图当背景复刻同一份文案" data-toc-link="验证招拿对标图当背景复刻同一份文案">验证招：拿对标图当背景复刻同一份文案</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,214 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>构建产物的脏改动不是事故 · 复发是归因错了的信号 · 蛛网之上</title><meta name="description" content="E:\above-the-web\kb-content 稳定呈现 305 个 M（modified）。作者明确指出「第二次了」。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-6fdab0b/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="构建产物的脏改动不是事故 · 复发是归因错了的信号"><meta property="og:description" content="E:\above-the-web\kb-content 稳定呈现 305 个 M（modified）。作者明确指出「第二次了」。"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-6fdab0b/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="构建产物的脏改动不是事故 · 复发是归因错了的信号"><meta name="twitter:description" content="E:\above-the-web\kb-content 稳定呈现 305 个 M（modified）。作者明确指出「第二次了」。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-28T10:37:20+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/git"><meta property="article:tag" content="主题/错误归因"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-6fdab0b/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-6fdab0b/","url":"https://tiaozhuxiansheng.com/v1-6fdab0b/","headline":"构建产物的脏改动不是事故 · 复发是归因错了的信号","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"E:\\above-the-web\\kb-content 稳定呈现 305 个 M（modified）。作者明确指出「第二次了」。","datePublished":"2026-07-28T10:37:20+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/git, 主题/错误归因"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"构建产物的脏改动不是事故 · 复发是归因错了的信号","item":"https://tiaozhuxiansheng.com/v1-6fdab0b/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-28T10:37:20+08:00">2026-07-28</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 8 分钟读完 · 2,929 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>18 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d3"><a href="#现象">现象</a></li><li class="d3"><a href="#我的初判后被证伪">我的初判（后被证伪）</a></li><li class="d3"><a href="#逐步收集的事实">逐步收集的事实</a></li><li class="d3"><a href="#真凶自家的同步脚本且是设计行为">真凶：自家的同步脚本，且是设计行为</a></li><li class="d3"><a href="#为什么必然复发">为什么必然复发</a></li><li class="d3"><a href="#派生物损坏--源损坏">派生物损坏 ≠ 源损坏</a></li><li class="d3"><a href="#处置">处置</a></li><li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#五条可复用-insight">五条可复用 insight</a></li><li class="d3"><a href="#1-复发--上次已修--上次归因错了-️首次">1. 复发 + 上次已修 = 上次归因错了 ⚠️首次</a></li><li class="d3"><a href="#2-自己写下的错误归因会成为下一次的加速陷阱-️首次">2. 自己写下的错误归因，会成为下一次的加速陷阱 ⚠️首次</a></li><li class="d3"><a href="#3-查谁干的要点名册不要从形态反推-️首次">3. 查”谁干的”要点名册，不要从形态反推 ⚠️首次</a></li><li class="d3"><a href="#4-派生物损坏--源损坏喊废了之前先查源-️首次">4. 派生物损坏 ≠ 源损坏，喊”废了”之前先查源 ⚠️首次</a></li><li class="d3"><a href="#5-问题在展示层时别去修数据层">5. 问题在展示层时，别去修数据层</a></li><li class="d2"><a href="#顺手教训">顺手教训</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="构建产物的脏改动不是事故--复发是归因错了的信号">构建产物的脏改动不是事故 · 复发是归因错了的信号</h1>
+<blockquote>
+<p>入档：2026-07-28
+来源：蛛网之上（above-the-web）源代码管理面板里 <code>kb-content</code> 反复出现 305 个未提交改动，作者问「为什么又出现了，这是第二次了」
+状态：已定位并处置（提交 <code>1ead950</code>，作者重载窗口后确认消失）；<strong>本篇同时是对 2026-07-27 一次错误归因的推翻</strong>——那次把同一现象归到 Obsidian 头上，并据此写进了记忆与归档分支</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<h3 id="现象">现象</h3>
+<p><code>E:\above-the-web\kb-content</code> 稳定呈现 305 个 <code>M</code>（modified）。作者明确指出「第二次了」。</p>
+<h3 id="我的初判后被证伪">我的初判（<strong>后被证伪</strong>）</h3>
+<p>初判为「Obsidian 属性面板批量重写 frontmatter」。依据两条，都不是直接证据：</p>
+<ul>
+<li>我的记忆文件 <code>repo-sweep-loose-ends</code> 里写着「kb-content 有损格式化 = Obsidian，已归档到 <code>archive/obsidian-lossy-reformat-20260727</code>」；</li>
+<li>knowledge-base 仓库当天有一条提交 <code>df79c76 配置:Obsidian 属性显示改为源码模式,阻断 frontmatter 批量重写</code>。</li>
+</ul>
+<p>diff 形态也「很像」：<code>tags: [类型/档案]</code> 展开成带引号的 YAML 块列表、BOM 被删。我当时说了「确诊了」。</p>
+<h3 id="逐步收集的事实">逐步收集的事实</h3>
+<ol>
+<li><strong>不是行尾问题</strong>：<code>git diff --ignore-cr-at-eol</code> / <code>-w</code> 后改动全在（+926 / −414），是真实内容改动。</li>
+<li><strong>改动范围极干净</strong>：305 个 hunk 的起始行分别是 1（56 个）、2（248 个）、3（1 个），<strong>起始行 >12 的 hunk 为 0</strong>，正文零改动。</li>
+<li><strong>唯一一行”非 frontmatter 新增”是假象</strong>：<code>+# Stay alive Case Notes</code> 实为 <code>-\ufeff# …</code> → <code>+# …</code>，即 BOM 被删。</li>
+<li><strong><code>song-caption-mv-workflow/SKILL.md</code> 的 frontmatter 被清空</strong>：<code>name</code> 与 <code>description</code> 两行消失，只剩 <code>---\n---</code>。我当时说「这个 skill 已经废了」——<strong>也是错的</strong>，见下。</li>
+<li><strong>时间戳比对（决定性）</strong>：305 个文件的 mtime 全部落在 <strong>2026-07-27 18:00</strong>，而 <code>.obsidian/app.json</code> 那次”修复”改于 <strong>16:44</strong>。<strong>改动发生在修复之后</strong>——上次的归因与修复被同时证伪。</li>
+<li><strong>名册排除（决定性）</strong>：<code>%APPDATA%\obsidian\obsidian.json</code> 里 Obsidian 只注册了一个库 <code>E:\AIGC工作站\年轮平台测试\docs</code>，<strong>kb-content 根本不在其中</strong>。Obsidian 不会自动扫描磁盘上的目录。</li>
+</ol>
+<h3 id="真凶自家的同步脚本且是设计行为">真凶：自家的同步脚本，且是设计行为</h3>
+<p><code>E:\above-the-web\scripts\sync-content.mjs</code> 的 <code>normalizeFrontmatter()</code>，三个动作正好对应三种 diff：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>脚本行为</th><th>观察到的 diff</th></tr></thead><tbody><tr><td><code>stripBom()</code></td><td><code>-\ufeff---</code> → <code>+---</code></td></tr><tr><td>重建 <code>tags:\n  - "x"</code></td><td>行内数组展开成带引号块列表</td></tr><tr><td><strong>只保留 <code>tags</code> / <code>title</code>，丢弃其余键</strong></td><td>SKILL.md 的 <code>name</code> / <code>description</code> 消失</td></tr></tbody></table>
+<p>源码注释写明了意图：「knowledge-base 用 Obsidian 风味 frontmatter（值里可能含 <code>[[]]</code>、未引号冒号等非法 YAML）。平台只消费 tags / title，故重建为最小安全 YAML，丢弃其余专有键，杜绝解析崩溃。」</p>
+<h3 id="为什么必然复发">为什么必然复发</h3>
+<ul>
+<li><code>kb-content/</code> 在 above-the-web 的 <code>.gitignore</code> 第 11 行，注释即「内容源：构建时从 knowledge-base 仓库克隆，不入库」；</li>
+<li><code>package.json</code> 里 <code>dev</code> 与 <code>build</code> <strong>都以 <code>npm run sync</code> 开头</strong>；</li>
+<li><code>sync</code> 先 <code>git reset --hard FETCH_HEAD</code>，再遍历所有 md 就地 <code>sanitize()</code> 写回。</li>
+</ul>
+<p>即：<strong>每次开发或构建都必然产生这批脏改动，且下一次 sync 会把它们冲掉重来。</strong> 它是流水线的稳定产物，不是事故。</p>
+<h3 id="派生物损坏--源损坏">派生物损坏 ≠ 源损坏</h3>
+<p>核实 SKILL.md：<code>E:\knowledge-base</code> 源仓库那份、以及本机 <code>C:\Users\Administrator\.claude\skills\</code> 装载的那份，<code>name</code> / <code>description</code> <strong>均完好</strong>，源仓库 <code>git status</code> 干净。kb-content 里那份只是会被反复重建的副本。</p>
+<h3 id="处置">处置</h3>
+<p>问题不在数据层——文件被改是设计内的；问题在<strong>展示层</strong>：VSCode 自动检测嵌套 git 仓库，把这个构建产物单列进源代码管理面板，逼人每次重新判断一遍「我是不是漏提交了」。</p>
+<p>加 <code>E:\above-the-web\.vscode\settings.json</code>：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="json"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">{ </span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">"git.ignoredRepositories"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">: [</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"kb-content"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">, </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"E:</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">above-the-web</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">\\</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">kb-content"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">] }</span></span></code></pre>
+<p>提交 <code>1ead950</code>。作者 <code>Developer: Reload Window</code> 后确认面板里不再出现。</p>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>同一个现象第二次出现，而上次”修复”之后它照样发生——这不是”又坏了一次”，这是上次归因错了的证据。最快的证伪手段是比时间戳：改动发生在修复之后，归因就不成立。</strong></p>
+<h2 id="五条可复用-insight">五条可复用 insight</h2>
+<h3 id="1-复发--上次已修--上次归因错了-️首次">1. 复发 + 上次已修 = 上次归因错了 ⚠️首次</h3>
+<p>人的默认反应是「又犯了，再修一次同样的地方」——这个反应默认了上次归因是对的。但「修了却照犯」本身就是对那次归因最强的反证。</p>
+<p><strong>最快的证伪动作是比时间戳</strong>，两个数字就够：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>改动发生：2026-07-27 18:00</span></span>
+<span class="line"><span>上次修复：2026-07-27 16:44   ← 修复在前，改动在后 → 归因不成立</span></span></code></pre>
+<p>这一步花不到一分钟，却直接推翻了一整条被写进记忆的结论。<strong>遇到”第二次”，先做这个减法，再谈修。</strong></p>
+<h3 id="2-自己写下的错误归因会成为下一次的加速陷阱-️首次">2. 自己写下的错误归因，会成为下一次的加速陷阱 ⚠️首次</h3>
+<p>我不是慢慢误判的，是<strong>很快</strong>误判的——因为记忆文件里明明白白写着「kb-content 有损格式化 = Obsidian」。它让我跳过了取证，直接说出「确诊了」。</p>
+<p><strong>错误的结论一旦被写进记忆 / 文档 / commit message，就不再是一个待检验的假设，而变成了下次的默认前提。</strong> 它的危害不是”存了个错东西”，而是<strong>它会主动加速你第二次走错</strong>，且比第一次更自信（“上次就是这个原因”）。</p>
+<p><a href="/above-the-web/v1-880a034/" class="wikilink">有意改动不是故障_v1</a> 已记过「归因被推翻要连经验一起改」；本次补上更前一步的判据：<strong>任何被写下的归因，都要带着”它可能是错的”这个标签被读取</strong>。尤其当它来自你自己——自己写的东西最不会被质疑。</p>
+<p>推论：<strong>归因类的记忆条目，最好连”证据是什么”一起写</strong>。我那条记忆只写了结论（“是 Obsidian”），没写”凭什么”，于是无从复核。写上”证据：obsidian.json 里注册了该 vault”，这次一查就露馅了。</p>
+<h3 id="3-查谁干的要点名册不要从形态反推-️首次">3. 查”谁干的”要点名册，不要从形态反推 ⚠️首次</h3>
+<p>diff 的形态（tags 重排 + 去 BOM）确实<strong>非常像</strong> Obsidian 的手笔——这正是它骗人的地方。<strong>形态相似只能提出嫌疑人，不能定罪。</strong></p>
+<p>定罪靠的是名册：<code>obsidian.json</code> 里 Obsidian 到底注册了哪些库。一查，kb-content 不在其中，嫌疑当场排除。</p>
+<p><strong>判据：怀疑某个程序改了文件，先去查那个程序的”作用域清单”（它管哪些目录 / 打开了哪些项目），而不是从改动长什么样往回猜。</strong> 作用域是二元的、可证伪的；形态相似是连续的、可自圆其说的。</p>
+<p>同族反面：<a href="/above-the-web/v1-880a034/" class="wikilink">有意改动不是故障_v1</a> 那次是「用一个真实的模式去套了一个不属于它的现象」（formatter 确实重排过表格，于是把删图也归给它）。本次一模一样——Obsidian 确实会重写 frontmatter，于是把这批也归给它。<strong>真实存在的模式，是最容易被过度套用的模式。</strong></p>
+<h3 id="4-派生物损坏--源损坏喊废了之前先查源-️首次">4. 派生物损坏 ≠ 源损坏，喊”废了”之前先查源 ⚠️首次</h3>
+<p>看到 SKILL.md 的 <code>name</code> / <code>description</code> 被删，我脱口而出「这个 skill 已经废了」。实际上那是个每次构建都会被重建的副本，源仓库和本机装载的那份都完好。</p>
+<p><strong>判据：在一个可重建的目录里发现”数据损坏”，第一件事是确认它是源还是派生物。</strong> 派生物的损坏不是数据事故，只是产物形态——它甚至可能是设计要的（本例中丢弃 <code>name</code>/<code>description</code> 正是脚本刻意为之，因为站点只消费 tags/title）。</p>
+<p>识别派生物的三个信号，本例全中：<strong>在 <code>.gitignore</code> 里 / 由脚本自动克隆 / 同步时会 <code>reset --hard</code></strong>。</p>
+<h3 id="5-问题在展示层时别去修数据层">5. 问题在展示层时，别去修数据层</h3>
+<p>文件被改是对的、不该拦；<code>git status</code> 显示脏也是对的、没说谎。唯一错的是 <strong>VSCode 把一个构建产物摆进了”等你提交”的位置</strong>，让人每次都要重新做一遍判断。</p>
+<p>如果只盯着数据层，能做的只有”每次手动 checkout 一遍”——治标且徒劳（下次 build 又来）。真正的解法在展示层：<code>git.ignoredRepositories</code> 一行配置，从此不再出现在待办位。</p>
+<p><strong>判据：当”数据是正确的，但它出现在错误的位置上”时，改的是位置，不是数据。</strong> 反复出现的、需要人做同一个判断的东西，都该问一句：能不能让它压根别出现在需要判断的地方。</p>
+<h2 id="顺手教训">顺手教训</h2>
+<ul>
+<li><strong>构建产物目录同时是 git clone 时，会被 VSCode 当独立仓库单列</strong>。父仓库的 <code>.gitignore</code> 拦不住它——<code>.gitignore</code> 管的是”父仓库不跟踪它”，而 VSCode 的嵌套仓库检测是另一套逻辑。要用 <code>git.ignoredRepositories</code>（配在项目 <code>.vscode/settings.json</code> 里，只影响该工作区）。</li>
+<li><strong><code>git diff --name-only</code> 的中文路径默认被转义成 <code>\345\275\225</code> 形式</strong>，直接喂给 PowerShell 的 <code>Test-Path</code> 会报 “Illegal characters in path”。加 <code>git -c core.quotepath=false</code> 即可。</li>
+<li><strong>判断”是不是纯格式化”的快法</strong>：<code>git diff -U0 | grep '^@@'</code> 取所有 hunk 起始行，看是否全部落在文件头几行。本次 305 个 hunk 全在第 1–3 行，正文零改动，一眼定性。比逐个文件看 diff 快一个量级。</li>
+<li><strong><code>git diff --ignore-cr-at-eol</code> / <code>-w</code> 是排除行尾/空白噪声的第一道筛</strong>。本次一开始满屏 “LF will be replaced by CRLF” 警告，很容易误以为是行尾问题——加这两个开关一比，改动数一点没少，当场排除。</li>
+<li><strong>PowerShell 的 <code>ConvertFrom-Json</code> 读 <code>obsidian.json</code> 会因编码报错</strong>（中文被按 GBK 读成乱码 + 反斜杠转义非法），但<strong>报错信息里把原始 JSON 整段打出来了</strong>，反而直接给出了答案。歪打正着不可复制，正规做法是 <code>[IO.File]::ReadAllText($p, [Text.Encoding]::UTF8)</code> 再解析。</li>
+</ul>
+<h2 id="下次改进">下次改进</h2>
+<ul>
+<li>遇到”第二次发生”，第一个动作固定为<strong>比时间戳</strong>（现象 mtime vs 上次修复时间），而不是复用上次结论。</li>
+<li>写归因类记忆时，<strong>连证据一起写</strong>（“凭什么这么判”），让它可被复核；只写结论的归因等于给未来的自己埋雷。</li>
+<li>怀疑某程序改了文件，先查该程序的<strong>作用域清单</strong>（vault 列表 / 打开的项目 / 监听的路径），再看 diff 形态。</li>
+<li>在可重建目录里看到”损坏”，先确认它是源还是派生物；三个信号：在 <code>.gitignore</code> 里、脚本自动克隆、同步时 <code>reset --hard</code>。</li>
+<li>反复要求人做同一个判断的界面元素，优先考虑”让它别出现”，而不是”每次判断得更快”。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⭐ <a href="/above-the-web/v1-880a034/" class="wikilink">有意改动不是故障_v1</a> —— <strong>直系母本，本篇是它的再验与扩容</strong>：那篇的三类归因（用户有意改 / 协作方越界 / 无害格式化）没覆盖本次这类——<strong>自动化流水线的设计产物</strong>，已回补为第四类；同时那篇「用一个真实的模式去套了一个不属于它的现象」在本次原样复现（Obsidian 确实会重写 frontmatter，于是这批也被归给它）</li>
+<li>⭐ <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> —— 同族第三次现形：那篇是「检测工具的输出要先证伪」，<a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> 是「诊断信号要打在真实链路上」，本篇是「<strong>你自己写下的历史归因要先证伪</strong>」——三条合起来覆盖了工具、信号、记忆三个信息源</li>
+<li>⚠️ <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> —— 前一天的同族案例：那次是 ping 永远绿导致误判链路健康，本次是记忆永远在导致误判故障来源；共同点是<strong>最方便取用的那个信号最不可信</strong></li>
+<li><a href="/above-the-web/git-v1-cc2dcd9/" class="wikilink">生成物不入git_v1</a> —— 相邻的 git 资产纪律：那条管「可重建的生成物不进版本库」，本篇管「可重建的生成物出现在版本控制界面里时，别把它当待办」；本例的 kb-content 正是被正确 gitignore 了，却仍被编辑器摆进提交位</li>
+<li><a href="/above-the-web/v1-f404c4e/" class="wikilink">变通方案不等于故障点_v1</a> —— 同族错误归因：那条管「别从产物形态反推故障位置」，与本篇 insight 3「别从 diff 形态反推是谁改的」是同一条在不同场景的投影</li>
+<li><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 本篇顶部事实冻结区按它执行；本次尤其重要，因为要冻结的事实里包含「我自己上一条结论是错的」</li>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 平台工程区入口</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/git</span><span class="tag">主题/错误归因</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9%E7%9A%84%E8%84%8F%E6%94%B9%E5%8A%A8%E4%B8%8D%E6%98%AF%E4%BA%8B%E6%95%85_%E5%A4%8D%E5%8F%91%E6%98%AF%E5%BD%92%E5%9B%A0%E9%94%99%E4%BA%86%E7%9A%84%E4%BF%A1%E5%8F%B7_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9%E7%9A%84%E8%84%8F%E6%94%B9%E5%8A%A8%E4%B8%8D%E6%98%AF%E4%BA%8B%E6%95%85_%E5%A4%8D%E5%8F%91%E6%98%AF%E5%BD%92%E5%9B%A0%E9%94%99%E4%BA%86%E7%9A%84%E4%BF%A1%E5%8F%B7_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/autoclaw-v1-aeec89d/">AutoClaw 失控删库全链路取证 · 回收站时间戳与孤本抢救</a></li><li><a href="/above-the-web/v1-83c88ab/">全站文字截断体检 · 检测工具本身要先被证伪</a></li><li><a href="/above-the-web/v1-c224595/">录屏假光标被打回：画出来的不算操作，与&quot;输入送达&quot;的四处假信号</a></li><li><a href="/above-the-web/v1-880a034/">有意改动不是故障</a></li><li><a href="/above-the-web/git-v1-cc2dcd9/">生成物不入 git</a></li><li><a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/">ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/pr-v1-b896304/"> <span class="card-cat">方法论与洞察</span> <h3>个人项目免 PR 直推主分支</h3> <p>个人项目不要走 PR 流程——自己写代码、自己审核、自己合并，这套仪式没有实际价值，反而拖慢迭代。直接 commit &amp; push 到 ma…</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a><a class="card" href="/above-the-web/v1-f404c4e/"> <span class="card-cat">方法论与洞察</span> <h3>变通方案不等于故障点</h3> <p>接手钉钉交付时，我看到仓库里同日提交了 4 个格式变体（附件版 / 公网图链版 / 纯文字版 / 占位标注版），据此反推出结论：&quot;钉钉粘贴带…</p> </a><a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d3"><a href="#现象" data-toc-link="现象">现象</a></li><li class="d3"><a href="#我的初判后被证伪" data-toc-link="我的初判后被证伪">我的初判（后被证伪）</a></li><li class="d3"><a href="#逐步收集的事实" data-toc-link="逐步收集的事实">逐步收集的事实</a></li><li class="d3"><a href="#真凶自家的同步脚本且是设计行为" data-toc-link="真凶自家的同步脚本且是设计行为">真凶：自家的同步脚本，且是设计行为</a></li><li class="d3"><a href="#为什么必然复发" data-toc-link="为什么必然复发">为什么必然复发</a></li><li class="d3"><a href="#派生物损坏--源损坏" data-toc-link="派生物损坏--源损坏">派生物损坏 ≠ 源损坏</a></li><li class="d3"><a href="#处置" data-toc-link="处置">处置</a></li><li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#五条可复用-insight" data-toc-link="五条可复用-insight">五条可复用 insight</a></li><li class="d3"><a href="#1-复发--上次已修--上次归因错了-️首次" data-toc-link="1-复发--上次已修--上次归因错了-️首次">1. 复发 + 上次已修 = 上次归因错了 ⚠️首次</a></li><li class="d3"><a href="#2-自己写下的错误归因会成为下一次的加速陷阱-️首次" data-toc-link="2-自己写下的错误归因会成为下一次的加速陷阱-️首次">2. 自己写下的错误归因，会成为下一次的加速陷阱 ⚠️首次</a></li><li class="d3"><a href="#3-查谁干的要点名册不要从形态反推-️首次" data-toc-link="3-查谁干的要点名册不要从形态反推-️首次">3. 查”谁干的”要点名册，不要从形态反推 ⚠️首次</a></li><li class="d3"><a href="#4-派生物损坏--源损坏喊废了之前先查源-️首次" data-toc-link="4-派生物损坏--源损坏喊废了之前先查源-️首次">4. 派生物损坏 ≠ 源损坏，喊”废了”之前先查源 ⚠️首次</a></li><li class="d3"><a href="#5-问题在展示层时别去修数据层" data-toc-link="5-问题在展示层时别去修数据层">5. 问题在展示层时，别去修数据层</a></li><li class="d2"><a href="#顺手教训" data-toc-link="顺手教训">顺手教训</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

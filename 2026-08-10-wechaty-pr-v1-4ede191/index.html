@@ -1,0 +1,218 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>微信群反馈机器人与 Wechaty 博客 PR：全链路复盘 · 蛛网之上</title><meta name="description" content="- 起点：pb-arena 有一个活跃的用户微信群，反馈散落在聊天里，手工收集漏消息。决定搭一个被动监听机器人自动入库。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-08-10-wechaty-pr-v1-4ede191/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="微信群反馈机器人与 Wechaty 博客 PR：全链路复盘"><meta property="og:description" content="- 起点：pb-arena 有一个活跃的用户微信群，反馈散落在聊天里，手工收集漏消息。决定搭一个被动监听机器人自动入库。"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-08-10-wechaty-pr-v1-4ede191/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="微信群反馈机器人与 Wechaty 博客 PR：全链路复盘"><meta name="twitter:description" content="- 起点：pb-arena 有一个活跃的用户微信群，反馈散落在聊天里，手工收集漏消息。决定搭一个被动监听机器人自动入库。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-10T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T07:05:43+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="工具/Wechaty"><meta property="article:tag" content="工具/GitHub CLI"><meta property="article:tag" content="主题/微信机器人"><meta property="article:tag" content="主题/开源贡献"><meta property="article:tag" content="来源/pb-arena"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-08-10-wechaty-pr-v1-4ede191/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-08-10-wechaty-pr-v1-4ede191/","url":"https://tiaozhuxiansheng.com/2026-08-10-wechaty-pr-v1-4ede191/","headline":"微信群反馈机器人与 Wechaty 博客 PR：全链路复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 起点：pb-arena 有一个活跃的用户微信群，反馈散落在聊天里，手工收集漏消息。决定搭一个被动监听机器人自动入库。","datePublished":"2026-08-10T00:00:00+08:00","dateModified":"2026-09-26T07:05:43+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 工具/Wechaty, 工具/GitHub CLI, 主题/微信机器人, 主题/开源贡献, 来源/pb-arena"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"微信群反馈机器人与 Wechaty 博客 PR：全链路复盘","item":"https://tiaozhuxiansheng.com/2026-08-10-wechaty-pr-v1-4ede191/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-10T00:00:00+08:00">2026-08-10</time></span> <span>更新于 <time datetime="2026-09-26T07:05:43+08:00">2026-09-26</time></span> <span>约 5 分钟读完 · 1,606 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话结论">一句话结论</a></li><li class="d2"><a href="#一实际走通的链路">一、实际走通的链路</a></li><li class="d2"><a href="#二阻塞与恢复">二、阻塞与恢复</a></li><li class="d2"><a href="#三可复用方法">三、可复用方法</a></li><li class="d3"><a href="#方法-1第三方开源贡献前的仓库验证律">方法 1：第三方开源贡献前的仓库验证律</a></li><li class="d3"><a href="#方法-2git-fetch-成功但-ref-不存在时的-fallback">方法 2：git fetch 成功但 ref 不存在时的 fallback</a></li><li class="d3"><a href="#方法-3gh-cli-一步到位执行-forkpr">方法 3：gh CLI 一步到位执行 fork+PR</a></li><li class="d3"><a href="#方法-4svg-配图别硬转-png">方法 4：SVG 配图别硬转 PNG</a></li><li class="d2"><a href="#四本次未验证的部分">四、本次未验证的部分</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="微信群反馈机器人与-wechaty-博客-pr全链路复盘">微信群反馈机器人与 Wechaty 博客 PR：全链路复盘</h1>
+<blockquote>
+<p>入档：2026-08-10
+项目：pb-arena 微信群反馈收集机器人
+项目目录（库外裸路径）：<code>E:\pb-arena\wechat-bot</code>
+PR 地址：<a href="https://github.com/wechaty/jekyll/pull/201">wechaty/jekyll#201</a>
+配套 skill：<code>wechaty-blog-pr</code>（用户级 <code>~/.workbuddy/skills/wechaty-blog-pr</code>）
+验证状态：⚠️ PR 已提交，待 CLA 签署 + CI + Review；PadLocal Token 尚未到手，机器人未实跑</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li><strong>起点</strong>：pb-arena 有一个活跃的用户微信群，反馈散落在聊天里，手工收集漏消息。决定搭一个被动监听机器人自动入库。</li>
+<li><strong>协议选型</strong>：普通微信群（非企业微信），选定 Wechaty + PadLocal（iPad 协议）。Bot 策略=被动监听、不主动回复（降低风控）。</li>
+<li><strong>架构</strong>：Wechaty Bot → 规则层（filter.js，53 个中文关键词评分 ≥3 为候选）→ AI 层（analyzer.js，LLM 分类/摘要/严重度）→ 复用 pb-arena 已有 <code>POST /api/feedback</code> 入库，与管理后台反馈面板打通。两层过滤的目的是省 LLM 调用成本。</li>
+<li><strong>交付物</strong>：<code>E:\pb-arena\wechat-bot\</code> 下 8 个源文件 + 启动脚本；规则层 16/16 单测通过；依赖安装完成。</li>
+<li><strong>卡点</strong>：PadLocal 付费站 <code>pad-local.com</code> 返回 502，注册站宕机；竞品 Paimon 同样 502，疑似共享基础设施故障。付费路径走不通。</li>
+<li><strong>转向</strong>：改走 Wechaty Contributor Program——给 wechaty/jekyll 写一篇技术博客提 PR，换取最长 1 年免费 PadLocal Token。</li>
+<li><strong>博客</strong>：撰写《Building a WeChat Group Feedback Collector with Wechaty + LLM》（英文），含架构图 SVG，归档 <code>E:\pb-arena\wechat-bot\wechaty-blog-post.md</code>。</li>
+<li><strong>PR 执行</strong>：fork <code>wechaty/jekyll</code> → 分支 <code>blog-wechat-feedback-collector</code> → 放博客/配图/contributor → push → <code>gh pr create</code> → PR #201。</li>
+<li><strong>当前状态</strong>：PR OPEN，mergeStateStatus=BLOCKED，唯一未过检查是 CLA（需作者签署）。</li>
+</ul>
+<p>以上先按 <a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> 冻结。下文「成功」仅指 PR 提交成功，不外推成「Token 已到手」或「机器人已跑通」。</p>
+<h2 id="一句话结论">一句话结论</h2>
+<p><strong>这次的核心教训是：旧指南里的仓库地址会过时，git fetch 报成功也不代表 ref 真写进去了——执行第三方开源贡献前，先用 <code>gh repo view</code> 验证实际仓库名，再亲自确认 ref 落地，别盲信任何「应该能行」的文档。</strong></p>
+<h2 id="一实际走通的链路">一、实际走通的链路</h2>
+<ol>
+<li><strong>gh CLI 全链路执行</strong>：用户要求「fork + PR 一步到位」。用 <code>gh repo fork</code> + <code>gh pr create</code> 串起 fork→clone→branch→commit→push→PR，比网页手把手操作高效，且每一步有命令行回执可核查。</li>
+<li><strong>先验证再动手</strong>：fork 前先 <code>gh repo view Mr-Salticidae/jekyll</code> 查 fork 是否已存在，避免重复 fork；再用 <code>gh search repos --owner wechaty</code> 确认目标仓库真名。</li>
+<li><strong>踩坑后即时沉淀</strong>：发现 PR 指南里的 <code>wechaty.js.org</code> 已更名，当场修正指南文件并写入新 skill，不让下一次再踩。</li>
+<li><strong>skill 化</strong>：把整条流程存成 <code>wechaty-blog-pr</code> skill，下次投 Wechaty 博客直接复用。</li>
+</ol>
+<h2 id="二阻塞与恢复">二、阻塞与恢复</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阻塞</th><th>事实原因</th><th>恢复方式</th><th>沉淀</th></tr></thead><tbody><tr><td>PR 指南里写 <code>wechaty/wechaty.js.org</code>，fork 时报「已存在 Mr-Salticidae/js.org」</td><td>旧仓库已更名/重定向，指南过时</td><td><code>gh search repos --owner wechaty</code> 查到真名是 <code>wechaty/jekyll</code>，重新 fork 正确仓库</td><td><strong>旧文档的仓库地址会过时</strong>，fork 前必须 <code>gh repo view</code> 验证实际仓库名</td></tr><tr><td><code>git fetch upstream</code> 报「<code>* [new branch] main -> upstream/main</code>」成功，但 <code>git show-ref</code> / <code>git checkout upstream/main</code> 全部找不到该 ref</td><td>Windows Git 2.55 的 ref 存储 bug：<code>.git/refs/remotes/upstream/</code> 目录未创建，fetch 写不进</td><td><code>mkdir -p .git/refs/remotes/upstream</code> 后手动 <code>echo &#x3C;hash> > .git/refs/remotes/upstream/main</code>，或直接 <code>git checkout -b &#x3C;branch> $(git ls-remote upstream main | awk '{print $1}')</code></td><td><strong>fetch 成功≠ref 写入</strong>；ref 不存在时优先用 <code>git ls-remote</code> 拿 hash 直接建分支</td></tr><tr><td>PR 指南要求配图转 PNG，但本机无 ImageMagick / cairo / rsvg-convert</td><td>Windows 环境缺系统级 SVG 渲染库，cairosvg/svglib 都因缺依赖失败</td><td>查证目标 Jekyll 站点本身支持 SVG（已有 <code>_posts</code> 引用 <code>.svg</code>），直接用 SVG，不转 PNG</td><td><strong>目标站点支持的格式就直接用，别在没有转换工具链的环境卡住</strong>；转换是优化不是阻塞</td></tr><tr><td>旧 PR 指南的 contributor 格式只有 name+github 两字段，但现有 contributor 都带 avatar/bio/site</td><td>指南过时，实际仓库格式更丰富</td><td>参照现有 <code>_contributors/*.md</code> 写 richer 格式，avatar 用 <code>https://avatars.githubusercontent.com/u/&#x3C;id>?v=4</code>（<code>gh api users/&#x3C;name> --jq '.avatar_url'</code> 取）</td><td>贡献者文件格式以仓库现有样本为准，不以旧指南为准</td></tr></tbody></table>
+<h2 id="三可复用方法">三、可复用方法</h2>
+<h3 id="方法-1第三方开源贡献前的仓库验证律">方法 1：第三方开源贡献前的仓库验证律</h3>
+<p>提 PR 给第三方开源项目前，<strong>先验证仓库真名，再 fork</strong>。文档（包括自己以前写的指南）里的仓库地址会随项目更名/归档/迁移而过时。</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 1. 查目标仓库是否存在、是否重定向</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">gh</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> repo</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> view</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">or</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">g</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">rep</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">o</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --json</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> name,owner,url,parent</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 2. 查自己是否已 fork</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">gh</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> repo</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> view</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">usernam</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">e</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">rep</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">o</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --json</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> name,parent</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 3. 不确定真名时搜索</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">gh</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> search</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> repos</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --owner</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">or</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">g</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --json</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> name,url,description</span></span></code></pre>
+<p><code>gh repo view</code> 遇到重定向会返回重定向后的真实仓库名（如 <code>wechaty/wechaty.js.org</code> 返回 <code>name: js.org</code>），这是仓库已更名的信号。</p>
+<h3 id="方法-2git-fetch-成功但-ref-不存在时的-fallback">方法 2：git fetch 成功但 ref 不存在时的 fallback</h3>
+<p>Windows Git 2.55 存在 ref 存储 bug：<code>git fetch upstream</code> 输出成功，但 <code>upstream/main</code> 在 <code>git show-ref</code> / <code>git branch -a</code> 里不存在，<code>git checkout -b x upstream/main</code> 报「unknown revision」。</p>
+<p>判定：<code>git ls-remote upstream</code> 能拿到 hash，说明远端没问题，是本地 ref 没写入。</p>
+<p>恢复（任选其一）：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># A. 直接用 hash 建分支，绕过 ref</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> checkout</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -b</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">branc</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">h</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> $(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> ls-remote</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> upstream</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> main</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> awk</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> '{print $1}'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># B. 手动补 ref 目录再 fetch</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">mkdir</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -p</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> .git/refs/remotes/upstream</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> fetch</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> upstream</span></span></code></pre>
+<p>这条与 <a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a> 同族：基线对不齐就别往下走，只是这次的「对不齐」是工具 bug 而非忘记 fetch。</p>
+<h3 id="方法-3gh-cli-一步到位执行-forkpr">方法 3：gh CLI 一步到位执行 fork+PR</h3>
+<p>给第三方仓库提 PR，用 gh CLI 串起全链路，比网页操作快且可核查：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">gh</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> repo</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> fork</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">or</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">g</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">rep</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">o</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --clone=false</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --default-branch-only</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> clone</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> https://github.com/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">usernam</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">e</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">rep</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">o</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">.git</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">cd</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">rep</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">o</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> remote</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> add</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> upstream</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> https://github.com/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">or</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">g</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">rep</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">o</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">.git</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 建分支（见方法 2 的 fallback）</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> checkout</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -b</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">branc</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">h</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> $(</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> ls-remote</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> upstream</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> main</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> awk</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> '{print $1}'</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">)</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 改文件…</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> add</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">file</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">s</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> commit</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -m</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "&#x3C;msg>"</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">git</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> push</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> origin</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">branc</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">h</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">gh</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> pr</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> create</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --repo</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">or</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">g</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">/</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">rep</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">o</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --base</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> main</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --head</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> &#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">usernam</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">e</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">:</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">&#x3C;</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">branc</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">h</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">></span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> \</span></span>
+<span class="line"><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF">  --title</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "&#x3C;title>"</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> --body</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "&#x3C;body>"</span></span></code></pre>
+<p>注意：个人项目可免 PR 直推（见 <a href="/above-the-web/pr-v1-b896304/" class="wikilink">个人项目免PR直推主分支_v1</a>），但<strong>第三方开源项目必须走 fork+PR+CLA</strong>，这是两套规则，不能混用。</p>
+<h3 id="方法-4svg-配图别硬转-png">方法 4：SVG 配图别硬转 PNG</h3>
+<p>博客配图若源文件是 SVG，先查目标站点是否支持 SVG（<code>grep -r "\.svg" _posts/</code> 看现有文章引用），支持就直接用。PNG 转换在没有 ImageMagick / cairo / librsvg 的 Windows 环境会卡住（cairosvg 缺 <code>libcairo-2.dll</code>、svglib 缺 <code>rlPyCairo</code> backend）。转换只是体积优化，不是阻塞项，别让它挡住 PR 提交。</p>
+<h2 id="四本次未验证的部分">四、本次未验证的部分</h2>
+<ul>
+<li><strong>机器人未实跑</strong>：PadLocal Token 要等 PR 合并后 Wechaty 团队发放，目前 <code>.env</code> 里 <code>WECHATY_PUPPET_PADLOCAL_TOKEN</code> 仍空，机器人没真正连过微信。</li>
+<li><strong>两层过滤的召回率未实测</strong>：规则层 53 个关键词是手工配的，AI 层 prompt 没有跑过真实群消息样本，可能漏召回或误召回。Token 到手后需用历史群消息做一轮标注验证。</li>
+<li><strong>PR 是否合并未知</strong>：取决于 Wechaty 维护者 review，可能要求改稿。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>基线对齐同族：<a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a>（fetch 对基线；本次是 fetch 的 ref bug 版本）</li>
+<li>个人 vs 协作的分轨：<a href="/above-the-web/pr-v1-b896304/" class="wikilink">个人项目免PR直推主分支_v1</a>（个人项目免 PR，第三方开源项目必须走 PR，互为镜像）</li>
+<li>交付前验证：<a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a>（「应该能行」的仓库地址当场证伪）</li>
+<li>复盘纪律：<a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a>（先冻结事实：Token 没到手、机器人没跑）</li>
+<li>配套 skill：<code>~/.workbuddy/skills/wechaty-blog-pr/SKILL.md</code></li>
+<li>原始底料（库外裸路径）：<code>E:\pb-arena\wechat-bot\wechaty-blog-post.md</code> · <code>E:\pb-arena\wechat-bot\PR-SUBMISSION-GUIDE.md</code></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">工具/Wechaty</span><span class="tag">工具/GitHub CLI</span><span class="tag">主题/微信机器人</span><span class="tag">主题/开源贡献</span><span class="tag">来源/pb-arena</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T07:05:43+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/2026-08-10_%E5%BE%AE%E4%BF%A1%E7%BE%A4%E5%8F%8D%E9%A6%88%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%8EWechaty%E5%8D%9A%E5%AE%A2PR_%E5%85%A8%E9%93%BE%E8%B7%AF%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/2026-08-10_%E5%BE%AE%E4%BF%A1%E7%BE%A4%E5%8F%8D%E9%A6%88%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%8EWechaty%E5%8D%9A%E5%AE%A2PR_%E5%85%A8%E9%93%BE%E8%B7%AF%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li><li><a href="/above-the-web/skill-index-b155e36/">SKILL_INDEX — Skill 使用索引</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/pr-v1-b896304/"> <span class="card-cat">方法论与洞察</span> <h3>个人项目免 PR 直推主分支</h3> <p>个人项目不要走 PR 流程——自己写代码、自己审核、自己合并，这套仪式没有实际价值，反而拖慢迭代。直接 commit &amp; push 到 ma…</p> </a><a class="card" href="/above-the-web/v1-043b6e8/"> <span class="card-cat">方法论与洞察</span> <h3>开工前先对基线律</h3> <p>动第一行代码之前先对基线，别把这个检查留到发布前。</p> </a><a class="card" href="/above-the-web/v1-3fce0f1/"> <span class="card-cat">方法论与洞察</span> <h3>交付前实测证伪律</h3> <p>别交付未验证的&quot;应该能行&quot;。任何&quot;X 应该有效&quot;的假设，交付前先写最小探针去证伪它——尤其跨平台、跨环境、跨版本的行为假设，它们最爱静默失效…</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话结论" data-toc-link="一句话结论">一句话结论</a></li><li class="d2"><a href="#一实际走通的链路" data-toc-link="一实际走通的链路">一、实际走通的链路</a></li><li class="d2"><a href="#二阻塞与恢复" data-toc-link="二阻塞与恢复">二、阻塞与恢复</a></li><li class="d2"><a href="#三可复用方法" data-toc-link="三可复用方法">三、可复用方法</a></li><li class="d3"><a href="#方法-1第三方开源贡献前的仓库验证律" data-toc-link="方法-1第三方开源贡献前的仓库验证律">方法 1：第三方开源贡献前的仓库验证律</a></li><li class="d3"><a href="#方法-2git-fetch-成功但-ref-不存在时的-fallback" data-toc-link="方法-2git-fetch-成功但-ref-不存在时的-fallback">方法 2：git fetch 成功但 ref 不存在时的 fallback</a></li><li class="d3"><a href="#方法-3gh-cli-一步到位执行-forkpr" data-toc-link="方法-3gh-cli-一步到位执行-forkpr">方法 3：gh CLI 一步到位执行 fork+PR</a></li><li class="d3"><a href="#方法-4svg-配图别硬转-png" data-toc-link="方法-4svg-配图别硬转-png">方法 4：SVG 配图别硬转 PNG</a></li><li class="d2"><a href="#四本次未验证的部分" data-toc-link="四本次未验证的部分">四、本次未验证的部分</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优 · 蛛网之上</title><meta name="description" content="ElevenLabs 生成的中文旁白,创作者审听报出三个问题:咬字含糊、口水音重、多音字读错。AI 无法听音频,以往只能&#34;改参数→请人再听&#34;盲迭代。本轮验证了一条闭环:用本地 Whisper 转写 + 拼音级评分,把三个听感问题拆成可测量的…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/tts-asr-v1-18cdf62/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优"><meta property="og:description" content="ElevenLabs 生成的中文旁白,创作者审听报出三个问题:咬字含糊、口水音重、多音字读错。AI 无法听音频,以往只能&#34;改参数→请人再听&#34;盲迭代。本轮验证了一条闭环:用本地 Whisper 转写 + 拼音级评分,把三个听感问题拆成可测量的…"><meta property="og:url" content="https://tiaozhuxiansheng.com/tts-asr-v1-18cdf62/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优"><meta name="twitter:description" content="ElevenLabs 生成的中文旁白,创作者审听报出三个问题:咬字含糊、口水音重、多音字读错。AI 无法听音频,以往只能&#34;改参数→请人再听&#34;盲迭代。本轮验证了一条闭环:用本地 Whisper 转写 + 拼音级评分,把三个听感问题拆成可测量的…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-07-02T15:37:46+08:00"><meta property="article:modified_time" content="2026-10-01T18:26:27+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="工具/ElevenLabs"><meta property="article:tag" content="工具/Whisper"><meta property="article:tag" content="主题/蒙眼剪辑"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/tts-asr-v1-18cdf62/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/tts-asr-v1-18cdf62/","url":"https://tiaozhuxiansheng.com/tts-asr-v1-18cdf62/","headline":"TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"ElevenLabs 生成的中文旁白,创作者审听报出三个问题:咬字含糊、口水音重、多音字读错。AI 无法听音频,以往只能\"改参数→请人再听\"盲迭代。本轮验证了一条闭环:用本地 Whisper 转写 + 拼音级评分,把三个听感问题拆成可测量的…","datePublished":"2026-07-02T15:37:46+08:00","dateModified":"2026-10-01T18:26:27+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 工具/ElevenLabs, 工具/Whisper, 主题/蒙眼剪辑"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优","item":"https://tiaozhuxiansheng.com/tts-asr-v1-18cdf62/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-07-02T15:37:46+08:00">2026-07-02</time></span> <span>更新于 <time datetime="2026-10-01T18:26:27+08:00">2026-10-01</time></span> <span>约 6 分钟读完 · 2,156 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>10 节</i></summary> <ol> <li class="d2"><a href="#一句话律">一句话律</a></li><li class="d2"><a href="#背景">背景</a></li><li class="d2"><a href="#原理拼音级评分把症状分离">原理:拼音级评分把症状分离</a></li><li class="d2"><a href="#方法步骤可照做">方法步骤(可照做)</a></li><li class="d2"><a href="#多音字换稿铁律的新实例">多音字换稿铁律的新实例</a></li><li class="d2"><a href="#排错与边界实测踩坑">排错与边界(实测踩坑)</a></li><li class="d2"><a href="#新实例asr-也能抓-audio-tag-泄漏2026-08-05">新实例:ASR 也能抓 audio tag 泄漏(2026-08-05)</a></li><li class="d2"><a href="#新实例ai-同期对白的逐字核对与字幕定时2026-09-29">新实例:AI 同期对白的逐字核对与字幕定时(2026-09-29)</a></li><li class="d2"><a href="#落地工程库外裸路径">落地工程(库外裸路径)</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="tts-旁白也能蒙眼质检--asr-拼音级评分与多-take-选优">TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优</h1>
+<blockquote>
+<p>入档:2026-07-02
+触发项目:desk-pond《工位池塘》发布视频旁白修复轮(创作者反馈:语言不清、口水音重、多音字读错)
+性质:蒙眼剪辑法的 <strong>TTS 质检域扩展</strong>。AI 听不见 TTS 的好坏,但 ASR 听得见——用代码”听”,人只做最终验收。</p>
+</blockquote>
+<h2 id="一句话律">一句话律</h2>
+<blockquote>
+<p><strong>无调拼音错误率量咬字,有调减无调量声调;系统性声调偏差换稿不抽卡。</strong></p>
+</blockquote>
+<h2 id="背景">背景</h2>
+<p>ElevenLabs 生成的中文旁白,创作者审听报出三个问题:咬字含糊、口水音重、多音字读错。AI 无法听音频,以往只能”改参数→请人再听”盲迭代。本轮验证了一条闭环:<strong>用本地 Whisper 转写 + 拼音级评分,把三个听感问题拆成可测量的指标</strong>,人只在最后验收一次。</p>
+<h2 id="原理拼音级评分把症状分离">原理:拼音级评分把症状分离</h2>
+<p>直接对比汉字转写会被同音字污染(池塘→吃堂不是咬字问题,是 ASR 选字)。转成拼音后分两把尺:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>无调拼音 CER   = 纯咬字清晰度(同音字不计错)</span></span>
+<span class="line"><span>有调 CER − 无调 CER = 声调/多音字误读残留</span></span></code></pre>
+<p>desk-pond 实测:问题版无调 CER 34.1%(ASR 都听不懂),修复版 0.8%。声调差把”染上”读成 rán、“任务”读成 rénwù 这类误读精确定位到字。</p>
+<h2 id="方法步骤可照做">方法步骤(可照做)</h2>
+<ol>
+<li><strong>归因先查官方</strong>:咬字含糊/多余杂音 → ElevenLabs 官方 troubleshooting 明确指认 <strong>style 过高产生”语速不稳、发音错误、多余杂音”(建议归零),stability 过低产生”含糊、怪异表演”</strong>。desk-pond 从 style 0.45/stability 0.38 改到 style 0/stability 0.50,咬字指标直接从 34.1% 修到接近噪声底。</li>
+<li><strong>每段多 take 抽卡</strong>(同参数 3 take),ASR 无调 CER 评分自动选优——TTS 输出方差大,选优比调参便宜。</li>
+<li><strong>声调残留分类</strong>:落在<strong>多音字</strong>上且多 take 一致 → 系统性偏差,<strong>换稿</strong>(见铁律);落在<strong>单读音字</strong>上 → 不存在”读错多音字”的可能,属 ASR 噪声或语气尾音,不追。</li>
+<li><strong>换稿后同尺复测</strong>,声调差应归零(desk-pond 三个问题句:0% / 0% / 3.8%)。</li>
+<li><strong>口水音三重处理</strong>:style 归零(除源)→ adeclick(去口点)→ 温和噪声门 agate(threshold -36dB/ratio 2/最多压 ~10dB,压间隙不动语音)。间隙电平实测再降 0.4–4.5dB。</li>
+<li><strong>人只验收一次</strong>:以上全部跑完再请创作者听,而不是每改一版听一版。</li>
+</ol>
+<h2 id="多音字换稿铁律的新实例">多音字换稿铁律的新实例</h2>
+<p>母本规则见 <a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/" class="wikilink">2026-06-09_Remotion全片音频字幕BGM复盘_v1</a>(误读就改写法,不搞注音/SSML,caption=ttsText 同步)。本轮新增三例:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>误读</th><th>换稿</th></tr></thead><tbody><tr><td>染上(rǎn→rán,3 take 一致)</td><td>对工作上瘾</td></tr><tr><td>一项任务(rèn→rén)</td><td>做完一件事</td></tr><tr><td>只增不减(zhǐ→zhī)、漏了(lòu→lóu)</td><td>只会变多,不会变少。哪天没来</td></tr></tbody></table>
+<p><strong>判据升级</strong>:多 take 一致误读 = 模型系统性偏差,继续抽卡无解(同 <a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a> 洞察 5”训练数据盲区绕开不硬怼”的 TTS 版)。</p>
+<h2 id="排错与边界实测踩坑">排错与边界(实测踩坑)</h2>
+<ul>
+<li><strong>ASR 噪声底约 5%</strong>:whisper-small 对短句的解码有边界抖动(同一 take 带静音转写全对、掐掉静音”瘾”翻成”营”)。单句 CER ≤5% 不要再追,那是尺子的极限不是音频的问题。</li>
+<li><strong>处理器会伤懒音色的字尾</strong>:噪声门/adeclick 对”慵懒拖尾”型音色的句尾轻音有破坏风险——每次处理后必须 ASR 复测,发现指标变差就对该段回退处理。</li>
+<li><strong>间隙杂音密度、adeclick 检测率都不是合格的口水音指标</strong>(气声/辅音污染读数,对任何语音都报 3.5–4%)。可信的是:除源(style)+ 处理(declick/gate)+ 间隙电平差,最终听感仍归人耳。</li>
+<li><strong>慵懒听感的真相</strong>:低 stability/高 style 带来的”懒”是不稳定副产品,修参数后语速从 2.9 字/秒回到 5+ 字/秒。想要”懒但清晰”,慵懒要靠 Voice Design 描述承担,不靠参数摇骰子。</li>
+<li><strong>国内网络 whisper 模型下载</strong>:huggingface_hub 直连/镜像均失败,用 curl 经本地代理逐文件从 hf-mirror 拉,库加载本地目录。</li>
+</ul>
+<h2 id="新实例asr-也能抓-audio-tag-泄漏2026-08-05">新实例:ASR 也能抓 audio tag 泄漏(2026-08-05)</h2>
+<p>同一把尺子的新用法。Eleven v3 有个已记录的失效模式:<strong>音色与要求的表演不匹配时,模型会把 <code>[sighs]</code> 这类标签当普通文本念出来</strong>——成片里出现角色一本正经念出英文单词,而且<strong>要到剪辑时才发现</strong>。</p>
+<p>这个失效<strong>完全可以机检</strong>:转录一遍,看中文台词里有没有蹦出标签词。判据比拼音 CER 还简单,是个二值判断。</p>
+<p>《1000人后室大逃亡》配音工序实测:3 个音色 × 4 组(无 tag / 中文台词+英文 tag / 中文台词+中文 tag / 英文对照)= <strong>12 次,零泄漏</strong>。顺带发现两条:</p>
+<ul>
+<li><strong>中文 tag 至少不比英文差</strong>:<code>[叹气]</code> 三个音色里两个产生可听见的叹气(转录里出现「唉」——那是叹气声被转成了字,不是把标签念出来),<code>[sighs]</code> 只有一个。原假设”只能用英文 tag”被推翻</li>
+<li><strong><code>stability: creative</code> 让 tag 响应明显更强</strong>(A/B 时长差 +24.5% vs 两个 natural 的 −3.1%/+6.6%)</li>
+</ul>
+<p>⚠️ <strong>边界</strong>:ASR 只能抓”念出来”这一种失效。<strong>情绪对不对仍然要听</strong>——机器分不出「叹了口气」和「假装叹了口气」。这仍是”机器压候选、人做裁决”的骨架。</p>
+<h2 id="新实例ai-同期对白的逐字核对与字幕定时2026-09-29">新实例:AI 同期对白的逐字核对与字幕定时(2026-09-29)</h2>
+<p>77《右下角的池塘》的 M04 是 Seedance 2.5 带同期声生成的 28 秒两人对白。同一把尺子做了两件事:</p>
+<ol>
+<li><strong>逐字核对</strong>:faster-whisper(large-v3-turbo)转写,和提示词里的 8 句台词比对,逐字一致,没有漏句、加句。视频模型念台词,也能像 TTS 一样机检。</li>
+<li><strong>给字幕定时</strong>:开 <code>word_timestamps</code>,按句取起止。这里有两个坑:
+<ul>
+<li><strong>词起点会被拉长</strong>:句首词的起点常被标早。“你摸鱼它就空军”标在 20.84 秒,实际起音在 21.56 秒;“这个”被标成 4.70–6.28。直接拿去当字幕入点,字幕会比说话早出来大半秒。</li>
+<li><strong>句尾幻听</strong>:最后一句后面,它多听出一个”好。“,那里没有任何人声。</li>
+<li><strong>解法</strong>:用能量包络校准。音频滤到 120–4000Hz,算 10ms 帧的 RMS,以底噪 10% 分位 +14dB 为阈值,找出每段人声的真实起止;whisper 只负责”哪几个字属于哪一句”,时间以包络为准。没有能量的”句子”直接丢掉。</li>
+<li><code>initial_prompt</code> 放进剧本台词,专名和断句更准。</li>
+<li><strong>边界(2026-10-01,⚠️首次)</strong>:上一条只适用于”台词肯定念了,只需要切句、定时间”的情况。如果要核对的是”到底念没念”,尤其是单字、气声这类短台词,<strong>不要给 <code>initial_prompt</code></strong>。
+<ul>
+<li>71_余温 瑟兰薇 PV 只有一个”嘘”。给了 <code>initial_prompt="嘘。"</code> 之后,whisper 在风声、脚步声上也转出了”嘘”。</li>
+<li>不给提示词、整段一起转,又会漏掉结尾那声气声。</li>
+<li>最后的做法:不给提示词,每 6 秒一窗分段转写,再用 VAD 确认哪里真有人声。</li>
+<li>守灯人那条,whisper 在 6–8 秒幻听出两个”好”,VAD 只在 26.96–30.09 秒检出人声,以 VAD 为准。</li>
+<li>来源 <a href="/above-the-web/2026-10-01-pv-v1-1ddae81/" class="wikilink">2026-10-01_余温_见证者角色PV_立项到四平台发布_复盘_v1</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>字幕规范和烧录做法见 <a href="/above-the-web/libass-v1-f10b402/" class="wikilink">影视级双语字幕_中上英下与libass逐镜头烧录_v1</a>。</p>
+<h2 id="落地工程库外裸路径">落地工程(库外裸路径)</h2>
+<p><code>E:\desk-pond\promo\video\scripts\</code>(tts.mjs 多 take 生成 / pick_best.py 选优 / verify_final.py 拼音级终验 / gate_and_measure.py 噪声门+间隙电平)</p>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>方法论母本:<a href="/above-the-web/v1-25a3d5e/" class="wikilink">蒙眼剪辑法_方法论笔记_v1</a>(本文是其 TTS 质检域扩展,v7)</li>
+<li>同族扩展:<a href="/above-the-web/v1-53f2101/" class="wikilink">音频也能蒙眼剪辑_突然静音是剪出来的_v1</a>(BGM 域:代码读波形)· <a href="%E7%B4%A0%E6%9D%90%E5%AE%A1%E7%89%87%E5%9F%9F:%E6%8A%BD%E5%B8%A7%E6%9D%A1%E5%B8%A6%E5%9B%BE%E8%AF%BB%E5%9B%BE">[素材审片也能蒙眼_盲选靠标题定案靠眼睛_v1]</a></li>
+<li>同构骨架:<a href="%E8%87%AA%E5%8A%A8%E5%8C%96%E5%BD%95%E5%B1%8F%E5%9F%9F:%E6%9C%BA%E5%99%A8%E9%AA%8C%E5%8F%82%E6%95%B0%E3%80%81%E4%BA%BA%E7%9C%BC%E6%8A%BD%E5%B8%A7%E9%AA%8C%E5%86%85%E5%AE%B9;%E4%B8%8E%E6%9C%AC%E5%BE%8B%E5%85%B1%E4%BA%AB%22%E6%9C%BA%E5%99%A8%E9%87%8F%E5%8C%96%E3%80%81%E4%BA%BA%E5%8F%AA%E8%A3%81%E5%86%B3%E4%B8%80%E6%AC%A1%22%E7%9A%84%E9%AA%A8%E6%9E%B6">[自动化产出双重验收_机器验参数人眼验内容_v1]</a></li>
+<li>多音字铁律母本:<a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/" class="wikilink">2026-06-09_Remotion全片音频字幕BGM复盘_v1</a></li>
+<li>音色去机械化双旋钮(描述+stability):<a href="/above-the-web/2026-06-26-pilot-0-1-v1-f82995a/" class="wikilink">2026-06-26_反诈柜台短视频pilot从0到1复盘_v1</a></li>
+<li>同工具的<strong>路径选择</strong>(IVC vs Voice Design / 克隆素材要求 / tag 实测):<a href="%E6%9C%AC%E7%AF%87%E7%AE%A1%E5%8F%82%E6%95%B0%E7%BA%A7%E8%B4%A8%E6%A3%80,%E9%82%A3%E7%AF%87%E7%AE%A1%E9%80%89%E5%93%AA%E6%9D%A1%E8%B7%AF">[Eleven_v3_行为规律_v1]</a></li>
+<li>ASR 抓 tag 泄漏的来源案例:<a href="/above-the-web/2026-08-05-v1-7db25e0/" class="wikilink">2026-08-05_后室大逃亡配音工序_四音色定版复盘_v1</a></li>
+<li>对白核对与字幕定时的来源:<a href="/above-the-web/2026-09-29-v1-03d7c00/" class="wikilink">2026-09-29_右下角的池塘_游戏宣传微电影_实录混剪到双语字幕发布_复盘_v1</a> · 下游 <a href="/above-the-web/libass-v1-f10b402/" class="wikilink">影视级双语字幕_中上英下与libass逐镜头烧录_v1</a></li>
+<li>索引入口:<a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">工具/ElevenLabs</span><span class="tag">工具/Whisper</span><span class="tag">主题/蒙眼剪辑</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-01T18:26:27+08:00">2026-10-01</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/TTS%E6%97%81%E7%99%BD%E4%B9%9F%E8%83%BD%E8%92%99%E7%9C%BC%E8%B4%A8%E6%A3%80_ASR%E6%8B%BC%E9%9F%B3%E7%BA%A7%E8%AF%84%E5%88%86_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/TTS%E6%97%81%E7%99%BD%E4%B9%9F%E8%83%BD%E8%92%99%E7%9C%BC%E8%B4%A8%E6%A3%80_ASR%E6%8B%BC%E9%9F%B3%E7%BA%A7%E8%AF%84%E5%88%86_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/eleven-v3-v1-d87db20/">Eleven v3 行为规律</a></li><li><a href="/above-the-web/seedance2-5-v1-14bc5c5/">Seedance 2.5 行为规律</a></li><li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-06-09-remotion-bgm-v1-c20b202/">2026-06-09 Remotion 全片音频字幕 BGM 复盘</a></li><li><a href="/above-the-web/2026-08-05-v1-7db25e0/">《1000人后室大逃亡》配音工序 · 四音色定版复盘（2026-08-05）</a></li><li><a href="/above-the-web/2026-09-29-v1-03d7c00/">《右下角的池塘》游戏宣传微电影：AI 屏幕外 + 游戏实录混剪，到双语字幕发布</a></li><li><a href="/above-the-web/2026-10-01-pv-v1-1ddae81/">《余温》见证者角色 PV：立项到四平台发布</a></li><li><a href="/above-the-web/libass-v1-f10b402/">影视级双语字幕：中上英下与 libass 逐镜头烧录</a></li><li><a href="/above-the-web/v1-bf57d38/">素材审片也能蒙眼 —— 盲选靠标题,定案靠眼睛</a></li><li><a href="/above-the-web/v1-7f8ce8a/">自动化产出双重验收：机器验参数，人眼验内容</a></li><li><a href="/above-the-web/v1-25a3d5e/">「蒙眼剪辑法」— 一套基于 Claude 的 AIGC 视频内容产出闭环</a></li><li><a href="/above-the-web/v1-53f2101/">音频也能蒙眼剪辑:突然静音是剪出来的，不是生成的</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/xremotion-v1-27cb9ce/"> <span class="card-cat">方法论与洞察</span> <h3>短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手</h3> <p>1. 图文流量天花板低,视频是增量入口。小红书图文已就绪(见 小红书导流话术合规红线扣1领资料v1 同项目),但抖音/B站/快手是视频平台,…</p> </a><a class="card" href="/above-the-web/2026-06-26-pilot-0-1-v1-f82995a/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-26 反诈柜台短视频 pilot 从 0 到 1 复盘</h3> <p>- 链路打通:文稿 → ElevenLabs 自定义音色配音 → 读真实时长写 src/timing.generated.ts(音频先行)→…</p> </a><a class="card" href="/above-the-web/2026-08-24-v1-60852b9/"> <span class="card-cat">方法论与洞察</span> <h3>2026-08-24 《擦干净》从素材到动态化制片 · 全链路阶段性复盘</h3> <p>- 作品名称:《擦干净》(B 站互动短片,悬疑/荒诞/社畜,主线 3:12 + 结局 A/B 各带 36s 片尾)</p> </a><a class="card" href="/above-the-web/2026-06-08-remotion-v3-v1-092ade9/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-08 Remotion 正式小片段 v3 复盘</h3> <p>- 成片 Composition:FormalClip20260608</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话律" data-toc-link="一句话律">一句话律</a></li><li class="d2"><a href="#背景" data-toc-link="背景">背景</a></li><li class="d2"><a href="#原理拼音级评分把症状分离" data-toc-link="原理拼音级评分把症状分离">原理:拼音级评分把症状分离</a></li><li class="d2"><a href="#方法步骤可照做" data-toc-link="方法步骤可照做">方法步骤(可照做)</a></li><li class="d2"><a href="#多音字换稿铁律的新实例" data-toc-link="多音字换稿铁律的新实例">多音字换稿铁律的新实例</a></li><li class="d2"><a href="#排错与边界实测踩坑" data-toc-link="排错与边界实测踩坑">排错与边界(实测踩坑)</a></li><li class="d2"><a href="#新实例asr-也能抓-audio-tag-泄漏2026-08-05" data-toc-link="新实例asr-也能抓-audio-tag-泄漏2026-08-05">新实例:ASR 也能抓 audio tag 泄漏(2026-08-05)</a></li><li class="d2"><a href="#新实例ai-同期对白的逐字核对与字幕定时2026-09-29" data-toc-link="新实例ai-同期对白的逐字核对与字幕定时2026-09-29">新实例:AI 同期对白的逐字核对与字幕定时(2026-09-29)</a></li><li class="d2"><a href="#落地工程库外裸路径" data-toc-link="落地工程库外裸路径">落地工程(库外裸路径)</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

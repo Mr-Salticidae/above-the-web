@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>自检 46 条零驳回 · 同类中的异类才是缺陷藏身处 · 蛛网之上</title><meta name="description" content="- 触发：用户一句「全项目自检一次，重点检查交互式 bug 及边缘问题」，没有清单、没有指定范围"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/46-v1-9df0c5a/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="自检 46 条零驳回 · 同类中的异类才是缺陷藏身处"><meta property="og:description" content="- 触发：用户一句「全项目自检一次，重点检查交互式 bug 及边缘问题」，没有清单、没有指定范围"><meta property="og:url" content="https://tiaozhuxiansheng.com/46-v1-9df0c5a/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="自检 46 条零驳回 · 同类中的异类才是缺陷藏身处"><meta name="twitter:description" content="- 触发：用户一句「全项目自检一次，重点检查交互式 bug 及边缘问题」，没有清单、没有指定范围"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-19T22:21:40+08:00"><meta property="article:modified_time" content="2026-08-20T14:48:31+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/46-v1-9df0c5a/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/46-v1-9df0c5a/","url":"https://tiaozhuxiansheng.com/46-v1-9df0c5a/","headline":"自检 46 条零驳回 · 同类中的异类才是缺陷藏身处","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 触发：用户一句「全项目自检一次，重点检查交互式 bug 及边缘问题」，没有清单、没有指定范围","datePublished":"2026-08-19T22:21:40+08:00","dateModified":"2026-08-20T14:48:31+08:00","articleSection":"平台工程","keywords":"类型/平台工程"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"自检 46 条零驳回 · 同类中的异类才是缺陷藏身处","item":"https://tiaozhuxiansheng.com/46-v1-9df0c5a/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-19T22:21:40+08:00">2026-08-19</time></span> <span>更新于 <time datetime="2026-08-20T14:48:31+08:00">2026-08-20</time></span> <span>约 8 分钟读完 · 3,146 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>10 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话总结">一句话总结</a></li><li class="d2"><a href="#六条可复用-insight">六条可复用 insight</a></li><li class="d3"><a href="#1--同类中的异类才是缺陷藏身处-️首次">1 · 同类中的异类才是缺陷藏身处 ⚠️首次</a></li><li class="d3"><a href="#2--复核全票通过等于没复核--第六次现形新亚型">2 · 复核全票通过等于没复核 ⭐ 第六次现形，新亚型</a></li><li class="d3"><a href="#3--占位数据必须一眼可辨为占位假数据比空白更危险-️首次">3 · 占位数据必须一眼可辨为占位，假数据比空白更危险 ⚠️首次</a></li><li class="d3"><a href="#4--保活信号不能搭业务轮询的便车-️首次">4 · 保活信号不能搭业务轮询的便车 ⚠️首次</a></li><li class="d3"><a href="#5--安全属性只做在渲染层等于没做--同族新变体">5 · 安全属性只做在渲染层等于没做 ⭐ 同族新变体</a></li><li class="d3"><a href="#6--反代之后-socket-地址不代表用户线下场景整场共用出口网-️首次">6 · 反代之后 socket 地址不代表用户；线下场景整场共用出口网 ⚠️首次</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="自检-46-条零驳回--同类中的异类才是缺陷藏身处">自检 46 条零驳回 · 同类中的异类才是缺陷藏身处</h1>
+<blockquote>
+<p>入档：2026-08-19
+来源：PB Arena（pb.tiaozhuxiansheng.com）「全项目自检一次，重点检查交互式 bug 及边缘问题」的整轮会话，两批修复共 11 文件 +1585/−184，后端用例 21 → 27，三次部署上线
+状态：已上线并线上验证；insight 1、3、4、6 为本次首次发现 ⚠️；insight 2 是 <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> 的<strong>第六次现形</strong>（新亚型）；insight 5 是 <a href="/above-the-web/v1-6532011/" class="wikilink">公屏下线只删了界面_删界面不等于关链路_v1</a> 的同族新变体
+前情：<a href="/above-the-web/v1-6532011/" class="wikilink">公屏下线只删了界面_删界面不等于关链路_v1</a> · <a href="/above-the-web/v1-0abb7cd/" class="wikilink">零作品的比赛_界面演完不等于链路存在_v1</a> · <a href="/above-the-web/v1-2af659e/" class="wikilink">内测修复逐项审计闭环_v1</a>（均同项目）
+<strong>续篇（2026-08-20）</strong>：<a href="/above-the-web/v1-41b9cb0/" class="wikilink">零路由补路由_普查要能推翻已写的代码_v1</a> —— 本篇清单里<strong>最后一项、也是唯一的架构级缺口</strong>（全站零路由）的落地。那一轮又贡献四条新律：普查要能推翻已写的代码、探路实验是免费的 bug 探针、完备方案 ≠ 该做的方案、异步修复要问「在途期间会发生什么」；并把本篇 insight 2 的「觉得自己知道于是没查」记到<strong>人肉版第三次现形</strong>，改成了具体动作（写接口测试前先 grep 出字符串贴过来，不手打）</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>触发：用户一句「全项目自检一次，重点检查交互式 bug 及边缘问题」，没有清单、没有指定范围</li>
+<li>做法两条腿：① 12 个方向并行静态排查，60 个 agent，逐条对抗式复核；② 在隔离实例（独立端口 + scratchpad 临时库）上跑真实用户路径</li>
+<li><strong>静态排查交回 46 条，全部标记「已确认」，驳回 0 条</strong></li>
+<li>实机另跑出 11 条，与静态排查重叠度低——实机独有的是「连接指示器恒显示连接正常」「断网切页静默失败」「79 个错误码里 42 个没汉化」，静态独有的是后端并发与状态机问题</li>
+<li>隔离性核对：全程独立端口（3300/3301/3302）+ scratchpad 临时库；收工时 <code>git status</code> 干净、真实开发库 <code>pb-arena-server/data/pb-arena.sqlite</code> mtime 未变</li>
+</ul>
+<p><strong>客观查证（不加解释）</strong></p>
+<ul>
+<li>
+<p><strong>昵称 XSS</strong>：注册昵称填 <code>&#x3C;img src=x onerror=top.PWN=1></code>（29 字，未超 32 上限，后端当时只校验长度）→ 任意用户打开封神榜 → <code>window.PWN === 1</code>。<code>/api/leaderboard</code> 为公开接口，排行榜任意名次都触发</p>
+</li>
+<li>
+<p><strong>结算页</strong>：三人真实对战，数据库 <code>votes</code> 表 2 票 / 1 票；同一时刻屏幕显示「本场无优胜 / #1 0 票 #2 0 票 #3 0 票 / 胜负积分 +0 / 不撒花」；按 F5 后退回 <code>index.html</code> 里写死的「本场优胜 <strong>Mori</strong>，作品获得 68% 的投票支持」</p>
+</li>
+<li>
+<p><strong>房间唯一索引</strong>：A 建房 → A 又加入 B 的房间（服务端允许）→ B 掉线 90 秒 → 请求路径全员 500，随后进程退出，日志：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>Error: UNIQUE constraint failed: match_rooms.host_user_id</span></span>
+<span class="line"><span>    at Object.expireWaitingRooms (database.js:2079)</span></span>
+<span class="line"><span>    at Timeout._onTimeout (app.js:1860)</span></span>
+<span class="line"><span>[exited with code 1]</span></span></code></pre>
+<p><code>app.js:1860</code> 是三个 sweep 定时器里唯一没有 try/catch 的那个；<code>deploy/pb-arena.service</code> 有 <code>Restart=always / RestartSec=3</code>，重启后未复现崩溃循环</p>
+</li>
+<li>
+<p><strong>频控</strong>：一名选手连错 11 次密码后 → 管理员用<strong>正确</strong>密码登录 429、另一名选手用<strong>正确</strong>密码 429、新用户注册 429。生产是 nginx 反代到 127.0.0.1，而频控 key 取 <code>request.socket.remoteAddress</code>；<code>deploy/nginx-pb.conf</code> 一直在传 <code>X-Real-IP</code> 与 <code>X-Forwarded-For</code>，后端没读</p>
+</li>
+<li>
+<p><strong>房间心跳</strong>：建房后停在大厅 168 秒不动 → 全程只发出 <strong>1 次</strong>心跳（建房那一下）→ 服务端约 90 秒把房间置 <code>closed</code>、参与者清零 → 页面上那张卡片仍在、「已等待 1 秒」的时间戳冻住、计数器仍显示 1</p>
+</li>
+<li>
+<p><strong>刷新即退房</strong>：建房后按一次 F5 → 房间 <code>status=closed</code>、房内人数 0</p>
+</li>
+<li>
+<p><strong>匹配成功页</strong>：<code>#matchedState</code> 里写死「亚总 VS Mori」，全文 grep 无任何代码填充过它</p>
+</li>
+<li>
+<p><strong>错误码</strong>：后端 79 个 <code>HttpError</code> 码，前端 <code>authErrorMessage</code> 映射表覆盖 37 个，其余 42 个走 <code>error.message</code> 兜底把英文原文弹给中文用户</p>
+</li>
+</ul>
+<p><strong>两条 agent 描述偏差（抽验后纠正，偏差都指向「比报告说的更糟」）</strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>agent 报告</th><th>实测</th></tr></thead><tbody><tr><td>结算页出问题后「F5 刷新就正确」</td><td>刷新<strong>更糟</strong>：接口对已结束对战返回 <code>null</code>，面板退回写死的演示数据，大屏打出一个不存在的选手名</td></tr><tr><td>房间唯一索引冲突让「大厅接口永久 500」</td><td>是<strong>整个进程被打挂</strong>（全站而非只有大厅）；但 systemd 3 秒拉起，且无崩溃循环</td></tr></tbody></table>
+<p><strong>自己的失误</strong>：新增回归测试第一次跑挂两条，均因未先查接口就凭印象写——提前结束对战的 action 是 <code>finished</code>（写成了 <code>finish</code>）、接受好友申请走 <code>/api/friend-requests/:id/respond</code>（写成了 POST 到本体）</p>
+<h2 id="一句话总结">一句话总结</h2>
+<p><strong>一堆同类代码里唯一不一致的那一处，就是缺陷的藏身处——三处最严重的问题（打挂进程的定时器、能偷管理员令牌的 XSS、漏转义的赛事标题）全是「两个包了 try/catch 第三个没包」「所有渲染函数都过 escapeHtml 只有这两行没过」「紧挨着的字段转义了它没转义」这种形状；排查先找异类，比逐行读快一个量级。</strong></p>
+<h2 id="六条可复用-insight">六条可复用 insight</h2>
+<h3 id="1--同类中的异类才是缺陷藏身处-️首次">1 · 同类中的异类才是缺陷藏身处 ⚠️首次</h3>
+<p>这次三个最严重的问题，定位方式完全一样：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>缺陷</th><th>同类</th><th>异类</th></tr></thead><tbody><tr><td>进程被打挂</td><td>三个 sweep 定时器</td><td>只有一个没包 try/catch</td></tr><tr><td>存储型 XSS，可偷管理员令牌</td><td>全文十几个渲染函数都 <code>escapeHtml</code></td><td>只有 <code>loadLeaderboard</code> 那两行没过</td></tr><tr><td>赛事页注入</td><td>同一模板里 <code>round.name</code> 转义了</td><td>紧挨着的 <code>event.title</code> 没转义</td></tr></tbody></table>
+<p><strong>方法</strong>：不要逐行读代码找 bug。先把「做同一件事的那批代码」枚举出来（grep 同一个函数名、同一个模式），然后看谁跟别人不一样。人写代码时会把一批同类的写成同一个样子，写漏的那处天然是异类。</p>
+<p>这条和 <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> 里的「找同类问题按写法搜不按页面搜」是一对：那条讲<strong>怎么找全</strong>，这条讲<strong>找全之后看哪个不对</strong>。</p>
+<h3 id="2--复核全票通过等于没复核--第六次现形新亚型">2 · 复核全票通过等于没复核 ⭐ 第六次现形，新亚型</h3>
+<p>「检测工具本身要先被证伪」这次的载体不是脚本，是<strong>一支被明确要求「尽力反驳」的 agent 复核团</strong>——46 条提案，<strong>驳回 0 条</strong>。</p>
+<p>前五次的亚型是「工具算错了」和「我把工具输出读成了别的意思」。这次是新的第三种：<strong>工具的判断机制本身有偏</strong>——复核 agent 拿到一段看起来合理的分析文本，倾向于确认而不是去跑一遍。光在 prompt 里写「默认怀疑」「证据不足判 false」不够。</p>
+<p><strong>判据</strong>：复核结果的驳回率是可信度指标。<strong>全过或全不过都不可信</strong>，必须抽最严重的几条自己验。这次抽验了，纠正了两条最严重的描述偏差，而这两条纠正<strong>直接改变了修法</strong>（一条要顺手清生产 HTML 里的占位数据，一条的止血点是那个定时器而不是大厅接口）——照单全收会修错地方。</p>
+<p><strong>下次改法</strong>：复核 agent 不给原始分析全文（避免锚定），只给「位置 + 一句话结论」要求独立重新推导；或强制要求附「我实际执行了哪些命令、看到什么输出」，没有执行记录的判定不算数。</p>
+<p>同一毛病也发生在我自己身上：写回归测试时凭印象写 action 名和路由路径，挂了两条。<strong>觉得自己知道，于是没去查</strong>——和复核 agent 是同一种失败。</p>
+<h3 id="3--占位数据必须一眼可辨为占位假数据比空白更危险-️首次">3 · 占位数据必须一眼可辨为占位，假数据比空白更危险 ⚠️首次</h3>
+<p>一轮里撞到两个实例，是同一失败模式：</p>
+<ul>
+<li>结算面板的 <code>resultWinner</code> 写死「Mori」+「作品获得 68% 的投票支持」——接口返回 <code>null</code> 时它原样留在屏幕上；</li>
+<li><code>#matchedState</code> 写死「亚总 VS Mori」——<strong>全文没有任何代码填充过它</strong>，每个匹配成功的人看到的都是这两个不存在的选手。</li>
+</ul>
+<p>第二个尤其说明问题：它不是逻辑错误，是「静态 HTML 里的假数据从来没被替换过」，静态排查和实机路径都抓不到，是部署后核对线上 HTML 才发现的。</p>
+<p><strong>律</strong>：生产 HTML 里的占位内容必须一眼可辨为占位（<code>—</code>、空字符串、「正在读取…」），不能是像模像样的假数据。空白至少能看出坏了，假数据看起来一切正常——尤其当它会被投到大屏上给一屋子人看。</p>
+<p><strong>推论</strong>：设计稿转代码时塞进去的示例姓名/数字，是这类问题的天然来源。交付前应该 grep 一遍设计稿里的人名。</p>
+<h3 id="4--保活信号不能搭业务轮询的便车-️首次">4 · 保活信号不能搭业务轮询的便车 ⚠️首次</h3>
+<p>房间心跳原来写在 <code>loadWaitingRooms()</code> 里，而这个函数只被 2 秒轮询调用。后来做 WebSocket 优化，加了「WS 连着时轮询整体空转」——<strong>心跳跟着一起被停掉了</strong>。</p>
+<p>代码里那句 <code>if (window.pbRealtime?.connected) return;</code> 旁边还有注释说明这是有意设计。<strong>设计本身没错，错在心跳搭了业务轮询的便车</strong>：优化的人只在想「要不要拉列表」，不会想到这条路上还挂着一个保活信号。</p>
+<p>后果是完整的一条现场故事：房间被服务端悄悄关掉 → 界面卡着不动（没人推送、也没人轮询）→ 人的第一反应是刷新 → 而 <code>beforeunload</code> 又会主动退房 → 房间真的没了。</p>
+<p><strong>律</strong>：保活/心跳是独立关注点，必须有自己的生命周期，不能寄生在任何「可能被优化掉」的业务循环里。判据很简单——问一句「如果有人把这个循环关了会怎样」。</p>
+<h3 id="5--安全属性只做在渲染层等于没做--同族新变体">5 · 安全属性只做在渲染层等于没做 ⭐ 同族新变体</h3>
+<p>「匿名投票」界面上老老实实显示「作品 A / B / C」，但接口无条件下发 <code>submissions[].userId</code>，同一个响应体里的 <code>players[]</code> 又是 id→昵称的对照表。打开 DevTools 的 Network 面板就能把每件作品对上具体的人。</p>
+<p>这是 <a href="/above-the-web/v1-6532011/" class="wikilink">公屏下线只删了界面_删界面不等于关链路_v1</a> 的同族——那条是「删界面不等于关链路」，这条是「<strong>匿名只做在渲染层不等于真的匿名</strong>」。同一个家族还有「权限门禁只做 <code>button.hidden = true</code>」。</p>
+<p><strong>判据</strong>：任何以「用户看不到」为前提的安全属性（匿名、脱敏、权限），验收方式都是<strong>绕过界面直接打接口</strong>，看它还给不给。给 → 没做。</p>
+<p>修法上有个通用形状：前端需要那个字段往往只是为了判断「这是不是我自己的」，<strong>换成一个布尔位就够了，不需要暴露全表身份</strong>。</p>
+<h3 id="6--反代之后-socket-地址不代表用户线下场景整场共用出口网-️首次">6 · 反代之后 socket 地址不代表用户；线下场景整场共用出口网 ⚠️首次</h3>
+<p>频控按 <code>request.socket.remoteAddress</code> 计数。生产是 nginx 反代到 127.0.0.1，这个值对所有外部用户<strong>恒为 127.0.0.1</strong>——全站共用一个桶。一个人连错 11 次密码，管理员用正确密码也登不上，现场当场失去控场能力。</p>
+<p>讽刺的是 nginx 配置里<strong>一直在传</strong> <code>X-Real-IP</code> 和 <code>X-Forwarded-For</code>，只是后端没读。配置和代码各自都「对」，接缝处没人管。</p>
+<p><strong>更要紧的一层</strong>：就算读对了真实 IP，<strong>线下赛整个会场共用一条出口网</strong>——按 IP 卡死照样是全场连坐。所以频控必须<strong>以账号为主维度</strong>（严，10 次），IP 维度只用来兜住明显的批量扫描（松，60 次），并且<strong>只在真正失败时计数</strong>（原来在入口无条件 +1，成功的登录也在吃配额）。</p>
+<p><strong>推论</strong>：任何「按来源限流」的设计，先问两句——① 反代之后这个来源还是用户吗？② 目标用户会不会成批共用同一个来源？线下活动、学校、公司网络全都会。</p>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>同项目前情：<a href="/above-the-web/v1-6532011/" class="wikilink">公屏下线只删了界面_删界面不等于关链路_v1</a> · <a href="/above-the-web/v1-0abb7cd/" class="wikilink">零作品的比赛_界面演完不等于链路存在_v1</a> · <a href="/above-the-web/v1-35e4706/" class="wikilink">赛事状态机到点不切换_写入方不等于推进方_v1</a> · <a href="/above-the-web/v1-2af659e/" class="wikilink">内测修复逐项审计闭环_v1</a></li>
+<li>核心律同族：<a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a>（insight 2 是它的第六次现形）</li>
+<li>区索引：<a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a></li>
+<li>对外版（无双链，可直接转发）：<code>08_对外分发/自检怎么做才不白做_六条可迁移的排查经验.md</code></li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-08-20T14:48:31+08:00">2026-08-20</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%87%AA%E6%A3%8046%E6%9D%A1%E9%9B%B6%E9%A9%B3%E5%9B%9E_%E5%90%8C%E7%B1%BB%E4%B8%AD%E7%9A%84%E5%BC%82%E7%B1%BB%E6%89%8D%E6%98%AF%E7%BC%BA%E9%99%B7%E8%97%8F%E8%BA%AB%E5%A4%84_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%87%AA%E6%A3%8046%E6%9D%A1%E9%9B%B6%E9%A9%B3%E5%9B%9E_%E5%90%8C%E7%B1%BB%E4%B8%AD%E7%9A%84%E5%BC%82%E7%B1%BB%E6%89%8D%E6%98%AF%E7%BC%BA%E9%99%B7%E8%97%8F%E8%BA%AB%E5%A4%84_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/v1-83c88ab/">全站文字截断体检 · 检测工具本身要先被证伪</a></li><li><a href="/above-the-web/v1-6532011/">公屏下线只删了界面 · 删界面不等于关链路</a></li><li><a href="/above-the-web/v1-191a808/">换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」</a></li><li><a href="/above-the-web/v1-41b9cb0/">零路由补路由 · 普查要能推翻已写的代码</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-0abb7cd/"> <span class="card-cat">平台工程</span> <h3>零作品的比赛 · 界面演完不等于链路存在</h3> <p>- 项目:PB Arena 官方赛事(报名 → 出图 → 上传 → 投票 → 结算)</p> </a><a class="card" href="/above-the-web/v1-2af659e/"> <span class="card-cat">平台工程</span> <h3>内测修复的逐项审计闭环</h3> <p>修复清单列出 12 项，其中 10 项已经在未提交改动中实现、2 项需要补代码。如果不做审计直接从头写，会重复劳动；如果盲目信任「已经修了」…</p> </a><a class="card" href="/above-the-web/v1-35e4706/"> <span class="card-cat">平台工程</span> <h3>赛事状态机到点不切换 · 写入方不等于推进方</h3> <p>- 项目:PB Arena 官方赛事(报名中 → 进行中 → 出图 / 上传 / 投票 → 完赛)</p> </a><a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话总结" data-toc-link="一句话总结">一句话总结</a></li><li class="d2"><a href="#六条可复用-insight" data-toc-link="六条可复用-insight">六条可复用 insight</a></li><li class="d3"><a href="#1--同类中的异类才是缺陷藏身处-️首次" data-toc-link="1--同类中的异类才是缺陷藏身处-️首次">1 · 同类中的异类才是缺陷藏身处 ⚠️首次</a></li><li class="d3"><a href="#2--复核全票通过等于没复核--第六次现形新亚型" data-toc-link="2--复核全票通过等于没复核--第六次现形新亚型">2 · 复核全票通过等于没复核 ⭐ 第六次现形，新亚型</a></li><li class="d3"><a href="#3--占位数据必须一眼可辨为占位假数据比空白更危险-️首次" data-toc-link="3--占位数据必须一眼可辨为占位假数据比空白更危险-️首次">3 · 占位数据必须一眼可辨为占位，假数据比空白更危险 ⚠️首次</a></li><li class="d3"><a href="#4--保活信号不能搭业务轮询的便车-️首次" data-toc-link="4--保活信号不能搭业务轮询的便车-️首次">4 · 保活信号不能搭业务轮询的便车 ⚠️首次</a></li><li class="d3"><a href="#5--安全属性只做在渲染层等于没做--同族新变体" data-toc-link="5--安全属性只做在渲染层等于没做--同族新变体">5 · 安全属性只做在渲染层等于没做 ⭐ 同族新变体</a></li><li class="d3"><a href="#6--反代之后-socket-地址不代表用户线下场景整场共用出口网-️首次" data-toc-link="6--反代之后-socket-地址不代表用户线下场景整场共用出口网-️首次">6 · 反代之后 socket 地址不代表用户；线下场景整场共用出口网 ⚠️首次</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

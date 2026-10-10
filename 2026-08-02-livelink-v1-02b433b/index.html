@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错 · 蛛网之上</title><meta name="description" content="- 项目：LiveLink · {AIGC工作站外}D:\B站直播弹幕+礼物插件 → github.com/Mr-Salticidae/livelink"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-08-02-livelink-v1-02b433b/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错"><meta property="og:description" content="- 项目：LiveLink · {AIGC工作站外}D:\B站直播弹幕+礼物插件 → github.com/Mr-Salticidae/livelink"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-08-02-livelink-v1-02b433b/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错"><meta name="twitter:description" content="- 项目：LiveLink · {AIGC工作站外}D:\B站直播弹幕+礼物插件 → github.com/Mr-Salticidae/livelink"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-02T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-08-02-livelink-v1-02b433b/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-08-02-livelink-v1-02b433b/","url":"https://tiaozhuxiansheng.com/2026-08-02-livelink-v1-02b433b/","headline":"LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目：LiveLink · {AIGC工作站外}D:\\B站直播弹幕+礼物插件 → github.com/Mr-Salticidae/livelink","datePublished":"2026-08-02T00:00:00+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错","item":"https://tiaozhuxiansheng.com/2026-08-02-livelink-v1-02b433b/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-02T00:00:00+08:00">2026-08-02</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 9 分钟读完 · 3,552 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>17 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一这次真正学到的根因不在自己代码里">一、这次真正学到的：根因不在自己代码里</a></li><li class="d2"><a href="#二三次自我纠错本篇最该记住的部分">二、三次自我纠错（本篇最该记住的部分）</a></li><li class="d3"><a href="#纠错一在过时检出上开发了整轮差点回退-13-个提交-️-最严重">纠错一：在过时检出上开发了整轮，差点回退 13 个提交 ⚠️ 最严重</a></li><li class="d3"><a href="#纠错二把工具缺陷误判成产品-bug并写进了已发布的-release-notes">纠错二：把工具缺陷误判成产品 bug，并写进了已发布的 release notes</a></li><li class="d3"><a href="#纠错三整屏截图抓到无关前台窗口">纠错三：整屏截图抓到无关前台窗口</a></li><li class="d3"><a href="#纠错四同一天又栽在同一个坑--落后的检出让我把-skill-报成不存在">纠错四：同一天又栽在同一个坑 —— 落后的检出让我把 skill 报成「不存在」</a></li><li class="d2"><a href="#三方法论沉淀">三、方法论沉淀</a></li><li class="d3"><a href="#方法论-1依赖库没有关闭入口的贴心默认必须接管不要对抗">方法论 1：依赖库「没有关闭入口的贴心默认」＝必须接管，不要对抗 ⭐⭐</a></li><li class="d3"><a href="#方法论-2凭证类缓存缺失效路径--从偶发失败退化成永久失败-️">方法论 2：凭证类缓存缺失效路径 → 从偶发失败退化成永久失败 ⚠️</a></li><li class="d3"><a href="#方法论-3换肤改色阶定义不要逐页改-class">方法论 3：换肤改「色阶定义」，不要逐页改 class ⭐⭐</a></li><li class="d3"><a href="#方法论-4跑起来看抓到的缺陷静态审查一个都抓不到">方法论 4：「跑起来看」抓到的缺陷，静态审查一个都抓不到 ⭐⭐⭐</a></li><li class="d3"><a href="#方法论-5观测工具本身要先被证伪">方法论 5：观测工具本身要先被证伪 ⭐⭐⭐</a></li><li class="d3"><a href="#方法论-6面向粉丝群的更新报告画布宽度决定可读性-️">方法论 6：面向粉丝群的更新报告，画布宽度决定可读性 ⚠️</a></li><li class="d2"><a href="#四没达成--打折扣的诚实表">四、没达成 / 打折扣的（诚实表）</a></li><li class="d2"><a href="#五下次改进">五、下次改进</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="livelink-v142--v150-迭代复盘修一个不在自己代码里的-bug与三次自我纠错">LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错</h1>
+<blockquote>
+<p>记录日期：2026-08-02
+来源：LiveLink（B 站直播弹幕 + 礼物助手，Electron + Vue3）两天两个版本的迭代
+状态：<strong>过程已完成、结论部分待长时验证</strong>（重连修复只在模拟断网下验证过）</p>
+</blockquote>
+<hr>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>项目：LiveLink · <code>{AIGC工作站外}D:\B站直播弹幕+礼物插件</code> → github.com/Mr-Salticidae/livelink</li>
+<li>迭代时间：2026-08-01 ~ 08-02</li>
+<li>起始版本：v1.4.1（线上已发布）</li>
+<li>交付：<strong>v1.4.2</strong>（08-01 发布，断线重连修复）、<strong>v1.5.0</strong>（08-02 发布，视觉系统「蛛丝」），均含 NSIS 安装包</li>
+<li>代码改动：34 文件、+1757 / −186 行</li>
+<li>提交：<code>fb52809</code> → <code>46a45a7</code> → <code>6449780</code> → <code>6b94807</code></li>
+<li>触发需求：用户一句现象描述「意外断网后 app 断联后不间断重连但始终失败」</li>
+<li>验证：对真实 B 站服务器跑自建回归脚本 <strong>22 项断言全通过</strong>；半开连接看门狗实测 75s 准点判死；两个 typecheck + build 全绿</li>
+<li>数据来源：git log、gh release、CDP 实测输出、会话全过程记录</li>
+<li>执行：跳蛛先生（需求 / 决策）+ Claude Code（排查 / 实现 / 验证）</li>
+</ul>
+<hr>
+<h2 id="一这次真正学到的根因不在自己代码里">一、这次真正学到的：根因不在自己代码里</h2>
+<p>用户只给了一句现象。排查后确认<strong>三条根因全部在第三方库 <code>tiny-bilibili-ws@1.0.2</code> 里</strong>，
+而且都不是「用错了 API」，是那个库自身的设计缺陷：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>缺陷</th><th>后果</th></tr></thead><tbody><tr><td>1</td><td>握手 token 存进程级 Map，<strong>永不失效、无清除入口</strong>；<code>socket.reconnect</code> 是闭包，复用旧 host/port 与 <code>options.key</code></td><td>token 过期后重连必失败；连「停止→重新开始」都救不回来，<strong>只有重启进程</strong></td></tr><tr><td>2</td><td><code>close()</code> 取消不掉已排上的 5s 重连计时器（那是 close 处理函数里的局部变量）；断线超 5s 后 <code>live===false</code>，<code>close()</code> 直接空转</td><td>两条路都留下<strong>停不掉的僵尸连接</strong></td></tr><tr><td>3</td><td>心跳「收到回包才排下一次」，丢一个回包即永久停摆</td><td>连接静默死亡但不报 close，UI 长期假显示「已连接」</td></tr></tbody></table>
+<p><strong>三条都写脚本实测复现过</strong>，不是读代码推断的 —— 例如打印出两次 <code>startListen</code> 拿到<strong>完全相同</strong>的 token，
+以及「点了停止之后底层仍自动重连、socket <code>destroyed=false</code>」。这一步是后面所有判断的地基。</p>
+<p><strong>解法不是「正确调用」，是「关掉它自己接管」</strong>：自实现 WBI 签名直取新 token、
+<code>keepalive: false</code>、自己驱动心跳与拆连接。详见 → 本文「方法论 1」。</p>
+<hr>
+<h2 id="二三次自我纠错本篇最该记住的部分">二、三次自我纠错（本篇最该记住的部分）</h2>
+<h3 id="纠错一在过时检出上开发了整轮差点回退-13-个提交-️-最严重">纠错一：在过时检出上开发了整轮，差点回退 13 个提交 ⚠️ 最严重</h3>
+<p>本地 <code>main</code> 落后 origin <strong>13 个提交</strong>（线上已是 v1.4.1，我在 v1.2.0 的旧检出上改），
+且已把版本改成 1.2.1、写好发布说明。<strong>若直接发，会覆盖掉宠物系统、AI 回复、
+overlay 主题、赛马押注、装修预览等 13 个提交的全部功能。</strong></p>
+<p>没出事的原因：发布前查了 <code>git remote -v</code> 与 <code>git rev-list --left-right --count</code>。
+<strong>但这个检查做在「准备发布」而不是「开始写代码」，属于侥幸。</strong></p>
+<p>→ 已提炼为独立律：<a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a></p>
+<h3 id="纠错二把工具缺陷误判成产品-bug并写进了已发布的-release-notes">纠错二：把工具缺陷误判成产品 bug，并写进了<strong>已发布</strong>的 release notes</h3>
+<p>截图时 PowerShell 进程 DPI-unaware，125% 缩放下按虚拟坐标截图导致右侧被裁。
+我据此判定「布局在窄窗口被撑破」，写了 CSS 修复，<strong>并把这条写进 commit message 和已发布的 GitHub release notes</strong>。</p>
+<p>后来用 CDP 量出 <code>scrollWidth === innerWidth === 1086</code>，又做对照实验
+（900 / 820 / 760px 下加不加那段 CSS 结果完全一致）—— <strong>该 bug 从不存在</strong>。</p>
+<p>处置：编辑线上 release notes 删掉虚假声明；commit message 已推送无法干净改写，在此如实记录；
+那两行 CSS 作为无害防御性代码保留，但标注「未修复任何已观察到的问题」。</p>
+<p>这正是 <a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a> 记过的同一类陷阱的<strong>第三次发生</strong>
+（本次两个新形态已补进该文档），也是 <a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a> 的新盲区形态：
+<strong>不只是「宣称已实现 vs 实测可用」，还有「宣称已修复 vs 该 bug 根本不存在」</strong>。</p>
+<h3 id="纠错三整屏截图抓到无关前台窗口">纠错三：整屏截图抓到无关前台窗口</h3>
+<p>用 <code>CopyFromScreen</code> 整屏捕获时，前台被其他应用（含私人聊天窗口）占据，
+截图内容与项目无关且涉及隐私，发现后立即删除。
+改用 CDP <code>Emulation.setDeviceMetricsOverride</code> + <code>captureBeyondViewport</code> <strong>离屏渲染</strong>——
+只截目标页面自身，不受遮挡、也不会捞到别的窗口。</p>
+<h3 id="纠错四同一天又栽在同一个坑--落后的检出让我把-skill-报成不存在">纠错四：同一天又栽在同一个坑 —— 落后的检出让我把 skill 报成「不存在」</h3>
+<p>写完「纠错一」和 <a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a> 不到一小时，<strong>在知识库仓库上又栽了一次</strong>。</p>
+<p>作者说「更新报告有专门的 skill，从知识库中找」。我穷尽式搜了 <code>07_skill存档/</code>（20 个）、
+<code>SKILL_INDEX.md</code>、部署手册、<code>~/.claude/skills/</code>、两处项目级 skills 目录，
+又全库 grep 关键词 —— 零命中，于是**向作者报告「库里没有这个 skill」**并列候选让他选。</p>
+<p>真相：本地知识库落后 origin <strong>14 个提交</strong>，<code>report-longimage</code> 就在其中一个提交里。
+<code>git fetch</code> 后一秒命中。</p>
+<p>代价：白做了一版不合规的长图（自搭深色版式 + 自写渲染脚本），
+最终按 skill 的 PB Arena「简洁低疲劳 V2」版式重做（1120@2x → 2240 宽、暖白/炭黑/珊瑚红、
+两趟 headless Chrome 截图、裁头中尾验收）。</p>
+<p><strong>这次比第一次更阴</strong>：第一次是「我改的会覆盖别人的」，后果看得见；
+这次是「<strong>我搜不到的，我报告成不存在</strong>」—— 穷尽搜索 + 零命中读起来像强证据，
+实际只是索引旧。<strong>推论已回填进该律：在 git 仓库里做全库搜索并下否定结论前，
+<code>git fetch</code> 和 <code>grep</code> 同等必要。</strong></p>
+<hr>
+<h2 id="三方法论沉淀">三、方法论沉淀</h2>
+<h3 id="方法论-1依赖库没有关闭入口的贴心默认必须接管不要对抗">方法论 1：依赖库「没有关闭入口的贴心默认」＝必须接管，不要对抗 ⭐⭐</h3>
+<p><strong>核心</strong>：第三方库的自动重连 / 缓存 / 心跳这类默认行为，一旦实现有缺陷且<strong>没有对外的关闭或清除入口</strong>，
+上层无论怎么调都修不好。此时唯一出路是<strong>关掉它、自己接管</strong>，而不是想办法「用对」它。</p>
+<p><strong>来源</strong>：<code>close()</code> 取消不了已排上的重连计时器、token 缓存无清除入口。
+试图「正确调用」耗掉的时间远超「关掉 keepalive 自己写」。</p>
+<p><strong>验证状态</strong>：二次验证 ⭐⭐（本次 + <a href="/above-the-web/v1-f404c4e/" class="wikilink">变通方案不等于故障点_v1</a> 的同构结构：
+都在讲「别顺着别人的表层行为反推 / 迁就，要直接定位并接管真正的控制点」）</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>排查第三方库问题时，先读它的 dist 源码确认<strong>有没有对外的控制入口</strong>（关闭开关 / 缓存清除 / 状态重置）。</li>
+<li>没有入口 → 直接评估「关掉该功能自己实现」的成本，通常比对抗便宜。</li>
+<li>自己接管后<strong>必须显式关掉库的对应功能</strong>，否则两套机制打架。</li>
+</ol>
+<p><strong>反例 / 边界</strong>：库的功能属于核心能力（协议解析、加解密）时不适用，那部分仍应复用。</p>
+<h3 id="方法论-2凭证类缓存缺失效路径--从偶发失败退化成永久失败-️">方法论 2：凭证类缓存缺失效路径 → 从偶发失败退化成永久失败 ⚠️</h3>
+<p><strong>核心</strong>：任何带时效的凭证（token / session / 签名），只要被缓存且<strong>缺少失效路径</strong>，
+就会从「偶发失败」退化成「永久失败」，且表现为<strong>重启才能恢复</strong>。</p>
+<p><strong>来源</strong>：本次 token 存进程级 Map，导致「停止→重新开始」也救不回来。</p>
+<p><strong>验证状态</strong>：初次发现 ⚠️（本项目内单次）</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>失效判断<strong>不要用时间</strong>（猜不准），要用<strong>权威信号</strong>（握手被拒时显式作废）。</li>
+<li>但也不能每次都回源 —— 本次实测发现未登录状态下高频请求会被 B 站风控（<code>-352</code>）。
+最终采用「短 TTL 复用 + 握手失败显式作废」双轨。</li>
+<li>诊断指纹见 → <a href="/above-the-web/v1-ff371f2/" class="wikilink">重启才好是缓存了时效凭证的指纹_v1</a></li>
+</ol>
+<p><strong>反例 / 边界</strong>：无时效的静态资源（图标、字体表）缓存越久越好，不适用。</p>
+<h3 id="方法论-3换肤改色阶定义不要逐页改-class">方法论 3：换肤改「色阶定义」，不要逐页改 class ⭐⭐</h3>
+<p><strong>核心</strong>：项目里成百上千处颜色写死时，品牌化的杠杆点在<strong>配置层的色阶映射</strong>，而非逐页改。</p>
+<p><strong>来源</strong>：656 处 <code>slate-*</code> / 47 处 <code>sky-*</code>。在 <code>tailwind.config.js</code> 里把这两条色阶整体重映射，
+10 个页面 + overlay 一次换肤，零重构风险。</p>
+<p><strong>验证状态</strong>：二次验证 ⭐⭐（本次 + <a href="/above-the-web/v1-ffe7a6e/" class="wikilink">美工改稿全站落地_跨稿重复才是规范_v1</a>：
+都在讲「视觉改动要找到那个能一次覆盖全站的层」）</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>换肤前先统计各色系用量（<code>grep -ohE</code> 计数），找出承载语义的主色阶。</li>
+<li>重映射主色阶，<strong>保留语义色</strong>（成功 / 警告 / 错误）不动，否则用户认不出状态。</li>
+<li>组件级质感另开一层可复用类，不要散在页面里。</li>
+</ol>
+<h3 id="方法论-4跑起来看抓到的缺陷静态审查一个都抓不到">方法论 4：「跑起来看」抓到的缺陷，静态审查一个都抓不到 ⭐⭐⭐</h3>
+<p><strong>核心</strong>：typecheck 全绿 + build 成功 ≠ 用户看到的东西是对的。</p>
+<p><strong>来源</strong>：真机截图逐页验收抓到 3 个静态检查完全无感的缺陷 ——
+版本号写死（发 1.4.1 时侧栏显示 1.4.0）、观众端进房横幅硬编码不跟主题、连接状态重复显示两遍。
+三个都是「代码没错，但呈现出来是错的」。</p>
+<p><strong>验证状态</strong>：三次验证 ⭐⭐⭐
+（本次 + <a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a> + <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a> +
+<a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/" class="wikilink">2026-06-26_桌面应用打磨发布闭环复盘_工位池塘v0.5.0_v1</a> 的「布局量 DOM 不量截图像素」）</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>UI 类改动<strong>必须真的启动应用逐页看过</strong>才能说完成。</li>
+<li>看的时候带着「这里显示的值是从哪来的」去看，而不是只看好不好看
+—— 版本号那个 bug 就是这么发现的。</li>
+<li>截图工具本身要先被证伪（见方法论 5）。</li>
+</ol>
+<h3 id="方法论-5观测工具本身要先被证伪">方法论 5：观测工具本身要先被证伪 ⭐⭐⭐</h3>
+<p><strong>核心</strong>：用工具观测到的「异常」，第一嫌疑人是<strong>工具</strong>，不是被观测对象。</p>
+<p><strong>来源</strong>：本次两例 —— PowerShell DPI-unaware 导致截图右侧被裁（误判为布局溢出）；
+CDP <code>Page.getLayoutMetrics().contentSize</code> 按宿主 DPI 报<strong>物理像素</strong>
+（125% 缩放下多报 25%），当成 CSS 像素套进截图参数 → 长图底部空一大截。</p>
+<p><strong>验证状态</strong>：三次验证 ⭐⭐⭐（本次两例 + <a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a></p>
+<ul>
+<li><a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a>）</li>
+</ul>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>观测到异常，先用<strong>第二种独立手段</strong>复现（本次是 CDP 量 <code>scrollWidth</code>）。</li>
+<li>能拿程序内数值就不要靠肉眼看图（<code>document.documentElement.scrollWidth</code> 胜过截图）。</li>
+<li>Windows 上凡涉及像素坐标，<strong>先确认进程 DPI 感知状态</strong>。</li>
+<li><strong>没有第二种手段确认过的现象，不能写进对外文案。</strong> ← 本次栽在这条</li>
+</ol>
+<h3 id="方法论-6面向粉丝群的更新报告画布宽度决定可读性-️">方法论 6：面向粉丝群的更新报告，画布宽度决定可读性 ⚠️</h3>
+<p><strong>核心</strong>：群里多数人用手机看。长图画布用 1080 会让正文在手机上缩到 ~5px。
+应按「手机满宽阅读 ≈ 15px 正文」反推：<strong>750 画布 + 26px 正文</strong>，2 倍渲染输出 1500 宽。</p>
+<p><strong>来源</strong>：本次首版按 1080 做，作者提醒「多数粉丝用手机查看，不要搞得太宽」。</p>
+<p><strong>验证状态</strong>：初次发现 ⚠️（单次，且<strong>尚未在真机手机上验证</strong>）</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>群发长图：750 画布 / 26px 正文 / 2 倍渲染，发之前先在手机上看一眼。</li>
+<li>受众不全是产品用户时，开头必须交代「这是什么」。</li>
+<li>体例沿用 pb-arena《项目进展说明_给团队与测试用户》：
+大白话、按人群说话、用<strong>现象</strong>而非<strong>实现</strong>描述。
+生成模板已存于项目仓库 <code>docs/更新报告模板/</code>（HTML → Electron 无头截图），
+与 <a href="/above-the-web/v1-afcd606/" class="wikilink">长期更新展示站_两层结构与无头卡片量产_v1</a> 的无头卡片量产同一套路子。</li>
+</ol>
+<hr>
+<h2 id="四没达成--打折扣的诚实表">四、没达成 / 打折扣的（诚实表）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>项</th><th>状态</th></tr></thead><tbody><tr><td>三条根因定位与修复</td><td>✅ 已实测复现 + 22 项真机断言</td></tr><tr><td>「路由器重启几分钟能自己扛过去」</td><td>⚠️ <strong>设计意图，非实测结论</strong>（只在模拟断网下验证）</td></tr><tr><td>token 真实过期时能否自愈</td><td>⚠️ 未验证（没等到真实过期场景）</td></tr><tr><td>视觉系统落地</td><td>✅ 真机逐页截图验收</td></tr><tr><td>观众端 overlay 四套主题</td><td>⚠️ 只确认「未被误伤」，没做美术优化</td></tr><tr><td>更新报告长图可读性</td><td>⚠️ 只在渲染端看过，<strong>未在真机手机验证</strong></td></tr></tbody></table>
+<hr>
+<h2 id="五下次改进">五、下次改进</h2>
+<p><strong>如果重来，最想改的一步</strong>：在动第一行代码之前先 <code>git fetch</code> 对基线。
+本次在过时检出上开发了整轮，靠发布前的习惯性检查兜住 —— 这个检查必须前移到「开始」。</p>
+<p><strong>行动清单</strong>：</p>
+<ol>
+<li>开工前：<code>git fetch origin &#x26;&#x26; git rev-list --left-right --count origin/main...main</code></li>
+<li>排查依赖问题：先读 dist 源码找控制入口，没有就直接考虑接管</li>
+<li>写验证脚本：覆盖<strong>事故时序</strong>（用户实际操作顺序），不要只测 happy path</li>
+<li>UI 改完：真机启动逐页截图；截图工具先自证可信</li>
+<li>写对外文案前：逐条问「这条我实测过吗」，没实测过的删掉或标为设计意图</li>
+<li>群发长图：750 画布，发前手机上看一眼</li>
+</ol>
+<hr>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>上位心法：<a href="/above-the-web/claude-v1-ec3d11f/" class="wikilink">Claude完成报告核查心法_v1</a> —— 本次贡献「宣称已修复 vs 该 bug 根本不存在」这一新盲区</li>
+<li>同类陷阱：<a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a> —— 本次两个新形态已补入该文档</li>
+<li>工具证伪：<a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> · <a href="/above-the-web/v1-3fce0f1/" class="wikilink">交付前实测证伪律_v1</a></li>
+<li>本次提炼的律：<a href="/above-the-web/v1-043b6e8/" class="wikilink">开工前先对基线律_v1</a> · <a href="/above-the-web/v1-ff371f2/" class="wikilink">重启才好是缓存了时效凭证的指纹_v1</a></li>
+<li>同类项目复盘：<a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/" class="wikilink">2026-06-26_桌面应用打磨发布闭环复盘_工位池塘v0.5.0_v1</a> · <a href="/above-the-web/2026-07-14-vpn-guard-v1-7eff1d0/" class="wikilink">2026-07-14_vpn-guard从工具到宣传片_全链路复盘_v1</a></li>
+<li>视觉一次覆盖：<a href="/above-the-web/v1-ffe7a6e/" class="wikilink">美工改稿全站落地_跨稿重复才是规范_v1</a></li>
+<li>无头截图量产：<a href="/above-the-web/v1-afcd606/" class="wikilink">长期更新展示站_两层结构与无头卡片量产_v1</a></li>
+<li>复盘体例：<a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/2026-08-02_LiveLink%E6%96%AD%E7%BA%BF%E9%87%8D%E8%BF%9E%E9%87%8D%E5%81%9A%E4%B8%8E%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F_%E8%BF%AD%E4%BB%A3%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/2026-08-02_LiveLink%E6%96%AD%E7%BA%BF%E9%87%8D%E8%BF%9E%E9%87%8D%E5%81%9A%E4%B8%8E%E8%A7%86%E8%A7%89%E7%B3%BB%E7%BB%9F_%E8%BF%AD%E4%BB%A3%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/v1-ffe7a6e/">美工改稿全站落地 · 跨稿重复才是规范</a></li><li><a href="/above-the-web/2026-06-26-v0-5-0-v1-2a5533b/">桌面应用打磨发布闭环复盘 · 工位池塘 Desk Pond v0.5.0</a></li><li><a href="/above-the-web/claude-v1-ec3d11f/">Claude 完成报告核查心法</a></li><li><a href="/above-the-web/windows-dpi-v1-c276e21/">Windows 下编码与 DPI 的「所见非真相」</a></li><li><a href="/above-the-web/v1-3fce0f1/">交付前实测证伪律</a></li><li><a href="/above-the-web/v1-f404c4e/">变通方案不等于故障点</a></li><li><a href="/above-the-web/v1-043b6e8/">开工前先对基线律</a></li><li><a href="/above-the-web/v1-ff371f2/">「重启才好」是缓存了时效凭证的指纹</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-07-14-vpn-guard-v1-7eff1d0/"> <span class="card-cat">方法论与洞察</span> <h3>vpn-guard 全链路复盘：从一个防护需求，到开源工具，到宣传片</h3> <p>一个&quot;需求→工具→开源→传播&quot;的完整闭环里，最值钱的不是任何单点产出，而是几条反复复用的纪律：交付前先证伪、开源前先脱敏自己、产线要可复现、…</p> </a><a class="card" href="/above-the-web/v1-78108ee/"> <span class="card-cat">方法论与洞察</span> <h3>复盘事实先行原则</h3> <p>写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把&quot;我喜欢的设计&quot;潜意识等同于&quot;成功的设…</p> </a><a class="card" href="/above-the-web/v1-afcd606/"> <span class="card-cat">方法论与洞察</span> <h3>长期更新展示站:两层结构 + 无头卡片量产</h3> <p>任何「长期一期一期往里加」的展示型站点(作品集 / 教程系列 / 案例库),首页都不要顺序罗列全文——改成「分类封面墙 + 详情」两层,数据…</p> </a><a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一这次真正学到的根因不在自己代码里" data-toc-link="一这次真正学到的根因不在自己代码里">一、这次真正学到的：根因不在自己代码里</a></li><li class="d2"><a href="#二三次自我纠错本篇最该记住的部分" data-toc-link="二三次自我纠错本篇最该记住的部分">二、三次自我纠错（本篇最该记住的部分）</a></li><li class="d3"><a href="#纠错一在过时检出上开发了整轮差点回退-13-个提交-️-最严重" data-toc-link="纠错一在过时检出上开发了整轮差点回退-13-个提交-️-最严重">纠错一：在过时检出上开发了整轮，差点回退 13 个提交 ⚠️ 最严重</a></li><li class="d3"><a href="#纠错二把工具缺陷误判成产品-bug并写进了已发布的-release-notes" data-toc-link="纠错二把工具缺陷误判成产品-bug并写进了已发布的-release-notes">纠错二：把工具缺陷误判成产品 bug，并写进了已发布的 release notes</a></li><li class="d3"><a href="#纠错三整屏截图抓到无关前台窗口" data-toc-link="纠错三整屏截图抓到无关前台窗口">纠错三：整屏截图抓到无关前台窗口</a></li><li class="d3"><a href="#纠错四同一天又栽在同一个坑--落后的检出让我把-skill-报成不存在" data-toc-link="纠错四同一天又栽在同一个坑--落后的检出让我把-skill-报成不存在">纠错四：同一天又栽在同一个坑 —— 落后的检出让我把 skill 报成「不存在」</a></li><li class="d2"><a href="#三方法论沉淀" data-toc-link="三方法论沉淀">三、方法论沉淀</a></li><li class="d3"><a href="#方法论-1依赖库没有关闭入口的贴心默认必须接管不要对抗" data-toc-link="方法论-1依赖库没有关闭入口的贴心默认必须接管不要对抗">方法论 1：依赖库「没有关闭入口的贴心默认」＝必须接管，不要对抗 ⭐⭐</a></li><li class="d3"><a href="#方法论-2凭证类缓存缺失效路径--从偶发失败退化成永久失败-️" data-toc-link="方法论-2凭证类缓存缺失效路径--从偶发失败退化成永久失败-️">方法论 2：凭证类缓存缺失效路径 → 从偶发失败退化成永久失败 ⚠️</a></li><li class="d3"><a href="#方法论-3换肤改色阶定义不要逐页改-class" data-toc-link="方法论-3换肤改色阶定义不要逐页改-class">方法论 3：换肤改「色阶定义」，不要逐页改 class ⭐⭐</a></li><li class="d3"><a href="#方法论-4跑起来看抓到的缺陷静态审查一个都抓不到" data-toc-link="方法论-4跑起来看抓到的缺陷静态审查一个都抓不到">方法论 4：「跑起来看」抓到的缺陷，静态审查一个都抓不到 ⭐⭐⭐</a></li><li class="d3"><a href="#方法论-5观测工具本身要先被证伪" data-toc-link="方法论-5观测工具本身要先被证伪">方法论 5：观测工具本身要先被证伪 ⭐⭐⭐</a></li><li class="d3"><a href="#方法论-6面向粉丝群的更新报告画布宽度决定可读性-️" data-toc-link="方法论-6面向粉丝群的更新报告画布宽度决定可读性-️">方法论 6：面向粉丝群的更新报告，画布宽度决定可读性 ⚠️</a></li><li class="d2"><a href="#四没达成--打折扣的诚实表" data-toc-link="四没达成--打折扣的诚实表">四、没达成 / 打折扣的（诚实表）</a></li><li class="d2"><a href="#五下次改进" data-toc-link="五下次改进">五、下次改进</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

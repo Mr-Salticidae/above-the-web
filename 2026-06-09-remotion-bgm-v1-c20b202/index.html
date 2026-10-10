@@ -1,0 +1,216 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>2026-06-09 Remotion 全片音频字幕 BGM 复盘 · 蛛网之上</title><meta name="description" content="- 项目名称:Skill Is All You Need"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-06-09-remotion-bgm-v1-c20b202/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="2026-06-09 Remotion 全片音频字幕 BGM 复盘"><meta property="og:description" content="- 项目名称:Skill Is All You Need"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-06-09-remotion-bgm-v1-c20b202/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="2026-06-09 Remotion 全片音频字幕 BGM 复盘"><meta name="twitter:description" content="- 项目名称:Skill Is All You Need"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-06-09T00:00:00+08:00"><meta property="article:modified_time" content="2026-09-29T16:18:43+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="工具/Remotion"><meta property="article:tag" content="工具/ElevenLabs"><meta property="article:tag" content="工具/Suno"><meta property="article:tag" content="工具/Codex"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-06-09-remotion-bgm-v1-c20b202/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-06-09-remotion-bgm-v1-c20b202/","url":"https://tiaozhuxiansheng.com/2026-06-09-remotion-bgm-v1-c20b202/","headline":"2026-06-09 Remotion 全片音频字幕 BGM 复盘","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 项目名称:Skill Is All You Need","datePublished":"2026-06-09T00:00:00+08:00","dateModified":"2026-09-29T16:18:43+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 工具/Remotion, 工具/ElevenLabs, 工具/Suno, 工具/Codex"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"2026-06-09 Remotion 全片音频字幕 BGM 复盘","item":"https://tiaozhuxiansheng.com/2026-06-09-remotion-bgm-v1-c20b202/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-06-09T00:00:00+08:00">2026-06-09</time></span> <span>更新于 <time datetime="2026-09-29T16:18:43+08:00">2026-09-29</time></span> <span>约 5 分钟读完 · 1,958 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#事实记录">事实记录</a></li><li class="d2"><a href="#作品回顾">作品回顾</a></li><li class="d2"><a href="#问题一字幕和口播不能分叉">问题一:字幕和口播不能分叉</a></li><li class="d3"><a href="#方法论逐字字幕优先于摘要字幕">方法论:逐字字幕优先于摘要字幕</a></li><li class="d2"><a href="#问题二bgm-不是整首歌铺底">问题二:BGM 不是整首歌铺底</a></li><li class="d3"><a href="#方法论suno-成品要二次剪辑">方法论:Suno 成品要二次剪辑</a></li><li class="d2"><a href="#问题三动画时长不能靠估算">问题三:动画时长不能靠估算</a></li><li class="d3"><a href="#方法论旁白驱动视频必须音频先行">方法论:旁白驱动视频必须音频先行</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="2026-06-09-remotion-全片音频字幕-bgm-复盘">2026-06-09 Remotion 全片音频字幕 BGM 复盘</h1>
+<blockquote>
+<p>入档:2026-06-09
+项目:Skill Is All You Need / Remotion 全片草稿
+性质:Eleven 分段旁白 + Suno 双 BGM + Remotion 全片时间线复盘</p>
+</blockquote>
+<h2 id="事实记录">事实记录</h2>
+<ul>
+<li>项目名称:Skill Is All You Need</li>
+<li>工程位置:<code>07_skill存档/remotion</code></li>
+<li>主 Composition:<code>SkillIsAllYouNeedFullFilm</code></li>
+<li>本轮收口版本:<code>07_skill存档/remotion/out/full-film-20260609-voiceover-subtitle-fixed-draft.mp4</code></li>
+<li>当前规格:1920x1080 / 30fps / 6765 frames / 约 225.50s</li>
+<li>旁白结构:53 个 Eleven beat,写入 <code>public/audio/full_film_20260609/voiceover.manifest.json</code></li>
+<li>BGM 结构:Suno 两首成品拼接,<code>Open Bench</code> 负责开场与教学段,<code>Night Workshop Manifesto</code> 负责作者的话与片尾</li>
+<li>验证结果:<code>npm.cmd run typecheck</code> 通过;<code>npx.cmd remotion compositions src/index.ts</code> 通过;MP4 渲染成功,含 H.264 视频流与 AAC 音频流</li>
+<li>已知遗留问题:旧全片动画仍带有“先估动画、后做口播”的历史错位,本轮只修音频、字幕、BGM 和存档,未重做全部 motion timing</li>
+</ul>
+<h2 id="作品回顾">作品回顾</h2>
+<p>这次推进的目标,不是直接做最终发布版,而是把原先的教学片段扩展成一条完整视频草稿:前半段讲 Skill,后半段加入作者的话、工具链声明、开源态度和片尾署名。</p>
+<p>执行过程大致分成四步:</p>
+<ol>
+<li>先把文稿拆成 53 个可独立生成的旁白 beat;</li>
+<li>用 Eleven 生成分段 MP3,再读取真实 duration 反推 Remotion 全片 timing;</li>
+<li>用 Suno 生成并挑选两条配乐,再把完整音乐当素材库取片段使用;</li>
+<li>修正字幕与口播不一致、多音字/英文标识朗读异常、BGM 过于平铺等问题。</li>
+</ol>
+<p>最终产物是一个可审听的全片草稿,但还不是正式发布版。它的价值在于暴露了正式生产顺序应该如何调整。</p>
+<h2 id="问题一字幕和口播不能分叉">问题一:字幕和口播不能分叉</h2>
+<p>本轮一开始延续了早期小片段的做法:用 <code>ttsText</code> 给 Eleven,再用 <code>caption</code> 做字幕。这个结构本身没错,但如果没有严格约束,很容易出现两种分叉:</p>
+<ul>
+<li>TTS 里有 <code>[curious]</code>、<code>[calm]</code> 这类控制标签,字幕里没有;</li>
+<li>画面或字幕保留 <code>SKILL_INDEX</code>,但口播为了避免 Eleven 崩坏改成“技能索引”。</li>
+</ul>
+<p>用户明确提出“字幕和口播要完全统一”后,最终规则收束为:</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>字幕 = 实际口播文本</span></span>
+<span class="line"><span>画面标签 = 可以保留技术名词</span></span></code></pre>
+<p>也就是说,画面卡片可以显示 <code>SKILL_INDEX</code>,因为它是视觉技术名词;但底部字幕和 Eleven 实际读出来的句子必须统一为“技能索引像图书馆索引。”</p>
+<h3 id="方法论逐字字幕优先于摘要字幕">方法论:逐字字幕优先于摘要字幕</h3>
+<p><strong>核心</strong>:知识解释视频里,字幕首先是听觉校验层,不是二次摘要层。</p>
+<p><strong>来源</strong>:本次 <code>SKILL_INDEX</code> 朗读异常和情绪标签残留。</p>
+<p><strong>验证状态</strong>:二次验证。2026-06-08 正式小片段 v3 已出现同类问题,本次全片再次出现。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>第一版 <code>caption</code> 必须等于实际 <code>ttsText</code>。</li>
+<li>不要在 <code>ttsText</code> 中写 Eleven 可能读出来的控制标签。</li>
+<li>如果需要摘要字幕,必须另设字段,并标注为“非逐字字幕”。</li>
+<li>技术英文名词可以留在画面元素里,但不要强迫 TTS 朗读。</li>
+<li><strong>多音字误读 → 换成无歧义同义词</strong>(同属“TTS 误读就改写法”,不要搞注音/SSML/字幕分叉)。因 <code>caption=ttsText</code>,换词后字幕同步更新,听觉与视觉仍一致。实例:<code>调研</code>(应 diào,被读 tiáo)→<code>研究</code>;<code>一起来调</code>(应 tiáo,被读 diào)→<code>调试</code>。注意 Eleven v3 对“调”有 <strong>tiáo 偏向</strong>,两个方向都可能错,最稳是绕开“调”字。
+2026-07-02 新增实例(desk-pond,eleven_multilingual_v2):<code>染上</code>(rǎn→rán)→<code>上瘾</code>;<code>一项任务</code>(rèn→rén)→<code>一件事</code>;<code>只增不减</code>(zhǐ→zhī)→<code>只会变多,不会变少</code>。误读定位与换稿复测方法已沉淀为 <a href="/above-the-web/tts-asr-v1-18cdf62/" class="wikilink">TTS旁白也能蒙眼质检_ASR拼音级评分_v1</a>(多 take 一致误读=系统性偏差,抽卡无解必须换稿)。</li>
+</ol>
+<p><strong>边界</strong>:MV、情绪短片、无旁白视觉诗可以做意译字幕;但教程 / 解释 / 口播视频不适合。</p>
+<h2 id="问题二bgm-不是整首歌铺底">问题二:BGM 不是整首歌铺底</h2>
+<p>两首 Suno 成品都可用,但如果直接从 0 秒铺到对应段落,会出现两个问题:</p>
+<ul>
+<li>成品 intro / outro 可能不是最适合旁白的部分;</li>
+<li>一首歌从头铺到底容易变成通用背景,失去结构变化。</li>
+</ul>
+<p>本轮最后采用的做法是把 Suno 输出当作“素材库”:</p>
+<ul>
+<li><code>Open Bench</code> 从 10 秒开始取用,跳过前奏铺垫,直接进入稳定推进段;</li>
+<li><code>Night Workshop Manifesto</code> 从 5 秒开始取用,更快进入作者话需要的夜间工作室 / 宣言感;</li>
+<li>在作者话开始前做约 3 秒交叉淡入淡出。</li>
+</ul>
+<h3 id="方法论suno-成品要二次剪辑">方法论:Suno 成品要二次剪辑</h3>
+<p><strong>核心</strong>:Suno 生成的是音乐素材,不是自动适配成片结构的最终配乐。</p>
+<p><strong>来源</strong>:本轮两首 BGM 都喜欢,但直接使用完整版会显得平铺。</p>
+<p><strong>验证状态</strong>:首次发现。此前已有 Suno 两阶段 brief 经验,但“成品入 Remotion 前必须剪辑取段”是本轮明确化。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>先听整首,标记稳定段、上升段、过强高潮、尾奏;</li>
+<li>旁白段优先取稳定段,不要取 intro / outro 的功能性铺垫;</li>
+<li>作者话、转场、片尾可以换第二首或第二段,避免听觉疲劳;</li>
+<li>BGM 进入点要跟随真实旁白 timing,不要写死绝对帧。</li>
+</ol>
+<p><strong>边界</strong>:如果视频是 MV 或音乐主导内容,音乐结构可以反过来决定画面;但本片是旁白主导,音乐只能服务时间线。</p>
+<h2 id="问题三动画时长不能靠估算">问题三:动画时长不能靠估算</h2>
+<p>这次全片草稿仍保留了历史问题:早期 sceneSpecs 和 motion timing 是按估算时长写的,后续才生成真实旁白音频。结果是口播节奏变准了,但部分动画动作还停留在旧估算时间上。</p>
+<p>本轮没有强行修全部动画,因为在旧结构上逐段硬调会制造新错位。更正确的处理方式是把它记录为正式版制作顺序问题。</p>
+<h3 id="方法论旁白驱动视频必须音频先行">方法论:旁白驱动视频必须音频先行</h3>
+<p><strong>核心</strong>:知识解释视频的主时间轴是声音,不是画面。</p>
+<p><strong>来源</strong>:本轮全片草稿暴露出 motion timing 与真实旁白时长的错位。</p>
+<p><strong>验证状态</strong>:二次验证。2026-06-08 小片段复盘已经得出“Eleven v3 前置”规则,本次全片再次验证。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>先定稿文稿;</li>
+<li>按 beat 生成 Eleven 分段音频;</li>
+<li>读取每段真实 duration;</li>
+<li>用真实 duration 反推 scene duration、caption timing 和 motion timing;</li>
+<li>再做 MJ / Seedance / Remotion 动画;</li>
+<li>最后接入 Suno BGM 并按成片结构剪辑。</li>
+</ol>
+<p><strong>边界</strong>:纯视觉 demo 可以先做动画;但只要视频是旁白解释型,动画就必须服从音频。</p>
+<h2 id="下次改进">下次改进</h2>
+<p>下一轮不要在当前旧全片草稿上继续局部修补,而应该把当前草稿当成“声音与文稿锁定版”,进入正式重排:</p>
+<ol>
+<li>以 <code>fullFilmVoiceoverTiming.ts</code> 为时间真相;</li>
+<li>按真实 beat duration 重写 sceneSpecs 的 duration 与 motion;</li>
+<li>重新决定哪些段落需要 MJ / Seedance,哪些段落 Remotion 原生足够;</li>
+<li>BGM 继续保留双曲拼接,但音量和取段点随新版动画节奏微调。</li>
+</ol>
+<h2 id="如何使用">如何使用</h2>
+<p>做下一条 Remotion 旁白解释视频前,先检查这四项:</p>
+<ol>
+<li>字幕是否逐字等于实际口播?</li>
+<li>技术名词或<strong>多音字</strong>是否会被 TTS 误读?如果会,是否已经改成中文读法 / 无歧义同义词?</li>
+<li>动画时长是否来自真实音频,而不是手工估算?</li>
+<li>Suno BGM 是否经过剪辑取段,而不是整首铺底?</li>
+</ol>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-06-08-remotion-v3-v1-092ade9/" class="wikilink">2026-06-08_Remotion正式小片段v3复盘_v1</a></li>
+<li><a href="/above-the-web/remotion-v1-3c6609d/" class="wikilink">Remotion正式小片段实验工作流防偏移_v1</a></li>
+<li><a href="/above-the-web/2026-06-08-remotion-mj-seedance-v1-5120fe3/" class="wikilink">2026-06-08_Remotion_MJ_Seedance混合动画闭环复盘_v1</a></li>
+<li><a href="/above-the-web/aigc-skill-remotion-v1-ae3aad4/" class="wikilink">AIGC_Skill到Remotion视频闭环_v1</a></li>
+<li><a href="/above-the-web/suno-v1-1-0ee403e/" class="wikilink">Suno两阶段工作流_v1.1</a></li>
+<li><a href="/above-the-web/suno-v1-f32f73e/" class="wikilink">Suno配乐制作分享_v1</a></li>
+<li>后来的字幕做法(微电影里 Remotion 式字幕被作者判“廉价”):<a href="/above-the-web/libass-v1-f10b402/" class="wikilink">影视级双语字幕_中上英下与libass逐镜头烧录_v1</a></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">工具/Remotion</span><span class="tag">工具/ElevenLabs</span><span class="tag">工具/Suno</span><span class="tag">工具/Codex</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-29T16:18:43+08:00">2026-09-29</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-06-09_Remotion%E5%85%A8%E7%89%87%E9%9F%B3%E9%A2%91%E5%AD%97%E5%B9%95BGM%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-06-09_Remotion%E5%85%A8%E7%89%87%E9%9F%B3%E9%A2%91%E5%AD%97%E5%B9%95BGM%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-06-26-pilot-0-1-v1-f82995a/">2026-06-26 反诈柜台短视频 pilot 从 0 到 1 复盘</a></li><li><a href="/above-the-web/2026-08-24-v1-60852b9/">2026-08-24 《擦干净》从素材到动态化制片 · 全链路阶段性复盘</a></li><li><a href="/above-the-web/tts-asr-v1-18cdf62/">TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优</a></li><li><a href="/above-the-web/libass-v1-f10b402/">影视级双语字幕：中上英下与 libass 逐镜头烧录</a></li><li><a href="/above-the-web/v1-cc1661d/">知识科普片节奏诊断与重构</a></li><li><a href="/above-the-web/xremotion-v1-27cb9ce/">短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手</a></li><li><a href="/above-the-web/full-film-2026-06-16-worklog-v3-1-checkp-8f3564e/">全片 v3.1 封版存档 · 工作日志（2026-06-16）</a></li><li><a href="/above-the-web/full-film-2026-06-27-visual-pack-v3-1-3bd0eef/">全片 v3.1 视觉生产包（2026-06-27）· P1 九场景 MJ + Seedance</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-06-08-remotion-v3-v1-092ade9/"> <span class="card-cat">方法论与洞察</span> <h3>2026-06-08 Remotion 正式小片段 v3 复盘</h3> <p>- 成片 Composition:FormalClip20260608</p> </a><a class="card" href="/above-the-web/remotion-v1-3c6609d/"> <span class="card-cat">方法论与洞察</span> <h3>Remotion 正式小片段实验工作流防偏移</h3> <p>本次偏移发生在用户明确要求进入&quot;20-30s 连续小片段正式实验&quot;之后。</p> </a><a class="card" href="/above-the-web/v1-53f2101/"> <span class="card-cat">方法论与洞察</span> <h3>音频也能蒙眼剪辑:突然静音是剪出来的，不是生成的</h3> <p>生成式音乐工具(Suno)给不出&quot;中途突然静音&quot;——无声不在它的生成分布里。那段死寂/留白是剪出来的,不是生成的。 让 Suno 生成&quot;有情…</p> </a><a class="card" href="/above-the-web/suno-v1-1-0ee403e/"> <span class="card-cat">方法论与洞察</span> <h3>Suno 两阶段工作流 · Simple→Custom</h3> <p>Simple Mode 求 happy accident（发现），Custom Mode 锁定固化（执行）。这是 Suno 创作工作流的最优…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录" data-toc-link="事实记录">事实记录</a></li><li class="d2"><a href="#作品回顾" data-toc-link="作品回顾">作品回顾</a></li><li class="d2"><a href="#问题一字幕和口播不能分叉" data-toc-link="问题一字幕和口播不能分叉">问题一:字幕和口播不能分叉</a></li><li class="d3"><a href="#方法论逐字字幕优先于摘要字幕" data-toc-link="方法论逐字字幕优先于摘要字幕">方法论:逐字字幕优先于摘要字幕</a></li><li class="d2"><a href="#问题二bgm-不是整首歌铺底" data-toc-link="问题二bgm-不是整首歌铺底">问题二:BGM 不是整首歌铺底</a></li><li class="d3"><a href="#方法论suno-成品要二次剪辑" data-toc-link="方法论suno-成品要二次剪辑">方法论:Suno 成品要二次剪辑</a></li><li class="d2"><a href="#问题三动画时长不能靠估算" data-toc-link="问题三动画时长不能靠估算">问题三:动画时长不能靠估算</a></li><li class="d3"><a href="#方法论旁白驱动视频必须音频先行" data-toc-link="方法论旁白驱动视频必须音频先行">方法论:旁白驱动视频必须音频先行</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

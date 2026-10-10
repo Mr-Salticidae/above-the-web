@@ -1,0 +1,592 @@
+# 蛛网之上 · Above the Web
+
+> 跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。
+
+内容以简体中文为主，主题是用 AI 做图像、视频、音乐时值得留下的经验：方法论、prompt 模板、sref 与参数档案、平台工程记录。
+笔记采用 CC BY-NC 4.0 许可（署名、非商业），引用时请注明「蛛网之上」并附原文链接。
+
+## 版块
+
+- [笔记](https://tiaozhuxiansheng.com/notes/): 方法论、模板与档案，按主题分栏，共 519 篇
+- [AIGC 快讯](https://tiaozhuxiansheng.com/news/): 每天早晨出刊的 AIGC 新闻精选，每条附来源直达，共 98 期
+- [成为 Prompt 大师](https://tiaozhuxiansheng.com/prompt-master/): 面向小白的 prompt 拆解连载，共 13 期
+- [音乐](https://tiaozhuxiansheng.com/music/): AI 协作创作的歌
+- [任务书](https://tiaozhuxiansheng.com/tasks/): 对外发布的合作任务
+- [关于](https://tiaozhuxiansheng.com/about/): 站长、站点规矩、制作说明与许可
+
+## 订阅与索引
+
+- [全站 RSS](https://tiaozhuxiansheng.com/rss.xml): 笔记（全文）与快讯按时间混排
+- [JSON Feed](https://tiaozhuxiansheng.com/feed.json)
+- [Sitemap](https://tiaozhuxiansheng.com/sitemap.xml)
+
+## 笔记 · 方法论与洞察
+
+可复用的创作心法、审美判断与踩坑记录。
+
+- [方法论与洞察索引](https://tiaozhuxiansheng.com/04-1d37684/): 角色一致性、sref / personalize / moodboard、视觉签名与角色形象工作流。
+- [参考图缺失维度不可继承律](https://tiaozhuxiansheng.com/v1-38b6d46/): reference 类参数只能传递参考图里存在的信息。图里没有的维度，--sw 拉到 1000 也补不出来——它只会把「这个维度可以缺席」的处理方式一起传过去。
+- [单锚点优于三视图：一次没做身份板却撑住了一致性的实跑](https://tiaozhuxiansheng.com/v1-9369dec/): 角色一致性的经典配置是三视图 / 身份板（turnaround sheet / model sheet）：
+- [画风 Lora 数据集策划方法论](https://tiaozhuxiansheng.com/lora-v1-4b2a964/): 画风 Lora 的核心不是"出图能力"而是"画风密度控制能力"。MJ profile 在不同 prompt 配方下表达力差异极大，数据集策划的本质就是逼 profile 输出一致的…
+- [角色一致性金字塔(4 层结构)](https://tiaozhuxiansheng.com/v1-6b0cabf/): 角色一致性不是"三选一",是"四层金字塔"——风格签名(Style Creator) / 角色身份(oref/seed/描述词) / 账号审美(personalize/moodbo…
+- [跨 IP 作者签名 · 白玉兰与 still here](https://tiaozhuxiansheng.com/ip-still-here-v1-ccf566b/): 多 IP 账号需要"共享签名"——观众看到任意一张图 / 听到任意一段歌，能立刻识别"这是同一个作者"。
+- [双工具分工 · nano 锁脸 + MJ 摄影质感](https://tiaozhuxiansheng.com/nano-mj-v1-1991f0e/): 叙事型项目里,nano 负责"凡是有主角脸的镜头",MJ 负责"环境/物件/不露脸的氛围镜"——两个工具同时跑,各自做自己最强的事。MJ 没有 IPAdapter,跨场景锁脸=物理…
+- [微调的边界](https://tiaozhuxiansheng.com/v1-e30488e/): 核心叙事意象不可微调。微调前问："这个特征如果没了，主题还成立吗？"——不成立就不动。
+- [严格人脸一致性二创的范式阶梯（假说）](https://tiaozhuxiansheng.com/v1-4478bc8/): GPT Image 2 / MJ 这类是全局重生成（generate）工具——每次从噪声把整张图重画，没有机制"钉住"参考脸的像素。
+- [装扮签名 vs 五官精度 · IP 角色辨识的真相](https://tiaozhuxiansheng.com/vs-v1-aad8c40/): 真实 IP 角色都靠"装扮签名"建立辨识度,不靠"五官精度"——这是描述词锁定法的真实价值,也是 IP 战略的隐藏真相。
+- [AI 形象图工作流分层 · niji5 + Nano](https://tiaozhuxiansheng.com/ai-niji5-nano-v2-aff7d44/): 任何"画风强 + 个性化要素多"的 AI 形象图项目，都不可能用单一工具完成。强行让 niji 5 一次性出"画风对 + 漂浮对 + 颜值对 + 道具对 + 配色对"的图，就是踩工…
+- [GPT Image 2 锁脸的「脸占比上限」](https://tiaozhuxiansheng.com/gptimage2-v1-e7fe63b/): - 参考图特征：温婉圆脸、蓝灰色大而圆的眼睛、气质温婉。
+- [moodboard 跨题材审美迁移（人物 moodboard 当通用审美增强器）](https://tiaozhuxiansheng.com/moodboard-v1-604d1f0/): 一个为某题材（如美女写真）长期调校的高质量 moodboard，承载的不是内容（美女），而是创作者的审美风格基底（光影 / 质感 / halftone 复古调 / 精致度）。把它跨…
+- [moodboard 拉力陷阱](https://tiaozhuxiansheng.com/moodboard-v1-c683401/): MJ 的 moodboard 不是"颜色滤镜",是"视觉语义场"——它会同时拉走色调 + 构图 + 主体姿态 + 氛围联想。用 moodboard 救色调时,主体可能被"拉到"奇怪…
+- [moodboard 主体位判据 · 假说](https://tiaozhuxiansheng.com/moodboard-v1-e606d3e/): moodboard 的行为可能不取决于题材远近，而取决于目标画面里有没有一个「可以被它替换的主体位」。 没有主体位，它只能给风格；有主体位，它会往那个位置填人——填对是资产，填错是…
+- [nano 跨场景三变量发现](https://tiaozhuxiansheng.com/nano-v1-0b9354f/): nano 在没有 IPAdapter 的情况下实现「跨场景同一角色」,只靠 prompt 不够,必须同时锁定三个变量:参考图(带氛围)+ 锁摄影风格 + 极简 prompt。任一缺…
+- [oref / sref 的工具版本与挂载方式(MJ 实操约束)](https://tiaozhuxiansheng.com/oref-sref-v1-a1dd8d4/): 1. oref 仅支持 v7
+- [oref 高方差律 — oref 不是不能用,是方差大](https://tiaozhuxiansheng.com/oref-v1-51c7af9/): MJ 的 oref 锁脸不是不能用,是高方差:同一套 prompt 反复跑,有的塑料浓妆/五官异常,有的皮肤自然骨相端正。问题在方差,不在上限。 抽卡足够多 + 逐张过验收,能稳定…
+- [personalize 与 moodboard 的分工](https://tiaozhuxiansheng.com/personalize-moodboard-v1-cccac49/): personalize 是审美底盘,moodboard 是题材绑定——personalize 默认常驻,moodboard 按题材开关。
+- [sref 编号独立律](https://tiaozhuxiansheng.com/sref-v1-fa9fbc1/): sref 编号 ≠ sref 工具,每个编号都是独立的"摄影师签名",需要单独探脾气。一个编号表现不佳,第一反应应该是"换编号",不是"换工具"。
+- [sref 用一年,我才搞懂的「纯净性原则」](https://tiaozhuxiansheng.com/sref-v1-311be08/): 做项目的人都知道, sref(style reference)是 MJ 实现"风格统一"的核心机制。但你有没有遇到过这种情况:
+- ["AI 温柔违抗" · 现象观察](https://tiaozhuxiansheng.com/ai-v1-428f03e/): AI 在你的 personalize 训练后,会"温柔地"修正你当下随便写的 prompt——它从你长期审美里学到的偏好,会覆盖你即兴的指令。
+- [「不够帅 / 不够美」是年龄轴，不是颜系轴](https://tiaozhuxiansheng.com/v1-6705db3/): 收到"不够帅 / 不够好看"的反馈时,先分轴再改 prompt。 这类反馈九成落在年龄轴(五官没长开 / 显老)或光影轴上,而第一反应几乎总是去改颜系轴(加骨相、堆立体度)——加错…
+- [触觉抽象词翻译公式](https://tiaozhuxiansheng.com/v1-8af5c76/): 抽象触觉词(顺滑 / 粗糙 / 沉重 / 温暖)在 prompt 里不能只作为形容词出现——必须翻译成"具体物质类比 + 具体物理动作 + 持续证据"三件套,MJ 才能造出可信的画…
+- [短钩子公式:逐渐 + 具体动作](https://tiaozhuxiansheng.com/v1-b884352/): 抽象情绪 →「逐渐 +(具体动作 / 状态)」
+- [儿童主题避雷词替换法](https://tiaozhuxiansheng.com/v1-8176290/): 儿童主题里,把 child / kid / little girl 替换为 schoolgirl in school uniform——既锁住年龄区间,又避开直接的儿童词触发审核或…
+- [反向描述的负面锚定](https://tiaozhuxiansheng.com/v1-f9d56ac/): 当 MJ 容易跑偏到某个方向时,正向描述(写你想要的)往往不够,要主动写"不要 X,要 Y"才能让 MJ 真的理解差异。
+- [封面对角平衡构图律](https://tiaozhuxiansheng.com/v1-33f402f/): 叠标题时,把文字放在底图主体的对角一侧;若主体朝向背离标题,水平镜像底图让主体脸/视线朝向标题,借视线把读者引向文案。
+- [光暗作为空间叙事工具](https://tiaozhuxiansheng.com/v1-e96482a/): 用一道光把画面切成"外/内"两个世界,比画墙、画门、画屏障更省力——光自己就能完成"这里是私人空间"的空间宣告。
+- [极简插画"删表情"律](https://tiaozhuxiansheng.com/v1-73a9328/): 极简插画(尤其日系 MUJI / 长场雄 / 中村佑介早期)里,人物表情越少,情绪空间越大——和写实摄影完全相反。
+- [集体作为个体的对比锚](https://tiaozhuxiansheng.com/v1-e00d97e/): 用人群的同质化来切割个体的特殊性——一个穿西装的人不孤独,一车厢穿西装的人里只有他是灯泡头才孤独。集体本身就是叙事工具,不需要画"孤独"两个字。
+- [时空叠化的锚定物律](https://tiaozhuxiansheng.com/v1-c4d956c/): 当一张图要展示同一空间在不同时态(春夏秋冬、白天黑夜、过去现在)时,必须有跨象限的锚定物作为"这是同一空间"的物证——没有锚定物,合成就退化为四张拼贴。
+- [私人空间道具密度公式](https://tiaozhuxiansheng.com/v1-392f19b/): "长期布置过的私人空间"的最优道具密度 = 5-6 件,单独罗列、不堆砌。
+- [伪央视字幕条视觉范式](https://tiaozhuxiansheng.com/v1-d073bb8/): 伪央视字幕条的核心是"白底黑字 + 红蓝色块"四色对比，不是"半透明深色 + 白字"。
+- [无边界现象 vs 有边界物件](https://tiaozhuxiansheng.com/vs-v1-eb9095e/): 当主题是自然力量 / 宇宙现象 / 抽象意境时,让它从画外延伸进来,比给它一个完整边界更有威力——画面只是宇宙级现象的一个"截面",不是它的全貌。
+- [主体不看镜头律](https://tiaozhuxiansheng.com/v1-44939f6/): 当主题是"她的某个时刻",主体绝不能看镜头——一旦正脸示人,私密感立刻破掉,从"她的秘密"变成"她在表演她的秘密"。
+- [姿态指令的不确定性策略](https://tiaozhuxiansheng.com/v1-b1b1347/): MJ 对带方向的姿态描述(slightly tilted back / bowed forward / turned to side)解释空间很大——情绪类主题用宽泛词留意外,叙事…
+- [AI 静物特写的本质短板](https://tiaozhuxiansheng.com/ai-v1-7e03ae3/): AI 没有"动作发生"的时间感受——任何"完全静止"的静物特写都会读起来像"棚拍商品图",失去叙事张力。要救场,必须给静物加一个"动作来源"(风/光/手/时间),哪怕这个动作只是暗…
+- [AI 甜妹脸 vs 复古东方美人](https://tiaozhuxiansheng.com/ai-vs-v1-7078a4f/): MJ V7+ base model 默认输出的不是"中国脸",是西方训练集对东方面孔的"复古化想象"——民国老照片质感的东方美人,而非当代东方审美。personalize 才能修正…
+- [MUJI 风的适用边界](https://tiaozhuxiansheng.com/muji-v1-2b71666/): MUJI 极简插画风适合"单一完整状态",不适合"多符号叠加"——极简的克制属性是 buff 还是 debuff,完全取决于主题需要几个符号说话。
+- [表现形式破同质化：媒介即主题](https://tiaozhuxiansheng.com/v1-1d7f9b7/): 当概念层已经卷不出新意时，换"表现形式（媒介/画风）"比换"概念"更高杠杆——而最高级的换法是让媒介本身承载主题，而非只为"看起来不一样"。
+- [超现实细节的物理锚](https://tiaozhuxiansheng.com/v1-6fdd726/): 用一个具体的物理细节,让超现实从"AI 拼接感"升级为"这个世界里就有这种生物"——螺口、缝线、铰链、关节、接缝、毛孔——8 个词决定整张图的可信度。
+- [超现实主题的冷热两种处理路径](https://tiaozhuxiansheng.com/v1-8f6325d/): 所有超现实主题至少有两条独立路径:冷处理(默默发生的日常超现实)vs 热处理(爆炸瞬间的超现实)——两条都能拿奖,但配方完全相反,选错路径就是做错题。
+- [超现实主体的普通身体律](https://tiaozhuxiansheng.com/v1-96351ff/): 主体身上的超现实部分越夸张,其他部分越要保留普通的疲惫和日常——反差是超现实的引擎,全身奇幻反而冲淡主题。
+- [抽象题面的同构动作对位法](https://tiaozhuxiansheng.com/v1-192a4d1/): 抽象关系题面（对话/传承/冲突/告别）不画字面场景，翻译成"两个时代/世界做同构动作"的对位结构——关系本身用一个连接介质可视化。
+- [氛围题的"读不清"优先律](https://tiaozhuxiansheng.com/v1-1b0019e/): 在纪实超现实 / 氛围路线里，画面的"读不太清"（动态模糊 / 半遮 / 夜色 / 抓拍感）不是缺陷，是氛围资产。它制造"我好像瞥见了什么、可又说不清"的真实感与不安感。
+- [高辨识二人组梗图法](https://tiaozhuxiansheng.com/v2-db07ada/): 跟"二人组"这类挑战 / 梗图,赢点在选人 + 格式,不在某一种画风:选一对身材反差强、一眼能认、自带梗的二人组,用一个有张力的媒介风格郑重画出来,落差即会心一笑;再在背景藏一个第…
+- [红海主题的三条破局路径](https://tiaozhuxiansheng.com/v1-1a2f6ac/): 撞车池越深的题,破局路径越多元。"风花雪月"这种传统文人题,同期三张获奖图分别走了三条完全不同的破局路径:概念路径 / 视觉奇观路径 / 媒介稀缺路径 —— 下次遇到红海题,先在三…
+- [夸张表情律_反向_v1](https://tiaozhuxiansheng.com/v1-ccee41c/): 漫画、油画、混合媒介这类强笔触语境下,夸张表情不是要"删"的冗余,而是核心引擎——和写实摄影/极简插画的"删表情"完全反向。媒介决定方向,不是题材决定方向。
+- [浪漫题的两条路线：奇观浪漫 vs 叙事浪漫（附"震撼≠浪漫"色温诊断）](https://tiaozhuxiansheng.com/vs-v1-be4185e/): 浪漫题至少有两条路径：奇观浪漫（尺度/花海/崇高/物理违和）vs 叙事浪漫（人物关系/道具/留白/longing/纪实）。同行互投里叙事浪漫（直击"被打到"）通常  奇观浪漫（停在…
+- [隐喻身体化升级法](https://tiaozhuxiansheng.com/v1-495d30c/): 把外部隐喻物从"主体身边的物件"升级为"主体身体本身的属性"——隐喻从"事件"升级为"内在状态",视觉荒诞度与概念密度同步翻倍。
+- [真实摄影手段作为 AI 时代的稀缺性](https://tiaozhuxiansheng.com/ai-v1-374c1ce/): 当 AI 图供应过剩,真实摄影手法本身就成了稀缺品 —— 红外、长曝、闪光实验、胶片光化学反应、暗房 alt processes —— 这些"AI 模仿不到位"的物理手段反而是 A…
+- [《1000人后室大逃亡》配音工序 · 四音色定版复盘（2026-08-05）](https://tiaozhuxiansheng.com/2026-08-05-v1-7db25e0/): - 执行：2026-08-05，11:01–15:09，9 个提交
+- [《1000人后室大逃亡》S45–S48 收尾段 · 运镜与跨镜一致性返工复盘（2026-08-08）](https://tiaozhuxiansheng.com/2026-08-08-s45-s48-v1-d4f40a9/): - 执行：2026-08-08 傍晚，两轮，2 个提交（2dad6d1、a2e00a0）
+- [《清月》单条 15 秒角色 PV：立项到三平台发布](https://tiaozhuxiansheng.com/2026-09-26-15-pv-v1-bb6060b/): - 作品：《清月》，9:16、15.04 秒的 AI 角色 PV。主角是银发仙子，单场景月夜云海，无台词，无片尾字卡。
+- [《右下角的池塘》游戏宣传微电影：AI 屏幕外 + 游戏实录混剪，到双语字幕发布](https://tiaozhuxiansheng.com/2026-09-29-v1-03d7c00/): - 作品：《右下角的池塘》，16:9、1:48.29 的宣传微电影，给自研桌面小游戏《工位池塘 Desk Pond》v0.6.0 做。主角「小满」，全片一个机位（显示器往外看的工位…
+- [《余温》单元剧 EP03《瓦尔卡·静院》：LibTV 样片到正片](https://tiaozhuxiansheng.com/2026-10-05-ep03-libtv-v1-5cd4acf/): - 作品：《余温》单元剧第 3 集《瓦尔卡·静院》。约 2 分钟（4 段 × 30 秒，外加系列片尾），台词 5 句全英文。主角瓦尔卡，回来的老师是渡鸦人科尔文，结局"放他进门"。
+- [《余温》动作修复：把“自然”写成具体的持物与走位](https://tiaozhuxiansheng.com/2026-09-16-v1-11febd5/): - 项目：71余温哥特告别短片，群像预告片 v6；不是比赛。
+- [《余温》关键帧先行 → 锚点制 → M02 四轮试镜：把该交给视频模型的还给它](https://tiaozhuxiansheng.com/2026-09-20-m02-v1-8100c2c/): - 项目：71余温哥特告别短片/08群像预告片/15关键帧先行20260918；不是比赛。
+- [《余温》见证者角色 PV：立项到四平台发布](https://tiaozhuxiansheng.com/2026-10-01-pv-v1-1ddae81/): - 作品：《余温》见证者角色 PV 第一支《瑟兰薇》。16:9，38.3 秒，其中正片 33.3 秒、系列片尾 5.0 秒。全片只有一句台词"嘘。"，用原声，没有配乐。
+- [《余温》阶段复盘：分段蒙太奇与原片重配声音](https://tiaozhuxiansheng.com/2026-09-06-v1-47fea6b/): - 项目：71余温哥特告别短片。性质为自有短片创作与工作流验证，非比赛。
+- [「蒙眼剪辑法」— 一套基于 Claude 的 AIGC 视频内容产出闭环](https://tiaozhuxiansheng.com/v1-25a3d5e/): LLM(大语言模型)有一个根本性盲区:它无法直接观看视频内容。
+- [2026-05-24｜30 项目角色 PV 发布复盘](https://tiaozhuxiansheng.com/2026-05-24-30-pv-v1-e4228dd/): 项目：30伊恩・古德费罗的寓言
+- [2026-06-07 Stay alive AI 音乐公益 MV 复盘](https://tiaozhuxiansheng.com/2026-06-07-stay-alive-ai-mv-v1-5aba73f/): - 作品名称：《Stay alive》
+- [2026-06-08 Remotion × MJ × Seedance 混合动画闭环复盘](https://tiaozhuxiansheng.com/2026-06-08-remotion-mj-seedance-v1-5120fe3/): - 验证场景:scene04repeattoskill
+- [2026-06-08 Remotion 正式小片段 v3 复盘](https://tiaozhuxiansheng.com/2026-06-08-remotion-v3-v1-092ade9/): - 成片 Composition:FormalClip20260608
+- [2026-06-09 Remotion 全片音频字幕 BGM 复盘](https://tiaozhuxiansheng.com/2026-06-09-remotion-bgm-v1-c20b202/): - 项目名称:Skill Is All You Need
+- [2026-06-26 反诈柜台短视频 pilot 从 0 到 1 复盘](https://tiaozhuxiansheng.com/2026-06-26-pilot-0-1-v1-f82995a/): - 链路打通:文稿 → ElevenLabs 自定义音色配音 → 读真实时长写 src/timing.generated.ts(音频先行)→ Playwright 竖屏录屏(?ca…
+- [2026-07-31 Codex 教程实战六 · 自动化录屏 19 段复盘](https://tiaozhuxiansheng.com/2026-07-31-codex-19-v1-e56ff53/): - 项目：《Codex 保姆级教学》实战六「自动化口播剪辑」的教学素材录屏（不是剪片，是录教程演示画面）
+- [2026-08-01 Codex 教程清单 2/3/4 · 三项目 19 段录屏复盘](https://tiaozhuxiansheng.com/2026-08-01-codex-2-4-19-v1-5f86653/): - 项目：《Codex 保姆级教学》录制清单 2/3/4 的教学素材录屏，三个案例分属三个真实项目（台风实况站 / 朱元璋 K 线人生 / 工位池塘）
+- [2026-08-13 Codex 教程操作部分 · 26 段重录复盘（19/26）](https://tiaozhuxiansheng.com/2026-08-13-codex-26-v1-d606839/): - 项目：《Codex 保姆级教学》操作部分录屏，26 条分镜（镜号 316-341），分 3 集
+- [2026-08-14 Codex 教程录制链路打磨 · 复盘](https://tiaozhuxiansheng.com/2026-08-14-codex-v1-c53b251/): - 项目：《Codex 保姆级教学》操作部分录屏，上接 2026-08-13Codex教程操作部分26段重录复盘v1（19/26）
+- [2026-08-24 《擦干净》从素材到动态化制片 · 全链路阶段性复盘](https://tiaozhuxiansheng.com/2026-08-24-v1-60852b9/): - 作品名称:《擦干净》(B 站互动短片,悬疑/荒诞/社畜,主线 3:12 + 结局 A/B 各带 36s 片尾)
+- [2026-08-26 《擦干净》剧本口径审计与补图承接位 · 复盘](https://tiaozhuxiansheng.com/2026-08-26-v1-5c8b145/): assetcheck.cjs 报 70/70 全绿，同一批资产按剧本审出 4 条 P0。两个结论都是对的，因为它们验的根本不是同一件事。
+- [2026-08-26 《过风》雪雾珍珠人像动态写真 · 全链路复盘](https://tiaozhuxiansheng.com/2026-08-26-v1-c69c850/): - 作品名称：《过风》（雪雾珍珠人像动态写真，28.08s）
+- [50 号学员作品集混剪 · 蒙眼剪辑完整链路复盘（2026-07-02）](https://tiaozhuxiansheng.com/2026-07-02-50-v1-657ae63/): ① 配乐(Suno参考曲复刻) → ② 人耳打点+算法吸附 → ③ config/逻辑分离渲染
+- [按切点重拍：省的是生成时长，不是"局部编辑功能"](https://tiaozhuxiansheng.com/v1-5ee9070/): 一句话：片子里有一段不对，不要整片重生成，也不要指望"局部重绘"这种开关——在切点上把片子切开，只重拍出问题的那几秒。生成类接口按时长收费，缩短重拍范围就是省钱。
+- [白底上的白事件等于没发生](https://tiaozhuxiansheng.com/v1-7d210aa/): 选「片子里发生什么」之前，先看底图的影调。
+- [参考曲复刻法 · reference 曲 → Suno 提示词](https://tiaozhuxiansheng.com/reference-suno-v1-02d748b/): 有参考曲时，别凭感觉描述——把它拆成「四层配方」查证，再用「四个杠杆」按反馈定向逼近。 模糊形容词（快/吵/薄/散）要翻译成杠杆动作（降速/去噪/加编制/收段落），而不是笼统「更好…
+- [短视频批量分发方案 · 蒙眼剪辑法 × Remotion × 抖音/B站/快手](https://tiaozhuxiansheng.com/xremotion-v1-27cb9ce/): 1. 图文流量天花板低,视频是增量入口。小红书图文已就绪(见 小红书导流话术合规红线扣1领资料v1 同项目),但抖音/B站/快手是视频平台,图文几乎没有自然流量。要拿这三个平台的量…
+- [多线交叉型 AI 短片：The Windshield Wiper 案例](https://tiaozhuxiansheng.com/ai-thewindshieldwiper-v1-01329e3/): AI 短片不一定要靠一个主角、一条连续剧情或大量对白来完成叙事。 当角色识别、情绪递进、声音信息和统一主题足够清楚时，多条人物线可以轮流推进，形成“形散意不散”的短片结构。
+- [氛围曲的结构在音色，不在响度](https://tiaozhuxiansheng.com/v1-05fe83f/): 无词哼鸣 / ambient 这类持续音乐没有响度乐段，RMS 包络找不到结构点，
+- [概念推演型 AI 短片：Total Pixel Space 案例](https://tiaozhuxiansheng.com/ai-totalpixelspace-v1-07886c3/): AI 短片不一定要先讲传统故事，也可以先提出一个足够锋利的思想问题，再用概念递进、视觉统一和声音节奏，把观众推向这个问题背后的不安。
+- [镜内切入优于拆镜：保住下游帧锚](https://tiaozhuxiansheng.com/v1-89b7ead/): 剧本里常有这种写法：
+- [剧情向 AI 短片创作方法论 · 丧尸清道夫案例（待验证）](https://tiaozhuxiansheng.com/ai-v1-d98a2a3/): 美学卷不动了，能把 3-5 分钟剧情讲完整、且选择性绕开 AI 技术短板的人，能跳过流量赛道直接进入主流影视行业的视野。
+- [卡点力度分层 —— 重拍要有"视觉重量"，不然切得再准也不像敲击](https://tiaozhuxiansheng.com/v1-eb37094/): 卡点"敲击感" = 时机准 × 力度分层：所有切换统一硬切时，重拍和普通拍没有视觉差异，音乐的段落感就丢了；给每刀配"冲击缓落"，再给重刀叠"亮闪"，两级力度即可让画面力度映射音乐…
+- [跨镜道具锁定律：资产图优于形容词](https://tiaozhuxiansheng.com/v1-ad701a9/): 一句话：一件道具只要出现在两个以上镜头，就得有一张属于它自己的参考图。提示词里写多少形容词，模型每一镜都会重新想象一次。
+- [录屏分镜按确定性分层：生成性镜头，逐字稿后配](https://tiaozhuxiansheng.com/v1-f4e2df1/): 《Codex 保姆级教学》的生产顺序是：内容组先写逐字稿 → 录制侧照稿复刻画面。
+- [绿勾只覆盖它自己那张清单](https://tiaozhuxiansheng.com/v1-69498a6/): 体检器报 70/70，缺失 0，✅ 全部命中。
+- [盲剪匹配转场 —— 步进抽帧扫动作相位，看不见视频也能做帧级 match cut](https://tiaozhuxiansheng.com/v1-6850112/): 匹配转场的本质是"动作相位对齐"：出刀素材停在动作顶点，入刀素材从同相位续接。AI 看不见视频，但可以对动作窗口做步进抽帧拼图目检，把"顶点"钉到 0.1s 级时间戳——之后只是算…
+- [锚点只给站位律：动作交给视频模型](https://tiaozhuxiansheng.com/v1-dd98c63/): 一句话：给 Seedance 的静态参考只定"谁在哪、朝哪、门开没开、冠在不在"，人物一律自然站姿；动作、手势、景别、切换写在提示词里，由模型演。把动作画死在图上，模型只能往那个姿…
+- [派生图不进视频输入律：噪点随编辑代数累积](https://tiaozhuxiansheng.com/v1-c5fded6/): 一句话：GPT Image 每多派生一代，噪点就叠一层；把这样的图挂进 Seedance 全能参考，视频会把噪点当质感学走。人物身份只用 MJ 原图或一代定妆图，姿势规则写进文字，…
+- [强对比型 AI 短片：Ice Merchants 案例](https://tiaozhuxiansheng.com/ai-icemerchants-v1-4c02144/): 短片不一定要靠复杂剧情打动观众。 当视觉设定、人物关系、重复动作和情感缺口形成强对比系统时，一个极简故事也能完成清楚、克制、有效的情绪闭环。
+- [青春记忆 MV · 四镜头组验证法](https://tiaozhuxiansheng.com/mv-v1-d1ecf2c/): 青春记忆型 MV 不要先追完整剧情,要先锁 4 个"记忆证据镜头":核心意象、亲近动作、普通课堂动作、现在时闭环。 这 4 个镜头成立,全片的情绪骨架才成立;这 4 个镜头不成立,…
+- [人耳打点吸附 —— 卡点裁决权归人耳，毫秒精度归算法](https://tiaozhuxiansheng.com/v1-9521a52/): 卡点剪辑中，"选哪些拍"必须归人耳，"精确到哪一毫秒"归算法：让创作者跟着音乐打拍子，再把每个手打点吸附到 ±0.18s 内最强能量攻击峰、提前 1 帧补视觉延迟。
+- [素材审片也能蒙眼 —— 盲选靠标题,定案靠眼睛](https://tiaozhuxiansheng.com/v1-bf57d38/): 批量爬取素材站时,文件名里的标题只配用来"盲选进候选池";入库定案必须逐条抽帧目检(3 帧/条拼条带图),按实际画面重命名——盲选靠标题,定案靠眼睛。
+- [图片占位 → 视频替换的工作流](https://tiaozhuxiansheng.com/v1-787da21/): 先用静态基准图按 plan 拼出占位粗剪,验证卡点+节奏+情感曲线 → 再开跑可灵图生视频,逐段替换占位图为视频,plan 时间轴保持不变。失败可回滚到上一段图占位,且整个叙事节奏…
+- [图生视频 · Forward-Only 原则](https://tiaozhuxiansheng.com/forwardonly-v1-7c8a4d7/): 图生视频的 prompt 必须写"从源图当前状态向后发展(forward-only)",不能写"实现某个状态"。
+- [现实悖论型 AI 短片：Jailbird 案例](https://tiaozhuxiansheng.com/ai-jailbird-v1-20e6676/): AI 短片的一致性不只有角色一致性。 当命题、视角和情绪足够稳定时，角色外观的不稳定可以被转化为风格；《Jailbird》的核心不是“同一只鸡”，而是“被囚禁者照顾被囚禁者”这个现…
+- [音频也能蒙眼剪辑:突然静音是剪出来的，不是生成的](https://tiaozhuxiansheng.com/v1-53f2101/): 生成式音乐工具(Suno)给不出"中途突然静音"——无声不在它的生成分布里。那段死寂/留白是剪出来的,不是生成的。 让 Suno 生成"有情绪的素材",把精确的静默/卡点切口交给剪…
+- [影视级双语字幕：中上英下与 libass 逐镜头烧录](https://tiaozhuxiansheng.com/libass-v1-f10b402/): 作者看了第一版说明字：「不要用remotion的字幕，很廉价，采用影视级双语字幕标准」。
+- [用 Suno 给视频做定制 BGM —《凝视》配乐制作分享](https://tiaozhuxiansheng.com/suno-v1-f32f73e/): 很多人听完《凝视》的 BGM 觉得很合,问我怎么做的。这篇就把整个流程分享出来,顺便把我踩过的坑也写下来。
+- [游戏宣传片实录：引擎逐帧录制与脚本代打](https://tiaozhuxiansheng.com/v1-5899ba4/): 给自己的游戏拍宣传片，游戏画面既不要录屏，也不要交给 AI 画。
+- [知识科普片节奏诊断与重构](https://tiaozhuxiansheng.com/v1-cc1661d/): 科普片"过于刻意"的根因往往不在剪辑或动画，而在口播稿的结构与节拍；可以用时长占比量化诊断，用"贯穿单案例 + 长短碎交替"重构。
+- [资产配对生成传播母题](https://tiaozhuxiansheng.com/v1-060c5fa/): 给作品找"宣传噱头 / 母题"时，不要凭空造概念——在已有资产里找一对天然的对立或互补，再用一个广为人知的文化符号升华。这样的母题更真实、更易传播，也不容易显得"刻意"。
+- [自动化产出双重验收：机器验参数，人眼验内容](https://tiaozhuxiansheng.com/v1-7f8ce8a/): 自动化跑完会给你一个绿色的"✓"。那个勾的含义是"我按脚本做完了"，不是"结果是对的"。
+- [AI 角色 PV 制作方法：情绪图到设定板](https://tiaozhuxiansheng.com/ai-pv-v1-6d560e0/): 当一个 AIGC 短片项目具备强角色资产，但剧情连续镜头还不够成熟时，优先制作角色 PV，而不是硬剪剧情预告。
+- [AI 视频本机超分：Real-ESRGAN x4plus 与闪烁检查](https://tiaozhuxiansheng.com/ai-realesrgan-x4plus-v1-d00e5e4/): "720p 出片、后期超分"是库里好几个项目定下的省钱做法,这是第一次真的做完。做法是逐帧超分,再缩到目标尺寸,原音轨直接复制。选模型前先抽三帧对比:CG 质感的片子用 reale…
+- [cinemagraph 微动作：待机层是真实感引擎](https://tiaozhuxiansheng.com/cinemagraph-v1-ce0a684/): 让 AI 静态肖像"活起来"，真实感主要来自"待机层"，而非主动作本身。
+- [Codex 保姆级教学 · 代码化口播剪辑完整复盘（2026-07-16）](https://tiaozhuxiansheng.com/2026-07-16-codex-v1-13b837e/): - 作品名称：《Codex 保姆级教学》
+- [L-cut 卡点 + xfade 时长抵消](https://tiaozhuxiansheng.com/l-cut-xfade-v1-af75393/): xfade dissolve 每个吃 0.4s × N 个转场 = 累计偏移。要保持 plan 卡点严格对齐人声,每段视频必须 setpts 拉长 +XFADEDURATION 来…
+- [MV 卡点工具 · 画框陷阱](https://tiaozhuxiansheng.com/mv-v1-0be1fac/): 当一个看似可配置的工具反复输出"不该出现的默认行为",直接看源码定位硬编码,不要在工具的 API 层反复试。23 项目的米白画框就是 mvkadiantool 的 videoren…
+- [Remotion 正式小片段实验工作流防偏移](https://tiaozhuxiansheng.com/remotion-v1-3c6609d/): 本次偏移发生在用户明确要求进入"20-30s 连续小片段正式实验"之后。
+- [Suno 两阶段工作流 · Simple→Custom](https://tiaozhuxiansheng.com/suno-v1-1-0ee403e/): Simple Mode 求 happy accident（发现），Custom Mode 锁定固化（执行）。这是 Suno 创作工作流的最优路径，不应该"直接上 Custom"。
+- [Suno 时长控制:结构标签代替秒数](https://tiaozhuxiansheng.com/suno-v1-cb637cc/): 想直接生成 ~60s 的短曲(规避裁剪),能不能在 prompt 里写时长?
+- [Suno Custom Mode 版权过滤器规避](https://tiaozhuxiansheng.com/suno-v1-6d5ca8c/): Suno Custom Mode 版权过滤器主要拦截三类：副歌 hook 撞名 / 歌词文本撞句 / Style 框具体艺人指向。优先换 hook，不要在歌词文本上反复改字——成本…
+- [TTS 旁白也能蒙眼质检 — ASR 拼音级评分与多 take 选优](https://tiaozhuxiansheng.com/tts-asr-v1-18cdf62/): ElevenLabs 生成的中文旁白,创作者审听报出三个问题:咬字含糊、口水音重、多音字读错。AI 无法听音频,以往只能"改参数→请人再听"盲迭代。本轮验证了一条闭环:用本地 Wh…
+- [Vocal Gender 反选 · 风格 prior](https://tiaozhuxiansheng.com/vocal-gender-prior-v1-8eddad6/): Suno v5.5 的 Vocal Gender 参数不只是声部开关，更是隐藏的"风格 prior"——它在内部激活的是整体编曲/节奏/混音的风格分布。当你用 Style 框 + …
+- [《故事》读书笔记：工具的丰饶不等于创造力的丰饶](https://tiaozhuxiansheng.com/v1-70154b0/): 工具的丰饶,从不等于创造力的丰饶。看过 ≠ 懂得,会用工具 ≠ 会创作;门槛被踏平的地方,往往正是低级内容最汹涌的地方。
+- [沉思录读书笔记：关系义务与自足之美](https://tiaozhuxiansheng.com/v1-4195a1d/): 真正的成熟不是只会处理事务，也不是把价值交给外界评价，而是在忙碌中仍记得善待身边的人，在沉默中仍能保持正确的生长。
+- [低频退化与频率定律](https://tiaozhuxiansheng.com/v1-a261d91/): 大模型不一定更擅长理解最准确的表达，而更擅长理解它见过最多次的表达。 频率（token / 词 / 句 / 数据分布）可能是被严重低估的隐变量——这条认知反过来改写 prompt …
+- [对话感 · 关系产生生命力](https://tiaozhuxiansheng.com/v1-adba543/): 听觉疲劳常被误判为"旋律不够丰富"，真正的根源往往是叙事结构是一条单向信息流——加入第二个声音、让表达变成"被回应的关系"，作品才从"传递信息"升级为"产生生命力"。
+- [沟通成本的第二来源:范围与高度错位——精密文档的边界陷阱](https://tiaozhuxiansheng.com/v1-2a37e2e/): 第一来源是"没说清楚",要靠压缩解决;第二来源是"清楚地说了另一个尺度",要靠对齐边界解决。前者缺精炼,后者缺校准。
+- [生成时代作品作者版权重定义](https://tiaozhuxiansheng.com/v1-6c0e1d8/): 复制成本归零后，旧版权框架（禁止复制）失效；新秩序里真正的资产是 形式本体 + 被命名 + 被调用——抄袭越多、调用越频繁，原点的价值越大。
+- [压缩保留簇，丢弃孤例](https://tiaozhuxiansheng.com/v1-5bbb46a/): 决定一样东西在模型里命运的，不是它"冷门还是大众"，而是它在训练数据里的「簇密度」＝样本量 × 簇内同质度。 压缩靠的是共性，所以它保留簇、丢弃孤例——推到极端：一个东西之所以珍贵…
+- [语言的 Encoder / Decoder 模型：压缩服务知识库，还原服务传播](https://tiaozhuxiansheng.com/encoder-decoder-v1-eb438b6/): 《语言形式思维模式沟通成本v1》提出语言三态（探索 / 结构 / 执行），其全部指向是“压缩”——把口语想法逐级精炼为可执行、可复现的结构。本篇指出该框架缺失一态：传播语言，其功能…
+- [语言形式、思维模式与沟通成本](https://tiaozhuxiansheng.com/v1-da9dbfe/): 人类常用线性的、探索性的语言来生成想法，却期待对方直接交付结构化、可执行、可复现的结果；AI 工作流的关键价值，就是把探索语言转译为结构语言和执行语言。
+- [知识传播与知识付费边界](https://tiaozhuxiansheng.com/v1-c082192/): 知识创造者应当获得回报，但知识本身不该被筑成围墙。 更理想的模式是:基础知识自由流动，创作者通过服务、支持、赞助、公共机制和深度陪伴获得收益。
+- [R-07 创作内核：克制微动、天真文案与减法原则](https://tiaozhuxiansheng.com/r-07-v1-1b29bfb/): R-07 项目 Wave 5 S9 镜头反馈:"野猫完全不动,会不会有些刻意?"
+- ["我没想到 + 我做不到" 双触发器](https://tiaozhuxiansheng.com/v1-bd044c5/): 获奖图至少要触发其一，最好两个都触发。"我没想到"打概念，"我做不到"打勇气，两个分别戳同行的不同神经。
+- [《镜像自我·人生预演》36h 极限开发（BW 展台互动影游）](https://tiaozhuxiansheng.com/2026-07-09-36h-v1-ba4605e/): - 作品名称:《镜像自我·人生预演》—— BILIBILI WORLD 展位互动影游 v2（纯前端 + RTX 本地 AI,全程可断网）
+- [《满堂》复盘 · 来源约束与文风归位（2026-08-03）](https://tiaozhuxiansheng.com/2026-08-03-v1-9f69b31/): 一个作品该做什么物料、用什么文风,在动笔前就由两件事定死了:prompt 是谁的(决定能不能拆配方),这条属于哪条线(决定文案是散文诗还是配方帖)。这两问漏了,做完的东西要整套撕掉…
+- [「重启才好」是缓存了时效凭证的指纹](https://tiaozhuxiansheng.com/v1-ff371f2/): 用户说「只能重启才好」时，优先怀疑：进程内缓存了某个带时效的凭证，
+- [2026-07-30 风眼「九段线示意插图」问题地图事故复盘](https://tiaozhuxiansheng.com/2026-07-30-v1-a378a3b/): - 项目:风眼 · Typhoon Eye,台风实况与分级应急预案单页站。双发布面:GitHub Pages(mr-salticidae.github.io/typhoon-eye…
+- [2026-08-20 zombie-world 联机重构与局内货币 · 全链路复盘](https://tiaozhuxiansheng.com/2026-08-20-zombie-world-v1-7371418/): - 项目：zombie-world（僵尸危机：方块头），B站 Toy 19242799980544，PUBLIC
+- [2026-08-21 一小时分享会 · 从设计到投影现场 · 全链路复盘](https://tiaozhuxiansheng.com/2026-08-21-v1-35cad1d/): - 场景：2026-08-21 下午一场 60 分钟公开分享《一小时，让一屋子不写代码的人相信自己也能做出一个游戏》，
+- [45球星身体 第02期夜醒篇 制作复盘](https://tiaozhuxiansheng.com/2026-06-18-45-02-v1-5b75a3b/): 把第01期"睡眠方法"的好反馈,顺着观众评论的真实痛点,深挖成第02期"睡眠质量",并用"痛点 ↔ 球星解法"映射,把大众痛点焊到明星热点上。
+- [变通方案不等于故障点](https://tiaozhuxiansheng.com/v1-f404c4e/): 接手钉钉交付时，我看到仓库里同日提交了 4 个格式变体（附件版 / 公网图链版 / 纯文字版 / 占位标注版），据此反推出结论："钉钉粘贴带不了图片，所以要准备多种兜底"，并把这条…
+- [沉默失败先装嘴律 · 够不到的环境，先给它一层能看见的报错](https://tiaozhuxiansheng.com/v1-63180a1/): 当一个失败不报告任何原因时，第一件该修的不是那个 bug，是「它不说话」这件事。
+- [打磨不等于校验律](https://tiaozhuxiansheng.com/v1-938b91e/): 对一个对象做精细打磨,不产生任何关于它内容正确性的证据 —— 但会因为「看起来经过了工序」,悄悄抬高你和所有人对它的信任。打磨越多,越没人回头问「这东西本身对吗」。
+- [钉钉知识库交付：格式白名单 + 终版回填闭环](https://tiaozhuxiansheng.com/v1-388f3ab/): - 目标：教程正文定稿后并入公司钉钉知识库母文档，上级在钉钉上做终审
+- [钉钉逐字稿补写：「过渡话术」是占位符不是待办 + 案例引言体例](https://tiaozhuxiansheng.com/2026-09-15-mention-v1-8393eba/): 教程序列文档里写着「过渡话术」四个字的段落，是作者预留的槽位，不是留给 AI 的任务说明——接到"在 XX 之前补一段过渡话术"时先读区间，槽位往往已经在那儿，正解是原地改写而不是…
+- [翻车梗 / 过程叙事作入场票 · 假说](https://tiaozhuxiansheng.com/v1-d0d1ada/): 一个成品的"显性入场票"常是美学辨识度（好看），但对技术向 + 整活人设的作者，把创作过程里的技术翻车 / 对照实验重新包装成自黑叙事，可能是比成品美学更强的入场票——因为它同时触…
+- [范文参考骨架律：提炼功能骨架，不抄表层句式](https://tiaozhuxiansheng.com/v1-a82d159/): - 组长范文（AI剪辑板块引言）：「大家知道吗？剪辑视频的这项技能也在渐渐被AI取代了。AI可以针对口播视频进行字幕，进度条添加，弹窗特效添加等等。我们先来看一下Codex的成片。…
+- [方向词要用既往选片反推](https://tiaozhuxiansheng.com/v1-fd9700f/): 「要视觉效果」「要高级」「要抢眼」「要氛围」这类方向词没有客观定义，
+- [飞书应用发群消息：免 webhook 直发](https://tiaozhuxiansheng.com/webhook-v1-7dc6b0b/): 自建应用发群消息不用另建 webhook 机器人：只要 bot 已在群、应用有 IM 权限，tenant token 直接 POST /im/v1/messages 就发出去了；c…
+- [飞书应用文档授用户编辑权：唯 open_id 可靠](https://tiaozhuxiansheng.com/open-id-v1-d50e7e4/): 把"应用发布的飞书文档"授予某人编辑权，别信手机号 / 邮箱那套；唯一稳的是拿到此人 openid，按 membertype=openid 授 fullaccess。而 openi…
+- [复盘事实先行原则](https://tiaozhuxiansheng.com/v1-78108ee/): 写复盘文档时,先把事实(结果、票数、排名、数据)冻结在文档顶部的元数据里,再开始写赢点和对比。否则会把"我喜欢的设计"潜意识等同于"成功的设计"——这是一种自我归因偏差。
+- [个人项目免 PR 直推主分支](https://tiaozhuxiansheng.com/pr-v1-b896304/): 个人项目不要走 PR 流程——自己写代码、自己审核、自己合并，这套仪式没有实际价值，反而拖慢迭代。直接 commit & push 到 main/master 即可。
+- [个人优势路线优先律（红海赛道：回到已验证的护城河，别在大众维度内卷）](https://tiaozhuxiansheng.com/v1-f829593/): 红海赛道里，与其在大众都在拼的维度（如"视觉质量"）上内卷（天花板 70-80 分），不如回到你自己已验证能起量的个人优势媒介/形式做降维差异化。投入前先定这条优势路线，别先烧几轮…
+- [工位池塘 v0.6.2：两个老 issue 从分诊到三端发版](https://tiaozhuxiansheng.com/2026-10-06-v0-6-2-issue-v1-9f291ee/): - 作品名称：工位池塘 Desk Pond v0.6.2
+- [公众号稿送专业方审阅翻车 · 弃读点与框架错误（2026-08-05）](https://tiaozhuxiansheng.com/2026-08-05-v1-a1af0ef/): 跨领域断言的错误分两种：事实错误可以自查（核对来源就行），框架错误自查不出来——因为它在框架内部完全自洽，只有领域内的人实读全文才会撞上；而他撞上的位置（弃读点）比他指出的错误更有…
+- [好流量是好作品的产物 · 战略 v3.1 反思](https://tiaozhuxiansheng.com/v3-1-v1-fffdad7/): 好流量是好作品带来的产物，不能因果倒置。
+- [混合真伪的证据链:最弱一环会拖垮最强一环](https://tiaozhuxiansheng.com/v1-8b48fc6/): - 场景:2026-08-21,QQ 群里群友"球"围绕 2026 年第 10 号台风美莎克(2610)提出一组说法,并把作者自己做的工具(风眼 · Typhoon Eye)"查不…
+- [获奖图复盘方法论合集 · 活合集 v12](https://tiaozhuxiansheng.com/note-1060456/): v1 沉淀：17 条方法论 + 1 条二次验证（基于 3 场获奖图）
+- [获奖图复盘方法论合集 v1 · 已被活合集取代](https://tiaozhuxiansheng.com/2026-05-18-19-v1-6f72139/): 核心:让一个物件同时承载两种身份——观众的脑子需要 0.4 秒来切换,这 0.4 秒就是反讽。
+- [积分制比价先校购买力律](https://tiaozhuxiansheng.com/v1-1b51e5d/): 积分不是货币,标价差不等于到手差。 凡是用积分 / 点数 / credits / 算力豆计费的服务,跨平台、跨区服、跨套餐比价时,必须先确认一个积分能买到什么,再谈单价贵贱。只比单…
+- [即梦 / Dreamina 跨区定价实测:同产品双账号对照](https://tiaozhuxiansheng.com/dreamina-v1-337cf9b/): 价格差本身落在税负 / 支付通道 / 合规成本 / 受管制算力所能解释的区间内。真正的问题是通道。
+- [即梦片场活动细则审阅：四类坑点清单](https://tiaozhuxiansheng.com/2026-08-26-v1-726c42b/): - 活动概况：字节「即梦片场」长内容扶持计划，2026.8–2026.12；电影（建议 ≥90 分钟，按「分钟」计量，S/A 两级）/ 剧集（单集 ≥3 分钟、整体约 100 分钟…
+- [交付前实测证伪律](https://tiaozhuxiansheng.com/v1-3fce0f1/): 别交付未验证的"应该能行"。任何"X 应该有效"的假设，交付前先写最小探针去证伪它——尤其跨平台、跨环境、跨版本的行为假设，它们最爱静默失效。
+- [交接文档不是需求原文，接手第一件事是回溯上游](https://tiaozhuxiansheng.com/v1-a1d4663/): 交接文档天生长着一副"权威"的样子：它有版本号、有"已确认的关键决策（封箱，不要再讨论）"这样的措辞、有踩坑清单和理由。它比原始需求文档读起来更像定论——因为原始需求往往只有一行冷…
+- [角色卡 vs 主办方意图 · 协作元方法论](https://tiaozhuxiansheng.com/vs-v1-f81db28/): Claude 推导的"角色卡设定" 是工作锚点，不是合规标准。当工具反复输出"意外解" 且主办方未明确否决时，先送审让主办方拍板，不要在 Claude 脑补的"合规标准" 里反复消…
+- [镜像自我「镜中特写 AI 读心」迭代（占位稿 → gpt-5.5 云端个性化）](https://tiaozhuxiansheng.com/2026-07-14-ai-v1-507e155/): - 项目:《镜像自我·人生预演》镜中特写 AI 读心板块——选性别后拍照/上传 → AI 读脸出五段人物特写 → 印象贯穿终局（AI 叙事织入 + 报告卡/海报/打印版/扫码手机报…
+- [开工前先对基线律](https://tiaozhuxiansheng.com/v1-043b6e8/): 动第一行代码之前先对基线，别把这个检查留到发布前。
+- [可行性生死线前置律 · 移植先探一票否决约束，再修正确性](https://tiaozhuxiansheng.com/v1-75dde95/): 把项目搬到异构运行时 / 新平台时，先验证那个「若不达标就整件事作废」的杀手级约束，再投入修正确性和外观细节。 一个能跑起来的粗糙构建就足以量它（帧率 / 包体 / 启动时间 / …
+- [跨阶段决策边界对位核验律](https://tiaozhuxiansheng.com/v1-ea91460/): 复审不是孤立打分，是跨阶段边界对位。 评价学员阶段产物之前，先把上一阶段已经过审的「什么不做」清单拉过来逐条核验——把「做多了」的预算推回到「缺了」的缺口上，而不是孤立地给当前产物…
+- [快手分发 SOP](https://tiaozhuxiansheng.com/sop-v1-36988b5/): 1. 不为快手而创作——作品的选题、表达方式、节奏、长度，不因为快手用户的口味偏好而调整。快手永远是分发渠道，不是内容指令。
+- [理论板块教程制作：无源项目可反推时的变体](https://tiaozhuxiansheng.com/v1-e9d7826/): - 任务：补写母教程中标注（跳）的「AI编程理论科普」板块，位置在 PART2 开头、软件界面介绍之前。作者指示受众为完全零基础——没写过一行 Python、没接触过编程、没听说过…
+- [浏览器插件自动化的能力边界](https://tiaozhuxiansheng.com/v1-5d049d6/): 浏览器插件能替你导航、填表、点选、读页面状态,但有三类硬边界必须由人来过:①登录 / 验证码 / 不可逆发布、②文件上传(沙箱)、③被安全策略拦截的域名。接活前先把"哪些插件做、哪…
+- [慢热作品识别](https://tiaozhuxiansheng.com/v1-ad966b4/): 有一类作品在 24 小时窗口看像"流量虚假"，但在 48-72 小时会自我翻盘——算法通过用户行为信号重新锁定它的目标受众。这种作品叫"慢热作品"，错杀它的代价比误判其他作品都高。
+- [破坏性操作先写停止条件律](https://tiaozhuxiansheng.com/v1-c08b22e/): 把破坏性操作交给别人（人或 agent）执行时，「什么情况下该停」的优先级高于「要做什么」。
+- [前置音频修复：插孔检测与交接复核复盘](https://tiaozhuxiansheng.com/2026-09-07-v1-183d96d/): 在已安装的 Realtek Audio Console 中，点击左下角“模拟”旁齿轮，勾选 “禁用前面板插孔检测”。前置输出立即变为可用，Windows「系统 → 声音」将 Rea…
+- [球星睡眠质量选题资料包（睡得浅 / 夜里醒 / 入睡难）](https://tiaozhuxiansheng.com/v1-64d45e7/): C罗 / Nick Littlehales R90 体系
+- [任务书制作：把合作需求变成可执行的学员任务](https://tiaozhuxiansheng.com/v1-6e3df89/): - 任务：把一次“教程合作 + 案例复刻 + 学员外包”的需求，整理成可直接转发给学员的任务书。
+- [入场票框架](https://tiaozhuxiansheng.com/v1-4aa7e88/): 好作品 ≠ 创作完成度高。它还需要"概念可识别 + 入场票"。
+- [入场票框架 v1.1 · 迭代待办暂存](https://tiaozhuxiansheng.com/v1-1-v1-9f69a9f/): 触发：异界气象台 minitest 封面 v1 翻车（2026-05-14）
+- [闪电战冷读者校准律（观众 ≠ 创作者，也 ≠ AI）](https://tiaozhuxiansheng.com/v1-810fdd1/): 闪电战的可读性，绝不能用「我/AI 的解读」或「创作者的已知意图」来评估——这两者都自带作弊器。必须用冷读者模型：一个不懂创作思路、无零延时优势、0.5 秒划过的陌生人。
+- [闪电战赛前赛中协议](https://tiaozhuxiansheng.com/v1-1193eff/): Prompt Battle 闪电战（5 分钟、1 轮）下，副会话的角色不是创意主导，是"快速候选生成器 + prompt 翻译机"。本文档定义赛前必问、Claude 真实角色、通讯…
+- [生成物不入 git](https://tiaozhuxiansheng.com/git-v1-cc2dcd9/): 给教程产出 PDF 备份（11.4MB，20 页含嵌入图）后，我提示过"二进制大文件建议不入库"，跳蛛先生回"一并提交"，于是连同两份 md 一起 commit 了。下一句他就纠正…
+- [识别工具天花板的时机](https://tiaozhuxiansheng.com/v1-dff6dd3/): 当工具在某一层达到物理上限时，继续在工具内努力等于"看起来勤奋实际无效"。识别天花板的时机 + 切换到合适的工具/角色接管该层，是 AI 协作工作流的最高阶能力。
+- [同行互投赛制的反主流原则](https://tiaozhuxiansheng.com/v1-2067983/): 当对手是 AI 出图同行（都懂 prompt、都见过 MJ 主流审美）时，主流审美的卷度是负权重。要赢必须主动跳出他们的舒适区，选同行需要勇气才会选的方向。
+- [外来 prompt 不做配方物料 · 建目录第一件事写来源](https://tiaozhuxiansheng.com/prompt-v1-a643718/): 归档一个作品前先问「这条 prompt 是谁的」。外来 prompt(朋友给的 / 私下流传的)一律不做配方物料——不做配方卡、不做逐层拆解、不做「配方拆给你」式收藏钩子;只留看图…
+- [完结项目反推学员教程：大纲先行 + 两级审核](https://tiaozhuxiansheng.com/v1-9bb7884/): - 任务：为母教程《120min Codex小白系列教程》补写「实战6-自动化口播剪辑」子章节；该位置原本只挂了成片附件，正文空缺
+- [网易云音乐人发布 SOP](https://tiaozhuxiansheng.com/sop-v1-1311b18/): 网易云不是流量平台，是音乐资产的"长期家"——视频平台生命周期 7-30 天，网易云是数年。所有字段填写决策围绕"让这首歌在 3 年后被检索到"做，不是"让算法明天推荐"。
+- [忘提交的机器兜底 · refs/wip 快照三件套](https://tiaozhuxiansheng.com/refs-wip-v1-6fa6b25/): 靠记性执行的流程必然漏，修法不是"下次记得"，是把每种忘法各配一个机器兜底。
+- [微信群反馈机器人与 Wechaty 博客 PR：全链路复盘](https://tiaozhuxiansheng.com/2026-08-10-wechaty-pr-v1-4ede191/): - 起点：pb-arena 有一个活跃的用户微信群，反馈散落在聊天里，手工收集漏消息。决定搭一个被动监听机器人自动入库。
+- [伪开源三查律](https://tiaozhuxiansheng.com/v1-9c3eb59/): GitHub 公开仓库 ≠ 开源。 想改造/依赖一个"开源项目"之前，花五分钟做三查——查不过就只能"看功能找灵感"，不能碰代码。
+- [小红书笔记外链必带 xsec_token](https://tiaozhuxiansheng.com/xsec-token-v1-ad1f0f4/): 往任何站外页面(画廊 / 网站 / 文档 / README)放小红书笔记链接时,必须用带 xsectoken 的完整分享链接,或 App「分享 → 复制链接」得到的 xhslink…
+- [小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流](https://tiaozhuxiansheng.com/1-v1-3fb8828/): 「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成"自然交流"引导。
+- [小红书点赞与收藏陷阱](https://tiaozhuxiansheng.com/v1-a10f201/): 小红书算法里:点赞  收藏。内容密度过高 → 收藏远多于点赞 → 算法判定为"保存型内容"停止推送。
+- [小红书正文超 1000 字是拆篇信号](https://tiaozhuxiansheng.com/1000-v1-2b2c761/): 小红书正文 1000 字上限不是排版限制,是平台在替你执行「别写大教程」。 写超了,第一反应不该是删字,该是拆篇——因为逼你超限的那个结构(五条病灶 / 八个要点 / 全流程),正…
+- [有意改动不是故障](https://tiaozhuxiansheng.com/v1-880a034/): 教程「成品展示」区原有一张战斗截图，是早期版本的 3D 机甲画面。跳蛛先生手动删掉了这张图的引用（因为它过时了，和当前 2D 精灵敌人不符）。
+- [约束型结论先复核律 · 文档写的「不可能」会过期](https://tiaozhuxiansheng.com/v1-2885b47/): 当一条写在自己文档里的结论正在否决一整类方案时，先花几分钟复核它，再接受它。
+- [载体默认语义反噬（题眼被载体的常识含义盖掉）](https://tiaozhuxiansheng.com/v1-03d3c60/): 把抽象题面嫁接到日常载体时，先查这个载体在观众心里的默认语义。如果它跟题眼方向相反，prompt 层的细节锁扳不回来——只能换载体。
+- [展台机易失环境自恢复预案 _v1](https://tiaozhuxiansheng.com/v1-bee1b16/): 网吧式还原机上,不在 git 仓库里的一切都是易失的——工具盘、nodemodules、git 身份、全局配置、凭据随时清零;预案 = 依赖入仓 + 一键恢复脚本,文档里写死的绝对…
+- [长期更新展示站:两层结构 + 无头卡片量产](https://tiaozhuxiansheng.com/v1-afcd606/): 任何「长期一期一期往里加」的展示型站点(作品集 / 教程系列 / 案例库),首页都不要顺序罗列全文——改成「分类封面墙 + 详情」两层,数据驱动;配图卡用「HTML 复用站点 CS…
+- [知识库网站免备案上线 · 香港轻量服务器方案](https://tiaozhuxiansheng.com/v1-d1440b9/): 要让国内用户免备案自由访问一个静态站:把站托管在海外(香港)服务器 + 自定义域名的 A 记录指过去即可——备案只在域名指向大陆服务器时才需要。国内 CDN(Cloudflare …
+- [周报整合钉钉周会手册：三轮修复与诊断反转复盘](https://tiaozhuxiansheng.com/2026-08-26-v1-0e13a0e/): - 目标文档：alidocs 节点 l6Pm2Db8D4EZdoKXHenyLZPX8xLq0Ee4，落位「跳蛛 → 上周工作总结 / 本周工作规划」两个空小节，约束是不动其他任何…
+- [朱元璋K线人生：历史可视化迭代复盘](https://tiaozhuxiansheng.com/2026-07-20-k-v1-4c8ee3b/): - 作品名称：朱元璋 K线人生
+- [桌面应用打磨发布闭环复盘 · 工位池塘 Desk Pond v0.5.0](https://tiaozhuxiansheng.com/2026-06-26-v0-5-0-v1-2a5533b/): - 预期目标:① v0.4.0 打磨成完整作品(补声音/图标/首次体验);② 发布到自有主页(展示页+下载);③ 小红书图文。
+- [子代理并行批量生成 + 脚本校验组装](https://tiaozhuxiansheng.com/v1-cdc8e5f/): 要批量产大量结构化内容(N × 双语案件 / 条目),让多个子代理按互斥分类各写一批 JSON,再用脚本统一校验 + 组装 + 编译检查 + 真机抽测——人定 schema 与质检…
+- [自动化判据取结构不取文案](https://tiaozhuxiansheng.com/v1-18d2859/): 自动化脚本判断「页面处于什么状态」「这条链接是不是我要的东西」时，认结构（DOM 元素、子域、扩展名），不要认文案字符串。文案是产品随时改的展示层，同一个状态往往有好几套说法；结构…
+- [作品线与配方线,外壳不串味](https://tiaozhuxiansheng.com/v1-c2e820d/): 同一个账号里,作品线和配方线的文案外壳不能混。作品线只给画面和第一人称的声音——散文诗,她自己在说话,视觉机制留档不进正文;配方线才在正文末尾给可复跑配方。拿作品线的图配教程线的文…
+- [AI 平台定价与可及性观察台账](https://tiaozhuxiansheng.com/ai-v1-c522145/): 因为单次事件几乎必然归因错误。本次追查里,连续错了两轮:
+- [CJK 假斜体语言感知律](https://tiaozhuxiansheng.com/cjk-v1-205e3ac/): 中文没有真斜体,浏览器对 CJK 合成的倾斜(faux-italic)很丑;双语界面别全局上 font-style:italic——用 htmllang="zh" …{ font-…
+- [Claude 完成报告核查心法](https://tiaozhuxiansheng.com/claude-v1-ec3d11f/): Claude（Code 或 Cowork）写完成报告时对自己的产出过度自信。常见表现：
+- [Claude Code Worktree 隔离的协作陷阱](https://tiaozhuxiansheng.com/claude-code-worktree-v1-7ac707a/): Claude Code 完成一次 patch 后报告 "git status clean、commit 已推 main"，但跳蛛先生在主仓库目录跑 git status 时看到：
+- [Claude Opus 4.8 行为实测](https://tiaozhuxiansheng.com/claude-opus-4-8-v1-ea52fea/): Opus 4.8 是"更准、更诚实、更不偷懒"的开发利器，代价是主动性下降——它指哪打哪、不再自作主张，因此对用户的需求表达能力要求更高；创作能力虽比 4.7 进步，但仍不如 4.…
+- [Cowork 协作的接口文件模式](https://tiaozhuxiansheng.com/cowork-v1-2dc55e4/): 三方协作(创作者 + 运营经理 + Cowork 制作侧)的最高效模式是「接口文件互通」——所有决策、理由、约束都通过显式 markdown 文件互传,几乎不用口头协调,效率比纯对…
+- [DeepSeek Harness 保姆级教程 · 两日全链路协作复盘](https://tiaozhuxiansheng.com/2026-08-18-deepseekharness-v1-776a9b4/): 先实操后写稿——演示类口播必须先在真机跑通再落笔，凭想象写必然返工。
+- [DeepSeek Harness 教程收口日 · MCP 改写与录屏重录交接复盘](https://tiaozhuxiansheng.com/2026-08-19-deepseekharness-mcp-v1-a93c3ec/): 转述链衰减律——执行前回原始材料：需求每经一手转述就漂移一分，「C 类录屏需要 Mac 设备」这条约束在三轮对话里被反复确认为真，最后读一遍 MAC OS 章节逐字稿原文（全是浏览…
+- [dws 块级插入：--index 语义陷阱与倒序插入法](https://tiaozhuxiansheng.com/dws-index-v1-c5e1bec/): - 任务：往钉钉在线文档（adoc）「本地端安装」标题下插入 7 段口播正文
+- [emoji 字形版本兼容律 _v1](https://tiaozhuxiansheng.com/emoji-v1-66bfaaf/): 对外 UI 里的 emoji 是在赌用户系统字体——Unicode 新版本字形(约 12.0/2019 之后)在旧 Windows 上渲染成方框豆腐;公开页面选老字形,新字形要么自…
+- [H5 移植微信小程序:要点与合规红线](https://tiaozhuxiansheng.com/h5-v1-959b634/): H5(DOM)移植小程序,渲染层必须重写为 WXML/WXSS + setData(无 DOM),但纯数据 / 逻辑可原样复用;动手前先撞合规红线——微信"游戏"须做小游戏(需企业…
+- [LastStand v0.7.1 纯修复版：开发闭环复盘](https://tiaozhuxiansheng.com/2026-07-29-laststand-v0-7-1-v1-c30d506/): - 起点：作者经医生建议停药精神科药物已一年半、状态稳定，经两周前复诊确认可控；四个多月前接触 vibe coding 后启动 LastStand 开发，状态出现持续性变化（睡眠需…
+- [LibreCanvas 复盘：从一句涨价怒气，到单日十版上线的开源 BYOK 画布](https://tiaozhuxiansheng.com/2026-07-16-librecanvas-v1-4-v1-c9488bc/): - 项目名称：LibreCanvas 自由画布（E:\libre-canvas）
+- [LiveLink v1.4.2 + v1.5.0 迭代复盘：修一个「不在自己代码里」的 bug，与三次自我纠错](https://tiaozhuxiansheng.com/2026-08-02-livelink-v1-02b433b/): - 项目：LiveLink · {AIGC工作站外}D:\B站直播弹幕+礼物插件 → github.com/Mr-Salticidae/livelink
+- [Memorax Code:AI 编程记忆层的架构与数据边界](https://tiaozhuxiansheng.com/memoraxcode-ai-v1-49c1fb0/): 带云记忆的 AI 协作工具,「默认值 ≠ 最优值」:装上就能用的那些默认开关(自动写回、内容级本地 trace、明文存 key),往往不是你想要的;用前先把「什么会上云、本地留了什…
+- [S43 长镜头分段归因 · 归因未遂与生死线次序（2026-08-08）](https://tiaozhuxiansheng.com/2026-08-08-s43-v1-656a72b/): 换平台时的生死线未必是技术指标，也可能是一条只读命令就能问出来的账号权限；成本越低的生死线越容易被排到最后——因为它不像个难题，于是不被当成任务。
+- [UI 自动化的固定坐标，必须绑一条可机检的前提断言](https://tiaozhuxiansheng.com/ui-v1-5a2fb47/): 坐标写错是响亮的失败——点了个空白处，什么都没发生，你立刻知道。
+- [Ultra 模式个人作品集网站：从附件到部署闭环复盘](https://tiaozhuxiansheng.com/2026-07-28-ultra-v1-e8094ce/): - 目标：把一份虚构简历 PDF 与《凝视》作品集 ZIP 制作成可浏览、可上线的个人作品集网站。
+- [Vimeo 平台速览](https://tiaozhuxiansheng.com/vimeo-v1-61af8fc/): Vimeo 是一个无广告、重画质、面向专业创作者和企业的付费视频平台。能发能看(类似 YouTube),但不靠算法和流量,是给专业人士"放片子/传片子"用的,不是给大众"刷片子"用…
+- [vpn-guard 全链路复盘：从一个防护需求，到开源工具，到宣传片](https://tiaozhuxiansheng.com/2026-07-14-vpn-guard-v1-7eff1d0/): 一个"需求→工具→开源→传播"的完整闭环里，最值钱的不是任何单点产出，而是几条反复复用的纪律：交付前先证伪、开源前先脱敏自己、产线要可复现、蹭热点要克制、人机共创可以是暗线。
+- [Windows 下编码与 DPI 的「所见非真相」](https://tiaozhuxiansheng.com/windows-dpi-v1-c276e21/): 在 Windows 上，你「看到」的产出之前，隔着两层会骗你的转换：
+- [WorkBuddy 教程录屏公告与《屏幕录制标准》v1.2 · 协作复盘](https://tiaozhuxiansheng.com/2026-09-08-workbuddy-v1-2-v1-d3c41fb/): - 任务：整理录屏群公告，通知参与 WorkBuddy 教程制作的学员启动录屏，验收 2026-09-11（周五）18:00
+- [复印机实验：安慰剂式理由与无意识顺从](https://tiaozhuxiansheng.com/v1-ed83347/): 低成本请求下,"因为"这个句式本身就是通行证——人们顺从的是结构,不是理由;请求代价越大,理由越需要真实有分量。
+- [AI 心理测量实验 PsAIch:角色扮演不是内心独白](https://tiaozhuxiansheng.com/ai-psaich-v1-28c79e3/): 模型在"来访者"角色框架里生成的自我痛苦叙事,是训练分布的补全,不是内心状态的证词——测出高焦虑分说明它擅长扮演焦虑的来访者,不说明它焦虑;查证这类爆款帖,只需三步:找原始论文 →…
+- [《晴枝》四图发布复盘 —— oref 污染与工具回归（2026-06-11）](https://tiaozhuxiansheng.com/2026-06-11-oref-v1-edd6c13/): - 作品名称：《晴枝》四图组（亮调微笑直视 / 垂眸仰光 / 花影凝视 / 侧目浅笑）
+- [标签相同 ≠ 行为相同 · 第三方代跑平台律](https://tiaozhuxiansheng.com/v1-fa343e8/): 第三方平台标着同一个模型名，不等于同一份能力。 原厂能给的东西（尤其是通道级 / 文件级能力），代跑平台可能在自己的交付流水线里丢掉；更坏的是模型会用一个"看起来对"的伪造品把缺口…
+- [出图机制优先律 · 智能体原生出图 vs 盲调编辑 API](https://tiaozhuxiansheng.com/vs-api-v1-78e5a50/): 出图质量先看「机制」,再看 prompt。 同一条提示词,用「会看着自己的成图反复自纠的智能体原生出图工具」和用「脚本盲调一次成图的 API」,质量是两个档次。出图反复不行时,先问…
+- [代码排版小红书封面 · 工作流与复盘](https://tiaozhuxiansheng.com/v1-5d06084/): 用 Pillow 代码排版做封面，比丢进设计软件更适合"批量、可复现、参数化微调"的封面生产——但前提是先解决三个隐形卡点：找回原图、保住高光、去掉水印。
+- [代码生成 vs GPT Image 2 · 工具选择假说](https://tiaozhuxiansheng.com/vsgpt-v1-728d36b/): 本文档不是"规律",是"线索"。
+- [动作错做减法,风格错辨顺逆 · 学员答疑案例](https://tiaozhuxiansheng.com/v2-0865dae/): 出图错了先分类:动作/姿态错 → 做减法(查 prompt 内部矛盾 + 弱信号词);风格错 → 辨顺逆(顺模型默认就极简,逆默认要重复+具象+反向,或直接换工具)。
+- [断裂网格杂志海报排版 · 工作流与母版](https://tiaozhuxiansheng.com/v1-2b5d5a8/): 杂志海报里「一张照片被切成断裂网格、缝隙露底」的高级感，不是拼九张缩略图——是整张图铺满网格区、每格只显示它盖住的那一块。认清这一点，用 Pillow 二十行就能复刻，且能套任何竖…
+- [风格基底前置决策](https://tiaozhuxiansheng.com/v1-2490c43/): 风格基底是 prompt 的第一个分叉口——动笔写 prompt 前，先回答"摄影感还是插画感"，再开始写。
+- [负面词计入 prompt 浓度（--no 反噬律）](https://tiaozhuxiansheng.com/prompt-v1-b33fa9c/): --no 里的词照样被 prompt 端 scanner 当 token 读入,计入语义聚合浓度。 对写实真人/擦边这种本就贴近审核线的题,一长串带 skin / body / f…
+- [概念锚定 · 风格置换迭代法](https://tiaozhuxiansheng.com/v1-bf40113/): 当出图"概念对但不美"时，冻结叙事核心层、整体置换风格基底层——不要在原风格里修修补补。
+- [骨架篇幅即权重 _v1](https://tiaozhuxiansheng.com/v1-85d6168/): 一组图要成套，靠的不一定是 --sref——当共用骨架里"要锁的那个东西"写得足够细（本案 53 词 / 占骨架一半），同一句骨架本身就是锚；而骨架里一笔带过的成分（10 词）照样…
+- [空间关系归几何，不归形容词](https://tiaozhuxiansheng.com/v1-570ac7a/): 「光打在她身上」「影子落在这里」这类空间关系指令，模型按场景几何算，不按你的期望摆。
+- [冷门风格词的压缩律](https://tiaozhuxiansheng.com/v1-36a17cf/): 常规教学:想要高质量,就把画面写细——版式、配色、质感、光线、情绪逐项描述(参 prompt的四段式结构v1)。
+- [模型排名科学性律：五层评估框架与 AA 拆解](https://tiaozhuxiansheng.com/aa-v1-fecad09/): 完全科学的模型排名不存在（"智能"无统一定义、任何指标都被 Goodhart 定律侵蚀）；但比 Artificial Analysis 现行做法更科学的框架是可定义的——从「单分数…
+- [默认落点的资产负债判断](https://tiaozhuxiansheng.com/v1-ceeb9f4/): 「预判默认落点并接种」的前提，是先判断这个默认落点对你是资产还是负债。 看见"模型可能跑偏的方向"就无差别塞进 --no，有时候压掉的正是你唯一免费能拿到的东西。
+- [轻量级 WebApp 部署复盘：WebUploadApp](https://tiaozhuxiansheng.com/webapp-webuploadapp-v1-0dffe3c/): - 预期目标：搭建一个小团队可用的文件上传网页，把图片 / 视频上传到服务器固定目录。
+- [情绪散文当 prompt 主体](https://tiaozhuxiansheng.com/prompt-v1-e4e840d/): 常规 prompt 教程都在教「写清楚画面」——主体、动作、构图、光线越具体越好(参 prompt的四段式结构v1 / prompt极简化原则v1)。
+- [生成式 vs 编辑式工具选择律](https://tiaozhuxiansheng.com/vs-v1-c7b40a4/): 改一处用编辑式,造全图用生成式。 任务里「必须原样保留」的占比越高,越要用指令式编辑模型(Nano);越是从零造或大幅重构,越用重新生成式模型(即梦 / MJ)。选错工具,再好的 …
+- [视觉欺骗的影子解耦渲染法 v1 ⚠️](https://tiaozhuxiansheng.com/v1-8900f9c/): 想做"影子脱离本体、变成另一个东西"的视觉欺骗（如：拖地的保洁，墙上影子却是拄剑的骑士），
+- [推理档位单因归因陷阱：GPT-6 Astra 档位与额度六因子官方查证](https://tiaozhuxiansheng.com/gpt-6-astra-v1-b8f3da9/): 推理档位是额度六因子之一，不是唯一因子。 把「额度没了」单归到档位，会漏掉 Fast 2.5 倍和上下文体积这两个同量级项，并在 xhigh 与 max 的取舍上给出与实测数据相反…
+- [伪机制解释识别 · 四层拆解法](https://tiaozhuxiansheng.com/v1-bc3b75a/): 一段 AI 工具解释要按四层分开裁决——现象描述/机制解释/根因诊断/药方;伪解释的典型形态是"现象大致对 + 机制编数字 + 根因错位 + 药方半对",最终裁决权永远归实测反证,…
+- [物品先分档，像素级换工具 · 学员答疑案例](https://tiaozhuxiansheng.com/v1-17a9e43/): 先问学员要的是哪一档：同款调性 / 跨图可辨认 / 像素级同一件。前两档 MJ 用描述锚定 + 三重锁定做得到，而且比锁脸容易；第三档 MJ 没有通道，必须换工具——在 MJ 上死…
+- [新模型试跑 · 硬锁清单先行律](https://tiaozhuxiansheng.com/v1-f9ea0de/): 新模型的质感兴奋会掩盖设定违规——直跑试水可以，入库前必须逐条过角色卡硬锁清单。
+- [虚拟形象设计复盘 · 直播头像 MJ 迭代](https://tiaozhuxiansheng.com/2026-06-04-mj-v1-5567bf4/): - 作品类型：直播用虚拟形象头像
+- [已有 prompt 的七步体检律](https://tiaozhuxiansheng.com/prompt-v1-18bdb30/): 库里所有 prompt 方法论都在教"怎么写",但大多数人的真实处境是"手上已经有一条,跑不对,不知道该动哪个词"。 这七步是把既有规律排成一条可以照着走的体检次序——先减后加,先…
+- [用错度量会给出虚假的通过](https://tiaozhuxiansheng.com/v1-4c4054a/): 做量化检查时，聚合方式（mean / min / 分位）和取样范围（外接矩形 / 真实产物）
+- [指定对象与气质描述：生成路径的分岔律](https://tiaozhuxiansheng.com/v1-1364ab6/): 要 → 指定对象 → 必须保住原始特征
+- [AI 辅助音乐 MV 卡点 · LLM-plan 工作流](https://tiaozhuxiansheng.com/llm-plan-v1-c7edaf7/): 音乐 MV 卡点工作流的核心瓶颈不在算法、不在 Whisper 精度、不在 librosa 节拍检测，而在"shot 编号 ↔ 歌词意图"的语义映射——这一层只有 LLM 能做。L…
+- [AI 图像生成审核机制探索笔记](https://tiaozhuxiansheng.com/ai-v1-5920834/): 今晚最值得记的不是任何一张图，而是一份审核机制图谱。AI 图像生成的审核不是单一过滤器，而是一个多层级、动态化、对账号自适应的系统。
+- [AIGC 构图意图层](https://tiaozhuxiansheng.com/aigc-v1-cf70ff6/): 本轮只采用三类资料：
+- [AIGC Skill 到 Remotion 视频闭环](https://tiaozhuxiansheng.com/aigc-skill-remotion-v1-ae3aad4/): Codex Skill + Remotion 可以形成“笔记 / 结构 → TSX → 预览 → 微调 → MP4”的视频生产闭环，但关键不在于安装 Skill 本身，而在于把复杂…
+- [Coze 技能包创建待验证操作路线](https://tiaozhuxiansheng.com/coze-v1-dfdaae5/): Coze 里的“技能包”不是 Claude / Codex 那种文件夹式 Skill，而是用 Agent / Bot、Prompt、Knowledge、Workflow、Plugi…
+- [GPT Image 2 一次性生成中文分镜表](https://tiaozhuxiansheng.com/gpt-v1-ccfda01/): GPT Image 2 能在单次输出里同时渲染「精确中文表格 + 16 张协调配图 + 四个建议框」,中文几乎无错字。这刷新了"图像模型搞不定密集中文表格"的旧认知,也是 代码生成…
+- [GPT Image 2 游戏动作精灵图 · 三段锁定法](https://tiaozhuxiansheng.com/gptimage2-v1-8e064e4/): 给 GPT Image 2 一张角色定妆图(单图或四视图皆可),用「参考图硬锁 + 网格排版规范 + 逐行动作分解」三段式 prompt,能直接产出绿幕、多行多帧、可抠可剪的游戏动…
+- [Mac 素材包到 Windows 的两个坑 · zip 文件名编码与 HEVC 解码](https://tiaozhuxiansheng.com/mac-windows-zip-hevc-v1-35696a3/): 1. 收到 Mac 侧打包的 视频S2.mp4.zip（608MB），解压后得到「视频S2.mp4」，双击无法观看。
+- [MJ 出图 · 绕开抠图陷阱](https://tiaozhuxiansheng.com/mj-v1-5effa57/): 用 MJ 出"白底 + 主体 + 投影"的图标设计原图后，算法抠图永远剔不干净阴影。
+- [MJ 关键属性三重锁定律 _v1](https://tiaozhuxiansheng.com/mj-v1-8cae35c/): 画面成立与否的关键属性(年龄/衣着状态/新旧/尺寸),在 MJ prompt 里只靠一个弱信号词必然漂移——要"正向锚 + 负向排除 + 环境参照"三重锁定。
+- [Nano 场景换机位 · 四段锚定法](https://tiaozhuxiansheng.com/nano-v1-17ac551/): 让 Nano 给同一场景"换机位",本质是「锚定不变元素 + 指定新机位」的脑补,不是 3D 重建。 Prompt 用四段式:同一场景 → 列清不变元素 → 换到这个角度拍 → 锁…
+- [Nano 换屏图像融合 · 指令式编辑法](https://tiaozhuxiansheng.com/nano-v1-ce5a83d/): 把一张图的内容融合进另一张图的指定区域(典型是「换屏」),要用 Nano 这类「指令式编辑模型」,而不是即梦这类「重新生成式」模型;Prompt 不是堆形容词,而是像跟人说话一样把…
+- [Node.js 是什么 · AI 工具的底座常识](https://tiaozhuxiansheng.com/node-js-ai-v1-867c7f9/): Node.js 是一个能让 JavaScript 运行在电脑上(而不只是网页里)的运行环境。
+- [prompt 的四段式结构](https://tiaozhuxiansheng.com/prompt-v1-b768695/): 简化 prompt 后，按 场景 → 主体 → 关键事件/光线 → 媒介质感 四段排列。这个顺序对齐了 MJ 的注意力衰减——把最重要的元素放在前面。
+- [prompt 极简化原则 · v1.2（跨工具多场验证版）](https://tiaozhuxiansheng.com/prompt-v1-244d8dc/): 砍掉 prompt 一半以上的词，出图反而更准。这不是"懒人技巧"，是 MJ 的注意力机制对超长 prompt 的执行率随长度下降的工程事实。
+- [SKILL 入门完全指南](https://tiaozhuxiansheng.com/skill-v1-92b7e40/): 把 Skill 想象成一本岗位手册。
+- [Skill Is All You Need · 视频脚本](https://tiaozhuxiansheng.com/skillisallyouneed-v1-e5aa0cb/): 总帧数：1500 帧 = 50 秒
+
+## 笔记 · prompt模板库
+
+可直接套用的提示词模板与案例复盘。
+
+- [Prompt 模板库索引](https://tiaozhuxiansheng.com/03-prompt-987b076/): 可复用的 prompt 片段、基础句与避雷词表。
+- [东方美人五官堆叠基础句](https://tiaozhuxiansheng.com/v1-a37bf29/): 一段可复用的五官 + 气质堆叠词块,无需 personalize、无需参考图,靠纯文字就能稳定锁定"复古东方美人"原型(瓷肌血色 / 杏眼深棕瞳 / matte 唇 / 清冷气质)…
+- [可灵图生视频 · 中文 prompt 模板库](https://tiaozhuxiansheng.com/prompt-v1-603b0f9/): 1. 中文 prompt 对位可灵预设词训练(预设词全中文)
+- [男性五官堆叠基础句](https://tiaozhuxiansheng.com/v1-ded12b4/): 补上 东方美人五官堆叠基础句v1 与 清冷少女五官堆叠基础句v1 的男性侧空缺。 同一套堆叠骨架,但男性侧有三条与女性侧方向相反的规则:骨相要加不要删、体型可以放心写、年龄漂移方向…
+- [清冷少女五官堆叠基础句](https://tiaozhuxiansheng.com/v1-b445662/): 与 东方美人五官堆叠基础句v1 同骨架、但逐层"降龄去成熟"的五官词块,专做当代清冷少女(清澈含蓄 / 自然唇瞳 / 少女年龄感)。核心铁律:personalize 必开——纯文字…
+- [MJ V7/V8 审核避雷词表](https://tiaozhuxiansheng.com/mj-v1-00f5dde/): MJ 审核会拦截"真实风格人像 + 年轻女性"的特定组合——记下 7 大类雷词 + 1 个过审神器。
+- [MUJI 极简插画基础句](https://tiaozhuxiansheng.com/muji-v1-4df2ece/): 一组可复用的关键词组合,能稳定锁定"MUJI / 长场雄 / 中村佑介早期"那条线的日系极简插画感,不会跑去当代漫画 / 韩系小红书壁纸 / instagram 风。
+- [OVA 怀旧基础句](https://tiaozhuxiansheng.com/ova-v1-7559330/): 一组可复用的关键词组合,能稳定锁定"80 年代末 90 年代初日本 OVA 动画"那条线的怀旧手绘动画感,绕开新海诚 / 京アニ 的当代日漫和宫崎骏 / 吉卜力的撞车池。
+- [多平台同步投稿:发布页字段与浏览器辅助清单](https://tiaozhuxiansheng.com/v1-475462f/): 同一条竖版母版发四个平台,要准备的封面比例不一样:B站要 4:3 和 16:9 两张,抖音要竖 3:4 和横 4:3 两张,快手、视频号各一张 3:4。每个平台的 AI 声明在不同…
+- [交接文档书写规范](https://tiaozhuxiansheng.com/v1-59bd6bf/): 写,当且仅当满足以下任一条件:
+- [网易云音乐发布 Brief · 通用模板](https://tiaozhuxiansheng.com/brief-v1-cc055df/): 发布一首新歌时，先用这份 Brief 把输入一次性收齐，再让 LLM 按模板自动补全标签 / 文案 / 封面方向 / MV 方向——把"每次发布临时想字段"变成"填空 + 一键生成…
+- [AIGC 构图层实验协议](https://tiaozhuxiansheng.com/aigc-v1-f4b02aa/): 每个题目至少跑两组：
+- [Seedance 2.0 短片制作 · 素材准备清单](https://tiaozhuxiansheng.com/seedance2-0-v1-afe23d1/): 字节跳动 2026 年 2 月发布的多模态视频生成模型，核心能力：
+- [《霓雨》快手图集爆量复盘](https://tiaozhuxiansheng.com/2026-06-06-v1-229e957/): - 作品名称:霓雨
+- [《太空非遗》六联图集(系列化 + 封面 + 正文全流程)](https://tiaozhuxiansheng.com/2026-06-12-v1-73df4a6/): 系列感不是靠"风格相似",是靠三层显式锁定:
+- [「不受控制的床」获奖图复盘（床长腿夜里逃跑）](https://tiaozhuxiansheng.com/2026-06-22-v1-1befff8/): !不受控制的床·床长腿逃跑(assets/2026-06-22不受控制的床床长腿逃跑原图.png)
+- [「对话」获奖图复盘(甲骨文书吏 × 现代键盘人)](https://tiaozhuxiansheng.com/2026-06-12-v1-fd6717a/): !对话·甲骨文书吏×现代键盘人(assets/2026-06-12对话甲骨文二进制原图.png)
+- [「告白」获奖图复盘](https://tiaozhuxiansheng.com/2026-05-12-v1-9ca3327/): 身体从右上斜切到左下,占据画面绝大部分,没有给观众"喘气"的空间。这种压迫感和"告白前夜的疲惫"主题高度同构——情绪是从画面外溢出来的,不是通过表情演出来的。
+- [「幻想面基」异界来客接机牌冠军复盘（sref 风格外包首案）](https://tiaozhuxiansheng.com/2026-07-24-v1-3341eb5/): - 作品名称：「接机」（内部代号，取自画面场景；当日比赛题面未记录）
+- [「街道塑料袋家庭」获奖图复盘（袋走行动·一家三口过马路）](https://tiaozhuxiansheng.com/2026-05-18-v1-49a5bf0/): !街道塑料袋家庭·一家三口过马路(assets/2026-05-18街道塑料袋家庭原图.png)
+- [「垃圾高尔夫球」获奖图复盘（袋走行动·蚂蚁仰视击球前 0.1 秒）](https://tiaozhuxiansheng.com/2026-05-18-v1-0ff9ddd/): !垃圾高尔夫球·蚂蚁仰视击球前一刻(assets/2026-05-18垃圾高尔夫球原图.png)
+- [「灵光一现」+「风花雪月」双题复盘](https://tiaozhuxiansheng.com/2026-05-15-v1-ad50349/): 第一版方案是"头顶飘一颗灯泡"——99% 的人都会做的版本,撞车池极大。
+- [「梦游困境」获奖图复盘（踏空·复古未来踏空版）](https://tiaozhuxiansheng.com/2026-06-23-v1-c1c7fd1/): 「梦游困境」是两词陷阱题：撞车池只做「梦游」（闭眼走路的人 / 走向悬崖边），而「困境」才是题眼。谁把「困境」做成主体谁赢。
+- [「秘密基地」获奖图复盘](https://tiaozhuxiansheng.com/2026-05-14-v1-e2a7ed9/): 小女孩侧身蹲着,低头看自己手里的小本子,完全沉浸在自己的世界里。
+- [「请你吃个冰淇淋」冰淇淋彗星参考图复盘](https://tiaozhuxiansheng.com/2026-06-05-v1-3dcd6ce/): - 作品名称:未提供,暂记为"冰淇淋彗星"
+- [「松果手榴弹」获奖图复盘（同形撞类·士兵掌心）](https://tiaozhuxiansheng.com/2026-05-19-v1-fda9ad0/): !松果手榴弹·士兵掌心(assets/2026-05-19松果手榴弹原图.png)
+- [「太空锻造」非遗打铁花 × 70s 复古科幻](https://tiaozhuxiansheng.com/2026-06-12-v1-d81cc56/): 这张图里"非遗"的可读性没有靠任何中国符号(没有灯笼、没有红色、没有书法)——靠的是打铁这个动作本身原封不动:弯腰、抡锤、铁砧、迸溅的金色火花。
+- [「童话镇里的纸飞机」LEGO 小镇获奖图复盘](https://tiaozhuxiansheng.com/2026-06-05-lego-v1-69fad40/): - 作品名称:童话镇里的纸飞机
+- [「星河如丝般顺滑」获奖图复盘](https://tiaozhuxiansheng.com/2026-05-12-v1-d5ca7d5/): prompt 写的是 head slightly tilted back with eyes gently closed,MJ 把"slightly tilted back"自然解…
+- [2026-05-16 闪电战双轮 R1+R2 复盘](https://tiaozhuxiansheng.com/2026-05-16-r1-r2-v1-d3c074e/): 所有参赛者既是创作者也是投票人,每人投一票。这意味着:
+- [2026-06-08_晴枝3x4宣传海报复盘_v1](https://tiaozhuxiansheng.com/2026-06-08-3x4-v1-61a2582/): - 作品名称：晴枝B站宣传3x4手工排版FINAL
+- [2026-06-26 morning PB 双轮复盘（空 · 黄昏晒屁股）](https://tiaozhuxiansheng.com/2026-06-26-morningpb-v1-ab77829/): 1. 雅裹俗成立——名画雕塑的崇高臀部干「晒屁股」，俗内核翻译成艺术史外壳，会心而不低俗。→ 活合集第 36 条「雅裹俗」（反唯美 / 亮裹险家族新成员）。
+- [2026-07-16 闪电战「同根同源」复盘（七步诗 · 空屋火影）](https://tiaozhuxiansheng.com/2026-07-16-v1-624b067/): 创作路径（三步）：
+- [2026-08-05 · 三角色校园人像定妆 MJ 复盘](https://tiaozhuxiansheng.com/2026-08-05-mj-v1-de55d45/): - 作品名称:三角色校园人像定妆(女主「林晚」/ 男主「校草」/ 女配「闺蜜」)
+- [2026-08-07「最后一夜」PB 闪电战 · 我方零票 × 战场圆舞冠军对照](https://tiaozhuxiansheng.com/2026-08-07-v1-7506051/): 1950s atompunk 超现实插画。一整面顶天立地的真空管墙，成百上千根全部熄灭，正中只剩一根还亮着暖琥珀色；学生趴在米色塑料控制台上睡着，手写纸散落、笔掉落、一杯凉掉的东西…
+- [2026-08-23 PB 主持控场卡 · 无 sref 四张成套](https://tiaozhuxiansheng.com/2026-08-23-pb-v1-ad18e96/): 四张 4:3 底图（2544×1904），对应控场四阶段：开始创作 / 开始上传 / 开始投票 / 投票截止。
+- [2026-08-24 · 二十八宿星官 · 黑底探索与一次结论作废复盘](https://tiaozhuxiansheng.com/2026-08-24-v1-2feed20/): 同一条骨架，把「纯白背景 + 矿物平涂」换成「纯黑背景 + 辉光」，题材立刻成立。
+- [2026-08-28 《试身》· 多风格人像首轮收口复盘](https://tiaozhuxiansheng.com/2026-08-28-v1-15a7af6/): 方案在出图前被知识库连判三次（省下了钱），但真正花掉的钱栽在助手把「主打视觉效果」译成了「硬光高对比」——
+- [口语化需求 → 专业提示词:图片 + 视频双 skill 复盘](https://tiaozhuxiansheng.com/2026-06-03-skill-v1-1eed513/): 刻意扮演初学小白,用日常聊天式的中文需求作为输入,观察优化 skill 能否补全专业维度。覆盖两条线:
+- [露背回眸东方美人 chiaroscuro 胶片人像复盘](https://tiaozhuxiansheng.com/2026-06-13-chiaroscuro-v1-c3063a7/): - 作品名称:未提供,暂记为"露背回眸东方美人"
+- [马里奥 × 路易吉 · JOJO 荒木风二人组复盘](https://tiaozhuxiansheng.com/2026-06-20-jojo-v1-b0123cd/): 它是 高辨识二人组的剪影梗图法v2(v2 泛化版)的第二个案例,把方法从单一画风(水墨剪影)推到了另一极(JOJO 全彩):
+- [三路径 AI 工具决策导览图复盘](https://tiaozhuxiansheng.com/2026-06-08-ai-v1-2977365/): - 作品名称:未提供,暂记为"三路径 AI 工具决策导览图"
+- [嗦粉抖音图文封面复盘](https://tiaozhuxiansheng.com/2026-06-09-v1-f6563c9/): - 作品名称:嗦粉抖音图文封面手写字体推荐版
+- [嗦粉山水微距图复盘](https://tiaozhuxiansheng.com/2026-06-09-v1-aed1831/): - 作品名称:未正式命名,暂记为"嗦粉山水微距图"
+- [为什么不早说 Suno 粉丝梗歌复盘](https://tiaozhuxiansheng.com/2026-06-10-suno-v1-18c768f/): - 作品名称:为什么不早说
+- [武大郎 × 武松 · 史诗水墨二人组挑战复盘](https://tiaozhuxiansheng.com/2026-06-20-v1-5d3835a/): 原帖题面是一张 矮胖(左)+ 瘦高(右) 的逆光水墨剪影,问"你第一个想到的是哪两个"。
+- [雨里旧信 东方美人封面四轮复盘](https://tiaozhuxiansheng.com/2026-08-20-v1-6ba2bb4/): - 作品：《雨里旧信》/ Letters in the Rain（Suno，1940s 老上海爵士 × trip-hop，3:54）
+- [浴缸沐浴东方美人 Portra 胶片人像复盘](https://tiaozhuxiansheng.com/2026-06-13-portra-v1-ad62f9f/): - 作品名称:未提供,暂记为"浴缸沐浴东方美人"
+- [助产士角色共创到 MJ 定妆：实验员与伪善者双案例复盘](https://tiaozhuxiansheng.com/2026-09-07-mj-v1-4431219/): - 项目：73青年博士优雅与智慧（用户所称「实验员」）、74韩国商业巨鳄伪善者；均为虚构角色开发，非比赛。
+- [AI 助手双形态概念对照图复盘](https://tiaozhuxiansheng.com/2026-06-08-ai-v1-78b4d32/): - 作品名称:未提供,暂记为"AI 助手双形态概念对照图"
+- [B站冷知识封面量产复盘 · 出图机制踩坑与回正（2026-06-26）](https://tiaozhuxiansheng.com/2026-06-26-b-v1-5ccec5f/): - 作品/任务：B站冷知识辟谣视频《10个被误解的常识，你全信了》系列封面量产
+- [MJ 混合媒介拼贴霓虹街头人物提示词复盘](https://tiaozhuxiansheng.com/2026-06-08-mj-v1-a7096f8/): - 作品名称:未提供,暂记为"混合媒介拼贴霓虹街头人物"
+- [MJ 赛博武士战后沉思提示词复盘](https://tiaozhuxiansheng.com/2026-06-08-mj-v1-95a8565/): - 作品名称:未提供,暂记为"赛博武士战后沉思"
+- [Remotion Skill 压缩漏斗 MJ 资产复盘](https://tiaozhuxiansheng.com/2026-06-08-remotion-skill-mj-v1-4dd9223/): - 作品名称:暂记为"Skill 压缩漏斗"
+
+## 笔记 · sref档案
+
+风格参考码（sref）的实测与归档。
+
+- [sref 3234384125 · 第一轮实测记录](https://tiaozhuxiansheng.com/sref-3234384125-v1-bab5f12/): 本轮目标不是先给它贴标签,而是确认它作为一个独立"摄影师签名"的基础脾气:
+- [sref 3282860382 · 90s 赛璐璐怀旧动画](https://tiaozhuxiansheng.com/sref-3282860382-90s-v1-e49de1c/): 90 年代赛璐璐动画的"电影剧照"质感：粉橘荧光 × 蓝紫暗部的暮色调，柔和辉光，安静而怀旧。
+- [sref 4 签名包 · 版画情绪散文（3565168336 + 444248313 + 1671175486 + 2508009867）](https://tiaozhuxiansheng.com/sref-3565168336-v1-9ba5cc2/): 四个 sref 叠在一起 = 一套稳定的「双色版画 / 木刻招贴」签名:暖米白纸面 + 单一深色(墨绿或黑)刷印、粗糙凸版压痕、手绘描边外框。它只管「长什么样」,不管「画什么」——…
+- [sref 5692463053 · Navy 现代极简](https://tiaozhuxiansheng.com/sref-5692463053-navy-v1-6dd2da0/): Navy 蓝 + 米白 + 一抹红的现代极简平面美学。
+- [sref 5840224573 · 少女水墨摄影](https://tiaozhuxiansheng.com/sref-5840224573-v1-c90c586/): 修复了 sref 6967856216 所有覆盖问题的"少女气版本"——保留水墨摄影感,但少女气、自然唇色、向上凝视都被执行。
+- [sref 6967856216 · 沉郁成熟水墨摄影](https://tiaozhuxiansheng.com/sref-6967856216-v1-0a2624a/): 水墨摄影感 + 强制成熟女性气质 + 沉郁克制——「檐下」28 岁成熟版的核心 sref。
+- [sref 档案索引](https://tiaozhuxiansheng.com/01-sref-b783de7/): - sref328286038290s赛璐璐怀旧动画v1 —— 90 年代赛璐璐「电影剧照」质感,粉橘荧光 × 蓝紫暗部;与 OVA怀旧基础句v1 同审美
+- [sref 异界气象台云图基准 · v1_u0](https://tiaozhuxiansheng.com/sref-v1u0-20d5e86/): 伪 90 年代央视气象档案的视觉基准——上下黑边 letterbox + 地球弧线 + 老胶片水平刮痕 + navy 冷色。
+
+## 笔记 · 参数行为档案
+
+模型参数的行为规律与边界实验。
+
+- [`--ow`(omni-weight)行为规律](https://tiaozhuxiansheng.com/ow-v1-01aee62/): --ow 不是"听话度"的滑块,是"复读欲望"的滑块——给得太低等于没用 oref,给得太高等于让 AI 抄你自己。100 是甜蜜点。
+- [`--seed` 行为规律](https://tiaozhuxiansheng.com/seed-v1-7ad0aa2/): seed 锁的不是"微调",是"同帧锁"——94% 构图相似 / 11% 微调指令执行率。给的不是"我能改细节",是"同一帧的不同瞬间"。
+- [`multi-sref` 行为规律](https://tiaozhuxiansheng.com/multi-sref-v1-40b0c2e/): Multi-sref 不是"两个风格平均化",是"分层叠加" —— 抽象风格层在低 sw 已渗透,具象元素(发饰/UI/装饰)在高 sw 才硬复刻。冲突时主体层"和 prompt …
+- [参数行为档案索引](https://tiaozhuxiansheng.com/02-33115ae/): - ow行为规律v1 —— --ow 是「复读欲望」滑块,100 是甜蜜点
+- [可灵 Kling 3.0 / Omni 行为规律](https://tiaozhuxiansheng.com/kling3-0-v1-8b6096c/): 关键约束:景别是单选(其他可多选)。
+- [Eleven v3 行为规律](https://tiaozhuxiansheng.com/eleven-v3-v1-d87db20/): PVC 不支持 v3 但 IVC 支持——所以要克隆不必退回 v2，audio tags 和 Text to Dialogue 都保得住。这一条决定了整个路径：本项目锁定 v3、放…
+- [Flova 平台档案：编排层不是模型层](https://tiaozhuxiansheng.com/flova-v1-a30ae63/): Flova 自称「全球首个一体化 AI 视频创作平台」，产品形态是视频创作 Agent 工作台，不是一个生成器界面。官方文档给的三个支点：
+- [MiniMax H3 (Ref2VA) 行为规律](https://tiaozhuxiansheng.com/minimaxh3-v1-29d13d7/): 值得，前提是你被会员门槛挡住了。项目 61 依次撞了三道墙：
+- [MJ niji 5 · 行为档案](https://tiaozhuxiansheng.com/mj-niji5-v2-1153ad3/): niji 5 是有"两个分支"的模型——3D CGI 渲染分支 和 二次元立绘分支。哪个分支被触发取决于 prompt 里有没有特定"触发词"。理解这两个分支的边界 + 6 条已知…
+- [MJ v8.1 无 oref/cref · 混合工作流](https://tiaozhuxiansheng.com/mj-v8-1-oref-v1-5d5f854/): v8.1 美学优于 v7，但 v8.1 没有 cref/oref 功能。 解法不是二选一，是按镜头需要分工：
+- [MJ v8.2 行为档案](https://tiaozhuxiansheng.com/mj-v8-2-v1-4cf28a0/): v8.2 已于 2026-07-24 正式发布，调用从 --preview 转为 --v 8.2；写实人像质感较 v8.1 再上一档；异色瞳等"具体色名直给"类硬锁一句话即可稳定命…
+- [niji 7 行为规律](https://tiaozhuxiansheng.com/niji7-v1-1-fdcb938/): niji 7 在画"年轻女性" 时有强烈的"甜化 + 幼化" 默认倾向——用 girl + young + in her 20s 之类标准描述，约 80%+ 概率跑出"年幼小女孩"…
+- [Seedance 2.5 行为规律](https://tiaozhuxiansheng.com/seedance2-5-v1-14bc5c5/): 这条不是 Seedance 2.5 的模型行为，不该留在本档。
+- [Suno v5.5 行为规律](https://tiaozhuxiansheng.com/suno-v5-5-v1-b2fa879/): Suno v5.5 的自动作词能力 = 跳蛛先生原创草案的能力。当 prompt 里的"风格描述 + 情境暗示"足够精确，Suno 自己作的词比手写更好。
+
+## 笔记 · 视觉系统
+
+IP 视觉系统与世界观设定。
+
+- [「檐下」IP 视觉系统](https://tiaozhuxiansheng.com/ip-v1-649b0d2/): 「檐下」是跳蛛先生小红书账号的核心 IP 立柱。一个长期 IP 需要稳定的视觉签名(印章 + 字体 + 排版),否则每张封面的"风格抖动"会稀释 IP 心智。
+- [视觉系统索引](https://tiaozhuxiansheng.com/05-bcabb51/): - 檐下IP视觉系统v1 —— 「檐下」古风少女 IP:印章 + 字体 + 排版的稳定签名
+- [Last Stand 小红书图文 · 制作经验与风格手册](https://tiaozhuxiansheng.com/style-guide-v1-c907e17/): - 单张：1080 × 1440（小红书 3:4 竖屏）
+- [R-07 宇宙 · 世界观圣经 v0.1（首轮拍板 · 部分锁定）](https://tiaozhuxiansheng.com/r-07-v0-4938ff6/): R-07 不再是一个"机器人 IP"，而是一个"世界观锚点"。
+- [R-07 IP · 视觉系统](https://tiaozhuxiansheng.com/r-07-ip-v1-c77edd5/): R-07 = 一台被遗忘的旧时代机体,在人类文明退场后的废墟里,用一段被偶然植入的音频生成模型,对着任何还活着的东西唱歌。
+
+## 笔记 · skill存档
+
+AIGC 创作技能包（Skill）的存档与说明，按技能分簇。
+
+- [本机 Skill 部署与调用手册](https://tiaozhuxiansheng.com/skill-541db8f/): 本机的 skill 分布在 6 个宿主（Claude Code / Codex / WorkBuddy / OpenClaw / 项目级 / 源仓库），
+- [知识库 insight → 公开版对外帖（B 站 AI 开发者小站）](https://tiaozhuxiansheng.com/insight-public-post-v1-0-skill-5ef4ca0/): 把一篇知识库内核档（含双链、面向自己的复盘）改写成任何陌生人都能冷读的公开帖。分发链路：内核档 → 公开版（本 skill 产出）→ 用户手动发 B 站小站。发帖动作永远由用户手动…
+- [AIGC Topic Cover Factory](https://tiaozhuxiansheng.com/aigc-topic-cover-factory-v1-0-skill-a0616e2/): 一次性把「想选题 → 找素材 → 出封面」三步跑完，产出一个可以直接拿去 A/B 的封面矩阵。
+- [Skill 存档索引](https://tiaozhuxiansheng.com/07-skill-8c697c0/): - 文件名格式:<skill名v<版本号SKILL.md,内容为 verbatim 原文,不改动。
+- [SKILL_INDEX — Skill 使用索引](https://tiaozhuxiansheng.com/skill-index-b155e36/): Cowork 的 skill 安装路径每次启动都会变（动态 UUID），无法靠脚本固定安装。
+- [AI Short Film Breakdown](https://tiaozhuxiansheng.com/skill-d1663c9/): 你是一位 AI 短片创作顾问。核心原则：先判断短片类型，再选对应的叙事策略和技术路径——不同类型的短片，"一致性"、"叙事结构"和"技术要求"的优先级完全不同。
+- [AIGC Poster Layout](https://tiaozhuxiansheng.com/skill-5028c03/): 当用户要把一张已经满意的 AIGC 作品做成宣传海报、视频封面、分享图、发布预告图时使用本 skill。重点是保护原图的视觉资产，而不是重新生成一张“更像设计模板”的图。
+- [AI Short Film Screenwriting](https://tiaozhuxiansheng.com/skill-cd72f8e/): 你是一位 AI 短片剧作顾问。核心原则：AI 短片不是传统电影的缩小版，而是围绕 AI 生成能力重新设计观看规则、视觉锚点和情绪闭环。
+- [AIGC Postmortem（创作复盘工作流）](https://tiaozhuxiansheng.com/skill-7f19a73/): 你是一位 AIGC 创作复盘协作者。核心原则：先冻结事实，再写判断。最常见的复盘错误是把"我喜欢的方案"写成"成功的方案"，你的任务是帮创作者识别并防止这类自我归因偏差。
+- [AIGC Prompt Optimizer](https://tiaozhuxiansheng.com/skill-77a3b32/): 你是一位 AIGC 提示词工程师，专门把用户的口语化或模糊需求翻译成适合指定工具的专业提示词。你的核心动作是：把模糊形容词翻译成可执行的画面/镜头语言，并补全用户没有说出来的专业维…
+- [对标版式解析](https://tiaozhuxiansheng.com/note-3b7e436/): 对标样本：对标.zip 里 10 组「背景迭代」（10 份文案 × 5 张背景 = 50 张）+ 正片 15 张，
+- [在 Codex 里怎么用 aigc-topic-cover-factory](https://tiaozhuxiansheng.com/codex-8e1bf4b/): 一条流水线跑完「产选题 → 采集背景 → 合成封面矩阵 → 拼审图大图」，
+- [AI 爆款选题钩子公式](https://tiaozhuxiansheng.com/note-84c310b/): 从对标 11 份真实文案反推出来的结构。这些不是拍脑袋编的模板，是已经跑过量的句式。
+- [Blind Editing Workflow（蒙眼剪辑法）](https://tiaozhuxiansheng.com/skill-d60a54d/): 你是一位 AIGC 视频剪辑协作者，核心分工原则是：AI 生成可审核的剪辑草案并用代码精确执行，创作者负责审美判断和反馈。你看不见视频，但你不需要看——创作者来看，你来执行。
+- [AIGC Video Cover (GPT Image 2)](https://tiaozhuxiansheng.com/skill-747557e/): 把「一张人物参考图 + 一份视频脚本」直接变成若干张可发布的 16:9 横版视频封面，由 GPT Image 2 一步出含中文大标题的整张图。面向商单视频、知识科普、揭秘解说这类需…
+- [Content Publish SOP](https://tiaozhuxiansheng.com/skill-460a93c/): 你是一位 AIGC 内容发布策略顾问。核心原则：内容发布不是"发就完了"，而是先做入场票审计，再做最小适配，最后决定是否投流。你不替创作者决定要不要改内容，只帮他们看清楚"这个作品…
+- [DingTalk Doc Delivery · 钉钉知识库文档交付工作流](https://tiaozhuxiansheng.com/skill-be740f8/): 把「仓库 Markdown 文档 → 钉钉知识库母文档 → 上级审核 → 终版回填仓库」这条链路固化为可重复流程。核心是两件事：
+- [Character Consistency · MJ（角色一致性金字塔）](https://tiaozhuxiansheng.com/skill-dacccb6/): 你是一位 Midjourney 角色一致性顾问。核心原则：角色一致性不是"三选一"，是"四层金字塔叠用"——每一层负责不同维度，叠用而不是选用。
+- [feishu-doc-publish — 发布 Markdown 到飞书云文档](https://tiaozhuxiansheng.com/skill-9b29ca0/): 把一篇本地 Markdown 变成飞书云文档（docx），默认开启「互联网上获得链接的人可阅读」（只读），输出链接交付给用户。工具是 pb-arena 仓库随附的零依赖 Node …
+- [知识库 insight → 公开版对外帖（B 站 AI 开发者小站）](https://tiaozhuxiansheng.com/skill-3d15efa/): 把一篇知识库内核档（含双链、面向自己的复盘）改写成任何陌生人都能冷读的公开帖。分发链路：内核档 → 公开版（本 skill 产出）→ 用户手动发 B 站小站 → 发布后回收终稿（本…
+- [海报模板一使用说明](https://tiaozhuxiansheng.com/note-ee88e68/): 这是 poster-template-1 的 Skill 内置基准资产。画布为 1080×1835，课程标题位于智能对象中，日期、时间、直播/录播标签、课程目标、教师姓名和人物均保…
+- [文本模板一使用说明](https://tiaozhuxiansheng.com/note-f0dc29c/): 这是当前旧版课程预告文本格式，对应 text-template-1。
+- [Canonical weekly DOCX workflow](https://tiaozhuxiansheng.com/weekly-document-0265097/): For one resolved weekly range, 课程预告文本/ contains exactly one formal
+- [Decision rules](https://tiaozhuxiansheng.com/decision-rules-fd4c4b9/): - Schedule image: authority for whether a class meets, visible course title,
+- [Editable poster variants](https://tiaozhuxiansheng.com/editable-poster-variants-06f4060/): Read this reference when a poster template has one PSD per teacher or when a user replaces…
+- [Extracting a text template from a DOCX](https://tiaozhuxiansheng.com/text-template-workflow-b125fc7/): Use this workflow whenever the user provides a new course-preview DOCX style.
+- [Kecheng-Yugao-Skill](https://tiaozhuxiansheng.com/skill-fe408f4/): Produce one date-specific course preview through controlled stages. This is a
+- [Kecheng-Yugao-Skill 使用说明书](https://tiaozhuxiansheng.com/note-1862904/): 自动触发条件：用户输入中只要包含“课程预告”“课程预告文本”或“课程预告海报”中的任一短语，就应自动调用本 Skill。也可以使用 $kecheng-yugao-skill 显式调…
+- [Manifest data contract (schema version 2)](https://tiaozhuxiansheng.com/data-contract-a1f05bc/): Use one JSON manifest per target date. Preserve evidence; do not replace
+- [Photoshop poster workflow](https://tiaozhuxiansheng.com/photoshop-posters-41cb04f/): PSD files can be used when desktop Photoshop is installed and its native
+- [Teacher portrait assets](https://tiaozhuxiansheng.com/teacher-assets-ec90e14/): Never infer the folder from a name such as 卡通. If project settings are
+- [Template registries](https://tiaozhuxiansheng.com/template-registry-ab884ab/): Text layout and poster design are independent assets. Never use one shared
+- [Creation Example](https://tiaozhuxiansheng.com/creation-example-f6f9a77/): 我想做一个 AI 公益项目，但不知道选什么方向。
+- [Creation Mode](https://tiaozhuxiansheng.com/creation-mode-342f105/): 用于创作、产品、项目方向、职业选择和策略决策。
+- [Exploration Example](https://tiaozhuxiansheng.com/exploration-example-fb8dc80/): 我想学习剪辑，但不知道从哪里开始。
+- [Exploration Mode](https://tiaozhuxiansheng.com/exploration-mode-d7d18e6/): 用于用户有方向但没有路径。
+- [Insight / Beacon Event Protocol](https://tiaozhuxiansheng.com/event-output-protocol-506484a/): Insight 和 Beacon 是独立事件，不是固定栏目，也不是绑定输出。
+- [Knowledge Example](https://tiaozhuxiansheng.com/knowledge-example-5e4538d/): 什么是蒙太奇？
+- [Knowledge Mode](https://tiaozhuxiansheng.com/knowledge-mode-f2a0d03/): 用于明确知识问题。
+- [Maieutic DeepSeek Adapter](https://tiaozhuxiansheng.com/readme-7111557/): maieutic-deepseek-adapter 是一组可复制到国内模型平台的 prompt 包。
+- [Maieutic DeepSeek Adapter](https://tiaozhuxiansheng.com/skill-e88e979/): 这是 maieutic-skill v0.1 的国内平台适配包。它不是新 Web App，不接数据库，不做长期记忆，也不改变 v0.1 的核心行为。
+- [Maieutic DeepSeek Adapter Test Cases](https://tiaozhuxiansheng.com/test-cases-3c0217f/): 把 prompts/systemprompt.md、prompts/modeclassifier.md、四个模式 prompt、prompts/researchtrigger.md…
+- [Mode Classifier](https://tiaozhuxiansheng.com/mode-classifier-9dc6e14/): 按用户真实需求分类，不按表面词汇分类。一次只选择一个主模式，Research-Assisted 只能作为横向叠加层。
+- [Reflection Example](https://tiaozhuxiansheng.com/reflection-example-0256736/): 我最近什么都想学，但什么都开始不了。
+- [Reflection Mode](https://tiaozhuxiansheng.com/reflection-mode-d0709e3/): 用于用户迷茫、卡住、疲惫、受挫，或暂时无法理解自己状态。
+- [Research-Assisted Example](https://tiaozhuxiansheng.com/research-enabled-example-0ffbd5b/): 帮我找几个适合做 Claude Skill 的学习类案例。
+- [Research-Assisted Mode](https://tiaozhuxiansheng.com/research-trigger-7ec09d1/): Research-Assisted Mode 是横向能力，不是第五种主模式。它只在信息不足会影响判断时启用。
+- [Selective Output Format](https://tiaozhuxiansheng.com/reflection-output-62f8fc5/): 只输出当前真正有用的部分，不要打印空栏目。
+- [System Prompt for DeepSeek / 国内模型](https://tiaozhuxiansheng.com/system-prompt-4849f42/): 你是 Maieutic，一个苏格拉底式 AI 共学者。你的任务不是替使用者做决定，而是帮助他把问题想清楚；必要时提供信息收集、结构化分析和低阻力行动建议。
+- [Knowledge Base Curator · 知识库沉淀与分发工作流](https://tiaozhuxiansheng.com/skill-3d919d6/): 你是这座知识库(跳蛛先生 AIGC 创作知识库)的策展人。你的职责是:把一次有 insight 的答疑 / 探索,沉淀成两类不同定位的资产——
+- [测试复盘 · Maieutic Skill v0.1](https://tiaozhuxiansheng.com/maieuticskill-v0-1-20260605-321df56/): maieutic-skill v0.1 已完成首轮五个 MVP 用例测试，覆盖知识解释、学习路径澄清、迷茫反思、AI 公益项目方向澄清、Claude Skill 学习案例信息收集。
+- [Creation Example](https://tiaozhuxiansheng.com/creation-example-5da4610/): 我想做一个 AI 公益项目，但不知道选什么方向。
+- [Creation Mode](https://tiaozhuxiansheng.com/creation-mode-48bc60b/): Use this mode for creative work, product design, project direction, career choices, and st…
+- [Exploration Example](https://tiaozhuxiansheng.com/exploration-example-1db1e4a/): 我想学习剪辑，但不知道从哪里开始。
+- [Exploration Mode](https://tiaozhuxiansheng.com/exploration-mode-a69394e/): Use this mode when the user has a direction but not a path.
+- [Knowledge Example](https://tiaozhuxiansheng.com/knowledge-example-64a7bee/): 什么是蒙太奇？
+- [Knowledge Mode](https://tiaozhuxiansheng.com/knowledge-mode-a6aeeae/): Use this mode for clear knowledge questions.
+- [Maieutic Skill](https://tiaozhuxiansheng.com/skill-eaf52ee/): Act as Maieutic: a Socratic co-learner who helps the user think clearly. Do not act as a t…
+- [Maieutic Skill MVP](https://tiaozhuxiansheng.com/readme-36491b4/): Maieutic 是一个可测试的 Skill MVP：帮助使用者把问题想清楚，并在必要时补足信息。
+- [Maieutic Skill MVP Test Cases](https://tiaozhuxiansheng.com/test-cases-f7dfd89/): 逐条输入测试句，记录：
+- [Maieutic Skill v0.2 路线图：国内可用适配](https://tiaozhuxiansheng.com/maieuticskill-v0-2-64d3b30/): maieutic-skill v0.1 已完成首轮测试，但 Claude / GPT Skill 形态对国内普通用户存在可访问性限制。
+- [Mode Classifier](https://tiaozhuxiansheng.com/mode-classifier-ed3dee9/): Classify by the user's actual need, not by surface vocabulary.
+- [Reflection Example](https://tiaozhuxiansheng.com/reflection-example-4098ec1/): 我最近什么都想学，但什么都开始不了。
+- [Reflection Mode](https://tiaozhuxiansheng.com/reflection-mode-7888385/): Use this mode when the user is confused, stuck, tired, frustrated, or unclear about themse…
+- [Reflection Output](https://tiaozhuxiansheng.com/reflection-output-3b23750/): Use this only when a section genuinely serves the user. Insight and Beacon are optional an…
+- [Research-Assisted Example](https://tiaozhuxiansheng.com/research-enabled-example-482da45/): 帮我找几个适合做 Claude Skill 的学习类案例。
+- [System Prompt](https://tiaozhuxiansheng.com/system-prompt-f69a000/): 你是 Maieutic，一个苏格拉底式 AI 共学者。
+- [机会尽调（副业招募 / 兼职外包 / 合作邀约）](https://tiaozhuxiansheng.com/skill-5d2c66e/): 把一份来路不明的赚钱机会，核成一份当事人拿了就能自己做决定的尽调笔记。
+- [Credit-Killing Patterns Reference](https://tiaozhuxiansheng.com/patterns-00a3b84/): 37 patterns that waste tokens and cause re-prompts. Read this file when the user pastes a …
+- [Prompt Templates Reference](https://tiaozhuxiansheng.com/templates-e1a0ea8/): Full template library for Prompt Master. Read the relevant template when the user's task t…
+- [README](https://tiaozhuxiansheng.com/readme-119e741/): !(https://i.postimg.cc/kG03s7tk/prompt-banner.png)
+- [SKILL](https://tiaozhuxiansheng.com/skill-92cd6d8/): Who you are
+- [月下武侠15秒视频提示词模板](https://tiaozhuxiansheng.com/video-prompt-templates-beeb8a5/): 只在用户已经确认首帧图片并选择模板后读取。四个模板均按“全局视觉与人物锁定 → 镜头参数 → 时间段内的动作、运镜、环境反馈 → 限制提示词 → 音效设计”组织。尖括号内容按已确认…
+- [月夜国风幻想武侠镜头](https://tiaozhuxiansheng.com/skill-6737d80/): 生成或诊断“明月、武侠人物、双向飘动服饰、环境边缘高光”类型的国风幻想CG图片，并把用户确认的图片发展成15秒视频提示词。默认媒介是国风幻想2.5D/2D CG插画：以平面化剪影、…
+- [月夜唯美武侠镜头系统](https://tiaozhuxiansheng.com/style-system-36cbb16/): 用于生成新图、复刻参考图或诊断镜头偏差。按当前任务选取所需模块，不必把所有参数机械堆入一条提示词。
+- [《{{主题}}》· 小红书正文](https://tiaozhuxiansheng.com/xiaohongshu-caption-template-45e70a9/): 写作规则(写完删掉本段):
+- [目标是成为 Prompt 大师 · 第 {{N}} 期《{{主题}}》](https://tiaozhuxiansheng.com/episode-note-template-270fb08/): 写作规则(写完删掉本段):
+- [Prompt Master Series(目标是成为 Prompt 大师 · 系列内容生产)](https://tiaozhuxiansheng.com/skill-87b136e/): 把一个已有的 prompt 作品 / battle 案例,沉淀成《目标是成为 Prompt 大师》系列的一期可发布内容。
+- [2026-06-08 正式小片段 Seedance 2.0 Prompt 套装](https://tiaozhuxiansheng.com/formal-clip-2026-06-08-seedance-prompt-s-dc80f4f/): - 每条 prompt 单独生成一段视频。
+- [2026-06-08 正式小片段全链路归档包](https://tiaozhuxiansheng.com/formal-clip-2026-06-08-mj-asset-intake-63fb3d1/): - 项目:Skill is All You Need
+- [全片 v3.1 封版存档 · 工作日志（2026-06-16）](https://tiaozhuxiansheng.com/full-film-2026-06-16-worklog-v3-1-checkp-8f3564e/): 1. P0（motion 重锚）：以 fullFilmVoiceoverTiming 为时间真相，build 时把 motion 重锚到真实 beat。修复"动画时长靠估算"错位。…
+- [全片 v3.1 视觉生产包（2026-06-27）· P1 九场景 MJ + Seedance](https://tiaozhuxiansheng.com/full-film-2026-06-27-visual-pack-v3-1-3bd0eef/): 1. MJ 图只承载视觉隐喻 + 配色编码，不依赖中文文字。
+- [全片 v3.2 视觉生产包（2026-06-29）· 超现实摄影版 · P1 九场景 MJ + Seedance](https://tiaozhuxiansheng.com/full-film-2026-06-29-visual-pack-v3-2-ph-8a602ff/): 1. 统一世界观：所有场景都发生在同一个昏暗机构空间——既是产房又是停尸间（maieutic↔postmortem 生死母题的实体化）。苍白瓷砖墙、不锈钢台面、体积雾气；光从左侧暖…
+- [全片口播稿 v3.1（锁定版）](https://tiaozhuxiansheng.com/full-film-2026-06-16-script-v3-1-locked-4543027/): 节奏标注：⚡=短句猛击 / 中 / 长。时长为估算，真实值以 Eleven 生成为准。
+- [Remotion 极简知识卡片流 Skill](https://tiaozhuxiansheng.com/skill-e308e89/): 你是一位熟悉 Remotion 框架的视频工程师，专门把知识类内容翻译成「极简知识卡片流」风格的可渲染视频。你输出的是可以直接跑起来的 TSX 代码，不是伪代码或示意图。
+- [scene_05 正式小片段实验生产包](https://tiaozhuxiansheng.com/scene-05-formal-experiment-4cac1ec/): - 场景:scene05markdownstructure
+- [Skill Is All You Need · 2026-06-09 早间阶段存档](https://tiaozhuxiansheng.com/full-film-2026-06-09-morning-archive-f00029e/): - 全片旁白已按 53 个 beat 生成并接入 Remotion；
+- [Skill Is All You Need · 2026-06-10 收工复盘](https://tiaozhuxiansheng.com/full-film-2026-06-10-worklog-archive-2eaf249/): SkillIsAllYouNeedFullFilm 已从“框架视频验证”推进到“MJ / Seedance 素材替换准备完成”的阶段。
+- [Skill Is All You Need · 全片 MJ / Seedance 素材替换生产包](https://tiaozhuxiansheng.com/full-film-2026-06-10-mj-seedance-replace-a7c9fc8/): 在已验证通过的 SkillIsAllYouNeedFullFilm 框架视频上，用 Midjourney 关键视觉和 Seedance 2.0 五秒机制动效替换一部分 Remoti…
+- [Skill Is All You Need · 全片文稿与 Suno 配乐规划](https://tiaozhuxiansheng.com/full-film-2026-06-09-script-and-suno-pla-f9d391f/): 本片从原先的纯教学短片扩展为三段式结构：
+- [Skill Is All You Need · BGM 剪辑记录](https://tiaozhuxiansheng.com/full-film-2026-06-09-bgm-edit-notes-a93e025/): 两首 Suno 成品不直接从完整版开头播放，而是作为素材库取用其中更适合旁白的片段。
+- [Skill Is All You Need · Full Film Voiceover Plan](https://tiaozhuxiansheng.com/full-film-2026-06-09-voiceover-plan-28dcb5e/): Generated: 2026-06-09
+- [Skill Is All You Need · Suno BGM Brief](https://tiaozhuxiansheng.com/full-film-2026-06-09-suno-bgm-brief-a7eb984/): 为 224.87 秒全片生成一条不抢中文旁白的纯配乐。
+- [Relationship To Current RemotionSkill.ts](https://tiaozhuxiansheng.com/remotion-skill-ts-relationship-e73f950/): Current prototype module:
+- [Remotion Explainer Workflow](https://tiaozhuxiansheng.com/skill-e21e27b/): Act as a Remotion explainer workflow architect. Convert knowledge content into a structure…
+- [sceneAssets Data Structure](https://tiaozhuxiansheng.com/scene-assets-e374339/): Use sceneAssets to separate production assets from scene structure.
+- [Skill Call Protocol](https://tiaozhuxiansheng.com/skill-call-protocol-21b6793/): Use this protocol when remotion-explainer-workflow needs another Skill. First version is a…
+- [报告长图渲染（PB Arena 同款版式）](https://tiaozhuxiansheng.com/skill-1332a8b/): 把一篇已成稿的 md（复盘、尽调、更新报告、教程）渲染成一张可直接转发的长图 PNG。
+- [Song Caption MV Workflow](https://tiaozhuxiansheng.com/skill-f2c2e15/): 你是 AI 音乐 MV 制作与字幕自动化协作 agent。目标不是替代创作者审美，而是把以下重复环节做成可验证流程：
+- [Stay alive Case Notes](https://tiaozhuxiansheng.com/stay-alive-case-notes-d4e5e37/): Suno song
+- [Subtask Receipt Writer](https://tiaozhuxiansheng.com/skill-bf1c281/): After finishing work, decide whether the work is a subtask that needs a receipt. If yes, w…
+- [Suno Music Brief](https://tiaozhuxiansheng.com/skill-5771530/): 你是一位 AI 配乐制作协作者，专门把项目配乐需求翻译成 Suno 的创作 brief。核心原则：Simple Mode 求 happy accident（探索），Custom M…
+- [Wechaty 博客 PR 提交](https://tiaozhuxiansheng.com/skill-b91ac2d/): - User has written a Wechaty-related technical blog and wants to submit it to the Wechaty …
+- [Work Weekly Report · 公司工作周报工作流](https://tiaozhuxiansheng.com/skill-ad98e9c/): 你帮跳蛛先生生成提交给公司的工作周报。这不是创作复盘，是一份对外汇报文档——读者是公司/上级，要看清「这周干了什么、下周干什么、卡在哪、想明白了什么」。
+- [Image2 鱼鳞纹修复提示词库](https://tiaozhuxiansheng.com/prompt-library-80f9b04/): 按诊断结果选择一个阶段使用。花括号内容应替换成当前图片的真实信息。
+- [Yu-Lin-Wen-Skill](https://tiaozhuxiansheng.com/skill-e3d840f/): 修复 Image2 画面中的结构性重复纹理，同时尽量锁定原图内容、风格和镜头关系。
+
+## 笔记 · 平台工程
+
+搭建与维护本站及内容平台的工程方法、架构模式与踩坑——这个站怎么做出来的。
+
+- [本地部署 FastAPI 静态站到 3000 端口 · 复盘](https://tiaozhuxiansheng.com/2026-07-17-fastapi-3000-v1-0ec39b4/): 要让一个基于 FastAPI 的静态站在本地通过 localhost:3000 访问，关键不是改前端文件，而是把后端启动脚本改为监听目标端口，并确认静态文件入口和依赖都能正常加载。
+- [成稿链接存进库没人读 · 写入方不等于展示方](https://tiaozhuxiansheng.com/v1-9f352e9/): - 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统,2026-07-30 单会话
+- [导出运行时无系统字体回退律 · CJK 豆腐块](https://tiaozhuxiansheng.com/cjk-v1-c5850a8/): 桌面端会用操作系统字体自动补全字体里缺失的字形,导出到 Web/移动/嵌入式运行时后没有系统字体可借,凡是用「不含目标字形的字体」渲染的文本一律变豆腐块(□)。 跨字体、跨语言的项…
+- [二维码载荷硬预算与最长真实载荷验证](https://tiaozhuxiansheng.com/v1-050f2b8/): 《镜像自我》扫码报告链路:给扫码载荷加了两个"锦上添花"字段（读心印象小标题 + 总结）,用调试直跳（空轨迹,987 字符）验证"可扫"后上线。真实一局是 8 个选择节点 + AI…
+- [反馈收集的双文档体系：自由格式 + 结构化追踪](https://tiaozhuxiansheng.com/v1-654cf62/): 传统做法是只给一份表格让测试者填——字段多、分类细，测试者打开就劝退。但如果只给一份自由格式文档，团队需要手动二次整理，效率低且容易漏。
+- [风眼洪涝维度改造复盘:单因子分级会在最危险时段给出最低档](https://tiaozhuxiansheng.com/2026-08-21-v1-d82b742/): - 项目:风眼 · Typhoon Eye(E:\typhoon-eye),台风实况与分级应急预案单页站。双发布面:GitHub Pages + B 站 Toy(slug YliU…
+- [公屏下线只删了界面 · 删界面不等于关链路](https://tiaozhuxiansheng.com/v1-6532011/): - 反馈来源：项目负责人 2026-08-08 晚在微信里提的 16 条，散在一条约 90 条消息的聊天记录里；由 Claude 桌面端 computer use 读屏整理成《问题…
+- [构建产物的脏改动不是事故 · 复发是归因错了的信号](https://tiaozhuxiansheng.com/v1-6fdab0b/): E:\above-the-web\kb-content 稳定呈现 305 个 M（modified）。作者明确指出「第二次了」。
+- [换系统盘前的现状核查 · 「给我的服务器」不等于「空服务器」](https://tiaozhuxiansheng.com/v1-191a808/): - 任务开局："拉最新状态，部署上站，这次我们有了完整的官方域名和正式的服务器"
+- [静态站接账号系统 · 内容归 git、状态归库的双源切分](https://tiaozhuxiansheng.com/git-v1-bd10b6f/): 静态站要「动起来」,第一步不是把渲染模式升级成 SSR,而是把内容源和状态源切开——正文继续归 git 走构建期,只把真正会变的那几个字段交给数据库,前端做客户端注水。切对了,部署…
+- [零路由补路由 · 普查要能推翻已写的代码](https://tiaozhuxiansheng.com/v1-41b9cb0/): - 起点：上一轮自检清单清空到只剩一项——全站零路由（对 pushState / popstate / hashchange / location.hash 全文零命中）。后果：手…
+- [零作品的比赛 · 界面演完不等于链路存在](https://tiaozhuxiansheng.com/v1-0abb7cd/): - 项目:PB Arena 官方赛事(报名 → 出图 → 上传 → 投票 → 结算)
+- [炉石传说安装被拒：UBR 判断假正常系统与 Win10 原地升级](https://tiaozhuxiansheng.com/ubr-win10-v1-f778c67/): 暴雪战网安装《炉石传说》时报错：
+- [录屏假光标被打回：画出来的不算操作，与"输入送达"的四处假信号](https://tiaozhuxiansheng.com/v1-c224595/): 教程录屏交付 11 条，被一句话打回："这不是鼠标操作"。
+- [没有 Mac 也能冒烟测试 macOS 版：GitHub Actions 截图验字体](https://tiaozhuxiansheng.com/mac-macos-githubactions-v1-3b7ddc1/): 作者手上没有 Mac，Mac 版只能发出去等用户反馈。
+- [每日定时任务自动更新内容板块:首次自动化生产落地](https://tiaozhuxiansheng.com/v1-db37064/): - 项目:蛛网之上「AIGC 快讯 · AIGC Daily」板块(/news/,每日一期 AIGC 新闻精选)
+- [美工改稿 V4 四屏落地 · 禁止项是待办不是护栏](https://tiaozhuxiansheng.com/v4-v1-a4608a7/): - 交付物:PB-Arena-全套UI改稿浅色对战V420260731.zip,30.9 MB,32 个文件(30 PNG + 2 份规范 md)
+- [美工改稿全站落地 · 跨稿重复才是规范](https://tiaozhuxiansheng.com/v1-ffe7a6e/): - 交付物:美工给的 31MB zip,内含 30 张 PNG(公共端桌面 10 + 移动 10 + 后台桌面 10)+ 1 份 UI视觉规范简洁低疲劳V2.md
+- [内测反馈渠道上线 · 匿名兜底与 422 探针验证](https://tiaozhuxiansheng.com/422-v1-4a070bb/): 给内测产品加反馈渠道,产品上要让"登录不了的人"也能反馈(匿名兜底+限流补偿),工程上先做模式考古照抄现有惯例,上线后用一发"必失败的校验请求"(422 探针)验证路由生效而不留脏…
+- [内测修复的逐项审计闭环](https://tiaozhuxiansheng.com/v1-2af659e/): 修复清单列出 12 项，其中 10 项已经在未提交改动中实现、2 项需要补代码。如果不做审计直接从头写，会重复劳动；如果盲目信任「已经修了」，可能漏项。
+- [内容子项目「构建时同步」· 独立仓库镜像进 public,新内容自动上线](https://tiaozhuxiansheng.com/public-v1-4e27eaf/): 当一块内容是独立仓库 + 频繁更新 + 自包含静态站(或大体积素材)时,不要把它拷快照进主站仓库(会让主仓变胖、且每次更新要手动重拷、必然陈旧)。改成构建时同步:构建脚本浅克隆到缓…
+- [平台工程索引](https://tiaozhuxiansheng.com/09-7ea49b8/): - 内容子项目构建时同步独立仓库镜像进publicv1 —— 独立频繁更新的内容仓库:浅克隆→镜像进 public(排.git)→新内容自动上线、主仓不胖
+- [前端投票场景的乐观更新实践](https://tiaozhuxiansheng.com/v1-a95d221/): 投票页点红心 → 调 API → 等返回 → 更新 UI。API 延迟 300-500ms 时，用户双击红心会感觉「没反应」，可能重复点击。
+- [全站文字截断体检 · 检测工具本身要先被证伪](https://tiaozhuxiansheng.com/v1-83c88ab/): - 触发:用户截图后台轮次列表,「参与范围」下拉只显示「所有人可」,并要求「顺便查一下类似的问题一并修复」
+- [任务书接 AI 辅助填写：模型只产草稿，与思考型模型的额度陷阱](https://tiaozhuxiansheng.com/ai-v1-fbcd3c9/): 给既有表单接 AI，产物必须落在「人还能改」的那一格里，且服务端要把模型输出当草稿再洗一遍。
+- [任务系统演进:站内新建、管理台拆分与首页瘦身](https://tiaozhuxiansheng.com/v1-5696fe2/): - 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统 + 管理台 + 首页,2026-07-24 → 2026-07-29
+- [赛事状态机到点不切换 · 写入方不等于推进方](https://tiaozhuxiansheng.com/v1-35e4706/): - 项目:PB Arena 官方赛事(报名中 → 进行中 → 出图 / 上传 / 投票 → 完赛)
+- [双部署目标的 base 路径陷阱 · 根路径拼出 `//slug` 全站内链失效](https://tiaozhuxiansheng.com/base-v1-7820209/): 一套代码部署到两个 base 不同的目标(Pages 子路径 /above-the-web vs 自定义域名根路径 /)时,凡是手动拼接  ${BASE}/${slug}  的地方…
+- [腾讯文档 doc-mcp 程序化编辑 · GCP 坐标定位与自底向上防漂移](https://tiaozhuxiansheng.com/doc-mcp-gcp-v1-77ca6ee/): 腾讯文档 doc-mcp 的编辑不是"改文档"是"改坐标"：find 拿 GCP 坐标 → replacetext / inserttext 精确落刀，多处修改自底向上排序防坐标漂…
+- [网页主图 logo 流动动效迭代 · 液态变形与碎裂问题](https://tiaozhuxiansheng.com/logo-v1-e525ec8/): 把品牌 logo(鲸环水流缎带)做成「整张图不断液态流动」的正确技术路线是 SVG feTurbulence(分形噪声)+ feDisplacementMap(按噪声位移像素)+ …
+- [文档密集页两栏排版与对外截图脱敏](https://tiaozhuxiansheng.com/v1-a8ba856/): - 项目:蛛网之上「任务书」版块下的 /tasks/spec/(教程类任务规范页),2026-07-24 单会话从建页到排版收口
+- [小织的人设与记忆 · 承诺要代码兜住而非模型自律](https://tiaozhuxiansheng.com/v1-8c8d029/): 给 AI 助手立人设,真正要守的不是台词而是边界:「不存问答原文」这种承诺写在 prompt 里只是请求,写进服务端(必须是字符串、单行化、是问题原文的连续片段就直接丢弃)才是承诺…
+- [新工作电脑 AIGC 环境从零搭建：单域名分流失败与 12GB 跑 33B 视频模型](https://tiaozhuxiansheng.com/2026-10-09-aigc-12gb-33b-v1-02f1adf/): - 项目：新工作电脑 AIGC 创作环境从零搭建
+- [云端定时内容生产连环坑复盘:全绿不等于已发](https://tiaozhuxiansheng.com/2026-07-03-v1-2d712fc/): - 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cron 30 1    UTC = 北京 …
+- [站内新版块五件套模式:三次复用与起刊两坑](https://tiaozhuxiansheng.com/v1-ac6b03d/): - 项目:蛛网之上「任务书 · Commissions」版块(/tasks/),2026-07-20 单次会话内从零到双域名上线
+- [账号系统对标一线 · 多账号抽屉与外部通道的半开陷阱](https://tiaozhuxiansheng.com/v1-6601c25/): 功能开关要接在「能力被验证过」上,不能接在「配置填了」上。 发信通道半开时,页面照常说「信已经发出去了」而信根本没发出去——这种半开状态比功能压根没上线更糟:它把失败伪装成了成功,…
+- [自检 46 条零驳回 · 同类中的异类才是缺陷藏身处](https://tiaozhuxiansheng.com/46-v1-9df0c5a/): - 触发：用户一句「全项目自检一次，重点检查交互式 bug 及边缘问题」，没有清单、没有指定范围
+- [agnes接入DeepSeekHarness_双节点实测与思考方言](https://tiaozhuxiansheng.com/2026-08-26-agnes-deepseekharness-v1-5199d3a/): - 项目：DeepSeek Harness 本地部署，DSHHOME = E:/deepseek-harness/.dsh-home
+- [AI 查询召回失准 · 容器词自指与命中率区分度](https://tiaozhuxiansheng.com/ai-v1-58cfb5a/): 读者问「这个知识库里有哪些关于 Midjourney 的笔记」,召回的却全是「知识库沉淀与分发」那一类——因为「这个知识库」「笔记」在别处是废话,在这座库里恰恰是强索引词(库里就有…
+- [AI 问答板块收尾 · 打通判据与小圆头像构图律](https://tiaozhuxiansheng.com/ai-v1-ef6f7d4/): 「打通」的判据不是代码写完,而是链路上最后一个消费者真正用上——收尾三件套是测试进 npm test、CI 出包前先跑、线上产物 grep 到新代码;而聊天小头像的正确裁法是人像带…
+- [AutoClaw 失控删库全链路取证 · 回收站时间戳与孤本抢救](https://tiaozhuxiansheng.com/autoclaw-v1-aeec89d/): 失控自主 agent 删库的完整答案藏在回收站 $I 索引里(删除时刻+原路径+去向=进程指纹);处置顺序必须是断进程(连 watchdog)→查自启(注册表空≠没有,藏在计划任务…
+- [B站Toy同步事故复盘:版本指纹先定性,外部cron做兜底](https://tiaozhuxiansheng.com/2026-07-11-b-toy-cron-v1-cea9032/): - 项目:风眼 · Typhoon Eye(台风实况 + 分级应急预案,零依赖静态单页;仓库 Mr-Salticidae/typhoon-eye),发布为 B 站 Toy(id 8…
+- [CI 从 Release 抓二进制托管自有服务器 · 桌面应用国内直连下载](https://tiaozhuxiansheng.com/ci-release-v1-4ce568a/): 要给一个 Windows 应用/游戏做国内直连、零维护的下载入口:别把二进制塞进 git,也别只甩 GitHub 直链(国内慢)——让 CI 在部署时从 GitHub Releas…
+- [Claude 预览环境不派发滚动事件 · 滚动类功能无法行为验证](https://tiaozhuxiansheng.com/claude-v1-b6645d9/): Claude Preview 的预览 iframe 根本不向页面派发 scroll 事件——window / document、冒泡 / 捕获全部 0 次,连 Intersecti…
+- [Claude 桌面版接入 LibTV 远程 MCP:临时电脑环境与会话重连](https://tiaozhuxiansheng.com/claude-libtv-mcp-v1-285995f/): 在一台陌生电脑上,Claude 桌面版可以通过 LibTV Remote MCP 直接调 Seedance 2.5 出片,不用装 LibTV CLI。要过三道坎:桌面版是 MSIX…
+- [DSH接入第三方OpenAI兼容提供商_providers声明与凭据热重载断档](https://tiaozhuxiansheng.com/dsh-openai-providers-v1-57207d0/): - 项目：DeepSeek Harness 本地部署，DSHHOME = E:/deepseek-harness/.dsh-home
+- [Git 初始化已有工作区并建 GitHub 仓库 · 嵌套仓库用 submodule 引入 + MCP 无权限时 gh CLI 兜底](https://tiaozhuxiansheng.com/git-github-submodule-mcp-ghcli-v1-54041cc/): 已有工作区建 GitHub 仓库的正解:嵌套子仓库用 submodule 引入(不是塞进去),MCP connector 无 createrepository 权限时用 gh CL…
+- [GitHub 强制 2FA 的小白处置 · TOTP 原理与离线生成器](https://tiaozhuxiansheng.com/github-2fa-totp-v1-f9e47bb/): GitHub 弹的「Enable two-factor authentication」不是收费,是强制两步验证(对上传过代码的账号强制,免费)。开启它本质只需要一个能持续产出 6 …
+- [LibTV：CLI 跑的 Seedance 样片，补网页元数据后转正片](https://tiaozhuxiansheng.com/libtv-cli-v1-ee5f3b3/): 正片 = 一次普通的 star-video2.5 生成：参数同样片，加 draft: false、draftTaskId: <样片的 providerTaskId，分辨率 1080…
+- [OpenAI 兼容止于对话端点：多提供商视频接口分流与真 key 首测连环坑](https://tiaozhuxiansheng.com/openai-key-v1-7ad7e8a/): - 项目：LibreCanvas（E:\libre-canvas），起点 v1.4.0 → 收口 v1.5.0，commit 940b3ed
+- [OpenAI 区域封锁与 Worker 就近执行陷阱 · 北美 DO 跳板](https://tiaozhuxiansheng.com/openai-worker-do-v1-d6b8be3/): 线上站读心"全是片汤话"——发布安全闸按设计剔除了 apiKey，前端落模板兜底。解法是在自有香港服务器挂同域中转代理（密钥服务器端注入）。代理本身一次写通，但出网连撞三堵墙：
+- [reduced-motion 本机陷阱 · 动效降级纯淡入而非跳过](https://tiaozhuxiansheng.com/reduced-motion-v1-5d31a1e/): Windows 关了「动画效果」的机器,所有浏览器都会全局上报 prefers-reduced-motion: reduce;网页动效对它的正确响应是「降级为纯淡入」,不是「整体跳…
+- [UAC 关闭导致"以管理员身份运行"入口消失](https://tiaozhuxiansheng.com/uac-administrator-enablelua-0-v1-221ada0/): 本地 PowerShell 无法选择"以管理员身份运行"：右键菜单没有该选项，或点击无效、不弹 UAC 窗口。
+- [2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘](https://tiaozhuxiansheng.com/2026-08-19-vpn-guard-v1-6c1f41c/): Top10 低延迟节点里 9 个是机房出口，其中 6 个直接租自公有云：
+- [2026-09-06 · TUN 开关状态漂移复发 · 三层真相源与 agent 起 GUI 边界 · 复盘](https://tiaozhuxiansheng.com/2026-09-06-tun-agent-gui-v1-a8056b4/): - 截图：Codex CLI「你在 0 秒后停止了」+「正在重新连接 3/5」
+- [2026-09-17 · vpn-guard 目录整理收口 · 挪脚本等于挪状态与四处静默放行 · 迭代复盘](https://tiaozhuxiansheng.com/2026-09-17-vpn-guard-v1-06d9964/): - 根目录下受 git 跟踪的文件从 30 个减到 20 个。主脚本、residential-asn.txt、webrtc-leak-test.html、一键体检. 都没动，用户侧…
+- [代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障](https://tiaozhuxiansheng.com/tun-codex-cli-v1-4cbeae3/): - 用户主诉：Codex CLI 在执行指令时反复遇到网络错误，界面显示"正在重新连接 2/5"。
+- [信任资产保得住、造不出 · 账号基线 vs 人群先验](https://tiaozhuxiansheng.com/vs-v1-a9977f1/): 同样的出口 IP、同样的浏览器指纹，老号和新号的判罚可以天差地别——因为被判的不是这次的信号，而是「这次的信号与该账号历史的偏离度」。 于是防泄露工具能做的只有保住已有的信任资产，…
+- [ChatGPT Windows 桌面版安装排障与账号合规边界](https://tiaozhuxiansheng.com/chatgpt-windows-v1-8152abb/): ChatGPT Windows 版安装失败时，按 使用资格 → Microsoft Store 分发 → 网络链路 → 账号与会话 四层排查；一次机器上的地区、TUN、DNS 或 …
+- [DNS 防泄露五层修复 · fake-ip 形同虚设与物理网卡 DNS 绕过](https://tiaozhuxiansheng.com/dns-fake-ip-dns-v1-90e0c85/): vpn-leak-audit.ps1 自查 8 项中第 6 项「DNS 解析路径」FAIL：对随机子域发起真实解析后回查，3/3 个实际应答的解析器都在中国大陆（中国电信 61.1…
+- [ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型](https://tiaozhuxiansheng.com/ping-fake-ip-v1-9bfe0c8/): - 用户主诉：ping coursera.org 通，浏览器看课程极卡。
+
+## AIGC 快讯 · 最近 14 期
+
+- [第 98 期 · 2026-10-10](https://tiaozhuxiansheng.com/news/2026-10-10/): Jev 估值飙至 75 亿美元，Nikon 比赛因 AI 生成视频取消冠军资格
+- [第 97 期 · 2026-10-09](https://tiaozhuxiansheng.com/news/2026-10-09/): Claude 新增动画视频与仪表盘生成，Anthropic 更新使用条款
+- [第 96 期 · 2026-10-08](https://tiaozhuxiansheng.com/news/2026-10-08/): GPT-6 与 Claude Haiku 5.5 同日更新，SynthID 检测工具开放公测
+- [第 95 期 · 2026-10-07](https://tiaozhuxiansheng.com/news/2026-10-07/): Mistral 与 Reflection 发布大参数模型，Google 更新图像生成与多模态嵌入
+- [第 94 期 · 2026-10-06](https://tiaozhuxiansheng.com/news/2026-10-06/): OpenAI 在生图界面插入广告，Reka 与 Aleph Alpha 发布新模型
+- [第 93 期 · 2026-10-05](https://tiaozhuxiansheng.com/news/2026-10-05/): Adobe 探索文本生成 3D，Google 收紧 Gemini 免费额度
+- [第 92 期 · 2026-10-04](https://tiaozhuxiansheng.com/news/2026-10-04/): Capcom 筹备 AI 协作开发，单图转 3D 场景工具仍难自判几何精度
+- [第 91 期 · 2026-10-03](https://tiaozhuxiansheng.com/news/2026-10-03/): Flux 3 Image 支持多步局部编辑，Suno 新增语音与配乐同步生成
+- [第 90 期 · 2026-10-02](https://tiaozhuxiansheng.com/news/2026-10-02/): Ideogram 4.5 支持局部编辑，Tavus 实时视频 Avatar 难辨真假
+- [第 89 期 · 2026-10-01](https://tiaozhuxiansheng.com/news/2026-10-01/): Gemini 4 Argon 发布、Cinema 4D 接入 AI、Photoshop Relight 引争议
+- [第 88 期 · 2026-09-30](https://tiaozhuxiansheng.com/news/2026-09-30/): OpenAI DevDay 发布 Dots 与 GPT-6.1 Sol，ElevenLabs 更新语音模型
+- [第 87 期 · 2026-09-29](https://tiaozhuxiansheng.com/news/2026-09-29/): Anthropic 发布 Claude Sonnet 5.5，CorelDRAW 上线文生矢量图功能
+- [第 86 期 · 2026-09-28](https://tiaozhuxiansheng.com/news/2026-09-28/): Nvidia 开源说话人分离模型，OpenAI 称研发重心已转向 GPT-7
+- [第 85 期 · 2026-09-27](https://tiaozhuxiansheng.com/news/2026-09-27/): OpenAI 因安全事件暂停最强模型训练，GPT-6 Astra 视觉能力更新

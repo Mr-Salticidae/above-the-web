@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UI 自动化的固定坐标，必须绑一条可机检的前提断言 · 蛛网之上</title><meta name="description" content="坐标写错是响亮的失败——点了个空白处，什么都没发生，你立刻知道。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/ui-v1-5a2fb47/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="UI 自动化的固定坐标，必须绑一条可机检的前提断言"><meta property="og:description" content="坐标写错是响亮的失败——点了个空白处，什么都没发生，你立刻知道。"><meta property="og:url" content="https://tiaozhuxiansheng.com/ui-v1-5a2fb47/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="UI 自动化的固定坐标，必须绑一条可机检的前提断言"><meta name="twitter:description" content="坐标写错是响亮的失败——点了个空白处，什么都没发生，你立刻知道。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-08-01T02:27:30+08:00"><meta property="article:modified_time" content="2026-09-26T06:53:28+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/协作工具链"><meta property="article:tag" content="主题/自动化"><meta property="article:tag" content="主题/UI自动化"><meta property="article:tag" content="工具/humancast"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/ui-v1-5a2fb47/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/ui-v1-5a2fb47/","url":"https://tiaozhuxiansheng.com/ui-v1-5a2fb47/","headline":"UI 自动化的固定坐标，必须绑一条可机检的前提断言","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"坐标写错是响亮的失败——点了个空白处，什么都没发生，你立刻知道。","datePublished":"2026-08-01T02:27:30+08:00","dateModified":"2026-09-26T06:53:28+08:00","articleSection":"方法论与洞察","keywords":"类型/协作工具链, 主题/自动化, 主题/UI自动化, 工具/humancast"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"UI 自动化的固定坐标，必须绑一条可机检的前提断言","item":"https://tiaozhuxiansheng.com/ui-v1-5a2fb47/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.DFmyHKNs.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>协作运营与发布</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-08-01T02:27:30+08:00">2026-08-01</time></span> <span>更新于 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time></span> <span>约 6 分钟读完 · 2,327 字</span> </p> </header>  <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>8 节</i></summary> <ol> <li class="d2"><a href="#为什么它比坐标写错危险一个量级">为什么它比”坐标写错”危险一个量级</a></li><li class="d2"><a href="#实证">实证</a></li><li class="d3"><a href="#三验补充2026-08-13前提还有两个更隐蔽的形态">三验补充（2026-08-13）：前提还有两个更隐蔽的形态</a></li><li class="d2"><a href="#操作规则">操作规则</a></li><li class="d2"><a href="#边界">边界</a></li><li class="d2"><a href="#同族">同族</a></li><li class="d2"><a href="#验证状态">验证状态</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="ui-自动化的固定坐标必须绑一条可机检的前提断言">UI 自动化的固定坐标，必须绑一条可机检的前提断言</h1>
+<blockquote>
+<p><strong>一句话律</strong>：硬编码坐标都有隐含前提（面板是关的 / 窗口是最大化的 / 输入框是空的）。<strong>前提不成立时坐标不会报错，它会落在别的东西上并照常执行。</strong> 所以坐标不能单独存在，必须和一条能当场校验的断言绑在一起。</p>
+</blockquote>
+<h2 id="为什么它比坐标写错危险一个量级">为什么它比”坐标写错”危险一个量级</h2>
+<p>坐标写错是<strong>响亮的失败</strong>——点了个空白处，什么都没发生，你立刻知道。</p>
+<p>前提不成立是<strong>安静的成功</strong>——点击、输入、Ctrl+A+Delete 全都正常执行了，只是执行在别的控件上。脚本一路绿灯跑完，产物参数正常，你要么很久以后才发现，要么根本发现不了。</p>
+<p>实测最贵的一次：右侧文档面板开着时，输入框坐标 <code>(3670,990)</code> 实际落在<strong>文档编辑器</strong>里，一次 Ctrl+A + Delete 把一份 18KB 的 PLAN.md 清成了 101 字节。脚本没有任何异常输出。</p>
+<h2 id="实证">实证</h2>
+<p>Codex 教程录屏项目，两批素材各自独立复现：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>事故</th><th>前提是什么</th><th>前提不成立时坐标落在哪</th></tr></thead><tbody><tr><td>PLAN.md 被清空 18KB→101B</td><td>右侧文档面板已关闭</td><td>文档编辑器</td></tr><tr><td>同根因第二次：确认语被打进 PLAN.md</td><td>同上</td><td>同上</td></tr><tr><td>整段一声不响退出，什么都没打印</td><td>Codex 在录制屏上最大化</td><td>窗口外的桌面背景（读到深色 → 判成”AI 还在跑”）</td></tr><tr><td>段 13 连着两次没跑起来</td><td>输入框是空的</td><td>输入框有内容时发送键从浅灰变深，和”停止方块”一样暗</td></tr><tr><td>”找不到窗口”</td><td>窗口没被最小化过</td><td>最小化窗口 <code>GetWindowRect</code> 只有 160×28，被按最小尺寸过滤的枚举漏掉</td></tr><tr><td>侧栏项目条目点错行</td><td>侧栏滚动在顶部</td><td>别的项目</td></tr></tbody></table>
+<p>共同点：<strong>没有一条是坐标本身算错了。</strong></p>
+<h3 id="三验补充2026-08-13前提还有两个更隐蔽的形态">三验补充（2026-08-13）：前提还有两个更隐蔽的形态</h3>
+<p>上表列的前提全是<strong>版面</strong>类的（面板开合 / 窗口最大化 / 输入框为空 / 侧栏滚动）。第三批（Codex 教程操作部分 26 段重录）暴露出两个新形态，它们比版面类更难想到：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>新形态</th><th>事故</th><th>前提是什么</th></tr></thead><tbody><tr><td><strong>窗口身份</strong></td><td><code>find_any("ChatGPT")</code> 抓到「ChatGPT - Google Chrome」，差点对着浏览器录整集</td><td>句柄指向的确实是目标进程</td></tr><tr><td><strong>应用视图</strong></td><td>316 第三段录成「常规设置」；随后三次 UI 探索连续失败</td><td>应用停在主界面，而不是设置页/全屏模态</td></tr></tbody></table>
+<ul>
+<li><strong>窗口身份</strong>：ChatGPT 桌面端是 Electron，窗口类名和 Chrome 同为 <code>Chrome_WidgetWin_1</code>；浏览器开着 chatgpt.com 时标题也含「ChatGPT」。<strong>类名和标题双重撞车</strong>，按这两者找窗口必然出错。同一套坐标在错的窗口上照样能点、能打字——又是一次”安静的成功”。</li>
+<li><strong>应用视图</strong>：设置页是<strong>占满整屏的页面</strong>而非弹窗，一开就顶掉主界面，左上角标题区变空，“新建任务""输入框""工作区胶囊”整套坐标同时失效。而且它会<strong>跨脚本残留</strong>——上一个脚本退出时停在设置页，下一个脚本一进来所有坐标就是错的。</li>
+</ul>
+<p>两条对应的解法已写进操作规则 7、8。</p>
+<h2 id="操作规则">操作规则</h2>
+<ol>
+<li>
+<p><strong>每个坐标常量旁边写死它的前提，并把前提做成可机检的断言</strong>，不是注释里的一句提醒。注释拦不住三周后的自己。</p>
+</li>
+<li>
+<p><strong>断言写在动作之前</strong>。<code>ensure_layout()</code> 必须先于 <code>clear_box()</code>，顺序反了就是清空文档——这条是用一份被删的文件换来的。</p>
+</li>
+<li>
+<p><strong>断言优先选位置无关的像素特征</strong>。本项目用”按钮区域最暗像素”一个量同时判三件事：</p>
+<ul>
+<li><code>&#x3C; 250</code>：按钮确实在这个坐标上（面板开着的话这里是纯白）</li>
+<li><code>&#x3C; 100</code>：按钮是停止方块（AI 在跑）</li>
+<li><code>≈ 140</code>：按钮是箭头（空闲）</li>
+</ul>
+<p>好判据的标准是<strong>跟视图无关</strong>。试过”和参考图比对”，会因为视图切换（新建任务页 ↔ 对话页）产生难以解释的误判。</p>
+</li>
+<li>
+<p><strong>破坏性操作前必须过断言</strong>——Ctrl+A + Delete、拖放、点”确认”/“删除”/“提交”。非破坏性动作可以只在开头过一次。</p>
+</li>
+<li>
+<p><strong>窗口类前提要校验矩形，不能只发一条消息就当成功</strong>。<code>ShowWindow(SW_RESTORE)</code> 不保证回到最大化：窗口如果中途被人手动动过，restore 出来的是普通尺寸，所有基于”最大化”的坐标同时失效。发完 <code>SW_MAXIMIZE</code> 再读回 rect 比一遍。</p>
+</li>
+<li>
+<p><strong>应用状态机不要靠单次点击推断</strong>。本例要开一个挂在指定项目上的空白任务：只点侧栏项目条目 → 进它已有的对话；只点”新建任务” → 项目是空的。正解是三步组合（新建任务 → 选项目 → 搜索过滤到一条 → 点它），并用像素校验结果。</p>
+</li>
+<li>
+<p><strong>窗口一律按进程名认，不要按标题或类名</strong>（三验新增）。Electron 应用（ChatGPT 桌面端、VS Code、Discord…）类名清一色 <code>Chrome_WidgetWin_1</code>；标题由页面内容决定，随时会和别的窗口撞。用 <code>GetWindowThreadProcessId</code> + <code>QueryFullProcessImageNameW</code> 取 exe 名比对。</p>
+</li>
+<li>
+<p><strong>每条动作前把应用收敛到已知视图</strong>（三验新增）。别假设它还停在上一段结束时的样子——尤其设置页这种”占满整屏且跨脚本残留”的状态。写一个 <code>ensure_main_view()</code> 放在所有坐标动作之前。</p>
+</li>
+<li>
+<p><strong>判据要能区分”没找到”和”找错了”</strong>（三验新增）。本例空输入框判据应为 0.0019，实测 0.99329（浏览器那块区域是深色），一眼就知道是抓错了窗口。如果判据只有”有没有内容”，会误判成”输入框有残留”，接着去清空一个浏览器页面——<strong>又是一次 PLAN.md 事故</strong>。</p>
+</li>
+<li>
+<p><strong>判据的方向要先想清楚：是”变化”还是”增加”？</strong>（三验新增）实测一次翻车：用”对话区暗像素<strong>增加</strong>”判断收到回复，结果发送后读数从 .00521 降到 .00056——新会话的大标题字号很大，暗像素比一句「2 + 2 = 4.」还多。素材本身是好的，白重录一条。凡是”内容变多 → 某指标变大”的直觉，都要先用两端实测标定一次。</p>
+</li>
+</ol>
+<h2 id="边界">边界</h2>
+<ul>
+<li><strong>坐标由程序当场探测时不适用</strong>（读控件 rect、找蓝色链接块、按标题找窗口）。那类失败会返回 <code>None</code>，是响亮的失败，不需要额外断言。这条只针对<strong>硬编码常量</strong>。</li>
+<li>断言本身也可能有隐含前提（“按钮亮度”这条的前提就是”输入框是空的”）。<strong>断言要写清自己的适用条件</strong>，否则只是把问题推后一层。</li>
+<li>这条不反对硬编码坐标。UI 自动化里硬编码往往是最稳的做法，代价就是这一条断言。</li>
+</ul>
+<h2 id="同族">同族</h2>
+<ul>
+<li><a href="/above-the-web/v1-7f8ce8a/" class="wikilink">自动化产出双重验收_机器验参数人眼验内容_v1</a> —— 一体两面：那条管”结果对不对”（事后抽帧），本条管”动作发生在对的上下文里”（事前断言）。<strong>能写成断言的就别只靠事后抽帧</strong>，人眼关是兜底不是第一道防线。</li>
+<li><a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a> —— 同源的”环境隐式转换”：DPI 缩放悄悄改比例，面板开合悄悄改布局，都是”看起来对，实际不对”。</li>
+</ul>
+<h2 id="验证状态">验证状态</h2>
+<p>⭐⭐⭐ 三次验证</p>
+<ul>
+<li>首验：Codex 教程实战六 19 段录制（<code>ensure_layout()</code> 面板前提、按钮亮度的”输入框须为空”前提）</li>
+<li>二验：Codex 教程清单 2/3/4 三项目 19 段录制（清空 PLAN.md ×2、窗口未最大化整段静默退出、最小化窗口枚举不到、侧栏行错位）</li>
+<li>三验：Codex 教程操作部分 26 段重录（窗口身份撞车差点录错整集、设置页顶掉主界面、判据方向写反），并把前提从”版面”扩展到 <strong>“窗口身份”和”应用视图”</strong> 两个新形态</li>
+</ul>
+<p>三次跨不同项目、不同界面版面独立复现。<strong>仍未离开录屏域</strong>——三次都来自同一条工具链（humancast + OBS）。真正的跨域验证应当来自别的 UI 自动化场景（浏览器插件、移动端、桌面测试框架）。</p>
+<blockquote>
+<p>另：二验时写下的”最小化窗口枚举不到”这一条，三验时<strong>被同一个人在同一套工具上再次踩中</strong>（清屏函数把目标窗口自己也最小化了）。<strong>已知坑写进文档不等于不会再踩</strong>——真正拦住它的是断言，不是记忆。</p>
+</blockquote>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-08-01-codex-2-4-19-v1-5f86653/" class="wikilink">2026-08-01_Codex教程清单2-4_三项目19段录屏复盘_v1</a>（本律来源案例，含完整事故清单）</li>
+<li><a href="/above-the-web/2026-07-31-codex-19-v1-e56ff53/" class="wikilink">2026-07-31_Codex教程实战六_自动化录屏19段复盘_v1</a>（首验案例）</li>
+<li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/" class="wikilink">2026-08-13_Codex教程操作部分_26段重录复盘_v1</a>（三验案例：窗口身份 / 应用视图两个新形态）</li>
+<li><a href="/above-the-web/v1-7f8ce8a/" class="wikilink">自动化产出双重验收_机器验参数人眼验内容_v1</a>（一体两面）</li>
+<li><a href="/above-the-web/windows-dpi-v1-c276e21/" class="wikilink">Windows下编码与DPI的所见非真相_v1</a>（同源：环境隐式转换）</li>
+<li><span class="wikilink wikilink--dangling" title="尚未发布的笔记">代码资产索引</span>（humancast 工具登记处）</li>
+<li><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/协作工具链</span><span class="tag">主题/自动化</span><span class="tag">主题/UI自动化</span><span class="tag">工具/humancast</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-09-26T06:53:28+08:00">2026-09-26</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/UI%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E5%9B%BA%E5%AE%9A%E5%9D%90%E6%A0%87%E5%BF%85%E9%A1%BB%E7%BB%91%E5%89%8D%E6%8F%90%E6%96%AD%E8%A8%80_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/06_%E5%8D%8F%E4%BD%9C%E8%BF%90%E8%90%A5%E4%B8%8E%E5%8F%91%E5%B8%83/UI%E8%87%AA%E5%8A%A8%E5%8C%96%E7%9A%84%E5%9B%BA%E5%AE%9A%E5%9D%90%E6%A0%87%E5%BF%85%E9%A1%BB%E7%BB%91%E5%89%8D%E6%8F%90%E6%96%AD%E8%A8%80_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/2026-07-31-codex-19-v1-e56ff53/">2026-07-31 Codex 教程实战六 · 自动化录屏 19 段复盘</a></li><li><a href="/above-the-web/2026-08-01-codex-2-4-19-v1-5f86653/">2026-08-01 Codex 教程清单 2/3/4 · 三项目 19 段录屏复盘</a></li><li><a href="/above-the-web/2026-08-14-codex-v1-c53b251/">2026-08-14 Codex 教程录制链路打磨 · 复盘</a></li><li><a href="/above-the-web/2026-08-13-codex-26-v1-d606839/">2026-08-13 Codex 教程操作部分 · 26 段重录复盘（19/26）</a></li><li><a href="/above-the-web/v1-7f8ce8a/">自动化产出双重验收：机器验参数，人眼验内容</a></li><li><a href="/above-the-web/dws-index-v1-c5e1bec/">dws 块级插入：--index 语义陷阱与倒序插入法</a></li><li><a href="/above-the-web/windows-dpi-v1-c276e21/">Windows 下编码与 DPI 的「所见非真相」</a></li><li><a href="/above-the-web/v1-5d049d6/">浏览器插件自动化的能力边界</a></li><li><a href="/above-the-web/v1-c08b22e/">破坏性操作先写停止条件律</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-a1d4663/"> <span class="card-cat">方法论与洞察</span> <h3>交接文档不是需求原文，接手第一件事是回溯上游</h3> <p>交接文档天生长着一副&quot;权威&quot;的样子：它有版本号、有&quot;已确认的关键决策（封箱，不要再讨论）&quot;这样的措辞、有踩坑清单和理由。它比原始需求文档读起…</p> </a><a class="card" href="/above-the-web/1-v1-3fb8828/"> <span class="card-cat">方法论与洞察</span> <h3>小红书导流话术合规红线 ·「扣1领源码/教程」会被判广告限流</h3> <p>「想要源码/思路,评论区扣『1』」这类关键词钓鱼式导流,会被小红书判定为引流广告 → 限流。配图卡、正文、置顶评论里都要清掉,改成&quot;自然交流…</p> </a><a class="card" href="/above-the-web/1000-v1-2b2c761/"> <span class="card-cat">方法论与洞察</span> <h3>小红书正文超 1000 字是拆篇信号</h3> <p>小红书正文 1000 字上限不是排版限制,是平台在替你执行「别写大教程」。 写超了,第一反应不该是删字,该是拆篇——因为逼你超限的那个结构(…</p> </a><a class="card" href="/above-the-web/2026-05-18-19-v1-6f72139/"> <span class="card-cat">方法论与洞察</span> <h3>获奖图复盘方法论合集 v1 · 已被活合集取代</h3> <p>核心:让一个物件同时承载两种身份——观众的脑子需要 0.4 秒来切换,这 0.4 秒就是反讽。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#为什么它比坐标写错危险一个量级" data-toc-link="为什么它比坐标写错危险一个量级">为什么它比”坐标写错”危险一个量级</a></li><li class="d2"><a href="#实证" data-toc-link="实证">实证</a></li><li class="d3"><a href="#三验补充2026-08-13前提还有两个更隐蔽的形态" data-toc-link="三验补充2026-08-13前提还有两个更隐蔽的形态">三验补充（2026-08-13）：前提还有两个更隐蔽的形态</a></li><li class="d2"><a href="#操作规则" data-toc-link="操作规则">操作规则</a></li><li class="d2"><a href="#边界" data-toc-link="边界">边界</a></li><li class="d2"><a href="#同族" data-toc-link="同族">同族</a></li><li class="d2"><a href="#验证状态" data-toc-link="验证状态">验证状态</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>
