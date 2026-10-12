@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-12",
+  "headline": "Odyssey-3 世界模型开放预览，多 Agent 协作被指性价比低",
+  "items": [
+    {
+      "title": "Odyssey-3 生成式世界模型开放免费试用",
+      "summary": "Odyssey 发布 140 亿参数的世界模型 Odyssey-3，可根据文本提示实时生成交互环境，并支持控制机器人、无人机及 GTA V。官方称其在物理基准测试中取得高分，但评估方法存在局限。对视频与交互内容创作者而言，这是一个可直接上手测试的生成式世界模型新选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/odyssey-3-is-a-new-generative-world-model-that-you-can-try-for-free",
+      "featured": true
+    },
+    {
+      "title": "研究：多 Agent 协作消耗大量 token 但提升有限",
+      "summary": "Vals AI 研究发现，使用 GPT-6 Sol 和 Claude Opus 5.5 的多 Agent 团队相比单 Agent 成本最高达 5.1 倍，但四项测试中仅一项有可衡量的质量提升。Anthropic 的数据也显示，Agent 数量超过十个后质量趋于停滞而 token 成本持续攀升。依赖多 Agent 工作流的创作者需要重新评估协作规模与实际收益。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-agent-teams-waste-massive-tokens-for-barely-measurable-quality-gains-research-finds",
+      "featured": true
+    },
+    {
+      "title": "研究显示当前 AI Agent 仍缺乏自主科研能力",
+      "summary": "Epoch AI 与 Anthropic 独立研究发现，GPT-5.6 Sol 和 Claude Fable 5 等模型虽能执行实验，但缺乏科学层面的自我批判与真正的创造性思维，最优表现仅达到人类参考分数的 15%。模型最大的短板仍是无法对自身结果进行有效质疑。这对尝试用 AI 做深度内容研究的创作者是一个现实提醒。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-agents-overstate-their-results-and-remain-far-from-autonomous-research-study-finds",
+      "featured": false
+    },
+    {
+      "title": "arXiv 因 AI 论文激增限制每人每月提交两篇",
+      "summary": "自 2026 年 10 月起，arXiv 将个人提交上限设为每月两篇。过去两年月提交量翻倍，cs.AI 类别增长超六倍，少数作者用低质量 AI 生成论文淹没了志愿审核系统。这一变化意味着通过预印本追踪前沿 AIGC 研究的效率可能受到影响。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/arxiv-caps-submissions-at-two-per-month-as-ai-paper-flood-overwhelms-the-preprint-server",
+      "featured": false
+    },
+    {
+      "title": "The Verge 实测本地运行 AI 模型的体验与门槛",
+      "summary": "出于隐私顾虑，The Verge 编辑尝试在本地运行 AI 模型以替代云服务。文章记录了从部署到日常使用的实际过程，指出本地 AI 的能力正在增强，但学习曲线依然陡峭。对于处理敏感素材的图像或写作创作者，本地化部署正逐渐成为一个可行选项。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1008484/learning-local-ai-hermes-qwen-model-mac-studio-testing-diary-progress",
+      "featured": false
+    },
+    {
+      "title": "好莱坞开始用 AI 处理基础制作环节而非特效",
+      "summary": "Creative Bloq 分析指出，AI 在影视行业的实际落地点并非外界预期的视觉奇观，而是流程中不起眼的基础环节。这种务实的应用方式被认为是目前好莱坞接纳 AI 最可行的路径。对 AI 视频创作者而言，关注生产管线中的具体痛点比追求宏大效果更有参考价值。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/features/why-boring-ai-is-hollywoods-best-bet",
+      "featured": false
+    }
+  ]
+}
