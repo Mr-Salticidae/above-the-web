@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-14",
+  "headline": "Gemini 4 Argon 上线，Higgsfield 把 AI 视频拉到 10 分钟以上",
+  "items": [
+    {
+      "title": "Higgsfield 借助 GPT-6 Astra 将 AI 视频时长推至 10 分钟以上",
+      "summary": "Higgsfield 宣布结合 GPT-6 Astra 和 GPT-Image-2.5，将 AI 视频生成时长从 1 分钟扩展至 10 分钟以上，并计划通过 GPT-Live 探索语音电影制作。对视频创作者而言，这意味着 AI 工具正在从短片段生成向完整叙事载体过渡。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/higgsfield-longer-videos-voice",
+      "featured": true
+    },
+    {
+      "title": "Google 发布 Gemini 4 Argon 前沿模型",
+      "summary": "Google 正式推出 Gemini 4 Argon，通过 API、Gemini app 及 Antigravity 面向全球开放，开发者在 11 月前可享五折 API 费率。独立基准测试显示其能力仍落后于 Claude Opus 5.5 和 Meta Muse Wonder Full，但 Google 称内部编程任务周期已从数月缩短至数周。文本与多模态创作者多了一个可选的前沿模型。",
+      "category": "模型",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1009862/google-releases-gemini-4-argon",
+      "featured": true
+    },
+    {
+      "title": "Arri Film Lab 1.5 插件扩展更多胶片模拟效果",
+      "summary": "Arri 更新 Film Lab OpenFX 插件至 1.5 版本，为数字视频调色流程新增更多模拟胶片风格选项。该插件适配主流剪辑与调色软件，方便影像创作者在数字工作流中直接调用专业级胶片质感。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/13/arri-film-lab-1-5-aims-to-emulate-even-more-analog-cinema-formats",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 披露动态工作流架构，Claude 可自主编写程序管理 Agent",
+      "summary": "Anthropic 公布新的动态工作流架构，允许 Claude 自行编写代码来管理和调度 Agent 任务。这一机制使复杂工作流的编排更加自动化，依赖 Agent 协作的创作者可减少手动配置环节。",
+      "category": "模型",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/8La5gsJVOOF5BvFiLAUF",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 称已将 Claude 推理 token 窃取率降低最高 99%",
+      "summary": "Anthropic 表示针对工业规模蒸馏攻击采取了反制措施，将提取 Claude 内部推理 token 的成功率降低了 90% 至 99%，并已封禁数万个相关账户。这直接关系到模型输出质量与版权保护，也提醒依赖 API 的创作者注意合规使用边界。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-says-it-cut-claude-reasoning-token-theft-by-up-to-99-in-fight-against-industrial-scale-distillation",
+      "featured": false
+    },
+    {
+      "title": "Google Play 支持直接托管个人 Vibe Coding 应用",
+      "summary": "Google 在美国推出新功能，用户通过 AI Studio 生成的个人 Android 应用可直接在 Play Store 上架或私有运行，无需连接电脑安装。这降低了非开发者用自然语言构建并发布小型创作工具的门槛。",
+      "category": "工具",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/google/2026/10/google-wants-to-host-your-personal-vibe-coded-apps-in-the-play-store",
+      "featured": false
+    },
+    {
+      "title": "《勇者斗恶龙》创作者用 AI 在 30 分钟内做出一款游戏",
+      "summary": "堀井雄二展示了一次实验：利用 AI 工具在 30 分钟内完成一款游戏的开发。报道同时提出了关于成品质量的疑问。该案例为游戏开发者评估 AI 辅助原型设计的实际可用性提供了一个参考样本。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/dragon-quests-creator-made-a-game-with-ai-in-30-minutes-and-its-a-bit-of-a-wake-up-call",
+      "featured": false
+    },
+    {
+      "title": "Mia Goth 团队批评 Instagram 放任 AI 伪造图像传播",
+      "summary": "演员 Mia Goth 的代表指责 Instagram 允许带有蓝标认证账号发布的 AI 伪造图像广泛传播。该事件再次凸显社交平台在 AI 生成内容审核上的滞后，对关注肖像权和内容真实性的创作者具有警示意义。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1010277/mia-goth-instagram-ai-shirt-deepfake-divorce",
+      "featured": false
+    }
+  ]
+}
