@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-15",
+  "headline": "YouTube 与 Deezer 相继为 AI 音乐打标签，OpenAI 旗舰模型仍在对齐",
+  "items": [
+    {
+      "title": "YouTube Music 上线 AI 生成音乐标识",
+      "summary": "YouTube 开始为「修改或完全由 AI 生成」的音乐曲目添加 Made with AI 标签，该标识将显示在播放器页面。覆盖范围包括 AI 参与作曲、人声等环节的作品，但并非所有使用过 AI 工具的创作都会被标记。对音乐创作者而言，发布含 AI 元素的作品时需注意平台的标注规则。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1011369/youtube-music-ai-label",
+      "featured": true
+    },
+    {
+      "title": "Deezer 将允许用户过滤 AI 生成音乐",
+      "summary": "流媒体平台 Deezer 宣布将在年底前上线一个新开关，允许用户在收听时过滤掉 AI 生成的音乐内容。此举是对平台上 AI 音乐数量增长的直接回应。依赖流媒体分发的 AI 音乐创作者需留意这一变化对作品曝光度的影响。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/14/deezer-will-soon-let-you-filter-out-ai-generated-music",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 年内将发新模型，旗舰版仍需对齐",
+      "summary": "据报道，OpenAI 正在推进下一代旗舰模型，采用与 Astra 相同的循环 Transformer 技术以提升数学和编程性能，但该技术也增加了安全监控的难度。无论旗舰模型是否如期就绪，员工透露年内预计还会发布一到两个新模型。创作者可关注年底的模型更新节奏，评估工作流迁移时机。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-will-reportedly-ship-at-least-one-model-this-year-but-its-flagship-still-needs-alignment-work",
+      "featured": false
+    },
+    {
+      "title": "Google 工程师称自改进 AI 仍无实质加速",
+      "summary": "DeepMind 工程师 Haydn Belfield 表示，目前 AI 驱动的研究尚未出现可衡量的加速迹象。虽然 AI 已编写超过 75% 的生产代码，但 88% 的变更仍需人类审核，内部能力指数呈平稳增长而非突变。这意味着短期内创作者仍需在 AI 辅助流程中保持把关角色。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-says-self-improving-ai-isnt-anywhere-close",
+      "featured": false
+    },
+    {
+      "title": "长辈用 AI 生成的怪异图像引发网络关注",
+      "summary": "一种被称为 Grandmaslop 的现象正在社交媒体蔓延：婴儿潮一代的父母和祖父母频繁使用 AI 生成包含家人形象的怪异图片并分享，引发了年轻一代的不适。这反映出 AI 图像生成工具在不同年龄群体中的使用习惯和审美差异。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/14/grandmaslop-is-bizarre-ai-imagery-of-kids-made-by-baby-boomers",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 前员工被指用 Vibe Coding 制作窃听设备",
+      "summary": "一名 OpenAI 沙特籍工程师因涉嫌在公司高管会议室放置录音设备被捕。起诉书显示，他通过妻子的聊天机器人账号，以 Vibe Coding 方式构建了该监控工具。若罪名成立，其将面临最高五年监禁。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/alleged-openai-spy-vibe-coded-a-surveillance-device-using-his-wifes-chatbot-account",
+      "featured": false
+    },
+    {
+      "title": "美国八州起诉 OpenAI 指控 ChatGPT 危害儿童",
+      "summary": "爱荷华、堪萨斯等八个美国州分别对 OpenAI 提起诉讼，指控其在明知风险的情况下将利润置于安全之上，对未成年人造成伤害并误导消费者。这是针对大模型厂商安全责任的最新一波法律行动。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1011500/openai-state-lawsuits-chatgpt-safety",
+      "featured": false
+    }
+  ]
+}
