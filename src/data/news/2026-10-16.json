@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-16",
+  "headline": "FLUX 3 Klein 降至 8GB 显存可用，Meta 发布多模态开源模型 Muse Spark Open",
+  "items": [
+    {
+      "title": "Black Forest Labs 发布 FLUX 3 Image Klein",
+      "summary": "Black Forest Labs 推出开源图像模型 FLUX 3 Image Klein，参数量 56 亿，比前代减少 38%，支持原生 4K 生成、像素级编辑以及最多十张参考图输入。该模型可在 8GB 显存的消费级 GPU 上运行，内部测试表现优于部分闭源竞品。对 AI 图像创作者而言，本地跑图的硬件门槛进一步降低。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/black-forest-labs-open-weights-image-model-flux-3-image-klein-runs-on-consumer-gpus-with-just-8-gb-of-vram",
+      "featured": true
+    },
+    {
+      "title": "Meta 发布多模态开源模型 Muse Spark Open",
+      "summary": "Meta 发布 8160 亿参数的开源多模态模型 Muse Spark Open，支持文本、图像、视频和音频处理，上下文窗口达 100 万 token。该模型与 Apple 合作优化，可在搭载 M5 Ultra 芯片的 Mac Studio 上通过 MLX 框架本地运行。这是目前能在桌面端运行的同级别开源模型之一，为本地多模态创作提供了新选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/muse-spark-open-is-metas-answer-to-qwen-glm-and-kimi-in-the-open-weight-race",
+      "featured": true
+    },
+    {
+      "title": "《全面战争：幕府将军 2》重制版因疑似 AI 放大被下架",
+      "summary": "Sega 将《全面战争：幕府将军 2 - 完全版》从商店下架，原因是发售后玩家反馈存在大量 Bug，且画面放大效果疑似由 AI 完成，质量不佳。这款 2011 年策略游戏的重制版刚于本周二上线即遭遇口碑问题。事件再次提醒行业，用 AI 做素材升格若缺乏人工把关，很容易引发玩家反弹。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/games/1012512/sega-total-war-shogun-2-remaster-pulled",
+      "featured": false
+    },
+    {
+      "title": "Pixieset 上线 AI 照片编辑器，打通选片到交付流程",
+      "summary": "摄影服务平台 Pixieset 推出 Photo Editor，利用设备端 AI 帮助摄影师完成批量筛选和编辑，无需在不同软件间反复切换。该工具补齐了 Pixieset 在画廊展示、建站和预约管理之外的最后一块工作流拼图。对于使用 Pixieset 交付作品的摄影师，选片和初修环节可以在同一平台内闭环完成。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/15/pixieset-helps-photographers-cull-edit-and-deliver-in-one-place",
+      "featured": false
+    },
+    {
+      "title": "特朗普发布白宫翻修照片，被检测出 AI 修改痕迹",
+      "summary": "特朗普在 Truth Social 发布一组白宫翻修对比照，其中一张柱子的新旧对比图存在多处细节异常，被 Google 的 AI 检测工具标记为由 AI 生成或修改。政治人物公开使用 AI 编辑图片并作为事实发布，使 AI 图像的真实性验证问题再次进入公众视野。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/policy/1012445/donald-trump-ai-photo-white-house-rennovation-column",
+      "featured": false
+    },
+    {
+      "title": "ChatGPT Chrome 扩展升级，可读取已打开标签页",
+      "summary": "OpenAI 取消了独立的 ChatGPT Atlas 浏览器，转而为 Chrome 扩展增加新功能：安装后，用户在网页或桌面端 @Chrome 即可让 ChatGPT 读取当前打开的浏览器标签页内容。这意味着基于网页内容的写作、总结和信息整理工作流可以直接在现有浏览环境中完成。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1012510/openai-chatgpt-google-chrome-tabs",
+      "featured": false
+    },
+    {
+      "title": "Nvidia 发布 Nemotron 3.5 Super VL 开源多模态模型",
+      "summary": "Nvidia 推出 1200 亿参数的开源多模态模型 Nemotron 3.5 Super VL，面向企业级 Agent 场景，同时发布两个可在本地运行的紧凑版本 Bolt 模型。已有数十家机构对其进行微调，但要发挥最佳性能仍需搭配 Nvidia 硬件。对需要构建多模态 Agent 工作流的开发者来说，这是一个新的开源基座选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nvidias-nemotron-3-5-super-vl-is-an-open-model-built-to-run-enterprise-ai-agents-nonstop",
+      "featured": false
+    }
+  ]
+}
