@@ -12,6 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { SELECTED } from '../src/lib/kb.mjs';
 import { DATES_FILE, parseGitLog } from '../src/lib/note-dates.mjs';
+import { packSkills } from './pack-skills.mjs';
 
 const REPO = 'https://github.com/Mr-Salticidae/knowledge-base.git';
 const DIR = 'kb-content';
@@ -172,5 +173,13 @@ ensureContent();
 exportDates();
 clean();
 console.log('[sync] 内容就绪 →', path.resolve(DIR));
+
+// Skill 一键下载包：读 git 原件打 zip（不受上面 clean 改写影响），产物 public/skills/ 已 gitignore。
+// 打包失败不阻断构建：页面会退回「去 GitHub 看源文件」。
+try {
+  packSkills({ kbDir: DIR });
+} catch (e) {
+  console.warn(`[skills] 打包失败（下载按钮将不出现）：${e.message}`);
+}
 
 ensureSeries();

@@ -18,6 +18,10 @@ kb-content/
 .cache/
 public/prompt-master/
 
+# Skill 一键下载包：构建时由 scripts/pack-skills.mjs 从 kb-content 打包，不入库
+public/skills/
+src/data/skills.generated.json
+
 # 系统与编辑器噪声
 .workbuddy/
 .memorax-code/

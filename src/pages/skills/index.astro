@@ -1,0 +1,91 @@
+---
+// Skill 下载 · /skills/ —— 知识库 07_skill存档 里所有可直接装进 Agent 的技能包，一键下载。
+// 数据来自构建期打包清单（scripts/pack-skills.mjs → src/data/skills.generated.json），
+// zip 与本页同在 /skills/ 下（public/skills/，gitignore）。
+// 顶部「双搭档」是宣发片《Skill Is All You Need》的落地位：片尾让观众来这里拿助产士与验尸官。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SkillDownload from '../../components/SkillDownload.astro';
+import { loadSkills, formatBytes } from '../../lib/skills.mjs';
+import { href } from '../../lib/notes.mjs';
+
+const { skills, allZipBytes } = loadSkills();
+const base = import.meta.env.BASE_URL;
+
+const DUO = [
+  { name: 'maieutic-skill', role: '助产士', line: '创作之前：把脑子里那团乱麻，接生成一个清楚的问题。' },
+  { name: 'aigc-postmortem', role: '验尸官', line: '作品做完：先冻结事实，再写判断——不许把偏爱的方案写成获胜的方案。' },
+];
+const duo = DUO.map((d) => ({ ...d, skill: skills.find((s) => s.name === d.name) })).filter((d) => d.skill);
+const duoNames = new Set(duo.map((d) => d.name));
+const rest = skills.filter((s) => !duoNames.has(s.name));
+
+const clip = (t, n = 110) => (t.length > n ? `${t.slice(0, n)}…` : t);
+---
+
+<BaseLayout
+  title="Skill 下载"
+  description="跳蛛先生的 AIGC 创作 Skill 合集：助产士、验尸官等技能包一键下载，解压即可装进 Claude Code / Codex / Kiro 等 Agent。"
+>
+  <div class="skills-page">
+    <header class="masthead">
+      <p class="masthead-kicker">Agent Skills</p>
+      <h1>Skill 下载</h1>
+      <p class="masthead-sub">Skill Is All You Need</p>
+      <p class="masthead-desc">
+        Skill 就是写给 AI 的工作手册。这里的 {skills.length} 份都是我自己创作时天天在用的，
+        点一下就能下载，解压放进 Agent 的技能目录即可。
+      </p>
+    </header>
+
+    {skills.length === 0 ? (
+      <p class="meta">技能包正在打包，稍后再来。</p>
+    ) : (
+      <>
+        {duo.length > 0 && (
+          <section class="skills-duo" aria-labelledby="duo-h">
+            <h2 id="duo-h">一头接生，一头验尸</h2>
+            <p class="meta">宣发片里的两位搭档，给你做的每个东西一个完整的一生。</p>
+            <div class="skills-duo-grid">
+              {duo.map((d) => (
+                <article class="skills-card featured">
+                  <p class="skills-role">{d.role}</p>
+                  <h3><a href={href(d.skill.noteSlug)}>{d.skill.title}</a></h3>
+                  <p>{d.line}</p>
+                  <SkillDownload skill={d.skill} compact />
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section aria-labelledby="all-h">
+          <div class="skills-all-head">
+            <h2 id="all-h">全部 Skill</h2>
+            <a class="skill-dl-btn ghost" href={`${base}skills/all-skills.zip`} download="all-skills.zip" data-no-prerender>
+              ⬇ 全部打包下载 · {formatBytes(allZipBytes)}
+            </a>
+          </div>
+          <div class="skills-grid">
+            {rest.map((s) => (
+              <article class="skills-card" id={s.name}>
+                <h3><a href={href(s.noteSlug)}>{s.title}</a></h3>
+                <p class="skills-desc">{clip(s.description)}</p>
+                <SkillDownload skill={s} compact />
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="skills-howto" aria-labelledby="howto-h">
+          <h2 id="howto-h">下载后怎么用</h2>
+          <ol>
+            <li>解压，得到 <code>技能名/SKILL.md</code> 这样的文件夹。</li>
+            <li>整个文件夹放进 Agent 的技能目录：Claude Code 是 <code>~/.claude/skills/</code>，Codex 是 <code>~/.codex/skills/</code>，Kiro 等其他工具放进各自的 skills 目录。</li>
+            <li>新开对话，按每个 Skill 描述里的触发词说话即可。没有 Agent 也没关系，把 <code>SKILL.md</code> 全文贴给任意 AI 当工作手册照样能用。</li>
+          </ol>
+          <p class="meta">内容采用 CC BY-NC 4.0 许可：个人随便用、改；转载请注明「蛛网之上」，商用请先联系。</p>
+        </section>
+      </>
+    )}
+  </div>
+</BaseLayout>

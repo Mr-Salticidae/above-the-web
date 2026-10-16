@@ -1,0 +1,46 @@
+---
+// Skill 下载卡：挂在 Skill 的 SKILL.md / README.md 笔记页正文前，以及 /skills/ 总览页每一项。
+// 一个按钮直接下 zip（解压即是 <name>/SKILL.md 的标准结构），下面折叠一段「放哪儿」的安装说明。
+import { formatBytes } from '../lib/skills.mjs';
+
+const { skill, compact = false } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const zipHref = `${base}skills/${skill.file}`;
+const absZip = `https://tiaozhuxiansheng.com/skills/${skill.file}`;
+const skippedBytes = skill.skipped.reduce((s, f) => s + f.size, 0);
+---
+
+<div class:list={['skill-dl', { compact }]} data-pagefind-ignore>
+  <div class="skill-dl-row">
+    <a class="skill-dl-btn" href={zipHref} download={skill.file} data-no-prerender>
+      <span aria-hidden="true">⬇</span> 一键下载 <code>{skill.name}</code>
+    </a>
+    <span class="skill-dl-meta">
+      zip · {formatBytes(skill.zipBytes)} · {skill.fileCount} 个文件{skill.version && <> · v{skill.version}</>}
+    </span>
+  </div>
+  {skill.skipped.length > 0 && (
+    <p class="skill-dl-note">
+      为了下载快，包里没放 {skill.skipped.length} 个视频 / 大图等素材（约 {formatBytes(skippedBytes)}），不影响 Skill 本身使用；完整素材见 GitHub 源文件。
+    </p>
+  )}
+  {!compact && (
+    <details class="skill-dl-howto">
+      <summary>下载后怎么用？</summary>
+      <ol>
+        <li>解压，得到一个 <code>{skill.name}/</code> 文件夹（里面是 <code>SKILL.md</code>）。</li>
+        <li>整个文件夹放进你用的 Agent 的技能目录：
+          <ul>
+            <li>Claude Code：<code>~/.claude/skills/</code></li>
+            <li>Codex：<code>~/.codex/skills/</code></li>
+            <li>Kiro / 其他支持 Agent Skills 的工具：放进它的 skills 目录</li>
+            <li>不用 Agent：直接把 <code>SKILL.md</code> 全文贴给任意 AI 当工作手册，也能用</li>
+          </ul>
+        </li>
+        <li>新开一个对话，用描述里的触发词说话即可（如「帮我复盘这次比赛」）。</li>
+      </ol>
+      <p>命令行一步到位（macOS / Linux / Git Bash）：</p>
+      <pre><code>{`curl -L ${absZip} -o ${skill.file} && unzip -o ${skill.file} -d ~/.claude/skills/`}</code></pre>
+    </details>
+  )}
+</div>

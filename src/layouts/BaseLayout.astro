@@ -43,6 +43,7 @@ const pageTitle = title ? `${title} · ${siteName}` : `${siteName} · ${SITE_TAG
 // 顶栏与页脚共用一份栏目表；当前栏目挂 aria-current，读屏与样式都认它
 const sections = [
   { key: 'notes', label: '笔记', href: nav('notes/') },
+  { key: 'skills', label: 'Skill', href: nav('skills/') },
   { key: 'news', label: 'AIGC 快讯', href: newsHref },
   { key: 'music', label: '音乐', href: nav('music/') },
   { key: 'prompt-master', label: 'Prompt 大师', href: nav('prompt-master/') },
