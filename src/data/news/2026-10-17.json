@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-17",
+  "headline": "Elorian 发布视觉推理模型，中国拟收紧开源模型出口管制",
+  "items": [
+    {
+      "title": "Elorian 发布 Glimpse，主打图像内推理",
+      "summary": "初创公司 Elorian 发布首款 AI 模型 Glimpse，定位为直接在图像内部进行推理，而非仅围绕图像做文本描述。据官方评测，该模型在科学图表推理和短视频字幕生成任务上优于 GPT-6 Astra。对从事视觉内容创作的 AIGC 用户而言，这类原生多模态推理能力可能改变图像与视频的分析工作流。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/16/elorians-first-ai-model-wants-to-reason-with-images-not-just-about-them",
+      "featured": true
+    },
+    {
+      "title": "中国拟将开源模型权重纳入出口管制",
+      "summary": "中国计划限制 23 项关键 AI 技术出口，涵盖算力达 10^26 FLOPs 或参数超 2 万亿的模型权重、源码及训练方法。开源版本在完成登记后仍可通过快速通道发布。此举意味着国内创作者在使用和分发大参数开源模型时，需留意合规边界。",
+      "category": "政策",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/china-plans-to-tighten-export-controls-on-open-weight-models-and-23-key-ai-technologies",
+      "featured": true
+    },
+    {
+      "title": "Hugging Face 上线 501B 开源模型 Beam",
+      "summary": "Hugging Face 推出参数量达 501B 的开源模型 Beam，支持本地部署、自定义微调与扩展。这是目前开源社区中体量较大的模型之一。对于有本地算力的 AIGC 创作者，Beam 提供了一个可自主掌控的高参数基座选项。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/reflection-beam",
+      "featured": false
+    },
+    {
+      "title": "Figma 新增 Agent 规则定义与代码图层公测",
+      "summary": "Figma 发布新功能，允许用户定义 AI Agent 在平台上的具体工作方式，同时代码图层（code layers）功能进入公开测试阶段。Agent 规则的引入让设计师可以更精确地控制 AI 辅助设计的执行逻辑，代码图层公测则进一步缩短从设计稿到前端实现的距离。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/14/figma-announces-new-features-to-define-how-agents-work-on-its-platform",
+      "featured": false
+    },
+    {
+      "title": "Meta 新商业条款或允许免费抓取网站训练 AI",
+      "summary": "Meta 更新商业服务条款，将于 10 月 30 日生效。新条款显示 Meta 可爬取与其平台关联企业的网站内容，用于开发和训练 AI 模型。法律专家提醒，这实质上扩大了 Meta 获取训练数据的权限，依赖 Meta 生态分发的创作者需重新评估自身内容的授权风险。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1012846/meta-business-terms-scrape-news-publishers",
+      "featured": false
+    },
+    {
+      "title": "IBM 发布 Granite Switch 4.1 统一端点模型",
+      "summary": "IBM 在 Hugging Face 发布 Granite Switch 4.1，通过单一 API 端点同时处理对话、决策和语音任务。这种多模态统一入口的设计，降低了开发者在构建复合型 AI 应用时的集成成本。对于尝试将文本、语音交互整合进创作工具的开发者，这是一个值得关注的开源选项。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/ibm-granite/granite-switch-4-1",
+      "featured": false
+    },
+    {
+      "title": "Meta 被指借新条款规避 AI 数据授权费用",
+      "summary": "Ars Technica 报道指出，Meta 精简后的商业条款不仅涉及数据抓取，还可能帮助其规避数百万美元的 AI 内容授权费用。这与同日 The Verge 的报道指向同一事件，但更侧重版权成本层面的分析。对内容创作者而言，平台单方面变更数据使用规则的趋势需要持续警惕。",
+      "category": "行业",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/10/meta-may-use-sweeping-new-commercial-tos-to-avoid-millions-in-ai-licensing-fees",
+      "featured": false
+    }
+  ]
+}
