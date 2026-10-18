@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>MiniMax H3 本地图生视频工作流 · 本机部署手册 · 蛛网之上</title><meta name="description" content="H3 是 33B omni-modal 视频+音频模型,i2v 走 FL2VA checkpoint。8GB 跑得起来靠四层叠加:"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/minimax-h3-78ffc11/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="MiniMax H3 本地图生视频工作流 · 本机部署手册"><meta property="og:description" content="H3 是 33B omni-modal 视频+音频模型,i2v 走 FL2VA checkpoint。8GB 跑得起来靠四层叠加:"><meta property="og:url" content="https://tiaozhuxiansheng.com/minimax-h3-78ffc11/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="MiniMax H3 本地图生视频工作流 · 本机部署手册"><meta name="twitter:description" content="H3 是 33B omni-modal 视频+音频模型,i2v 走 FL2VA checkpoint。8GB 跑得起来靠四层叠加:"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-10-18T07:26:14+08:00"><meta property="article:modified_time" content="2026-10-18T07:26:14+08:00"><meta property="article:section" content="skill存档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/minimax-h3-78ffc11/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/minimax-h3-78ffc11/","url":"https://tiaozhuxiansheng.com/minimax-h3-78ffc11/","headline":"MiniMax H3 本地图生视频工作流 · 本机部署手册","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"H3 是 33B omni-modal 视频+音频模型,i2v 走 FL2VA checkpoint。8GB 跑得起来靠四层叠加:","datePublished":"2026-10-18T07:26:14+08:00","dateModified":"2026-10-18T07:26:14+08:00","articleSection":"skill存档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"skill存档","item":"https://tiaozhuxiansheng.com/notes/?cat=skill%E5%AD%98%E6%A1%A3"},{"@type":"ListItem","position":3,"name":"MiniMax H3 本地图生视频工作流 · 本机部署手册","item":"https://tiaozhuxiansheng.com/minimax-h3-78ffc11/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/skills/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.CYRIyOqt.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/skills/">Skill</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=skill%E5%AD%98%E6%A1%A3" data-pagefind-meta="category" data-pagefind-filter="kind:note">skill存档</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-10-18T07:26:14+08:00">2026-10-18</time></span>  <span>约 3 分钟读完 · 1,102 字</span> </p> </header>   <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>15 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#关键事实核实于-2026-10社区源">关键事实(核实于 2026-10,社区源)</a></li><li class="d2"><a href="#目录与组件">目录与组件</a></li><li class="d3"><a href="#自定义节点custom_nodes4-个全部已验加载成功">自定义节点(custom_nodes,4 个,全部已验加载成功)</a></li><li class="d3"><a href="#权重4-个b8gb-配方">权重(4 个,B/8GB 配方)</a></li><li class="d2"><a href="#启动">启动</a></li><li class="d2"><a href="#i2v-用法">i2v 用法</a></li><li class="d2"><a href="#下载踩坑本机特有务必记住">下载踩坑(本机特有,务必记住)</a></li><li class="d2"><a href="#自检验证2026-10-15-已通过">自检验证(2026-10-15 已通过)</a></li><li class="d2"><a href="#待办搭建完成时">待办(搭建完成时)</a></li><li class="d2"><a href="#增强版工作流-v2--2026-10-15">增强版工作流 (v2 · 2026-10-15)</a></li><li class="d3"><a href="#1-尾帧开关-workflow-内">1. 尾帧开关 (workflow 内)</a></li><li class="d3"><a href="#2-补帧--插帧-workflow-内">2. 补帧 / 插帧 (workflow 内)</a></li><li class="d3"><a href="#3-超分-离线-cli不进-workflow">3. 超分 (离线 CLI，不进 workflow)</a></li><li class="d3"><a href="#自检验证-2026-10-15">自检验证 (2026-10-15)</a></li> </ol> </details> <h1 id="minimax-h3-本地图生视频工作流--本机部署手册">MiniMax H3 本地图生视频工作流 · 本机部署手册</h1>
+<blockquote>
+<p>本机 RTX 4060 Ti 8GB / 32GB RAM / Windows。480×864 低显存档。
+搭建日期 2026-10-15。模型为 <strong>开源权重</strong>(H3 Community License,<strong>商用需单独授权</strong>,Comfy 是官方唯一转售方)。</p>
+</blockquote>
+<h2 id="一句话">一句话</h2>
+<p>H3 是 33B omni-modal 视频+音频模型,i2v 走 <strong>FL2VA</strong> checkpoint。8GB 跑得起来靠四层叠加:
+<strong>W4A8/GGUF 低比特量化 + BlockSwap 逐块换入换出 + 4B 小文本编码器(替 32B)+ 压分辨率到 480×864</strong>。
+真·本地推理,生成在本机;720p+ 成片需云端 regenerate(本地上限 768p,8GB 实测稳定 480×864)。</p>
+<h2 id="关键事实核实于-2026-10社区源">关键事实(核实于 2026-10,社区源)</h2>
+<ul>
+<li>本地基础分辨率 768p;8GB 实测甜点 <strong>480×864 / 158 帧(~6.6s@24fps)/ 20 步 Euler/Simple</strong>。25 步在 8GB 上不稳。</li>
+<li>NVFP4(11.9GB)<strong>仅 Blackwell/RTX 50 系</strong>;4060 Ti 是 Ada,用 <strong>W4A8/GGUF</strong>,不是 NVFP4。</li>
+<li>H3 隐藏层宽 2688,不被 256 整除 → <strong>用不了 K-quant</strong>(Q4_K_M 那种),只能经典 Q4_0/Q5_1/Q3mix 或 W4A8。</li>
+<li>一条 clip 本地 5–10 分钟。</li>
+</ul>
+<h2 id="目录与组件">目录与组件</h2>
+<ul>
+<li>ComfyUI 便携版(空壳,0.35.0):<code>C:\ComfyUI-H3\ComfyUI_windows_portable\</code></li>
+<li>权重库(D 盘,省 C 盘):<code>D:\AIGC工作站\99_工具\minimax_h3_tool\models\</code></li>
+<li><code>extra_model_paths.yaml</code>(C 盘 ComfyUI 内)指向 D 盘库。<strong>例外:ClipProj 节点只读 <code>models_dir\clip_projections</code>(C 盘),该文件须放 C 盘。</strong></li>
+</ul>
+<h3 id="自定义节点custom_nodes4-个全部已验加载成功">自定义节点(custom_nodes,4 个,全部已验加载成功)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>节点</th><th>来源</th><th>作用</th></tr></thead><tbody><tr><td>ComfyUI-GGUF</td><td>city96/ComfyUI-GGUF</td><td>GGUF 量化加载</td></tr><tr><td>ComfyUI-H3-Multishot</td><td>jlucasmcrell/ComfyUI-H3-Multishot</td><td><strong>补 <code>minimax_h3</code> 架构</strong>(不然 GGUF 报 Unexpected architecture 拒载)</td></tr><tr><td>ComfyUI-ClipProj</td><td>nicolab28/ComfyUI-ClipProj</td><td>4B 小编码器投影(省显存);<strong>必须用 <code>-v3-mlp</code>,旧版报 KeyError ‘W’</strong></td></tr><tr><td>ComfyUI-Spectrum-MiniMax-H3</td><td>xmarre/ComfyUI-Spectrum-MiniMax-H3</td><td>采样加速(可选)</td></tr></tbody></table>
+<h3 id="权重4-个b8gb-配方">权重(4 个,B/8GB 配方)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>文件</th><th>repo</th><th>大小</th><th>去向</th></tr></thead><tbody><tr><td>minimax_h3_fl2va_pruned_w4a8_mixed.safetensors</td><td>starsfriday/MiniMax-H3-w4a8</td><td>12.5GB</td><td>diffusion_models</td></tr><tr><td>qwen3vl_4b_int8_convrot.safetensors</td><td>Stick9190/qwen3vl_4b_int8_convrot</td><td>5.4GB</td><td>text_encoders</td></tr><tr><td>minimax_h3_video_vae_int8_convrot.safetensors</td><td>Kijai/MiniMax-H3-experimental</td><td>3.2GB</td><td>vae</td></tr><tr><td>mmh3-4b-ClipProj-v3-mlp.safetensors</td><td>NicoLab28/ClipProj-MiniMax-H3</td><td>0.5GB</td><td>clip_projections(<strong>C 盘</strong>)</td></tr></tbody></table>
+<h2 id="启动">启动</h2>
+<p>双击 <code>run_h3_8gb.bat</code>(或)：</p>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>cd /d C:\ComfyUI-H3\ComfyUI_windows_portable</span></span>
+<span class="line"><span>python_embeded\python.exe -s ComfyUI\main.py --lowvram --fp16-vae --listen 127.0.0.1 --port 8188</span></span></code></pre>
+<p>浏览器开 <a href="http://127.0.0.1:8188">http://127.0.0.1:8188</a> → 导入 <code>workflows\MiniMax_H3_FL2V_8GB_VRAM.json</code>。</p>
+<h2 id="i2v-用法">i2v 用法</h2>
+<ul>
+<li>两个 LoadImage 节点填首帧/尾帧(纯 i2v 可首尾用同一张或只给首帧)。</li>
+<li>分辨率先用 <strong>480×864,length 158,steps 20,Euler,Simple</strong>。</li>
+<li>产出落 <code>outputs\</code>。</li>
+</ul>
+<h2 id="下载踩坑本机特有务必记住">下载踩坑(本机特有,务必记住)</h2>
+<ol>
+<li><strong>CJK 路径坑</strong>:aria2 的 <code>-i</code> 输入文件被存成 ASCII,把 <code>AIGC工作站</code>/<code>99_工具</code> 编码成 <code>AIGC???</code>,报 <code>errorCode=18 Invalid argument</code> 建目录失败。
+<strong>解法:不用 <code>-i</code>,直接把 Unicode 路径作为 <code>-d</code>/<code>-o</code> 参数传给 aria2c</strong>(PowerShell 以 UTF-16 传参,aria2 收到正确路径)。</li>
+<li><strong>hf-mirror 慢且重定向不稳</strong>;<strong>huggingface.co 原站 + aria2 <code>-x8 -s8</code></strong> 反而更快更稳(实测 ~9MB/s)。</li>
+<li>aria2 加 <code>--file-allocation=none --auto-file-renaming=false --continue=true</code>;断点续传可靠。</li>
+<li><strong>勿多开 aria2 抢同一文件</strong>(会互相清理导致”下完即空”)。单进程逐文件。</li>
+</ol>
+<h2 id="自检验证2026-10-15-已通过">自检验证(2026-10-15 已通过)</h2>
+<p>ComfyUI 启动日志应见:</p>
+<ul>
+<li><code>[H3] taught ComfyUI-GGUF the 'minimax_h3' architecture</code></li>
+<li><code>[ClipProj] graph watch installed</code></li>
+<li>4 节点 Import times 全部无 FAILED</li>
+<li><code>comfy_kitchen backend eager/cuda available</code>,capabilities 含 <code>w4a8_int8_linear</code>(W4A8 算子就位)</li>
+<li><code>Set vram state to: LOW_VRAM</code> + <code>async weight offloading</code></li>
+</ul>
+<h2 id="待办搭建完成时">待办(搭建完成时)</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 跑一条 480×864 i2v 冒烟测试,确认不 OOM、出 mp4</li>
+<li class="task-list-item"><input type="checkbox" disabled> 商用前确认 H3 Community License 授权(SeeBay 等参赛/商用片相关)</li>
+</ul>
+<hr>
+<h2 id="增强版工作流-v2--2026-10-15">增强版工作流 (v2 · 2026-10-15)</h2>
+<p>跑通 480x864 基础档后加的三个增强。原始工作流备份在 <code>workflows\MiniMax_H3_FL2V_8GB_VRAM.base.json</code>。</p>
+<h3 id="1-尾帧开关-workflow-内">1. 尾帧开关 (workflow 内)</h3>
+<ul>
+<li>新增本地小节点 <code>ComfyUI-H3-TailSwitch</code>（<code>custom_nodes\ComfyUI-H3-TailSwitch\__init__.py</code>，零依赖）。</li>
+<li>节点名 <strong>H3 Tail-Frame Switch</strong>，接在首/尾 LoadImage 与 H3 节点之间。</li>
+<li><code>use_tail</code> 关(默认)=复用首帧喂进 last_frame（纯 i2v 开放式运动，没尾帧时用这个）；开=用真尾帧。</li>
+<li>这样 <code>MiniMaxH3ImageToVideo.last_frame</code> 这个必填口永远有合法输入，不会报缺输入。</li>
+</ul>
+<h3 id="2-补帧--插帧-workflow-内">2. 补帧 / 插帧 (workflow 内)</h3>
+<ul>
+<li>装 <code>ComfyUI-Frame-Interpolation</code>(Fannovel16)，依赖 opencv-contrib-python 已装(走官方 PyPI，清华镜像对该 wheel 403)。</li>
+<li>新增 <strong>RIFE_VFI</strong> 节点接在 <code>VAEDecode -> CreateVideo</code> 之间。</li>
+<li>8GB 配置：<code>ckpt=rife49.pth / multiplier=2 / fast_mode=on / ensemble=off / scale_factor=1.0 / dtype=float16 / clear_cache_after_n_frames=4 / torch_compile=off</code>。</li>
+<li><strong>关键</strong>：multiplier=2 把 24->48fps，所以 <strong>CreateVideo 的 fps 已同步改成 48</strong>（否则播放会被放慢）。首次用 RIFE 会自动下 rife49 权重(~50MB)。</li>
+<li>triton 缺失无害(只有 torch_compile=on 才用，已关)。</li>
+</ul>
+<h3 id="3-超分-离线-cli不进-workflow">3. 超分 (离线 CLI，不进 workflow)</h3>
+<ul>
+<li>脚本 <code>upscale_video.py</code>。<strong>刻意放到图外</strong>：8GB 逐帧超分在 ComfyUI 里几乎必 OOM；且 GAN 超分会抹平颗粒/柔焦，作者历史偏好是定稿默认原版、超分慎用。</li>
+<li>用法：<code>python_embeded\python.exe upscale_video.py 输入.mp4 --scale 2</code></li>
+<li>流程：拆帧 -> realesrgan-ncnn-vulkan 逐帧放大(零推理显存) -> ffmpeg 重组(保留原音频/原帧率)。</li>
+<li>realesrgan-ncnn-vulkan 便携 exe 已装到 <code>bin\</code>(含 x4plus / x4plus-anime / animevideov3 模型)，脚本自动检测；缺失时打印一键下载命令。</li>
+<li>已端到端实测通过(2026-10-15)：640x480 -> x4 -> 2560x1920，帧率/音频保留。x4plus 模型按 x4 出，<code>--scale</code> 走模型原生倍数。</li>
+<li>建议：定稿前先出 5s 原版/超分对比片盲看再决定是否整片超分。</li>
+</ul>
+<h3 id="自检验证-2026-10-15">自检验证 (2026-10-15)</h3>
+<ul>
+<li>CI 自检全绿：TailSwitch 0.0s 加载、Frame-Interpolation 0.4s 加载、H3 架构补丁仍生效、ClipProj 完好。</li>
+<li>workflow JSON link 完整性校验通过：无悬空 link，node8.last_frame&#x3C;-TailSwitch、node15.images&#x3C;-RIFE(fps=48)、RIFE.frames&#x3C;-VAEDecode。</li>
+</ul>  <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-18T07:26:14+08:00">2026-10-18</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/07_skill%E5%AD%98%E6%A1%A3/MiniMax_H3%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%94%9F%E8%A7%86%E9%A2%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/07_skill%E5%AD%98%E6%A1%A3/MiniMax_H3%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%94%9F%E8%A7%86%E9%A2%91%E5%B7%A5%E4%BD%9C%E6%B5%81%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li> </ul> </nav>  </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#关键事实核实于-2026-10社区源" data-toc-link="关键事实核实于-2026-10社区源">关键事实(核实于 2026-10,社区源)</a></li><li class="d2"><a href="#目录与组件" data-toc-link="目录与组件">目录与组件</a></li><li class="d3"><a href="#自定义节点custom_nodes4-个全部已验加载成功" data-toc-link="自定义节点custom_nodes4-个全部已验加载成功">自定义节点(custom_nodes,4 个,全部已验加载成功)</a></li><li class="d3"><a href="#权重4-个b8gb-配方" data-toc-link="权重4-个b8gb-配方">权重(4 个,B/8GB 配方)</a></li><li class="d2"><a href="#启动" data-toc-link="启动">启动</a></li><li class="d2"><a href="#i2v-用法" data-toc-link="i2v-用法">i2v 用法</a></li><li class="d2"><a href="#下载踩坑本机特有务必记住" data-toc-link="下载踩坑本机特有务必记住">下载踩坑(本机特有,务必记住)</a></li><li class="d2"><a href="#自检验证2026-10-15-已通过" data-toc-link="自检验证2026-10-15-已通过">自检验证(2026-10-15 已通过)</a></li><li class="d2"><a href="#待办搭建完成时" data-toc-link="待办搭建完成时">待办(搭建完成时)</a></li><li class="d2"><a href="#增强版工作流-v2--2026-10-15" data-toc-link="增强版工作流-v2--2026-10-15">增强版工作流 (v2 · 2026-10-15)</a></li><li class="d3"><a href="#1-尾帧开关-workflow-内" data-toc-link="1-尾帧开关-workflow-内">1. 尾帧开关 (workflow 内)</a></li><li class="d3"><a href="#2-补帧--插帧-workflow-内" data-toc-link="2-补帧--插帧-workflow-内">2. 补帧 / 插帧 (workflow 内)</a></li><li class="d3"><a href="#3-超分-离线-cli不进-workflow" data-toc-link="3-超分-离线-cli不进-workflow">3. 超分 (离线 CLI，不进 workflow)</a></li><li class="d3"><a href="#自检验证-2026-10-15" data-toc-link="自检验证-2026-10-15">自检验证 (2026-10-15)</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/skills/">Skill</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>
