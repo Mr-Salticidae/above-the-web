@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-21",
+  "headline": "Spotify 清理五千万 AI 音乐，ElevenLabs 与 Mistral 更新语音模型",
+  "items": [
+    {
+      "title": "Spotify 从推荐中移除超 5000 万首 AI 生成曲目",
+      "summary": "Spotify 宣布过去一年已从用户推荐中移除超过 5000 万首被认定为 AI 生成的低质或垃圾曲目，并调整了推荐算法以优先展示人类创作者的音乐。平台表示编辑团队对内容保持统一标准。对依赖流媒体分发的 AI 音乐创作者而言，批量铺量的策略空间正在收窄。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/1014284/spotify-ai-slop-spam-songs-removed",
+      "featured": true
+    },
+    {
+      "title": "ElevenLabs 发布两款实时语音对话模型",
+      "summary": "ElevenLabs 推出 Eleven Realtime 系列 speech-to-speech 模型，面向实时 AI 语音对话场景。其中 v1 Max 版本在 Big Bench Audio 基准上得分 98.8%，响应延迟为 0.57 秒，官方称目前榜单上没有同时更快更准的模型。适合需要低延迟、高自然度语音交互的音频创作者和开发者接入使用。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/elevenlabs-releases-two-new-speech-to-speech-models-designed-for-real-time-ai-conversations",
+      "featured": true
+    },
+    {
+      "title": "Mistral AI 发布 Voxtral 3 实时语音 Agent 方案",
+      "summary": "Mistral AI 推出 Voxtral 3，整合了语音转文字、文字转语音及语音 Agent SDK，支持 50 多种语言，Agent 可在实时对话中调用外部工具。该模型支持本地部署或通过欧盟托管 API 调用。做语音交互类内容的创作者多了一个可自托管的完整技术栈选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/mistral-ai-launches-voxtral-3-a-full-voice-agent-stack-that-listens-thinks-and-talks-in-real-time",
+      "featured": false
+    },
+    {
+      "title": "Lightroom 移动端新增一键睁眼生成功能",
+      "summary": "Adobe Lightroom 移动端（iOS、iPadOS、Android）上线基于生成式 AI 的一键修复闭眼功能。应用检测到照片中人物闭眼后会自动提示，点击即可生成睁眼效果。摄影师和修图师在处理合影时可以少一步手动合成流程。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1014246/adobe-lightroom-mobile-ai-quick-action-open-eyes-closed-blink-repair",
+      "featured": false
+    },
+    {
+      "title": "DxO ViewPoint 6 引入 AI 遮罩校正透视",
+      "summary": "DxO 发布透视校正软件 ViewPoint 6，核心升级是引入 AI 遮罩技术，官方称其为迄今精度最高的版本。主要用于解决摄影中的几何畸变问题。对需要精确控制建筑或产品透视的图像创作者是一项实用更新。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/20/dxo-viewpoint-6-fixes-photographers-geometry-problems",
+      "featured": false
+    },
+    {
+      "title": "NVIDIA Cosmos3-H-Dreams 用生成式模拟还原手术场景",
+      "summary": "NVIDIA 在 Hugging Face 上发布了 Cosmos3-H-Dreams，通过生成式模拟技术将临床手术过程可视化。该项目展示了视频生成模型在专业仿真领域的应用方向。关注 AI 视频技术的创作者可以留意其在物理一致性方面的进展。",
+      "category": "研究",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/nvidia/cosmos3-h-dreams",
+      "featured": false
+    },
+    {
+      "title": "Meta 修改商业条款，删除「训练」一词",
+      "summary": "在此前 AI 数据抓取争议后，Meta 更新了其商业服务条款，移除了「train」（训练）这一表述，但并未加入遵守 robots.txt 协议的相关承诺。此次调整更多是措辞层面的变化。对于在意作品是否被用于模型训练的图像和文本创作者，实际的数据使用规则仍需持续关注。",
+      "category": "政策",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/10/meta-drops-the-word-train-from-its-commercial-tos-after-ai-backlash",
+      "featured": false
+    }
+  ]
+}
