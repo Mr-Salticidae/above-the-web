@@ -1,6 +1,24 @@
 {
   "tracks": [
     {
+      "id": "disanjie-de-qiutian",
+      "title": "第三阶的秋天",
+      "artist": "跳蛛先生",
+      "audio": "第三阶的秋天.mp3",
+      "cover": "第三阶的秋天.jpg",
+      "duration": 149,
+      "note": "《那道题还亮着》的续篇。那年我停在第三阶，看你走远；后来每个秋天，我都替你留了一点。"
+    },
+    {
+      "id": "nadaoti-hai-liangzhe",
+      "title": "那道题还亮着",
+      "artist": "跳蛛先生",
+      "audio": "那道题还亮着.mp3",
+      "cover": "那道题还亮着.jpg",
+      "duration": 195,
+      "note": "高三那年，前桌给我讲过一道题。你讲到第三步，语速忽然变长。男女对唱。"
+    },
+    {
       "id": "yulijiuxin",
       "title": "雨里旧信",
       "artist": "跳蛛先生",
