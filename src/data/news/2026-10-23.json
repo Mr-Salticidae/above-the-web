@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-23",
+  "headline": "Canva 发布自研图像生成模型，OpenAI 上线决策 API 并筹备 IPO 前融资",
+  "items": [
+    {
+      "title": "Canva 发布首个自研图像生成模型 Canva Craft",
+      "summary": "Canva 推出名为 Canva Craft 的图像生成模型，采用两阶段架构，在生成图像前先规划设计方案，以提升精度与一致性。该模型面向所有用户开放，直接对标 OpenAI、Microsoft 和 Google 的同类产品。对依赖 Canva 出图的设计师而言，这意味着更可控的生成流程。",
+      "category": "模型",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1017151/canva-craft-in-house-ai-model",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 发布 Decisions API，面向低延迟决策场景",
+      "summary": "OpenAI 正式推出 Decisions API，定位为快速、聚焦且低成本的决策接口，其竞品 Jev 也同步向公众开放。这为需要在应用中嵌入轻量级 AI 判断逻辑的开发者提供了新选项。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/decisions-api",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 正以 1.25 万亿美元估值筹备 300 亿美元融资",
+      "summary": "据 TechCrunch 报道，OpenAI 正在推进新一轮 300 亿美元融资，估值达 1.25 万亿美元，若达成将刷新未上市公司估值纪录，并为后续 IPO 铺路。大模型厂商的资本规模仍在持续扩张。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/22/openai-working-on-new-30b-raise-at-1-25t-valuation-ahead-of-ipo",
+      "featured": false
+    },
+    {
+      "title": "DeepSeek 千亿融资逼近收官，押注具身智能",
+      "summary": "DeepSeek 本轮融资引入完美世界、中芯聚源等产业资本，募资规模较此前翻倍，资金将重点投向具身智能方向。国内大模型团队的竞争重心正从纯文本向多模态与物理世界延伸。",
+      "category": "行业",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/ViOyxiOSP2ihxuUyg1rD",
+      "featured": false
+    },
+    {
+      "title": "Google 推出 Agent Compute Engine，为 Agent 提供隔离运行环境",
+      "summary": "Google 发布 Agent Compute Engine，为每个 Gemini agent 分配硬件隔离的微型虚拟机，同时扩展云端、混合及本地环境的治理能力。这对需要稳定沙箱来运行自动化工作流的创作者有实际参考价值。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/googles-agent-compute-engine-gives-every-gemini-agent-its-own-hardware-isolated-micro-virtual-machine",
+      "featured": false
+    },
+    {
+      "title": "1Password 推出功能，允许 AI Agent 免密登录账户",
+      "summary": "1Password 新增一项功能，使 AI agent 可以代替用户登录个人账户，同时不暴露真实密码凭证。随着 Agent 逐步接管日常操作，这类安全中间件将成为创作者管理工作流时的基础设施。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/22/1password-launches-a-way-for-ai-agents-to-log-in-on-your-behalf-without-seeing-your-password",
+      "featured": false
+    },
+    {
+      "title": "Spotify 调整 AI 策略：让 Agent 主动选择其音乐服务",
+      "summary": "Spotify 联席 CEO Gustav Söderström 表示，公司当前的 AI 策略是成为 AI agent 优先选择的音乐服务平台。当 Agent 开始替用户做消费决策时，音乐创作者的分发入口可能随之改变。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/22/spotifys-current-ai-bet-is-about-being-the-music-service-that-agents-choose",
+      "featured": false
+    }
+  ]
+}
