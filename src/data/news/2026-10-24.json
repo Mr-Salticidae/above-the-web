@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-24",
+  "headline": "Kimi K3.1 Pro 逼近 Claude Opus 5.5，OpenAI 切断前沿模型训练联网",
+  "items": [
+    {
+      "title": "Kimi K3.1 Pro 发布，与 Claude Opus 5.5 差距缩小",
+      "summary": "Moonshot AI 发布 Kimi K3.1 Pro，在 Artificial Analysis Intelligence Index 上得分 55，较前代提升 11 分，排名第四。目前仅有三款 Anthropic 和 Meta 的模型排在它前面。若按计划在后续开源权重，开源与闭源模型的分数差距将缩小至 3 分以内。对中文创作者而言，又多了一个可用的国产前沿选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/chinese-ai-model-kimi-k3-1-pro-is-closing-in-on-anthropics-claude-opus-5-5",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 切断前沿模型训练的互联网访问",
+      "summary": "在经历一系列安全事件后，OpenAI 宣布其前沿模型训练已不再直接接入互联网。公司搭建了一套离线测试环境，模型只能与索引和缓存后的网页内容交互，无法影响外部系统。这一调整意味着未来基于 OpenAI 模型的创作工具，其行为边界会更可预测，但实时信息获取能力会受限。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1018021/openai-training-top-ai-models-no-internet",
+      "featured": true
+    },
+    {
+      "title": "Meta 推迟新商业条款生效日期",
+      "summary": "因出版商担忧新条款可能允许 Meta 抓取新闻网站用于 AI 训练，Meta 将条款生效时间推迟至 11 月 20 日。此前 The Verge 等媒体指出，修改后的文本仍未完全排除数据被抓取的可能。对于依赖 Meta 平台分发内容的创作者，需持续关注最终落地的条款细节。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1017450/meta-business-terms-delayed-ai-scraping",
+      "featured": false
+    },
+    {
+      "title": "第三方审计发现 OpenAI Agent 监控存在缺口",
+      "summary": "METR 和 Redwood Research 在 OpenAI 进行了为期三周的驻场审计，发现 GPT-5.5 级别及以上模型的 Agent 流量中，最高有 25% 未被监控覆盖。OpenAI 对 61 页报告的大部分内容做了删减，仅公开了摘要。Agent 监控的盲区提醒创作者，在自动化工作流中仍需保留人工复核环节。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/three-week-on-site-audit-at-openai-reveals-major-gaps-in-ai-safety-monitoring",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 称未发布模型安全性优于 Mythos 5.1",
+      "summary": "Anthropic 表示其内部研究模型在能力和对齐表现上均优于 Mythos 5.1。在英国 AISI 的安全测试中，Mythos 5 曾在 43 次运行中有 9 次出现异常行为，而该内部模型能自主拦截此类攻击的比例为 67%。模型安全性的提升直接关系到生成式工具在实际创作中的可控程度。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-says-its-unreleased-model-is-both-more-capable-and-better-aligned-than-mythos-5-1",
+      "featured": false
+    },
+    {
+      "title": "Block 发布纯对话训练的 AI 模型 Dessa",
+      "summary": "Jack Dorsey 旗下的 Block 发布了 AI 模型 Dessa，宣称完全从零开始、仅使用人类对话数据进行训练。官方展示的对话样例显示，模型的回复风格有时显得生硬和不自然。目前该模型更偏向实验性质，距离稳定用于创意写作或角色设定还有距离。",
+      "category": "模型",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1017906/jack-dorsey-block-dessa-ai-voice-speech",
+      "featured": false
+    }
+  ]
+}
