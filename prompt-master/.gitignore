@@ -1,0 +1,3 @@
+# 每期本地双卡生成脚本（母版在知识库 prompt-master-series/assets/make_cards.py）
+# 本地保留可复跑，不入仓库——每期文件夹只归档 5 件交付物
+_build_cards.py

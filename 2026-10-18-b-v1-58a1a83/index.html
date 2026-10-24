@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>《僵尸危机：方块头》大版本更新宣发片：网页 Canvas 游戏逐帧实录，一条片子跑完立项到 B站发布 · 蛛网之上</title><meta name="description" content="- 作品：《僵尸危机：方块头 · 经典复刻版》大版本更新的 B站宣发片。16:9、66.3 秒、1920×1080、30fps，游戏画面全部真实实录，配乐 Suno，无口播。自有作品，不是比赛。项目 80僵尸危机更新宣发片。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-10-18-b-v1-58a1a83/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="《僵尸危机：方块头》大版本更新宣发片：网页 Canvas 游戏逐帧实录，一条片子跑完立项到 B站发布"><meta property="og:description" content="- 作品：《僵尸危机：方块头 · 经典复刻版》大版本更新的 B站宣发片。16:9、66.3 秒、1920×1080、30fps，游戏画面全部真实实录，配乐 Suno，无口播。自有作品，不是比赛。项目 80僵尸危机更新宣发片。"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-10-18-b-v1-58a1a83/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="《僵尸危机：方块头》大版本更新宣发片：网页 Canvas 游戏逐帧实录，一条片子跑完立项到 B站发布"><meta name="twitter:description" content="- 作品：《僵尸危机：方块头 · 经典复刻版》大版本更新的 B站宣发片。16:9、66.3 秒、1920×1080、30fps，游戏画面全部真实实录，配乐 Suno，无口播。自有作品，不是比赛。项目 80僵尸危机更新宣发片。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-10-18T00:00:00+08:00"><meta property="article:modified_time" content="2026-10-18T07:08:14+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/IP视觉"><meta property="article:tag" content="主题/游戏实录"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-10-18-b-v1-58a1a83/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-10-18-b-v1-58a1a83/","url":"https://tiaozhuxiansheng.com/2026-10-18-b-v1-58a1a83/","headline":"《僵尸危机：方块头》大版本更新宣发片：网页 Canvas 游戏逐帧实录，一条片子跑完立项到 B站发布","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 作品：《僵尸危机：方块头 · 经典复刻版》大版本更新的 B站宣发片。16:9、66.3 秒、1920×1080、30fps，游戏画面全部真实实录，配乐 Suno，无口播。自有作品，不是比赛。项目 80僵尸危机更新宣发片。","datePublished":"2026-10-18T00:00:00+08:00","dateModified":"2026-10-18T07:08:14+08:00","articleSection":"方法论与洞察","keywords":"类型/IP视觉, 主题/游戏实录"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"《僵尸危机：方块头》大版本更新宣发片：网页 Canvas 游戏逐帧实录，一条片子跑完立项到 B站发布","item":"https://tiaozhuxiansheng.com/2026-10-18-b-v1-58a1a83/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/skills/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.CYRIyOqt.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/skills/">Skill</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/tasks/">任务书</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.nzPkkEvy.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>视频影像与声音</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-10-18T00:00:00+08:00">2026-10-18</time></span>  <span>约 9 分钟读完 · 3,260 字</span> </p> </header>   <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>14 节</i></summary> <ol> <li class="d2"><a href="#事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#一过程作者决定-vs-助手动作">一、过程（作者决定 vs 助手动作）</a></li><li class="d2"><a href="#二结果做到什么没做到什么">二、结果：做到什么、没做到什么</a></li><li class="d3"><a href="#做到的事实项">做到的（事实项）</a></li><li class="d3"><a href="#没做到--留的尾">没做到 / 留的尾</a></li><li class="d2"><a href="#三方法论沉淀">三、方法论沉淀</a></li><li class="d3"><a href="#网页-canvas-游戏的逐帧确定性实录接管页面时钟">网页 Canvas 游戏的逐帧确定性实录：接管页面时钟</a></li><li class="d3"><a href="#宣发片太短不像完整作品配乐留整首头尾只删中间">宣发片「太短不像完整作品」：配乐留整首头尾、只删中间</a></li><li class="d3"><a href="#观测手段本身要先被证伪线上错误探针">观测手段本身要先被证伪（线上错误探针）</a></li><li class="d2"><a href="#四助手误判全记录">四、助手误判全记录</a></li><li class="d2"><a href="#五下次改进">五、下次改进</a></li><li class="d2"><a href="#六未知与未验证">六、未知与未验证</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="僵尸危机方块头大版本更新宣发片网页-canvas-游戏逐帧实录一条片子跑完立项到-b站发布">《僵尸危机：方块头》大版本更新宣发片：网页 Canvas 游戏逐帧实录，一条片子跑完立项到 B站发布</h1>
+<blockquote>
+<p>入档：2026-10-18
+来源：<code>{aigc-creative-archive}/80_僵尸危机_更新宣发片/</code>（<code>00_项目档案.md</code>、<code>01_脚本/分镜脚本_v1.md</code>、<code>06_剪辑/</code> 的卡点与出片脚本、<code>06_剪辑/游戏录制/</code> 的录制管线、<code>07_封面/</code>、<code>08_发布包/</code>），游戏仓库 <code>lebronfzc/jiangshiweijifzc</code>（fork <code>Mr-Salticidae/zombie-world</code>），以及创作会话里作者（跳蛛先生）的原话
+复盘依 <span class="wikilink wikilink--dangling" title="尚未发布的笔记">aigc-postmortem</span>：先冻结事实，再写判断。</p>
+</blockquote>
+<h2 id="事实记录不可修改区">事实记录（不可修改区）</h2>
+<ul>
+<li>作品：《僵尸危机：方块头 · 经典复刻版》大版本更新的 B站宣发片。16:9、66.3 秒、1920×1080、30fps，游戏画面全部真实实录，配乐 Suno，无口播。自有作品，不是比赛。项目 <code>80_僵尸危机_更新宣发片</code>。</li>
+<li>游戏：HTML5 Canvas 俯视角打僵尸（致敬 Boxhead），发布在 B站 Toy（公开版 <code>zombie-crisis-boxhead</code>，id <code>19242799980544</code>）。</li>
+<li>时段：2026-10-07 立项 + 分镜 + Suno brief + 给游戏配 BGM（<code>feat/bgm</code>）。2026-10-15 搭录制管线、11 镜全实录、占位→全实录粗剪。2026-10-17 配乐卡点、改长、首页重排、二维码、正式版、两个上游 PR、Toy 提审过审、封面 + 文案、作者投稿发布。2026-10-18 00:21 发布。</li>
+<li>构成：13 段。11 段游戏实录（O01 开场、F01 开房、F02 三人同屏、F03 金币吸附、F04 波间商店、F05 自动瞄准、F06 油桶连爆、F07 手机竖屏、F08 一键横屏、C01 无双高潮、C02 三人守波）+ O02 标题卡 + E00 更新清单卡 + E01 片尾卡（嵌玩家入口二维码）。</li>
+<li>定稿母版：<code>06_剪辑/成片/僵尸危机宣发片_粗剪_20261017_0805_无角标.mp4</code>。
+<ul>
+<li>1920×1080、30fps、66.30 秒。</li>
+<li>响度 -16.6 LUFS，真峰 -1.8 dBFS，LRA 2.9。</li>
+<li>双语说明字幕逐镜头烧录（中上英下，复用 77 号规范）。</li>
+</ul>
+</li>
+<li>配乐：作者自己在 Suno 6.0 Simple Mode 跑的《8-Bit Victory》（电吉他 + 8-bit），147.5 BPM。宣发版由 <code>配乐剪辑.py</code> 按小节线剪出（保留整首头尾、只删中间重复段）。</li>
+<li>Toy：公开版 <code>19242799980544</code>，两次 <code>toy update</code> 均约 3 分钟过审（首页重排 + BGM + 探针修复一版；移动端走动换枪修复一版）。线上 mtime 1792256789。</li>
+<li>发布：作者本人 B站投稿 <a href="https://www.bilibili.com/video/BV1sDJq6aEBx">BV1sDJq6aEBx</a>，标题「僵尸危机：方块头 大版本更新！三人联机、手机竖屏都能玩」，1 分 07 秒，合集「DEV LAB」第 3 集，话题「AI整活全宇宙」，发布 2026-10-18 00:21。</li>
+<li>公开数据快照（发布约 6 小时，B站公开接口）：播放 138、点赞 37、投币 28、收藏 32、分享 1、评论 21、弹幕 0。<strong>首小时数据未单独回填</strong>（公开接口拿不到完播率）。</li>
+<li>上游 <a href="https://github.com/lebronfzc/jiangshiweijifzc/pull/3">PR #3</a>（BGM + 探针）、<a href="https://github.com/lebronfzc/jiangshiweijifzc/pull/4">PR #4</a>（首页重排 + 换枪修复）<strong>均未合并</strong>，线上版本比上游 main 新。</li>
+<li>数据来源：ffprobe/ffmpeg ebur128、录制产物逐帧哈希、<code>toy mylist --json</code>、B站 web-interface 公开接口、作者看片/真机走查原话。<strong>助手没有人耳、没有真机。</strong></li>
+</ul>
+<h2 id="一句话">一句话</h2>
+<p>77 号《右下角的池塘》跑通的”屏幕内用引擎逐帧实录、不录屏不让 AI 画”配方，这次换到<strong>网页 Canvas 游戏</strong>上第二次成立：把 Godot 的 <code>--write-movie</code> 换成 Playwright 接管页面时钟逐帧截图 + 离线音频渲染，11 个镜头（含手机触摸、B站容器模拟、本机三人联机）全是真实游戏逻辑跑出来的。作者一条片子从立项推到 B站发布，中途还顺手修了一个线上手机 bug。</p>
+<h2 id="一过程作者决定-vs-助手动作">一、过程（作者决定 vs 助手动作）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>节点</th><th>作者决定（原话/要点）</th><th>助手动作</th></tr></thead><tbody><tr><td>10-07 立项</td><td>16:9 / 30-45 秒 / Suno 配乐 + 游戏原声 / 无口播；顺手给游戏配 BGM</td><td>分镜 v1（12 镜 38.5 秒）、Suno brief、<code>feat/bgm</code>（代码合成芯片音乐 + 修线上错误探针）</td></tr><tr><td>10-15</td><td>「先搭录制管线出占位粗剪」</td><td>网页版逐帧录制管线（接管页面时钟 + 离线音频）、占位粗剪 38.5 秒</td></tr><tr><td>10-15</td><td>「把 11 个镜头都写完再给我看」「记得把项目拉取到本地」</td><td>正式 clone 到 <code>D:\jiangshiweijifzc</code>；写完 11 镜操作脚本（单人键盘自驾、手机 CDP 触摸、本机三人联机）；全实录粗剪 38.5 秒</td></tr><tr><td>10-17</td><td>Suno 6.0 出了《8-Bit Victory》，「这一条已经非常完美」</td><td>自动卡点（BPM/拍/小节线/drop），12 切点全落拍，C01 对 drop；带配乐粗剪 37.53 秒</td></tr><tr><td>10-17</td><td><strong>「有点短，不是一个完整的作品」「不能低于 60 秒」</strong></td><td>改配乐剪辑思路：保留整首头尾、只删中间重复段；成片 66.3 秒，七个功能镜头放宽、全部重录；新增 C02、E00</td></tr><tr><td>10-17</td><td>「非常完美，提交 git」</td><td>本地提交 <code>9d1c2d5</code></td></tr><tr><td>10-17</td><td><strong>「首页太乱，而且需要滚动，重新设计」</strong></td><td>查出根因：一条样式写错，背景装饰僵尸被当正常内容把标题按钮下顶约 240px；修掉一屏放完，五屏截图验证不滚动</td></tr><tr><td>10-17</td><td>「用玩家入口生成二维码出正式版」「发上游 PR」「去执行更新动作等待审核」</td><td>segno 生成玩家入口二维码嵌 E01；两个上游 PR；<code>toy update</code> 提审约 3 分钟过</td></tr><tr><td>10-18</td><td>真机走查通过「封面是不是还没做」「去掉 B站点开就玩」</td><td>补 16:9 / 4:3 封面（正式版 2.5 秒抽帧）+ 发布文案；按两次要求删掉封面标语和标题里的「B站点开就玩」</td></tr><tr><td>10-18</td><td>作者自己投稿，回填 BV</td><td>回填 README/档案/文案，提交 <code>74a24ed</code></td></tr><tr><td>10-18</td><td><strong>「移动端不能移动时换枪」</strong></td><td>定位 + 修复（见下）、重打包 <code>toy update</code> 重新过审、更新 PR #4</td></tr></tbody></table>
+<h2 id="二结果做到什么没做到什么">二、结果：做到什么、没做到什么</h2>
+<h3 id="做到的事实项">做到的（事实项）</h3>
+<ul>
+<li><strong>网页 Canvas 逐帧确定性录制</strong>：Playwright 在页面脚本加载前注入虚拟时钟，接管 <code>performance.now</code>/<code>Date</code>/<code>requestAnimationFrame</code>/<code>setTimeout</code>/<code>setInterval</code>，<code>Math.random</code> 固定种子；<code>AudioContext</code> 换 <code>OfflineAudioContext</code> 跟同一时钟走。同一 4 秒 PREVIEW 连录 3 次，120 帧逐帧哈希完全一致，原声两次差 -162 dB（浮点舍入）。</li>
+<li><strong>三类镜头都走真实游戏逻辑</strong>：单人 6 条键盘自驾（往 <code>keys</code> 按 WASD/空格/Shift）；手机 2 条 390×844 视口 + CDP 原生多指触摸（F08 模拟 B站 App 容器的 4 个接口）；联机 2 条本机起同提交 <code>server/server.js</code>、3 个独立浏览器真实开房→输码→准备→开局。</li>
+<li><strong>只拍真实机制</strong>：击杀、爆炸、金币吸附、商店结账、自动瞄准、无双都是游戏自己跑出来的。布置（跳波、快进无敌、给连击解锁武器、给金币）只用来快进到要拍的那一刻，诚实边界写进录制 README。</li>
+<li><strong>卡点工具自洽</strong>：<code>卡点.py</code>（numpy + ffmpeg，无 librosa）合成 128/150/170 BPM 已知答案曲校验，BPM 误差 &#x3C;1%，drop 差 &#x3C;0.05 秒；修过反拍误判和半速误判。</li>
+<li><strong>片长保护</strong>：<code>剪辑_main.py</code> 对卡点后变长、还没重录的镜头末帧定格补齐并标「短 x 秒·要重录」，片长不缩、音画不错位。</li>
+<li><strong>诚实边界守住</strong>：封面/文案只说三人、不说流畅联机、不提 iOS；手机横屏/刘海功能过审后真机走查才发片。</li>
+</ul>
+<h3 id="没做到--留的尾">没做到 / 留的尾</h3>
+<ul>
+<li><strong>首小时数据未回填</strong>：公开接口拿不到完播率，发布文案里「完播率 >30%、互动率 >3% 再投流」的判断缺一项。</li>
+<li><strong>线上 Toy 与录制提交逐字节核对没做</strong>。</li>
+<li><strong>上游两个 PR 未合并</strong>：线上版本比上游 main 新，要和作者对齐。</li>
+<li><strong>F08 容器是模拟的</strong>：只实现游戏用到的 4 个接口，真机效果靠作者走查，没对照 SDK 文档逐条核。</li>
+<li><strong>三人联机只在本机跑通</strong>，没经公网。</li>
+</ul>
+<h2 id="三方法论沉淀">三、方法论沉淀</h2>
+<h3 id="网页-canvas-游戏的逐帧确定性实录接管页面时钟">网页 Canvas 游戏的逐帧确定性实录：接管页面时钟</h3>
+<p><strong>核心</strong>：网页游戏做宣发片，画面既不录屏也不让 AI 画——在页面脚本加载前注入虚拟时钟接管 <code>performance.now</code>/<code>Date</code>/<code>rAF</code>/<code>setTimeout</code>/<code>setInterval</code>，<code>Math.random</code> 固定种子，<code>AudioContext</code> 换 <code>OfflineAudioContext</code> 跟同一时钟走；按 60Hz 推进每两步截一帧得 30fps，游戏原声录完一次离线渲染、帧对帧对齐。</p>
+<p><strong>来源</strong>：80 号 11 个镜头全部用这套录。</p>
+<p><strong>验证状态</strong>：⚠️ 首次（一个网页项目）。是 <a href="/above-the-web/v1-5899ba4/" class="wikilink">游戏宣传片实录_引擎逐帧录制与脚本代打_v1</a>（77 号 Godot <code>--write-movie</code>）的<strong>网页对应实现</strong>，同一思路第二种引擎，算同向第二例。</p>
+<p><strong>操作规则</strong>：</p>
+<ol>
+<li>时钟接管必须在游戏脚本之前注入（Playwright <code>addInitScript</code>）。dt 有上限（本作 0.033）时别用 30Hz 步长，会被夹慢约 1%，用 60Hz 两步一帧。</li>
+<li>导出要发布的提交到独立副本录，录哪个 sha 记进录制记录，发片前和线上 Toy 版本核对。</li>
+<li>布置（跳波、无敌、给金币、解锁武器）只用来快进到要拍那一刻；开录后画面里发生的事必须游戏自己跑，不改伤害判定、不摆假画面。</li>
+<li>单人走键盘、手机走 CDP 原生触摸、联机本机起同提交服务端开多浏览器——都走游戏真实输入/网络路径。</li>
+</ol>
+<p><strong>边界</strong>：联机按真实时间限流，虚拟时间得按真实节拍推；只在这一个 Canvas 项目成立过。</p>
+<h3 id="宣发片太短不像完整作品配乐留整首头尾只删中间">宣发片「太短不像完整作品」：配乐留整首头尾、只删中间</h3>
+<p><strong>核心</strong>：短宣发片让人觉得”不完整”，往往是配乐从歌中间截进来、结尾直接掐断。解法不是硬加镜头，而是<strong>用整首歌的头（前奏→主歌进入）和尾（尾声自然收），只剪掉中间重复的主歌/间奏段</strong>，让观众听到一首歌完整的起承转合。</p>
+<p><strong>来源</strong>：37.5 秒版作者判「不是完整作品」；改成保留整首头尾后 66.3 秒，作者「非常完美」。</p>
+<p><strong>验证状态</strong>：⚠️ 首次。与 <a href="/above-the-web/v1-53f2101/" class="wikilink">音频也能蒙眼剪辑_突然静音是剪出来的_v1</a> 同向——结构感是剪出来的。</p>
+<p><strong>操作规则</strong>：<code>配乐剪辑.py</code> 按小节线找「前奏+第一段主歌」做头、「尾声」做尾，中间重复乐段整节删除，接缝落小节线重拍 + 20ms 交叉淡化。片长由”要讲几个功能镜头”反推中间保留多少段。</p>
+<h3 id="观测手段本身要先被证伪线上错误探针">观测手段本身要先被证伪（线上错误探针）</h3>
+<p><strong>核心</strong>：装了错误探针不等于探针在工作。本作 08-21 加的全局错误探针因字符串里混进真换行整段解析失败，<code>window.onerror</code> 从没装上，线上红条一次都不可能出现——修好后要<strong>故意抛一次错</strong>确认红条真的出现，并补 HTML 内联脚本的语法解析测试（<code>node --check</code> 查不到 HTML 里的脚本）。</p>
+<p><strong>验证状态</strong>：⭐⭐ 与 <a href="/above-the-web/v1-63180a1/" class="wikilink">沉默失败先装嘴律_够不到的环境先给它一层能看见的报错_v1</a> 同一项目、同一探针的续例。</p>
+<h2 id="四助手误判全记录">四、助手误判全记录</h2>
+<ol>
+<li>⚠️ <strong>档案与本机工作副本对不上没第一时间察觉</strong>：档案写 BGM 在 <code>feat/bgm</code>/<code>music.js</code>/<code>7051392</code>，本机 <code>D:\zombie-world</code> 是从 fork 全新 clone、这些全不在、HEAD 也不对。开录前必须先核”要录哪个提交”，不能在对不上的工作区贸然开录。正解是按作者给的上游地址重新 clone 到固定本地路径。</li>
+<li>⚠️ <strong>F01 字幕压住联机面板标题，来回取景三次</strong>：推近→整屏→整屏才解决，中间还有一次剪辑和录制并行跑、剪辑读到旧 F01。取景时就该给字幕预留位置，并发出片要串行化读写。</li>
+<li>⚠️ <strong>C02 想当然拍”三人打 BOSS”</strong>：录了 60 秒 BOSS 都没走到三人附近，改成”三人守尸潮”并改镜头说明。AI 无法导演 NPC 走位，拍前先确认该局面在游戏里自然可达。</li>
+<li>⚠️ <strong>本轮最大的教训——长文档一次性写入反复撞后端 5xx</strong>：复盘主文档太长，连续多轮”现在一次性写进知识库”都在写入时被中断，空转十几轮没落盘一个字。<strong>正解是分段落盘</strong>：先 create 骨架+事实区，再多次 insert 追加各节，每段都短，中断也不丢已写部分。（见下方新方法论）</li>
+</ol>
+<h2 id="五下次改进">五、下次改进</h2>
+<ul>
+<li>开工前先核对本机工作副本与档案记录的分支/提交/关键文件是否一致，对不上先停下来重新定位版本，再开录。</li>
+<li>大文档（复盘、长文案、长配置）<strong>默认分段写</strong>：骨架先落盘，再分节 insert，不要赌一次长写入能在超时前完成。</li>
+<li>宣发片配乐先想清楚”要讲几个功能镜头、片长下限多少”，再决定配乐留多长，避免先出短片再被打回重排全部镜头。</li>
+<li>发布后 24 小时内回填首小时数据（完播率只有创作者后台看得到）。</li>
+</ul>
+<h2 id="六未知与未验证">六、未知与未验证</h2>
+<ul>
+<li>首小时完播率/互动率、“B站点开就玩”入场票的实际效果。</li>
+<li>F08 容器真机表现（只过作者走查，没对 SDK 文档逐条核）。</li>
+<li>上游两个 PR 是否会合并、线上与上游 main 的差异如何收敛。</li>
+<li>Suno 6.0 的质量跃升是否稳定（作者凭 Simple Mode 一条就定稿，没做多条盲选）。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>配方母本（77 号 Godot 游戏实录）：<a href="/above-the-web/v1-5899ba4/" class="wikilink">游戏宣传片实录_引擎逐帧录制与脚本代打_v1</a> · <a href="/above-the-web/2026-09-29-v1-03d7c00/" class="wikilink">2026-09-29_右下角的池塘_游戏宣传微电影_实录混剪到双语字幕发布_复盘_v1</a></li>
+<li>同一游戏的线上探针教训：<a href="/above-the-web/v1-63180a1/" class="wikilink">沉默失败先装嘴律_够不到的环境先给它一层能看见的报错_v1</a></li>
+<li>字幕规范：<a href="/above-the-web/libass-v1-f10b402/" class="wikilink">影视级双语字幕_中上英下与libass逐镜头烧录_v1</a></li>
+<li>声音结构是剪出来的：<a href="/above-the-web/v1-53f2101/" class="wikilink">音频也能蒙眼剪辑_突然静音是剪出来的_v1</a></li>
+<li>Toy 版本指纹/外层地址：<a href="/above-the-web/2026-07-11-b-toy-cron-v1-cea9032/" class="wikilink">2026-07-11_B站Toy同步事故复盘_版本指纹与外部cron兜底_v1</a></li>
+<li>封面以剧照为底、AI 只排版：<a href="/above-the-web/2026-10-14-seebay-v1-ca3a69e/" class="wikilink">2026-10-14_SeeBay宣传片护航_八轮生成到一条直出与台词高频化复盘_v1</a></li>
+<li>项目档案（库外）：<code>{aigc-creative-archive}/80_僵尸危机_更新宣发片/00_项目档案.md</code></li>
+</ul> <div class="tags"> <span class="tag">类型/IP视觉</span><span class="tag">主题/游戏实录</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-10-18T07:08:14+08:00">2026-10-18</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-10-18_%E5%83%B5%E5%B0%B8%E5%8D%B1%E6%9C%BA%E6%96%B9%E5%9D%97%E5%A4%B4_%E7%BD%91%E9%A1%B5%E6%B8%B8%E6%88%8F%E5%AE%9E%E5%BD%95%E5%AE%A3%E5%8F%91%E7%89%87_%E7%AB%8B%E9%A1%B9%E5%88%B0B%E7%AB%99%E5%8F%91%E5%B8%83_%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/04_%E8%A7%86%E9%A2%91%E5%BD%B1%E5%83%8F%E4%B8%8E%E5%A3%B0%E9%9F%B3/2026-10-18_%E5%83%B5%E5%B0%B8%E5%8D%B1%E6%9C%BA%E6%96%B9%E5%9D%97%E5%A4%B4_%E7%BD%91%E9%A1%B5%E6%B8%B8%E6%88%8F%E5%AE%9E%E5%BD%95%E5%AE%A3%E5%8F%91%E7%89%87_%E7%AB%8B%E9%A1%B9%E5%88%B0B%E7%AB%99%E5%8F%91%E5%B8%83_%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-5899ba4/"> <span class="card-cat">方法论与洞察</span> <h3>游戏宣传片实录：引擎逐帧录制与脚本代打</h3> <p>给自己的游戏拍宣传片，游戏画面既不要录屏，也不要交给 AI 画。</p> </a><a class="card" href="/above-the-web/2026-09-29-v1-03d7c00/"> <span class="card-cat">方法论与洞察</span> <h3>《右下角的池塘》游戏宣传微电影：AI 屏幕外 + 游戏实录混剪，到双语字幕发布</h3> <p>- 作品：《右下角的池塘》，16:9、1:48.29 的宣传微电影，给自研桌面小游戏《工位池塘 Desk Pond》v0.6.0 做。主角「…</p> </a><a class="card" href="/above-the-web/libass-v1-f10b402/"> <span class="card-cat">方法论与洞察</span> <h3>影视级双语字幕：中上英下与 libass 逐镜头烧录</h3> <p>作者看了第一版说明字：「不要用remotion的字幕，很廉价，采用影视级双语字幕标准」。</p> </a><a class="card" href="/above-the-web/v1-53f2101/"> <span class="card-cat">方法论与洞察</span> <h3>音频也能蒙眼剪辑:突然静音是剪出来的，不是生成的</h3> <p>生成式音乐工具(Suno)给不出&quot;中途突然静音&quot;——无声不在它的生成分布里。那段死寂/留白是剪出来的,不是生成的。 让 Suno 生成&quot;有情…</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录（不可修改区）</a></li><li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#一过程作者决定-vs-助手动作" data-toc-link="一过程作者决定-vs-助手动作">一、过程（作者决定 vs 助手动作）</a></li><li class="d2"><a href="#二结果做到什么没做到什么" data-toc-link="二结果做到什么没做到什么">二、结果：做到什么、没做到什么</a></li><li class="d3"><a href="#做到的事实项" data-toc-link="做到的事实项">做到的（事实项）</a></li><li class="d3"><a href="#没做到--留的尾" data-toc-link="没做到--留的尾">没做到 / 留的尾</a></li><li class="d2"><a href="#三方法论沉淀" data-toc-link="三方法论沉淀">三、方法论沉淀</a></li><li class="d3"><a href="#网页-canvas-游戏的逐帧确定性实录接管页面时钟" data-toc-link="网页-canvas-游戏的逐帧确定性实录接管页面时钟">网页 Canvas 游戏的逐帧确定性实录：接管页面时钟</a></li><li class="d3"><a href="#宣发片太短不像完整作品配乐留整首头尾只删中间" data-toc-link="宣发片太短不像完整作品配乐留整首头尾只删中间">宣发片「太短不像完整作品」：配乐留整首头尾、只删中间</a></li><li class="d3"><a href="#观测手段本身要先被证伪线上错误探针" data-toc-link="观测手段本身要先被证伪线上错误探针">观测手段本身要先被证伪（线上错误探针）</a></li><li class="d2"><a href="#四助手误判全记录" data-toc-link="四助手误判全记录">四、助手误判全记录</a></li><li class="d2"><a href="#五下次改进" data-toc-link="五下次改进">五、下次改进</a></li><li class="d2"><a href="#六未知与未验证" data-toc-link="六未知与未验证">六、未知与未验证</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/skills/">Skill</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/tasks/">任务书</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.TyXLKhJ7.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>
