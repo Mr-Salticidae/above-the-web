@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-25",
+  "headline": "宾州立法要求 AI 广告强制标注，F1 转场被疑用 AI",
+  "items": [
+    {
+      "title": "宾州立法：AI 生成广告须加标注",
+      "summary": "宾夕法尼亚州签署《人工智能欺骗性广告法》，要求任何经 AI 显著修改或生成的图像、视频、音频及文本广告必须添加标注。该法律适用于所有广告媒介形式。对使用 AI 工具产出商业素材的创作者而言，合规门槛正在从平台自律走向法律强制。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1018187/pennsylvania-ai-deceptive-advertising-act",
+      "featured": true
+    },
+    {
+      "title": "F1 赛事转场被社交媒体质疑使用 AI",
+      "summary": "近几场 F1 赛事中出现了突破物理规律的摄像机转场画面，社交媒体上大量观众怀疑这些镜头由 AI 生成。PetaPixel 报道了这一争议。随着 AI 视频生成能力提升，专业影视与体育转播中的真实画面正面临越来越频繁的信任挑战。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/23/social-media-suspects-f1-is-using-ai-for-physics-defying-camera-transition",
+      "featured": true
+    },
+    {
+      "title": "研究：复杂框架未提升编程 Agent 效果但更贵",
+      "summary": "一项对照实验比较了 Claude Code、OpenCode、mini-SWE-agent 等编程 Agent 框架的表现，发现切换框架对任务通过率的提升微乎其微，甚至不如直接重跑同一配置。但由于系统提示词在每步都会重新发送，单任务成本可能增至三倍。依赖 AI 辅助编程的创作者需要关注实际投入产出比，而非盲目追逐新框架。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/fancy-harnesses-make-coding-agents-more-expensive-but-not-better-study-finds",
+      "featured": false
+    },
+    {
+      "title": "BBC《蓝色星球3》刻意保留瑕疵以证非 AI",
+      "summary": "BBC 自然纪录片《蓝色星球 III》选择保留不够完美的镜头，以此证明素材的真实性。制作方认为，画面过度精致和无缝衔接已成为 AI 生成内容的典型特征。这一策略反映出，在 AI 影像泛滥的背景下，「不完美」本身正在成为一种可信度信号。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1018205/blue-planet-iii-authentic-organic-ai",
+      "featured": false
+    },
+    {
+      "title": "AI 工具推动复古游戏二创频繁出圈",
+      "summary": "The Verge 报道，过去一个月里，借助新的 AI 工具，将《光环》搬进浏览器、在 iPhone 上运行《塞尔达传说：风之杖》等复古游戏移植项目频繁走红。AI 降低了技术门槛，让这类跨平台创意实验更容易实现并传播。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1015430/ai-retro-games-decomp-recomp-port",
+      "featured": false
+    },
+    {
+      "title": "Google 更新隐私政策，个性化 AI 数据或用于广告",
+      "summary": "Google 更新了隐私政策，若用户开启 Personal Intelligence 等个性化 AI 功能，其 Gmail、Drive 和 Google Photos 中的数据可能被用于广告定向投放。此前的政策曾承诺不使用这些个人数据进行广告推荐。对于将日常创作素材存储在 Google 生态中的创作者，需留意这一条款变化。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1017600/google-personal-intelligence-privacy-policy-ads-update",
+      "featured": false
+    }
+  ]
+}
