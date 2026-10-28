@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-28",
+  "headline": "Genie 4 支持音频与实时引导，Etsy 开始清理 AI 生成商品",
+  "items": [
+    {
+      "title": "Google DeepMind 发布世界模型 Genie 4",
+      "summary": "Genie 4 是一个实时世界模型，可生成交互式 3D 场景并加入音频与会说话的角色。相比上一代，它能维持长达两分钟的场景一致性，物理效果与人物动作也更自然。底层使用 Gemini 3.8 Flash 保持模拟连贯性，但长时间运行仍会出现视觉不一致。目前处于早期研究阶段，即将面向开发者和 AI Ultra 订阅用户开放。对互动视频和虚拟场景创作者而言，这是目前可控性较强的生成方案之一。",
+      "category": "模型",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation",
+      "featured": true
+    },
+    {
+      "title": "Hugging Face 推出多模态模型 LFM3",
+      "summary": "Hugging Face 发布了 LFM3，用于构建专用多模态模型。候选线索未提供更多技术细节，但从定位来看，它面向需要针对特定任务微调多模态能力的开发者。适合在图像、文本等混合输入场景中寻找轻量化方案的创作者关注。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/LiquidAI/lfm3",
+      "featured": false
+    },
+    {
+      "title": "Apple 为 Pages、Keynote 和 Numbers 接入 AI 助手",
+      "summary": "Apple 在其办公套件中引入基于自研模型与 OpenAI 模型的 AI 助手。Keynote 中可根据文档上下文设计、制作动画和优化幻灯片；Pages 支持起草与重组文稿内容。这意味着日常排版和内容初稿工作可以在 Apple 原生工具内直接完成，无需切换到第三方应用。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1019373/apple-pages-keynote-numbers-ai-chatbot-update",
+      "featured": true
+    },
+    {
+      "title": "Opera 推出 WebAI 标准，支持浏览器本地部署 AI",
+      "summary": "Opera 提出名为 WebAI 的新网页标准，允许用户在浏览器中本地运行多种 AI 模型。该标准旨在让 AI 推理过程留在客户端，减少对云端接口的依赖。对于希望在网页端集成轻量 AI 功能、同时在意数据隐私的创作者，这是一个值得跟进的基础能力变化。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/27/opera-introduces-a-new-web-standard-to-let-users-deploy-ai-locally-in-their-browser",
+      "featured": false
+    },
+    {
+      "title": "Etsy 出台规则限制 AI 生成商品上架",
+      "summary": "手工制品交易平台 Etsy 开始打击低质量 AI 生成内容，明确禁止使用虚假照片和纯 AI 生成的商品素材。平台此前以手工艺品为主，但近期被大量 AI 批量生产的商品占据。这对依赖 Etsy 变现的 AI 图像创作者意味着，未经人工加工的直接出图将越来越难通过审核。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/etsys-crackdown-on-ai-slop-is-welcome-but-it-shows-how-far-things-have-slipped",
+      "featured": false
+    },
+    {
+      "title": "ASAP Rocky MV 被指用 AI 抄袭视频艺术家作品",
+      "summary": "两位视频艺术家和一名跑酷运动员指控 ASAP Rocky 的最新音乐视频使用 AI 直接复制了他们的创作成果。事件再次引发关于 AI 视频工具在商业制作中版权归属的讨论。对视频创作者而言，在使用 AI 辅助生成画面时，参考素材的授权边界需要更谨慎地处理。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/27/videographers-claim-asap-rocky-used-ai-to-rip-off-their-work",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 在 IPO 文件中承诺 Claude 永不加广告",
+      "summary": "Anthropic 在 IPO 申请的附信中表示，Claude 的唯一目标是提供有用的回答，不会引入广告机制。公司认为广告模式会改变模型的激励方向，影响输出质量。对于将 Claude 作为写作或对话生成主力工具的创作者，这一承诺意味着短期内不必担心输出结果被商业化干扰。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-uses-its-ipo-letter-to-renew-its-pledge-that-claude-will-never-show-ads",
+      "featured": false
+    }
+  ]
+}
