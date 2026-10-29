@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-29",
+  "headline": "Gemini 4 Carbon 发布，Nvidia 开源语音模型，AI 生成电影遇冷",
+  "items": [
+    {
+      "title": "Google DeepMind 发布 Gemini 4 Carbon",
+      "summary": "距 Gemini 4 Argon 仅两周，Google DeepMind 推出新前沿模型 Gemini 4 Carbon，在 Artificial Analysis Intelligence Index v5 基准中位列第一，领先于 Claude Opus 5.5 和 GPT-6 Astra。该模型侧重长链路 Agent 工作流与网络安全防御能力，初期仅向部分安全专家开放。对创作者而言，这意味着更强的代码与自动化工作流底座即将可用。",
+      "category": "模型",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1021339/google-gemini-4-carbon-cybersecurity-frontier",
+      "featured": true
+    },
+    {
+      "title": "Nvidia 开源 Nemotron 3.5 Transcribe 语音模型",
+      "summary": "Nvidia 发布开源语音识别模型 Nemotron 3.5 Transcribe，支持转录、说话人识别与翻译，覆盖最多 40 种语言，可通过文本提示词控制任务。该模型活跃参数量仅为同类最强开源竞品的六分之一，并附带超 80 万小时语音数据集及微调工具。目前仅支持录音文件处理，暂不支持实时音频，适合播客、会议记录等后期转写场景。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nvidias-open-nemotron-3-5-transcribe-combines-transcription-translation-and-speaker-recognition",
+      "featured": true
+    },
+    {
+      "title": "Akai 为 MPC 硬件引入开源固件，拥抱 vibe coding",
+      "summary": "Akai 尚未正式发布 MPC Sample Key，但已向 mod 社区提前开放设备并提供开源固件，鼓励开发者通过 vibe coding 自定义功能。这一举措意味着音乐制作人将能通过 AI 辅助编程，更自由地改造经典硬件的工作流。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/gadgets/1021405/akai-open-source-mpc-sample-key",
+      "featured": false
+    },
+    {
+      "title": "国内首部全 AI 生成长片上映后票房遇冷",
+      "summary": "中国首部完全由 AI 生成的院线长片已全国公映，首日排片达一万场，但票房表现不及预期，未能吸引足够观众。这反映出当前市场对纯 AI 生成影视内容的接受度仍然有限，也提醒创作者技术实现与叙事吸引力之间存在差距。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/28/chinas-first-fully-ai-generated-film-is-crashing-and-burning-at-the-box-office",
+      "featured": false
+    },
+    {
+      "title": "时尚品牌转向生成式 AI，线下摄影棚陆续关闭",
+      "summary": "据 Reuters 报道，随着越来越多时尚品牌采用生成式 AI 完成视觉内容制作以压缩成本，传统商业摄影棚正面临关停潮。这对依赖时尚商业拍摄为生的摄影师和工作室构成了直接的生存压力。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/10/28/photo-studios-are-closing-as-the-fashion-industry-embraces-generative-ai",
+      "featured": false
+    },
+    {
+      "title": "Instagram 负责人称公众对 AI 的负面情绪会加剧",
+      "summary": "Instagram 负责人 Adam Mosseri 在播客访谈中表示，不仅是年轻人和创意群体，相当一部分公众确实反感 AI，且这种负面情绪预计还会恶化。他同时谈及了 Instagram 宽屏等新功能的上线背景。创作者需留意平台受众对 AI 标签日益敏感的舆论环境。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1021644/adam-mosseri-instagram-ai-negativity",
+      "featured": false
+    },
+    {
+      "title": "Android Studio 开放接入第三方 AI 编程 Agent",
+      "summary": "Google 为 Android Studio 新增 Bring Your Own Agent 功能，现支持包括 Anthropic Claude Agent 和 OpenAI Codex 在内的 40 余个编程 Agent。官方称新的终端工具可帮助 Agent 完成 UI 任务的速度提升 77%，token 消耗最高降至三分之一。移动端开发者的 AI 辅助编码选择进一步增加。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-opens-android-development-to-third-party-ai-agents-and-unveils-new-gemini-apis",
+      "featured": false
+    }
+  ]
+}
