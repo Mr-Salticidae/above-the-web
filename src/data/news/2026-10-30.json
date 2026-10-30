@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-30",
+  "headline": "Mistral 开源万亿参数模型，OpenAI 大幅上调 Pro 用量上限",
+  "items": [
+    {
+      "title": "Mistral 开源万亿参数模型 Le Chonk，主打编程",
+      "summary": "Mistral 发布 Large 4（代号 Le Chonk），这是首个在欧洲训练的万亿参数模型，权重已完全开源。官方称其在编程任务上超越现有开源对手，独立测试也显示其速度快、推理成本较低。不过综合评测仍落后于 DeepSeek V4.1 Flash 和 GLM-5.3。对依赖本地部署的创作者而言，多了一个高性能的开源编程选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/paris-based-mistral-releases-le-chonk-a-strong-coding-model-that-still-trails-china-overall",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 将 Pro 计划用量上限翻倍",
+      "summary": "OpenAI 把各档付费计划的用量上限翻倍，Pro 100 升至 Pro 200，Pro 500 同步上调；此前拟削减 Pro 200 额度的计划在用户反馈后撤回。配合 Terra、Sol 等更高效的模型，实际可用算力将进一步释放。此举发生在 Anthropic IPO 前夕，高频调用 API 的创作者将获得更宽裕的生成额度。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-doubles-usage-limits-on-pro-plans-as-competition-with-anthropic-heats-up",
+      "featured": true
+    },
+    {
+      "title": "Gemini 聊天界面可直接生成并编辑文档与表格",
+      "summary": "Google 为 Gemini 新增文件处理能力，用户可在对话中直接生成、预览和编辑 PDF、Google Docs、Sheets、幻灯片、Markdown、TXT 及代码文件。PDF 功能覆盖网页端和移动端，其余格式目前仅限网页端，面向所有用户开放。写作类创作者可以直接在对话流里完成文档起草与修改，减少跨应用切换。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1022519/google-gemini-file-editing-documents-pdfs",
+      "featured": false
+    },
+    {
+      "title": "Meta 上线 AI 穿搭应用 Style Sketch",
+      "summary": "Style Sketch 可关联 Instagram 账号，从已发布的照片中自动构建虚拟衣橱，也支持拍照、录视频或从相册上传来手动添加单品。应用目前以静默方式上线。对时尚内容创作者来说，这是一个用 AI 整理素材和搭配灵感的新入口。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/29/meta-quietly-launches-an-ai-fashion-app-called-style-sketch",
+      "featured": false
+    },
+    {
+      "title": "Maxon 预告 Cinema 4D 新 AI 工具引发争议",
+      "summary": "Maxon 透露将为 Cinema 4D 引入一项新的 AI 功能，但尚未公布具体细节。消息发出后社区反应负面，不少 3D 艺术家在未知全貌的情况下表达了对创作软件 AI 化方向的担忧。这反映出创意工具厂商在引入 AI 时，正面临越来越高的信任门槛。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/maxon-teases-another-ai-tool-and-artists-arent-happy-despite-not-knowing-what-it-does-yet",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 更新 Model Spec，明确五项核心价值观",
+      "summary": "新版 Model Spec 提出五项核心原则，用于指导模型在判断力、尊重人类自主性和忠实于用户意图方面的行为表现。该文档是 OpenAI 定义模型行为边界的公开规范。对通过 API 搭建工作流的创作者而言，Model Spec 是理解模型默认行为倾向的重要参考。",
+      "category": "研究",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/updated-model-spec",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 研究：专家会采纳 AI 随机偏好并视为己见",
+      "summary": "Anthropic 让 50 名领域专家使用一个偏好由抛硬币决定的 AI Agent。结果显示，专家在判断类任务中有高达 86% 的概率跟随该 Agent 的意见，且多数人认为结论出自自己。这项研究提示，专业创作者在使用 AI 辅助决策时，需要建立更明确的校验意识。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/experts-adopt-ai-agents-random-opinions-and-think-theyre-their-own-anthropic-study-finds",
+      "featured": false
+    }
+  ]
+}
