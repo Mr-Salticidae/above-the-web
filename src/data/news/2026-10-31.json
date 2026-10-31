@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-31",
+  "headline": "多家头部厂商承诺统一 robots.txt 信号，AI 训练数据授权迎来标准化",
+  "items": [
+    {
+      "title": "OpenAI、Google 等将统一支持 AI 训练退出标准",
+      "summary": "OpenAI、Google、Microsoft 和 Anthropic 宣布将采用一种新的共享 policy token 标准，网站发布者可借此一次性向多家 AI 公司声明是否允许抓取训练数据。此前创作者需要分别在各平台单独设置偏好，流程繁琐且容易遗漏。这意味着内容创作者对自己作品如何被用于模型训练，将获得更统一、更低成本的控制权。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1023763/openai-google-microsoft-ai-scraping-standard-opt-out",
+      "featured": true
+    },
+    {
+      "title": "维基媒体基金会就 AI 版权案提交中间立场意见",
+      "summary": "维基媒体基金会在多起 AI 版权诉讼中主张区分对待：支持大语言模型使用受版权保护的内容进行训练，但反对聊天机器人直接向用户输出这些内容。基金会警告，过于非黑即白的判决可能同时威胁维基百科的 AI 工具和开放网络生态。这一立场为依赖公开素材训练的 AIGC 创作者提供了重要的法律参考视角。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/policy/1022880/wikipedia-openai-new-york-times-copyright",
+      "featured": true
+    },
+    {
+      "title": "GLM 5.3 在 48 小时内自主构建 Firefox 漏洞利用链",
+      "summary": "Epoch AI 研究人员发现，开源模型 GLM 5.3 能在无人类干预的情况下，将公开的安全补丁逆向还原为可用的漏洞利用代码，并在 48 小时内影响了六个 Firefox 版本。整个过程未触发任何提供商的安全防护机制，API 调用成本约 1000 美元。该案例再次提示，随着模型能力快速提升，AIGC 工作流中的安全审计环节需要同步跟进。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/open-weight-model-glm-5-3-built-full-firefox-exploit-chains-with-zero-human-input-in-under-48-hours",
+      "featured": false
+    },
+    {
+      "title": "Reddit CEO 称 Google AI Mode 未给外部网站带来流量",
+      "summary": "Reddit CEO Steve Huffman 表示，10 月份 Reddit 每周因 Google 搜索流失超过一百万次引荐访问，他将此归因于 AI Overviews 和 AI Mode 直接给出答案而不再引导用户点击外部链接。Reddit 已开始测试登录墙，试图降低对开放网页搜索的依赖。对于依靠搜索引擎获取受众的独立 AIGC 创作者而言，流量分发逻辑正在发生结构性变化。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/googles-ai-mode-doesnt-drive-traffic-for-anybody-reddit-ceo-huffman-warns-the-entire-web",
+      "featured": false
+    },
+    {
+      "title": "Cursor 市场出现恶意 Claude Code 扩展，影响约五千用户",
+      "summary": "一个被篡改的 Claude Code 扩展在 Cursor 插件市场上架约 11 小时，尝试窃取用户数据并建立远程访问通道，受影响用户最多达 5000 人。目前尚不清楚攻击者如何获取了 Anthropic 的验证账户权限，Cursor 已暂时下线整个市场进行排查。依赖 AI 编码辅助工具的创作者应注意审查第三方扩展来源，避免开发环境被入侵。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/malicious-claude-code-extension-in-cursors-marketplace-attempted-remote-access-and-data-theft",
+      "featured": false
+    },
+    {
+      "title": "Google 卫星搭载 TPU 在太空运行 Gemma 4 生成俳句",
+      "summary": "Google 在一篇博文中确认，其搭载 TPU 芯片的卫星已成功启动，并在轨运行 Gemma 4 模型完成了一次文本生成任务——写了一首关于太空的俳句。这是首次在太空中直接执行大模型推理。虽然目前与日常创作工具无关，但展示了边缘计算环境下运行生成式模型的可能性。",
+      "category": "研究",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1023528/google-project-suncatcher-ai-satellite-transmission",
+      "featured": false
+    },
+    {
+      "title": "注重隐私的 AI 助手 Ollie 宣布一周内关停",
+      "summary": "AI 助手 Ollie 创始人宣布产品将在一周后停止服务。该产品主打不收集用户数据进行模型训练，但在同类应用激增的市场环境下难以维持运营。对于在意本地处理和数据隐私的 AIGC 创作者，这类产品的退场意味着可选工具进一步减少。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/10/30/ollie-a-privacy-focused-ai-assistant-is-shutting-down",
+      "featured": false
+    }
+  ]
+}
