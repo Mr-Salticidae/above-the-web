@@ -1,0 +1,31 @@
+{
+  "tracks": [
+    {
+      "id": "disanjie-de-qiutian",
+      "title": "第三阶的秋天",
+      "artist": "跳蛛先生",
+      "audio": "https://tiaozhuxiansheng.com/music/audio/%E7%AC%AC%E4%B8%89%E9%98%B6%E7%9A%84%E7%A7%8B%E5%A4%A9.mp3",
+      "cover": "https://tiaozhuxiansheng.com/music/covers/%E7%AC%AC%E4%B8%89%E9%98%B6%E7%9A%84%E7%A7%8B%E5%A4%A9.jpg",
+      "duration": 149,
+      "note": "《那道题还亮着》的续篇。那年我停在第三阶，看你走远；后来每个秋天，我都替你留了一点。"
+    },
+    {
+      "id": "nadaoti-hai-liangzhe",
+      "title": "那道题还亮着",
+      "artist": "跳蛛先生",
+      "audio": "https://tiaozhuxiansheng.com/music/audio/%E9%82%A3%E9%81%93%E9%A2%98%E8%BF%98%E4%BA%AE%E7%9D%80.mp3",
+      "cover": "https://tiaozhuxiansheng.com/music/covers/%E9%82%A3%E9%81%93%E9%A2%98%E8%BF%98%E4%BA%AE%E7%9D%80.jpg",
+      "duration": 195,
+      "note": "高三那年，前桌给我讲过一道题。你讲到第三步，语速忽然变长。男女对唱。"
+    },
+    {
+      "id": "yulijiuxin",
+      "title": "雨里旧信",
+      "artist": "跳蛛先生",
+      "audio": "https://tiaozhuxiansheng.com/music/audio/%E9%9B%A8%E9%87%8C%E6%97%A7%E4%BF%A1.mp3",
+      "cover": "https://tiaozhuxiansheng.com/music/covers/%E9%9B%A8%E9%87%8C%E6%97%A7%E4%BF%A1.jpg",
+      "duration": 234,
+      "note": "一封一直保存着、却从来没有被读过的信。1940s 老上海爵士 × trip-hop，全曲连续雨声。"
+    }
+  ]
+}
