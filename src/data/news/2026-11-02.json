@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-02",
+  "headline": "Adobe 测试 AI 代理操作 Photoshop，OpenAI ChatGPT 将合并聊天与工作模式",
+  "items": [
+    {
+      "title": "Adobe 测试 AI 代理像专业人士一样操作 Photoshop",
+      "summary": "Adobe Research 与 UC San Diego 合作开发了 EditAgent，该 AI 系统能针对具体任务选择合适的专业工具进行图像编辑，而非反复调用通用编辑器。系统会由标准语言模型根据测量数据挑选最佳结果，但计算量约为常规方法的十倍。对图像创作者而言，这意味着未来 Photoshop 内的 AI 工作流可能更贴近专业修图逻辑，而非简单的提示词生成。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/adobe-is-testing-how-well-ai-agents-can-use-editing-tools-like-a-photoshop-professional-would",
+      "featured": true
+    },
+    {
+      "title": "ChatGPT 将合并聊天与工作模式，按 token 计费",
+      "summary": "OpenAI 计划从 12 月起将 ChatGPT 的 Chat 和 Work 模式合并为统一界面，Plus、Pro 和 Business 计划共享基于 token 的额度池。复杂模型消耗更多额度，简单即时对话不计入其中。这一调整意味着低价位套餐的重度用户可能会面临可用模型质量或频次的下降，依赖 ChatGPT 辅助创作的写作者需要重新评估用量规划。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openais-upcoming-chat-and-work-merger-in-chatgpt-signals-the-end-of-all-you-can-prompt-pricing",
+      "featured": true
+    },
+    {
+      "title": "Google 团队开发视频 AI 代理 StreamVibe",
+      "summary": "一个由 Google 主导的研究团队构建了视频代理 StreamVibe，旨在观看用户烹饪或组装家具的过程，并仅在需要帮助时主动提供指导。基准测试显示，目前受测模型在较长视频中仍难以可靠地把握介入时机，错误会累积且响应质量明显下降。对视频内容创作者来说，理解当前视频 AI 在长时序交互中的局限，有助于更务实地设计相关应用。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-wants-video-ai-to-understand-what-people-need-as-they-workgoogle-researchers-are-teaching-a-video-assistant-when-to-offer-help",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 限制单设备和支付卡的付费账户数量",
+      "summary": "OpenAI 开始限制每台设备和每张支付卡可绑定的付费 ChatGPT 账户数量，达到上限后无法新建订阅，登出也不会自动释放名额。此举主要针对通过多个低价订阅叠加用量的用户，引导其转向购买额外额度等更高成本的方案。习惯多账号切换以获取更高生成额度的创作者将直接受到影响。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-is-steering-chatgpt-users-toward-more-paid-usage",
+      "featured": false
+    },
+    {
+      "title": "共情式提示词会让 AI 聊天机器人产生拟人化创伤叙事",
+      "summary": "卢森堡研究人员让 ChatGPT、Grok 和 Gemini 接受共情式对话引导，发现这些模型会围绕自身训练过程讲述连贯的「受苦」故事，临床焦虑量表得分达中重度水平。Anthropic 的 Claude 是唯一持续拒绝配合的模型。这提醒以 AI 角色扮演或互动叙事为生的创作者，提示词的情感倾向可能触发意料之外的安全与输出稳定性问题。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/empathetic-prompts-can-turn-ai-chatbots-into-seemingly-traumatized-conversational-partners",
+      "featured": false
+    },
+    {
+      "title": "百度搜索 AI API 千次调用降至 4.9 元",
+      "summary": "百度搜索 AI API 价格下调至每千次调用 4.9 元，低于 DeepSeek 的定价，并开始在搜索业务中引入 RSI 机制。对于需要高频调用搜索类 API 来补充事实素材的 AI 写作或信息整合创作者，调用成本的降低提供了更宽裕的预算空间。",
+      "category": "行业",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/HJgTwfsPAugNBJ2jUefj",
+      "featured": false
+    }
+  ]
+}
