@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-04",
+  "headline": "Nexus Mods 强制披露 AI 使用情况，AI 生成图像正引发创作者与消费者的信任博弈",
+  "items": [
+    {
+      "title": "Nexus Mods 要求新 Mod 上传时必须声明是否使用 AI",
+      "summary": "PC 游戏 Mod 平台 Nexus Mods 宣布，今后上传新 Mod 的作者必须明确声明作品中是否使用了 AI。这是该平台针对 AI 生成内容发布的一系列新规之一。对于依赖社区素材进行二次创作的作者而言，Mod 资源的透明度将直接影响工作流的合规判断。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/games/1026085/nexus-mods-ai-disclosures",
+      "featured": true
+    },
+    {
+      "title": "研究显示多数美国消费者对 AI 生成商品图缺乏信任",
+      "summary": "电商体验研究机构 Baymard 的新调查显示，大多数美国在线消费者表示 AI 生成的商品图片会降低他们的购买信心。这一结论对正在用 AI 批量生成产品图的电商卖家和视觉创作者是一个直接的信号：在商业转化环节，AI 图像的接受度仍低于预期。",
+      "category": "研究",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/03/ai-generated-product-photos-are-putting-off-online-shoppers-study-finds",
+      "featured": true
+    },
+    {
+      "title": "摄影师发现同行作品集中混入 AI 生成图像并公开指出",
+      "summary": "一位摄影师在英国 Whitehaven 拍摄时，发现另一位摄影师的作品集中包含 AI 生成的图像，并将此事公开。随着 AI 生图工具普及，真实摄影与 AI 图像混杂的情况开始在专业社区引发争议，创作者需要更清晰地界定作品的来源属性。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/03/photographer-exposes-ai-generated-images-in-another-photographers-portfolio",
+      "featured": false
+    },
+    {
+      "title": "Creative Bloq 讨论一款被 AI 大量使用的争议字体",
+      "summary": "Creative Bloq 撰文讨论了一款近期频繁出现在 AI 生成设计中的字体，称其风格张扬且已被过度使用，引发了类似当年 Comic Sans 的争议。这提醒平面设计师和排版工作者，在使用 AI 辅助产出视觉物料时需要额外留意字体选择的同质化问题。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/is-this-the-most-controversial-font-since-comic-sans",
+      "featured": false
+    },
+    {
+      "title": "Airbnb 房东涉嫌用 AI 修改照片伪造损坏现场索赔",
+      "summary": "一名 Airbnb 房东被指控使用 AI 编辑了一张马桶堵塞溢水的照片，以此向房客索赔 1000 美元。该事件再次展示了 AI 图像编辑能力在非创作场景下的滥用风险，也为依赖影像作为证据的商业纠纷增加了核实成本。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/03/airbnb-host-accused-of-using-ai-edited-photo-of-blocked-toilet-to-claim-1000-from-guest",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 称 GPT-6 Astra 一周内从零设计了硬件设备",
+      "summary": "OpenAI 硬件团队使用 GPT-6 Astra 在不到一周时间内完成了一款 Codex 编程代理设备的设计，涵盖外壳、电路板到固件的全流程。不过由于模型未充分考虑制造公差，量产前仍需多轮修改。虽然属于硬件工程范畴，但全流程由模型主导的模式对理解 AI 跨模态生成能力的边界具有参考价值。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-says-gpt-6-astra-designed-a-hardware-device-from-scratch-in-under-a-week",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 开发 FlashProve 系统用于验证 AI 模型身份",
+      "summary": "Anthropic 正在开发名为 FlashProve 的系统，允许任何人验证某个 AI 响应是否确实来自其所声称的模型。随着不同模型能力差异拉大，确认输出内容的具体模型来源将成为创作者评估素材质量和版权属性的基础前提。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/03/anthropic-is-working-on-a-system-to-prove-ai-models-identity",
+      "featured": false
+    }
+  ]
+}
