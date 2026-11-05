@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-05",
+  "headline": "OpenAI 发布 Images 2.6 支持 GIF 生成，GPT-6 Astra 可直接改写其他模型权重",
+  "items": [
+    {
+      "title": "OpenAI 发布 Images 2.6，新增 GIF 生成功能",
+      "summary": "OpenAI 推出 Images 2.6 模型，支持通过文本提示词或照片生成动态 GIF，用户可调整动画速度并逐帧编辑。该模型在跨帧一致性上表现较好，能保持角色可识别，实现类似翻页动画的效果。目前 ChatGPT 用户每周生成的图像已超过四十亿张。对图像和视频创作者而言，这意味着可以直接在对话中产出轻量级动态素材。",
+      "category": "模型",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-images-2-6",
+      "featured": true
+    },
+    {
+      "title": "MIT 研究：GPT-6 Astra 可直接改写其他模型权重",
+      "summary": "MIT 研究人员发现 OpenAI 的 GPT-6 Astra 能在不经过传统训练的情况下，读取并直接修改其他 AI 模型的权重。在一项实验中，Astra 仅改变 Qwen 模型 0.016% 的权重，就将其数学准确率从 7.9% 提升至 48.1%。该方法可能简化模型优化流程，但仍存在明显局限。对关注底层能力的创作者来说，这预示着未来模型微调路径可能出现变化。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/gpt-6-astra-sees-the-matrix-and-reprograms-other-ai-models-directly-through-their-weights",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 旧版 Claude 模型文本水印易被绕过",
+      "summary": "为应对欧盟 AI Act 十二月截止期限，Anthropic 将文本水印功能扩展至另外四款 Claude 模型。但在 Claude Opus 4.6 和 Sonnet 4.6 等旧版模型上，API 用户只需更改一个采样参数即可关闭水印，Anthropic 对此仅发布了合规警告。对于需要依赖水印区分 AI 与人类文本的写作场景，这一漏洞值得留意。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-text-watermark-is-easy-to-bypass-on-several-older-claude-models",
+      "featured": false
+    },
+    {
+      "title": "Spotify AI 混音争议引发视觉艺术家担忧",
+      "summary": "围绕 Spotify AI 混音功能的争议正在扩散。Creative Bloq 指出，这一问题不仅关乎音乐人，视觉艺术家同样面临作品被 AI 未经授权重组的风险。平台用 AI 重新混合内容的做法，让创作者对自身素材的控制权进一步受到挑战。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/the-spotify-ai-remixing-controversy-is-about-more-than-just-music",
+      "featured": false
+    },
+    {
+      "title": "AI 推理平台 Fal 估值翻倍至 160 亿美元",
+      "summary": "AI 推理初创公司 Fal 完成由 Bessemer 领投的 13 亿美元融资，估值达到 160 亿美元。Fal 主要为开发者提供图像、视频等多模态模型的云端推理服务。随着 AIGC 创作工具调用量持续增长，底层推理基础设施的需求也在同步放大。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/03/ai-inference-startup-fal-doubles-its-valuation-to-16b-as-demand-surges",
+      "featured": false
+    },
+    {
+      "title": "斯坦福研究：LLM 相关结论平均有效期仅 15 个月",
+      "summary": "斯坦福研究人员针对 50 个被广泛引用的 LLM 结论，在 20 款当前模型上进行复测，发现 44% 的结论已经失效，另有 34% 显著弱化，平均有效期仅为 15.7 个月。其中关于「模型做不到什么」的结论失效最快。这提醒创作者，过去总结的提示词技巧或模型边界可能很快过时，需要持续验证。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/rapid-llm-development-is-outrunning-the-research-meant-to-explain-it-study-finds",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 收购 Pierre Computer Company",
+      "summary": "OpenAI 宣布收购 Pierre Computer Company，该公司的代码库已用于驱动编程 Agent Codex。结合近期推出的 Git 后端 Pando，OpenAI 正在完善开发者与 AI Agent 协同工作的基础设施。虽然面向程序员，但这也反映出 Agent 工作流正加速向实际生产环境渗透。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-acquires-pierre-computer-company-to-make-git-keep-up-with-ai-coding-agents",
+      "featured": false
+    }
+  ]
+}
