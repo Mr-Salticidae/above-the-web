@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-06",
+  "headline": "Gemini Omni 1.2 Flash 开放使用，NVIDIA Cosmos 3 与 ElevenLabs 同步更新",
+  "items": [
+    {
+      "title": "Gemini Omni 1.2 Flash 视频生成上限延至 15 秒并降价",
+      "summary": "Google DeepMind 正式推出 Gemini Omni 1.2 Flash，视频片段最长可达 15 秒，支持通过对话逐步编辑。720p 分辨率下单价降至每秒 0.07 美元，较上一代降低 30%，低分辨率起草后放大可进一步节省成本。对 AI 视频创作者而言，更长的时长和更低的价格意味着迭代试错的门槛继续下降。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/googles-gemini-omni-1-2-flash-stretches-ai-video-clips-to-15-seconds-and-cuts-pricing-by-30-percent",
+      "featured": true
+    },
+    {
+      "title": "NVIDIA 开源 Cosmos 3 交互式世界模拟模型",
+      "summary": "NVIDIA 在 Hugging Face 发布新一代开源模型 Cosmos 3，用于交互式世界模拟。该模型面向需要构建可控动态场景的开发者与视觉创作者，提供比前代更强的物理一致性基础。对于尝试用 AI 搭建虚拟环境或生成交互式视频的创作者，这是一项值得关注的底层能力更新。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation",
+      "featured": true
+    },
+    {
+      "title": "ElevenLabs 支持将 AI 音乐直接发布到 SoundCloud",
+      "summary": "SoundCloud 新增与 ElevenLabs 的集成，用户无需先导出再上传，可直接从 ElevenLabs 将生成的音乐发布至 SoundCloud。作为合作的一部分，SoundCloud Artist Pro 订阅者可获得三个月的相关权益。这缩短了 AI 音乐从生成到分发的链路，适合高频产出的音乐创作者。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1027427/ai-music-soundcloud-elevenlabs",
+      "featured": false
+    },
+    {
+      "title": "AI 电影《Gods Don't Give Gifts》确认院线上映",
+      "summary": "由 AI 生成的科幻电影《Gods Don't Give Gifts》宣布歌手 Grimes 参演，并称其为「首部进入院线的 AI 电影」。该片被视为检验 AI 长片商业可行性的测试案例。无论最终票房表现如何，它为关注 AI 影视化的创作者提供了一个观察市场接受度的实际样本。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/1026282/grimes-ai-movie",
+      "featured": false
+    },
+    {
+      "title": "百度开源 280B 参数基座模型 ERNIE 5.5 Flash Base",
+      "summary": "百度发布 ERNIE 5.5 Flash Base，这是一个 280B 参数的 MoE 架构模型，基于 33.5T tokens 预训练。该版本刻意未做指令微调，以开源基座形式交付，供开发者自行适配下游任务。对需要从零微调中文多模态能力的团队来说，多了一个高参数量的起点选择。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/baidu-releases-ernie-5-5-flash-base-with-280-billion-parameters-as-an-open-source-foundation-model",
+      "featured": false
+    },
+    {
+      "title": "Perplexity 推出面向工作场景的 AI Agent 功能 Teammates",
+      "summary": "Perplexity 上线常驻型 Agent 功能 Teammates，可在工作区内承担多种角色，并调用已有的项目、技能和记忆数据。Teammates 还与 Perplexity Computer 集成，支持在本地设备上部署 Agent。虽然定位偏生产力工具，但其多 Agent 协作机制对探索 AI 工作流的创作者有参考价值。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1028302/perplexity-teammates-ai-agents-work",
+      "featured": false
+    },
+    {
+      "title": "Hugging Face 介绍端侧语音合成模型 Phonon TTS",
+      "summary": "Hugging Face 发文介绍了 Phonon TTS，一款面向端侧设备的高质量语音合成模型，称其在多项基准测试中表现领先。该模型强调在本地运行条件下的音质与效率平衡。对需要在应用中嵌入离线语音合成、或为 AI 视频配音的创作者，端侧 TTS 是一个值得评估的方向。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/phonon-tts",
+      "featured": false
+    }
+  ]
+}
