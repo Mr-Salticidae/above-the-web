@@ -5,6 +5,7 @@ import Search from '../components/Search.astro';
 import AccountMenu from '../components/AccountMenu.astro';
 import MusicPlayer from '../components/MusicPlayer.astro';
 import SEO from '../components/SEO.astro';
+import SocialLinks from '../components/SocialLinks.astro';
 import { TOY, NEWS_SITE, STANDALONE, SITE_NAME, SITE_TAGLINE, stripBase } from '../lib/site.mjs';
 
 const {
@@ -174,6 +175,8 @@ const speculationRules = {
             {sections.map((s) => <a href={s.href} {...ariaCurrent(s.key)}>{s.label}</a>)}
             <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a>
           </nav>
+          {/* 关注行：Toy 包与快讯子站都不带（前者在 B 站内，后者对外隔离个人站入口） */}
+          {!STANDALONE && <SocialLinks variant="footer" />}
           {!STANDALONE && (
             <p class="footer-subscribe">
               订阅更新：<a href={`${base}rss.xml`}>RSS</a> · <a href={`${base}feed.json`}>JSON Feed</a>

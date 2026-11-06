@@ -8,6 +8,8 @@
 // 后两份只带快讯（STANDALONE），SEO 头、Feed、预渲染这些「整站能力」一律不进包，
 // 否则要么外泄主站地址、要么指向包里不存在的文件。
 
+import { socialUrls } from '../data/social.js';
+
 export const TOY = process.env.TOY_NEWS === '1';
 export const NEWS_SITE = process.env.NEWS_SITE === '1';
 export const STANDALONE = TOY || NEWS_SITE;
@@ -24,7 +26,8 @@ export const CANONICAL_ORIGIN = 'https://tiaozhuxiansheng.com';
 export const AUTHOR = {
   name: '跳蛛先生',
   url: `${CANONICAL_ORIGIN}/about/`,
-  sameAs: ['https://github.com/Mr-Salticidae'],
+  // 各平台主页，来自 src/data/social.js（搜索引擎据此把这些账号认作同一个人）
+  sameAs: socialUrls,
 };
 
 export const KB_REPO = 'https://github.com/Mr-Salticidae/knowledge-base';

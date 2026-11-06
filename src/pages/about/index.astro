@@ -5,6 +5,7 @@
 // 音乐 manifest / 任务书集合），页面随每次构建刷新，不用手改。
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import SocialLinks from '../../components/SocialLinks.astro';
 import { groupNotes } from '../../lib/note-groups.mjs';
 import { getIssues } from '../../lib/news.mjs';
 import { getEpisodes } from '../../lib/prompt-master.mjs';
@@ -233,16 +234,21 @@ const colophon = [
       </ul>
     </section>
 
+    <section class="about-sec" id="follow">
+      <header class="sec-head">
+        <p class="sec-kicker"><i>07</i>Follow</p>
+        <h2>在哪儿关注我</h2>
+        <p class="sec-desc">新作品通常先发在这些平台，站里沉淀的是做法与复盘。</p>
+      </header>
+      <SocialLinks variant="list" />
+    </section>
+
     <section class="about-sec" id="contact">
       <header class="sec-head">
-        <p class="sec-kicker"><i>07</i>Contact</p>
+        <p class="sec-kicker"><i>08</i>Contact</p>
         <h2>找我</h2>
       </header>
       <ul class="contact">
-        <li>
-          <span class="ct-k">代码与知识库</span>
-          <a href="https://github.com/Mr-Salticidae" target="_blank" rel="noopener">github.com/Mr-Salticidae ↗</a>
-        </li>
         <li>
           <span class="ct-k">合作</span>
           <span><a href={`${base}/tasks/`}>任务书</a>是入口：看到合适的就认领，站内会把人对上。</span>
@@ -262,7 +268,7 @@ const colophon = [
 
 <script>
   import { revealOnScroll } from '../../scripts/reveal.js';
-  revealOnScroll('.about-sec .sec-head, .prose-block, .map-card, .rules li, .timeline li, .cl-row, .license li, .contact li');
+  revealOnScroll('.about-sec .sec-head, .prose-block, .map-card, .rules li, .timeline li, .cl-row, .license li, .sl-list li, .contact li');
 </script>
 
 <style>

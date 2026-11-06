@@ -1,0 +1,87 @@
+---
+// 「关注我」：社交媒体主页链接，三种排法共用一份数据（src/data/social.js）。
+//   variant="hero"   —— 首页 hero 下的一行小胶囊，只放 primary 的主阵地
+//   variant="list"   —— 关于页：平台 / 名字 / 一句话说明，一行一个
+//   variant="footer" —— 页脚：一行纯文字链接
+// 没有 url 的条目（如视频号）按 hint 显示成「怎么搜到」，不渲染成链接。
+import { socials, primarySocials } from '../data/social.js';
+
+const { variant = 'list' } = Astro.props;
+const items = variant === 'hero' ? primarySocials : socials;
+const ext = { target: '_blank', rel: 'noopener me' };
+---
+
+{items.length > 0 && variant === 'hero' && (
+  <nav class="sl-hero" aria-label="在其他平台关注我">
+    <span class="sl-hero-k">关注</span>
+    {items.map((s) => s.url
+      ? <a class="sl-chip" href={s.url} {...ext} data-platform={s.key}><b>{s.name}</b><span>{s.handle}</span></a>
+      : <span class="sl-chip is-hint" data-platform={s.key}><b>{s.name}</b><span>{s.hint}</span></span>)}
+  </nav>
+)}
+
+{items.length > 0 && variant === 'list' && (
+  <ul class="sl-list">
+    {items.map((s) => (
+      <li data-platform={s.key}>
+        <span class="sl-name">{s.name}</span>
+        <span class="sl-body">
+          {s.url
+            ? <a href={s.url} {...ext}>{s.handle} ↗</a>
+            : <b>{s.handle}</b>}
+          {s.hint && <em class="sl-hint">{s.hint}</em>}
+          {s.desc && <span class="sl-desc">{s.desc}</span>}
+        </span>
+      </li>
+    ))}
+  </ul>
+)}
+
+{items.length > 0 && variant === 'footer' && (
+  <p class="sl-footer">
+    关注：{items.filter((s) => s.url).map((s, i) => (
+      <>{i > 0 && ' · '}<a href={s.url} {...ext}>{s.name}</a></>
+    ))}
+  </p>
+)}
+
+<style>
+  /* hero：刊眉同款字距的小标签 + 一排细边胶囊，压得比 hero 正文轻 */
+  /* hero 是居中排版：关注条整行居中，换行时也居中 */
+  .sl-hero { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .55rem .6rem; margin-top: 1.5rem; }
+  .sl-hero-k {
+    font-family: var(--sans); font-size: .7rem; letter-spacing: .24em; color: var(--ink-soft);
+    margin-right: .2rem;
+  }
+  .sl-chip {
+    display: inline-flex; align-items: baseline; gap: .45rem; padding: .32rem .8rem .34rem;
+    border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--paper) 72%, transparent);
+    font-family: var(--sans); font-size: .8rem; color: var(--ink); line-height: 1.3;
+    transition: color .15s ease, border-color .15s ease, transform .2s cubic-bezier(.2,.7,.3,1);
+  }
+  .sl-chip b { font-weight: 600; }
+  .sl-chip span { color: var(--ink-soft); font-size: .74rem; }
+  a.sl-chip:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; transform: translateY(-1px); }
+  a.sl-chip:hover span { color: var(--accent); }
+  .sl-chip.is-hint { border-style: dashed; }
+
+  /* 关于页：与「找我」一样的两栏行，左平台右说明 */
+  .sl-list { list-style: none; margin: 0; padding: 0; max-width: 46rem; }
+  .sl-list li {
+    display: grid; grid-template-columns: 7rem 1fr; gap: 1rem; padding: .75rem 0;
+    border-top: 1px solid var(--line); font-size: .95rem; line-height: 1.75; color: var(--ink-soft);
+  }
+  .sl-list li:last-child { border-bottom: 1px solid var(--line); }
+  .sl-name { font-family: var(--sans); font-size: .74rem; letter-spacing: .14em; color: var(--accent); padding-top: .28rem; }
+  .sl-body { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .8rem; }
+  .sl-body a, .sl-body b { color: var(--ink); font-weight: 600; }
+  .sl-hint { font-style: normal; font-size: .85rem; }
+  .sl-desc { flex-basis: 100%; font-size: .86rem; }
+
+  /* 页脚：与订阅行同一字号 */
+  .sl-footer { margin: 0 0 .7rem; font-size: .78rem; }
+
+  @media (max-width: 560px) {
+    .sl-list li { grid-template-columns: 1fr; gap: .15rem; }
+  }
+</style>

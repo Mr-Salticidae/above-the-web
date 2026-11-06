@@ -1,4 +1,4 @@
-最后更新：2026-09-24
+最后更新：2026-11-06
 
 # 项目页面地图
 
@@ -50,4 +50,5 @@
 - 搜索：Pagefind（在生产构建后为 `dist` 生成静态搜索索引）
 - 渲染方式：以构建期静态生成为主，账户、任务状态和管理台等功能由浏览器端脚本连接后端 API 动态加载
 - 分发层：`src/components/SEO.astro` 统一输出规范地址（默认回指主站）、Open Graph 与 JSON-LD；Sitemap、Feed、robots、llms.txt、manifest 均在构建期生成，零新增依赖
+- 社交媒体：`src/data/social.js` 是各平台主页的唯一数据源，经 `src/components/SocialLinks.astro` 出现在首页 hero 关注条（只放 `primary`）、关于页「在哪儿关注我」、页脚关注行，并写入 JSON-LD `Person.sameAs`；Toy 包与快讯子站不渲染
 - 导航：跨文档 View Transitions 与 Speculation Rules 预渲染，详见 `docs/SITE_ARCHITECTURE_UPGRADE.md`
