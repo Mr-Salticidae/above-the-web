@@ -15,7 +15,7 @@ const ext = { target: '_blank', rel: 'noopener me' };
   <nav class="sl-hero" aria-label="在其他平台关注我">
     <span class="sl-hero-k">关注</span>
     {items.map((s) => s.url
-      ? <a class="sl-chip" href={s.url} {...ext} data-platform={s.key}><b>{s.name}</b><span>{s.handle}</span></a>
+      ? <a class="sl-chip" href={s.url} {...ext} data-platform={s.key} title={`${s.name} · ${s.handle}`}><b>{s.name}</b></a>
       : <span class="sl-chip is-hint" data-platform={s.key}><b>{s.name}</b><span>{s.hint}</span></span>)}
   </nav>
 )}

@@ -9,10 +9,30 @@
 //   handle  —— 在该平台上的名字
 //   url     —— 个人主页地址（必须是主页，不是某条作品）
 //   desc    —— 一句话：在这个平台能看到什么
-//   primary —— true 的才上首页 hero 关注条（首页只放主阵地，免得喧宾夺主）
+//   primary —— true 的才上首页 hero 关注条（首页只放视频主阵地，免得喧宾夺主）
 //
-// 只收录核实过的主页。没有可直达网页主页的平台（如视频号）用 hint 写「怎么搜到」，不填 url。
+// 只收录核实过的主页（2026-11-06 逐个登录核对：昵称、平台号、主页作品与站内作品一致）。
+// 没有可直达网页主页的平台（如视频号）用 hint 写「怎么搜到」，不填 url。
+// 链接注意：
+//   · 抖音主页用 sec_uid（MS4wLjABAAAA…），抖音号本身拼不出网页地址
+//   · 小红书「主页」裸链访客可开；「笔记」裸链不行，必须带 xsec_token（见知识库同名笔记）
 export const socials = [
+  {
+    key: 'douyin',
+    name: '抖音',
+    handle: '跳蛛先生',
+    url: 'https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC',
+    desc: '抖音号 73837811479。原创 MV、角色 PV 与 AI 短片，竖屏首发。',
+    primary: true,
+  },
+  {
+    key: 'kuaishou',
+    name: '快手',
+    handle: '跳蛛先生',
+    url: 'https://www.kuaishou.com/profile/3xaszm4s33jffe2',
+    desc: '快手号 4396260714。AI 再现的历史短片、原创音乐与角色 PV。',
+    primary: true,
+  },
   {
     key: 'bilibili',
     name: '哔哩哔哩',
@@ -22,11 +42,11 @@ export const socials = [
     primary: true,
   },
   {
-    key: 'github',
-    name: 'GitHub',
-    handle: 'Mr-Salticidae',
-    url: 'https://github.com/Mr-Salticidae',
-    desc: '公开知识库、本站源码与几件开源小工具。',
+    key: 'xiaohongshu',
+    name: '小红书',
+    handle: '跳蛛先生',
+    url: 'https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723',
+    desc: '小红书号 6116861130。作品图文、封面与幕后。',
     primary: true,
   },
   {
@@ -36,10 +56,14 @@ export const socials = [
     url: 'https://music.163.com/#/artist?id=124358911',
     desc: '自己做的歌：《那道题还亮着》《第三阶的秋天》等，可收藏、可单曲循环。',
   },
-  // 待补（拿到主页链接后取消注释并填上 url）：
-  // { key: 'douyin', name: '抖音', handle: '', url: '', desc: '', primary: true },
-  // { key: 'xiaohongshu', name: '小红书', handle: '', url: '', desc: '', primary: true },
-  // { key: 'kuaishou', name: '快手', handle: '', url: '', desc: '' },
+  {
+    key: 'github',
+    name: 'GitHub',
+    handle: 'Mr-Salticidae',
+    url: 'https://github.com/Mr-Salticidae',
+    desc: '公开知识库、本站源码与几件开源小工具。',
+  },
+  // 待补：视频号没有网页主页，确认微信里搜索用的名字后再加
   // { key: 'channels', name: '微信视频号', handle: '', hint: '微信里搜「…」', desc: '' },
 ];
 
