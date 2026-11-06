@@ -29,12 +29,18 @@ export const socials = [
     desc: '公开知识库、本站源码与几件开源小工具。',
     primary: true,
   },
+  {
+    key: 'netease-music',
+    name: '网易云音乐',
+    handle: '跳蛛先生',
+    url: 'https://music.163.com/#/artist?id=124358911',
+    desc: '自己做的歌：《那道题还亮着》《第三阶的秋天》等，可收藏、可单曲循环。',
+  },
   // 待补（拿到主页链接后取消注释并填上 url）：
   // { key: 'douyin', name: '抖音', handle: '', url: '', desc: '', primary: true },
   // { key: 'xiaohongshu', name: '小红书', handle: '', url: '', desc: '', primary: true },
   // { key: 'kuaishou', name: '快手', handle: '', url: '', desc: '' },
   // { key: 'channels', name: '微信视频号', handle: '', hint: '微信里搜「…」', desc: '' },
-  // { key: 'netease-music', name: '网易云音乐', handle: '', url: '', desc: '' },
 ];
 
 // 有可点击主页的条目（结构化数据 sameAs 只认 URL）
