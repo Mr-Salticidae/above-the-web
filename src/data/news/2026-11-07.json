@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-07",
+  "headline": "OpenAI 完成新一轮融资，Meta Muse 支持自定义空间与视频通话",
+  "items": [
+    {
+      "title": "Thinking Machines 发布开源模型 Inkling 2 Small",
+      "summary": "前 OpenAI CTO Mira Murati 创办的 Thinking Machines 发布 Inkling 2 Small，这是一个 594B 参数的 MoE 架构开放权重模型，官方称其为当前最强西方开源模型。更强的 Agent 能力伴随 token 消耗大幅上升。对本地部署的创作者而言，运行成本是需要评估的现实问题。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/thinking-machines-inkling-2-small-claims-top-spot-among-western-open-weight-models",
+      "featured": true
+    },
+    {
+      "title": "Meta Muse 新增 Spaces，可生成自定义交互界面",
+      "summary": "Meta 为 Muse AI 助手推出 Spaces 功能，允许用户通过描述需求，让 AI 直接构建购物、音乐追踪、问答游戏等类应用界面并在 App 内交互。这标志着 AI 助手从对话向可视化工作流迈进一步。内容创作者可借此快速搭建轻量级互动工具。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1028871/meta-muse-ai-spaces",
+      "featured": true
+    },
+    {
+      "title": "Meta Muse 在美国上线视频通话与虚拟形象功能",
+      "summary": "美国用户现在可以与 Meta Muse AI 进行视频通话，Muse 会以可自定义的动画虚拟形象出镜。该功能在 Muse 配套的类似电子宠物形态的可穿戴设备发售前率先落地。这为依赖 AI 角色互动的创作者提供了新的表现形式。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/05/meta-says-us-users-can-now-video-chat-with-their-muse-ai-avatar",
+      "featured": false
+    },
+    {
+      "title": "Underdog 展示 32MB 语音模型，支持语音与音乐生成",
+      "summary": "初创公司 Underdog 演示了一款仅 32MB 大小的新模型，尽管体积极小，但具备同时生成语音和音乐的能力。轻量化意味着未来在端侧设备上直接运行高质量音频生成成为可能。这对需要低延迟产出的音乐和配音创作者是一个值得关注的方向。",
+      "category": "模型",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/06/underdog-shows-off-a-32mb-speech-model-in-new-demo",
+      "featured": false
+    },
+    {
+      "title": "Ricursive Intelligence 开源 65B 参数模型 Ripple-65B",
+      "summary": "Ricursive Intelligence 发布 Ripple-65B Preview，采用 Apache 2.0 许可，总研发成本 3200 万美元。该模型在 TerminalBench 2.1 编程基准测试中取得美国开源模型最高分，但在其他基准上落后于同期发布的 Inkling 2 Small。适合需要完全商用自由的开发者参考。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ripple-65b-preview-delivers-strong-agentic-coding-results-as-a-fully-apache-2-0-open-us-model",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 以 1.25 万亿美元估值完成 110 亿美元融资",
+      "summary": "据 Bloomberg 报道，OpenAI 在尚未完全关闭的新一轮融资中筹集了 110 亿美元，估值达到 1.25 万亿美元。此前该公司在 3 月刚以 8520 亿美元估值完成 1220 亿美元融资。头部模型厂商的资金规模持续扩大，直接影响后续创作工具的迭代节奏。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1029380/openai-1-25-trillion-investment-valuation",
+      "featured": false
+    },
+    {
+      "title": "Akai 与 Moog 母公司宣布向社区开放硬件内部接口",
+      "summary": "inMusic CEO 表示将向 modding 社区提供 MPC 等设备的内部工作原理和工具箱，鼓励用户使用 vibe coding 等方式自行修改硬件功能。这是传统乐器大厂首次系统性地拥抱 AI 辅助的硬件改造。对音乐制作人和声音设计师来说，自定义设备的门槛正在降低。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1028720/vibe-coding-open-source-inmusic-akai",
+      "featured": false
+    },
+    {
+      "title": "Meta 撤回强制使用页面内容进行 AI 训练的条款更新",
+      "summary": "在用户抗议后，Meta 放弃了原计划强制 Facebook 页面所有者允许平台使用其关联内容进行 AI 训练的争议性商业条款更新。创作者对自己发布内容是否被用于模型训练的控制权暂时得以保留。",
+      "category": "政策",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/11/does-meta-think-we-cant-read-meta-abandons-sketchy-commercial-terms-update",
+      "featured": false
+    }
+  ]
+}
