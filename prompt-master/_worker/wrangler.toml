@@ -1,0 +1,16 @@
+# 用 wrangler CLI 部署时所需配置(也可改用后台粘贴,见 README.md)
+name = "prompt-master-likes"
+main = "like-counter.js"
+compatibility_date = "2026-06-01"
+
+# 先创建 KV:npx wrangler kv namespace create LIKES
+# 把返回的 id 填到下面:
+kv_namespaces = [
+  { binding = "LIKES", id = "<填入你创建的 KV namespace id>" }
+]
+
+[vars]
+ALLOW_ORIGIN = "https://mr-salticidae.github.io"
+
+# SALT 不要写在这里,用 secret 设置:
+#   npx wrangler secret put SALT
