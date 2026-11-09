@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-09",
+  "headline": "Suno 再遭音乐版权诉讼，AI 视频生成仍难摆脱抽卡困境",
+  "items": [
+    {
+      "title": "猫王与 Eminem 版权方起诉 Suno 侵权",
+      "summary": "Elvis Presley 和 Eminem 的音乐版权方分别对 AI 音乐公司 Suno 提起诉讼，指控其非法生成模仿这两位艺人风格的音乐与歌词。其中猫王相关诉讼还援引了田纳西州的法律条款。这对使用 AI 工具进行音乐创作的从业者而言，意味着在风格模仿上的法律风险正在快速上升。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1029533/elvis-eminem-suno-ai-music-clone-lawsuit",
+      "featured": true
+    },
+    {
+      "title": "InfoQ：AI 视频生成为何仍难摆脱“抽卡”模式",
+      "summary": "InfoQ 发文探讨 AI 视频生成在实际工作流中面临的返工率与成本问题。文章指出，当前模型在高效生成的表象下，创作者仍需反复尝试才能得到可用素材。这意味着对于视频创作者来说，AI 生成距离稳定可控的生产工具仍有差距。",
+      "category": "研究",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/xd9o6TyQ8GLON3dmiWpG",
+      "featured": true
+    },
+    {
+      "title": "Apple 加速推进 Siri 的 Agent 化改造",
+      "summary": "据 Bloomberg 记者 Mark Gurman 报道，Apple CEO John Ternus 正推动 AI 负责人 Craig Federighi 加快 Siri 的迭代节奏，目标是打造能与 OpenAI Dots 或 Meta Muse 竞争的 AI Agent。虽然团队已在极短时间内交付了可用的 Siri AI 版本，但公司内部清楚现有能力仍有不足。这预示着 Apple 生态内的创作与交互方式可能会迎来较大调整。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1029552/apple-siri-ai-agentic",
+      "featured": false
+    },
+    {
+      "title": "Karpathy 用 Claude Opus 5.5 搭建视频筛选平台",
+      "summary": "OpenAI 联合创始人 Andrej Karpathy 利用 Claude Opus 5.5 处理了 4300 万条 Hacker News 评论，在一个周末内筛选出 6454 个视频并搭建为策展平台。他表示该平台的推荐效果优于 YouTube 自身的推荐系统。这是一个将大模型直接应用于内容策展和筛选的实际案例。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/andrej-karpathy-built-a-curated-video-platform-in-a-weekend-using-claude-and-20-years-of-hacker-news",
+      "featured": false
+    },
+    {
+      "title": "阿里新基准测试：AI 编程 Agent 真实任务完成率仅 26%",
+      "summary": "阿里巴巴推出 Co-Design Bench 基准测试，评估 AI 编程 Agent 在真实用户请求中的表现。结果显示，即使是得分最高的 GPT-6 Astra，也仅能独立完成 26.4% 的任务，其余近四分之三的任务仍需人工介入清理。这表明开发者在使用 AI 辅助编程时，仍需预留大量代码审查与修改的时间。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/ai-coding-agents-still-need-human-cleanup-on-nearly-three-out-of-four-tasks-in-a-real-world-test",
+      "featured": false
+    },
+    {
+      "title": "Richard Sutton 重申单纯扩大算力无法实现智能",
+      "summary": "图灵奖得主 Richard Sutton 再次强调，仅靠原始算力不足以实现真正的智能，需要根本性的新学习方法。前 OpenAI 研究员 Tworek 对此表示认同，认为盲目扩大 Transformer 规模已经误导了一代研究者。这一观点提醒依赖 scaling law 进行模型训练的从业者和创作者关注技术路线的潜在变化。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/the-inventor-of-the-bitter-lesson-has-a-bitter-lesson-for-llm-scaling-enthusiasts",
+      "featured": false
+    }
+  ]
+}
