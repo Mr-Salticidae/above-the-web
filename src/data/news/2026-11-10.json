@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-10",
+  "headline": "Anthropic 发布 Fable/Mythos 5.2，ByteDance Seedream 5.5 支持百轮图像编辑",
+  "items": [
+    {
+      "title": "Anthropic 发布 Claude Fable 与 Mythos 5.2",
+      "summary": "Anthropic 推出 Claude Fable 5.2 和 Mythos 5.2 两个新模型，在编码、推理和视觉能力上较 5.1 版本有所提升。据官方介绍，新模型可解决开放物理问题、设计操作系统，并完成了 Anthropic 核心代码库中超过 90% 的合并变更。Anthropic 同时表示已主动限制可能让 AI 加速自身开发的能力。对创作者而言，视觉与推理能力的增强意味着更稳定的多模态生成表现。",
+      "category": "模型",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1030005/anthropic-claude-fable-mythos-5-2",
+      "featured": true
+    },
+    {
+      "title": "ByteDance 发布图像模型 Seedream 5.5",
+      "summary": "ByteDance Seed 团队发布面向专业工作流的图像模型 Seedream 5.5，支持最多 100 轮的多步编辑且无色彩偏移，并可生成带透明背景的原生 RGBA 图像。官方称其在真实感方面优于 GPT-Image-2.5 Sunburst，后续还将推出 Pro 版本。对于需要反复修改细节的图像创作者，像素级稳定性是一个实用指标。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/bytedances-seedream-5-5-promises-pixel-stable-image-editing-across-100-rounds-without-color-drift",
+      "featured": true
+    },
+    {
+      "title": "Disney 与 Adobe 合作开发定制生成式 AI 工具",
+      "summary": "Disney 与 Adobe 达成多年合作，基于 Firefly 为 Disney 的生产管线构建品牌安全的定制生成式 AI 模型。合作范围覆盖影视制作、主题乐园及邮轮等业务线，Disney 将获得 Adobe 最新技术的早期访问权限。大型制片厂开始将生成式 AI 正式纳入生产流程，而非停留在实验阶段。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/disney-bets-on-adobes-firefly-to-create-brand-safe-ai-models-for-its-entertainment-empire",
+      "featured": false
+    },
+    {
+      "title": "Meta 发布轻量模型 Muse Ember",
+      "summary": "Meta 推出小型高效模型 Muse Ember，专为 Agent 的工具调用、路由和数据提取等重复性任务优化。官方称其单位成本下的智能表现优于 Claude Haiku 5.5 和 GPT-6 Luna，输入价格约为每百万 token 10 美分，但在编程任务上仍有不足。适合在 Agent 工作流中处理高频低复杂度环节，降低整体调用成本。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/meta-launches-muse-ember-a-small-ai-model-built-for-the-repetitive-work-agents-actually-do",
+      "featured": false
+    },
+    {
+      "title": "Instagram 上线 Effect Builder，用提示词生成滤镜",
+      "summary": "Instagram 推出 Effect Builder 功能，用户可通过文本提示词描述想法，由 AI 直接生成用于 Stories 的自定义滤镜，也支持上传参考图。该功能目前面向美国地区 18 岁以上用户开放。短视频和社交媒体创作者可以更低门槛地定制视觉风格，无需手动搭建特效节点。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1030061/instagram-ai-effect-builder-filters",
+      "featured": false
+    },
+    {
+      "title": "Apple 为 Logic Pro AI 功能推出付费用量包",
+      "summary": "Apple 在 Logic Pro 中新增「购买更多用量」选项，一次性售价 49.99 美元，用于扩展内置 AI 助手的使用额度。此前 Apple 已在支持文档中明确了部分 Apple Intelligence 功能的用量上限。AI 辅助编曲、混音等功能开始从免费试用转向按量付费模式，音乐创作者需关注用量规划。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1030084/apple-intelligence-usage-packs-ai-features-creator-studio-logic-pro",
+      "featured": false
+    },
+    {
+      "title": "Medium 推出写作应用 TK，内置 AI 辅助功能",
+      "summary": "Medium 发布独立写作应用 TK，将 AI 辅助能力直接集成到写作流程中。尽管出版行业对 AI 介入写作的争议仍在持续，Medium 选择以产品形式推进这一方向。对文字创作者来说，这提供了一个观察平台方如何定义 AI 辅助边界的样本。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/09/mediums-new-tk-app-brings-ai-assistance-directly-into-the-writing-process",
+      "featured": false
+    }
+  ]
+}
