@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-11",
+  "headline": "Adobe MAX 全面引入 Agent，Gemini 4 Carbon 开放公测",
+  "items": [
+    {
+      "title": "Adobe MAX：Creative Agent 接入 PS、PR 等全线应用",
+      "summary": "Adobe 在 MAX 2026 上大幅扩展 Creative Agent 能力，用户可通过文本指令跨 Firefly、Photoshop、Premiere Pro 等应用调度 AI 完成编辑任务。同时允许第三方 AI Agent 访问并修改项目文件。对创作者而言，重复性修图与剪辑工作正加速向自动化转移。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/10/adobes-creative-agent-wants-to-do-the-photo-and-video-editing-tasks-you-dont-want-to",
+      "featured": true
+    },
+    {
+      "title": "Google 发布 Gemini 4 Carbon，新增多智能体协作功能",
+      "summary": "Gemini 4 Carbon 结束两周测试后正式面向公众开放，多项基准测试排名第一，单次任务成本低于同类模型一半以上。新推出的 /swarm 功能支持多个 Agent 实时拆分并协作处理复杂任务。图像与视频创作者可关注其多 Agent 调度在长流程生成中的实际表现。",
+      "category": "模型",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1030787/google-gemini-4-carbon-public-rollout",
+      "featured": true
+    },
+    {
+      "title": "Anthropic Fable 5.2 真实自由职业任务完成率达 41%",
+      "summary": "Anthropic 的 Fable 5.2 在 Remote Labor Index 上以专业质量完成了 41.3% 的真实自由职业任务，较一年前的 2.5% 大幅提升，领先于 Opus 5.5 和 GPT 6 Astra。不过产品设计与动画仍是弱项。这意味着 AI 在文案、代码类外包中的替代进度正在加快，但视觉创作岗位短期内仍有壁垒。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-fable-5-2-completes-41-percent-of-real-freelance-jobs-up-from-2-5-percent-a-year-ago",
+      "featured": false
+    },
+    {
+      "title": "独立游戏节评委拒评 AI 游戏，Big Walk 引发争议",
+      "summary": "部分 Independent Games Festival 评委发表声明，拒绝为任何环节使用生成式 AI 的游戏投票。随后热门独立游戏 Big Walk 开发者回应称，仅在开发后期少量使用了 AI 来攻克难题。此事反映出独立游戏社区对 AI 介入创作的边界尚无共识。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/games/1030994/big-walk-independent-games-festival-igf-ai",
+      "featured": false
+    },
+    {
+      "title": "ArtStation 更新 AI 作品政策，尝试平衡各方诉求",
+      "summary": "ArtStation 发布了新的 AI 艺术作品管理政策，试图在社区创作者与 AI 使用者之间寻找平衡点。具体细则仍在接受社区反馈。作为概念设计和插画师的核心展示平台，其政策走向将直接影响 AI 图像作品的公开展示空间。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/is-artstations-new-ai-art-policy-good-enough",
+      "featured": false
+    },
+    {
+      "title": "VSCO 更新条款，明确承诺不用用户照片训练 AI",
+      "summary": "此前 VSCO 因服务条款中疑似允许用用户内容训练生成式 AI 而受到质疑，现已明确修改政策，承诺不会将用户照片用于 AI 或机器学习模型的训练。对于习惯在 VSCO 存储和处理照片的摄影师及图像创作者，素材安全性得到了书面保障。",
+      "category": "政策",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/10/vsco-updates-its-policy-to-explicitly-state-it-wont-train-ai-on-your-photos",
+      "featured": false
+    },
+    {
+      "title": "Spotify AI DJ 新增多种音色，支持关闭语音解说",
+      "summary": "Spotify Premium 用户的 AI DJ 功能新增不同性格的语音选项，并支持完全关闭歌曲间的语音解说。这为播客和音乐创作者提供了 AI 语音陪伴程度的参考样本。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/10/spotifys-ai-dj-gets-new-voices-personalities-and-an-option-for-less-chatter",
+      "featured": false
+    }
+  ]
+}
