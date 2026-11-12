@@ -13,7 +13,37 @@ test('剧本档案 ID 唯一，公开学习路径与自测结构完整', () => {
     assert.ok(item.questions.length >= 3, `${item.id} 自测题过少`);
     for (const module of item.modules) {
       assert.ok(module.title && module.desc, `${item.id} 学习节点不能只写标题`);
+      assert.ok(module.slug, `${item.id} 的「${module.title}」缺少 slug——学习进度靠它认人`);
     }
+  }
+});
+
+// 学习进度按 `${caseId}/${slug}` 存，slug 就是进度的身份证。
+// 台账写死在这里：谁改 slug、删模块，CI 会红——那是「有人正在让所有人的老进度失效」的信号，
+// 必须显式改台账才放行，而不是顺手 glitch 过去。
+const SLUG_LEDGER = {
+  'virtual-game': ['flow-skeleton', 'god-view', 'dual-track-clues', 'layered-review'],
+  'woman-by-window': ['five-stages', 'character-web', 'cross-media-evidence', 'question-layers'],
+};
+
+test('模块 slug 是稳定 ID：格式合法、卷内唯一、与台账一致', () => {
+  assert.deepEqual(
+    jubenCases.map((item) => item.id).sort(),
+    Object.keys(SLUG_LEDGER).sort(),
+    '新增或删除剧本时，台账要一起改',
+  );
+
+  for (const item of jubenCases) {
+    const slugs = item.modules.map((module) => module.slug);
+    for (const slug of slugs) {
+      assert.match(slug, /^[a-z0-9][a-z0-9-]{0,63}$/, `${item.id} 的 slug 只能是短横线小写`);
+    }
+    assert.equal(new Set(slugs).size, slugs.length, `${item.id} 的 slug 有重复`);
+    assert.deepEqual(
+      slugs,
+      SLUG_LEDGER[item.id],
+      `${item.id} 的模块 slug 变了：老用户已完成的状态会对不上，确认无碍后同步更新台账`,
+    );
   }
 });
 

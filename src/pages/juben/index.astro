@@ -706,7 +706,13 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   }
 </style>
 
-<script is:inline>
+<script>
+  // 公开学习区：切卷、筛选、清单勾选、复述自测、复制清单。
+  // 进度不再自己管 localStorage——统一交给 progress-store（按账号分桶、老数据迁移），
+  // 个人中心的档案库读的是同一个仓库，两边不会各存一份。
+  import { createProgressStore, GUEST_OWNER } from '../../scripts/progress-store.js';
+  import { getCachedUser, onAuthChange } from '../../scripts/account-core.js';
+
   (() => {
     const dataNode = document.getElementById('juben-data');
     if (!dataNode) return;
@@ -720,40 +726,45 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     const result = document.getElementById('juben-result');
     const detail = document.getElementById('juben-detail');
     const moduleList = document.getElementById('module-list');
-    const storageKey = 'atw-juben-progress-v1';
     let activeFilter = 'all';
     let quizIndex = 0;
     let selected = new URLSearchParams(location.search).get('case');
     if (!byId.has(selected)) selected = cases[0]?.id;
 
-    let progress = {};
-    try { progress = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; } catch (_) {}
-    const doneFor = (id) => Array.isArray(progress[id]) ? progress[id] : [];
-    const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(progress)); } catch (_) {} };
+    const store = createProgressStore({ cases, owner: getCachedUser()?.id || GUEST_OWNER });
+    store.boot();
+    // 登录 / 登出 / 切号都重绑桶：上一版是全站一把钥匙，切号会看到别人的勾选。
+    onAuthChange((user) => {
+      store.setOwner(user ? user.id : GUEST_OWNER);
+      if (user) store.adoptGuest(); // 未登录时勾的，进门就并进账号
+    });
+    // 别的标签页或登录态改了才重画；自己刚点的由点击路径就地更新，避免焦点丢失。
+    store.subscribe(({ reason }) => {
+      if (reason === 'toggle') return;
+      renderModules(byId.get(selected));
+      syncCardProgress();
+    });
+
     const text = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
 
     function syncCardProgress() {
       for (const item of cases) {
         const bar = document.querySelector(`[data-card-progress="${item.id}"]`);
-        if (bar) bar.style.width = `${Math.min(100, doneFor(item.id).length / item.modules.length * 100)}%`;
+        if (bar) bar.style.width = `${Math.min(100, store.count(item.id) / item.modules.length * 100)}%`;
       }
     }
 
     function renderModules(item) {
       moduleList.replaceChildren();
-      const done = doneFor(item.id);
       item.modules.forEach((module, index) => {
         const label = document.createElement('label');
         label.className = 'juben-module';
         const input = document.createElement('input');
         input.type = 'checkbox';
-        input.checked = done.includes(index);
+        input.checked = store.isDone(item.id, module.slug);
         input.setAttribute('aria-label', `完成：${module.title}`);
         input.addEventListener('change', () => {
-          const next = new Set(doneFor(item.id));
-          if (input.checked) next.add(index); else next.delete(index);
-          progress[item.id] = [...next].sort((a, b) => a - b);
-          save();
+          store.toggle(item.id, module.slug);
           updateProgress(item);
           syncCardProgress();
         });
@@ -775,7 +786,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     }
 
     function updateProgress(item) {
-      const done = doneFor(item.id).length;
+      const done = store.count(item.id);
       text('progress-label', `${done} / ${item.modules.length}`);
       const track = document.getElementById('progress-track');
       track.setAttribute('aria-valuemax', String(item.modules.length));
@@ -859,8 +870,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     });
 
     document.getElementById('reset-progress').addEventListener('click', () => {
-      progress[selected] = [];
-      save();
+      store.resetCase(selected);
       renderModules(byId.get(selected));
       syncCardProgress();
     });
@@ -869,7 +879,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       const item = byId.get(selected);
       const checklist = [
         `《${item.title}》学习清单`,
-        ...item.modules.map((module, index) => `${doneFor(item.id).includes(index) ? '[x]' : '[ ]'} ${index + 1}. ${module.title}：${module.desc}`),
+        ...item.modules.map((module, index) => `${store.isDone(item.id, module.slug) ? '[x]' : '[ ]'} ${index + 1}. ${module.title}：${module.desc}`),
         '', '公开学习导航：蛛网之上 · 剧本研究室',
       ].join('\n');
       const button = event.currentTarget;

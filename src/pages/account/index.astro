@@ -10,12 +10,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { jubenCases } from '../../data/juben.js';
 import { TASKS_ENABLED } from '../../data/features.js';
 
-// 学习进度存在本机 localStorage（键在 juben 页里定义），
-// 这里只把卷名与模块数带到前端，用来算完成率——不上传、不跨设备。
+// 学习进度存在本机 localStorage，按账号分桶（仓库见 src/scripts/progress-store.js）。
+// 这里把卷名与模块 slug 带到前端，用来算完成率——目前不上传、不跨设备。
 const progressSeed = jubenCases.map((item) => ({
   id: item.id,
   title: item.title,
-  modules: Array.isArray(item.modules) ? item.modules.length : 0,
+  modules: Array.isArray(item.modules) ? item.modules.map((module) => module.slug) : [],
 }));
 ---
 
@@ -161,6 +161,7 @@ const progressSeed = jubenCases.map((item) => ({
     ROLE_LABEL,
     TASK_STATUS_LABEL,
   } from '../../scripts/account-core.js';
+  import { createProgressStore, GUEST_OWNER } from '../../scripts/progress-store.js';
 
   const CLAIM_LABEL = {
     pending: '等发布方定人',
@@ -248,23 +249,17 @@ const progressSeed = jubenCases.map((item) => ({
       return [];
     }
   })();
-  // 与 /juben/ 共用同一把钥匙：换设备不跟着走，所以文案里说清楚「记在这台机器上」
-  const PROGRESS_KEY = 'atw-juben-progress-v1';
+  // 与 /juben/ 共用同一个仓库（src/scripts/progress-store.js），按账号分桶：
+  // 这台上切过几个号，各看各的。owner 在 renderHome 里按当前用户重绑。
+  // 目前仍是纯本地，换设备不跟着走，所以文案要把这件事说清楚。
+  const progress = createProgressStore({ cases: CASES, owner: GUEST_OWNER });
+  progress.boot();
   let inviteInfo = null;
 
-  function readProgress() {
-    try {
-      return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}') || {};
-    } catch {
-      return {};
-    }
-  }
-
   function vaultBlock() {
-    const progress = readProgress();
     const rows = CASES.map((item) => {
-      const done = Array.isArray(progress[item.id]) ? progress[item.id].length : 0;
-      const total = item.modules || 0;
+      const done = progress.count(item.id);
+      const total = Array.isArray(item.modules) ? item.modules.length : 0;
       return {
         id: item.id,
         title: item.title,
@@ -288,7 +283,7 @@ const progressSeed = jubenCases.map((item) => ({
 
     return `<section class="acc-home-block">
         <h2>我的档案库 <a class="acc-home-more" href="${url('juben/')}">进档案库 →</a></h2>
-        <p class="acc-note">进度记在这台机器上，换设备不跟着走。点卷名直接从那一卷接着读。</p>
+        <p class="acc-note">进度记在这台机器上的这个账号里，换设备暂时不跟着走。点卷名直接从那一卷接着读。</p>
         <div class="acc-vault-total">
           <b>${pctAll}%</b>
           <span>全部学习项完成 · ${doneAll}/${totalAll}</span>
@@ -325,6 +320,9 @@ const progressSeed = jubenCases.map((item) => ({
     const host = document.querySelector('[data-home]');
     if (!host) return;
     const dm = isDm(user);
+    // 先绑到本人桶：老版本那把全站共用的钥匙，切号会让两个账号看见彼此。
+    progress.setOwner(user.id || GUEST_OWNER);
+    progress.adoptGuest(); // 未登录时在剧本研究室勾的，登录后并进来
     host.innerHTML = dm ? vaultBlock() : readerBlock();
     if (dm && !inviteInfo) {
       api('GET', '/dm/invite')

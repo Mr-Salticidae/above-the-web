@@ -47,7 +47,7 @@
 | 成为 Prompt 大师 | `/prompt-master/` | 构建时镜像 [becoming-a-prompt-master](https://github.com/Mr-Salticidae/becoming-a-prompt-master) 进 `public/` | 面向小白的 prompt 拆解连载，每期一个 battle 主题 |
 | 可玩 | 首页 `#plays` | `src/data/games.js` + `public/<作品>/` 落地页 | vibe coding 小作品：在线可玩，或免费下载的 Windows 小工具 |
 | 音乐 | `/music/` | `src/data/music/manifest.json`；音频存服务器 `/music/` | AI 协作创作的歌，全站底部有播放器 |
-| 剧本研究室 | `/juben/` | 公开元数据在 `src/data/juben.js`；DM 档案库由服务端从私有 `juben-dm-lab` 按需拉取 | 可搜索筛选、记录学习进度、复述自测与跨本结构对比；持邀请码的 DM 另开一套完整拆解档案（开本流程、角色剧本、线索、结局） |
+| 剧本研究室 | `/juben/` | 公开元数据在 `src/data/juben.js`；DM 档案库由服务端从私有 `juben-dm-lab` 按需拉取 | 可搜索筛选、记录学习进度（按账号存在本机）、复述自测与跨本结构对比；持邀请码的 DM 另开一套完整拆解档案（开本流程、角色剧本、线索、结局） |
 | 任务书 | `/tasks/` | `src/data/tasks/*.md`，或管理台直接新建；状态归数据库 | **暂时收起**：上一份工作的遗留，导航与首页都不再出现，直连给一页说明；数据、接口、管理台原样留着 |
 | 关于 | `/about/` | 页面本身；各版块的计数构建期现算 | 站长、规矩、时间线、制作说明、许可与联系方式 |
 
@@ -184,13 +184,16 @@ cd platform/server && npm run dev
 
 | 层 | 谁能看 | 有什么 | 从哪来 |
 | --- | --- | --- | --- |
-| 公开索引 `/juben/` | 任何人 | 剧本条目、类型、人数、时长、难度、五维评分、学习清单与本机进度 | `src/data/juben.js`，构建期渲染，无答案剧透 |
+| 公开索引 `/juben/` | 任何人 | 剧本条目、类型、人数、时长、难度、五维评分、学习清单与进度 | `src/data/juben.js`，构建期渲染，无答案剧透 |
 | DM 档案库 `/juben/`（登录后） | 持邀请码的 DM | 开卷总览、对外学习包、角色剧本、线索卡、组织者手册、音视频转写、结局解析 | 服务端从私有 `juben-dm-lab` 按需拉取 |
 
 - **身份是传出来的**：每位 DM 有一枚常驻邀请码（`dm_invites`），兑换即升级为 `dm` 角色，`users.invited_by` 记下是谁带进来的。第一位 DM 是站长本人；`admin` 天然拥有 DM 权限，不需要兑换。
 - **两种邀请码别混**：注册邀请码解决「能不能开号」（`meta.requiresInvite` 控制），DM 邀请码解决「能不能看谜底」。后者在剧本研究室里兑换，与注册流程互不相干。
 - **正文只经服务端**：客户端不接触 `juben-dm-lab`。服务端用只读 token 取目录树、按需读 raw markdown，再按 DM 的阅读顺序分组下发（开卷 · 总览 / 对外学习包 / 角色剧本 / 线索卡 / 开本资料…），分册按「第一册…第五册」排序，中文目录名与嵌套路径都按原样保留。
 - **配置**：给本仓库加 secret `JUBEN_REPO_TOKEN`（fine-grained PAT，只授 `juben-dm-lab` 的 `Contents: Read`），`deploy-platform.yml` 会把它合并进服务器 `.env` 的 `ATW_JUBEN_TOKEN`。不配也能上线，只是档案库显示「内容通道未配置」。
+- **学习进度**：唯一入口是 `src/scripts/progress-store.js`，`/juben/` 与个人中心都只经它读写。进度按 `${caseId}/${moduleSlug}` 记，与模块顺序无关；按账号分桶（`atw-juben-progress-v2:<userId>`，未登录是 `:guest`，登录时并入账号），所以同一浏览器切号不会串。老版本的 `atw-juben-progress-v1`（存的是下标数组）在首次加载时就地迁成 slug，原文留一份 `-v1-backup`。取消勾选写 `d:0` 墓碑而不是删行，为跨设备同步留好语义。
+  - **slug 是进度的身份证**：`juben.js` 每个模块都有 `slug`，`test/juben.test.mjs` 里有一份写死的台账，改 slug 或删模块会让 CI 变红——那正是「有人在让老进度失效」的信号。
+  - 目前仍是纯本机，换设备不跟随。跨设备同步的分阶段计划见 [`docs/PROGRESS_SYNC_PLAN.md`](docs/PROGRESS_SYNC_PLAN.md)。
 
 ## 部署
 
@@ -235,7 +238,7 @@ DM 身份靠人传人：每位 DM 有一枚常驻邀请码，兑换后可以在�
 **注册是两步**：先选来意（「我只是来读」/「我有 DM 邀请码」），再填表。选 DM 那条路会多一个邀请码字段，注册成功立刻兑换，直接落进档案库；码没通过也不算注册失败——账号已经建好，人会落在兑换表单上重试，页面会说清是哪一步没过。
 
 - 登录 `/account/login/`、注册 `/account/register/`、个人中心 `/account/`。本机可同时留几个账号，切换不用重输密码；个人中心能看登录设备、单独踢掉某一处。
-- 个人中心首屏按身份分流：DM 看到「我的档案库」（本机学习进度、邀请码），读者看到能去哪、怎么拿邀请码。联系方式与收款方式收进折叠的「合作资料」，不再挡路。
+- 个人中心首屏按身份分流：DM 看到「我的档案库」（按账号记在本机的学习进度、邀请码），读者看到能去哪、怎么拿邀请码。联系方式与收款方式收进折叠的「合作资料」，不再挡路。
 - 忘记密码走 `/account/forgot/`：一次性链接 60 分钟有效、用过即焚。发信通道未配时自动退回「管理台生成链接、站长人工发」。
 - API 只有一套（`tiaozhuxiansheng.com/api/`）。Pages 镜像跨域也能用，只是两个域的登录态各自独立。
 
