@@ -263,10 +263,19 @@ export function onAuthChange(handler) {
 
 // ---------- 页面间跳转 ----------
 
-// next 只认站内绝对路径，挡掉 //evil.com 这类协议相对地址
+// next 只认站内绝对路径，挡掉 //evil.com 这类协议相对地址；
+// 还要补站点 base——本站部署在 /above-the-web/ 子路径下，
+// 调用方图省事写 next=/juben/ 的话，登完就会被弹到站点根外的 404 荒野。
+export function withSiteBase(path) {
+  const raw = String(path || '');
+  if (!raw.startsWith('/') || raw.startsWith('//')) return '';
+  if (!SITE_BASE) return raw;
+  if (raw === SITE_BASE || raw.startsWith(`${SITE_BASE}/`)) return raw;
+  return `${SITE_BASE}${raw}`;
+}
+
 export function safeNext(value) {
-  const next = String(value || '');
-  return next.startsWith('/') && !next.startsWith('//') ? next : '';
+  return withSiteBase(value);
 }
 
 export function currentNext() {

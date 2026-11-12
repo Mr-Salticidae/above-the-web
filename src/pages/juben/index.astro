@@ -236,7 +236,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   // DM 档案库：整卷拆解只对 dm/admin 开放，member 在这里兑换邀请码。
   // 三种形态都由 JS 注入（未登录 / 兑换 / 阅读器），样式全部走 :global()，
   // 原因见同文件注释：scoped 样式罩不住运行时创建的节点。
-  import { api, displayNameOf, escapeHtml, getCachedUser, loginUrl, refreshUser, url, isDm } from '../../scripts/account-core.js';
+  import { api, displayNameOf, escapeHtml, getCachedUser, loginUrl, registerUrl, refreshUser, url, isDm } from '../../scripts/account-core.js';
   import { renderMarkdown } from '../../scripts/mini-markdown.js';
 
   const body = document.getElementById('vault-body');
@@ -254,12 +254,14 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
 
     function renderAnonymous() {
       setState('未登录 · 公开区随便看，档案库要身份');
+      // 回跳目标直接用当前真实地址：写死 '/juben/' 会绕开部署 base，登完掉进 404
+      const here = location.pathname + location.search;
       body.innerHTML = `
         <div class="juben-vault-gate">
           <p>读公开区不用账号；进档案库需要站内账号 + DM 邀请码。</p>
           <p class="juben-vault-gate-actions">
-            <a class="juben-vault-cta" href="${loginUrl('/juben/')}">登录</a>
-            <a class="juben-vault-cta is-ghost" href="${url('account/register/')}?next=${encodeURIComponent('/juben/')}">注册</a>
+            <a class="juben-vault-cta" href="${loginUrl(here)}">登录</a>
+            <a class="juben-vault-cta is-ghost" href="${registerUrl(here)}">注册</a>
           </p>
         </div>`;
     }
