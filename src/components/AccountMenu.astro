@@ -26,6 +26,7 @@
     displayNameOf,
     escapeHtml,
     getCachedUser,
+    isDm,
     listAccounts,
     loginUrl,
     onAuthChange,
@@ -93,11 +94,17 @@
       const role =
         current.role === 'admin'
           ? `<span class="acct-badge">${ROLE_LABEL.admin}</span>`
-          : '';
+          : current.role === 'dm'
+            ? `<span class="acct-badge is-dm">${ROLE_LABEL.dm}</span>`
+            : '';
       const adminLink =
         current.role === 'admin'
           ? `<a class="acct-link" role="menuitem" href="${url('admin/')}">管理台</a>`
           : '';
+      // DM（含 admin）多一个直达剧本档案库的入口
+      const vaultLink = isDm(current)
+        ? `<a class="acct-link" role="menuitem" href="${url('juben/#dm-vault')}">DM 档案库</a>`
+        : '';
       pop.innerHTML = `
         <div class="acct-card">
           ${avatarHtml(current, 'lg')}
@@ -109,6 +116,7 @@
         <div class="acct-group">
           <a class="acct-link" role="menuitem" href="${url('account/')}">个人中心</a>
           <a class="acct-link" role="menuitem" href="${url('account/#claims')}">我的认领</a>
+          ${vaultLink}
           ${adminLink}
         </div>
         <div class="acct-group">

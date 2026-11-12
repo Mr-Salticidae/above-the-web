@@ -73,7 +73,6 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
                 data-search={`${item.title} ${item.english} ${item.genre} ${item.level} ${item.tags.join(' ')} ${item.compare.dm}`}
                 aria-pressed={index === 0 ? 'true' : 'false'}
               >
-                <span class="juben-case-no">CASE {item.archive}</span>
                 <span class={`juben-status ${item.statusKey}`}>{item.status}</span>
                 <strong>{item.title}</strong>
                 <small>{item.english}</small>
@@ -89,7 +88,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
         <article class="juben-detail" id="juben-detail" data-tone={first.tone} aria-live="polite">
           <header class="juben-detail-head">
             <div>
-              <p class="juben-detail-code" id="detail-code">CASE {first.archive} / {first.english}</p>
+              <p class="juben-detail-code" id="detail-code">{first.english}</p>
               <h3 id="detail-title">{first.title}</h3>
               <p id="detail-intro">{first.intro}</p>
             </div>
@@ -151,6 +150,23 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       </div>
     </section>
 
+    <section class="juben-vault" id="dm-vault" aria-labelledby="vault-title">
+      <header class="juben-section-head">
+        <div>
+          <p class="juben-kicker">04 · DM Vault</p>
+          <h2 id="vault-title">DM 档案库</h2>
+        </div>
+        <p id="vault-state">按登录身份开放：整卷拆解、时间线与带本提醒。</p>
+      </header>
+      <p class="juben-vault-note">
+        完整拆解手册只对 DM 开放——玩家仍保留第一次推开房门的惊喜。
+        DM 身份靠邀请码人传人：拿到码的站内成员在这里兑换，兑换成功即拥有自己的邀请码。
+      </p>
+      <div class="juben-vault-body" id="vault-body" aria-live="polite">
+        <p class="juben-vault-loading">正在确认身份…</p>
+      </div>
+    </section>
+
     <section class="juben-compare" aria-labelledby="compare-title">
       <header class="juben-section-head">
         <div>
@@ -168,7 +184,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       <div class="juben-table-wrap">
         <table>
           <thead>
-            <tr><th scope="col">维度</th>{jubenCases.map((item) => <th scope="col"><span>CASE {item.archive}</span>{item.title}</th>)}</tr>
+            <tr><th scope="col">维度</th>{jubenCases.map((item) => <th scope="col">{item.title}</th>)}</tr>
           </thead>
           <tbody>
             {comparisonRows.map((row) => (
@@ -215,6 +231,238 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
 
   <script type="application/json" id="juben-data" set:html={JSON.stringify(jubenCases)}></script>
 </BaseLayout>
+
+<script>
+  // DM 档案库：整卷拆解只对 dm/admin 开放，member 在这里兑换邀请码。
+  // 三种形态都由 JS 注入（未登录 / 兑换 / 阅读器），样式全部走 :global()，
+  // 原因见同文件注释：scoped 样式罩不住运行时创建的节点。
+  import { api, displayNameOf, escapeHtml, getCachedUser, loginUrl, refreshUser, url, isDm } from '../../scripts/account-core.js';
+  import { renderMarkdown } from '../../scripts/mini-markdown.js';
+
+  const body = document.getElementById('vault-body');
+  const state = document.getElementById('vault-state');
+  if (body && state) {
+    let user = getCachedUser();
+    let manifest = null; // { configured, cases: [{ id, docs: [{ id, title, bytes }] }] }
+    let activeCase = null;
+    let activeDoc = null;
+    let inviteInfo = null;
+
+    const setState = (text) => { state.textContent = text; };
+
+    // ---------- 未登录 ----------
+
+    function renderAnonymous() {
+      setState('未登录 · 公开区随便看，档案库要身份');
+      body.innerHTML = `
+        <div class="juben-vault-gate">
+          <p>读公开区不用账号；进档案库需要站内账号 + DM 邀请码。</p>
+          <p class="juben-vault-gate-actions">
+            <a class="juben-vault-cta" href="${loginUrl('/juben/')}">登录</a>
+            <a class="juben-vault-cta is-ghost" href="${url('account/register/')}?next=${encodeURIComponent('/juben/')}">注册</a>
+          </p>
+        </div>`;
+    }
+
+    // ---------- member：兑换 ----------
+
+    function renderRedeem() {
+      setState('已登录 · 还差一枚邀请码');
+      body.innerHTML = `
+        <form class="juben-vault-redeem" id="vault-redeem">
+          <label>
+            <span>邀请码</span>
+            <input name="code" autocomplete="off" spellcheck="false" placeholder="XXXXX-XXXXX" required />
+          </label>
+          <button type="submit">兑换 DM 身份</button>
+          <p class="juben-vault-msg" id="vault-redeem-msg" role="status"></p>
+        </form>`;
+      document.getElementById('vault-redeem').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const msg = document.getElementById('vault-redeem-msg');
+        form.querySelector('button').disabled = true;
+        msg.textContent = '兑换中…';
+        msg.dataset.tone = 'busy';
+        try {
+          const result = await api('POST', '/dm/redeem', { code: form.code.value.trim() });
+          user = result.user;
+          inviteInfo = result.invite;
+          msg.textContent = '兑换成功，欢迎入门。';
+          msg.dataset.tone = 'ok';
+          setTimeout(renderReader, 600);
+        } catch (error) {
+          form.querySelector('button').disabled = false;
+          msg.textContent = error.message;
+          msg.dataset.tone = 'error';
+        }
+      });
+    }
+
+    // ---------- DM：阅读器 ----------
+
+    async function loadManifest() {
+      if (manifest) return manifest;
+      const result = await api('GET', '/juben/manifest');
+      manifest = result;
+      return manifest;
+    }
+
+    async function openDoc(caseId, docId) {
+      activeCase = caseId;
+      activeDoc = docId;
+      const host = document.getElementById('vault-reader-doc');
+      if (!host) return;
+      host.innerHTML = '<p class="juben-vault-loading">取文中…</p>';
+      try {
+        const { doc } = await api('GET', `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(docId)}`);
+        host.innerHTML = renderMarkdown(doc.markdown);
+        document.getElementById('vault-reader')?.scrollIntoView({ block: 'nearest' });
+      } catch (error) {
+        host.innerHTML = `<p class="juben-vault-msg" data-tone="error">${escapeHtml(error.message)}</p>`;
+      }
+    }
+
+    function renderDocList() {
+      const caseData = manifest.cases.find((entry) => entry.id === activeCase) ?? manifest.cases[0];
+      if (caseData) activeCase = caseData.id;
+      const flat = (caseData?.groups ?? []).flatMap((group) => group.docs);
+      // 默认落在第一组第一篇（通常是「读我先看 / README」这类的入门文档）
+      if (flat.length && !flat.some((doc) => doc.id === activeDoc)) activeDoc = flat[0].id;
+      // 分组目录：开卷总览 / 学习包 / 角色剧本 / 线索卡…，组内已按 DM 阅读序排好
+      const groups = caseData?.groups ?? [];
+      if (!flat.length) return '<nav class="juben-vault-docs" aria-label="本卷目录"><p class="juben-vault-invite-sub">这一卷还没有文档。</p></nav>';
+      return `
+        <nav class="juben-vault-docs" aria-label="本卷目录">
+          ${groups.map((group) => `
+            <div class="juben-vault-group">
+              <p class="juben-vault-group-title">${escapeHtml(group.label)}<span>${group.docs.length}</span></p>
+              <div class="juben-vault-group-pills">
+                ${group.docs.map((doc) => `
+                  <button type="button" class="juben-vault-doc${doc.id === activeDoc ? ' is-active' : ''}" data-doc="${escapeHtml(doc.id)}" title="${escapeHtml(doc.title)}">
+                    ${escapeHtml(doc.title)}
+                  </button>`).join('')}
+              </div>
+            </div>`).join('')}
+        </nav>`;
+    }
+
+    async function renderReader() {
+      setState(`DM · ${displayNameOf(user)}`);
+      body.innerHTML = `
+        <div class="juben-vault-reader" id="vault-reader">
+          <aside class="juben-vault-side">
+            <div class="juben-vault-invite">
+              <p class="juben-vault-invite-title">我的邀请码</p>
+              <code id="vault-invite-code">${escapeHtml(inviteInfo ? inviteInfo.code : '……')}</code>
+              <button type="button" id="vault-invite-copy">复制</button>
+              <p class="juben-vault-invite-sub">把它交给值得信任的准 DM；每带一人进门，传承就长一格。</p>
+            </div>
+            <div class="juben-vault-cases" id="vault-cases" role="tablist" aria-label="卷宗">
+              <p class="juben-vault-invite-title">卷宗</p>
+            </div>
+          </aside>
+          <div class="juben-vault-main">
+            ${renderDocList()}
+            <article class="juben-vault-doc-body" id="vault-reader-doc" aria-live="polite">
+              <p class="juben-vault-loading">取文中…</p>
+            </article>
+          </div>
+        </div>`;
+
+      // 邀请码懒加载（还没拿过就问服务端要）
+      if (!inviteInfo) {
+        api('GET', '/dm/invite')
+          .then((result) => {
+            inviteInfo = result.invite;
+            document.getElementById('vault-invite-code').textContent = inviteInfo.code;
+          })
+          .catch(() => {});
+      }
+
+      document.getElementById('vault-invite-copy')?.addEventListener('click', async (event) => {
+        const code = document.getElementById('vault-invite-code').textContent.trim();
+        try {
+          await navigator.clipboard.writeText(code);
+          event.target.textContent = '已复制';
+        } catch {
+          event.target.textContent = '复制失败';
+        }
+        setTimeout(() => { event.target.textContent = '复制'; }, 1500);
+      });
+
+      // 卷宗按钮（目录名如 954-虚拟游戏：展示时剥掉旧收录编号前缀）
+      const casesHost = document.getElementById('vault-cases');
+      if (manifest.cases.length) {
+        manifest.cases.forEach((entry) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'juben-vault-case' + (entry.id === activeCase ? ' is-active' : '');
+          button.textContent = entry.id.replace(/^\d+-/, '');
+          button.addEventListener('click', () => {
+            activeCase = entry.id;
+            activeDoc = null;
+            casesHost.querySelectorAll('.juben-vault-case').forEach((node) => node.classList.remove('is-active'));
+            button.classList.add('is-active');
+            document.querySelector('.juben-vault-main .juben-vault-docs')?.remove();
+            document.querySelector('.juben-vault-main').insertAdjacentHTML('afterbegin', renderDocList());
+            bindDocButtons();
+            if (activeDoc) openDoc(activeCase, activeDoc);
+          });
+          casesHost.append(button);
+        });
+      } else {
+        const empty = document.createElement('p');
+        empty.className = 'juben-vault-invite-sub';
+        empty.textContent = manifest.configured
+          ? '档案库还是空的：私有仓库还没有 cases/ 内容。'
+          : '内容通道未配置（服务器缺 ATW_JUBEN_TOKEN），邀请码体系不受影响。';
+        casesHost.append(empty);
+      }
+
+      function bindDocButtons() {
+        document.querySelectorAll('.juben-vault-doc').forEach((button) => {
+          button.addEventListener('click', () => {
+            document.querySelectorAll('.juben-vault-doc').forEach((node) => node.classList.remove('is-active'));
+            button.classList.add('is-active');
+            openDoc(activeCase, button.dataset.doc);
+          });
+        });
+      }
+      bindDocButtons();
+
+      if (activeDoc) openDoc(activeCase, activeDoc);
+      else document.getElementById('vault-reader-doc').innerHTML = '<p class="juben-vault-loading">这一卷还没有文档。</p>';
+    }
+
+    // ---------- 启动 ----------
+
+    async function boot() {
+      try {
+        const fresh = await refreshUser();
+        if (fresh) user = fresh;
+      } catch {
+        /* 离线时用缓存身份渲染，接口失败再各自降级 */
+      }
+      if (!user) {
+        renderAnonymous();
+        return;
+      }
+      if (!isDm(user)) {
+        renderRedeem();
+        return;
+      }
+      try {
+        await loadManifest();
+        await renderReader();
+      } catch (error) {
+        body.innerHTML = `<p class="juben-vault-msg" data-tone="error">${escapeHtml(error.message || '档案库暂时打不开')}</p>`;
+      }
+    }
+
+    boot();
+  }
+</script>
 
 <style>
   .juben-page { max-width: 74rem; margin: 0 auto; padding: 0 1.5rem 5rem; }
@@ -344,6 +592,69 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   .juben-colophon { display: flex; justify-content: space-between; gap: 1rem; margin-top: 4rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
   .juben-colophon p { margin: 0; color: var(--accent); font-size: .58rem; letter-spacing: .14em; }
   .juben-colophon span { color: var(--ink-soft); font-size: .65rem; }
+  /* ---------- DM 档案库（内容全部 JS 注入，样式必须 :global） ---------- */
+  .juben-vault { padding-top: 4.2rem; scroll-margin-top: var(--header-h); }
+  .juben-vault-note { margin: 0 0 1.2rem; padding: .85rem 1rem; color: var(--ink-soft); font-size: .78rem; line-height: 1.8; background: var(--accent-soft); border-left: 2px solid var(--accent); }
+  :global(.juben-vault-loading) { margin: 1.5rem 0; color: var(--ink-soft); font-size: .78rem; }
+  :global(.juben-vault-gate) { padding: 1.6rem; border: 1px dashed var(--line); border-radius: 10px; background: var(--paper-2); }
+  :global(.juben-vault-gate p) { margin: 0 0 .9rem; color: var(--ink-soft); font-size: .8rem; line-height: 1.8; }
+  :global(.juben-vault-gate-actions) { display: flex; gap: .6rem; }
+  :global(.juben-vault-cta) { display: inline-block; padding: .45rem .9rem; border: 1px solid var(--ink); border-radius: 5px; background: var(--ink); color: var(--paper); font-size: .72rem; text-decoration: none; }
+  :global(.juben-vault-cta.is-ghost) { background: transparent; color: var(--ink); border-color: var(--line); }
+  :global(.juben-vault-cta:hover) { text-decoration: none; opacity: .88; }
+  :global(.juben-vault-redeem) { display: flex; align-items: flex-end; gap: .9rem; flex-wrap: wrap; padding: 1.6rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); }
+  :global(.juben-vault-redeem label) { display: grid; gap: .35rem; }
+  :global(.juben-vault-redeem label span) { color: var(--ink-soft); font-size: .62rem; letter-spacing: .12em; }
+  :global(.juben-vault-redeem input) { padding: .5rem .7rem; border: 1px solid var(--line); border-radius: 5px; background: var(--paper); color: var(--ink); font: inherit; font-size: .9rem; letter-spacing: .12em; width: 13rem; }
+  :global(.juben-vault-redeem input:focus) { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+  :global(.juben-vault-redeem button) { padding: .55rem 1.1rem; border: 1px solid var(--ink); border-radius: 5px; background: var(--ink); color: var(--paper); font: inherit; font-size: .72rem; cursor: pointer; }
+  :global(.juben-vault-redeem button:disabled) { opacity: .5; cursor: wait; }
+  :global(.juben-vault-msg) { margin: 0; font-size: .72rem; color: var(--ink-soft); }
+  :global(.juben-vault-msg[data-tone="error"]) { color: #b3452e; }
+  :global(.juben-vault-msg[data-tone="ok"]) { color: var(--accent); }
+  :global(.juben-vault-reader) { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+  :global(.juben-vault-side) { position: sticky; top: calc(var(--header-h) + 1rem); display: grid; gap: 1rem; }
+  :global(.juben-vault-invite) { padding: 1.1rem 1.2rem; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 10px; background: var(--paper-2); }
+  :global(.juben-vault-invite-title) { margin: 0 0 .5rem; color: var(--ink-soft); font-size: .62rem; letter-spacing: .14em; }
+  :global(.juben-vault-invite code) { display: block; font-family: var(--serif); font-size: 1.05rem; letter-spacing: .18em; color: var(--accent); }
+  :global(.juben-vault-invite button) { margin-top: .6rem; padding: .35rem .8rem; border: 1px solid var(--line); border-radius: 5px; background: transparent; color: var(--ink-soft); font: inherit; font-size: .65rem; cursor: pointer; }
+  :global(.juben-vault-invite button:hover) { color: var(--accent); border-color: var(--accent); }
+  :global(.juben-vault-invite-sub) { margin: .6rem 0 0; color: var(--ink-soft); font-size: .65rem; line-height: 1.7; }
+  :global(.juben-vault-cases) { display: grid; gap: .5rem; padding: 1.1rem 1.2rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); }
+  :global(.juben-vault-case) { padding: .5rem .7rem; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--ink-soft); font: inherit; font-size: .72rem; text-align: left; cursor: pointer; }
+  :global(.juben-vault-case:hover) { color: var(--ink); border-color: var(--line); }
+  :global(.juben-vault-case.is-active) { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  :global(.juben-vault-main) { min-width: 0; }
+  :global(.juben-vault-docs) { display: grid; gap: 1.1rem; margin-bottom: 1.2rem; }
+  :global(.juben-vault-group-title) { display: flex; align-items: baseline; gap: .45rem; margin: 0 0 .5rem; color: var(--ink); font-family: var(--serif); font-size: .82rem; letter-spacing: .06em; }
+  :global(.juben-vault-group-title span) { color: var(--ink-soft); font-family: var(--sans); font-size: .6rem; letter-spacing: .1em; }
+  :global(.juben-vault-group-pills) { display: flex; flex-wrap: wrap; gap: .45rem; }
+  :global(.juben-vault-doc) { padding: .4rem .75rem; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--ink-soft); font: inherit; font-size: .68rem; cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  :global(.juben-vault-doc:hover) { color: var(--ink); border-color: var(--accent); }
+  :global(.juben-vault-doc.is-active) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  :global(.juben-vault-doc-body) { padding: 1.8rem 2rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); }
+  :global(.juben-vault-doc-body :is(h1, h2, h3)) { margin: 1.6rem 0 .7rem; font-family: var(--serif); letter-spacing: .03em; line-height: 1.4; }
+  :global(.juben-vault-doc-body h1) { font-size: 1.5rem; margin-top: 0; }
+  :global(.juben-vault-doc-body h2) { font-size: 1.2rem; padding-bottom: .35rem; border-bottom: 1px solid var(--line); }
+  :global(.juben-vault-doc-body h3) { font-size: 1rem; }
+  :global(.juben-vault-doc-body p) { margin: .7rem 0; color: var(--ink-soft); font-size: .84rem; line-height: 1.9; }
+  :global(.juben-vault-doc-body :is(ul, ol)) { margin: .7rem 0; padding-left: 1.4rem; color: var(--ink-soft); font-size: .84rem; line-height: 1.9; }
+  :global(.juben-vault-doc-body blockquote) { margin: 1rem 0; padding: .6rem 1rem; border-left: 2px solid var(--accent); background: var(--paper-3); color: var(--ink-soft); font-size: .8rem; line-height: 1.85; }
+  :global(.juben-vault-doc-body code) { padding: .1rem .35rem; border-radius: 3px; background: var(--paper-3); font-size: .78em; }
+  :global(.juben-vault-doc-body pre) { margin: 1rem 0; padding: 1rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-3); }
+  :global(.juben-vault-doc-body pre code) { background: transparent; padding: 0; }
+  :global(.juben-vault-doc-body hr) { margin: 1.6rem 0; border: 0; border-top: 1px solid var(--line); }
+  @media (max-width: 900px) {
+    :global(.juben-vault-reader) { grid-template-columns: 1fr; }
+    :global(.juben-vault-side) { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); display: grid; }
+    :global(.juben-vault-doc-body) { padding: 1.2rem 1.1rem; }
+  }
+  @media (max-width: 560px) {
+    :global(.juben-vault-side) { grid-template-columns: 1fr; }
+    :global(.juben-vault-redeem input) { width: 100%; }
+    :global(.juben-vault-redeem) { align-items: stretch; flex-direction: column; }
+  }
+
   @media (max-width: 900px) {
     .juben-workbench { grid-template-columns: 14.5rem minmax(0, 1fr); }
     .juben-case-desc { display: none; }
@@ -469,7 +780,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       selected = id;
       quizIndex = 0;
       detail.dataset.tone = item.tone;
-      text('detail-code', `CASE ${item.archive} / ${item.english}`);
+      text('detail-code', item.english);
       text('detail-title', item.title);
       text('detail-intro', item.intro);
       text('detail-status', item.status);

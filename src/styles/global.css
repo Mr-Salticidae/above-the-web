@@ -95,6 +95,17 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .prose img { max-width: 100%; border-radius: 8px; }
 .prose hr { border: none; border-top: 1px solid var(--line); margin: 2.5em 0; }
 
+/* 浏览器侧渲染的 markdown 表格（任务书预览 / DM 卷宗）。
+   卷宗里的线索总表一列能有七八列，窄屏塞不下——外壳横向滚动，别把整页撑破。 */
+.md-table { margin: 1.2em 0; border: 1px solid var(--line); border-radius: 8px; overflow-x: auto; background: var(--paper); }
+.md-table table { border-collapse: collapse; width: 100%; font-size: .8rem; }
+.md-table th, .md-table td { padding: .58em .72em; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); text-align: left; vertical-align: top; line-height: 1.7; }
+.md-table th:last-child, .md-table td:last-child { border-right: none; }
+.md-table tr:last-child td { border-bottom: none; }
+.md-table th { background: var(--accent-soft); color: var(--ink); font-weight: 650; white-space: nowrap; }
+.md-table td { color: var(--ink-soft); }
+.md-table code { font-size: .92em; }
+
 /* wikilink */
 .wikilink { border-bottom: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent); }
 .wikilink--dangling { color: var(--ink-soft); border-bottom: 1px dotted var(--line); cursor: help; }
@@ -1151,6 +1162,10 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 .acct-badge {
   font-size: .66rem; padding: .1em .5em; border-radius: 999px;
   color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent);
+}
+.acct-badge.is-dm {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  background: transparent;
 }
 .acct-group { padding: .35rem 0; border-top: 1px solid var(--line); }
 .acct-group:first-child { border-top: 0; }

@@ -231,7 +231,7 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
     <div class="note-cats">
       {jubenCases.map((item) => (
         <a class="note-cat" href={`${jubenBase}?case=${item.id}`}>
-          <span class="nc-count">CASE {item.archive} · {item.status}</span>
+          <span class="nc-count">{item.status}</span>
           <h3>{item.title}</h3>
           <p>{item.intro}</p>
         </a>

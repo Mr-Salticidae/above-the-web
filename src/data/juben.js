@@ -6,7 +6,6 @@ const privateCaseUrl = (path) =>
 export const jubenCases = [
   {
     id: 'virtual-game',
-    archive: '954',
     title: '虚拟游戏',
     english: 'THE VIRTUAL GAME',
     status: '学习中',
@@ -43,7 +42,6 @@ export const jubenCases = [
   },
   {
     id: 'woman-by-window',
-    archive: '247',
     title: '窗边的女人',
     english: 'THE WOMAN BY THE WINDOW',
     status: '资料就绪',

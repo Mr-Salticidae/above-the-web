@@ -181,7 +181,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   // ---------- 渲染 ----------
 
   function renderIdentity(user) {
-    const role = user.role === 'admin' ? `<span class="acct-badge">${ROLE_LABEL.admin}</span>` : '';
+    const role =
+      user.role === 'admin'
+        ? `<span class="acct-badge">${ROLE_LABEL.admin}</span>`
+        : user.role === 'dm'
+          ? `<span class="acct-badge is-dm">${ROLE_LABEL.dm}</span>`
+          : '';
     document.querySelector('[data-identity]').innerHTML = `${avatarHtml(user, 'xl')}
       <div class="acc-id-text">
         <h1>${escapeHtml(displayNameOf(user))}${role}</h1>

@@ -6,7 +6,7 @@ test('剧本档案 ID 唯一，公开学习路径与自测结构完整', () => {
   assert.ok(jubenCases.length > 0);
   assert.equal(new Set(jubenCases.map((item) => item.id)).size, jubenCases.length);
   for (const item of jubenCases) {
-    for (const key of ['archive', 'title', 'status', 'players', 'duration', 'intro', 'tone']) {
+    for (const key of ['title', 'status', 'players', 'duration', 'intro', 'tone']) {
       assert.ok(item[key], `${item.id} 缺少 ${key}`);
     }
     assert.ok(item.modules.length >= 3, `${item.id} 学习节点过少`);

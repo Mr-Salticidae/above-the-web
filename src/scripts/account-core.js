@@ -356,4 +356,9 @@ export const TASK_STATUS_LABEL = {
   closed: '已收官',
 };
 
-export const ROLE_LABEL = { admin: '发布方', member: '成员' };
+export const ROLE_LABEL = { admin: '发布方', member: '成员', dm: 'DM' };
+
+// DM 级权限：dm 与 admin 都算（admin 是首任 DM）。页面据此切「DM 视图」。
+export function isDm(user) {
+  return Boolean(user && (user.role === 'dm' || user.role === 'admin'));
+}
