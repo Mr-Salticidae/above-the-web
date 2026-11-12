@@ -288,15 +288,17 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   .juben-learning-head > span { color: var(--case-accent); font-size: .72rem; font-variant-numeric: tabular-nums; }
   .juben-progress-track { height: 3px; margin: .8rem 0 1rem; background: var(--line); }
   .juben-progress-track b { display: block; width: 0; height: 100%; background: var(--case-accent); transition: width .25s ease; }
-  .juben-module-list { display: grid; gap: .55rem; }
-  .juben-module { display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: start; cursor: pointer; }
-  .juben-module input { position: absolute; opacity: 0; pointer-events: none; }
-  .juben-check { display: grid; place-items: center; width: 1.15rem; height: 1.15rem; margin-top: .12rem; border: 1px solid var(--line); border-radius: 3px; background: var(--paper-2); color: transparent; font-size: .7rem; transition: all .15s ease; }
-  .juben-module input:focus-visible + .juben-check { outline: 2px solid var(--case-accent); outline-offset: 2px; }
-  .juben-module input:checked + .juben-check { border-color: var(--case-accent); background: var(--case-accent); color: var(--paper-2); }
-  .juben-module input:checked ~ .juben-module-copy strong { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--case-accent) 55%, transparent); }
-  .juben-module-copy strong { display: block; font-size: .76rem; font-weight: 650; }
-  .juben-module-copy small { display: block; margin-top: .15rem; color: var(--ink-soft); font-size: .68rem; line-height: 1.65; }
+  /* 清单行由 JS 运行时创建，拿不到 Astro scoped 属性，必须用 :global() 才能命中 */
+  .juben-module-list { display: grid; gap: .35rem; }
+  :global(.juben-module) { position: relative; display: grid; grid-template-columns: auto 1fr; gap: .75rem; align-items: start; padding: .5rem .55rem; margin-inline: -.55rem; border-radius: 6px; cursor: pointer; transition: background .15s ease; }
+  :global(.juben-module:hover) { background: color-mix(in srgb, var(--case-accent) 7%, transparent); }
+  :global(.juben-module input) { position: absolute; opacity: 0; pointer-events: none; }
+  :global(.juben-check) { display: grid; place-items: center; width: 1.15rem; height: 1.15rem; margin-top: .18rem; border: 1px solid var(--line); border-radius: 3px; background: var(--paper-2); color: transparent; font-size: .7rem; transition: all .15s ease; }
+  :global(.juben-module input:focus-visible + .juben-check) { outline: 2px solid var(--case-accent); outline-offset: 2px; }
+  :global(.juben-module input:checked + .juben-check) { border-color: var(--case-accent); background: var(--case-accent); color: var(--paper-2); }
+  :global(.juben-module input:checked ~ .juben-module-copy strong) { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--case-accent) 55%, transparent); }
+  :global(.juben-module-copy strong) { display: block; font-size: .82rem; font-weight: 650; letter-spacing: .02em; line-height: 1.5; }
+  :global(.juben-module-copy small) { display: block; margin-top: .3rem; color: var(--ink-soft); font-size: .72rem; line-height: 1.8; }
   .juben-learning-actions { display: flex; gap: 1rem; margin-top: 1rem; }
   .juben-learning-actions button, .juben-quiz button { padding: 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink-soft); font: inherit; font-size: .65rem; cursor: pointer; }
   .juben-learning-actions button:hover, .juben-quiz button:hover { color: var(--case-accent); border-color: var(--case-accent); }
@@ -319,7 +321,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   .juben-table-wrap thead th span { display: block; margin-bottom: .25rem; color: var(--accent); font-family: var(--sans); font-size: .55rem; letter-spacing: .12em; }
   .juben-table-wrap tbody th { font-size: .75rem; font-weight: 600; }
   .juben-table-wrap tbody th small { display: block; margin-top: .2rem; color: var(--ink-soft); font-size: .56rem; font-weight: 400; }
-  .juben-table-wrap td { color: var(--ink-soft); font-size: .75rem; }
+  .juben-table-wrap td { color: var(--ink-soft); font-size: .75rem; line-height: 1.8; }
   .juben-table-wrap tbody tr:hover { background: color-mix(in srgb, var(--accent) 4%, transparent); }
   .juben-compare-insight { margin: 1rem 0 0; padding-left: 1rem; border-left: 2px solid var(--accent); color: var(--ink-soft); font-size: .75rem; line-height: 1.85; }
   .juben-compare-insight span { margin-right: .7rem; color: var(--ink); font-weight: 650; }
