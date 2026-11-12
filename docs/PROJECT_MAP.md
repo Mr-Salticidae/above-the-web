@@ -19,14 +19,14 @@
 | `/news/` | `src/pages/news/index.astro` | AIGC 快讯首页，展示最新一期全文及往期归档。 |
 | `/news/[date]/` | `src/pages/news/[date].astro` | AIGC 快讯单期归档页，按日期生成，并提供前后期导航。 |
 | `/news/rss.xml` | `src/pages/news/rss.xml.js` | AIGC 快讯 RSS：最近 30 期，一期一条。 |
-| `/tasks/` | `src/pages/tasks/index.astro` | 对外合作任务列表，按招募中、进行中、已收官分组，并展示教程标杆。 |
-| `/tasks/[slug]/` | `src/pages/tasks/[slug].astro` | Markdown 任务书详情动态路由；构建时从 `tasks` 内容集合按任务 ID 生成页面。 |
+| `/tasks/` | `src/pages/tasks/index.astro` | 任务书版块。默认收起（`src/data/features.js`）：只剩一页暂停说明；`PUBLIC_TASKS_ENABLED=1` 时才恢复任务列表（按招募中、进行中、已收官分组，并展示教程标杆）。 |
+| `/tasks/[slug]/` | `src/pages/tasks/[slug].astro` | Markdown 任务书详情动态路由；构建时从 `tasks` 内容集合按任务 ID 生成页面。版块收起时 `getStaticPaths` 返回空数组，深链接 404。 |
 | `/tasks/detail/` | `src/pages/tasks/detail.astro` | 站内新建任务的通用详情容器，通过 `?slug=` 在运行时读取并装配任务内容。 |
 | `/tasks/spec/` | `src/pages/tasks/spec.astro` | 教程类任务的统一交付规范，包括命名、权限、上传流程和正文模板。 |
 | `/tasks/index.json` | `src/pages/tasks/index.json.js` | 给后端同步使用的任务清单 JSON 端点，导出 Git 中任务书的不变量，不是面向访客的页面。 |
-| `/account/` | `src/pages/account/index.astro` | 登录后的个人中心，管理资料、任务认领记录、密码、登录设备和账号切换。 |
+| `/account/` | `src/pages/account/index.astro` | 登录后的个人中心。概览按身份分流（DM 看档案库进度与邀请码，读者看入口与说明）、资料（合作资料折叠）、安全（密码、登录设备、账号切换）；任务书认领区只在开关打开时出现。 |
 | `/account/login/` | `src/pages/account/login/index.astro` | 账号登录与本机已有账号选择页面。 |
-| `/account/register/` | `src/pages/account/register/index.astro` | 新用户注册页面。 |
+| `/account/register/` | `src/pages/account/register/index.astro` | 新用户注册页面。两步：先选来意（读者 / 我有 DM 邀请码），再填表；DM 那条路注册成功即兑换邀请码并跳进档案库。 |
 | `/account/forgot/` | `src/pages/account/forgot/index.astro` | 忘记密码页面，用于申请一次性密码重置链接。 |
 | `/account/reset/` | `src/pages/account/reset/index.astro` | 密码重置落地页，校验令牌后设置新密码。 |
 | `/admin/` | `src/pages/admin/index.astro` | 管理台概览，汇总待处理申请和各状态任务数量。 |

@@ -6,7 +6,7 @@
 
 # 蛛网之上 · Above the Web
 
-**A magazine-style personal site by 跳蛛先生 (Mr. Jumping Spider)**: notes, daily AIGC news, a prompt-breakdown series, a study room for murder-mystery (剧本杀) scripts, playable toys, music and paid commissions.
+**A magazine-style personal site by 跳蛛先生 (Mr. Jumping Spider)**: notes, daily AIGC news, a prompt-breakdown series, a study room for murder-mystery (剧本杀) scripts, playable toys and music.
 
 [简体中文](../README.md) · English · [日本語](README_JA.md)
 
@@ -52,7 +52,7 @@ Four rules hold throughout:
 | Plays | Home page `#plays` | `src/data/games.js` plus a landing page in `public/<slug>/` | Small vibe-coded works: play online, or download a free Windows tool |
 | Music | `/music/` | `src/data/music/manifest.json`. Audio lives on the server under `/music/` | Songs made with AI. A player sits at the bottom of every page |
 | Script Study Room | `/juben/` | Public metadata in `src/data/juben.js`; the DM archive is pulled from the private `juben-dm-lab` on demand by the server | Search and filter scripts, track study progress, self-quiz and compare structure across scripts. DMs holding an invite code also get the full breakdown: opening flow, character scripts, clues, endings |
-| Commissions | `/tasks/` | `src/data/tasks/*.md`, or created in the admin console. State lives in the database | Paid collaboration tasks. Claiming one requires an account |
+| Commissions | `/tasks/` | `src/data/tasks/*.md`, or created in the admin console. State lives in the database | **Parked for now**: left over from previous work. It no longer appears in the nav or on the home page, and the URL shows a short note instead; the data, API and admin console are untouched |
 | About | `/about/` | The page itself. Counts for the seven sections are computed at build time | The owner, house rules, timeline, how it's built, licenses and contact |
 
 The site also has Pagefind full-text search, an AI assistant for the notes ("小织", Xiaozhi), an account center and an admin console. Subscribe via [RSS](https://tiaozhuxiansheng.com/rss.xml) or [JSON Feed](https://tiaozhuxiansheng.com/feed.json), or subscribe to notes or news separately. The full route table is in [PROJECT_MAP.md](PROJECT_MAP.md) (Chinese).
@@ -120,7 +120,8 @@ Build-time environment variables:
 | --- | --- | --- |
 | `BASE_PATH` | `/above-the-web` | Site sub-path. The Hong Kong build sets it to `/` |
 | `SITE_URL` | `https://mr-salticidae.github.io` | Site origin, used for canonical and other absolute URLs |
-| `PUBLIC_ATW_API` | empty | Account API URL. When unset, the front end falls back to `/api/` on the main domain |
+| `PUBLIC_ATW_API` | empty | Account API URL, including `/api` (`http://127.0.0.1:3200/api` when working locally). When unset, the front end falls back to `/api/` on the main domain |
+| `PUBLIC_TASKS_ENABLED` | off | Switch for the commissions section. Off by default; `1` restores the nav entry, the home page teaser and the detail pages, and `/tasks/` stops being a placeholder |
 | `TOY_NEWS` / `NEWS_SITE` | empty | Set to `1` for the corresponding news-only build variant. The scripts set these, so you rarely pass them by hand |
 
 ## Repository layout
@@ -221,21 +222,32 @@ Repository secrets:
 | `TOY_SESSION` | Login session for the Bilibili Toy CLI (raw contents of `~/.toy/session.json`) |
 | `JUBEN_REPO_TOKEN` | Read-only token for the DM archive: a fine-grained PAT with `Contents: Read` on `juben-dm-lab` only. Injected as `ATW_JUBEN_TOKEN` at deploy time; when missing, the archive reports "not configured" |
 
-## Accounts, commissions and the DM role
+## Accounts: readers and DMs
 
-Reading the site, the news and the public script pages never needs an account. Only two things require signing in: claiming a commission (money and payment are involved) and entering the DM archive (the answers are involved).
+Reading the site, the news and the public script pages never needs an account. Signing in buys two things: entry to the DM archive (the answers live there) and follow-up questions for the notes assistant "小织".
 
-There are three roles: `member` (can take commissions), `dm` (redeemed an invite code, can read the full archive) and `admin` (publisher, implicitly a DM). The account page and the account menu show a role badge. DM status spreads person to person: after redeeming, the sidebar hands you your own invite code to pass on.
+| Role | Shown as | What it unlocks |
+| --- | --- | --- |
+| `member` | Reader | Full-text note search, AI follow-up questions, per-section subscriptions. No code needed |
+| `dm` | DM | All of the above plus the complete script archive: opening flow, character scripts, clues, endings |
+| `admin` | Publisher | The admin console, and DM rights without redeeming anything |
 
-A commission can be written in `src/data/tasks/*.md` (published on push) or created with 「新建任务书」 (New commission) in the admin console. In the second case the body is stored in the database, the page is served at `/tasks/detail/?slug=`, and it can be exported to md and committed to git at any time. State always lives in the database: claiming, assigning, delivering and paying are all clicks on the site that take effect immediately, with no rebuild.
+DM status spreads person to person: every DM owns one persistent invite code, and after redeeming it can be copied from the sidebar of the script study room or from the account page.
+
+**Registration takes two steps**: pick why you are here ("I'm just here to read" / "I have a DM invite code"), then fill the form. The DM path adds an invite-code field; the account is created and the code redeemed in one go, landing you straight in the archive. If the code fails, that is not a failed signup: the account exists, and you land on the redemption form with a note explaining what happened.
 
 - Log in at `/account/login/`, register at `/account/register/`, and manage your account at `/account/`. A browser can keep several accounts and switch between them without re-entering passwords. The account page lists logged-in devices, and each one can be signed out individually.
+- The account overview adapts to your role: DMs see the archive (local study progress, invite code), readers see where to go and how to get a code. Contact and payee details sit inside a collapsed "collaboration details" block instead of blocking the page.
 - Forgotten passwords go through `/account/forgot/`: a one-time link that is valid for 60 minutes and is burned after use. If no mail provider is configured, it falls back to the admin generating a link and the owner sending it by hand.
-- Both posting and taking a commission have an AI helper: describe what you want in plain words, it fills in the form, and a person checks it.
-- The admin console's 「月度统计与对账」 (monthly statistics and reconciliation) page summarizes task counts, agreed amounts, payment progress and takers by delivery month or payment month, and can export a CSV statement.
 - There is only one API (`tiaozhuxiansheng.com/api/`). It also works cross-origin from the Pages mirror, but the two domains keep separate login sessions.
 
-The service code, state machine, the split between the two kinds of commissions, deployment and operations are all in [platform/README.md](../platform/README.md) (Chinese).
+## Commissions: parked, kept on disk
+
+Commissions — publishing paid tasks, claiming them, delivering and reconciling payments by month — are left over from previous work and are no longer the point of the site. While parked they disappear from the nav, the home page, the account centre and `llms.txt`; `/tasks/` shows a short note, task detail pages are not generated (deep links 404), and the sitemap skips the page because it is marked `noindex`.
+
+The code, data, API, admin console and monthly reconciliation are all still here, and `src/data/tasks/*.md` is untouched. To bring it back, build with `PUBLIC_TASKS_ENABLED=1` or flip the default in `src/data/features.js` — that file is the single switch read by the nav, the home page, the About section count, the account centre and the registration copy.
+
+The two sources of commissions, the state machine, claiming and payment, and the reconciliation rules are documented in [platform/README.md](../platform/README.md) (Chinese).
 
 ## Documentation
 

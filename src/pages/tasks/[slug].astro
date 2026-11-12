@@ -3,8 +3,11 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../lib/news.mjs';
+import { TASKS_ENABLED } from '../../data/features.js';
 
 export async function getStaticPaths() {
+  // 版块收起时不生成详情页：深链接进来就是 404，好过点开一份「暂停中」的任务书
+  if (!TASKS_ENABLED) return [];
   const tasks = await getCollection('tasks');
   return tasks.map((task) => ({ params: { slug: task.id }, props: { task } }));
 }

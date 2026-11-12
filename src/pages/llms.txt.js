@@ -6,6 +6,7 @@ import { groupNotes } from '../lib/note-groups.mjs';
 import { getIssues } from '../lib/news.mjs';
 import { getEpisodes } from '../lib/prompt-master.mjs';
 import { jubenCases } from '../data/juben.js';
+import { TASKS_ENABLED } from '../data/features.js';
 import { CANONICAL_ORIGIN, SITE_DESCRIPTION, SITE_NAME, SITE_NAME_EN, canonicalUrl } from '../lib/site.mjs';
 
 const RECENT_ISSUES = 14;
@@ -30,8 +31,8 @@ export async function GET() {
     line('AIGC 快讯', canonicalUrl('/news/'), `每天早晨出刊的 AIGC 新闻精选，每条附来源直达，共 ${issues.length} 期`),
     line('成为 Prompt 大师', canonicalUrl('/prompt-master/'), `面向小白的 prompt 拆解连载，共 ${episodes.length} 期`),
     line('音乐', canonicalUrl('/music/'), 'AI 协作创作的歌'),
-    line('剧本研究室', canonicalUrl('/juben/'), `剧本杀 DM 学习导航与跨本结构归纳，共 ${jubenCases.length} 卷；公开页无答案剧透`),
-    line('任务书', canonicalUrl('/tasks/'), '对外发布的合作任务'),
+    line('剧本研究室', canonicalUrl('/juben/'), `剧本杀 DM 学习导航与跨本结构归纳，共 ${jubenCases.length} 卷；公开页无答案剧透，完整复盘仅对持邀请码的 DM 开放`),
+    ...(TASKS_ENABLED ? [line('任务书', canonicalUrl('/tasks/'), '对外发布的合作任务')] : []),
     line('关于', canonicalUrl('/about/'), '站长、站点规矩、制作说明与许可'),
     '',
     '## 订阅与索引',

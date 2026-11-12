@@ -7,6 +7,7 @@ import MusicPlayer from '../components/MusicPlayer.astro';
 import SEO from '../components/SEO.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import { TOY, NEWS_SITE, STANDALONE, SITE_NAME, SITE_TAGLINE, stripBase } from '../lib/site.mjs';
+import { TASKS_ENABLED } from '../data/features.js';
 
 const {
   title,
@@ -49,7 +50,8 @@ const sections = [
   { key: 'news', label: 'AIGC 快讯', href: newsHref },
   { key: 'music', label: '音乐', href: nav('music/') },
   { key: 'prompt-master', label: 'Prompt 大师', href: nav('prompt-master/') },
-  { key: 'tasks', label: '任务书', href: nav('tasks/') },
+  // 任务书暂时退场（见 src/data/features.js），站点主体回到「读」与「剧本」两条线
+  ...(TASKS_ENABLED ? [{ key: 'tasks', label: '任务书', href: nav('tasks/') }] : []),
   { key: 'about', label: '关于', href: nav('about/') },
 ];
 const here = stripBase(Astro.url.pathname, base);

@@ -5,6 +5,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { formatDate } from '../../lib/news.mjs';
+import { TASKS_ENABLED } from '../../data/features.js';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tasks = (await getCollection('tasks')).sort((a, b) => b.data.date.localeCompare(a.data.date));
@@ -24,9 +25,29 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
 ---
 
 <BaseLayout
-  title="任务书"
-  description="对外发布的合作任务：明确的要求、对标素材、时间与报酬，认领前一次看清。"
+  title={TASKS_ENABLED ? '任务书' : '任务书 · 暂停中'}
+  description={TASKS_ENABLED
+    ? '对外发布的合作任务：明确的要求、对标素材、时间与报酬，认领前一次看清。'
+    : '任务书版块暂时收起，保留为存档。'}
+  noindex={!TASKS_ENABLED}
 >
+  {!TASKS_ENABLED && (
+    <div class="tasks-paused">
+      <p class="tp-kicker">Commissions · Paused</p>
+      <h1>任务书暂时收起</h1>
+      <p class="tp-lead">
+        这一栏是上一份工作留下的：对外发布合作任务、认领、交付，以及按月对账打款。
+        站点的重心已经挪到「读」与「剧本」两条线上，所以它先退出导航和首页——
+        数据、接口、管理台都原样留着，将来要重启，打开开关就回来。
+      </p>
+      <p class="tp-actions">
+        <a class="atw-primary" href={`${base}/juben/`}>去剧本研究室</a>
+        <a class="atw-ghost" href={`${base}/notes/`}>翻笔记</a>
+      </p>
+      <p class="tp-note">想聊合作，直接写信给站长：见<a href={`${base}/about/#contact`}>关于页的「找我」</a>。</p>
+    </div>
+  )}
+  {TASKS_ENABLED && (
   <div class="tasks-page">
     <header class="masthead">
       <p class="masthead-kicker">Open Commissions</p>
@@ -181,6 +202,7 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
       </div>
     </section>
   </div>
+  )}
 </BaseLayout>
 
 <script>
@@ -190,6 +212,14 @@ const exemplars = tasks.filter((t) => t.data.exemplar && t.data.deliverable);
 
 <style>
   .tasks-page { max-width: 52rem; margin: 0 auto; padding: 3.2rem 1.5rem 6rem; }
+
+  /* 版块暂停：内容退场，留一页说明，免得旧链接点进来是一片空白 */
+  .tasks-paused { max-width: 34rem; margin: 0 auto; padding: 5rem 1.5rem 7rem; text-align: center; }
+  .tp-kicker { margin: 0 0 1rem; font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
+  .tasks-paused h1 { margin: 0 0 1.2rem; font-family: var(--serif); font-size: clamp(1.6rem, 4vw, 2.2rem); }
+  .tp-lead { margin: 0 0 1.8rem; font-size: .92rem; line-height: 1.95; color: var(--ink-soft); text-align: left; }
+  .tp-actions { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; margin: 0 0 1.6rem; }
+  .tp-note { margin: 0; font-size: .8rem; line-height: 1.8; color: var(--ink-soft); }
 
   /* 刊头样式在 global.css：快讯 / 任务书 / 笔记三页共用 */
   .masthead-spec {

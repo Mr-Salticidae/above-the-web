@@ -1,23 +1,43 @@
 ---
 // 注册板块。和登录彻底分开：这边只管开号，开完直接带着登录态回原处。
 // 校验分两层——这里做即时提示（格式、强度、两次密码是否一致），服务端再判一遍权威的。
+//
+// 两步走：先选来意（读者 / 我有 DM 邀请码），再填表。
+// 选 DM 那条路会多一个邀请码字段，注册成功后立刻兑换，成功就直接进档案库；
+// 码不对不能算注册失败——账号已经建好了，把人送到兑换表单那儿重试。
 import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { TASKS_ENABLED } from '../../../data/features.js';
 ---
 
-<BaseLayout title="注册" description="注册蛛网之上的站内账号：认领任务书，或用邀请码进 DM 档案库。" noindex>
+<BaseLayout
+  title="注册"
+  description={TASKS_ENABLED
+    ? '注册蛛网之上的站内账号：读笔记、认领任务书，或用邀请码进 DM 档案库。'
+    : '注册蛛网之上的站内账号：对着知识库追问，或用邀请码进 DM 档案库。'}
+  noindex
+>
   <div class="auth-page">
     <section class="auth-aside">
       <p class="auth-kicker">Create account</p>
       <h1>注册</h1>
-      <p class="auth-lead">
-        开一个号能做两件事：任务书定人之后，报酬能打到对的人手上；拿到 DM 邀请码，能进门读完整的剧本拆解。
-        读站的人永远不需要走这一步。
-      </p>
+      {TASKS_ENABLED ? (
+        <p class="auth-lead">
+          开一个号能做两件事：任务书定人之后，报酬能打到对的人手上；拿到 DM 邀请码，能进门读完整的剧本拆解。
+          读站的人永远不需要走这一步。
+        </p>
+      ) : (
+        <p class="auth-lead">
+          开一个号能做两件事：对着知识库追问「小织」、把自己的剧本学习进度留在站里；
+          拿到 DM 邀请码的，开号就是 DM，进门能读完整的剧本拆解。读站的人永远不需要走这一步。
+        </p>
+      )}
       <ul class="auth-points">
         <li>只要用户名、邮箱、密码，不要手机号、不做实名</li>
-        <li>DM 身份靠人传人：拿到邀请码的在剧本研究室兑换，不用另外申请</li>
-        <li>联系方式与收款方式在个人中心填，只有你和发布方看得到</li>
-        <li>站内不接支付：打款走微信手动转账，站里只记时间</li>
+        <li>读者身份开箱即用；DM 身份靠人传人，得有一枚邀请码</li>
+        {TASKS_ENABLED
+          ? <li>联系方式与收款方式在个人中心填，只有你和发布方看得到</li>
+          : <li>邀请码在剧本研究室兑换，入口就在那一页，不用另外申请</li>}
+        {TASKS_ENABLED && <li>站内不接支付：打款走微信手动转账，站里只记时间</li>}
       </ul>
     </section>
 
@@ -29,8 +49,25 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <p class="auth-hint">站长把注册关了。已经有账号的话，直接<a data-login-link href="#">去登录</a>。</p>
       </div>
 
+      <!-- 第一步：选来意。两条路后面要填的东西不一样，先说清楚再让人填 -->
+      <div data-view="purpose" hidden>
+        <p class="auth-card-title">先选一个来意</p>
+        <p class="auth-hint">两种身份能做的事不一样；选错了也没关系，DM 码以后随时能补。</p>
+        <div class="auth-purpose">
+          <button class="auth-purpose-card" type="button" data-purpose="reader">
+            <strong>我只是来读</strong>
+            <span>开个读者号：翻笔记、对着「小织」追问、逛剧本公开区。学习进度存在本机。</span>
+          </button>
+          <button class="auth-purpose-card" type="button" data-purpose="dm">
+            <strong>我有 DM 邀请码</strong>
+            <span>一并填码，开号即 DM，进门就能读开本流程、角色剧本、线索与结局。</span>
+          </button>
+        </div>
+      </div>
+
       <div data-view="form" hidden>
-        <p class="auth-card-title">创建账号</p>
+        <p class="auth-card-title" data-form-title>创建账号</p>
+        <p class="auth-hint" data-form-hint hidden></p>
         <form class="atw-form" data-form="register" novalidate>
           <label>
             <span>用户名<i>登录用，2–32 位字母数字或 - _，注册后不可改</i></span>
@@ -45,7 +82,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <i class="auth-field-msg" data-field="username"></i>
           </label>
           <label>
-            <span>昵称<i>公开显示，比如任务定给你之后。留空就用用户名</i></span>
+            <span>昵称<i>公开显示：登录列表、邀请与评论里都用它</i></span>
             <input name="displayName" autocomplete="nickname" maxlength="32" />
           </label>
           <label>
@@ -69,6 +106,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <input name="confirm" type="password" autocomplete="new-password" required />
             <i class="auth-field-msg" data-field="confirm"></i>
           </label>
+          <label data-dm-code hidden>
+            <span>DM 邀请码<i>问带你的那位 DM 要，形如 XXXXX-XXXXX</i></span>
+            <input name="dmCode" autocapitalize="off" spellcheck="false" placeholder="XXXXX-XXXXX" />
+            <i class="auth-field-msg" data-field="dmCode"></i>
+          </label>
           <label data-invite hidden>
             <span>邀请码<i>站长给的注册码；DM 邀请码进门后再去剧本研究室兑换</i></span>
             <input name="inviteCode" autocapitalize="off" spellcheck="false" />
@@ -76,12 +118,17 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <label class="auth-agree">
             <input name="agree" type="checkbox" required />
             <span>
-              我填的联系方式与收款方式真实可用，明白报酬走站外手动转账、站内只记录进度。
+              {TASKS_ENABLED
+                ? '我填的联系方式与收款方式真实可用，明白报酬走站外手动转账、站内只记录进度。'
+                : '我知道这个号只靠邮箱找回：站内不收手机号，密码忘了要走邮箱重置信。'}
             </span>
           </label>
           <button class="atw-primary" type="submit">注册并登录</button>
           <p class="atw-msg" data-msg="register" role="status"></p>
         </form>
+        <p class="auth-foot auth-foot-dim">
+          <button class="auth-switch-link" type="button" data-back-purpose>← 换个来意</button>
+        </p>
         <p class="auth-foot">
           已经有账号了？<a data-login-link href="#">去登录 →</a>
         </p>
@@ -96,14 +143,41 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   const views = {
     loading: document.querySelector('[data-view="loading"]'),
     closed: document.querySelector('[data-view="closed"]'),
+    purpose: document.querySelector('[data-view="purpose"]'),
     form: document.querySelector('[data-view="form"]'),
   };
   const next = currentNext();
   const form = document.querySelector('[data-form="register"]');
+  // 'reader' | 'dm'：选 DM 那条路会多一个邀请码字段，注册后立刻兑换
+  let purpose = null;
 
   function show(name) {
     for (const [key, node] of Object.entries(views)) node.hidden = key !== name;
   }
+
+  function choosePurpose(value) {
+    purpose = value;
+    const dm = value === 'dm';
+    document.querySelector('[data-form-title]').textContent = dm ? '创建 DM 账号' : '创建读者账号';
+    document.querySelector('[data-form-hint]').hidden = !dm;
+    document.querySelector('[data-form-hint]').textContent = dm
+      ? '注册成功会直接用这枚码升级 DM；码没通过也别急，账号照建，之后在剧本研究室重试即可。'
+      : '';
+    document.querySelector('[data-dm-code]').hidden = !dm;
+    form.dmCode.required = dm;
+    show('form');
+  }
+
+  document.querySelectorAll('[data-purpose]').forEach((button) => {
+    button.addEventListener('click', () => choosePurpose(button.dataset.purpose));
+  });
+
+  document.querySelector('[data-back-purpose]').addEventListener('click', () => {
+    purpose = null;
+    form.dmCode.required = false;
+    say('');
+    show('purpose');
+  });
 
   function say(text, tone = 'error') {
     const node = document.querySelector('[data-msg="register"]');
@@ -191,6 +265,11 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       say('请先确认上面那条');
       return;
     }
+    if (purpose === 'dm' && !form.dmCode.value.trim()) {
+      fieldMsg('dmCode', '填一下邀请码，或者退回上一步选「我只是来读」');
+      say('还差一枚 DM 邀请码');
+      return;
+    }
     const button = form.querySelector('button[type="submit"]');
     button.disabled = true;
     say('创建中…', 'busy');
@@ -203,7 +282,20 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         inviteCode: form.inviteCode.value,
       });
       setSession(payload);
-      // 注册即登录：从任务书过来的送回去接着认领，直接来的进个人中心填资料
+
+      // DM 那条路：账号已经成了，接着把码兑掉。兑换失败不等于注册失败，
+      // 所以不能原地报错——送到剧本研究室的兑换表单，那里能重试、也能看到码错在哪。
+      if (purpose === 'dm') {
+        try {
+          await api('POST', '/dm/redeem', { code: form.dmCode.value.trim() });
+          location.replace(url('juben/') + '?welcome=1');
+        } catch {
+          location.replace(url('juben/') + '?dm=retry');
+        }
+        return;
+      }
+
+      // 读者那条路：从哪来回哪去，直接来的进个人中心看看自己现在能做什么
       location.replace(next || url('account/'));
     } catch (error) {
       button.disabled = false;
@@ -223,10 +315,15 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         document.querySelector('[data-invite]').hidden = false;
         form.inviteCode.required = true;
       }
-      show('form');
+      // 从剧本研究室那道门点「注册」进来的，来意已经很清楚：直接给 DM 表单，少一步点击
+      if ((next || '').includes('/juben')) {
+        choosePurpose('dm');
+        return;
+      }
+      show('purpose');
     })
     .catch(() => {
-      // 服务拿不到就先把表单放出来，提交时该报错还是会报
-      show('form');
+      // 服务拿不到就先把第一步放出来，提交时该报错还是会报
+      show('purpose');
     });
 </script>

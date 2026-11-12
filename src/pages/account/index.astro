@@ -1,11 +1,25 @@
 ---
 // 个人中心。登录后才有内容——没登录直接送去 /account/login/，登完回来。
 // 登录与注册各自成板块（account/login、account/register），这一页只管「登录之后的事」：
-// 概览与认领记录 / 资料 / 安全（改密码、登录设备、本机账号切换、退出）。
+// 概览与身份 / 资料 / 安全（改密码、登录设备、本机账号切换、退出）。
+//
+// 站点重心从「接单」挪到「读」与「剧本」之后，概览首屏按身份分流：
+// DM 看档案库与学习进度，读者看能去哪、怎么拿到 DM 身份。
+// 任务书那套（认领记录、收款资料）只在 TASKS_ENABLED 打开时才出现（src/data/features.js）。
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { jubenCases } from '../../data/juben.js';
+import { TASKS_ENABLED } from '../../data/features.js';
+
+// 学习进度存在本机 localStorage（键在 juben 页里定义），
+// 这里只把卷名与模块数带到前端，用来算完成率——不上传、不跨设备。
+const progressSeed = jubenCases.map((item) => ({
+  id: item.id,
+  title: item.title,
+  modules: Array.isArray(item.modules) ? item.modules.length : 0,
+}));
 ---
 
-<BaseLayout title="个人中心" description="蛛网之上的站内账号：资料、认领记录与登录安全。" noindex>
+<BaseLayout title="个人中心" description="蛛网之上的站内账号：身份、剧本档案与登录安全。" noindex>
   <div class="account-page">
     <p class="acc-loading" data-view="loading">正在确认登录状态…</p>
 
@@ -24,23 +38,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         <button class="acc-tab" type="button" role="tab" data-tab="security">安全</button>
       </nav>
 
-      <!-- 概览 -->
+      <!-- 概览：先说你是什么身份、能去哪；任务书只在开关打开时才出现 -->
       <section class="acc-panel" data-panel="overview">
-        <div class="acc-stats" data-stats></div>
+        <div data-home><p class="atw-empty">加载中…</p></div>
 
-        <h2 id="claims">我的认领</h2>
-        <p class="acc-note">
-          申请、定人、交付、打款的进度都在这儿。发布方定了人之后，会直接按你填的联系方式找你。
-        </p>
-        <div data-claims><p class="atw-empty">加载中…</p></div>
+        {TASKS_ENABLED && (
+          <>
+            <div class="acc-stats" data-stats></div>
+
+            <h2 id="claims">我的认领</h2>
+            <p class="acc-note">
+              申请、定人、交付、打款的进度都在这儿。发布方定了人之后，会直接按你填的联系方式找你。
+            </p>
+            <div data-claims><p class="atw-empty">加载中…</p></div>
+          </>
+        )}
       </section>
 
       <!-- 资料 -->
       <section class="acc-panel" data-panel="profile" hidden>
         <h2>资料</h2>
         <p class="acc-note">
-          联系方式和收款方式只有你自己和发布方看得到，不出现在任何公开页面、也不进任何公开接口。
-          认领任务前建议先填好，定了人当天就能对接。
+          昵称会出现在评论、邀请与登录列表里；用户名只作登录用，改不了。
         </p>
         <form class="atw-form" data-form="profile">
           <label>
@@ -48,21 +67,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
             <input name="username" disabled />
           </label>
           <label>
-            <span>昵称<i>公开显示，比如任务定给你之后</i></span>
+            <span>昵称<i>公开显示</i></span>
             <input name="displayName" maxlength="32" />
-          </label>
-          <label>
-            <span>联系方式<i>微信号 / QQ / 邮箱，能找到你就行</i></span>
-            <input name="contact" maxlength="120" />
-          </label>
-          <label>
-            <span>收款方式<i>微信 / 支付宝账号，打款时用</i></span>
-            <input name="payee" maxlength="120" />
           </label>
           <label>
             <span>一句话简介<i>可留空</i></span>
             <input name="bio" maxlength="200" />
           </label>
+          <details class="acc-fold" open={TASKS_ENABLED}>
+            <summary>合作资料（联系方式与收款方式）</summary>
+            <p class="acc-note">
+              {TASKS_ENABLED
+                ? '只有你自己和发布方看得到，不出现在任何公开页面、也不进任何公开接口。'
+                : '任务书版块暂时收起，这两项先当占位留着；将来重启对外合作时才会用到，不填也不影响现在的一切。'}
+            </p>
+            <label>
+              <span>联系方式<i>微信号 / QQ / 邮箱，能找到你就行</i></span>
+              <input name="contact" maxlength="120" />
+            </label>
+            <label>
+              <span>收款方式<i>微信 / 支付宝账号，打款时用</i></span>
+              <input name="payee" maxlength="120" />
+            </label>
+          </details>
           <button class="atw-primary" type="submit">保存资料</button>
           <p class="atw-msg" data-msg="profile" role="status"></p>
         </form>
@@ -105,6 +132,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </section>
     </div>
   </div>
+
+  <!-- 卷名与模块数：前端据此把本机学习进度换算成完成率 -->
+  <script type="application/json" id="juben-cases" set:html={JSON.stringify(progressSeed)} />
 </BaseLayout>
 
 <script>
@@ -126,6 +156,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     signOut,
     switchAccount,
     url,
+    isDm,
+    ROLE_HINT,
     ROLE_LABEL,
     TASK_STATUS_LABEL,
   } from '../../scripts/account-core.js';
@@ -181,12 +213,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   // ---------- 渲染 ----------
 
   function renderIdentity(user) {
-    const role =
-      user.role === 'admin'
+    // 三种身份都挂徽章：读者也要知道自己现在是哪一档，不然会以为「怎么什么都没解锁」
+    const badge = user.role === 'dm'
+      ? `<span class="acct-badge is-dm">${ROLE_LABEL.dm}</span>`
+      : user.role === 'admin'
         ? `<span class="acct-badge">${ROLE_LABEL.admin}</span>`
-        : user.role === 'dm'
-          ? `<span class="acct-badge is-dm">${ROLE_LABEL.dm}</span>`
-          : '';
+        : `<span class="acct-badge is-reader">${ROLE_LABEL.member}</span>`;
+    const role = badge;
     document.querySelector('[data-identity]').innerHTML = `${avatarHtml(user, 'xl')}
       <div class="acc-id-text">
         <h1>${escapeHtml(displayNameOf(user))}${role}</h1>
@@ -204,6 +237,120 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     form.payee.value = user.payee || '';
     form.bio.value = user.bio || '';
   }
+
+  // ---------- 概览：身份与去处 ----------
+
+  // 卷名与模块数由服务端在构建期塞进页面（见 frontmatter 的 progressSeed）
+  const CASES = (() => {
+    try {
+      return JSON.parse(document.getElementById('juben-cases')?.textContent || '[]') || [];
+    } catch {
+      return [];
+    }
+  })();
+  // 与 /juben/ 共用同一把钥匙：换设备不跟着走，所以文案里说清楚「记在这台机器上」
+  const PROGRESS_KEY = 'atw-juben-progress-v1';
+  let inviteInfo = null;
+
+  function readProgress() {
+    try {
+      return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}') || {};
+    } catch {
+      return {};
+    }
+  }
+
+  function vaultBlock() {
+    const progress = readProgress();
+    const rows = CASES.map((item) => {
+      const done = Array.isArray(progress[item.id]) ? progress[item.id].length : 0;
+      const total = item.modules || 0;
+      return {
+        id: item.id,
+        title: item.title,
+        done,
+        total,
+        pct: total ? Math.min(100, Math.round((done / total) * 100)) : 0,
+      };
+    });
+    const doneAll = rows.reduce((sum, row) => sum + row.done, 0);
+    const totalAll = rows.reduce((sum, row) => sum + row.total, 0);
+    const pctAll = totalAll ? Math.round((doneAll / totalAll) * 100) : 0;
+    const list = rows
+      .map(
+        (row) => `<a class="acc-vault-row" href="${url('juben/')}?case=${encodeURIComponent(row.id)}">
+          <span class="acc-vault-name">${escapeHtml(row.title)}</span>
+          <span class="acc-vault-bar"><i style="width:${row.pct}%"></i></span>
+          <span class="acc-vault-num">${row.done}/${row.total}</span>
+        </a>`,
+      )
+      .join('');
+
+    return `<section class="acc-home-block">
+        <h2>我的档案库 <a class="acc-home-more" href="${url('juben/')}">进档案库 →</a></h2>
+        <p class="acc-note">进度记在这台机器上，换设备不跟着走。点卷名直接从那一卷接着读。</p>
+        <div class="acc-vault-total">
+          <b>${pctAll}%</b>
+          <span>全部学习项完成 · ${doneAll}/${totalAll}</span>
+        </div>
+        <div class="acc-vault-rows">${list || '<p class="atw-empty">暂时没有可读的卷宗。</p>'}</div>
+        <div class="acc-invite">
+          <p class="acc-invite-label">我的邀请码</p>
+          <code id="acc-invite-code">${escapeHtml(inviteInfo ? inviteInfo.code : '……')}</code>
+          <button class="atw-ghost" type="button" data-copy-invite>复制</button>
+          <p class="acc-invite-hint">交给值得信任的准 DM；每带一人进门，传承就长一格。</p>
+        </div>
+      </section>`;
+  }
+
+  function readerBlock() {
+    return `<section class="acc-home-block">
+        <h2>你手上还没有剧本档案</h2>
+        <p class="acc-note">
+          剧本的答案、组织者手册、结局解析都不在公开页上。DM 身份是传出来的——
+          找一位已经在带本的朋友要一枚邀请码，在剧本研究室兑换即可，不用另外申请。
+        </p>
+        <p class="acc-home-actions">
+          <a class="atw-primary" href="${url('juben/')}">去剧本研究室</a>
+          <a class="atw-ghost" href="${url('notes/')}">翻笔记</a>
+        </p>
+        <p class="acc-note">
+          读者身份现在就能用：笔记全文搜索、在笔记里对着「小织」追问，以及分栏订阅。
+          兑换邀请码的表单也在剧本研究室里，登录后就能看到。
+        </p>
+      </section>`;
+  }
+
+  function renderHome(user) {
+    const host = document.querySelector('[data-home]');
+    if (!host) return;
+    const dm = isDm(user);
+    host.innerHTML = dm ? vaultBlock() : readerBlock();
+    if (dm && !inviteInfo) {
+      api('GET', '/dm/invite')
+        .then((result) => {
+          inviteInfo = result.invite;
+          const node = document.getElementById('acc-invite-code');
+          if (node && inviteInfo) node.textContent = inviteInfo.code;
+        })
+        .catch(() => {});
+    }
+  }
+
+  document.addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-copy-invite]');
+    if (!button) return;
+    const code = document.getElementById('acc-invite-code')?.textContent.trim() || '';
+    try {
+      await navigator.clipboard.writeText(code);
+      button.textContent = '已复制';
+    } catch {
+      button.textContent = '复制失败';
+    }
+    setTimeout(() => {
+      button.textContent = '复制';
+    }, 1500);
+  });
 
   function renderStats(user, claims) {
     const running = claims.filter((claim) => claim.status === 'accepted').length;
@@ -421,6 +568,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     if (cached) {
       me = cached;
       renderIdentity(cached);
+      renderHome(cached);
       document.querySelector('[data-view="loading"]').hidden = true;
       document.querySelector('[data-view="ready"]').hidden = false;
     }
@@ -431,6 +579,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
     me = user;
     renderIdentity(user);
+    renderHome(user);
     renderAccounts();
     selectTab(tabFromHash());
     document.querySelector('[data-view="loading"]').hidden = true;
@@ -439,14 +588,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       document.getElementById('claims')?.scrollIntoView({ block: 'start' });
     }
 
-    try {
-      const { claims } = await api('GET', '/my/claims');
-      renderClaims(claims);
-      renderStats(user, claims);
-    } catch {
-      document.querySelector('[data-claims]').innerHTML =
-        '<p class="atw-empty">认领记录暂时读不到，刷新试试。</p>';
-      renderStats(user, []);
+    // 任务书收起时页面里没有认领区块，就别去敲那个接口了
+    const claimsHost = document.querySelector('[data-claims]');
+    if (claimsHost) {
+      try {
+        const { claims } = await api('GET', '/my/claims');
+        renderClaims(claims);
+        renderStats(user, claims);
+      } catch {
+        claimsHost.innerHTML = '<p class="atw-empty">认领记录暂时读不到，刷新试试。</p>';
+        renderStats(user, []);
+      }
     }
     loadSessions();
   }

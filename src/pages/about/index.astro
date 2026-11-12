@@ -12,6 +12,7 @@ import { getEpisodes } from '../../lib/prompt-master.mjs';
 import { games } from '../../data/games.js';
 import manifest from '../../data/music/manifest.json';
 import { jubenCases } from '../../data/juben.js';
+import { TASKS_ENABLED } from '../../data/features.js';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -56,11 +57,14 @@ const sections = [
     count: tracks.length, unit: '首',
     desc: 'AI 协作时代的创作实验，自己做的歌。全站底部有播放器，边逛边听。',
   },
-  {
-    href: `${base}/tasks/`, label: 'Commissions', title: '任务书',
-    count: tasks.length, unit: '份',
-    desc: '对外发布的合作任务：要求、对标素材、时间与报酬一次写清。认领需要登录。',
-  },
+  // 任务书暂时收起（src/data/features.js）：卡片不摆出来，也不计入版块数
+  ...(TASKS_ENABLED
+    ? [{
+        href: `${base}/tasks/`, label: 'Commissions', title: '任务书',
+        count: tasks.length, unit: '份',
+        desc: '对外发布的合作任务：要求、对标素材、时间与报酬一次写清。认领需要登录。',
+      }]
+    : []),
 ];
 
 // 时间线：只记版块级的节点，日常迭代不入
@@ -132,7 +136,7 @@ const colophon = [
       <header class="sec-head">
         <p class="sec-kicker"><i>02</i>What's Here</p>
         <h2>站上有什么</h2>
-        <p class="sec-desc">七个版块，数字随每次构建实时更新。</p>
+        <p class="sec-desc">{sections.length} 个版块，数字随每次构建实时更新。</p>
       </header>
       <div class="map-grid">
         {sections.map((s) => (
@@ -258,7 +262,11 @@ const colophon = [
       <ul class="contact">
         <li>
           <span class="ct-k">合作</span>
-          <span><a href={`${base}/tasks/`}>任务书</a>是入口：看到合适的就认领，站内会把人对上。</span>
+          {TASKS_ENABLED ? (
+            <span><a href={`${base}/tasks/`}>任务书</a>是入口：看到合适的就认领，站内会把人对上。</span>
+          ) : (
+            <span>任务书版块暂时收起（对外合作材料还在整理）。想聊点别的，直接写信给站长。</span>
+          )}
         </li>
         <li>
           <span class="ct-k">带教与协作</span>

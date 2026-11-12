@@ -365,7 +365,16 @@ export const TASK_STATUS_LABEL = {
   closed: '已收官',
 };
 
-export const ROLE_LABEL = { admin: '发布方', member: '成员', dm: 'DM' };
+// 角色对外说法：站点重心从「接单」挪到「读」之后，member 就是读者。
+// 数据库里的值仍是 member/dm/admin，别改数据，只改叫法。
+export const ROLE_LABEL = { admin: '发布方', member: '读者', dm: 'DM' };
+
+// 每种身份「能做什么」的一句话：个人中心、登录页、注册完成后都用它对齐预期
+export const ROLE_HINT = {
+  admin: '站点的发布方，天然拥有 DM 权限',
+  dm: '持邀请码进门，能读完整的剧本拆解',
+  member: '读者身份：翻笔记、问小织；剧本公开区随便看',
+};
 
 // DM 级权限：dm 与 admin 都算（admin 是首任 DM）。页面据此切「DM 视图」。
 export function isDm(user) {

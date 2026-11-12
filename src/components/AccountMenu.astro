@@ -3,9 +3,13 @@
 // 未登录时是「登录 / 注册」两个入口；登录后是头像 + 昵称，下拉里有个人中心、
 // 切换账号（本机留着的其它账号一点就换，不用重输密码）和退出登录。
 // 下拉内容由 JS 注入，样式一律写在 global.css —— scoped 样式罩不住运行时插入的节点。
+//
+// 任务书收起后（src/data/features.js），下拉里不再摆「我的认领」，未登录提示也改口径。
+// 开关经 data-tasks 传给下面的脚本——<script> 拿不到 frontmatter 的变量。
+import { TASKS_ENABLED } from '../data/features.js';
 ---
 
-<div class="acct" data-account-menu>
+<div class="acct" data-account-menu data-tasks={TASKS_ENABLED ? 'on' : 'off'}>
   <button
     class="acct-trigger"
     type="button"
@@ -45,10 +49,11 @@
 
   if (root && trigger && face && pop) {
     let current = getCachedUser();
+    const tasksOn = root.dataset.tasks === 'on';
 
     function renderFace(user) {
       root.dataset.state = user ? 'signed-in' : 'anonymous';
-      trigger.title = user ? '账号菜单' : '登录后可认领任务';
+      trigger.title = user ? '账号菜单' : tasksOn ? '登录后可认领任务' : '登录后进 DM 档案库';
       trigger.setAttribute('aria-label', user ? `账号：${displayNameOf(user)}` : '登录');
       face.innerHTML = user
         ? `${avatarHtml(user)}<span class="acct-name">${escapeHtml(displayNameOf(user))}</span>`
@@ -82,7 +87,11 @@
             </div>`
           : '';
         pop.innerHTML = `
-          <p class="acct-hint">读站、看快讯、翻笔记都不用账号。<br />只有认领任务书要登录——那头连着报酬和打款。</p>
+          <p class="acct-hint">读站、看快讯、翻笔记都不用账号。<br />${
+            tasksOn
+              ? '只有认领任务书要登录——那头连着报酬和打款。'
+              : '登录是为了进 DM 档案库，或对着知识库追问。'
+          }</p>
           <div class="acct-cta-row">
             <a class="acct-cta" role="menuitem" href="${escapeHtml(loginUrl(next))}">登录</a>
             <a class="acct-cta is-ghost" role="menuitem" href="${escapeHtml(registerUrl(next))}">注册</a>
@@ -96,7 +105,7 @@
           ? `<span class="acct-badge">${ROLE_LABEL.admin}</span>`
           : current.role === 'dm'
             ? `<span class="acct-badge is-dm">${ROLE_LABEL.dm}</span>`
-            : '';
+            : `<span class="acct-badge is-reader">${ROLE_LABEL.member}</span>`;
       const adminLink =
         current.role === 'admin'
           ? `<a class="acct-link" role="menuitem" href="${url('admin/')}">管理台</a>`
@@ -115,7 +124,7 @@
         </div>
         <div class="acct-group">
           <a class="acct-link" role="menuitem" href="${url('account/')}">个人中心</a>
-          <a class="acct-link" role="menuitem" href="${url('account/#claims')}">我的认领</a>
+          ${tasksOn ? `<a class="acct-link" role="menuitem" href="${url('account/#claims')}">我的认领</a>` : ''}
           ${vaultLink}
           ${adminLink}
         </div>

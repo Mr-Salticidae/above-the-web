@@ -269,9 +269,14 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     // ---------- member：兑换 ----------
 
     function renderRedeem() {
-      setState('已登录 · 还差一枚邀请码');
+      // 注册时选了「我有 DM 邀请码」但码没通过：账号已经建好，落在这儿重试
+      const retry = new URLSearchParams(location.search).get('dm') === 'retry';
+      setState(retry ? '已登录 · 邀请码没通过' : '已登录 · 还差一枚邀请码');
       body.innerHTML = `
         <form class="juben-vault-redeem" id="vault-redeem">
+          ${retry
+            ? `<p class="juben-vault-msg" data-tone="error">账号已经建好了，但那枚码没通过——可能是输错了、已经被用完，或者不是 DM 码。再试一次，或者问发码的人。</p>`
+            : ''}
           <label>
             <span>邀请码</span>
             <input name="code" autocomplete="off" spellcheck="false" placeholder="XXXXX-XXXXX" required />
@@ -350,7 +355,9 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     }
 
     async function renderReader() {
-      setState(`DM · ${displayNameOf(user)}`);
+      // 注册时选「我有 DM 邀请码」且兑换成功的，落地就在这儿（?welcome=1）
+      const welcomed = new URLSearchParams(location.search).get('welcome') === '1';
+      setState(`DM · ${displayNameOf(user)}${welcomed ? ' · 欢迎入门' : ''}`);
       body.innerHTML = `
         <div class="juben-vault-reader" id="vault-reader">
           <aside class="juben-vault-side">

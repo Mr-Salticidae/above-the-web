@@ -1167,6 +1167,10 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
   border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
   background: transparent;
 }
+/* 读者是默认身份，徽章压得比 DM 弱一档：说清身份，但不抢戏 */
+.acct-badge.is-reader {
+  color: var(--ink-soft); background: transparent; border-color: var(--line);
+}
 .acct-group { padding: .35rem 0; border-top: 1px solid var(--line); }
 .acct-group:first-child { border-top: 0; }
 .acct-group-title {
@@ -1220,6 +1224,17 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 }
 .auth-card-title { margin: 0 0 .2rem; font-family: var(--serif); font-size: 1.2rem; }
 .auth-loading, .auth-hint { margin: 0; font-size: .88rem; line-height: 1.8; color: var(--ink-soft); }
+
+/* 注册第一步：两条路各一张卡，点一下即选，不用先读表单 */
+.auth-purpose { display: grid; gap: .6rem; margin: 1rem 0 0; }
+.auth-purpose-card {
+  display: grid; gap: .3rem; padding: .95rem 1rem; text-align: left; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--paper);
+  color: inherit; font: inherit; transition: border-color .15s ease, background .15s ease;
+}
+.auth-purpose-card:hover { border-color: var(--accent); background: var(--paper-2); }
+.auth-purpose-card strong { font-family: var(--serif); font-size: .95rem; font-weight: 600; }
+.auth-purpose-card span { font-size: .78rem; line-height: 1.7; color: var(--ink-soft); }
 .auth-card .atw-form { margin-top: 1.1rem; }
 .auth-card .atw-primary { justify-self: stretch; }
 .auth-pw { position: relative; display: block; }
@@ -1350,6 +1365,40 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 }
 .acc-account-actions { display: flex; gap: .4rem; flex: none; }
 .acc-danger { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+
+/* 概览首屏：身份与去处。任务书收起后，这里不再以「认领」开头 */
+.acc-home-block { margin: 1.8rem 0 .5rem; }
+.acc-home-block h2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .8rem; }
+.acc-home-more { font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .04em; color: var(--accent); text-decoration: none; }
+.acc-home-more:hover { text-decoration: underline; }
+.acc-home-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.1rem 0 1.4rem; }
+.acc-vault-total { display: flex; align-items: baseline; gap: .6rem; margin: 0 0 1rem; }
+.acc-vault-total b { font-family: var(--serif); font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.acc-vault-total span { font-size: .76rem; color: var(--ink-soft); }
+.acc-vault-rows { display: grid; gap: .1rem; border-top: 1px solid var(--line); }
+.acc-vault-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) 6rem auto; align-items: center; gap: .8rem;
+  padding: .6rem .2rem; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; font-size: .84rem;
+}
+.acc-vault-row:hover .acc-vault-name { color: var(--accent); }
+.acc-vault-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.acc-vault-bar { display: block; height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; }
+.acc-vault-bar i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.acc-vault-num { font-size: .72rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.acc-invite { margin-top: 1.6rem; padding: 1rem 1.1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); }
+.acc-invite-label { margin: 0 0 .5rem; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.acc-invite code { font-size: .95rem; letter-spacing: .1em; }
+.acc-invite .atw-ghost { margin-left: .6rem; }
+.acc-invite-hint { margin: .6rem 0 0; font-size: .74rem; line-height: 1.7; color: var(--ink-soft); }
+/* 合作资料：任务书收起时默认折叠，不占视线 */
+.acc-fold { margin: .4rem 0 .2rem; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 10px; }
+.acc-fold > summary { cursor: pointer; font-size: .84rem; color: var(--ink-soft); }
+.acc-fold[open] > summary { margin-bottom: .6rem; color: var(--ink); }
+
+@media (max-width: 560px) {
+  .acc-vault-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .acc-vault-bar { grid-column: 1 / -1; order: 3; }
+}
 
 @media (max-width: 560px) {
   .acct-name { max-width: 4.5rem; }
