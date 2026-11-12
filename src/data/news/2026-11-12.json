@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-12",
+  "headline": "Adobe MAX 实验项目探索图像转 3D，Gemini Decision 1 与 Tabletop 发布",
+  "items": [
+    {
+      "title": "Adobe MAX Sneaks：照片变 3D 场景、对话生成角色",
+      "summary": "Adobe 在 MAX 2026 上展示了多项实验性 AI 功能，包括将静态图像转化为可探索的 3D 场景、通过对话设计 AI 角色，以及将照片编辑简化为复制粘贴流程。这些技术目前处于研究阶段，但预示了视觉创作工具未来的交互方向。对图像和视频创作者而言，这类能力可能改变素材复用与角色设计的流程。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1031505/adobe-max-2026-sneaks-experiments-ai",
+      "featured": true
+    },
+    {
+      "title": "谷歌发布决策模型 Gemini Decision 1",
+      "summary": "Google DeepMind 推出首款决策模型 Gemini Decision 1，支持文本、图像、音频和视频多模态输入，可在单次请求中评估最多 1000 个封闭式问题，响应时间在 150 至 250 毫秒之间，成本约为 Gemini 3.5 Flash-Lite 的五分之一。该模型适合需要快速批量判断内容的创作者，例如素材筛选或风格分类。",
+      "category": "模型",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/E7QKIMUz3h0G0IE5Paii",
+      "featured": true
+    },
+    {
+      "title": "Creative Bloq 横评五款主流 AI 视频生成工具",
+      "summary": "Creative Bloq 对比了当前排名前五的 AI 视频生成器，重点梳理了各平台定价结构中的隐性成本。对于日常依赖 AI 视频工具的创作者，这份横评可作为选型和预算规划的参考。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/features/so-what-are-the-best-ai-video-generators-and-how-do-they-compare-on-price",
+      "featured": false
+    },
+    {
+      "title": "Google 推出协作实验项目 Tabletop",
+      "summary": "Tabletop 是 Google Labs 的新实验项目，用户可通过自然语言描述生成定制化的协作工具，如互动行程表、投票等。平台内置 vibecode 功能，降低了搭建轻量级交互应用的门槛。对需要与团队或受众协同策划内容的创作者有一定实用价值。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1031526/google-tabletop-ai-experiment-waitlist-availability",
+      "featured": false
+    },
+    {
+      "title": "DeepL Voice 新模型 Aure 支持语气与情绪迁移",
+      "summary": "DeepL 为其语音实时翻译服务推出新模型 Aure，能够在目标语言中保留原说话者的语气、情绪、重音和语速。这对制作多语言视频或播客的创作者来说，有助于在翻译过程中维持原始表达的情感层次。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/with-its-new-voice-model-deepl-voice-now-translates-intonation-and-speaking-speed-into-other-languages-as-well",
+      "featured": false
+    },
+    {
+      "title": "Adobe MAX Sneaks：Project Link Up 探索矢量设计",
+      "summary": "Adobe 研究负责人 Hailin Jin 介绍了实验项目 Project Link Up，旨在为矢量设计增加更多可玩性和交互维度。该项目属于 Adobe MAX 年度前瞻展示，具体上线时间未定。关注矢量创作的插画师和设计师可持续跟进。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/features/adobe-max-2026-sneaks-project-link-up-is-making-design-playful-again",
+      "featured": false
+    }
+  ]
+}
