@@ -1,0 +1,574 @@
+---
+// 剧本研究室 · /juben/ —— 公开学习导航与跨本结构归纳。
+// 任何凶手、完整真相、诡计解答、结局与原始剧本都不得写入 src/data/juben.js。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { jubenCases, comparisonRows, methodSteps } from '../../data/juben.js';
+
+const first = jubenCases[0];
+const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length, 0);
+---
+
+<BaseLayout
+  title="剧本研究室"
+  description="剧本杀 DM 的交互式学习档案：流程骨架、上帝视角、线索组织、复述自测与跨本结构对比。公开页面无答案剧透。"
+  section="juben"
+>
+  <div class="juben-page">
+    <header class="juben-hero">
+      <div class="juben-hero-copy">
+        <p class="masthead-kicker">Script Library · DM Notes</p>
+        <h1>剧本研究室</h1>
+        <p class="juben-hero-en">READ THE STRUCTURE, NOT JUST THE STORY</p>
+        <p class="juben-hero-desc">
+          不只把故事读完，而是把它拆成能复述、能主持、能迁移的结构。
+          每学一本，就留下一张档案；学得越多，下一本越省力。
+        </p>
+      </div>
+      <div class="juben-hero-index" aria-label="专栏概况">
+        <span>Vol. 001</span>
+        <strong>{String(jubenCases.length).padStart(2, '0')}</strong>
+        <p>卷已整理档案</p>
+        <i></i>
+        <small>{totalModules} 个学习节点<br />持续开本，持续回填</small>
+      </div>
+    </header>
+
+    <div class="juben-notice" role="note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3 3.5 7.5v5c0 4.7 3.5 7.7 8.5 9 5-1.3 8.5-4.3 8.5-9v-5L12 3Z"/><path d="M12 8v4M12 16h.01"/></svg>
+      <p><strong>公开页无答案剧透。</strong>这里只有学习路径与结构概括；凶手、完整时间线、诡计解答和结局均留在私有档案。结构类型仍属轻度提示，未玩的玩家请酌情阅读。</p>
+    </div>
+
+    <section class="juben-library" aria-labelledby="library-title">
+      <header class="juben-section-head">
+        <div>
+          <p class="juben-kicker">01 · Case Files</p>
+          <h2 id="library-title">剧本档案</h2>
+        </div>
+        <p>选一本，开始拆解。勾选进度会保存在本机。</p>
+      </header>
+
+      <div class="juben-tools">
+        <label class="juben-search">
+          <span class="sr-only">搜索剧本或标签</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg>
+          <input id="juben-search" type="search" placeholder="搜索剧名、标签或主持重点" autocomplete="off" />
+        </label>
+        <div class="juben-filters" aria-label="按学习状态筛选">
+          <button class="is-active" type="button" data-filter="all" aria-pressed="true">全部 <span>{jubenCases.length}</span></button>
+          <button type="button" data-filter="learning" aria-pressed="false">学习中</button>
+          <button type="button" data-filter="ready" aria-pressed="false">资料就绪</button>
+        </div>
+      </div>
+
+      <div class="juben-workbench">
+        <div class="juben-case-column">
+          <p class="juben-result" id="juben-result" aria-live="polite">{jubenCases.length} 卷档案</p>
+          <div class="juben-case-list" id="juben-case-list">
+            {jubenCases.map((item, index) => (
+              <button
+                class:list={['juben-case-card', { 'is-active': index === 0 }]}
+                type="button"
+                data-case={item.id}
+                data-status={item.statusKey}
+                data-search={`${item.title} ${item.english} ${item.genre} ${item.level} ${item.tags.join(' ')} ${item.compare.dm}`}
+                aria-pressed={index === 0 ? 'true' : 'false'}
+              >
+                <span class="juben-case-no">CASE {item.archive}</span>
+                <span class={`juben-status ${item.statusKey}`}>{item.status}</span>
+                <strong>{item.title}</strong>
+                <small>{item.english}</small>
+                <span class="juben-case-desc">{item.intro}</span>
+                <span class="juben-case-meta">{item.players}<i></i>{item.duration}<i></i>{item.level}</span>
+                <span class="juben-card-progress"><b data-card-progress={item.id} style="width:0%"></b></span>
+              </button>
+            ))}
+          </div>
+          <p class="juben-empty" id="juben-empty" hidden>没有找到对应档案，换个关键词试试。</p>
+        </div>
+
+        <article class="juben-detail" id="juben-detail" data-tone={first.tone} aria-live="polite">
+          <header class="juben-detail-head">
+            <div>
+              <p class="juben-detail-code" id="detail-code">CASE {first.archive} / {first.english}</p>
+              <h3 id="detail-title">{first.title}</h3>
+              <p id="detail-intro">{first.intro}</p>
+            </div>
+            <span class="juben-detail-status" id="detail-status">{first.status}</span>
+          </header>
+
+          <dl class="juben-facts" id="detail-facts">
+            <div><dt>配置</dt><dd id="fact-players">{first.players}</dd></div>
+            <div><dt>时长</dt><dd id="fact-duration">{first.duration}</dd></div>
+            <div><dt>类型</dt><dd id="fact-genre">{first.genre}</dd></div>
+            <div><dt>建议</dt><dd id="fact-level">{first.level}</dd></div>
+          </dl>
+
+          <div class="juben-current-note">
+            <span>当前注记</span>
+            <p id="detail-note">{first.note}</p>
+          </div>
+
+          <section class="juben-learning" aria-labelledby="learning-title">
+            <div class="juben-learning-head">
+              <div>
+                <p class="juben-kicker">Learning Path</p>
+                <h4 id="learning-title">学习路径</h4>
+              </div>
+              <span id="progress-label">0 / {first.modules.length}</span>
+            </div>
+            <div class="juben-progress-track" id="progress-track" role="progressbar" aria-label="当前剧本学习进度" aria-valuemin="0" aria-valuemax={first.modules.length} aria-valuenow="0">
+              <b id="progress-bar"></b>
+            </div>
+            <div class="juben-module-list" id="module-list">
+              {first.modules.map((module, index) => (
+                <span>{index + 1}. {module.title}</span>
+              ))}
+            </div>
+            <div class="juben-learning-actions">
+              <button type="button" id="copy-path">复制学习清单</button>
+              <button type="button" id="reset-progress">清空本卷进度</button>
+            </div>
+          </section>
+
+          <section class="juben-quiz" aria-labelledby="quiz-title">
+            <div class="juben-quiz-mark" aria-hidden="true">?</div>
+            <div>
+              <p class="juben-kicker">Recall Practice</p>
+              <h4 id="quiz-title">脱稿复述一题</h4>
+              <p id="quiz-question">{first.questions[0]}</p>
+              <button type="button" id="next-question">换一道 <span aria-hidden="true">→</span></button>
+            </div>
+          </section>
+
+          <footer class="juben-detail-footer">
+            <p><span></span>深度内容需私有仓库访问权限</p>
+            <div>
+              <a id="private-link" href={first.privateUrl} target="_blank" rel="noopener">DM 学习手册 <span>↗</span></a>
+              <a id="timeline-link" href={first.timelineUrl} target="_blank" rel="noopener">时间线 / 故事全貌 <span>↗</span></a>
+            </div>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <section class="juben-compare" aria-labelledby="compare-title">
+      <header class="juben-section-head">
+        <div>
+          <p class="juben-kicker">02 · Cross-reading</p>
+          <h2 id="compare-title">跨本对照</h2>
+        </div>
+        <p>比较设计结构，不比较谜底。点击维度收起无关行。</p>
+      </header>
+      <div class="juben-compare-filters" aria-label="对比维度">
+        <button class="is-active" type="button" data-group="all" aria-pressed="true">全部维度</button>
+        <button type="button" data-group="structure" aria-pressed="false">流程与机制</button>
+        <button type="button" data-group="clues" aria-pressed="false">线索与真相</button>
+        <button type="button" data-group="hosting" aria-pressed="false">主持执行</button>
+      </div>
+      <div class="juben-table-wrap">
+        <table>
+          <thead>
+            <tr><th scope="col">维度</th>{jubenCases.map((item) => <th scope="col"><span>CASE {item.archive}</span>{item.title}</th>)}</tr>
+          </thead>
+          <tbody>
+            {comparisonRows.map((row) => (
+              <tr data-group={row.group}>
+                <th scope="row">{row.label}{row.hint && <small>{row.hint}</small>}</th>
+                {jubenCases.map((item) => <td>{item.compare[row.key]}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="juben-compare-insight"><span>对照结论</span>同为六人硬核还原，两本需要训练的 DM 能力并不相同：一本更吃节奏与复盘表达，一本更吃物料与流程执行。学习路径也应因此不同。</p>
+    </section>
+
+    <section class="juben-method" aria-labelledby="method-title">
+      <header class="juben-section-head">
+        <div>
+          <p class="juben-kicker">03 · The Method</p>
+          <h2 id="method-title">下一本，怎么拆</h2>
+        </div>
+        <p>一条可以反复使用的五步学习线。</p>
+      </header>
+      <div class="juben-method-grid">
+        <div class="juben-method-intro">
+          <p>从“读完一份剧本”到“能独立带完全场”，中间隔着五次主动加工。</p>
+          <a href="https://github.com/Mr-Salticidae/knowledge-base/tree/main/07_skill存档/juben-deconstruct" target="_blank" rel="noopener">查看拆解 Skill <span>↗</span></a>
+        </div>
+        <div class="juben-accordion">
+          {methodSteps.map((step, index) => (
+            <details open={index === 0}>
+              <summary><span>{step.no}</span><strong>{step.title}</strong><i aria-hidden="true"></i></summary>
+              <div><p>{step.desc}</p><small>{step.output}</small></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <footer class="juben-colophon">
+      <p>PUBLIC INDEX / PRIVATE CASE NOTES</p>
+      <span>公开导航与私有复盘分离，让玩家仍能保留第一次推开房门的惊喜。</span>
+    </footer>
+  </div>
+
+  <script type="application/json" id="juben-data" set:html={JSON.stringify(jubenCases)}></script>
+</BaseLayout>
+
+<style>
+  .juben-page { max-width: 74rem; margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .juben-hero { min-height: 26rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3rem; padding: 4.2rem 0 3.6rem; border-bottom: 2px solid var(--ink); position: relative; }
+  .juben-hero::before { content: ""; position: absolute; width: 22rem; height: 22rem; right: 2%; top: 0; pointer-events: none; background: radial-gradient(circle, rgba(var(--glow), .12), transparent 67%); }
+  .juben-hero-copy { position: relative; }
+  .juben-hero h1 { margin: .15rem 0; font-family: var(--serif); font-size: clamp(3rem, 7vw, 5.6rem); letter-spacing: .09em; line-height: 1.12; }
+  .juben-hero-en { margin: .8rem 0 0; color: var(--accent); font-size: .66rem; letter-spacing: .24em; }
+  .juben-hero-desc { max-width: 38rem; margin: 1.5rem 0 0; color: var(--ink-soft); font-size: .98rem; line-height: 1.95; }
+  .juben-hero-index { width: 11rem; padding: 1.4rem 0 1.4rem 2rem; border-left: 1px solid var(--line); position: relative; }
+  .juben-hero-index > span { color: var(--ink-soft); font-size: .66rem; letter-spacing: .18em; }
+  .juben-hero-index strong { display: block; margin: .4rem 0 -.5rem; font-family: var(--serif); font-size: 5.6rem; font-weight: 400; line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .juben-hero-index p { margin: 0; color: var(--ink-soft); font-size: .8rem; }
+  .juben-hero-index i { display: block; width: 2.5rem; margin: 1rem 0; border-top: 1px solid var(--accent); }
+  .juben-hero-index small { color: var(--ink-soft); font-size: .72rem; line-height: 1.8; }
+  .juben-notice { display: flex; align-items: flex-start; gap: .8rem; margin: 1.5rem 0 0; padding: .85rem 1rem; background: var(--accent-soft); border-left: 2px solid var(--accent); }
+  .juben-notice svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .2rem; color: var(--accent); }
+  .juben-notice p { margin: 0; color: var(--ink-soft); font-size: .78rem; line-height: 1.7; }
+  .juben-notice strong { color: var(--ink); }
+  .juben-library, .juben-compare, .juben-method { padding-top: 4.2rem; scroll-margin-top: var(--header-h); }
+  .juben-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 1.6rem; }
+  .juben-kicker { margin: 0 0 .3rem; color: var(--accent); font-size: .64rem; font-weight: 650; letter-spacing: .18em; text-transform: uppercase; }
+  .juben-section-head h2 { margin: 0; font-family: var(--serif); font-size: 1.9rem; letter-spacing: .04em; }
+  .juben-section-head > p { max-width: 25rem; margin: 0 0 .2rem; color: var(--ink-soft); font-size: .78rem; text-align: right; }
+  .juben-tools { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .juben-search { display: flex; align-items: center; gap: .55rem; width: min(24rem, 100%); }
+  .juben-search svg { flex: none; width: 1rem; height: 1rem; color: var(--ink-soft); }
+  .juben-search input { width: 100%; padding: .5rem 0; border: 0; border-bottom: 1px solid transparent; outline: 0; background: transparent; color: var(--ink); font: inherit; font-size: .82rem; }
+  .juben-search:focus-within { border-color: var(--accent); }
+  .juben-search input::placeholder { color: var(--ink-soft); }
+  .juben-filters, .juben-compare-filters { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .juben-filters button, .juben-compare-filters button { padding: .38rem .75rem; border: 1px solid transparent; border-radius: 999px; background: transparent; color: var(--ink-soft); font: inherit; font-size: .72rem; cursor: pointer; }
+  .juben-filters button:hover, .juben-compare-filters button:hover { color: var(--ink); border-color: var(--line); }
+  .juben-filters button.is-active, .juben-compare-filters button.is-active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .juben-filters button span { margin-left: .2rem; opacity: .7; }
+  .juben-workbench { display: grid; grid-template-columns: 17.5rem minmax(0, 1fr); gap: 1.4rem; margin-top: 1.4rem; align-items: start; }
+  .juben-result { margin: 0 0 .6rem; color: var(--ink-soft); font-size: .68rem; letter-spacing: .08em; }
+  .juben-case-list { display: grid; gap: .8rem; }
+  .juben-case-card { position: relative; display: grid; grid-template-columns: 1fr auto; width: 100%; padding: 1.15rem; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); color: var(--ink); text-align: left; font: inherit; cursor: pointer; transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+  .juben-case-card:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 12px 28px -20px rgba(var(--shadow), .7); }
+  .juben-case-card.is-active { border-color: var(--accent); box-shadow: inset 3px 0 var(--accent); }
+  .juben-case-no { color: var(--accent); font-size: .62rem; letter-spacing: .15em; }
+  .juben-status { justify-self: end; padding: .08rem .45rem; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); font-size: .58rem; }
+  .juben-status.learning { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
+  .juben-case-card strong { grid-column: 1 / -1; margin-top: .65rem; font-family: var(--serif); font-size: 1.35rem; letter-spacing: .04em; }
+  .juben-case-card small { grid-column: 1 / -1; color: var(--ink-soft); font-size: .54rem; letter-spacing: .13em; }
+  .juben-case-desc { grid-column: 1 / -1; margin-top: .8rem; color: var(--ink-soft); font-size: .75rem; line-height: 1.75; }
+  .juben-case-meta { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; margin-top: .85rem; color: var(--ink-soft); font-size: .62rem; }
+  .juben-case-meta i { width: 2px; height: 2px; border-radius: 50%; background: var(--accent); }
+  .juben-card-progress { grid-column: 1 / -1; height: 2px; margin-top: .9rem; background: var(--line); }
+  .juben-card-progress b { display: block; height: 100%; background: var(--accent); transition: width .25s ease; }
+  .juben-empty { padding: 1.5rem 0; color: var(--ink-soft); font-size: .8rem; }
+  .juben-detail { --case-accent: var(--accent); min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--paper-2); overflow: hidden; }
+  .juben-detail[data-tone="bronze"] { --case-accent: #a56536; }
+  :global(:root[data-theme="dark"]) .juben-detail[data-tone="bronze"] { --case-accent: #d6a477; }
+  .juben-detail-head { display: flex; justify-content: space-between; gap: 1rem; padding: 1.6rem 1.7rem 1.35rem; border-top: 3px solid var(--case-accent); }
+  .juben-detail-code { margin: 0; color: var(--case-accent); font-size: .6rem; letter-spacing: .14em; }
+  .juben-detail-head h3 { margin: .35rem 0 .45rem; font-family: var(--serif); font-size: 2rem; letter-spacing: .05em; }
+  .juben-detail-head > div > p:last-child { max-width: 35rem; margin: 0; color: var(--ink-soft); font-size: .8rem; line-height: 1.8; }
+  .juben-detail-status { flex: none; align-self: flex-start; padding: .2rem .55rem; border: 1px solid color-mix(in srgb, var(--case-accent) 45%, var(--line)); border-radius: 999px; color: var(--case-accent); font-size: .62rem; }
+  .juben-facts { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; padding: 0 1.7rem 1.25rem; }
+  .juben-facts div { padding: .25rem .8rem .25rem 0; }
+  .juben-facts dt { color: var(--ink-soft); font-size: .58rem; letter-spacing: .12em; }
+  .juben-facts dd { margin: .15rem 0 0; font-size: .78rem; font-weight: 600; }
+  .juben-current-note { display: flex; align-items: baseline; gap: 1rem; margin: 0 1.7rem; padding: .75rem 0; border-top: 1px solid var(--line); }
+  .juben-current-note span { flex: none; color: var(--case-accent); font-size: .62rem; letter-spacing: .1em; }
+  .juben-current-note p { margin: 0; color: var(--ink-soft); font-size: .72rem; }
+  .juben-learning { margin: 1rem 1.7rem 0; padding: 1.1rem 1.2rem; border-radius: 8px; background: var(--paper-3); }
+  .juben-learning-head { display: flex; justify-content: space-between; align-items: center; }
+  .juben-learning h4, .juben-quiz h4 { margin: 0; font-family: var(--serif); font-size: 1.05rem; }
+  .juben-learning-head > span { color: var(--case-accent); font-size: .72rem; font-variant-numeric: tabular-nums; }
+  .juben-progress-track { height: 3px; margin: .8rem 0 1rem; background: var(--line); }
+  .juben-progress-track b { display: block; width: 0; height: 100%; background: var(--case-accent); transition: width .25s ease; }
+  .juben-module-list { display: grid; gap: .55rem; }
+  .juben-module { display: grid; grid-template-columns: auto 1fr; gap: .7rem; align-items: start; cursor: pointer; }
+  .juben-module input { position: absolute; opacity: 0; pointer-events: none; }
+  .juben-check { display: grid; place-items: center; width: 1.15rem; height: 1.15rem; margin-top: .12rem; border: 1px solid var(--line); border-radius: 3px; background: var(--paper-2); color: transparent; font-size: .7rem; transition: all .15s ease; }
+  .juben-module input:focus-visible + .juben-check { outline: 2px solid var(--case-accent); outline-offset: 2px; }
+  .juben-module input:checked + .juben-check { border-color: var(--case-accent); background: var(--case-accent); color: var(--paper-2); }
+  .juben-module input:checked ~ .juben-module-copy strong { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--case-accent) 55%, transparent); }
+  .juben-module-copy strong { display: block; font-size: .76rem; font-weight: 650; }
+  .juben-module-copy small { display: block; margin-top: .15rem; color: var(--ink-soft); font-size: .68rem; line-height: 1.65; }
+  .juben-learning-actions { display: flex; gap: 1rem; margin-top: 1rem; }
+  .juben-learning-actions button, .juben-quiz button { padding: 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink-soft); font: inherit; font-size: .65rem; cursor: pointer; }
+  .juben-learning-actions button:hover, .juben-quiz button:hover { color: var(--case-accent); border-color: var(--case-accent); }
+  .juben-quiz { display: grid; grid-template-columns: auto 1fr; gap: 1rem; margin: 1rem 1.7rem 0; padding: 1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .juben-quiz-mark { display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border: 1px solid color-mix(in srgb, var(--case-accent) 40%, var(--line)); border-radius: 50%; color: var(--case-accent); font-family: var(--serif); font-size: 1.4rem; }
+  .juben-quiz p:not(.juben-kicker) { margin: .55rem 0 .65rem; font-size: .78rem; line-height: 1.75; }
+  .juben-detail-footer { padding: 1rem 1.7rem 1.3rem; }
+  .juben-detail-footer > p { display: flex; align-items: center; gap: .4rem; margin: 0 0 .6rem; color: var(--ink-soft); font-size: .62rem; }
+  .juben-detail-footer > p span { width: 5px; height: 5px; border-radius: 50%; background: var(--case-accent); }
+  .juben-detail-footer > div { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .juben-detail-footer a { display: inline-flex; justify-content: space-between; gap: 1rem; padding: .5rem .75rem; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); font-size: .7rem; }
+  .juben-detail-footer a:hover { border-color: var(--case-accent); color: var(--case-accent); text-decoration: none; }
+  .juben-compare-filters { margin-bottom: 1rem; }
+  .juben-table-wrap { overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .juben-table-wrap table { width: 100%; min-width: 42rem; border-collapse: collapse; }
+  .juben-table-wrap th, .juben-table-wrap td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+  .juben-table-wrap tr:last-child th, .juben-table-wrap tr:last-child td { border-bottom: 0; }
+  .juben-table-wrap thead th { font-family: var(--serif); font-size: 1rem; }
+  .juben-table-wrap thead th:first-child { width: 19%; color: var(--ink-soft); font-family: var(--sans); font-size: .68rem; font-weight: 400; }
+  .juben-table-wrap thead th span { display: block; margin-bottom: .25rem; color: var(--accent); font-family: var(--sans); font-size: .55rem; letter-spacing: .12em; }
+  .juben-table-wrap tbody th { font-size: .75rem; font-weight: 600; }
+  .juben-table-wrap tbody th small { display: block; margin-top: .2rem; color: var(--ink-soft); font-size: .56rem; font-weight: 400; }
+  .juben-table-wrap td { color: var(--ink-soft); font-size: .75rem; }
+  .juben-table-wrap tbody tr:hover { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+  .juben-compare-insight { margin: 1rem 0 0; padding-left: 1rem; border-left: 2px solid var(--accent); color: var(--ink-soft); font-size: .75rem; line-height: 1.85; }
+  .juben-compare-insight span { margin-right: .7rem; color: var(--ink); font-weight: 650; }
+  .juben-method-grid { display: grid; grid-template-columns: 16rem 1fr; gap: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+  .juben-method-intro p { margin: 0 0 1rem; color: var(--ink-soft); font-family: var(--serif); font-size: 1.15rem; line-height: 1.9; }
+  .juben-method-intro a { font-size: .72rem; }
+  .juben-method-intro a span { margin-left: .4rem; }
+  .juben-accordion details { border-bottom: 1px solid var(--line); }
+  .juben-accordion summary { display: grid; grid-template-columns: 2.3rem 1fr auto; align-items: center; gap: .8rem; padding: 1rem 0; cursor: pointer; list-style: none; }
+  .juben-accordion summary::-webkit-details-marker { display: none; }
+  .juben-accordion summary > span { color: var(--accent); font-family: var(--serif); font-size: .85rem; }
+  .juben-accordion summary strong { font-size: .85rem; font-weight: 600; }
+  .juben-accordion summary i { position: relative; width: .8rem; height: .8rem; }
+  .juben-accordion summary i::before, .juben-accordion summary i::after { content: ""; position: absolute; left: 0; top: 50%; width: 100%; border-top: 1px solid var(--ink-soft); }
+  .juben-accordion summary i::after { transform: rotate(90deg); transition: transform .15s ease; }
+  .juben-accordion details[open] summary i::after { transform: rotate(0); }
+  .juben-accordion details > div { padding: 0 0 1.1rem 3.1rem; }
+  .juben-accordion details p { margin: 0 0 .45rem; color: var(--ink-soft); font-size: .76rem; line-height: 1.85; }
+  .juben-accordion details small { color: var(--accent); font-size: .65rem; }
+  .juben-colophon { display: flex; justify-content: space-between; gap: 1rem; margin-top: 4rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
+  .juben-colophon p { margin: 0; color: var(--accent); font-size: .58rem; letter-spacing: .14em; }
+  .juben-colophon span { color: var(--ink-soft); font-size: .65rem; }
+  @media (max-width: 900px) {
+    .juben-workbench { grid-template-columns: 14.5rem minmax(0, 1fr); }
+    .juben-case-desc { display: none; }
+    .juben-facts { grid-template-columns: repeat(2, 1fr); gap: .5rem 0; }
+    .juben-method-grid { grid-template-columns: 13rem 1fr; gap: 2rem; }
+  }
+  @media (max-width: 700px) {
+    .juben-page { padding-inline: 1.1rem; }
+    .juben-hero { min-height: 0; grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 0 2.4rem; }
+    .juben-hero-index { display: grid; grid-template-columns: auto auto 1fr; align-items: end; gap: .4rem .8rem; width: 100%; padding: 1rem 0 0; border-left: 0; border-top: 1px solid var(--line); }
+    .juben-hero-index > span { grid-column: 1 / -1; }
+    .juben-hero-index strong { margin: 0; font-size: 3.4rem; }
+    .juben-hero-index i, .juben-hero-index small { display: none; }
+    .juben-section-head { align-items: flex-start; flex-direction: column; gap: .5rem; }
+    .juben-section-head > p { text-align: left; }
+    .juben-tools { align-items: stretch; flex-direction: column; }
+    .juben-search { width: 100%; }
+    .juben-workbench { grid-template-columns: 1fr; }
+    .juben-case-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .juben-case-card { padding: .9rem; }
+    .juben-case-card strong { font-size: 1.1rem; }
+    .juben-case-card small { letter-spacing: .05em; }
+    .juben-detail-head, .juben-facts, .juben-detail-footer { padding-inline: 1.1rem; }
+    .juben-current-note, .juben-learning, .juben-quiz { margin-inline: 1.1rem; }
+    .juben-method-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .juben-method-intro p { max-width: 28rem; }
+    .juben-colophon { flex-direction: column; }
+  }
+  @media (max-width: 430px) {
+    .juben-case-list { grid-template-columns: 1fr; }
+    .juben-case-desc { display: block; }
+    .juben-detail-head { flex-direction: column; }
+    .juben-detail-status { align-self: flex-start; }
+    .juben-current-note { align-items: flex-start; flex-direction: column; gap: .25rem; }
+    .juben-detail-footer > div { flex-direction: column; }
+    .juben-detail-footer a { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .juben-case-card, .juben-card-progress b, .juben-progress-track b { transition: none; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const dataNode = document.getElementById('juben-data');
+    if (!dataNode) return;
+    const cases = JSON.parse(dataNode.textContent || '[]');
+    const byId = new Map(cases.map((item) => [item.id, item]));
+    const cards = [...document.querySelectorAll('[data-case]')];
+    const filterButtons = [...document.querySelectorAll('[data-filter]')];
+    const groupButtons = [...document.querySelectorAll('.juben-compare-filters [data-group]')];
+    const search = document.getElementById('juben-search');
+    const empty = document.getElementById('juben-empty');
+    const result = document.getElementById('juben-result');
+    const detail = document.getElementById('juben-detail');
+    const moduleList = document.getElementById('module-list');
+    const storageKey = 'atw-juben-progress-v1';
+    let activeFilter = 'all';
+    let quizIndex = 0;
+    let selected = new URLSearchParams(location.search).get('case');
+    if (!byId.has(selected)) selected = cases[0]?.id;
+
+    let progress = {};
+    try { progress = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; } catch (_) {}
+    const doneFor = (id) => Array.isArray(progress[id]) ? progress[id] : [];
+    const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(progress)); } catch (_) {} };
+    const text = (id, value) => { const el = document.getElementById(id); if (el) el.textContent = value; };
+
+    function syncCardProgress() {
+      for (const item of cases) {
+        const bar = document.querySelector(`[data-card-progress="${item.id}"]`);
+        if (bar) bar.style.width = `${Math.min(100, doneFor(item.id).length / item.modules.length * 100)}%`;
+      }
+    }
+
+    function renderModules(item) {
+      moduleList.replaceChildren();
+      const done = doneFor(item.id);
+      item.modules.forEach((module, index) => {
+        const label = document.createElement('label');
+        label.className = 'juben-module';
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.checked = done.includes(index);
+        input.setAttribute('aria-label', `完成：${module.title}`);
+        input.addEventListener('change', () => {
+          const next = new Set(doneFor(item.id));
+          if (input.checked) next.add(index); else next.delete(index);
+          progress[item.id] = [...next].sort((a, b) => a - b);
+          save();
+          updateProgress(item);
+          syncCardProgress();
+        });
+        const check = document.createElement('span');
+        check.className = 'juben-check';
+        check.textContent = '✓';
+        check.setAttribute('aria-hidden', 'true');
+        const copy = document.createElement('span');
+        copy.className = 'juben-module-copy';
+        const strong = document.createElement('strong');
+        strong.textContent = `${String(index + 1).padStart(2, '0')} · ${module.title}`;
+        const small = document.createElement('small');
+        small.textContent = module.desc;
+        copy.append(strong, small);
+        label.append(input, check, copy);
+        moduleList.append(label);
+      });
+      updateProgress(item);
+    }
+
+    function updateProgress(item) {
+      const done = doneFor(item.id).length;
+      text('progress-label', `${done} / ${item.modules.length}`);
+      const track = document.getElementById('progress-track');
+      track.setAttribute('aria-valuemax', String(item.modules.length));
+      track.setAttribute('aria-valuenow', String(done));
+      document.getElementById('progress-bar').style.width = `${done / item.modules.length * 100}%`;
+    }
+
+    function selectCase(id, updateUrl = true) {
+      const item = byId.get(id);
+      if (!item) return;
+      selected = id;
+      quizIndex = 0;
+      detail.dataset.tone = item.tone;
+      text('detail-code', `CASE ${item.archive} / ${item.english}`);
+      text('detail-title', item.title);
+      text('detail-intro', item.intro);
+      text('detail-status', item.status);
+      text('detail-note', item.note);
+      text('fact-players', item.players);
+      text('fact-duration', item.duration);
+      text('fact-genre', item.genre);
+      text('fact-level', item.level);
+      text('quiz-question', item.questions[0]);
+      document.getElementById('private-link').href = item.privateUrl;
+      document.getElementById('timeline-link').href = item.timelineUrl;
+      cards.forEach((card) => {
+        const active = card.dataset.case === id;
+        card.classList.toggle('is-active', active);
+        card.setAttribute('aria-pressed', String(active));
+      });
+      renderModules(item);
+      if (updateUrl) {
+        const url = new URL(location.href);
+        url.searchParams.set('case', id);
+        history.replaceState(null, '', url);
+      }
+    }
+
+    function applyCaseFilter() {
+      const query = (search.value || '').trim().toLocaleLowerCase('zh-CN');
+      let shown = 0;
+      for (const card of cards) {
+        const matchesStatus = activeFilter === 'all' || card.dataset.status === activeFilter;
+        const matchesQuery = !query || (card.dataset.search || '').toLocaleLowerCase('zh-CN').includes(query);
+        const visible = matchesStatus && matchesQuery;
+        card.hidden = !visible;
+        if (visible) shown += 1;
+      }
+      empty.hidden = shown > 0;
+      result.textContent = `${shown} / ${cases.length} 卷档案`;
+    }
+
+    cards.forEach((card) => card.addEventListener('click', () => selectCase(card.dataset.case)));
+    filterButtons.forEach((button) => button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      filterButtons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', String(active));
+      });
+      applyCaseFilter();
+    }));
+    search.addEventListener('input', applyCaseFilter);
+
+    groupButtons.forEach((button) => button.addEventListener('click', () => {
+      const group = button.dataset.group;
+      groupButtons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-pressed', String(active));
+      });
+      document.querySelectorAll('.juben-table-wrap tbody tr').forEach((row) => {
+        row.hidden = group !== 'all' && row.dataset.group !== group;
+      });
+    }));
+
+    document.getElementById('next-question').addEventListener('click', () => {
+      const item = byId.get(selected);
+      quizIndex = (quizIndex + 1) % item.questions.length;
+      text('quiz-question', item.questions[quizIndex]);
+    });
+
+    document.getElementById('reset-progress').addEventListener('click', () => {
+      progress[selected] = [];
+      save();
+      renderModules(byId.get(selected));
+      syncCardProgress();
+    });
+
+    document.getElementById('copy-path').addEventListener('click', async (event) => {
+      const item = byId.get(selected);
+      const checklist = [
+        `《${item.title}》学习清单`,
+        ...item.modules.map((module, index) => `${doneFor(item.id).includes(index) ? '[x]' : '[ ]'} ${index + 1}. ${module.title}：${module.desc}`),
+        '', '公开学习导航：蛛网之上 · 剧本研究室',
+      ].join('\n');
+      const button = event.currentTarget;
+      try {
+        await navigator.clipboard.writeText(checklist);
+        button.textContent = '已复制';
+      } catch (_) {
+        const area = document.createElement('textarea');
+        area.value = checklist;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.append(area);
+        area.select();
+        const ok = document.execCommand('copy');
+        area.remove();
+        button.textContent = ok ? '已复制' : '复制失败，请重试';
+      }
+      setTimeout(() => { button.textContent = '复制学习清单'; }, 1800);
+    });
+
+    selectCase(selected, false);
+    syncCardProgress();
+  })();
+</script>

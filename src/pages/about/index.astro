@@ -2,7 +2,7 @@
 // 关于 · About —— 一页说清这个站是谁做的、放了什么、按什么规矩做、怎么做出来的。
 //
 // 板块数字全部构建期从各数据源现算（笔记集合 / 快讯 JSON / Prompt 大师画廊 / games.js /
-// 音乐 manifest / 任务书集合），页面随每次构建刷新，不用手改。
+// 剧本档案 / 音乐 manifest / 任务书集合），页面随每次构建刷新，不用手改。
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SocialLinks from '../../components/SocialLinks.astro';
@@ -11,6 +11,7 @@ import { getIssues } from '../../lib/news.mjs';
 import { getEpisodes } from '../../lib/prompt-master.mjs';
 import { games } from '../../data/games.js';
 import manifest from '../../data/music/manifest.json';
+import { jubenCases } from '../../data/juben.js';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -46,6 +47,11 @@ const sections = [
     desc: '在浏览器里直接打开就玩、或免费下载带走的小作品。用 vibe coding 做的，国内直连。',
   },
   {
+    href: `${base}/juben/`, label: 'Script Library', title: '剧本研究室',
+    count: jubenCases.length, unit: '卷',
+    desc: '剧本杀 DM 的交互式学习档案：流程、时间线、线索与跨本结构对照，公开页无答案剧透。',
+  },
+  {
     href: `${base}/music/`, label: 'Music', title: '音乐',
     count: tracks.length, unit: '首',
     desc: 'AI 协作时代的创作实验，自己做的歌。全站底部有播放器，边逛边听。',
@@ -73,6 +79,7 @@ const timeline = [
   ['2026-08-18', '「音乐」板块与全站播放器', '一周后第一首歌《雨里旧信》归档。'],
   ['2026-08-24', '「小织」立角色', '查笔记小助手有了名字、性格和 Galgame 式的回头客记忆；问题还没成形时，她先帮你把它接生出来。'],
   ['2026-08-26', '快讯子站上线', 'news.tiaozhuxiansheng.com：同一份快讯的对外副本，发给 GenJi 的学员，署名与入口都做了隔离。'],
+  ['2026-11-12', '「剧本研究室」开栏', '把剧本杀资料整理成可交互的 DM 学习档案：公开结构导航，私有完整复盘，开始积累跨本对照。'],
 ];
 
 // 这站怎么做的：一行一件，左名右注
@@ -125,7 +132,7 @@ const colophon = [
       <header class="sec-head">
         <p class="sec-kicker"><i>02</i>What's Here</p>
         <h2>站上有什么</h2>
-        <p class="sec-desc">六个版块，数字随每次构建实时更新。</p>
+        <p class="sec-desc">七个版块，数字随每次构建实时更新。</p>
       </header>
       <div class="map-grid">
         {sections.map((s) => (
@@ -280,7 +287,7 @@ const colophon = [
   .prose-block p { margin: 0 0 1em; font-size: 1.04rem; line-height: 1.95; }
   .prose-block p:last-child { margin-bottom: 0; }
 
-  /* 站上有什么：六张入口卡，和首页笔记栏目卡同一种质感 */
+  /* 站上有什么：七张入口卡，和首页笔记栏目卡同一种质感 */
   .map-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr)); gap: 1rem; }
   .map-card {
     display: flex; flex-direction: column; padding: 1.15rem 1.25rem 1.3rem; color: var(--ink);

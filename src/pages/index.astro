@@ -5,6 +5,7 @@ import SpiderWeb from '../components/SpiderWeb.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import { groupNotes } from '../lib/note-groups.mjs';
 import { games } from '../data/games.js';
+import { jubenCases } from '../data/juben.js';
 import { getEpisodes, getLatestEpisodes } from '../lib/prompt-master.mjs';
 import { getLatestIssue, formatDate } from '../lib/news.mjs';
 
@@ -33,6 +34,9 @@ const openTaskCount = allTasks.filter((t) => t.data.status === 'open').length;
 const notesBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/notes/';
 const { groups, total } = groupNotes(await getCollection('notes'));
 
+// 「剧本研究室」：公开学习导航；完整复盘留在私有仓库，不在首页或专栏公开答案。
+const jubenBase = import.meta.env.BASE_URL.replace(/\/$/, '') + '/juben/';
+
 // 「关于」：hero 文案末尾的一个小入口，落在 /about/
 const aboutHref = import.meta.env.BASE_URL.replace(/\/$/, '') + '/about/';
 
@@ -44,6 +48,7 @@ const toc = [
   { id: 'plays', label: '可玩' },
   ...(allTasks.length > 0 ? [{ id: 'tasks', label: '任务书' }] : []),
   { id: 'collab', label: '协作板块' },
+  { id: 'juben', label: '剧本研究室' },
   { id: 'notes', label: '笔记' },
 ];
 
@@ -54,6 +59,7 @@ if (latestEpisodes.length > 0) kickers.push(['prompt-master', 'Prompt Master']);
 kickers.push(['plays', 'Plays']);
 if (allTasks.length > 0) kickers.push(['tasks', 'Commissions']);
 kickers.push(['collab', 'Collaboration']);
+kickers.push(['juben', 'Script Library']);
 kickers.push(['notes', 'Notes']);
 const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: String(i + 1).padStart(2, '0'), label }]));
 ---
@@ -214,6 +220,29 @@ const kickerOf = Object.fromEntries(kickers.map(([id, label], i) => [id, { no: S
       </div>
       <span class="collab-cta">进入板块 →</span>
     </a>
+  </section>
+
+  <section class="notes-peek" id="juben">
+    <header class="sec-head">
+      <p class="sec-kicker"><i>{kickerOf.juben.no}</i>{kickerOf.juben.label}</p>
+      <h2>剧本研究室</h2>
+      <p class="sec-desc">把剧本拆成能复述、能主持、能迁移的结构。每本都有学习路径与自测题；公开页不含凶手、诡计解答和结局。</p>
+    </header>
+    <div class="note-cats">
+      {jubenCases.map((item) => (
+        <a class="note-cat" href={`${jubenBase}?case=${item.id}`}>
+          <span class="nc-count">CASE {item.archive} · {item.status}</span>
+          <h3>{item.title}</h3>
+          <p>{item.intro}</p>
+        </a>
+      ))}
+      <a class="note-cat" href={`${jubenBase}#method-title`}>
+        <span class="nc-count">可复用方法</span>
+        <h3>下一本，怎么拆</h3>
+        <p>从盘点物料到现场回填的五步学习线，让每学一本都为下一本省力。</p>
+      </a>
+    </div>
+    <a class="news-peek-all" href={jubenBase}>进入剧本研究室 · {jubenCases.length} 卷档案 →</a>
   </section>
 
   <section class="notes-peek" id="notes">

@@ -44,8 +44,9 @@
 | 成为 Prompt 大师 | `/prompt-master/` | 构建时镜像 [becoming-a-prompt-master](https://github.com/Mr-Salticidae/becoming-a-prompt-master) 进 `public/` | 面向小白的 prompt 拆解连载，每期一个 battle 主题 |
 | 可玩 | 首页 `#plays` | `src/data/games.js` + `public/<作品>/` 落地页 | vibe coding 小作品：在线可玩，或免费下载的 Windows 小工具 |
 | 音乐 | `/music/` | `src/data/music/manifest.json`；音频存服务器 `/music/` | AI 协作创作的歌，全站底部有播放器 |
+| 剧本研究室 | `/juben/` | `src/data/juben.js` 公开元数据；深度内容链接到私有 `juben-dm-lab` | 可搜索筛选、记录学习进度、复述自测与跨本结构对比，公开页无答案剧透 |
 | 任务书 | `/tasks/` | `src/data/tasks/*.md`，或管理台直接新建；状态归数据库 | 对外合作任务，认领需登录 |
-| 关于 | `/about/` | 页面本身；六个版块的计数构建期现算 | 站长、规矩、时间线、制作说明、许可与联系方式 |
+| 关于 | `/about/` | 页面本身；七个版块的计数构建期现算 | 站长、规矩、时间线、制作说明、许可与联系方式 |
 
 站内还有 Pagefind 全文搜索、知识库 AI 查询（查笔记小助手「小织」）、账号中心与管理台。订阅走 [RSS](https://tiaozhuxiansheng.com/rss.xml) / [JSON Feed](https://tiaozhuxiansheng.com/feed.json)，也可以分栏订阅笔记或快讯。完整路由表见 [docs/PROJECT_MAP.md](docs/PROJECT_MAP.md)。
 
@@ -124,7 +125,7 @@ cd platform/server && npm run dev
 │  ├─ lib/              构建期数据层：kb / notes / news / prompt-master / remark 插件 / 日期 / feed / sitemap / 结构化数据
 │  ├─ integrations/     本地 Astro 集成（构建后生成 sitemap.xml）
 │  ├─ scripts/          浏览器端脚本：账号、任务注水、播放器、滚动渐现、AI 辅助、文章页增强
-│  ├─ data/             news/ 期刊 JSON · tasks/ 任务书 md · games.js · music/manifest.json
+│  ├─ data/             news/ 期刊 JSON · tasks/ 任务书 md · games.js · juben.js · music/manifest.json
 │  └─ styles/global.css 设计 token 与全局样式
 ├─ public/              静态资源与可玩作品落地页（fraud-desk、desk-pond、livelink …）
 ├─ scripts/             sync-content · stamp-assets · news-fetch · news-compose · build-news-site · build-toy-news
