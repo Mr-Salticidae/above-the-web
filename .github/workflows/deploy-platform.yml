@@ -25,15 +25,29 @@ jobs:
       - name: 跑流转回归（不过就不上线）
         run: cd platform/server && node --test test/*.test.js
 
+      # DM 剧本内容通道的令牌：有 secret 就先送到服务器暂存（后面合并进 .env），
+      # 没有就跳过——邀请码体系照常上线，只是内容接口返回「未配置」。
+      # token 建议用 fine-grained PAT，只授 juben-dm-lab 的 Contents:Read。
       - name: 同步到香港服务器并重启
         env:
           HOST: ${{ secrets.HK_HOST }}
+          JUBEN_REPO_TOKEN: ${{ secrets.JUBEN_REPO_TOKEN }}
         run: |
           test -n "$HOST" || { echo "::error::缺少仓库 secret HK_HOST（部署服务器地址），见 README「部署」一节"; exit 1; }
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.HK_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          # DM 剧本内容令牌：有 secret 就先暂存到服务器（下一步合并进 .env），
+          # 没有就跳过——邀请码体系照常上线，内容接口返回「未配置」，不会崩。
+          # token 建议用 fine-grained PAT，只授 juben-dm-lab 的 Contents: Read。
+          if [ -n "$JUBEN_REPO_TOKEN" ]; then
+            printf 'ATW_JUBEN_TOKEN=%s\n' "$JUBEN_REPO_TOKEN" \
+              | ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@"$HOST" 'umask 077; cat > /tmp/atw-juben-token'
+          else
+            echo "未配置 JUBEN_REPO_TOKEN，剧本内容通道保持未配置"
+          fi
 
           # 先把整份 platform（含 deploy 脚本）放到暂存目录，装没装过都用得上
           rsync -az --delete \
@@ -57,6 +71,17 @@ jobs:
               chown -R atwplat:atwplat /opt/atw-platform
               chmod 600 /opt/atw-platform/server/.env
               systemctl restart atw-platform
+            fi
+            # 内容令牌合并进 .env 才算真生效：先删旧行再追加，反复部署不会堆重复项
+            if [ -s /tmp/atw-juben-token ]; then
+              grep -v "^ATW_JUBEN_TOKEN=" /opt/atw-platform/server/.env > /tmp/atw-env.merge || true
+              cat /tmp/atw-juben-token >> /tmp/atw-env.merge
+              cat /tmp/atw-env.merge > /opt/atw-platform/server/.env
+              chmod 600 /opt/atw-platform/server/.env
+              chown atwplat:atwplat /opt/atw-platform/server/.env
+              rm -f /tmp/atw-env.merge /tmp/atw-juben-token
+              systemctl restart atw-platform
+              echo "已注入 DM 内容令牌并重启"
             fi
             sleep 1
             systemctl is-active atw-platform

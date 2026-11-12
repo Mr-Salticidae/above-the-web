@@ -1,7 +1,8 @@
 import http from "node:http";
-import { randomUUID } from "node:crypto";
+import { randomUUID, randomBytes } from "node:crypto";
 import { createDatabase, TASK_STATUSES, ROLES } from "./database.js";
 import { createTaskSync } from "./task-sync.js";
+import { createJubenContent } from "./juben-content.js";
 import { createMailer, passwordResetMail } from "./mailer.js";
 import {
   AssistError,
@@ -364,6 +365,10 @@ export function createApplication(config, log = console, deps = {}) {
   const mailer = deps.mailer ?? createMailer(config, log);
   // 同理：测试里换成假的助手，就能验证「送进模型的是什么、拿回来的怎么洗」而不真花钱
   const assistant = deps.assistant ?? createAssistant(config, log);
+  // 剧本内容通道：测试里注入假 fetch（deps.jubenFetcher）就能离线回归
+  const juben = createJubenContent(config, log, {
+    fetch: deps.jubenFetcher,
+  });
 
   // 开一张一次性重置票。旧的没用过的一并作废，同一时间只留一个有效链接。
   function issuePasswordReset(user, { channel = "email", issuedBy = null } = {}) {
@@ -406,6 +411,34 @@ export function createApplication(config, log = console, deps = {}) {
       throw new HttpError(403, "FORBIDDEN", "只有发布方可以执行该操作");
     }
     return auth;
+  }
+
+  // DM 级访问：dm 或 admin 都算。admin 是首任 DM（跳蛛先生本人），天然通行。
+  function isDm(user) {
+    return user && (user.role === "dm" || user.role === "admin");
+  }
+
+  function requireDm(request) {
+    const auth = authenticate(request);
+    if (!isDm(auth.user)) {
+      throw new HttpError(403, "NOT_DM", "这一区只对 DM 开放：需要邀请码升级身份");
+    }
+    return auth;
+  }
+
+  // 邀请码：Crockford base32 去掉易混字符，10 位分两组便于抄写转述
+  function newInviteCode() {
+    const alphabet = "23456789ABCDEFGHJKMNPQRSTVWXYZ";
+    const bytes = randomBytes(10);
+    const raw = Array.from(bytes, (b) => alphabet[b % alphabet.length]).join("");
+    return `${raw.slice(0, 5)}-${raw.slice(5)}`;
+  }
+
+  // 一个人一个码：需要时才长出来（兑换成功 / admin 首次打开），之后一直可用
+  function ensureInvite(user) {
+    const existing = database.findInviteByOwner(user.id);
+    if (existing) return existing;
+    return database.createInvite({ ownerUserId: user.id, code: newInviteCode() });
   }
 
   function taskOrThrow(slug) {
@@ -1103,6 +1136,103 @@ export function createApplication(config, log = console, deps = {}) {
           });
         }
         reply(200, { ok: true });
+        return;
+      }
+
+      // ---------- DM 身份与剧本研读 ----------
+
+      // 兑换邀请码：member → dm。兑换成功即拥有自己的邀请码（人传人链条长一格）。
+      if (route === "POST /api/dm/redeem") {
+        const { user } = authenticate(request);
+        const body = await readJson(request);
+        const code = clean(body.code).toUpperCase();
+        if (!code) throw new HttpError(422, "CODE_REQUIRED", "请填入邀请码");
+        if (isDm(user)) {
+          throw new HttpError(409, "ALREADY_DM", "你已经是 DM 了，不需要邀请码");
+        }
+        const invite = database.findInviteByCode(code);
+        if (!invite) {
+          throw new HttpError(404, "CODE_INVALID", "邀请码不正确");
+        }
+        if (invite.owner_user_id === user.id) {
+          // 逻辑上到不了这（码的 owner 一定是 dm/admin），守一道门
+          throw new HttpError(409, "CODE_SELF", "不能兑换自己的邀请码");
+        }
+        const inviter = database.findUserById(invite.owner_user_id);
+        if (!inviter || !isDm(inviter)) {
+          throw new HttpError(410, "CODE_OWNER_GONE", "这个邀请码的主人已不是 DM，链断了");
+        }
+        const updated = database.grantDmRole(user.id, invite.owner_user_id);
+        database.touchInviteUse(code);
+        database.createAuditLog({
+          actorUserId: user.id,
+          action: "dm.redeem",
+          targetType: "dm_invite",
+          targetId: code,
+          details: { invitedBy: invite.owner_user_id },
+        });
+        reply(200, { user: updated, invite: ensureInvite(updated) });
+        return;
+      }
+
+      // 我的邀请码：DM 首次打开才生成，一人一码、长期有效
+      if (route === "GET /api/dm/invite") {
+        const { user } = requireDm(request);
+        reply(200, { invite: ensureInvite(user) });
+        return;
+      }
+
+      // 我领进门的人：自己看得到传承，别人看不到
+      if (route === "GET /api/dm/invited") {
+        const { user } = requireDm(request);
+        const invited = database.listInvitedBy(user.id).map((row) => ({
+          username: row.username,
+          displayName: row.display_name,
+          role: row.role,
+          dmAt: row.dm_at,
+        }));
+        reply(200, { invited });
+        return;
+      }
+
+      // 剧本清单：正文元数据。配置了内容通道才有东西；没配 token 时 configured:false，
+      // 前端把阅读区换成一句「内容通道未配置」，邀请码体系照常运转。
+      if (route === "GET /api/juben/manifest") {
+        requireDm(request);
+        if (!juben.configured()) {
+          reply(200, { configured: false, cases: [] });
+          return;
+        }
+        try {
+          const result = await juben.manifest();
+          reply(200, result);
+        } catch {
+          reply(502, { error: "JUBEN_UPSTREAM", message: "剧本库暂时拉不动，稍后再试" });
+        }
+        return;
+      }
+
+      // 单篇正文：DM 才能读。id 由服务端拼路径，case/doc 都过白名单正则。
+      // 中文文件名进 URL 会变成百分号编码，先 decode 再交给内容模块校验；
+      // 校验不过（含 ../ 之类）就是 404，不存在拼路径的口子。
+      const jubenDocMatch = url.pathname.match(/^\/api\/juben\/doc\/([^/]+)\/([^/]+)$/);
+      if (jubenDocMatch && request.method === "GET") {
+        requireDm(request);
+        if (!juben.configured()) {
+          reply(200, { configured: false });
+          return;
+        }
+        let caseId = "";
+        let docId = "";
+        try {
+          caseId = decodeURIComponent(jubenDocMatch[1]);
+          docId = decodeURIComponent(jubenDocMatch[2]);
+        } catch {
+          throw new HttpError(404, "DOC_NOT_FOUND", "没有这一篇");
+        }
+        const doc = await juben.doc(caseId, docId);
+        if (!doc) throw new HttpError(404, "DOC_NOT_FOUND", "没有这一篇");
+        reply(200, { configured: true, doc });
         return;
       }
 

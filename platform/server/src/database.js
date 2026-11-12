@@ -11,7 +11,9 @@ import { hashPassword } from "./security.js";
 //   closed 已收官     —— 打款完成，闭环
 export const TASK_STATUSES = ["open", "taken", "done", "closed"];
 export const CLAIM_STATUSES = ["pending", "accepted", "rejected", "withdrawn"];
-export const ROLES = ["admin", "member"];
+// member 普通成员（认领任务用）；dm 剧本研读者（可读私有剧本拆解，靠邀请码升级）；
+// admin 发布方（天然拥有 dm 的一切权限）。
+export const ROLES = ["admin", "member", "dm"];
 // 任务书从哪来：md = git 里的 markdown（构建期渲染成静态页），web = 发布方在站内新建（正文存库）
 export const TASK_SOURCES = ["md", "web"];
 
@@ -26,13 +28,16 @@ CREATE TABLE IF NOT EXISTS users (
   display_name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE COLLATE NOCASE,
   password_hash TEXT NOT NULL,
-  role TEXT NOT NULL DEFAULT 'member' CHECK (role IN ('admin', 'member')),
+  role TEXT NOT NULL DEFAULT 'member' CHECK (role IN ('admin', 'member', 'dm')),
   status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended')),
   -- 认领任务涉及打款，需要能联系上本人。两个字段都由用户自己填、随时可改，
   -- 只有管理员和本人能读到（列表接口一律不返回）。
   contact TEXT NOT NULL DEFAULT '',
   payee TEXT NOT NULL DEFAULT '',
   bio TEXT NOT NULL DEFAULT '',
+  -- DM 身份来源：被谁用邀请码领进门（人传人链路）。admin 为空。
+  invited_by TEXT REFERENCES users(id) ON DELETE SET NULL,
+  dm_at INTEGER,
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL,
   last_login_at INTEGER
@@ -173,10 +178,20 @@ CREATE TABLE IF NOT EXISTS kb_memory (
   notes_json TEXT NOT NULL DEFAULT '[]',
   updated_at INTEGER NOT NULL
 );
+
+-- DM 邀请码：一人一码，长期有效（人传人：老 DM 把码给熟人，熟人兑换后自己也长出一枚新码）。
+-- uses 只做统计，不做次数限制——收口手段是邀请人自己手里的码不外传。
+CREATE TABLE IF NOT EXISTS dm_invites (
+  code TEXT PRIMARY KEY,
+  owner_user_id TEXT NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+  uses INTEGER NOT NULL DEFAULT 0,
+  created_at INTEGER NOT NULL,
+  last_used_at INTEGER
+);
 `;
 
 const PUBLIC_USER_COLUMNS =
-  "id, username, display_name, email, role, status, contact, payee, bio, created_at, updated_at, last_login_at";
+  "id, username, display_name, email, role, status, contact, payee, bio, invited_by, dm_at, created_at, updated_at, last_login_at";
 // 对其他用户可见的部分：联系方式与收款信息不出现在任何公开列表里
 const SAFE_USER_COLUMNS = "id, username, display_name, role, status, bio, created_at";
 
@@ -196,6 +211,49 @@ function migrate(db) {
   }
   if (!columns.has("outline")) {
     db.exec("ALTER TABLE tasks ADD COLUMN outline TEXT NOT NULL DEFAULT ''");
+  }
+
+  // users 的 role CHECK 是老库的 'admin/member'：SQLite 改不了列约束，只能整表重建。
+  // 顺带补 invited_by / dm_at 两列（新库 SCHEMA 里已带，走不到这里）。
+  const userColumns = new Set(db.prepare("PRAGMA table_info(users)").all().map((c) => c.name));
+  const needsRebuild = (() => {
+    const sql = db.prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'users'").get()?.sql || "";
+    return !sql.includes("'dm'");
+  })();
+  if (needsRebuild) {
+    const addInvitedBy = userColumns.has("invited_by") ? "invited_by" : "NULL AS invited_by";
+    const addDmAt = userColumns.has("dm_at") ? "dm_at" : "NULL AS dm_at";
+    db.exec(`
+      PRAGMA foreign_keys = OFF;
+      BEGIN;
+      CREATE TABLE users_migrated (
+        id TEXT PRIMARY KEY,
+        username TEXT NOT NULL UNIQUE COLLATE NOCASE,
+        display_name TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE COLLATE NOCASE,
+        password_hash TEXT NOT NULL,
+        role TEXT NOT NULL DEFAULT 'member' CHECK (role IN ('admin', 'member', 'dm')),
+        status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended')),
+        contact TEXT NOT NULL DEFAULT '',
+        payee TEXT NOT NULL DEFAULT '',
+        bio TEXT NOT NULL DEFAULT '',
+        invited_by TEXT REFERENCES users(id) ON DELETE SET NULL,
+        dm_at INTEGER,
+        created_at INTEGER NOT NULL,
+        updated_at INTEGER NOT NULL,
+        last_login_at INTEGER
+      );
+      INSERT INTO users_migrated (id, username, display_name, email, password_hash, role, status,
+                                   contact, payee, bio, invited_by, dm_at, created_at, updated_at, last_login_at)
+        SELECT id, username, display_name, email, password_hash, role, status,
+               contact, payee, bio, ${addInvitedBy}, ${addDmAt}, created_at, updated_at, last_login_at
+        FROM users;
+      DROP TABLE users;
+      ALTER TABLE users_migrated RENAME TO users;
+      COMMIT;
+      PRAGMA foreign_keys = ON;
+      PRAGMA foreign_key_check;
+    `);
   }
 }
 
@@ -291,6 +349,50 @@ export function createDatabase(config) {
 
     touchLastLogin(id) {
       db.prepare("UPDATE users SET last_login_at = ? WHERE id = ?").run(now(), id);
+    },
+
+    // ---------- DM 邀请制 ----------
+
+    // 兑换邀请码：member 升 dm。invited_by 记的是发码人，dm_at 记入门时刻。
+    // 前面必须先由调用方用 findInviteByCode 校验过码、且确认当前角色是 member。
+    grantDmRole(id, invitedBy) {
+      db.prepare("UPDATE users SET role = 'dm', invited_by = ?, dm_at = ?, updated_at = ? WHERE id = ?").run(
+        invitedBy ?? null,
+        now(),
+        now(),
+        id,
+      );
+      return api.findUserById(id);
+    },
+
+    findInviteByCode(code) {
+      return db.prepare("SELECT * FROM dm_invites WHERE code = ?").get(code) ?? null;
+    },
+
+    findInviteByOwner(ownerUserId) {
+      return db.prepare("SELECT * FROM dm_invites WHERE owner_user_id = ?").get(ownerUserId) ?? null;
+    },
+
+    createInvite({ ownerUserId, code }) {
+      db.prepare(
+        `INSERT INTO dm_invites (code, owner_user_id, uses, created_at) VALUES (?, ?, 0, ?)`,
+      ).run(code, ownerUserId, now());
+      return api.findInviteByOwner(ownerUserId);
+    },
+
+    touchInviteUse(code) {
+      db.prepare("UPDATE dm_invites SET uses = uses + 1, last_used_at = ? WHERE code = ?").run(now(), code);
+    },
+
+    // 我领进门的 DM：安全列即可，联系方式不外泄
+    listInvitedBy(inviterId) {
+      return db
+        .prepare(`SELECT ${SAFE_USER_COLUMNS}, dm_at FROM users WHERE invited_by = ? ORDER BY dm_at`)
+        .all(inviterId);
+    },
+
+    countDmUsers() {
+      return db.prepare("SELECT COUNT(*) AS n FROM users WHERE role = 'dm'").get().n;
     },
 
     // ---------- 会话 ----------

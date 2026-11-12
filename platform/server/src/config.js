@@ -111,5 +111,16 @@ export function getConfig(env = process.env) {
       password: env.ATW_ADMIN_PASSWORD || "change-this-before-production",
       displayName: env.ATW_ADMIN_DISPLAY_NAME || "跳蛛先生",
     },
+
+    // DM 剧本研读内容：私有仓库 juben-dm-lab 的拆解手册，只在服务器上拉取，
+    // 绝不进公开仓库（防剧透隔离）。token 缺失时整个通道优雅降级——
+    // 邀请码、角色照常可用，只是内容接口返回 configured:false。
+    juben: {
+      repo: String(env.ATW_JUBEN_REPO || "Mr-Salticidae/juben-dm-lab"),
+      token: String(env.ATW_JUBEN_TOKEN || "").trim(),
+      branch: String(env.ATW_JUBEN_BRANCH || "main").trim(),
+      // 内容清单的内存缓存 TTL（分钟）。兑换/阅读高峰不用每次都打 GitHub。
+      cacheTtlMinutes: positiveInteger(env.ATW_JUBEN_CACHE_TTL_MINUTES, 10),
+    },
   };
 }
