@@ -4,17 +4,18 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="注册" description="注册蛛网之上的站内账号：认领任务书用。" noindex>
+<BaseLayout title="注册" description="注册蛛网之上的站内账号：认领任务书，或用邀请码进 DM 档案库。" noindex>
   <div class="auth-page">
     <section class="auth-aside">
       <p class="auth-kicker">Create account</p>
       <h1>注册</h1>
       <p class="auth-lead">
-        开一个号只为一件事：任务书定人之后，报酬能打到对的人手上。
+        开一个号能做两件事：任务书定人之后，报酬能打到对的人手上；拿到 DM 邀请码，能进门读完整的剧本拆解。
         读站的人永远不需要走这一步。
       </p>
       <ul class="auth-points">
         <li>只要用户名、邮箱、密码，不要手机号、不做实名</li>
+        <li>DM 身份靠人传人：拿到邀请码的在剧本研究室兑换，不用另外申请</li>
         <li>联系方式与收款方式在个人中心填，只有你和发布方看得到</li>
         <li>站内不接支付：打款走微信手动转账，站里只记时间</li>
       </ul>
@@ -69,7 +70,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <i class="auth-field-msg" data-field="confirm"></i>
           </label>
           <label data-invite hidden>
-            <span>邀请码<i>站长给的那串</i></span>
+            <span>邀请码<i>站长给的注册码；DM 邀请码进门后再去剧本研究室兑换</i></span>
             <input name="inviteCode" autocapitalize="off" spellcheck="false" />
           </label>
           <label class="auth-agree">

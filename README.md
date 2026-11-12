@@ -4,7 +4,7 @@
 
 # 蛛网之上 · Above the Web
 
-**跳蛛先生的杂志风个人站** — 笔记 · AIGC 快讯 · Prompt 拆解连载 · 可玩 · 音乐 · 任务书
+**跳蛛先生的杂志风个人站** — 笔记 · AIGC 快讯 · Prompt 拆解连载 · 剧本杀研究室 · 可玩 · 音乐 · 任务书
 
 简体中文 · [English](docs/README_EN.md) · [日本語](docs/README_JA.md)
 
@@ -26,13 +26,16 @@
 
 ## 这是什么
 
-把一份 Obsidian 创作知识库搬上网，再让它长成一本每天都在更新的杂志。站上所有内容都围绕一件事：
-用 AI 做图像、视频、音乐时，哪些经验值得留下、哪些工具值得关注、哪些东西可以直接拿去玩。
+把一份 Obsidian 创作知识库搬上网，再让它长成一本每天都在更新的杂志。站上有两条并行的主线：
 
-三条硬约束贯穿始终：
+- **AIGC 创作线**——用 AI 做图像、视频、音乐时，哪些经验值得留下、哪些工具值得关注、哪些东西可以直接拿去玩。
+- **剧本杀研读线**——一个带本的人怎么把剧本拆开：开本流程、角色动机、线索链、结局分支。公开页只给结构和玩法，谜底锁在邀请制的 DM 档案库里。
 
-- **读站不需要账号**，页面里没有统计脚本和广告。只有认领任务书才要登录，因为那头连着报酬。
-- **静态优先**。能在构建期算好的都在构建期算好（笔记、快讯、播放列表、关于页的计数）；只有账号与任务状态走服务端。
+四条硬约束贯穿始终：
+
+- **读站不需要账号**，页面里没有统计脚本和广告。只有认领任务书和进 DM 档案库要登录——一头连着报酬，一头连着剧透。
+- **静态优先**。能在构建期算好的都在构建期算好（笔记、快讯、播放列表、关于页的计数）；只有账号、任务状态与剧本正文走服务端。
+- **剧透隔离**。答案、组织者手册、结局解析只存在私有仓库 `juben-dm-lab`，服务端鉴权后按需下发；公开页与搜索索引里永远没有谜底。
 - **国内直连**。香港服务器是主入口，桌面小工具的安装包也从这里直发，不走网盘。
 
 ## 站上有什么
@@ -44,7 +47,7 @@
 | 成为 Prompt 大师 | `/prompt-master/` | 构建时镜像 [becoming-a-prompt-master](https://github.com/Mr-Salticidae/becoming-a-prompt-master) 进 `public/` | 面向小白的 prompt 拆解连载，每期一个 battle 主题 |
 | 可玩 | 首页 `#plays` | `src/data/games.js` + `public/<作品>/` 落地页 | vibe coding 小作品：在线可玩，或免费下载的 Windows 小工具 |
 | 音乐 | `/music/` | `src/data/music/manifest.json`；音频存服务器 `/music/` | AI 协作创作的歌，全站底部有播放器 |
-| 剧本研究室 | `/juben/` | `src/data/juben.js` 公开元数据；深度内容链接到私有 `juben-dm-lab` | 可搜索筛选、记录学习进度、复述自测与跨本结构对比，公开页无答案剧透 |
+| 剧本研究室 | `/juben/` | 公开元数据在 `src/data/juben.js`；DM 档案库由服务端从私有 `juben-dm-lab` 按需拉取 | 可搜索筛选、记录学习进度、复述自测与跨本结构对比；持邀请码的 DM 另开一套完整拆解档案（开本流程、角色剧本、线索、结局） |
 | 任务书 | `/tasks/` | `src/data/tasks/*.md`，或管理台直接新建；状态归数据库 | 对外合作任务，认领需登录 |
 | 关于 | `/about/` | 页面本身；七个版块的计数构建期现算 | 站长、规矩、时间线、制作说明、许可与联系方式 |
 
@@ -64,6 +67,7 @@ flowchart LR
   BUILD -->|build-news-site.mjs| SUB["快讯子站<br/>news.tiaozhuxiansheng.com"]
   BUILD -->|build-toy-news.mjs| TOY["B 站 Toy 包"]
   API["platform/<br/>Node + node:sqlite · /api/"] <-->|账号 · 任务状态 · AI 通道| HK
+  JB[("juben-dm-lab<br/>私有仓库")] -->|Trees API + raw 正文<br/>内存缓存 10 分钟| HK
 ```
 
 - **静态主站**：Astro 5 文件系统路由 + Content Collections（笔记、任务书）。`remark-wikilink` 在构建期把 `[[双链]]` 解析成站内链接，`remark-safe-images` 先把破损图片中性化。
@@ -72,6 +76,7 @@ flowchart LR
 - **阅读与导航**：文章页吸顶目录与滚动高亮、标题锚点、Shiki 昼夜双主题代码块、阅读时长、相关笔记；跨文档 View Transitions 切页动画 + Speculation Rules 悬停预渲染。
 - **搜索**：Pagefind 在构建后为 `dist/` 生成静态索引，零后端；顶栏、页脚、播放器等站点框架不进索引。
 - **知识库 AI 查询**：Pagefind 先找相关笔记，登录用户再通过站内 AI 通道获得带原文引用的多轮回答。
+- **DM 剧本档案**：正文不进公开仓库。服务端持一枚只读 token，走 GitHub Trees API 取 `juben-dm-lab` 的目录树、按需取 raw markdown，按 DM 阅读顺序分组后下发给客户端，内存缓存 10 分钟（`ATW_JUBEN_CACHE_TTL_MINUTES` 可调）。token 缺失时通道优雅降级——档案库显示「未配置」，邀请码与站内其余部分照常。
 - **账号与任务流转**：`platform/`，零第三方依赖的 Node 服务，跑在香港服务器，nginx 反代到 `tiaozhuxiansheng.com/api/`。
 - **三种构建变体**：主站（默认）、`TOY_NEWS=1`（B 站 Toy 包）、`NEWS_SITE=1`（快讯子站）。后两种只带快讯，导航改指线上主站的绝对地址。
 
@@ -172,6 +177,20 @@ cd platform/server && npm run dev
   - 有服务器私钥的电脑：`collect-music.mjs` 从散落的创作目录把歌归拢进 `music-library/` → `upload-music.mjs` 上传并逐个回查 → `music-manifest.mjs` 生成清单初稿。
   - 没有私钥的电脑：把音频传到 Release `music-inbox`，手动跑 `music-inbox.yml`，由 CI 转码、上传、核对并清理附件（仓库公开，附件在搬走前人人可下载，只放决定上架的歌）。
 
+### 剧本研究室：公开索引与 DM 档案库
+
+同一个剧本在站上分两层放，中间隔着一道邀请制：
+
+| 层 | 谁能看 | 有什么 | 从哪来 |
+| --- | --- | --- | --- |
+| 公开索引 `/juben/` | 任何人 | 剧本条目、类型、人数、时长、难度、五维评分、学习清单与本机进度 | `src/data/juben.js`，构建期渲染，无答案剧透 |
+| DM 档案库 `/juben/`（登录后） | 持邀请码的 DM | 开卷总览、对外学习包、角色剧本、线索卡、组织者手册、音视频转写、结局解析 | 服务端从私有 `juben-dm-lab` 按需拉取 |
+
+- **身份是传出来的**：每位 DM 有一枚常驻邀请码（`dm_invites`），兑换即升级为 `dm` 角色，`users.invited_by` 记下是谁带进来的。第一位 DM 是站长本人；`admin` 天然拥有 DM 权限，不需要兑换。
+- **两种邀请码别混**：注册邀请码解决「能不能开号」（`meta.requiresInvite` 控制），DM 邀请码解决「能不能看谜底」。后者在剧本研究室里兑换，与注册流程互不相干。
+- **正文只经服务端**：客户端不接触 `juben-dm-lab`。服务端用只读 token 取目录树、按需读 raw markdown，再按 DM 的阅读顺序分组下发（开卷 · 总览 / 对外学习包 / 角色剧本 / 线索卡 / 开本资料…），分册按「第一册…第五册」排序，中文目录名与嵌套路径都按原样保留。
+- **配置**：给本仓库加 secret `JUBEN_REPO_TOKEN`（fine-grained PAT，只授 `juben-dm-lab` 的 `Contents: Read`），`deploy-platform.yml` 会把它合并进服务器 `.env` 的 `ATW_JUBEN_TOKEN`。不配也能上线，只是档案库显示「内容通道未配置」。
+
 ## 部署
 
 同一次 `deploy.yml` 产出三个目标：
@@ -196,10 +215,15 @@ cd platform/server && npm run dev
 | `HK_SSH_KEY` | 香港服务器的部署私钥（主站、子站、账号服务共用） |
 | `DASHSCOPE_API_KEY` | 每日快讯的选稿与摘要模型 |
 | `TOY_SESSION` | B 站 Toy CLI 的登录态（`~/.toy/session.json` 原文） |
+| `JUBEN_REPO_TOKEN` | DM 档案库的只读令牌：fine-grained PAT，只授 `juben-dm-lab` 的 `Contents: Read`。部署时注入 `ATW_JUBEN_TOKEN`；未配置时档案库降级为「未配置」 |
 
-## 账号与任务书
+## 账号、任务书与 DM 身份
 
-读站永远不需要账号。任务书可以写在 `src/data/tasks/*.md`（push 即发布），也可以在管理台「新建任务书」里直接发，后者正文存数据库、页面走 `/tasks/detail/?slug=`，随时能导出成 md 提进 git。状态一律归数据库：认领、定人、交付、打款在站内点，实时生效，不用重新构建。
+读站、看快讯、逛剧本公开区永远不需要账号。要登录的只有两件事：认领任务书（那头连着报酬和打款），以及用邀请码进 DM 档案库（那头是剧本的谜底）。
+
+账号有三种角色：`member`（普通成员，能接任务书）、`dm`（持邀请码进门，能读完整档案）、`admin`（发布方，天然是 DM）。个人中心与账号菜单都有角色徽章。DM 身份靠人传人：在剧本研究室兑换后，侧栏就能复制自己的邀请码继续往下传。
+
+任务书可以写在 `src/data/tasks/*.md`（push 即发布），也可以在管理台「新建任务书」里直接发，后者正文存数据库、页面走 `/tasks/detail/?slug=`，随时能导出成 md 提进 git。状态一律归数据库：认领、定人、交付、打款在站内点，实时生效，不用重新构建。
 
 - 登录 `/account/login/`、注册 `/account/register/`、个人中心 `/account/`。本机可同时留几个账号，切换不用重输密码；个人中心能看登录设备、单独踢掉某一处。
 - 忘记密码走 `/account/forgot/`：一次性链接 60 分钟有效、用过即焚。发信通道未配时自动退回「管理台生成链接、站长人工发」。
@@ -247,4 +271,5 @@ cd platform/server && npm run dev
 - **站点源码**以 [MIT](LICENSE) 许可开源：代码、构建脚本、工作流、服务端都可以自由使用、修改与再分发，保留版权声明即可。
 - **笔记内容**遵循源仓库的 [CC BY-NC 4.0](https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md)：署名、非商业，转载改写请保留作者与仓库链接。
 - **快讯摘要**为站内编辑，转载注明「蛛网之上」即可；原文版权归各来源。
+- **剧本杀拆解内容不随站点开源**：`juben-dm-lab` 是独立私有仓库，其中的剧本原文、组织者手册与拆解笔记版权归原剧本作者与拆解者，站点只经鉴权后向持邀请码的 DM 提供阅读。fork 本仓库不会得到这些内容，也不应另行收集搬运。
 - **不在 MIT 范围内**：站名与标识、「小织」形象图、音乐作品，以及 `public/` 下由他人创作的作品（如 X-nian 的字幕转换器、GenJi 的标识）。fork 时请换成你自己的素材。

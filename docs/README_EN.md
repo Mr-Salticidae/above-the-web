@@ -6,7 +6,7 @@
 
 # 蛛网之上 · Above the Web
 
-**A magazine-style personal site by 跳蛛先生 (Mr. Jumping Spider)**: notes, daily AIGC news, a prompt-breakdown series, playable toys, music and paid commissions.
+**A magazine-style personal site by 跳蛛先生 (Mr. Jumping Spider)**: notes, daily AIGC news, a prompt-breakdown series, a study room for murder-mystery (剧本杀) scripts, playable toys, music and paid commissions.
 
 [简体中文](../README.md) · English · [日本語](README_JA.md)
 
@@ -30,12 +30,16 @@
 
 ## What this is
 
-It started as an Obsidian knowledge base about creative work with AI, put on the web, and grew into a magazine that updates every day. Everything on the site is about one question: when you make images, video and music with AI, which lessons are worth keeping, which tools are worth watching, and what can you just pick up and play with?
+It started as an Obsidian knowledge base about creative work with AI, put on the web, and grew into a magazine that updates every day. There are two parallel threads:
 
-Three rules hold throughout:
+- **The AIGC thread** — when you make images, video and music with AI, which lessons are worth keeping, which tools are worth watching, and what can you just pick up and play with?
+- **The murder-mystery thread** — how a game master takes a 剧本杀 script apart: the opening flow, character motives, the clue chain, the branch endings. The public pages give you structure and mechanics; the answers stay locked in an invite-only DM archive.
 
-- **Reading never requires an account.** There are no analytics scripts or ads. You only log in to claim a commission, because that involves payment.
-- **Static first.** Anything that can be computed at build time is computed at build time: notes, news, the playlist, the counters on the About page. Only accounts and task state live on a server.
+Four rules hold throughout:
+
+- **Reading never requires an account.** There are no analytics scripts or ads. You only log in to claim a commission, because that involves payment, or to enter the DM archive, because that involves spoilers.
+- **Static first.** Anything that can be computed at build time is computed at build time: notes, news, the playlist, the counters on the About page. Only accounts, task state and script bodies live on a server.
+- **Spoiler isolation.** Answers, organiser handbooks and ending analyses exist only in the private `juben-dm-lab` repository and are served to authorised DMs on demand. Public pages and the search index never contain them.
 - **Directly reachable from mainland China.** A Hong Kong server is the main entry point. Installers for the desktop toys are served from there too, not from a cloud drive.
 
 ## What's on the site
@@ -47,8 +51,9 @@ Three rules hold throughout:
 | Becoming a Prompt Master | `/prompt-master/` | [becoming-a-prompt-master](https://github.com/Mr-Salticidae/becoming-a-prompt-master) mirrored into `public/` at build time | A beginner-friendly series that breaks down prompts, one "battle" theme per episode |
 | Plays | Home page `#plays` | `src/data/games.js` plus a landing page in `public/<slug>/` | Small vibe-coded works: play online, or download a free Windows tool |
 | Music | `/music/` | `src/data/music/manifest.json`. Audio lives on the server under `/music/` | Songs made with AI. A player sits at the bottom of every page |
+| Script Study Room | `/juben/` | Public metadata in `src/data/juben.js`; the DM archive is pulled from the private `juben-dm-lab` on demand by the server | Search and filter scripts, track study progress, self-quiz and compare structure across scripts. DMs holding an invite code also get the full breakdown: opening flow, character scripts, clues, endings |
 | Commissions | `/tasks/` | `src/data/tasks/*.md`, or created in the admin console. State lives in the database | Paid collaboration tasks. Claiming one requires an account |
-| About | `/about/` | The page itself. Counts for the six sections are computed at build time | The owner, house rules, timeline, how it's built, licenses and contact |
+| About | `/about/` | The page itself. Counts for the seven sections are computed at build time | The owner, house rules, timeline, how it's built, licenses and contact |
 
 The site also has Pagefind full-text search, an AI assistant for the notes ("小织", Xiaozhi), an account center and an admin console. Subscribe via [RSS](https://tiaozhuxiansheng.com/rss.xml) or [JSON Feed](https://tiaozhuxiansheng.com/feed.json), or subscribe to notes or news separately. The full route table is in [PROJECT_MAP.md](PROJECT_MAP.md) (Chinese).
 
@@ -66,6 +71,7 @@ flowchart LR
   BUILD -->|build-news-site.mjs| SUB["News subsite<br/>news.tiaozhuxiansheng.com"]
   BUILD -->|build-toy-news.mjs| TOY["Bilibili Toy package"]
   API["platform/<br/>Node + node:sqlite · /api/"] <-->|accounts · task state · AI| HK
+  JB[("juben-dm-lab<br/>private repo")] -->|Trees API + raw bodies<br/>10-minute memory cache| HK
 ```
 
 - **Static site**: Astro 5 file-based routing with Content Collections for notes and commissions. At build time `remark-wikilink` resolves `[[wikilinks]]` into site links, and `remark-safe-images` neutralizes broken images first.
@@ -74,6 +80,7 @@ flowchart LR
 - **Reading and navigation**: a sticky table of contents with scroll-spy, heading anchors, Shiki code blocks with light and dark themes, reading time and related notes. Page changes use cross-document View Transitions, and Speculation Rules prerender on hover.
 - **Search**: Pagefind builds a static index over `dist/` after the build, so there is no search backend. Site chrome such as the header, footer and player is excluded from the index.
 - **AI search over the notes**: Pagefind finds relevant notes first. Logged-in users then get multi-turn answers that quote the original notes, through the site's AI channel.
+- **DM script archive**: script bodies never enter the public repo. The server holds a read-only token, walks the `juben-dm-lab` tree through the GitHub Trees API, fetches raw markdown on demand, groups documents in DM reading order and sends them to the client, with a 10-minute in-memory cache (`ATW_JUBEN_CACHE_TTL_MINUTES`). Without a token the channel degrades gracefully: the archive reports "not configured" and invites plus the rest of the site keep working.
 - **Accounts and task flow**: `platform/` is a Node service with no third-party dependencies. It runs on the Hong Kong server behind nginx at `tiaozhuxiansheng.com/api/`.
 - **Three build variants**: the main site (default), `TOY_NEWS=1` (the Bilibili Toy package) and `NEWS_SITE=1` (the news subsite). The last two contain only the news, and their navigation points at absolute URLs on the main site.
 
@@ -174,6 +181,20 @@ Without it, the schedule and pushes still keep things in sync, just not instantl
   - From a computer that has the server key: `collect-music.mjs` gathers songs from scattered project folders into `music-library/`. `upload-music.mjs` uploads them and checks each file on the server. `music-manifest.mjs` then drafts the manifest.
   - From a computer without the key: upload the audio to the `music-inbox` Release and run `music-inbox.yml` by hand. CI transcodes, uploads, verifies and then cleans up the attachments. The repo is public, so the attachments can be downloaded by anyone until they are moved. Only put songs there that you have decided to publish.
 
+### Script Study Room: public index and DM archive
+
+Each script is published in two layers, separated by an invite gate:
+
+| Layer | Who can read it | What's in it | Where it comes from |
+| --- | --- | --- | --- |
+| Public index `/juben/` | Anyone | Script entries, genre, player count, duration, difficulty, five-axis rating, study checklist and local progress | `src/data/juben.js`, rendered at build time, no spoilers |
+| DM archive `/juben/` (signed in) | DMs holding an invite code | Overview, outward-facing study pack, character scripts, clue cards, organiser handbook, audio/video transcripts, ending analysis | Pulled from the private `juben-dm-lab` on demand by the server |
+
+- **Identity is handed down.** Every DM owns a persistent invite code (`dm_invites`). Redeeming one promotes the account to the `dm` role and records who brought them in (`users.invited_by`). The first DM is the site owner; `admin` already has DM rights and never needs to redeem.
+- **Two kinds of invite code, don't mix them.** The registration code answers "may I create an account" (controlled by `meta.requiresInvite`); the DM code answers "may I read the answers". The latter is redeemed inside the study room and has nothing to do with signing up.
+- **Bodies only travel through the server.** The client never touches `juben-dm-lab`. The server lists the tree with a read-only token, reads raw markdown on demand, then groups documents in DM reading order (overview / study pack / character scripts / clue cards / opening materials…) and sorts volumes as 第一册…第五册, keeping Chinese directory names and nested paths intact.
+- **Setup**: add a `JUBEN_REPO_TOKEN` secret to this repository (a fine-grained PAT with `Contents: Read` on `juben-dm-lab` only). `deploy-platform.yml` merges it into the server's `.env` as `ATW_JUBEN_TOKEN`. Without it the site still deploys; the archive just reports "not configured".
+
 ## Deployment
 
 One run of `deploy.yml` produces three targets:
@@ -198,10 +219,15 @@ Repository secrets:
 | `HK_SSH_KEY` | Deploy key for the Hong Kong server, shared by the main site, the subsite and the account service |
 | `DASHSCOPE_API_KEY` | The model that picks and summarizes the daily news |
 | `TOY_SESSION` | Login session for the Bilibili Toy CLI (raw contents of `~/.toy/session.json`) |
+| `JUBEN_REPO_TOKEN` | Read-only token for the DM archive: a fine-grained PAT with `Contents: Read` on `juben-dm-lab` only. Injected as `ATW_JUBEN_TOKEN` at deploy time; when missing, the archive reports "not configured" |
 
-## Accounts and commissions
+## Accounts, commissions and the DM role
 
-Reading never needs an account. A commission can be written in `src/data/tasks/*.md` (published on push) or created with 「新建任务书」 (New commission) in the admin console. In the second case the body is stored in the database, the page is served at `/tasks/detail/?slug=`, and it can be exported to md and committed to git at any time. State always lives in the database: claiming, assigning, delivering and paying are all clicks on the site that take effect immediately, with no rebuild.
+Reading the site, the news and the public script pages never needs an account. Only two things require signing in: claiming a commission (money and payment are involved) and entering the DM archive (the answers are involved).
+
+There are three roles: `member` (can take commissions), `dm` (redeemed an invite code, can read the full archive) and `admin` (publisher, implicitly a DM). The account page and the account menu show a role badge. DM status spreads person to person: after redeeming, the sidebar hands you your own invite code to pass on.
+
+A commission can be written in `src/data/tasks/*.md` (published on push) or created with 「新建任务书」 (New commission) in the admin console. In the second case the body is stored in the database, the page is served at `/tasks/detail/?slug=`, and it can be exported to md and committed to git at any time. State always lives in the database: claiming, assigning, delivering and paying are all clicks on the site that take effect immediately, with no rebuild.
 
 - Log in at `/account/login/`, register at `/account/register/`, and manage your account at `/account/`. A browser can keep several accounts and switch between them without re-entering passwords. The account page lists logged-in devices, and each one can be signed out individually.
 - Forgotten passwords go through `/account/forgot/`: a one-time link that is valid for 60 minutes and is burned after use. If no mail provider is configured, it falls back to the admin generating a link and the owner sending it by hand.
@@ -251,4 +277,5 @@ Lessons learned while building the site are published in the notes under the [�
 - **Site source code** is open source under the [MIT](../LICENSE) license. You may freely use, modify and redistribute the code, build scripts, workflows and server, as long as you keep the copyright notice.
 - **Notes** follow the source repository's [CC BY-NC 4.0](https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md) license: give credit, no commercial use, and keep the author and repository link when you repost or adapt them.
 - **News summaries** are written by the site. To repost a summary, credit 「蛛网之上」 (Above the Web). Copyright in the original reporting belongs to each source.
+- **Script breakdowns are not open sourced with the site.** `juben-dm-lab` is a separate private repository; the script texts, organiser handbooks and breakdown notes in it belong to the original script authors and the person who did the breakdown. The site only serves them to invite-holding DMs after authentication. Forking this repository gives you none of that content, and you should not go collect it either.
 - **Not covered by MIT**: the site name and logo, the 「小织」 character art, the music, and works by other people under `public/` (such as X-nian's subtitle converter and GenJi's logo). Replace them with your own assets when you fork.

@@ -1,4 +1,4 @@
-最后更新：2026-11-12
+最后更新：2026-11-13
 
 # 项目页面地图
 
@@ -14,7 +14,7 @@
 | `/notes/rss.xml` | `src/pages/notes/rss.xml.js` | 笔记 RSS：最近发布的 30 篇，带全文。 |
 | `/about/` | `src/pages/about/index.astro` | 关于页：站长与站点定位、七个版块入口（构建期实时计数）、站点规矩、版块时间线、制作说明、许可与联系方式。 |
 | `/music/` | `src/pages/music/index.astro` | 音乐板块：曲库列表，点播放交给全站底部播放器。 |
-| `/juben/` | `src/pages/juben/index.astro` | 剧本研究室：公开学习导航、剧本搜索筛选、本机学习进度、复述自测与跨本结构对照；完整复盘仅链接到私有仓库。 |
+| `/juben/` | `src/pages/juben/index.astro` | 剧本研究室：公开学习导航、剧本搜索筛选、本机学习进度、复述自测与跨本结构对照；完整复盘（开本流程、角色剧本、线索、结局）由服务端从私有仓库 `juben-dm-lab` 按需下发，仅限持邀请码的 DM。 |
 | `/music/playlist.json` | `src/pages/music/playlist.json.js` | 构建期从曲目 manifest 导出的播放列表 JSON，供全站播放器读取，不是面向访客的页面。 |
 | `/news/` | `src/pages/news/index.astro` | AIGC 快讯首页，展示最新一期全文及往期归档。 |
 | `/news/[date]/` | `src/pages/news/[date].astro` | AIGC 快讯单期归档页，按日期生成，并提供前后期导航。 |
