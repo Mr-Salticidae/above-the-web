@@ -106,6 +106,29 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .md-table td { color: var(--ink-soft); }
 .md-table code { font-size: .92em; }
 
+/* 白板示意图：中文框线必须按等宽排版，不能折行，也不能被 prose 的 pre 配色吞掉。
+   DM 现场要照着它手抄到白板上，所以保留原始缩进、只给横向滚动。 */
+/* 档案库页面自带 `.juben-vault-doc-body pre` / `code` 的 scoped 规则，
+   与这里同为 (0,1,1)/(0,1,2)，谁在后谁说了算——不能赌样式表的拼接顺序。
+   追加一条带父级的复合选择器把优先级抬到 (0,2,1)/(0,2,2)，
+   保证 white-space:pre、等宽字号和深色对比不会被 scoped 规则覆盖。 */
+pre.md-whiteboard,
+.juben-vault-doc-body pre.md-whiteboard {
+  margin: 1.2em 0; padding: 1.1rem 1.2rem; overflow-x: auto;
+  border: 1px solid var(--line); border-radius: 10px;
+  background: var(--paper-2);
+  /* 中文框线要对齐，优先挑「拉丁半角 / 汉字全角恰好 2 倍」的等宽字体；
+     没有这些字体时退回系统等宽，窄屏仍可横向滚动，不会折行撕开画框。 */
+  font-family: "Sarasa Mono SC", "Noto Sans Mono CJK SC", "NSimSun", "MS Gothic",
+               ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: .8rem; line-height: 1.85; letter-spacing: 0; tab-size: 2;
+  white-space: pre; word-break: normal; overflow-wrap: normal;
+}
+pre.md-whiteboard code,
+.juben-vault-doc-body pre.md-whiteboard code {
+  font: inherit; color: var(--ink); background: none; padding: 0;
+}
+
 /* wikilink */
 .wikilink { border-bottom: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent); }
 .wikilink--dangling { color: var(--ink-soft); border-bottom: 1px dotted var(--line); cursor: help; }

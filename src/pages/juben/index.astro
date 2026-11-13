@@ -854,8 +854,13 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   :global(.juben-vault-doc-body pre) { margin: 1rem 0; padding: 1rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-3); }
   :global(.juben-vault-doc-body pre code) { background: transparent; padding: 0; }
   :global(.juben-vault-doc-body img) { display: block; max-width: 100%; height: auto; margin: 1rem auto; border-radius: 6px; }
-  :global(.juben-vault-doc-body table) { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; font-size: .75rem; }
-  :global(.juben-vault-doc-body :is(th, td)) { padding: .5rem .65rem; border: 1px solid var(--line); text-align: left; }
+  /* 表格必须保持 display:table + width:100%。给 table 设 display:block 会让浏览器
+     为内部行列生成一个「按内容收缩」的匿名表格盒：外壳（.md-table，有圆角/底色）
+     仍撑满整行，可见的表格却只占内容宽度，右边就空出一大片。横向滚动交给外壳的
+     overflow-x:auto（见 global.css 的 .md-table），不要再挪到 table 上。 */
+  :global(.juben-vault-doc-body .md-table) { max-width: 100%; }
+  :global(.juben-vault-doc-body table) { display: table; width: 100%; font-size: .75rem; }
+  :global(.juben-vault-doc-body :is(th, td)) { padding: .5rem .65rem; }
   :global(.juben-vault-doc-body hr) { margin: 1.6rem 0; border: 0; border-top: 1px solid var(--line); }
   @media (max-width: 900px) {
     :global(.juben-vault-reader) { grid-template-columns: 1fr; }

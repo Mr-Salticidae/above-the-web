@@ -82,6 +82,7 @@ export function renderMarkdown(source) {
   let list = null;
   let quote = [];
   let fence = null;
+  let fenceLang = '';
 
   const closePara = () => {
     if (para.length) out.push(`<p>${inline(joinLines(para))}</p>`);
@@ -105,8 +106,12 @@ export function renderMarkdown(source) {
     closeQuote();
   };
   const closeFence = () => {
-    out.push(`<pre><code>${escapeHtml(fence.join('\n'))}</code></pre>`);
+    // whiteboard 是给 DM 现场抄白板用的示意图：中文框线不能按等宽字距压，
+    // 单独挂 class 交给 CSS 处理（横向滚动 + 不断行 + 保留缩进）。
+    const lang = fenceLang === 'whiteboard' ? ' class="md-whiteboard"' : '';
+    out.push(`<pre${lang}><code>${escapeHtml(fence.join('\n'))}</code></pre>`);
     fence = null;
+    fenceLang = '';
   };
 
   for (let i = 0; i < lines.length; i += 1) {
@@ -118,9 +123,11 @@ export function renderMarkdown(source) {
       else fence.push(raw);
       continue;
     }
-    if (/^\s*```/.test(line)) {
+    const openFence = line.match(/^\s*```\s*([A-Za-z][\w-]*)?\s*$/);
+    if (openFence) {
       closeAll();
       fence = [];
+      fenceLang = openFence[1] || '';
       continue;
     }
     if (!line.trim()) {

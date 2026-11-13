@@ -3,6 +3,7 @@
 // 这里把渲染器单独拎出来跑单测，把这两条钉死。
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 // account-core.js 在模块顶层就读 document/location，Node 里得先铺个最小地板
 globalThis.document = { querySelector: () => null };
@@ -66,4 +67,56 @@ test('表格里的 HTML 仍然被转义', () => {
   const html = renderMarkdown(['| x | y |', '| --- | --- |', '| <img src=x onerror=1> | ok |'].join('\n'));
   assert.ok(!html.includes('<img src=x'));
   assert.match(html, /&lt;img/);
+});
+
+// 白板示意图是 DM 照着手抄到现场白板上的施工图：中文框线一旦折行或被
+// 当成表格解析，整张图就废了。渲染器给它单独挂 class，CSS 负责等宽与横滚。
+test('whiteboard 代码块单独挂 md-whiteboard class，语言标记不漏进正文', () => {
+  const html = renderMarkdown(['```whiteboard', '┌───┐', '└───┘', '```'].join('\n'));
+  assert.match(html, /<pre class="md-whiteboard"><code>/);
+  assert.match(html, /┌───┐\n└───┘/);
+  assert.doesNotMatch(html, />whiteboard</);
+  assert.doesNotMatch(html, /```/);
+});
+
+test('普通代码块仍是不带 class 的 pre，语言标记同样不渲染', () => {
+  const html = renderMarkdown(['```js', 'const x = 1;', '```'].join('\n'));
+  assert.match(html, /<pre><code>const x = 1;<\/code><\/pre>/);
+  assert.ok(!html.includes('md-whiteboard'));
+  assert.ok(!html.includes('>js<'));
+});
+
+test('whiteboard 保留缩进与换行，且照样转义 HTML', () => {
+  const html = renderMarkdown(
+    ['```whiteboard', '  第一行', '    缩进行 <b>粗</b>', '```'].join('\n'),
+  );
+  assert.match(html, /  第一行\n    缩进行 &lt;b&gt;粗&lt;\/b&gt;/);
+  assert.ok(!html.includes('<b>'));
+});
+
+test('whiteboard 行尾对齐空格原样保留，画框不会被压歪', () => {
+  // 白板图靠「每行显示宽度一致」对齐：ASCII 1 列、汉字 2 列，行尾补空格。
+  // 渲染器若做 trim / 合并软换行，右边框就会参差不齐。
+  const line = '|  A. 林家血缘（左上）        |  B. 孟德制药（右上）        |';
+  const html = renderMarkdown(['```whiteboard', line, '```'].join('\n'));
+  assert.ok(html.includes(line), '整行（含行尾空格）必须逐字保留');
+  assert.doesNotMatch(html, /<p>/, '围栏内容不该被包成段落');
+});
+
+test('whiteboard 里的管道语法不被当成表格', () => {
+  const html = renderMarkdown(
+    ['```whiteboard', '| a | b |', '| --- | --- |', '```'].join('\n'),
+  );
+  assert.ok(!html.includes('md-table'), '围栏内的管道只是画框字符，不该生成表格');
+  assert.match(html, /\| a \| b \|\n\| --- \| --- \|/);
+});
+
+test('白板样式保证等宽、不折行、可横滚，并压得住档案库的 scoped 规则', () => {
+  const css = readFileSync(new URL('../src/styles/global.css', import.meta.url), 'utf8');
+  assert.match(css, /pre\.md-whiteboard[\s\S]*?white-space:\s*pre/);
+  assert.match(css, /pre\.md-whiteboard[\s\S]*?overflow-x:\s*auto/);
+  assert.match(css, /pre\.md-whiteboard[\s\S]*?word-break:\s*normal/);
+  // scoped 的 .juben-vault-doc-body pre / code 与全局规则同优先级，必须有抬优先级的伴随选择器
+  assert.match(css, /\.juben-vault-doc-body pre\.md-whiteboard/);
+  assert.match(css, /\.juben-vault-doc-body pre\.md-whiteboard code/);
 });
