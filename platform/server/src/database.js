@@ -209,6 +209,7 @@ CREATE TABLE IF NOT EXISTS juben_progress (
   done       INTEGER NOT NULL DEFAULT 0,
   client_at  INTEGER NOT NULL,
   rev        INTEGER NOT NULL,
+  device_id  TEXT NOT NULL DEFAULT '',
   PRIMARY KEY (user_id, case_id, module_id)
 );
 
@@ -245,6 +246,15 @@ function migrate(db) {
   }
   if (!columns.has("outline")) {
     db.exec("ALTER TABLE tasks ADD COLUMN outline TEXT NOT NULL DEFAULT ''");
+  }
+
+  // 学习进度的「哪台设备记的」：档案库那张状态卡要显示设备数。
+  // 只做计数，不存 UA / IP——能回答「几台设备在同步」，答不出「你在哪」。
+  const progressColumns = new Set(
+    db.prepare("PRAGMA table_info(juben_progress)").all().map((c) => c.name),
+  );
+  if (!progressColumns.has("device_id")) {
+    db.exec("ALTER TABLE juben_progress ADD COLUMN device_id TEXT NOT NULL DEFAULT ''");
   }
 
   // users 的 role CHECK 是老库的 'admin/member'：SQLite 改不了列约束，只能整表重建。
@@ -640,14 +650,30 @@ export function createDatabase(config) {
           done: row.done,
           at: row.client_at,
         })),
+        // 档案库那张状态卡要的两项：记录过的设备数、上次有人推进度的时刻。
+        // 设备数只数 device_id，不认 UA / IP；lastSyncAt 是本账号在任一设备上的最后写入时间。
+        devices: api.progressDeviceCount(userId),
+        lastSyncAt:
+          db.prepare("SELECT last_sync_at FROM juben_sync_state WHERE user_id = ?").get(userId)
+            ?.last_sync_at ?? null,
         serverTime: now(),
       };
     },
 
+    progressDeviceCount(userId) {
+      const row = db
+        .prepare(
+          "SELECT COUNT(DISTINCT device_id) AS n FROM juben_progress WHERE user_id = ? AND device_id <> ''",
+        )
+        .get(userId);
+      return Number(row?.n) || 0;
+    },
+
     // baseRev 是客户端上次见到的游标：响应一律回 rev > baseRev 的增量，
     // 这样「A 机取消、B 机同时勾选」的裁决结果能立刻回到发起方，不用等下一轮。
-    mergeProgress(userId, items, { baseRev = 0 } = {}) {
+    mergeProgress(userId, items, { baseRev = 0, deviceId = '' } = {}) {
       const serverNow = now();
+      const device = String(deviceId || "").slice(0, 64);
       const from = Number.isFinite(baseRev) && baseRev > 0 ? Math.floor(baseRev) : 0;
       const list = Array.isArray(items) ? items : [];
       // 空批次不占版本号：轮询型的调用不该把 rev 一路推高
@@ -658,12 +684,15 @@ export function createDatabase(config) {
         "SELECT done, client_at FROM juben_progress WHERE user_id = ? AND case_id = ? AND module_id = ?",
       );
       const insert = db.prepare(
-        `INSERT INTO juben_progress (user_id, case_id, module_id, done, client_at, rev)
-         VALUES (?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO juben_progress (user_id, case_id, module_id, done, client_at, rev, device_id)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
       );
+      // device_id 只在这次带上了才覆盖：老客户端不带这个字段时，别把已知的设备擦成空
       const update = db.prepare(
-        `UPDATE juben_progress SET done = ?, client_at = ?, rev = ?
-         WHERE user_id = ? AND case_id = ? AND module_id = ?`,
+        `UPDATE juben_progress
+            SET done = ?, client_at = ?, rev = ?,
+                device_id = CASE WHEN ? = '' THEN device_id ELSE ? END
+          WHERE user_id = ? AND case_id = ? AND module_id = ?`,
       );
 
       let written = 0;
@@ -674,14 +703,14 @@ export function createDatabase(config) {
           const done = item.done ? 1 : 0;
           const row = read.get(userId, item.caseId, item.moduleId);
           if (!row) {
-            insert.run(userId, item.caseId, item.moduleId, done, at, nextRev);
+            insert.run(userId, item.caseId, item.moduleId, done, at, nextRev, device);
             written += 1;
             continue;
           }
           // 服务端这条更新（或同毫秒下更要紧的一条）：忽略，但整批仍然换版本号，
           // 让客户端知道「你的写入被处理过了」
           if (at > row.client_at || (at === row.client_at && done > row.done)) {
-            update.run(done, at, nextRev, userId, item.caseId, item.moduleId);
+            update.run(done, at, nextRev, device, device, userId, item.caseId, item.moduleId);
             written += 1;
           }
         }

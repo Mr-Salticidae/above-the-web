@@ -43,6 +43,16 @@ jobs:
           # 没有就跳过——邀请码体系照常上线，内容接口返回「未配置」，不会崩。
           # token 建议用 fine-grained PAT，只授 juben-dm-lab 的 Contents: Read。
           if [ -n "$JUBEN_REPO_TOKEN" ]; then
+            # 体检：令牌过期 / 被撤销 / 权限被收走时，站点只会静默变成「内容未配置」，
+            # 没人会发现。这里让它在部署日志里显形（只告警，不拦住发布）。
+            if curl -sf -o /dev/null \
+                 -H "Authorization: Bearer $JUBEN_REPO_TOKEN" \
+                 -H "Accept: application/vnd.github+json" \
+                 https://api.github.com/repos/Mr-Salticidae/juben-dm-lab; then
+              echo "剧本内容令牌可用（private repo 可达）"
+            else
+              echo "::warning::JUBEN_REPO_TOKEN 读不到 juben-dm-lab：可能已过期或被撤销，档案库会静默降级成「未配置」。去 GitHub 重新签发并更新 secret，见 README「令牌轮换」。"
+            fi
             printf 'ATW_JUBEN_TOKEN=%s\n' "$JUBEN_REPO_TOKEN" \
               | ssh -i ~/.ssh/id_ed25519 -o BatchMode=yes root@"$HOST" 'umask 077; cat > /tmp/atw-juben-token'
           else

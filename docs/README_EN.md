@@ -202,6 +202,29 @@ Each script is published in two layers, separated by an invite gate:
   - Privacy: only the token owner's rows, no `userId` parameter, no admin view of anyone's progress; the audit log records resets only.
   - Readers (`member`) can sync too — the module list is public and the DM gate only covers script bodies. A badge shows the state (local / syncing / synced / N pending / failed, click to retry) instead of toasts.
   - Rollout switch: `PUBLIC_PROGRESS_SYNC=0` at build time, or `ATW_PROGRESS_SYNC=0` on the server (the front end follows `/api/meta`, so one env var is enough — no rebuild).
+- **Where you stopped reading**: stored in the same items list under the reserved case name `reading` (`case-<id>` as the module slot). No second storage or protocol; the cost is that these rows never count towards completion — `count` / `countAll` only accept slugs that exist in the catalog. Re-entering the same script within ten minutes does not write again, and on a new device the position is decided only after the first pull, so the "default first script" cannot overwrite the real record.
+- **Quiz position**: `atw-juben-quiz` keeps the question index per script, locally only — answering on your phone should not move the cursor on your desktop.
+- **Status card** (account centre, under "我的档案库"): last sync, pending count, devices seen, plus "sync now" and "clear all progress". The device count is `COUNT(DISTINCT device_id)`; the id is random and only used for counting, never UA or IP. Clearing takes two clicks (the first only arms the button for four seconds) and writes tombstones so other devices follow.
+
+### Rotating `JUBEN_REPO_TOKEN`
+
+Fine-grained PATs expire (one year is recommended). Expiry does not raise an error — the archive just quietly degrades to "content channel not configured" — so the deploy workflow now probes the private repo and emits a `::warning::` in the Actions log when it cannot read it.
+
+1. Open [new fine-grained token](https://github.com/settings/personal-access-tokens/new): any name, one-year expiry, `Repository access` limited to `juben-dm-lab`, permission `Contents: Read` only.
+2. From the repo directory run the command below and paste the token when prompted (input is hidden):
+
+```bash
+gh secret set JUBEN_REPO_TOKEN -R Mr-Salticidae/above-the-web
+```
+
+   If you already have it in a variable, check the prefix first — a token in the secret-name position returns HTTP 422:
+
+```bash
+case "$t" in github_pat_*) gh secret set JUBEN_REPO_TOKEN -R Mr-Salticidae/above-the-web --body "$t";; *) echo "not a token";; esac
+```
+
+3. Run `gh workflow run deploy-platform.yml` (or push to main); the log should say the token is usable.
+4. Delete the old token on GitHub afterwards.
 
 ## Deployment
 

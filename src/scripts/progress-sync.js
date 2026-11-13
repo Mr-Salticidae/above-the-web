@@ -20,6 +20,10 @@ export const SYNC_STATE = {
 
 const QUEUE_PREFIX = 'atw-juben-queue:';
 const REV_PREFIX = 'atw-juben-rev:';
+const SYNCED_PREFIX = 'atw-juben-synced:';
+// 这台浏览器（这个存储桶）的匿名标识：服务端只拿它数「几台设备在同步」，
+// 不认 UA、不认 IP，也不需要它稳定到能认人——换设备就是换一个随机串。
+const DEVICE_KEY = 'atw-device-id';
 const GUEST = 'guest';
 const ENDPOINT = '/juben/progress';
 // 单次最多带这么多项。服务端上限 500，这里留余量：一次勾不了这么多，
@@ -47,6 +51,18 @@ export function syncText(status) {
   return base;
 }
 
+/** 「3 分钟前」这类说法，档案库状态卡与徽章共用一套口径。 */
+export function relativeTime(at, now = Date.now()) {
+  if (!Number.isFinite(at) || at <= 0) return '—';
+  const age = Math.max(0, now - at);
+  if (age < 60_000) return '刚刚';
+  if (age < 60 * 60_000) return `${Math.floor(age / 60_000)} 分钟前`;
+  if (age < 24 * 60 * 60_000) return `${Math.floor(age / 3_600_000)} 小时前`;
+  if (age < 30 * 24 * 60 * 60_000) return `${Math.floor(age / 86_400_000)} 天前`;
+  const date = new Date(at);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
 function defaultStorage() {
   try {
     const probe = '__atw_sync_probe__';
@@ -62,6 +78,20 @@ const splitKey = (key) => {
   const slash = key.indexOf('/');
   return slash < 0 ? null : [key.slice(0, slash), key.slice(slash + 1)];
 };
+
+// 设备标识：够长、够随机、只含服务端正则允许的字符。
+// crypto.randomUUID 在 http 页面（内网预览）也可用；老浏览器退到时间戳 + 随机数。
+function createDeviceId() {
+  try {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return `dev-${crypto.randomUUID().replace(/-/g, '')}`;
+    }
+  } catch {
+    /* 落到下面 */
+  }
+  const random = () => Math.random().toString(36).slice(2, 10);
+  return `dev-${Date.now().toString(36)}${random()}${random()}`;
+}
 
 /**
  * @param {object} store  createProgressStore 的产物
@@ -92,6 +122,9 @@ export function createProgressSync(store, options = {}) {
   let timer = null;
   let inflight = null;
   let reconcileNeeded = true; // 本机有服务端不知道的项，第一次全量拉取后要补推
+  let deviceId = '';
+  let remoteDevices = 0; // 服务端说这个账号有几台设备记过进度
+  let serverLastSyncAt = null; // 任一设备最后一次推进度的时刻（服务端时钟）
 
   // ---------- 持久化 ----------
 
@@ -113,6 +146,19 @@ export function createProgressSync(store, options = {}) {
     }
   }
 
+  // 设备标识只生成一次，之后一直复用——生成两次就等于把自己数成两台设备。
+  function ensureDeviceId() {
+    if (deviceId) return deviceId;
+    const saved = readRaw(DEVICE_KEY);
+    if (saved && /^[A-Za-z0-9_-]{8,64}$/.test(saved)) {
+      deviceId = saved;
+    } else {
+      deviceId = createDeviceId();
+      writeRaw(DEVICE_KEY, deviceId);
+    }
+    return deviceId;
+  }
+
   function loadBucket(next) {
     owner = next;
     pending = new Map();
@@ -132,6 +178,9 @@ export function createProgressSync(store, options = {}) {
     }
     const rawRev = Number(readRaw(`${REV_PREFIX}${owner}`) || 0);
     rev = Number.isFinite(rawRev) && rawRev > 0 ? rawRev : 0;
+    // 上次同步时间跟着账号存：刷新页面后状态卡还能说「3 分钟前」而不是「—」
+    const rawSynced = Number(readRaw(`${SYNCED_PREFIX}${owner}`) || 0);
+    lastSyncAt = Number.isFinite(rawSynced) && rawSynced > 0 ? rawSynced : null;
     reconcileNeeded = rev === 0;
   }
 
@@ -149,10 +198,24 @@ export function createProgressSync(store, options = {}) {
     writeRaw(`${REV_PREFIX}${owner}`, String(rev));
   }
 
+  function persistSynced() {
+    if (lastSyncAt) writeRaw(`${SYNCED_PREFIX}${owner}`, String(lastSyncAt));
+  }
+
   // ---------- 状态广播 ----------
 
   function snapshotStatus() {
-    return { state: status, pending: pending.size, lastSyncAt, error: lastError, owner, rev };
+    return {
+      state: status,
+      pending: pending.size,
+      lastSyncAt,
+      error: lastError,
+      owner,
+      rev,
+      // 状态卡要的两项：服务端看到的设备数、任一设备的最后写入时刻
+      devices: remoteDevices,
+      serverLastSyncAt,
+    };
   }
 
   function setStatus(next) {
@@ -217,6 +280,9 @@ export function createProgressSync(store, options = {}) {
       store.setRev(rev);
       persistRev();
     }
+    // 设备数与「任一设备的最后写入」只在拉取响应里出现；没有就保留上一次的值
+    if (Number.isFinite(response.devices)) remoteDevices = response.devices;
+    if (Number.isFinite(response.lastSyncAt)) serverLastSyncAt = response.lastSyncAt;
     // 本机这条比服务端新：推回去（几乎只发生在「推送途中又勾了一次」）
     for (const key of result.kept) {
       const item = store.snapshot().items[key];
@@ -261,6 +327,7 @@ export function createProgressSync(store, options = {}) {
     const sent = new Map(entries);
     const response = await request('POST', ENDPOINT, {
       baseRev: rev,
+      deviceId: ensureDeviceId(),
       items: payloadOf(entries),
     });
 
@@ -297,6 +364,7 @@ export function createProgressSync(store, options = {}) {
         lastSyncAt = Date.now();
         lastError = '';
         persistRev();
+        persistSynced();
         setStatus(pending.size ? SYNC_STATE.PENDING : SYNC_STATE.SYNCED);
         if (pending.size) schedule();
         return pushed || pulled;
@@ -412,6 +480,7 @@ export function createProgressSync(store, options = {}) {
         persistRev();
         reconcileNeeded = false;
         lastSyncAt = Date.now();
+        persistSynced();
         setStatus(SYNC_STATE.SYNCED);
       } catch (error) {
         lastError = error && error.message ? error.message : '同步失败';

@@ -28,6 +28,8 @@ function fakeServer() {
     failNext: false,
     missing: false, // 模拟「服务端还是旧版，没这个接口」
     gate: null, // 设成 { promise, open } 可以让 POST 卡住，测「请求在飞时又勾一次」
+    devices: 0, // 服务端记账的「几台设备」
+    lastSyncAt: null,
     get rev() {
       return rev;
     },
@@ -52,7 +54,13 @@ function fakeServer() {
       const [route, query] = path.split('?');
       if (method === 'GET' && route === '/juben/progress') {
         const since = Number(new URLSearchParams(query || '').get('since') || 0);
-        return { rev, items: snapshot((row) => row.rev > since), serverTime: Date.now() };
+        return {
+          rev,
+          items: snapshot((row) => row.rev > since),
+          devices: state.devices,
+          lastSyncAt: state.lastSyncAt,
+          serverTime: Date.now(),
+        };
       }
       if (method === 'POST' && route === '/juben/progress') {
         if (state.gate) await state.gate.promise;
@@ -65,7 +73,13 @@ function fakeServer() {
           }
         }
         const baseRev = body.baseRev || 0;
-        return { rev, items: snapshot((row) => row.rev > baseRev), serverTime: Date.now() };
+        return {
+          rev,
+          items: snapshot((row) => row.rev > baseRev),
+          devices: state.devices,
+          lastSyncAt: state.lastSyncAt,
+          serverTime: Date.now(),
+        };
       }
       if (method === 'DELETE' && route === '/juben/progress') {
         rev += 1;
@@ -360,4 +374,100 @@ test('徽章文案：三态 + 待同步计数', () => {
   assert.equal(syncText({ state: SYNC_STATE.ERROR, pending: 1 }), '同步失败 · 点此重试');
   assert.equal(syncText({ state: SYNC_STATE.SYNCED, lastSyncAt: Date.now() }), '已同步 · 刚刚');
   assert.equal(syncText({ state: SYNC_STATE.SYNCED, lastSyncAt: Date.now() - 5 * 60_000 }), '已同步 · 5 分钟前');
+});
+
+// ---- 档案库状态卡：设备标识、上次同步、设备数 ----
+
+test('推送带上设备标识，且两次同步用的是同一个', async () => {
+  const { store, sync, server, storage } = harness({ quietMs: 10_000 });
+  sync.start();
+  await sync.syncNow();
+
+  store.toggle('virtual-game', 'flow-skeleton');
+  sync.note();
+  await sync.syncNow();
+  store.toggle('virtual-game', 'god-view');
+  sync.note();
+  await sync.syncNow();
+
+  const posts = server.calls.filter((entry) => entry.method === 'POST');
+  assert.equal(posts.length, 2);
+  const [first, second] = posts.map((entry) => entry.body.deviceId);
+  assert.match(first, /^[A-Za-z0-9_-]{8,64}$/, '设备标识要符合服务端的字符白名单');
+  assert.equal(first, second, '同一个浏览器不该把自己数成两台设备');
+  assert.equal(storage.dump()['atw-device-id'], first, '标识落盘了，刷新后还认得出自己');
+});
+
+test('设备标识在两次页面会话之间复用（不是每次加载新生成）', async () => {
+  const storage = memoryStorage();
+  const first = harness({ storage, quietMs: 10_000 });
+  first.sync.start();
+  await first.sync.syncNow();
+  // 设备标识是第一次推送时才生成的：只读页面不写库，不必先跟服务端报个到
+  first.store.toggle('virtual-game', 'flow-skeleton');
+  first.sync.note();
+  await first.sync.syncNow();
+  const id = storage.dump()['atw-device-id'];
+  assert.ok(id);
+
+  const second = harness({ storage, quietMs: 10_000 });
+  second.sync.start();
+  await second.sync.syncNow();
+  second.store.toggle('virtual-game', 'god-view');
+  second.sync.note();
+  await second.sync.syncNow();
+  const posts = second.server.calls.filter((entry) => entry.method === 'POST');
+  assert.equal(posts.at(-1).body.deviceId, id, '第二个会话沿用同一个标识');
+});
+
+test('上次同步时间跟着账号落盘：刷新后状态卡还能说「刚才」', async () => {
+  const storage = memoryStorage();
+  const first = harness({ storage });
+  first.sync.start();
+  await first.sync.syncNow();
+  const at = first.sync.status().lastSyncAt;
+  assert.ok(Number.isFinite(at));
+  assert.ok(storage.dump()['atw-juben-synced:user-a'], '时间戳写进了当前账号的桶');
+
+  const second = harness({ storage });
+  second.sync.start();
+  assert.equal(second.sync.status().lastSyncAt, at, '新实例起来就带着上次的时间');
+});
+
+test('换账号：同步时间不跟着串桶', async () => {
+  const storage = memoryStorage();
+  const { sync } = harness({ storage });
+  sync.start();
+  await sync.syncNow();
+  assert.ok(sync.status().lastSyncAt > 0);
+
+  sync.setOwner('user-b');
+  assert.equal(sync.status().lastSyncAt, null, '另一个账号还没同步过');
+});
+
+test('服务端说有几台设备，状态里就透出几台', async () => {
+  const server = fakeServer();
+  server.devices = 3;
+  server.lastSyncAt = 123456;
+  const { sync } = harness({ server });
+  sync.start();
+  await sync.syncNow();
+  const status = sync.status();
+  assert.equal(status.devices, 3);
+  assert.equal(status.serverLastSyncAt, 123456);
+});
+
+test('同步失败时不谎报设备数（保留上一次读到的值）', async () => {
+  const server = fakeServer();
+  server.devices = 2;
+  const { store, sync } = harness({ server, quietMs: 10_000 });
+  sync.start();
+  await sync.syncNow();
+  assert.equal(sync.status().devices, 2);
+
+  server.failNext = true;
+  store.toggle('virtual-game', 'five-stages');
+  sync.note();
+  await sync.syncNow();
+  assert.equal(sync.status().devices, 2, '失败不该把已知值清成 0');
 });

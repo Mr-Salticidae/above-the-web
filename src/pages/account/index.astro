@@ -162,7 +162,7 @@ const progressSeed = jubenCases.map((item) => ({
     TASK_STATUS_LABEL,
   } from '../../scripts/account-core.js';
   import { createProgressStore, GUEST_OWNER } from '../../scripts/progress-store.js';
-  import { createProgressSync, mountBadge } from '../../scripts/progress-sync.js';
+  import { createProgressSync, mountBadge, relativeTime } from '../../scripts/progress-sync.js';
   import { PROGRESS_SYNC } from '../../data/features.js';
 
   const CLAIM_LABEL = {
@@ -259,6 +259,28 @@ const progressSeed = jubenCases.map((item) => ({
   let inviteInfo = null;
   let sync = null;
   let badgeOff = null;
+  let syncOff = null;
+
+  /** 把同步状态写进状态卡。节点来自 innerHTML 重画，所以要容错缺失。 */
+  function paintSyncCard(status) {
+    const host = document.querySelector('[data-sync-card]');
+    if (!host || !status) return;
+    const when = host.querySelector('[data-sync-when]');
+    if (when) {
+      when.textContent = status.lastSyncAt
+        ? relativeTime(status.lastSyncAt)
+        : status.state === 'syncing'
+          ? '同步中…'
+          : '还没同步过';
+    }
+    const pending = host.querySelector('[data-sync-pending]');
+    if (pending) pending.textContent = status.pending ? `${status.pending} 项` : '0 项';
+    const devices = host.querySelector('[data-sync-devices]');
+    if (devices) devices.textContent = status.devices ? `${status.devices} 台` : '这台';
+    const wipe = host.querySelector('[data-sync-wipe]');
+    // 清空要联网才有意义：离线时它只会清本地，别的设备下次把进度推回来又长出来
+    if (wipe) wipe.disabled = status.state === 'syncing';
+  }
 
   function vaultBlock() {
     const rows = CASES.map((item) => {
@@ -297,13 +319,55 @@ const progressSeed = jubenCases.map((item) => ({
           <span>全部学习项完成 · ${doneAll}/${totalAll}</span>
         </div>
         <div class="acc-vault-rows">${list || '<p class="atw-empty">暂时没有可读的卷宗。</p>'}</div>
+        ${resumeHtml()}
         <div class="acc-invite">
           <p class="acc-invite-label">我的邀请码</p>
           <code id="acc-invite-code">${escapeHtml(inviteInfo ? inviteInfo.code : '……')}</code>
           <button class="atw-ghost" type="button" data-copy-invite>复制</button>
           <p class="acc-invite-hint">交给值得信任的准 DM；每带一人进门，传承就长一格。</p>
         </div>
+        ${syncCardHtml()}
       </section>`;
+  }
+
+  /** 「上次读到哪一卷」：和完成率读同一份仓库，只是那条记录走保留卷名 reading。 */
+  function resumeHtml() {
+    const last = progress.lastReading();
+    if (!last) return '';
+    const title = CASES.find((item) => item.id === last.caseId)?.title || last.caseId;
+    const href = `${url('juben/')}?case=${encodeURIComponent(last.caseId)}`;
+    return `<p class="acc-resume">上次读到《${escapeHtml(title)}》 · ${relativeTime(last.at)}
+      <a href="${href}">接着读 →</a></p>`;
+  }
+
+  /**
+   * 档案库底部的同步状态卡：上次同步 / 待同步 / 设备数，外加手动同步与清空。
+   * 清空是唯一不可撤销的动作，所以那一个按钮要点两次（不做弹窗，弹窗会打断读的人）。
+   */
+  function syncCardHtml() {
+    if (!sync || !sync.enabled) {
+      return `<div class="acc-sync-card is-local" data-sync-card="local">
+        <p class="acc-sync-title">进度目前只记在这台机器上</p>
+        <p class="acc-sync-hint">跨设备同步关着（服务端开关或接口版本所致）；勾选照旧有效，只是不跟着账号走。</p>
+        <div class="acc-sync-actions">
+          <button class="atw-ghost" type="button" data-sync-wipe>清空本机进度</button>
+        </div>
+        <p class="acc-sync-hint" data-sync-hint></p>
+      </div>`;
+    }
+    return `<div class="acc-sync-card" data-sync-card="cloud">
+      <div class="acc-sync-facts">
+        <p><span>上次同步</span><b data-sync-when>—</b></p>
+        <p><span>待同步</span><b data-sync-pending>0 项</b></p>
+        <p><span>记录过的设备</span><b data-sync-devices>—</b></p>
+      </div>
+      <div class="acc-sync-actions">
+        <button class="atw-ghost" type="button" data-sync-now>立即同步</button>
+        <button class="atw-ghost" type="button" data-sync-wipe>清空全部进度</button>
+      </div>
+      <p class="acc-sync-hint">勾选先存本机，联网后自动对账。同一账号在别的设备上打开，会接着同一处读。</p>
+      <p class="acc-sync-hint" data-sync-hint></p>
+    </div>`;
   }
 
   function readerBlock() {
@@ -321,6 +385,7 @@ const progressSeed = jubenCases.map((item) => ({
           读者身份现在就能用：笔记全文搜索、在笔记里对着「小织」追问，以及分栏订阅。
           兑换邀请码的表单也在剧本研究室里，登录后就能看到。
         </p>
+        ${resumeHtml()}
       </section>`;
   }
 
@@ -342,6 +407,12 @@ const progressSeed = jubenCases.map((item) => ({
         badgeOff?.();
         badgeOff = mountBadge(badge, sync);
       }
+    }
+    // 状态卡每次重画都是一批新节点，订阅也要跟着换，别越挂越多
+    if (sync) {
+      paintSyncCard(sync.status());
+      syncOff?.();
+      syncOff = sync.subscribe(paintSyncCard);
     }
     if (dm && !inviteInfo) {
       api('GET', '/dm/invite')
@@ -367,6 +438,63 @@ const progressSeed = jubenCases.map((item) => ({
     setTimeout(() => {
       button.textContent = '复制';
     }, 1500);
+  });
+
+  // ---------- 状态卡：手动同步 / 清空 ----------
+
+  const wipeLabel = () => (sync && sync.enabled ? '清空全部进度' : '清空本机进度');
+  let wipeArmed = false;
+  let wipeTimer = null;
+
+  document.addEventListener('click', async (event) => {
+    const nowButton = event.target.closest('[data-sync-now]');
+    if (nowButton) {
+      if (!sync) return;
+      nowButton.disabled = true;
+      await sync.syncNow();
+      nowButton.disabled = false;
+      const hint = document.querySelector('[data-sync-hint]');
+      if (hint) {
+        hint.textContent = ['error', 'pending'].includes(sync.status().state)
+          ? '这次没对上，检查网络后再点一次。'
+          : '已对齐。别的设备上的改动也一并取回来了。';
+      }
+      return;
+    }
+
+    const wipe = event.target.closest('[data-sync-wipe]');
+    if (!wipe) return;
+
+    // 第一次点只是「上膛」，四秒不点自动收回——清空不可撤销，但也不该弹窗打断阅读
+    if (!wipeArmed) {
+      wipeArmed = true;
+      wipe.dataset.armed = '1';
+      wipe.textContent = '真的清空？再点一次';
+      clearTimeout(wipeTimer);
+      wipeTimer = setTimeout(() => {
+        wipeArmed = false;
+        const node = document.querySelector('[data-sync-wipe]');
+        if (node) {
+          delete node.dataset.armed;
+          node.textContent = wipeLabel();
+        }
+      }, 4000);
+      return;
+    }
+
+    wipeArmed = false;
+    clearTimeout(wipeTimer);
+    wipe.disabled = true;
+    wipe.textContent = '清空中…';
+    if (sync && sync.enabled) await sync.reset();
+    else progress.clearAll();
+    renderHome(me);
+    const hint = document.querySelector('[data-sync-hint]');
+    if (hint) {
+      hint.textContent = sync && sync.enabled
+        ? '已清空。别的设备下次打开会跟着归零。'
+        : '已清空本机记录。';
+    }
   });
 
   function renderStats(user, claims) {
@@ -636,6 +764,10 @@ const progressSeed = jubenCases.map((item) => ({
     sync.start();
     // 文案与徽章都要按「现在有同步了」重画一遍
     renderHome(me);
+    // 首轮拉取回来之后才有别的设备的进度与「上次读到」，再画一次
+    sync.syncNow().then(() => {
+      if (me) renderHome(me);
+    });
     window.addEventListener('online', () => sync && sync.syncNow());
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible' && sync) sync.syncNow();

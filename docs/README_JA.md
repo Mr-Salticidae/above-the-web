@@ -202,6 +202,29 @@ knowledge-base の更新を数秒で反映させたい場合（任意、一度�
   - プライバシー：トークン本人の行だけを返し、`userId` パラメータは受け付けません。管理画面に他人の進捗を見る機能はなく、監査ログは「消去」だけを記録します。
   - 読者（`member`）も同期できます。モジュール一覧は公開情報で、DM 制限は本文だけに掛かるためです。状態はトーストではなくバッジで常時表示します。
   - 切り戻し：ビルド時の `PUBLIC_PROGRESS_SYNC=0`、またはサーバーの `ATW_PROGRESS_SYNC=0`（フロントは `/api/meta` に従うので、再ビルド不要で環境変数ひとつで止められます）。
+- **どこまで読んだか**：同じ items に予約された卷名 `reading`（モジュール位置は `case-<id>`）として保存します。別のストレージも別のプロトコルも要りませんが、その代わりこれらの行は達成率に数えません（`count` / `countAll` はカタログに実在する slug だけを数えます）。同じ卷に十分以内に再入場しても書き直さず、新しい端末では最初のプルが返ってから位置を決めるので、「既定の一巻目」が本当の記録を上書きすることはありません。
+- **自測問題の位置**：`atw-juben-quiz` に卷ごとの問題番号をローカル保存のみ。スマホで解いた問題が PC の位置を動かすべきではないためです。
+- **ステータスカード**（アカウントセンター「我的档案库」の下）：最終同期・未同期件数・記録された端末数、そして「今すぐ同期」「進捗をすべて消去」。端末数は `COUNT(DISTINCT device_id)` で、id はフロントが生成する乱数（UA も IP も見ません）。消去は二回クリック（一回目は 4 秒だけボタンを武装）で、墓標を書くので他の端末も次回の表示でゼロになります。
+
+### `JUBEN_REPO_TOKEN` のローテーション
+
+fine-grained PAT には有効期限があります（1 年推奨）。期限切れはエラーにならず、アーカイブが静かに「未設定」へ落ちるだけなので、デプロイ時にプライベートリポジトリを確認し、読めない場合は Actions ログに `::warning::` を出すようにしました。
+
+1. [新しい fine-grained token](https://github.com/settings/personal-access-tokens/new) を開き、任意の名前・有効期限 1 年・`Repository access` は `juben-dm-lab` のみ・権限は `Contents: Read` のみ。
+2. リポジトリのディレクトリで次を実行し、プロンプトに token を貼り付けます（入力は表示されません）：
+
+```bash
+gh secret set JUBEN_REPO_TOKEN -R Mr-Salticidae/above-the-web
+```
+
+   変数に入っている場合は、先に接頭辞を確認してください（secret 名の位置に token を渡すと HTTP 422 になります）：
+
+```bash
+case "$t" in github_pat_*) gh secret set JUBEN_REPO_TOKEN -R Mr-Salticidae/above-the-web --body "$t";; *) echo "token ではありません";; esac
+```
+
+3. `gh workflow run deploy-platform.yml`（または main へ push）を実行し、ログに「トークンが使える」と出ることを確認します。
+4. その後 GitHub で古い token を削除します。
 
 ## デプロイ
 

@@ -442,6 +442,8 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
     width: calc(100vw - 1.5rem); height: calc(100vh - 1.5rem); height: calc(100dvh - 1.5rem);
     border-radius: 17px;
   }
+  /* 播放条在窄屏会折成两行，面板高度要把这段让出来（--mp-h 见下方播放器样式） */
+  html.music-on .kb-chat-panel { height: calc(100dvh - 1.5rem - var(--mp-h)); }
   .kb-chat-head { padding: .9rem .9rem .8rem; }
   .kb-chat-head > div:first-child > p:last-child { font-size: .68rem; }
   .kb-chat-thread { padding: .85rem; }
@@ -456,7 +458,14 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* 音乐播放器（全局底部常驻；曲库为空时整个 .mp 保持 hidden） */
 .mp { position: fixed; inset: auto 0 0 0; z-index: 60; font-family: var(--sans); }
-html.music-on body { padding-bottom: 4.6rem; } /* 播放条不遮正文 */
+/* 播放条一现身就给它让位：--mp-h 是它的实际高度，由 music-player.js 量出来写回内联样式
+   （窄屏折行、系统字号放大都算得准），这里的 4.6rem 只是脚本还没跑时的兜底。
+   旧写法只在「播过一次」之后才加 padding，没点过播放的页面最底部会被压掉一截。 */
+html.music-on { --mp-h: 4.6rem; }
+html.music-on body { padding-bottom: var(--mp-h); }
+/* 悬浮的「问知识库」得抬到播放条上面，否则正好压在播放条右半边的控制键上 */
+html.music-on .kb-chat { bottom: calc(var(--mp-h) + max(1.25rem, env(safe-area-inset-bottom))); }
+html.music-on .kb-chat-panel { height: min(38rem, calc(100dvh - 5.5rem - var(--mp-h))); }
 .mp-bar {
   display: flex; align-items: center; gap: .8rem; max-width: 72rem; margin: 0 auto;
   padding: .55rem 1rem; background: color-mix(in srgb, var(--paper) 92%, transparent);
@@ -527,7 +536,8 @@ html.music-on body { padding-bottom: 4.6rem; } /* 播放条不遮正文 */
 @keyframes mp-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
 @media (prefers-reduced-motion: reduce) { .mp.is-playing .mp-cover img { animation: none; } }
 @media (max-width: 620px) {
-  html.music-on body { padding-bottom: 8.6rem; }
+  html.music-on { --mp-h: 8.6rem; } /* 折成两行后的兜底高度，脚本量完会覆盖 */
+  html.music-on .kb-chat { bottom: calc(var(--mp-h) + max(.75rem, env(safe-area-inset-bottom))); }
   .mp-bar { flex-wrap: wrap; gap: .5rem .6rem; padding: .55rem .75rem; }
   .mp-info { flex: 1 1 calc(50% - 3rem); order: 1; }
   .mp-controls { order: 2; margin-left: auto; }
@@ -1403,6 +1413,31 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 .acc-invite code { font-size: .95rem; letter-spacing: .1em; }
 .acc-invite .atw-ghost { margin-left: .6rem; }
 .acc-invite-hint { margin: .6rem 0 0; font-size: .74rem; line-height: 1.7; color: var(--ink-soft); }
+
+/* 上次读到哪一卷：一行就够，点进去从那一卷接着看 */
+.acc-resume { margin: 1rem 0 0; color: var(--ink-soft); font-size: .78rem; }
+.acc-resume a {
+  margin-left: .45rem; color: var(--accent); text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.acc-resume a:hover { border-bottom-color: var(--accent); }
+
+/* 同步状态卡：档案库底部，回答「同步到哪了、几台设备、要不要重来」 */
+.acc-sync-card {
+  margin-top: 1rem; padding: .95rem 1.1rem;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--paper);
+}
+.acc-sync-card.is-local { background: var(--paper-2); }
+.acc-sync-title { margin: 0 0 .35rem; font-size: .84rem; }
+.acc-sync-facts { display: flex; flex-wrap: wrap; gap: .55rem 1.8rem; margin: 0 0 .85rem; }
+.acc-sync-facts p { display: grid; gap: .12rem; margin: 0; min-width: 4.6rem; }
+.acc-sync-facts span { color: var(--ink-soft); font-size: .62rem; letter-spacing: .12em; }
+.acc-sync-facts b { font-family: var(--serif); font-size: .98rem; font-variant-numeric: tabular-nums; }
+.acc-sync-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+/* 「上膛」态：点了第一次，按钮自己变红，四秒不点自动收回 */
+.acc-sync-actions .atw-ghost[data-armed='1'] { border-color: #d0342c; color: #d0342c; }
+.acc-sync-hint { margin: .6rem 0 0; color: var(--ink-soft); font-size: .72rem; line-height: 1.7; }
+.acc-sync-hint:empty { display: none; }
 /* 合作资料：任务书收起时默认折叠，不占视线 */
 .acc-fold { margin: .4rem 0 .2rem; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 10px; }
 .acc-fold > summary { cursor: pointer; font-size: .84rem; color: var(--ink-soft); }

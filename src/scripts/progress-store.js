@@ -18,6 +18,14 @@
 export const GUEST_OWNER = 'guest';
 export const SCHEMA_VERSION = 2;
 
+// 「读到哪一卷」也走同一套 items：卷 id 用保留卷名 reading，模块位写 case-<卷 id>。
+// 好处是不必为它另开一套存储与同步协议；代价是这些行不参与完成率
+// （count / countAll 只认目录里真有的 slug），所以不会污染进度条。
+export const SPOT_CASE = 'reading';
+export const spotKey = (caseId) => itemKey(SPOT_CASE, `case-${caseId}`);
+// 同一卷十分钟内重复进入不再写一条：刷新页面不该变成一次服务端写入
+export const SPOT_QUIET_MS = 10 * 60_000;
+
 const KEY_PREFIX = 'atw-juben-progress-v2:';
 const LEGACY_KEY = 'atw-juben-progress-v1';
 const LEGACY_BACKUP_KEY = 'atw-juben-progress-v1-backup';
@@ -303,6 +311,37 @@ export function createProgressStore(options = {}) {
 
     count: countFor,
     countAll,
+
+    /**
+     * 记下「现在正读这一卷」。写的是同一份 items，只是走保留卷名 reading，
+     * 因此它跟着进度一起上传，换台设备也能接着上次那一卷打开。
+     * 不 emit：切卷本来就要重画，再广播一次会让页面白重渲染一遍。
+     */
+    markReading(caseId) {
+      if (!catalog.has(caseId)) return false;
+      const key = spotKey(caseId);
+      const stamp = now();
+      // 已经就是「最近读的一卷」且刚记过：不再写。否则每刷新一次页面就给服务端加一行。
+      const last = api.lastReading();
+      if (last && last.caseId === caseId && stamp - last.at < SPOT_QUIET_MS) return false;
+      state.items[key] = { d: 1, t: stamp };
+      dirty.add(key);
+      persist();
+      return true;
+    },
+
+    /** 最近读过的那一卷（越界 / 已下架的卷直接忽略，不留幽灵入口）。 */
+    lastReading() {
+      let best = null;
+      for (const [key, item] of Object.entries(state.items)) {
+        if (!item.d) continue;
+        if (!key.startsWith(`${SPOT_CASE}/case-`)) continue;
+        const caseId = key.slice(`${SPOT_CASE}/case-`.length);
+        if (!catalog.has(caseId)) continue;
+        if (!best || item.t > best.at) best = { caseId, at: item.t };
+      }
+      return best;
+    },
 
     toggle(caseId, moduleId) {
       const key = itemKey(caseId, moduleId);

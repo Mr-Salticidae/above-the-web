@@ -14,7 +14,7 @@
 | `/notes/rss.xml` | `src/pages/notes/rss.xml.js` | 笔记 RSS：最近发布的 30 篇，带全文。 |
 | `/about/` | `src/pages/about/index.astro` | 关于页：站长与站点定位、七个版块入口（构建期实时计数）、站点规矩、版块时间线、制作说明、许可与联系方式。 |
 | `/music/` | `src/pages/music/index.astro` | 音乐板块：曲库列表，点播放交给全站底部播放器。 |
-| `/juben/` | `src/pages/juben/index.astro` | 剧本研究室：公开学习导航、剧本搜索筛选、跟着账号跨设备同步的学习进度（右上角常显同步徽章）、复述自测与跨本结构对照；完整复盘（开本流程、角色剧本、线索、结局）由服务端从私有仓库 `juben-dm-lab` 按需下发，仅限持邀请码的 DM。 |
+| `/juben/` | `src/pages/juben/index.astro` | 剧本研究室：公开学习导航、剧本搜索筛选、跟着账号跨设备同步的学习进度（右上角常显同步徽章）、跨设备「上次读到哪一卷」、自测题位置记忆、复述自测与跨本结构对照；完整复盘（开本流程、角色剧本、线索、结局）由服务端从私有仓库 `juben-dm-lab` 按需下发，仅限持邀请码的 DM。 |
 | `/music/playlist.json` | `src/pages/music/playlist.json.js` | 构建期从曲目 manifest 导出的播放列表 JSON，供全站播放器读取，不是面向访客的页面。 |
 | `/news/` | `src/pages/news/index.astro` | AIGC 快讯首页，展示最新一期全文及往期归档。 |
 | `/news/[date]/` | `src/pages/news/[date].astro` | AIGC 快讯单期归档页，按日期生成，并提供前后期导航。 |
@@ -24,7 +24,7 @@
 | `/tasks/detail/` | `src/pages/tasks/detail.astro` | 站内新建任务的通用详情容器，通过 `?slug=` 在运行时读取并装配任务内容。 |
 | `/tasks/spec/` | `src/pages/tasks/spec.astro` | 教程类任务的统一交付规范，包括命名、权限、上传流程和正文模板。 |
 | `/tasks/index.json` | `src/pages/tasks/index.json.js` | 给后端同步使用的任务清单 JSON 端点，导出 Git 中任务书的不变量，不是面向访客的页面。 |
-| `/account/` | `src/pages/account/index.astro` | 登录后的个人中心。概览按身份分流（DM 看档案库进度与邀请码，读者看入口与说明；进度与剧本研究室读同一份跨设备同步数据）、资料（合作资料折叠）、安全（密码、登录设备、账号切换）；任务书认领区只在开关打开时出现。 |
+| `/account/` | `src/pages/account/index.astro` | 登录后的个人中心。概览按身份分流（DM 看档案库进度、同步状态卡（上次同步 / 待同步 / 设备数 / 手动同步 / 清空）与邀请码，读者看入口与说明；进度与剧本研究室读同一份跨设备同步数据）、资料（合作资料折叠）、安全（密码、登录设备、账号切换）；任务书认领区只在开关打开时出现。 |
 | `/account/login/` | `src/pages/account/login/index.astro` | 账号登录与本机已有账号选择页面。 |
 | `/account/register/` | `src/pages/account/register/index.astro` | 新用户注册页面。两步：先选来意（读者 / 我有 DM 邀请码），再填表；DM 那条路注册成功即兑换邀请码并跳进档案库。 |
 | `/account/forgot/` | `src/pages/account/forgot/index.astro` | 忘记密码页面，用于申请一次性密码重置链接。 |

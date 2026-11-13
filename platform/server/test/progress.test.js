@@ -75,8 +75,8 @@ async function newUser() {
 
 const item = (moduleId, done, at, caseId = "virtual-game") => ({ caseId, moduleId, done, at });
 
-async function push(token, items, baseRev = 0) {
-  return call("POST", "/api/juben/progress", { token, body: { baseRev, items } });
+async function push(token, items, baseRev = 0, deviceId = "") {
+  return call("POST", "/api/juben/progress", { token, body: { baseRev, items, deviceId } });
 }
 
 async function pull(token, since = 0) {
@@ -350,4 +350,56 @@ test("/api/meta 带进度同步开关", async () => {
   const { status, payload } = await call("GET", "/api/meta");
   assert.equal(status, 200);
   assert.equal(payload.features.progressSync, true);
+});
+
+// ---- 档案库状态卡：设备数与上次同步 ----
+
+test("设备数：两台设备各推一次算 2，同一台再推还是 2", async () => {
+  const { token } = await newUser();
+  const now = Date.now();
+  await push(token, [item("flow-skeleton", 1, now)], 0, "device-aaaa1111");
+  await push(token, [item("god-view", 1, now + 100)], 0, "device-bbbb2222");
+  await push(token, [item("dual-track-clues", 1, now + 200)], 0, "device-aaaa1111");
+  const seen = await pull(token);
+  assert.equal(seen.payload.devices, 2);
+});
+
+test("设备数：不带设备标识的老客户端不计入，也不拦整批写入", async () => {
+  const { token } = await newUser();
+  const now = Date.now();
+  const { status, payload } = await push(token, [item("flow-skeleton", 1, now)]);
+  assert.equal(status, 200);
+  assert.equal(payload.written, 1);
+  assert.equal(payload.devices, 0);
+});
+
+test("设备数：非法设备标识当没带，不影响进度写入", async () => {
+  const { token } = await newUser();
+  const { status, payload } = await push(token, [item("flow-skeleton", 1, Date.now())], 0, "有中文 与空格");
+  assert.equal(status, 200);
+  assert.equal(payload.written, 1);
+  assert.equal(payload.devices, 0);
+});
+
+test("上次同步时间：写入后是个有效时间戳，清空后仍在", async () => {
+  const { token } = await newUser();
+  const before = Date.now();
+  await push(token, [item("flow-skeleton", 1, before)], 0, "device-aaaa1111");
+  const first = await pull(token);
+  assert.ok(Number.isFinite(first.payload.lastSyncAt));
+  assert.ok(first.payload.lastSyncAt >= before - 1000);
+
+  await call("DELETE", "/api/juben/progress", { token });
+  const second = await pull(token);
+  assert.ok(Number.isFinite(second.payload.lastSyncAt));
+  assert.ok(second.payload.lastSyncAt >= first.payload.lastSyncAt);
+});
+
+test("设备数：别人的设备不会算进来", async () => {
+  const a = await newUser();
+  const b = await newUser();
+  await push(a.token, [item("flow-skeleton", 1, Date.now())], 0, "device-aaaa1111");
+  await push(b.token, [item("flow-skeleton", 1, Date.now())], 0, "device-bbbb2222");
+  const seen = await pull(a.token);
+  assert.equal(seen.payload.devices, 1);
 });

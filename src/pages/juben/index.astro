@@ -95,6 +95,8 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
             <span class="juben-detail-status" id="detail-status">{first.status}</span>
           </header>
 
+          <p class="juben-resume" id="juben-resume" hidden></p>
+
           <dl class="juben-facts" id="detail-facts">
             <div><dt>配置</dt><dd id="fact-players">{first.players}</dd></div>
             <div><dt>时长</dt><dd id="fact-duration">{first.duration}</dd></div>
@@ -518,6 +520,9 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   .juben-case-card.is-active { border-color: var(--accent); box-shadow: inset 3px 0 var(--accent); }
   .juben-case-no { color: var(--accent); font-size: .62rem; letter-spacing: .15em; }
   .juben-status { justify-self: end; padding: .08rem .45rem; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); font-size: .58rem; }
+  /* 接着上次读：只在「没指定卷、由本机记录恢复」时出现一行，随后切卷即收起 */
+  .juben-resume { margin: 0; padding: .7rem 1.7rem 0; color: var(--ink-soft); font-size: .68rem; letter-spacing: .04em; }
+  .juben-resume b { color: var(--case-accent); font-weight: 600; }
   .juben-status.learning { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
   .juben-case-card strong { grid-column: 1 / -1; margin-top: .65rem; font-family: var(--serif); font-size: 1.35rem; letter-spacing: .04em; }
   .juben-case-card small { grid-column: 1 / -1; color: var(--ink-soft); font-size: .54rem; letter-spacing: .13em; }
@@ -721,7 +726,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   // 进度不再自己管 localStorage——统一交给 progress-store（按账号分桶、老数据迁移），
   // 个人中心的档案库读的是同一个仓库，两边不会各存一份。
   import { createProgressStore, GUEST_OWNER } from '../../scripts/progress-store.js';
-  import { createProgressSync, mountBadge } from '../../scripts/progress-sync.js';
+  import { createProgressSync, mountBadge, relativeTime } from '../../scripts/progress-sync.js';
   import { PROGRESS_SYNC } from '../../data/features.js';
   import { api, getCachedUser, onAuthChange } from '../../scripts/account-core.js';
 
@@ -740,19 +745,66 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     const moduleList = document.getElementById('module-list');
     let activeFilter = 'all';
     let quizIndex = 0;
-    let selected = new URLSearchParams(location.search).get('case');
-    if (!byId.has(selected)) selected = cases[0]?.id;
 
     const store = createProgressStore({ cases, owner: getCachedUser()?.id || GUEST_OWNER });
     store.boot();
+
+    // 打开时没指定卷：接着上次读到的那一卷（60 天内的记录，超了就当没读过）。
+    // 指定了 ?case= 就完全听链接的——从个人中心点某一卷进来不该被「上次」劫走。
+    const RESUME_MAX_AGE = 60 * 24 * 60 * 60_000;
+    const askedCase = new URLSearchParams(location.search).get('case');
+    let selected = askedCase;
+    let resumedFrom = null;
+    if (!byId.has(selected)) {
+      const last = store.lastReading();
+      if (last && Date.now() - last.at < RESUME_MAX_AGE) {
+        selected = last.caseId;
+        resumedFrom = last;
+      } else {
+        selected = cases[0]?.id;
+      }
+    }
 
     // ---------- 跨设备同步 ----------
     // 本地永远先认，网络只是后台对账；徽章常显状态，不弹窗打断。
     let sync = null;
     const badge = document.getElementById('sync-badge');
 
+    // 换设备首开时本机是空的，真正的「上次读到」要等首轮拉取下来才知道。
+    // 所以先别急着记位置（否则会用当前默认卷把服务端那条盖掉），拉完再定。
+    let spotSettled = false;
+    let userPicked = false; // 用户自己点过卷：之后不再自动跳转
+
+    function showResume(spot) {
+      const resume = document.getElementById('juben-resume');
+      if (!resume) return;
+      const title = byId.get(spot.caseId)?.title || '';
+      resume.innerHTML = `接着上次读：<b>《${title}》</b> · ${relativeTime(spot.at)}。换台设备登录同一账号也会接上。`;
+      resume.hidden = false;
+    }
+
+    function settleSpot(remote = false) {
+      if (spotSettled) return;
+      spotSettled = true;
+      const last = store.lastReading();
+      const fresh = last && Date.now() - last.at < RESUME_MAX_AGE;
+      // 服务端那份指向另一卷，且用户还没动手：跟过去，并说明为什么
+      if (fresh && last.caseId !== selected && !userPicked) {
+        selected = last.caseId;
+        selectCase(last.caseId, true);
+        showResume(last);
+        return;
+      }
+      // 否则按当前这一卷记一笔；十分钟内重复进入不会重复写
+      if (store.markReading(selected) && sync) sync.note();
+      if (remote && fresh && last.caseId === selected) showResume(last);
+    }
+
     async function startSync() {
-      if (!PROGRESS_SYNC) return;
+      if (!PROGRESS_SYNC) {
+        settleSpot();
+        return;
+      }
       // 运行时开关以服务端为准：静态站构建期拿不到线上配置，接口 404 / 关掉都退回纯本地
       let allowed = true;
       try {
@@ -761,7 +813,10 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       } catch {
         allowed = true;
       }
-      if (!allowed) return;
+      if (!allowed) {
+        settleSpot();
+        return;
+      }
       sync = createProgressSync(store, { request: api, owner: store.owner });
       sync.start();
       if (badge) {
@@ -773,8 +828,10 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'visible') sync.syncNow();
       });
+      await sync.syncNow(); // 首轮（拉 + 补推）跑完再决定落到哪一卷
+      settleSpot(true);
     }
-    startSync();
+    startSync().catch(() => settleSpot());
 
     // 登录 / 登出 / 切号都重绑桶：上一版是全站一把钥匙，切号会看到别人的勾选。
     // 顺序有讲究：先让同步层把上一个账号的待推项归到它自己的队列，再换仓库的桶。
@@ -845,11 +902,39 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       document.getElementById('progress-bar').style.width = `${done / item.modules.length * 100}%`;
     }
 
-    function selectCase(id, updateUrl = true) {
+    // 自测题停在第几题：按卷记在本机。它只是「我这台设备上次想的是哪题」，
+    // 不上传——手机上做过的那道题不该把电脑上的位置改掉。
+    const QUIZ_KEY = 'atw-juben-quiz';
+    function loadQuizMap() {
+      try {
+        const raw = localStorage.getItem(QUIZ_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return parsed && typeof parsed === 'object' ? parsed : {};
+      } catch {
+        return {};
+      }
+    }
+    function loadQuizIndex(caseId) {
+      const total = byId.get(caseId)?.questions?.length || 0;
+      if (!total) return 0;
+      const saved = Number(loadQuizMap()[caseId]);
+      return Number.isInteger(saved) && saved >= 0 && saved < total ? saved : 0;
+    }
+    function saveQuizIndex(caseId, index) {
+      try {
+        const map = loadQuizMap();
+        map[caseId] = index;
+        localStorage.setItem(QUIZ_KEY, JSON.stringify(map));
+      } catch {
+        /* 隐私模式下存不住：本次会话内照常翻题 */
+      }
+    }
+
+    function selectCase(id, updateUrl = true, mark = true) {
       const item = byId.get(id);
       if (!item) return;
       selected = id;
-      quizIndex = 0;
+      quizIndex = loadQuizIndex(id);
       detail.dataset.tone = item.tone;
       text('detail-code', item.english);
       text('detail-title', item.title);
@@ -860,7 +945,13 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       text('fact-duration', item.duration);
       text('fact-genre', item.genre);
       text('fact-level', item.level);
-      text('quiz-question', item.questions[0]);
+      text('quiz-question', item.questions[quizIndex] || item.questions[0]);
+      // 手动切卷之后「上次读到」这行就该收起来，不然它一直挂着像在提示别的卷
+      const resume = document.getElementById('juben-resume');
+      if (resume) resume.hidden = true;
+      // 记下「正读这一卷」：写进同一份进度里，换设备也能接着这一卷打开。
+      // markReading 不广播事件，所以这里显式让同步层收一次。
+      if (mark && store.markReading(id) && sync) sync.note();
       document.getElementById('private-link').href = item.privateUrl;
       document.getElementById('timeline-link').href = item.timelineUrl;
       cards.forEach((card) => {
@@ -890,7 +981,10 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       result.textContent = `${shown} / ${cases.length} 卷档案`;
     }
 
-    cards.forEach((card) => card.addEventListener('click', () => selectCase(card.dataset.case)));
+    cards.forEach((card) => card.addEventListener('click', () => {
+      userPicked = true; // 用户自己挑了卷：别再自动跳回「上次」
+      selectCase(card.dataset.case);
+    }));
     filterButtons.forEach((button) => button.addEventListener('click', () => {
       activeFilter = button.dataset.filter;
       filterButtons.forEach((item) => {
@@ -918,6 +1012,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       const item = byId.get(selected);
       quizIndex = (quizIndex + 1) % item.questions.length;
       text('quiz-question', item.questions[quizIndex]);
+      saveQuizIndex(selected, quizIndex);
     });
 
     document.getElementById('reset-progress').addEventListener('click', () => {
@@ -951,7 +1046,9 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       setTimeout(() => { button.textContent = '复制学习清单'; }, 1800);
     });
 
-    selectCase(selected, false);
+    // 首屏先画出来（本地优先），位置留到首轮同步回来再由 settleSpot 定
+    selectCase(selected, false, false);
     syncCardProgress();
+    if (resumedFrom) showResume(resumedFrom);
   })();
 </script>

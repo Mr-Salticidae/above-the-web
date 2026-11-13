@@ -48,6 +48,9 @@ function clean(value) {
 // 进度的两个 ID 都是前端手写的 slug（见 src/data/juben.js 的台账测试）：
 // 小写、数字、连字符，不许 ../、不许大写、不许超长——它们会直接进查询条件与本地键名。
 const PROGRESS_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
+// 设备标识由客户端自己生成（随机串），只用于去重计数。长度给足 UUID / 随机 hex，
+// 但不接受自由文本：这一列只是计数用的，不该顺手变成备注栏。
+const PROGRESS_DEVICE_PATTERN = /^[A-Za-z0-9_-]{8,64}$/;
 const PROGRESS_MAX_ITEMS = 500;
 
 // 整批拒绝而不是「挑好的收」：半批写进去，客户端会以为全成功了，
@@ -1318,7 +1321,11 @@ export function createApplication(config, log = console, deps = {}) {
           const body = await readJson(request);
           const items = normalizeProgressItems(body.items);
           const baseRev = Number.isFinite(body.baseRev) ? Math.floor(body.baseRev) : 0;
-          reply(200, database.mergeProgress(user.id, items, { baseRev }));
+          // 设备标识只用来数「几台设备在同步」，不是身份：不合法就当没带，不拦整批写入
+          const deviceId = PROGRESS_DEVICE_PATTERN.test(clean(body.deviceId))
+            ? clean(body.deviceId)
+            : "";
+          reply(200, database.mergeProgress(user.id, items, { baseRev, deviceId }));
           return;
         }
 

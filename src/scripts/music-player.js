@@ -19,6 +19,21 @@ const state = {
 const els = {};
 let audio = null;
 let baseTitle = ''; // 本页原标题，播放时在前面挂「▶ 歌名 ·」，停了原样还回去
+let barVisible = false; // 播放条是否已经现身（曲库为空时始终不现身）
+
+// 播放条是 fixed 的，它占的那一截必须由页面自己让出来：正文下沿留高度，
+// 悬浮的「问知识库」抬到它上面。高度按实际测量写回 --mp-h，
+// 窄屏折行、系统字号放大都不会算错；拿不到高度时才用 CSS 里的兜底值。
+function syncBarSpace() {
+  const root = document.documentElement;
+  root.classList.toggle('music-on', barVisible);
+  if (!barVisible || !els.bar) {
+    root.style.removeProperty('--mp-h');
+    return;
+  }
+  const height = Math.round(els.bar.getBoundingClientRect().height);
+  if (height > 0) root.style.setProperty('--mp-h', `${height}px`);
+}
 
 const fmt = (s) => {
   if (!Number.isFinite(s) || s < 0) s = 0;
@@ -145,7 +160,6 @@ function syncPlayUI() {
     ? 'M7 5h3.5v14H7zM13.5 5H17v14h-3.5z'
     : 'M8 5.2v13.6L19 12z');
   els.bar.classList.toggle('is-playing', state.playing);
-  document.documentElement.classList.toggle('music-on', true);
   syncTitle(); // 播放态变了标题也跟着变，不只在切歌时更新
 }
 
@@ -281,6 +295,10 @@ export function initMusicPlayer(root) {
       });
 
       root.hidden = false; // 有曲库才现身
+      barVisible = true;
+      syncBarSpace();
+      // 折行（窄屏）、字体载入完成都会改高度：跟着量，别让页面留错一截
+      if (typeof ResizeObserver === 'function') new ResizeObserver(syncBarSpace).observe(els.bar);
     })
     .catch(() => {/* playlist 拉不到（Pages 早期构建等）：静默保持隐藏 */});
 }

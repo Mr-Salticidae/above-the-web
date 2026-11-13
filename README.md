@@ -200,6 +200,31 @@ cd platform/server && npm run dev
   - 隐私：只认 token 本人的行，接口不接受 `userId` 参数；管理台不提供「查看某人进度」，审计只在「清空」时记一笔。
   - 读者（`member`）也能同步——模块清单本来就公开，DM 门槛只管正文。徽章常显状态（本机记录 / 同步中 / 已同步 / 待同步 N 项 / 失败可重试），不弹 toast 打断勾选。
   - 开关：构建期 `PUBLIC_PROGRESS_SYNC=0` 或服务端 `ATW_PROGRESS_SYNC=0`（前端以 `/api/meta` 为准，一个环境变量就能止血，不用重发前端）。分阶段计划与冲突矩阵见 [`docs/PROGRESS_SYNC_PLAN.md`](docs/PROGRESS_SYNC_PLAN.md)。
+- **读到哪一卷**：也走同一份 items，只是用保留卷名 `reading`、模块位写 `case-<卷 id>`（`SPOT_CASE` / `spotKey`）。好处是不必为它另开存储与协议，代价是这些行不参与完成率——`count` / `countAll` 只认目录里真有的 slug。同一卷十分钟内重复进入不重复写；换设备首开时先等服务端那份下来再决定落到哪一卷，不会用「默认第一卷」把真记录盖掉。
+- **自测题停在第几题**：`atw-juben-quiz` 按卷记在本机，不上传——手机上做过的题不该改掉电脑上的位置。
+- **状态卡**（个人中心 · 我的档案库底部）：上次同步、待同步项数、记录过的设备数，外加「立即同步」与「清空全部进度」。设备数是服务端 `COUNT(DISTINCT device_id)`，`device_id` 由前端随机生成、只用于计数，不认 UA 也不认 IP；清空要点两次（第一次只是上膛，四秒不点自动收回），成功后写墓碑，别的设备下次打开跟着归零。
+
+### 令牌轮换（`JUBEN_REPO_TOKEN`）
+
+fine-grained PAT 有有效期（建议一年）。过期不会报错，只会让档案库静默变成「内容通道未配置」，所以部署脚本里加了一步体检：读不到 `juben-dm-lab` 就在 Actions 日志里亮 `::warning::`。
+
+换发流程（约两分钟）：
+
+1. 打开 [新建 fine-grained token](https://github.com/settings/personal-access-tokens/new)，名称随意（如 `atw-juben-2026`），有效期一年，`Repository access` 只选 `juben-dm-lab`，权限只勾 `Contents: Read`。
+2. 在仓库目录执行下面这条，按提示把 token 粘进去（回车提交，输入不回显）：
+
+```bash
+gh secret set JUBEN_REPO_TOKEN -R Mr-Salticidae/above-the-web
+```
+
+   已经有变量在手时也可以一步到位，但先验一下前缀，别把 token 塞进 secret 的名字位（那会 422）：
+
+```bash
+case "$t" in github_pat_*) gh secret set JUBEN_REPO_TOKEN -R Mr-Salticidae/above-the-web --body "$t";; *) echo "剪贴板里不是 token";; esac
+```
+
+3. 跑一次 `gh workflow run deploy-platform.yml`（或推一次 main），日志里应出现「剧本内容令牌可用」。
+4. 回 GitHub 把旧 token 撤销（Settings → Developer settings → Fine-grained tokens → 旧的 Delete）。
 
 ## 部署
 

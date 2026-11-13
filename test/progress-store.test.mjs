@@ -206,3 +206,69 @@ test('目录允许只给 slug 数组（个人中心就是这么传的）', () =>
   assert.equal(store.count('virtual-game'), 1);
   assert.deepEqual(store.doneIds('virtual-game'), ['god-view']);
 });
+
+// ---- 阅读位置：复用同一份 items，走保留卷名 reading ----
+
+test('记下正在读的卷，lastReading 认得它', () => {
+  let ts = 5000;
+  const { store } = makeStore({ now: () => (ts += 1000) });
+  store.boot();
+  store.markReading('virtual-game');
+  const last = store.lastReading();
+  assert.equal(last.caseId, 'virtual-game');
+});
+
+test('切到另一卷后，lastReading 跟着换到最近的那一卷', () => {
+  let ts = 5000;
+  const { store } = makeStore({ now: () => (ts += 1000) });
+  store.boot();
+  store.markReading('virtual-game');
+  store.markReading('woman-by-window');
+  assert.equal(store.lastReading().caseId, 'woman-by-window');
+  // 再切回第一卷：十分钟静默期是按「当前最近一卷」算的，切回来要重新记
+  store.markReading('virtual-game');
+  assert.equal(store.lastReading().caseId, 'virtual-game');
+});
+
+test('同一卷十分钟内反复进入不重复写（刷新页面不该每次推一行）', () => {
+  let ts = 5000;
+  const { store } = makeStore({ now: () => (ts += 1000) });
+  store.boot();
+  assert.equal(store.markReading('virtual-game'), true, '第一次记');
+  ts += 60_000; // 一分钟后再进
+  assert.equal(store.markReading('virtual-game'), false, '还在静默期内，不写');
+  ts += 10 * 60_000; // 过了静默期
+  assert.equal(store.markReading('virtual-game'), true, '重新记一次');
+});
+
+test('阅读位置不进完成率，也不占模块清单', () => {
+  const { store } = makeStore();
+  store.boot();
+  store.markReading('virtual-game');
+  store.toggle('virtual-game', 'flow-skeleton');
+  assert.equal(store.count('virtual-game'), 1, '只算真模块那一条');
+  assert.equal(store.doneIds('virtual-game').includes('case-virtual-game'), false);
+});
+
+test('不认识的卷不记（下架的卷不留幽灵入口）', () => {
+  const { store } = makeStore();
+  store.boot();
+  store.markReading('no-such-case');
+  assert.equal(store.lastReading(), null);
+});
+
+test('阅读位置跟着账号分桶，清空整桶时一起清掉', () => {
+  const { store } = makeStore();
+  store.boot();
+  store.markReading('virtual-game');
+  store.clearAll();
+  assert.equal(store.lastReading(), null);
+});
+
+test('清空单卷不动「上次读到」这一行', () => {
+  const { store } = makeStore();
+  store.boot();
+  store.markReading('virtual-game');
+  store.resetCase('virtual-game');
+  assert.equal(store.lastReading()?.caseId, 'virtual-game', '读到哪与完成了多少是两件事');
+});
