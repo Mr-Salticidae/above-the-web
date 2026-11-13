@@ -48,7 +48,7 @@ export function renderWhiteboardCards(rows, mode = 'board') {
     const options = cards.map(([title], i) => `<option value="${i}">${i + 1}. ${escapeHtml(title)}</option>`).join('');
     return `<div class="md-trace-entry">
       <button type="button" data-whiteboard-open>打开${isCaseWorkspace ? '案件复盘' : '逐笔白板'} · ${cards.length} ${isCaseWorkspace ? '张' : '步'}</button>
-      <dialog class="md-whiteboard-cards md-trace-workspace${isCaseWorkspace ? ' md-case-workspace' : ''}" aria-label="${heading}">
+      <dialog class="md-whiteboard-cards md-trace-workspace${isCaseWorkspace ? ' md-case-workspace' : ''}" data-whiteboard-deck aria-label="${heading}">
         <header class="md-trace-heading">
           <div><h3>${heading}</h3><p>${isCaseWorkspace ? '沿箭头复盘证据，图中人物与物品为示意' : '紫色是本步新增或改写的内容'}</p></div>
           <button type="button" data-whiteboard-close>返回档案</button>
@@ -64,7 +64,7 @@ export function renderWhiteboardCards(rows, mode = 'board') {
       </dialog>
     </div>`;
   }
-  return `<div class="md-whiteboard-cards">
+  return `<div class="md-whiteboard-cards" data-whiteboard-deck>
     <nav aria-label="${isCase ? '案件推理卡' : '白板阶段卡'}">
       <button type="button" data-whiteboard-prev disabled>${isCase ? '上一张' : '上一阶段'}</button>
       <span data-whiteboard-count aria-live="polite">1 / ${cards.length}</span>
@@ -76,7 +76,7 @@ export function renderWhiteboardCards(rows, mode = 'board') {
 
 export function mountWhiteboardCards(host, { openTrace = false, openCases = false } = {}) {
   const workspaces = [];
-  for (const deck of host.querySelectorAll('.md-whiteboard-cards')) {
+  for (const deck of host.querySelectorAll('[data-whiteboard-deck]')) {
     const slides = [...deck.querySelectorAll('[data-whiteboard-slide]')];
     const previous = deck.querySelector('[data-whiteboard-prev]');
     const next = deck.querySelector('[data-whiteboard-next]');

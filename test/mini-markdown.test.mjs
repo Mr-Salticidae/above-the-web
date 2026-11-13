@@ -69,14 +69,24 @@ test('案件卡能展开时间线、物证与揭晓顺序，正文中的 HTML �
   assert.match(html, /DM 提示与揭晓顺序/);
 });
 
-test('现场带本只在 DM 阅读器解析，计时只出现在有预设的步骤', () => {
+test('现场带本只在 DM 阅读器解析，混排时只有案件组件属于白板控制器', async () => {
   const source = ['```dm-runbook', '准备|0|<开场>|发本；停页|角色本|齐了', '公聊|30|开始|计时|白板|到点', '```'].join('\n');
   assert.doesNotMatch(renderMarkdown(source), /data-run-open/);
-  const html = renderMarkdown(source, { whiteboardImages: true });
+  const cases = ['```case-workspace', '旧案|先问谁？|结论|§9|PHN2Zy8+|证据链', '```'].join('\n');
+  const html = renderMarkdown(source + '\n\n' + cases, { whiteboardImages: true });
   assert.match(html, /&lt;开场&gt;/);
   assert.match(html, /<ol><li>发本<\/li><li>停页<\/li><\/ol>/);
   assert.equal((html.match(/<output>/g) ?? []).length, 1);
   assert.match(html, /<output>30:00<\/output>/);
+  assert.match(html, /<dialog[^>]*md-case-workspace" data-whiteboard-deck/);
+  assert.doesNotMatch(html, /<dialog[^>]*md-runbook"[^>]*data-whiteboard-deck/);
+  const { mountWhiteboardCards } = await import('../src/scripts/whiteboard-cards.js');
+  assert.deepEqual(mountWhiteboardCards({
+    querySelectorAll(selector) {
+      assert.equal(selector, '[data-whiteboard-deck]');
+      return [];
+    },
+  }), []);
 });
 
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
