@@ -1,8 +1,22 @@
 import { escapeHtml } from './account-core.js';
 
+const runbookHighlights = /(?<gate>不要翻开下一页|不可翻开下一页|重投仍平|强制公开不能藏|经典版(?:跳过走向说明|跳过|省略)|只拿出符合条件的一个剧场)|(?<material>虚拟轨\s*\d+(?:[–—／/、-]\d+)*|现实轨\s*\d+(?:[–—／/、-]\d+)*|《Remember Me》|《Hello Zepp》|「名侦探的分析思路」[\d–—\s]*|编号\s*46|剧场\s*[12])|(?<number>每地最多(?:搜)?两条|每人最多藏一张|五人留在现实搜证，一人进虚拟|\d{1,2}:\d{2}|\d+\s*(?:AP|分钟|点))/g;
+
+function highlightRunbookText(value) {
+  let position = 0;
+  let html = '';
+  for (const match of value.matchAll(runbookHighlights)) {
+    const kind = match.groups.gate ? 'gate' : match.groups.material ? 'material' : 'number';
+    html += escapeHtml(value.slice(position, match.index));
+    html += `<mark class="md-run-highlight is-${kind}">${escapeHtml(match[0])}</mark>`;
+    position = match.index + match[0].length;
+  }
+  return html + escapeHtml(value.slice(position));
+}
+
 export function renderRunbook(rows) {
   const steps = rows.map((row) => row.split('|'));
-  if (!steps.length || steps.some((fields) => fields.length !== 6 || fields.some((value) => !value)
+  if (!steps.length || steps.some((fields) => ![6, 7, 8].includes(fields.length) || fields.slice(0, 6).some((value) => !value)
     || !/^\d{1,2}$/.test(fields[1]))) return '<p>现场流程暂时无法显示。</p>';
   return `<div class="md-runbook-entry"><button type="button" data-run-open>打开现场带本 · ${steps.length} 步</button>
     <dialog class="md-whiteboard-cards md-trace-workspace md-runbook" aria-label="《虚拟游戏》现场带本">
@@ -13,14 +27,18 @@ export function renderRunbook(rows) {
         <button type="button" data-run-next>下一步</button>
       </nav>
       <div class="md-run-body">
-        ${steps.map(([title, minutes, say, actions, supplies, check], index) => `<section data-run-step data-minutes="${minutes}"${index ? ' hidden' : ''}>
+        ${steps.map(([title, minutes, say, actions, supplies, check, scene, reference], index) => `<section data-run-step data-minutes="${minutes}"${reference ? ` data-run-reference="${escapeHtml(reference)}"` : ''}${index ? ' hidden' : ''}>
           <h4>${escapeHtml(title)}</h4>
           ${Number(minutes) ? `<div class="md-run-timer"><output>${minutes}:00</output><span role="status"></span>
             <button type="button" data-run-clock="toggle">开始</button><button type="button" data-run-clock="add">＋5 分钟</button><button type="button" data-run-clock="reset">重置</button></div>` : ''}
-          <dl><div><dt>对玩家说</dt><dd>${escapeHtml(say)}</dd></div>
-          <div><dt>DM 操作</dt><dd><ol>${actions.split('；').map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</ol></dd></div>
-          <div><dt>物料与判定</dt><dd>${escapeHtml(supplies)}</dd></div>
-          <div><dt>进入下一步前</dt><dd>${escapeHtml(check)}</dd></div></dl>
+          <dl><div class="md-run-say"><dt>对玩家说</dt><dd>${highlightRunbookText(say)}</dd></div>
+          <div><dt>DM 操作</dt><dd><ol>${actions.split('；').map((item) => `<li>${highlightRunbookText(item)}</li>`).join('')}</ol></dd></div>
+          <div class="md-run-material"><dt>物料与判定 · 仅 DM 查看</dt><dd>${highlightRunbookText(supplies)}</dd></div>
+          <div class="md-run-check"><dt>进入下一步前</dt><dd>${highlightRunbookText(check)}</dd></div></dl>
+          ${scene ? `<details class="md-run-reference md-run-scene"><summary>小剧场 · 台词与走位</summary><ol>${scene.split('；').map((line) => {
+            const end = line.indexOf('】') + 1;
+            return `<li><strong>${escapeHtml(line.slice(0, end))}</strong>${highlightRunbookText(line.slice(end))}</li>`;
+          }).join('')}</ol></details>` : ''}
         </section>`).join('')}
       </div>
     </dialog></div>`;
@@ -122,4 +140,95 @@ export function mountRunbook(host, autoOpen = false) {
   });
   goTo(index);
   if (autoOpen) open();
+}
+
+export function attachRunbookReferences(host, workspaces) {
+  const steps = host.querySelectorAll('[data-run-step]');
+  const cases = workspaces.find(({ deck }) => deck.classList.contains('md-case-workspace'))?.slides;
+  const board = workspaces.find(({ deck }) => !deck.classList.contains('md-case-workspace'))?.slides;
+  if (!steps.length) return;
+  const doc = host.ownerDocument;
+
+  function addReference(step, label, render) {
+    const details = doc.createElement('details');
+    details.className = 'md-run-reference';
+    const summary = doc.createElement('summary');
+    summary.textContent = label;
+    details.append(summary);
+    details.addEventListener('toggle', () => {
+      if (details.open && details.children.length === 1) render(details);
+    });
+    step.append(details);
+  }
+
+  function copyImage(slide, target) {
+    const image = slide.querySelector('img')?.cloneNode();
+    if (image) target.append(image);
+  }
+
+  for (const step of steps) {
+    if (!step.dataset.runReference) continue;
+    let reference;
+    try { reference = JSON.parse(step.dataset.runReference); } catch { continue; }
+    if (!reference || typeof reference !== 'object') continue;
+    const { live, layout, boardStep, caseIndices } = reference;
+    if (Array.isArray(live) && live.length === 2 && live.every((value) => typeof value === 'string')) {
+      const [title, update] = live;
+      const panel = doc.createElement('aside');
+      panel.className = 'md-run-live';
+      const heading = doc.createElement('h5');
+      heading.textContent = '现场整理与更新白板';
+      const lead = doc.createElement('strong');
+      lead.textContent = title;
+      const notes = doc.createElement('p');
+      notes.textContent = update;
+      panel.append(heading, lead, notes);
+      if (Array.isArray(layout)) {
+        const grid = doc.createElement('ul');
+        grid.className = 'md-run-layout';
+        for (const label of layout) {
+          const cell = doc.createElement('li');
+          cell.textContent = label;
+          grid.append(cell);
+        }
+        panel.append(grid);
+      }
+      step.querySelector('dl').before(panel);
+    }
+    if (Number.isInteger(boardStep) && board?.[boardStep - 1]) {
+      addReference(step, `本步白板 · 第 ${boardStep} 笔`, (target) => {
+        const slide = board[boardStep - 1];
+        copyImage(slide, target);
+        const notes = doc.createElement('p');
+        notes.textContent = slide.querySelectorAll('dd')[1].textContent;
+        target.append(notes);
+      });
+    }
+    if (!Array.isArray(caseIndices) || !caseIndices.length || !caseIndices.every((i) => Number.isInteger(i) && cases?.[i])) continue;
+    addReference(step, `本重案件卡 · ${caseIndices.length} 张`, (target) => {
+      const select = doc.createElement('select');
+      select.setAttribute('aria-label', '选择本重案件');
+      const card = doc.createElement('div');
+      for (const i of caseIndices) {
+        const option = doc.createElement('option');
+        option.value = String(i);
+        option.textContent = cases[i].querySelector('h4').textContent;
+        select.append(option);
+      }
+      const render = () => {
+        const slide = cases[Number(select.value)];
+        card.replaceChildren();
+        copyImage(slide, card);
+        const notes = slide.querySelector('.md-trace-notes').cloneNode(true);
+        notes.className = 'md-run-case-notes';
+        notes.removeAttribute('tabindex');
+        notes.removeAttribute('aria-label');
+        notes.querySelector('.md-linked-board')?.remove();
+        card.append(notes);
+      };
+      select.addEventListener('change', render);
+      target.append(select, card);
+      render();
+    });
+  }
 }

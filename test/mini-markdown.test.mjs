@@ -89,6 +89,16 @@ test('现场带本只在 DM 阅读器解析，混排时只有案件组件属于�
   }), []);
 });
 
+test('带本重点区分数字、物料和停读，正文仍然转义', () => {
+  const row = '搜证|0|读到不要翻开下一页|每人 4 AP；公开虚拟轨 32/33|<物料>|强制公开不能藏';
+  const html = renderMarkdown(['```dm-runbook', row, '```'].join('\n'), { whiteboardImages: true });
+  assert.match(html, /is-gate">不要翻开下一页<\/mark>/);
+  assert.match(html, /is-number">4 AP<\/mark>/);
+  assert.match(html, /is-material">虚拟轨 32\/33<\/mark>/);
+  assert.match(html, /仅 DM 查看/);
+  assert.match(html, /&lt;物料&gt;/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

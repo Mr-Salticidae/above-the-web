@@ -256,7 +256,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   import { renderMarkdown } from '../../scripts/mini-markdown.js';
   import { mountWhiteboardCards } from '../../scripts/whiteboard-cards.js';
   import { linkReviewBoard } from '../../scripts/juben-review-board.js';
-  import { mountRunbook } from '../../scripts/juben-runbook.js';
+  import { attachRunbookReferences, mountRunbook } from '../../scripts/juben-runbook.js';
   import { jubenCases } from '../../data/juben.js';
   import { nextMission, resolveVaultMission, vaultDocList } from '../../scripts/juben-journey.js';
 
@@ -411,7 +411,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         const reviewId = '00_DM主持学习手册';
         const boardId = '09_人物关系白板示意图';
         const view = requestedWorkspace();
-        const companionId = caseId === '954-虚拟游戏' && view !== 'run'
+        const companionId = caseId === '954-虚拟游戏'
           ? ({ [reviewId]: boardId, [boardId]: reviewId })[docId]
           : null;
         const companion = companionId ? loadDoc(companionId).catch(() => null) : null;
@@ -420,18 +420,28 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
         mountRunbook(host, view === 'run' && docId === reviewId);
         const workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: view === 'review' });
+        if (!companion) attachRunbookReferences(host, workspaces);
         if (companion) {
           const linked = await companion;
-          if (!current() || !linked?.doc) return;
+          if (!current()) return;
+          if (!linked?.doc) {
+            attachRunbookReferences(host, workspaces);
+            return;
+          }
           const template = document.createElement('template');
           template.innerHTML = renderMarkdown(linked.doc.markdown, { whiteboardImages: true });
           const entry = template.content.querySelector('.md-trace-entry');
-          if (!entry) return;
+          if (!entry) {
+            attachRunbookReferences(host, workspaces);
+            return;
+          }
           const container = document.createElement('div');
           container.className = 'md-companion-workspace';
           container.append(entry);
           host.append(container);
-          linkReviewBoard([...workspaces, ...mountWhiteboardCards(container)]);
+          const allWorkspaces = [...workspaces, ...mountWhiteboardCards(container)];
+          attachRunbookReferences(host, allWorkspaces);
+          linkReviewBoard(allWorkspaces);
         }
       } catch (error) {
         if (!current()) return;
@@ -907,6 +917,24 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.md-run-body dl) { margin: .75rem 0; display: grid; gap: 1rem; }
   :global(.md-run-body dt) { font-weight: 700; color: var(--accent); margin-bottom: .2rem; }
   :global(.md-run-body dd) { margin: 0; line-height: 1.65; }
+  :global(.md-run-say), :global(.md-run-material), :global(.md-run-check) { border-inline-start: 3px solid; border-radius: 5px; padding: .55rem .7rem; }
+  :global(.md-run-say) { border-color: #7750bd; background: color-mix(in srgb, #7750bd 9%, var(--paper-2)); }
+  :global(.md-run-material) { border-color: #258477; background: color-mix(in srgb, #258477 9%, var(--paper-2)); }
+  :global(.md-run-check) { border-color: #be7828; background: color-mix(in srgb, #be7828 11%, var(--paper-2)); }
+  :global(.md-run-highlight) { color: inherit; font-weight: 700; border-radius: 3px; box-decoration-break: clone; }
+  :global(.md-run-highlight.is-number) { background: color-mix(in srgb, #8e63e3 24%, var(--paper-2)); }
+  :global(.md-run-highlight.is-material) { background: color-mix(in srgb, #349c8b 24%, var(--paper-2)); }
+  :global(.md-run-highlight.is-gate) { background: color-mix(in srgb, #df9b43 24%, var(--paper-2)); text-decoration: underline; text-underline-offset: .18em; }
+  :global(.md-run-body li + li) { margin-top: .45rem; }
+  :global(.md-run-reference) { margin: .75rem 0; padding: .35rem .65rem; border: 1px solid var(--line); border-radius: 8px; }
+  :global(.md-run-reference > summary) { min-height: 44px; line-height: 44px; font-weight: 700; color: var(--accent); cursor: pointer; }
+  :global(.md-run-reference select) { width: 100%; min-height: 44px; font: inherit; color: var(--ink); background: var(--paper-2); }
+  :global(.juben-vault-doc-body .md-run-reference img) { width: 100%; height: auto; }
+  :global(.md-run-live) { margin: .75rem 0; padding: .6rem .75rem; border-inline-start: 3px solid #7750bd; border-radius: 6px; background: color-mix(in srgb, #7750bd 9%, var(--paper-2)); }
+  :global(.md-run-live h5) { margin: 0 0 .35rem; color: var(--accent); font-size: .85rem; }
+  :global(.juben-vault-doc-body .md-run-live p) { margin: .25rem 0 0; line-height: 1.55; }
+  :global(.juben-vault-doc-body .md-run-layout) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .35rem; padding: 0; margin: .55rem 0 0; list-style: none; }
+  :global(.md-run-layout li) { margin: 0; padding: .35rem .45rem; border: 1px solid var(--line); border-radius: 5px; background: var(--paper-2); }
   :global(.md-run-timer) { position: sticky; top: 0; display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; padding: .4rem; margin-top: .5rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); }
   :global(.md-run-timer output) { font-size: 1.3rem; font-weight: 700; font-variant-numeric: tabular-nums; }
   :global(.md-run-timer [role="status"]:not(:empty)) { flex-basis: 100%; color: var(--accent); }
