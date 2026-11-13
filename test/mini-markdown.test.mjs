@@ -60,6 +60,14 @@ test('案件工作区使用示意图与文字证据，并隔离公开渲染', ()
   assert.match(html, /先问玩家[\s\S]*核对证据[\s\S]*本轮结论/);
 });
 
+test('案件卡能展开时间线、物证与揭晓顺序，正文中的 HTML 继续转义', () => {
+  const row = '旧案|先问谁？|结论|§9|PHN2Zy8+|证据链|先发生；后发生|<物证>；另一件|先问；再揭晓';
+  const html = renderMarkdown(['```case-workspace', row, '```'].join('\n'), { whiteboardImages: true });
+  assert.match(html, /事件还原<\/summary><ol><li>先发生<\/li><li>后发生<\/li>/);
+  assert.match(html, /逐条核对物证<\/summary><ul><li>&lt;物证&gt;<\/li>/);
+  assert.match(html, /DM 提示与揭晓顺序/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

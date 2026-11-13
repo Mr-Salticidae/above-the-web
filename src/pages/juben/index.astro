@@ -900,6 +900,10 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   :global(.md-trace-notes dl) { margin: .65rem 0 0; display: grid; gap: .6rem; }
   :global(.md-trace-notes dt) { font-size: .75rem; font-weight: 700; color: var(--accent); }
   :global(.md-trace-notes dd) { margin: .12rem 0 0; font-size: .87rem; line-height: 1.55; overflow-wrap: anywhere; }
+  :global(.md-case-detail) { margin-top: .55rem; border-top: 1px solid var(--line); }
+  :global(.md-case-detail summary) { padding: .55rem 0 .15rem; color: var(--ink); font-size: .85rem; font-weight: 650; cursor: pointer; }
+  :global(.juben-vault-doc-body .md-case-detail :is(ol, ul)) { margin: .35rem 0 .65rem; padding-left: 1.2rem; line-height: 1.55; }
+  :global(.md-case-detail li + li) { margin-top: .4rem; }
   @media (max-width: 680px) {
     :global(.md-trace-workspace) { width: 100vw; height: 100dvh; border: 0; border-radius: 0; }
     :global(.md-trace-heading) { padding: .4rem .6rem; }

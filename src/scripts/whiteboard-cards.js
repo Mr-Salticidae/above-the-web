@@ -5,13 +5,17 @@ export function renderWhiteboardCards(rows, mode = 'board') {
   const isCaseWorkspace = mode === 'case-workspace';
   const isWorkspace = mode === 'trace' || isCaseWorkspace;
   const cards = rows.map((row) => row.split('|'));
-  if (!cards.length || cards.some(([title, timing, update, evidence, image, chain, extra]) =>
+  if (!cards.length || cards.some(([title, timing, update, evidence, image, chain, timeline, clues, guidance, extra]) =>
     !title || !timing || !update || !evidence || !image || extra !== undefined ||
-    (isCaseWorkspace ? !chain : chain !== undefined) ||
+    (isCaseWorkspace ? !chain || (timeline !== undefined && (!timeline || !clues || !guidance)) : chain !== undefined) ||
     (!isCase && (image.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/.test(image)))
   )) return '<p>卡片暂时无法显示，请参考下方正文。</p>';
 
-  const slides = cards.map(([title, timing, update, evidence, image, chain], index) => isWorkspace ? `
+  const details = (label, content, ordered = false) => {
+    const tag = ordered ? 'ol' : 'ul';
+    return `<details class="md-case-detail"><summary>${label}</summary><${tag}>${content.split('；').map((item) => `<li>${escapeHtml(item)}</li>`).join('')}</${tag}></details>`;
+  };
+  const slides = cards.map(([title, timing, update, evidence, image, chain, timeline, clues, guidance], index) => isWorkspace ? `
     <section class="md-trace-slide" data-whiteboard-slide${index ? ' hidden' : ''}>
       <div class="md-whiteboard-pan" tabindex="0" aria-label="当前白板图，放大后可滚动">
         <img src="data:image/svg+xml;base64,${image}" alt="${isCaseWorkspace ? escapeHtml(chain) : `第 ${index + 1} 步的完整白板，本步新增或改写处为紫色`}" decoding="async" />
@@ -23,6 +27,11 @@ export function renderWhiteboardCards(rows, mode = 'board') {
           <div><dt>${isCaseWorkspace ? '核对证据' : '照着画'}</dt><dd>${escapeHtml(isCaseWorkspace ? evidence : update)}</dd></div>
           <div><dt>${isCaseWorkspace ? '本轮结论' : '更新依据'}</dt><dd>${escapeHtml(isCaseWorkspace ? update : evidence)}</dd></div>
         </dl>
+        ${isCaseWorkspace && timeline ? [
+          details('事件还原', timeline, true),
+          details('逐条核对物证', clues),
+          details('DM 提示与揭晓顺序', guidance, true),
+        ].join('') : ''}
       </div>
     </section>` : `
     <section data-whiteboard-slide${index ? ' hidden' : ''}>
@@ -97,6 +106,7 @@ export function mountWhiteboardCards(host, { openTrace = false } = {}) {
       if (select) {
         select.value = String(current);
         slides[current].querySelector('.md-trace-notes').scrollTop = 0;
+        slides[current].querySelectorAll('.md-case-detail').forEach((item) => { item.open = false; });
       }
       const focused = deck.ownerDocument.activeElement;
       previous.disabled = current === 0;
