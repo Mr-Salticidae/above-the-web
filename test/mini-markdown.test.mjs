@@ -56,6 +56,7 @@ test('案件工作区使用示意图与文字证据，并隔离公开渲染', ()
   assert.doesNotMatch(renderMarkdown(markdown), /<dialog/);
   const html = renderMarkdown(markdown, { whiteboardImages: true });
   assert.match(html, /md-case-workspace/);
+  assert.doesNotMatch(html, /data-whiteboard-zoom|放大示意图/);
   assert.match(html, /alt="物证 → &lt;时间&gt;"/);
   assert.match(html, /先问玩家[\s\S]*核对证据[\s\S]*本轮结论/);
 });

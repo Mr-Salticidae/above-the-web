@@ -58,7 +58,7 @@ export function renderWhiteboardCards(rows, mode = 'board') {
           <select data-whiteboard-select aria-label="${isCaseWorkspace ? '跳到案件' : '跳到步骤'}">${options}</select>
           <span data-whiteboard-count aria-live="polite">1 / ${cards.length}</span>
           <button type="button" data-whiteboard-next${cards.length === 1 ? ' disabled' : ''}>${isCaseWorkspace ? '下一张' : '下一步'}</button>
-          <button type="button" data-whiteboard-zoom aria-pressed="false">${isCaseWorkspace ? '放大示意图' : '放大白板'}</button>
+          ${isCaseWorkspace ? '' : '<button type="button" data-whiteboard-zoom aria-pressed="false">放大白板</button>'}
         </nav>
         <div class="md-trace-stage">${slides}</div>
       </dialog>
@@ -74,20 +74,22 @@ export function renderWhiteboardCards(rows, mode = 'board') {
   </div>`;
 }
 
-export function mountWhiteboardCards(host, { openTrace = false } = {}) {
+export function mountWhiteboardCards(host, { openTrace = false, openCases = false } = {}) {
+  const workspaces = [];
   for (const deck of host.querySelectorAll('.md-whiteboard-cards')) {
     const slides = [...deck.querySelectorAll('[data-whiteboard-slide]')];
     const previous = deck.querySelector('[data-whiteboard-prev]');
     const next = deck.querySelector('[data-whiteboard-next]');
     const count = deck.querySelector('[data-whiteboard-count]');
     const select = deck.querySelector('[data-whiteboard-select]');
+    let open;
     if (select) {
       const opener = deck.parentElement.querySelector('[data-whiteboard-open]');
-      const open = () => { if (!deck.open) deck.showModal(); };
+      open = () => { if (!deck.open) deck.showModal(); };
       opener.addEventListener('click', open);
       deck.querySelector('[data-whiteboard-close]').addEventListener('click', () => deck.close());
       deck.addEventListener('close', () => { if (opener.isConnected) opener.focus({ preventScroll: true }); });
-      if (openTrace && !deck.classList.contains('md-case-workspace')) open();
+      if (deck.classList.contains('md-case-workspace') ? openCases : openTrace) open();
     }
     const zoom = deck.querySelector('[data-whiteboard-zoom]');
     const zoomLabel = zoom?.textContent;
@@ -97,7 +99,7 @@ export function mountWhiteboardCards(host, { openTrace = false } = {}) {
       zoom.textContent = enlarged ? '缩回全图' : zoomLabel;
     });
     let current = 0;
-    function goTo(target) {
+    function goTo(target, notify = true) {
       if (target < 0 || target >= slides.length) return;
       slides[current].hidden = true;
       current = target;
@@ -113,9 +115,12 @@ export function mountWhiteboardCards(host, { openTrace = false } = {}) {
       next.disabled = current === slides.length - 1;
       if (focused === next && next.disabled) previous.focus();
       if (focused === previous && previous.disabled) next.focus();
+      if (notify) deck.dispatchEvent(new CustomEvent('juben-workspace-step', { detail: current }));
     }
     previous.addEventListener('click', () => goTo(current - 1));
     next.addEventListener('click', () => goTo(current + 1));
     select?.addEventListener('change', () => goTo(Number(select.value)));
+    if (select) workspaces.push({ deck, slides, goTo, open });
   }
+  return workspaces;
 }

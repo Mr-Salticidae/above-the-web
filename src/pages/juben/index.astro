@@ -6,8 +6,8 @@ import { jubenCases, comparisonRows, methodSteps } from '../../data/juben.js';
 import { KB_REPO, KB_BRANCH } from '../../lib/site.mjs';
 
 const first = jubenCases[0];
+const workspaceCase = jubenCases.find((item) => item.id === 'virtual-game');
 const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-deconstruct`;
-const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length, 0);
 ---
 
 <BaseLayout
@@ -18,38 +18,26 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   <div class="juben-page">
     <header class="juben-hero">
       <div class="juben-hero-copy">
-        <p class="masthead-kicker">Script Library · DM Notes</p>
         <h1>剧本研究室</h1>
-        <p class="juben-hero-en">READ THE STRUCTURE, NOT JUST THE STORY</p>
-        <p class="juben-hero-desc">
-          不只把故事读完，而是把它拆成能复述、能主持、能迁移的结构。
-          每学一本，就留下一张档案；学得越多，下一本越省力。
-        </p>
-      </div>
-      <div class="juben-hero-index" aria-label="专栏概况">
-        <span>Vol. 001</span>
-        <strong>{String(jubenCases.length).padStart(2, '0')}</strong>
-        <p>卷已整理档案</p>
-        <i></i>
-        <small>{totalModules} 个学习节点<br />持续开本，持续回填</small>
+        <p class="juben-hero-desc">选一卷，从开本流程学起，或直接进入案件复盘和白板演练。</p>
       </div>
     </header>
 
     <div class="juben-notice" role="note">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3 3.5 7.5v5c0 4.7 3.5 7.7 8.5 9 5-1.3 8.5-4.3 8.5-9v-5L12 3Z"/><path d="M12 8v4M12 16h.01"/></svg>
-      <p><strong>公开页无答案剧透。</strong>这里只有学习路径与结构概括；凶手、完整时间线、诡计解答和结局均留在私有档案。结构类型仍属轻度提示，未玩的玩家请酌情阅读。</p>
+      <p>案件答案与原始资料仅对持邀请码的 DM 开放。</p>
     </div>
 
     <section class="juben-library" aria-labelledby="library-title">
       <header class="juben-section-head">
         <div>
-          <p class="juben-kicker">01 · Case Files</p>
-          <h2 id="library-title">剧本档案</h2>
+          <h2 id="library-title">选择剧本</h2>
         </div>
-        <p>选一本，开始拆解。勾选进度会保存在本机。</p>
       </header>
 
-      <div class="juben-tools">
+      <details class="juben-filter-panel">
+        <summary>搜索与筛选</summary>
+        <div class="juben-tools">
         <label class="juben-search">
           <span class="sr-only">搜索剧本或标签</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg>
@@ -60,7 +48,8 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
           <button type="button" data-filter="learning" aria-pressed="false">学习中</button>
           <button type="button" data-filter="ready" aria-pressed="false">资料就绪</button>
         </div>
-      </div>
+        </div>
+      </details>
 
       <div class="juben-workbench">
         <div class="juben-case-column">
@@ -106,11 +95,15 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
             <div><dt>建议</dt><dd id="fact-level">{first.level}</dd></div>
           </dl>
 
-          <div class="juben-current-note">
-            <span>当前注记</span>
-            <p id="detail-note">{first.note}</p>
-          </div>
+          <nav class="juben-study-links" aria-label="本卷学习入口">
+            <a class="juben-study-primary" id="private-link" href={`?case=${first.id}&module=${first.modules[0].slug}#dm-vault`}>开始学本 <span>打开 DM 学习手册 →</span></a>
+            {workspaceCase && <a id="review-link" href={`?case=${workspaceCase.id}&view=review#dm-vault`}>案件复盘 <span>查看图解与提示 →</span></a>}
+            {workspaceCase && <a id="board-link" href={`?case=${workspaceCase.id}&view=board#dm-vault`}>白板演练 <span>逐笔跟画 →</span></a>}
+            <a id="timeline-link" href={`?case=${first.id}&module=${first.modules[1].slug}#dm-vault`}>故事与时间线 <span>核对完整经过 →</span></a>
+          </nav>
 
+          <details class="juben-practice" id="juben-practice">
+          <summary>主持训练与自测</summary>
           <section class="juben-learning" aria-labelledby="learning-title">
             <div class="juben-learning-head">
               <div>
@@ -173,13 +166,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
             </div>
           </section>
 
-          <footer class="juben-detail-footer">
-            <p><span></span>深度内容在站内 DM 档案库阅读，不必跳去私有仓库找文件</p>
-            <div>
-              <a id="private-link" href={`?case=${first.id}&module=${first.modules[0].slug}#dm-vault`}>DM 学习手册 <span>→</span></a>
-              <a id="timeline-link" href={`?case=${first.id}&module=${first.modules[1].slug}#dm-vault`}>时间线 / 故事全貌 <span>→</span></a>
-            </div>
-          </footer>
+          </details>
         </article>
       </div>
     </section>
@@ -187,24 +174,23 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     <section class="juben-vault" id="dm-vault" aria-labelledby="vault-title">
       <header class="juben-section-head">
         <div>
-          <p class="juben-kicker">04 · DM Vault</p>
           <h2 id="vault-title">DM 档案库</h2>
         </div>
         <p id="vault-state">按登录身份开放：整卷拆解、时间线与带本提醒。</p>
       </header>
       <p class="juben-vault-note">
-        完整拆解手册只对 DM 开放——玩家仍保留第一次推开房门的惊喜。
-        DM 身份靠邀请码人传人：拿到码的站内成员在这里兑换，兑换成功即拥有自己的邀请码。
+        登录后可在此兑换 DM 邀请码。
       </p>
       <div class="juben-vault-body" id="vault-body" aria-live="polite">
         <p class="juben-vault-loading">正在确认身份…</p>
       </div>
     </section>
 
+    <details class="juben-reference">
+      <summary>跨本对照与拆解方法</summary>
     <section class="juben-compare" aria-labelledby="compare-title">
       <header class="juben-section-head">
         <div>
-          <p class="juben-kicker">02 · Cross-reading</p>
           <h2 id="compare-title">跨本对照</h2>
         </div>
         <p>比较设计结构，不比较谜底。点击维度收起无关行。</p>
@@ -236,7 +222,6 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     <section class="juben-method" aria-labelledby="method-title">
       <header class="juben-section-head">
         <div>
-          <p class="juben-kicker">03 · The Method</p>
           <h2 id="method-title">下一本，怎么拆</h2>
         </div>
         <p>一条可以反复使用的五步学习线。</p>
@@ -247,8 +232,8 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
           <a href={deconstructSkillUrl} target="_blank" rel="noopener">查看拆解 Skill <span>↗</span></a>
         </div>
         <div class="juben-accordion">
-          {methodSteps.map((step, index) => (
-            <details open={index === 0}>
+          {methodSteps.map((step) => (
+            <details>
               <summary><span>{step.no}</span><strong>{step.title}</strong><i aria-hidden="true"></i></summary>
               <div><p>{step.desc}</p><small>{step.output}</small></div>
             </details>
@@ -257,10 +242,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       </div>
     </section>
 
-    <footer class="juben-colophon">
-      <p>PUBLIC INDEX / PRIVATE CASE NOTES</p>
-      <span>公开导航与私有复盘分离，让玩家仍能保留第一次推开房门的惊喜。</span>
-    </footer>
+    </details>
   </div>
 
   <script type="application/json" id="juben-data" set:html={JSON.stringify(jubenCases)}></script>
@@ -272,6 +254,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   import { api, cacheUser, displayNameOf, escapeHtml, getCachedUser, getToken, loginUrl, registerUrl, refreshUser, isDm, onAuthChange } from '../../scripts/account-core.js';
   import { renderMarkdown } from '../../scripts/mini-markdown.js';
   import { mountWhiteboardCards } from '../../scripts/whiteboard-cards.js';
+  import { linkReviewBoard } from '../../scripts/juben-review-board.js';
   import { jubenCases } from '../../data/juben.js';
   import { nextMission, resolveVaultMission, vaultDocList } from '../../scripts/juben-journey.js';
 
@@ -383,7 +366,21 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       if (!target) return null;
       activeCase = target.vaultCaseId;
       activeDoc = target.manifestCase ? target.docId : null;
+      const view = requestedWorkspace();
+      const workspaceCase = jubenCases.find((item) => item.id === 'virtual-game');
+      if (view && activeCase === workspaceCase?.vaultCaseId) {
+        const docId = view === 'board' ? '09_人物关系白板示意图' : workspaceCase.modules[0].docId;
+        if (target.manifestCase && vaultDocList(target.manifestCase).some((doc) => doc.id === docId)) {
+          activeDoc = docId;
+          return null;
+        }
+      }
       return target;
+    }
+
+    function requestedWorkspace() {
+      const view = new URLSearchParams(location.search).get('view');
+      return view === 'review' || view === 'board' ? view : '';
     }
 
     async function openDoc(caseId, docId) {
@@ -408,10 +405,30 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
         && document.getElementById('vault-reader-doc') === host
       );
       try {
-        const { doc } = await api('GET', `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(docId)}`);
+        const loadDoc = (id) => api('GET', `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(id)}`);
+        const reviewId = '00_DM主持学习手册';
+        const boardId = '09_人物关系白板示意图';
+        const companionId = caseId === '954-虚拟游戏'
+          ? ({ [reviewId]: boardId, [boardId]: reviewId })[docId]
+          : null;
+        const companion = companionId ? loadDoc(companionId).catch(() => null) : null;
+        const { doc } = await loadDoc(docId);
         if (!current()) return;
         host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
-        mountWhiteboardCards(host, { openTrace: true });
+        const workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: requestedWorkspace() === 'review' });
+        if (companion) {
+          const linked = await companion;
+          if (!current() || !linked?.doc) return;
+          const template = document.createElement('template');
+          template.innerHTML = renderMarkdown(linked.doc.markdown, { whiteboardImages: true });
+          const entry = template.content.querySelector('.md-trace-entry');
+          if (!entry) return;
+          const container = document.createElement('div');
+          container.className = 'md-companion-workspace';
+          container.append(entry);
+          host.append(container);
+          linkReviewBoard([...workspaces, ...mountWhiteboardCards(container)]);
+        }
       } catch (error) {
         if (!current()) return;
         host.innerHTML = `<p class="juben-vault-msg" data-tone="error">${escapeHtml(error.message)}</p>`;
@@ -425,9 +442,8 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       if (flat.length && !flat.some((doc) => doc.id === activeDoc)) activeDoc = flat[0].id;
       const groups = caseData.groups?.length ? caseData.groups : [{ label: '档案', docs: flat }];
       if (!flat.length) return '<nav class="juben-vault-docs" aria-label="本卷目录"><p class="juben-vault-invite-sub">这一卷还没有文档。</p></nav>';
-      const open = window.matchMedia('(min-width: 901px)').matches ? ' open' : '';
       return `
-        <details class="juben-vault-directory"${open}>
+        <details class="juben-vault-directory">
           <summary>全部档案 <span>${flat.length} 篇 · 点击展开 / 收起</span></summary>
           <nav class="juben-vault-docs" aria-label="本卷目录">
             ${groups.map((group) => `
@@ -473,7 +489,10 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       window.dispatchEvent(new CustomEvent('atw-juben-request-mission', {
         detail: { ...pendingMission, hash: returnToTrainer ? '' : 'dm-vault' },
       }));
-      if (returnToTrainer) document.getElementById('juben-trainer')?.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
+      if (returnToTrainer) {
+        document.getElementById('juben-practice').open = true;
+        document.getElementById('juben-trainer')?.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
+      }
     }
 
     function renderReader(generation = beginVaultRender()) {
@@ -485,12 +504,12 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       body.innerHTML = `
         <div class="juben-vault-reader" id="vault-reader">
           <aside class="juben-vault-side">
-            <div class="juben-vault-invite">
-              <p class="juben-vault-invite-title">我的邀请码</p>
+            <details class="juben-vault-invite">
+              <summary>我的邀请码</summary>
               <code id="vault-invite-code">${escapeHtml(inviteInfo ? inviteInfo.code : '……')}</code>
               <button type="button" id="vault-invite-copy">复制</button>
               <p class="juben-vault-invite-sub">把它交给值得信任的准 DM；每带一人进门，传承就长一格。</p>
-            </div>
+            </details>
             <div class="juben-vault-cases" id="vault-cases" aria-label="卷宗"><p class="juben-vault-invite-title">卷宗</p></div>
           </aside>
           <div class="juben-vault-main">
@@ -631,22 +650,26 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
 <style>
   .juben-page { max-width: 74rem; margin: 0 auto; padding: 0 1.5rem 5rem; }
   .juben-hero { min-height: 26rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3rem; padding: 4.2rem 0 3.6rem; border-bottom: 2px solid var(--ink); position: relative; }
-  .juben-hero::before { content: ""; position: absolute; width: 22rem; height: 22rem; right: 2%; top: 0; pointer-events: none; background: radial-gradient(circle, rgba(var(--glow), .12), transparent 67%); }
-  .juben-hero-copy { position: relative; }
   .juben-hero h1 { margin: .15rem 0; font-family: var(--serif); font-size: clamp(3rem, 7vw, 5.6rem); letter-spacing: .09em; line-height: 1.12; }
-  .juben-hero-en { margin: .8rem 0 0; color: var(--accent); font-size: .66rem; letter-spacing: .24em; }
-  .juben-hero-desc { max-width: 38rem; margin: 1.5rem 0 0; color: var(--ink-soft); font-size: .98rem; line-height: 1.95; }
-  .juben-hero-index { width: 11rem; padding: 1.4rem 0 1.4rem 2rem; border-left: 1px solid var(--line); position: relative; }
-  .juben-hero-index > span { color: var(--ink-soft); font-size: .66rem; letter-spacing: .18em; }
-  .juben-hero-index strong { display: block; margin: .4rem 0 -.5rem; font-family: var(--serif); font-size: 5.6rem; font-weight: 400; line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; }
-  .juben-hero-index p { margin: 0; color: var(--ink-soft); font-size: .8rem; }
-  .juben-hero-index i { display: block; width: 2.5rem; margin: 1rem 0; border-top: 1px solid var(--accent); }
-  .juben-hero-index small { color: var(--ink-soft); font-size: .72rem; line-height: 1.8; }
+  .juben-hero-desc { max-width: 38rem; margin: .6rem 0 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.75; }
   .juben-notice { display: flex; align-items: flex-start; gap: .8rem; margin: 1.5rem 0 0; padding: .85rem 1rem; background: var(--accent-soft); border-left: 2px solid var(--accent); }
   .juben-notice svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .2rem; color: var(--accent); }
   .juben-notice p { margin: 0; color: var(--ink-soft); font-size: .78rem; line-height: 1.7; }
   .juben-notice strong { color: var(--ink); }
-  .juben-library, .juben-compare, .juben-method { padding-top: 4.2rem; scroll-margin-top: var(--header-h); }
+  .juben-library, .juben-compare, .juben-method { padding-top: 1.35rem; scroll-margin-top: var(--header-h); }
+  .juben-filter-panel { margin: 0 0 .75rem; }
+  .juben-filter-panel > summary, .juben-practice > summary, .juben-reference > summary { min-height: 44px; box-sizing: border-box; padding: .65rem .8rem; cursor: pointer; color: var(--ink); font-size: .88rem; }
+  .juben-filter-panel > summary { width: fit-content; padding-left: 0; color: var(--ink-soft); }
+  .juben-practice, .juben-reference { border: 1px solid var(--line); border-radius: 8px; }
+  .juben-practice[open], .juben-reference[open] { padding: 0 .8rem .8rem; }
+  .juben-practice[open] > summary, .juben-reference[open] > summary { padding-left: 0; }
+  .juben-reference { margin-top: 1.75rem; }
+  .juben-study-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin: 1rem 0; }
+  .juben-study-links a { display: grid; gap: .2rem; padding: .65rem .8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); color: var(--ink); font-size: .92rem; font-weight: 650; text-decoration: none; }
+  .juben-study-links a[hidden] { display: none; }
+  .juben-study-links a:hover { border-color: var(--accent); }
+  .juben-study-links a span { font-size: .72rem; font-weight: 400; }
+  .juben-study-links .juben-study-primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .juben-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 1.6rem; }
   .juben-kicker { margin: 0 0 .3rem; color: var(--accent); font-size: .64rem; font-weight: 650; letter-spacing: .18em; text-transform: uppercase; }
   .juben-section-head h2 { margin: 0; font-family: var(--serif); font-size: 1.9rem; letter-spacing: .04em; }
@@ -694,9 +717,6 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   .juben-facts div { padding: .25rem .8rem .25rem 0; }
   .juben-facts dt { color: var(--ink-soft); font-size: .58rem; letter-spacing: .12em; }
   .juben-facts dd { margin: .15rem 0 0; font-size: .78rem; font-weight: 600; }
-  .juben-current-note { display: flex; align-items: baseline; gap: 1rem; margin: 0 1.7rem; padding: .75rem 0; border-top: 1px solid var(--line); }
-  .juben-current-note span { flex: none; color: var(--case-accent); font-size: .62rem; letter-spacing: .1em; }
-  .juben-current-note p { margin: 0; color: var(--ink-soft); font-size: .72rem; }
   .juben-learning { margin: 1rem 1.7rem 0; padding: 1.1rem 1.2rem; border-radius: 8px; background: var(--paper-3); }
   .juben-learning-head { display: flex; justify-content: space-between; align-items: center; }
   .juben-learning h4, .juben-quiz h4 { margin: 0; font-family: var(--serif); font-size: 1.05rem; }
@@ -765,12 +785,6 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   .juben-quiz { display: grid; grid-template-columns: auto 1fr; gap: 1rem; margin: 1rem 1.7rem 0; padding: 1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .juben-quiz-mark { display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border: 1px solid color-mix(in srgb, var(--case-accent) 40%, var(--line)); border-radius: 50%; color: var(--case-accent); font-family: var(--serif); font-size: 1.4rem; }
   .juben-quiz p:not(.juben-kicker) { margin: .55rem 0 .65rem; font-size: .78rem; line-height: 1.75; }
-  .juben-detail-footer { padding: 1rem 1.7rem 1.3rem; }
-  .juben-detail-footer > p { display: flex; align-items: center; gap: .4rem; margin: 0 0 .6rem; color: var(--ink-soft); font-size: .62rem; }
-  .juben-detail-footer > p span { width: 5px; height: 5px; border-radius: 50%; background: var(--case-accent); }
-  .juben-detail-footer > div { display: flex; flex-wrap: wrap; gap: .6rem; }
-  .juben-detail-footer a { display: inline-flex; justify-content: space-between; gap: 1rem; padding: .5rem .75rem; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); font-size: .7rem; }
-  .juben-detail-footer a:hover { border-color: var(--case-accent); color: var(--case-accent); text-decoration: none; }
   .juben-compare-filters { margin-bottom: 1rem; }
   .juben-table-wrap { overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
   .juben-table-wrap table { width: 100%; min-width: 42rem; border-collapse: collapse; }
@@ -801,11 +815,8 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   .juben-accordion details > div { padding: 0 0 1.1rem 3.1rem; }
   .juben-accordion details p { margin: 0 0 .45rem; color: var(--ink-soft); font-size: .76rem; line-height: 1.85; }
   .juben-accordion details small { color: var(--accent); font-size: .65rem; }
-  .juben-colophon { display: flex; justify-content: space-between; gap: 1rem; margin-top: 4rem; padding-top: 1.2rem; border-top: 1px solid var(--line); }
-  .juben-colophon p { margin: 0; color: var(--accent); font-size: .58rem; letter-spacing: .14em; }
-  .juben-colophon span { color: var(--ink-soft); font-size: .65rem; }
   /* ---------- DM 档案库（内容全部 JS 注入，样式必须 :global） ---------- */
-  .juben-vault { padding-top: 4.2rem; scroll-margin-top: var(--header-h); }
+  .juben-vault { padding-top: 2rem; scroll-margin-top: var(--header-h); }
   .juben-vault-note { margin: 0 0 1.2rem; padding: .85rem 1rem; color: var(--ink-soft); font-size: .78rem; line-height: 1.8; background: var(--accent-soft); border-left: 2px solid var(--accent); }
   :global(.juben-vault-loading) { margin: 1.5rem 0; color: var(--ink-soft); font-size: .78rem; }
   :global(.juben-vault-gate) { padding: 1.6rem; border: 1px dashed var(--line); border-radius: 10px; background: var(--paper-2); }
@@ -827,6 +838,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   :global(.juben-vault-reader) { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 1.4rem; align-items: start; }
   :global(.juben-vault-side) { position: sticky; top: calc(var(--header-h) + 1rem); display: grid; gap: 1rem; }
   :global(.juben-vault-invite) { padding: 1.1rem 1.2rem; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 10px; background: var(--paper-2); }
+  :global(.juben-vault-invite summary) { cursor: pointer; font-size: .8rem; color: var(--ink); }
   :global(.juben-vault-invite-title) { margin: 0 0 .5rem; color: var(--ink-soft); font-size: .62rem; letter-spacing: .14em; }
   :global(.juben-vault-invite code) { display: block; font-family: var(--serif); font-size: 1.05rem; letter-spacing: .18em; color: var(--accent); }
   :global(.juben-vault-invite button) { margin-top: .6rem; padding: .35rem .8rem; border: 1px solid var(--line); border-radius: 5px; background: transparent; color: var(--ink-soft); font: inherit; font-size: .65rem; cursor: pointer; }
@@ -904,6 +916,12 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   :global(.md-case-detail summary) { padding: .55rem 0 .15rem; color: var(--ink); font-size: .85rem; font-weight: 650; cursor: pointer; }
   :global(.juben-vault-doc-body .md-case-detail :is(ol, ul)) { margin: .35rem 0 .65rem; padding-left: 1.2rem; line-height: 1.55; }
   :global(.md-case-detail li + li) { margin-top: .4rem; }
+  :global(.md-companion-workspace [data-whiteboard-open]) { display: none; }
+  :global(.md-linked-cases) { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+  :global(.md-linked-cases button) { font-size: .78rem; }
+  :global(.md-case-workspace .md-trace-nav > button:last-child) { justify-self: end; }
+  :global(.md-case-workspace .md-case-detail img) { max-width: 100%; height: auto; }
+  :global(.md-linked-board summary) { color: var(--accent); }
   @media (max-width: 680px) {
     :global(.md-trace-workspace) { width: 100vw; height: 100dvh; border: 0; border-radius: 0; }
     :global(.md-trace-heading) { padding: .4rem .6rem; }
@@ -912,6 +930,11 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     :global(.md-trace-nav [data-whiteboard-next]) { justify-self: start; }
     :global(.md-trace-workspace .md-trace-slide:not([hidden])) { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1.35fr) minmax(0, 1fr); padding: .45rem; gap: .45rem; }
     :global(.md-trace-notes) { padding: .6rem; }
+    :global(.md-trace-nav button) { white-space: nowrap; }
+    :global(.md-case-workspace .md-trace-nav [data-workspace-linked]) { grid-column: 4; grid-row: 1; }
+    :global(.md-trace-workspace:not(.md-case-workspace) .md-trace-nav [data-workspace-linked]) { grid-column: 1 / -1; width: 100%; }
+    :global(.md-trace-workspace.md-case-workspace .md-trace-slide:not([hidden])) { grid-template-rows: minmax(0, 1fr) minmax(0, 2fr); }
+    :global(.md-trace-notes dd) { font-size: .94rem; }
   }
   :global(.juben-vault-doc-body .md-case-chain) { display: grid; gap: 1rem; padding: 0; list-style: none; }
   :global(.md-case-chain li) { position: relative; padding: .45rem .65rem; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-2); color: var(--ink); }
@@ -947,10 +970,6 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   @media (max-width: 700px) {
     .juben-page { padding-inline: 1.1rem; }
     .juben-hero { min-height: 0; grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 0 2.4rem; }
-    .juben-hero-index { display: grid; grid-template-columns: auto auto 1fr; align-items: end; gap: .4rem .8rem; width: 100%; padding: 1rem 0 0; border-left: 0; border-top: 1px solid var(--line); }
-    .juben-hero-index > span { grid-column: 1 / -1; }
-    .juben-hero-index strong { margin: 0; font-size: 3.4rem; }
-    .juben-hero-index i, .juben-hero-index small { display: none; }
     .juben-section-head { align-items: flex-start; flex-direction: column; gap: .5rem; }
     .juben-section-head > p { text-align: left; }
     .juben-tools { align-items: stretch; flex-direction: column; }
@@ -961,23 +980,18 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     .juben-case-card strong { font-size: 1.1rem; }
     .juben-case-card small { letter-spacing: .05em; }
     .juben-detail-head, .juben-facts, .juben-detail-footer { padding-inline: 1.1rem; }
-    .juben-current-note, .juben-learning, .juben-quiz { margin-inline: 1.1rem; }
     .juben-training-callout { align-items: flex-start; flex-direction: column; }
     .juben-training-callout button { width: 100%; min-height: 2.75rem; }
     .juben-mission-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .juben-trainer-draft small { display: block; margin: .2rem 0 0; }
     .juben-method-grid { grid-template-columns: 1fr; gap: 1rem; }
     .juben-method-intro p { max-width: 28rem; }
-    .juben-colophon { flex-direction: column; }
   }
   @media (max-width: 430px) {
     .juben-case-list { grid-template-columns: 1fr; }
     .juben-case-desc { display: block; }
     .juben-detail-head { flex-direction: column; }
     .juben-detail-status { align-self: flex-start; }
-    .juben-current-note { align-items: flex-start; flex-direction: column; gap: .25rem; }
-    .juben-detail-footer > div { flex-direction: column; }
-    .juben-detail-footer a { width: 100%; }
   }
   @media (prefers-reduced-motion: reduce) {
     .juben-case-card, .juben-card-progress b, .juben-progress-track b { transition: none; }
@@ -1354,6 +1368,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       const target = new URL(location.href);
       target.searchParams.set('case', caseId);
       target.searchParams.set('module', moduleSlug);
+      target.searchParams.delete('view');
       if (hash !== null) target.hash = hash;
       if (target.href === location.href) return;
       history[mode === 'replace' ? 'replaceState' : 'pushState']({ juben: true }, '', target);
@@ -1367,7 +1382,10 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       renderTrainer(item);
       updateHistory(selected, selectedMissionSlug, historyMode, hash);
       window.dispatchEvent(new CustomEvent('atw-juben-mission', { detail: { caseId: selected, moduleSlug: selectedMissionSlug } }));
-      if (scroll) document.getElementById('juben-trainer').scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
+      if (scroll) {
+        document.getElementById('juben-practice').open = true;
+        document.getElementById('juben-trainer').scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
+      }
     }
 
     function openMissionDoc(slug) {
@@ -1413,7 +1431,6 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       text('detail-title', item.title);
       text('detail-intro', item.intro);
       text('detail-status', item.status);
-      text('detail-note', item.note);
       text('fact-players', item.players);
       text('fact-duration', item.duration);
       text('fact-genre', item.genre);
@@ -1429,6 +1446,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       selectedMissionSlug = missionAt(item, requestedModule || firstMission.module.slug).module.slug;
       document.getElementById('private-link').href = missionHref(url('juben/'), id, item.modules[0].slug);
       document.getElementById('timeline-link').href = missionHref(url('juben/'), id, item.modules[1].slug);
+      document.querySelectorAll('#review-link, #board-link').forEach((link) => { link.hidden = id !== 'virtual-game'; });
       cards.forEach((card) => {
         const active = card.dataset.case === id;
         card.classList.toggle('is-active', active);
@@ -1544,6 +1562,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       const target = location.hash === '#dm-vault'
         ? document.getElementById('dm-vault')
         : document.getElementById('juben-trainer');
+      if (location.hash !== '#dm-vault') document.getElementById('juben-practice').open = true;
       target?.scrollIntoView({ behavior: 'auto', block: location.hash === '#dm-vault' ? 'start' : 'center' });
     });
 
@@ -1580,6 +1599,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     });
 
     // 首屏先画出来（本地优先），位置留到首轮同步回来再由 settleSpot 定
+    if (askedModule && location.hash !== '#dm-vault') document.getElementById('juben-practice').open = true;
     selectCase(selected, false, false, askedModule);
     syncCardProgress();
     if (resumedFrom) showResume(resumedFrom);
