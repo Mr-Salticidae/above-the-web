@@ -3,13 +3,14 @@
 // 会把用户送到站点根外的 404 荒野。这里把 base 归一化钉死。
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 globalThis.document = {
   querySelector: (selector) => (String(selector).includes('atw-base') ? { content: '/above-the-web/' } : null),
 };
 globalThis.location = { hostname: 'example.com', search: '', pathname: '/above-the-web/juben/' };
 
-const { safeNext, currentNext, loginUrl, withSiteBase } = await import('../src/scripts/account-core.js');
+const { safeNext, currentNext, loginUrl, registerUrl, withSiteBase } = await import('../src/scripts/account-core.js');
 
 test('站点 base 下的裸路径要补齐前缀', () => {
   assert.equal(withSiteBase('/juben/'), '/above-the-web/juben/');
@@ -23,6 +24,10 @@ test('已经带 base 的路径不重复叠加', () => {
 
 test('查询串与锚点原样保留', () => {
   assert.equal(safeNext('/juben/?tab=247#top'), '/above-the-web/juben/?tab=247#top');
+  assert.equal(
+    safeNext('/juben/?case=virtual-game&module=flow-skeleton#flow-skeleton'),
+    '/above-the-web/juben/?case=virtual-game&module=flow-skeleton#flow-skeleton',
+  );
 });
 
 test('站点根也走 base', () => {
@@ -37,6 +42,21 @@ test('协议相对与外部地址一律丢弃', () => {
   assert.equal(safeNext(null), '');
 });
 
+test('反斜杠、编码斜杠与控制字符不能绕过站内校验', () => {
+  const rejected = [
+    '/\\evil.com/juben',
+    '/%5cevil.com/juben',
+    '/%255cevil.com/juben',
+    '/%2Fevil.com/juben',
+    '/%252Fevil.com/juben',
+    '/juben/\nnext',
+    '/juben/%0d%0aLocation:%20https://evil.com',
+    '/juben/%00',
+    '/juben/%C2%85',
+  ];
+  for (const value of rejected) assert.equal(safeNext(value), '', value);
+});
+
 test('登录链接里的 next 已编码带 base', () => {
   const link = loginUrl('/juben/');
   assert.match(link, /next=%2Fabove-the-web%2Fjuben%2F/);
@@ -48,11 +68,22 @@ test('从旧链接进来（next 没有 base）也能纠正回跳', () => {
   globalThis.location.search = '';
 });
 
+test('账号菜单把当前锚点交给登录与注册回跳', () => {
+  const source = readFileSync(new URL('../src/components/AccountMenu.astro', import.meta.url), 'utf8');
+  assert.match(source, /const next = location\.pathname \+ location\.search \+ location\.hash;/);
+  assert.match(loginUrl('/juben/#dm-vault'), /next=%2Fabove-the-web%2Fjuben%2F%23dm-vault/);
+  assert.match(registerUrl('/juben/#dm-vault'), /next=%2Fabove-the-web%2Fjuben%2F%23dm-vault/);
+});
+
 test('部署在域根时（base 为空）不做任何改写', async () => {
   globalThis.document.querySelector = () => null;
   globalThis.location.hostname = 'www.example.org';
   // 换个 specifier 拿一份新模块实例，模拟 base 为空的部署
   const root = await import('../src/scripts/account-core.js?base=root');
   assert.equal(root.safeNext('/juben/'), '/juben/');
+  assert.equal(root.safeNext('/juben/?case=virtual-game#god-view'), '/juben/?case=virtual-game#god-view');
   assert.equal(root.loginUrl('/juben/'), '/account/login/?next=%2Fjuben%2F');
+  for (const value of ['/\\evil.com', '/%5cevil.com', '/%2Fevil.com', '/juben/%0a', '/juben/\u0000']) {
+    assert.equal(root.safeNext(value), '', value);
+  }
 });

@@ -10,6 +10,8 @@ import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { getConfig } from "../src/config.js";
 import { createApplication } from "../src/app.js";
+import { createProgressStore } from "../../../src/scripts/progress-store.js";
+import { createProgressSync } from "../../../src/scripts/progress-sync.js";
 
 const workdir = fs.mkdtempSync(path.join(os.tmpdir(), "atw-progress-test-"));
 const manifestPath = path.join(workdir, "index.json");
@@ -84,6 +86,15 @@ async function pull(token, since = 0) {
 }
 
 const findItem = (payload, moduleId) => payload.items.find((row) => row.moduleId === moduleId);
+
+function memoryStorage() {
+  const values = new Map();
+  return {
+    getItem: (key) => values.get(key) ?? null,
+    setItem: (key, value) => void values.set(key, String(value)),
+    removeItem: (key) => void values.delete(key),
+  };
+}
 
 // ---- 基础契约 ----
 
@@ -310,6 +321,50 @@ test("清空：全部写墓碑，另一台设备拉取后归零", async () => {
 
   const logs = database.listAuditLogs(20).filter((row) => row.action === "juben.progress_reset");
   assert.equal(logs.length, 1);
+});
+
+test("两个本地仓库走真实 API：清空墓碑时间更新，已同步设备不会复活完成项", async () => {
+  const { token, user } = await newUser();
+  const stamp = Date.now();
+  const cases = [{ id: "virtual-game", modules: ["flow-skeleton"] }];
+  const request = async (method, route, body) => {
+    const result = await call(method, `/api${route}`, { token, body });
+    if (result.status < 200 || result.status >= 300) {
+      const error = new Error(result.payload.message || "同步失败");
+      error.status = result.status;
+      throw error;
+    }
+    return result.payload;
+  };
+  const device = () => {
+    const storage = memoryStorage();
+    const store = createProgressStore({ cases, owner: user.id, storage, now: () => stamp, watch: false });
+    store.boot();
+    const sync = createProgressSync(store, { request, owner: user.id, storage, quietMs: 10_000 });
+    return { store, sync };
+  };
+  const a = device();
+  const b = device();
+
+  a.store.toggle("virtual-game", "flow-skeleton");
+  a.sync.note();
+  a.sync.start();
+  await a.sync.syncNow();
+  b.sync.start();
+  await b.sync.syncNow();
+  assert.equal(b.store.isDone("virtual-game", "flow-skeleton"), true, "B 已同步 A 的完成项");
+  assert.equal(b.sync.status().pending, 0);
+
+  assert.equal(await a.sync.reset(), true);
+  const tombstone = database.pullProgress(user.id, 0).items[0];
+  assert.equal(tombstone.done, 0);
+  assert.ok(tombstone.at > stamp, "墓碑必须严格新于原完成项，同刻 done=1 会赢");
+
+  await b.sync.syncNow();
+  assert.equal(b.store.isDone("virtual-game", "flow-skeleton"), false);
+  assert.equal(b.sync.status().pending, 0, "B 不该把旧完成项重新排队");
+  const server = await pull(token);
+  assert.equal(findItem(server.payload, "flow-skeleton").done, 0, "服务端也不能被 B 复活");
 });
 
 test("清空后再推回完成，rev 继续递增（不会卡在旧值）", async () => {

@@ -10,8 +10,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { jubenCases } from '../../data/juben.js';
 import { TASKS_ENABLED } from '../../data/features.js';
 
-// 学习进度存在本机 localStorage，按账号分桶（仓库见 src/scripts/progress-store.js）。
-// 这里把卷名与模块 slug 带到前端，用来算完成率——目前不上传、不跨设备。
+// 学习进度先写本机 localStorage，按账号分桶，并在开关允许时跨设备同步。
+// 这里把卷名与模块 slug 带到前端，用来算完成率和定位下一关。
 const progressSeed = jubenCases.map((item) => ({
   id: item.id,
   title: item.title,
@@ -291,6 +291,7 @@ const progressSeed = jubenCases.map((item) => ({
         title: item.title,
         done,
         total,
+        next: item.modules.find((slug) => !progress.isDone(item.id, slug)) || item.modules[0],
         pct: total ? Math.min(100, Math.round((done / total) * 100)) : 0,
       };
     });
@@ -299,7 +300,7 @@ const progressSeed = jubenCases.map((item) => ({
     const pctAll = totalAll ? Math.round((doneAll / totalAll) * 100) : 0;
     const list = rows
       .map(
-        (row) => `<a class="acc-vault-row" href="${url('juben/')}?case=${encodeURIComponent(row.id)}">
+        (row) => `<a class="acc-vault-row" href="${url('juben/')}?case=${encodeURIComponent(row.id)}&module=${encodeURIComponent(row.next)}">
           <span class="acc-vault-name">${escapeHtml(row.title)}</span>
           <span class="acc-vault-bar"><i style="width:${row.pct}%"></i></span>
           <span class="acc-vault-num">${row.done}/${row.total}</span>
@@ -334,8 +335,10 @@ const progressSeed = jubenCases.map((item) => ({
   function resumeHtml() {
     const last = progress.lastReading();
     if (!last) return '';
-    const title = CASES.find((item) => item.id === last.caseId)?.title || last.caseId;
-    const href = `${url('juben/')}?case=${encodeURIComponent(last.caseId)}`;
+    const item = CASES.find((entry) => entry.id === last.caseId);
+    const title = item?.title || last.caseId;
+    const next = item?.modules.find((slug) => !progress.isDone(last.caseId, slug)) || item?.modules[0];
+    const href = `${url('juben/')}?case=${encodeURIComponent(last.caseId)}${next ? `&module=${encodeURIComponent(next)}` : ''}`;
     return `<p class="acc-resume">上次读到《${escapeHtml(title)}》 · ${relativeTime(last.at)}
       <a href="${href}">接着读 →</a></p>`;
   }
@@ -486,14 +489,17 @@ const progressSeed = jubenCases.map((item) => ({
     clearTimeout(wipeTimer);
     wipe.disabled = true;
     wipe.textContent = '清空中…';
-    if (sync && sync.enabled) await sync.reset();
+    let resetOk = true;
+    if (sync && sync.enabled) resetOk = await sync.reset();
     else progress.clearAll();
     renderHome(me);
     const hint = document.querySelector('[data-sync-hint]');
     if (hint) {
-      hint.textContent = sync && sync.enabled
-        ? '已清空。别的设备下次打开会跟着归零。'
-        : '已清空本机记录。';
+      hint.textContent = !resetOk
+        ? '清空失败：本机记录和待同步内容都还在。请检查网络后重试。'
+        : sync && sync.enabled
+          ? '已清空。别的设备下次打开会跟着归零。'
+          : '已清空本机记录。';
     }
   });
 

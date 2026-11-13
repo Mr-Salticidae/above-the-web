@@ -147,6 +147,12 @@ import { TASKS_ENABLED } from '../../../data/features.js';
     form: document.querySelector('[data-view="form"]'),
   };
   const next = currentNext();
+  function dmReturn(flag, value = '1') {
+    // 保留 case/module/hash：兑换成功或失败都不能把 DM 从当前训练关卡弹走。
+    const target = new URL(next || url('juben/'), location.origin);
+    target.searchParams.set(flag, value);
+    return `${target.pathname}${target.search}${target.hash}`;
+  }
   const form = document.querySelector('[data-form="register"]');
   // 'reader' | 'dm'：选 DM 那条路会多一个邀请码字段，注册后立刻兑换
   let purpose = null;
@@ -288,9 +294,9 @@ import { TASKS_ENABLED } from '../../../data/features.js';
       if (purpose === 'dm') {
         try {
           await api('POST', '/dm/redeem', { code: form.dmCode.value.trim() });
-          location.replace(url('juben/') + '?welcome=1');
+          location.replace(dmReturn('welcome'));
         } catch {
-          location.replace(url('juben/') + '?dm=retry');
+          location.replace(dmReturn('dm', 'retry'));
         }
         return;
       }

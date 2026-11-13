@@ -733,6 +733,7 @@ export function createDatabase(config) {
     },
 
     // 「清空我的进度」不物理删：给所有 done=1 的行写墓碑并统一换版本号，
+    // client_at 也必须比原行新；否则已同步设备上的 done=1 会在同刻裁决中赢回墓碑。
     // 另一台设备下次拉取会跟着归零，不会「这边清了那边又把进度推回来」。
     // 返回值带 cleared 是因为审计只该记真的清掉了东西的那次。
     resetProgress(userId) {
@@ -742,8 +743,12 @@ export function createDatabase(config) {
       let cleared = 0;
       try {
         cleared = db
-          .prepare("UPDATE juben_progress SET done = 0, rev = ? WHERE user_id = ? AND done = 1")
-          .run(nextRev, userId).changes;
+          .prepare(
+            `UPDATE juben_progress
+                SET done = 0, client_at = MAX(client_at + 1, ?), rev = ?
+              WHERE user_id = ? AND done = 1`,
+          )
+          .run(serverNow, nextRev, userId).changes;
         api.touchProgressState(userId, nextRev, serverNow);
         db.exec("COMMIT");
       } catch (error) {

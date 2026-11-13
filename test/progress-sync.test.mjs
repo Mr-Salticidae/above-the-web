@@ -30,6 +30,7 @@ function fakeServer() {
     gate: null, // 设成 { promise, open } 可以让 POST 卡住，测「请求在飞时又勾一次」
     devices: 0, // 服务端记账的「几台设备」
     lastSyncAt: null,
+    clampAt: null, // 设成数字可模拟服务端夹紧 client_at
     get rev() {
       return rev;
     },
@@ -67,9 +68,10 @@ function fakeServer() {
         if (body.items.length) rev += 1;
         for (const item of body.items) {
           const key = `${item.caseId}/${item.moduleId}`;
+          const at = state.clampAt === null ? item.at : Math.min(item.at, state.clampAt);
           const row = rows.get(key);
-          if (!row || item.at > row.t || (item.at === row.t && item.done > row.d)) {
-            rows.set(key, { d: item.done, t: item.at, rev });
+          if (!row || at > row.t || (at === row.t && item.done > row.d)) {
+            rows.set(key, { d: item.done, t: at, rev });
           }
         }
         const baseRev = body.baseRev || 0;
@@ -234,6 +236,52 @@ test('推送途中又勾一次：新的那条留在队列里，下一轮补推',
   assert.equal(queueOf(storage), null);
 });
 
+test('服务端夹紧时间戳：POST 回显覆盖已发送项，队列与本地一起收敛', async () => {
+  const { store, sync, server, storage } = harness({ quietMs: 10_000 });
+  sync.start();
+  await sync.syncNow();
+  server.clampAt = 10_000;
+
+  store.toggle('virtual-game', 'flow-skeleton'); // 本地 t=11000，服务端会夹到 10000
+  sync.note();
+  await sync.syncNow();
+
+  assert.equal(store.snapshot().items['virtual-game/flow-skeleton'].t, 10_000);
+  assert.equal(server.rows.get('virtual-game/flow-skeleton').t, 10_000);
+  assert.equal(queueOf(storage), null, '已接受的项不能带着本地旧时间戳直接出队');
+
+  const posts = server.calls.filter((entry) => entry.method === 'POST').length;
+  await sync.syncNow();
+  assert.equal(server.calls.filter((entry) => entry.method === 'POST').length, posts, '下一轮不该反复补推');
+});
+
+test('服务端夹紧时间戳时，请求途中产生的新编辑仍然保留', async () => {
+  const { store, sync, server, storage } = harness({ quietMs: 10_000 });
+  sync.start();
+  await sync.syncNow();
+  server.clampAt = 10_000;
+  let open;
+  server.gate = { promise: new Promise((resolve) => { open = resolve; }) };
+
+  store.toggle('virtual-game', 'five-stages');
+  sync.note();
+  const flight = sync.syncNow();
+  await until(() => server.calls.some((entry) => entry.method === 'POST'));
+  store.toggle('virtual-game', 'five-stages'); // 新编辑：取消，t=12000
+  sync.note();
+  open();
+  await flight;
+
+  assert.deepEqual(store.snapshot().items['virtual-game/five-stages'], { d: 0, t: 12_000 });
+  assert.deepEqual(queueOf(storage)['virtual-game/five-stages'], { d: 0, t: 12_000 });
+
+  server.gate = null;
+  server.clampAt = null;
+  await sync.syncNow();
+  assert.equal(server.rows.get('virtual-game/five-stages').d, 0);
+  assert.equal(queueOf(storage), null);
+});
+
 test('服务端还是旧版（接口 404）：静默降级为纯本地，勾选照常', async () => {
   const server = fakeServer();
   server.missing = true;
@@ -301,6 +349,127 @@ test('换账号：上一个账号的待推项不会记到新账号名下', async
   assert.equal(sync.status().pending, 0, 'B 没有待推项');
 });
 
+test('换账号时 delayed GET：A 的响应不能改写 B 的仓库、队列、rev 或状态', async () => {
+  let online = true;
+  let currentOwner = 'user-a';
+  let release;
+  const gate = new Promise((resolve) => { release = resolve; });
+  const server = {
+    calls: [],
+    async request(method, path, body) {
+      server.calls.push({ method, path, body, owner: currentOwner });
+      if (method === 'GET' && currentOwner === 'user-a') {
+        const response = {
+          rev: 7,
+          items: [{ caseId: 'virtual-game', moduleId: 'flow-skeleton', done: 1, at: 1000 }],
+        };
+        await gate;
+        return response;
+      }
+      if (method === 'GET') return { rev: 4, items: [] };
+      throw new Error(`未预期的请求 ${method}`);
+    },
+  };
+  const storage = memoryStorage({
+    'atw-juben-progress-v2:user-b': JSON.stringify({
+      version: 2,
+      rev: 4,
+      items: { 'virtual-game/god-view': { d: 1, t: 9000 } },
+    }),
+    'atw-juben-rev:user-b': '4',
+    'atw-juben-queue:user-b': JSON.stringify({ 'virtual-game/god-view': { d: 1, t: 9000 } }),
+  });
+  const { store, sync } = harness({ server, storage, online: () => online });
+  sync.start();
+  const flightA = sync.syncNow();
+  await until(() => server.calls.some((entry) => entry.method === 'GET'));
+
+  online = false;
+  currentOwner = 'user-b';
+  sync.setOwner('user-b');
+  store.setOwner('user-b');
+  assert.equal(sync.status().state, SYNC_STATE.PENDING);
+  release();
+  await flightA;
+
+  assert.equal(store.snapshot().items['virtual-game/flow-skeleton'], undefined, 'A 的项不能并入 B');
+  assert.equal(store.isDone('virtual-game', 'god-view'), true);
+  assert.deepEqual(queueOf(storage, 'user-b'), { 'virtual-game/god-view': { d: 1, t: 9000 } });
+  assert.equal(sync.status().rev, 4, 'A 的旧 rev 不能覆盖 B');
+  assert.equal(sync.status().pending, 1);
+  assert.equal(sync.status().state, SYNC_STATE.PENDING);
+});
+
+test('换账号时 delayed POST：旧响应被忽略，旧 finally 也不清掉 B 的在飞请求', async () => {
+  let currentOwner = 'user-a';
+  let releaseA;
+  let releaseB;
+  const gateA = new Promise((resolve) => { releaseA = resolve; });
+  const gateB = new Promise((resolve) => { releaseB = resolve; });
+  const server = {
+    calls: [],
+    async request(method, path, body) {
+      const requestOwner = currentOwner;
+      server.calls.push({ method, path, body, owner: requestOwner });
+      if (method === 'GET') return { rev: requestOwner === 'user-b' ? 4 : 0, items: [] };
+      if (method === 'POST' && requestOwner === 'user-a') {
+        await gateA;
+        return {
+          rev: 1,
+          items: [{ caseId: 'virtual-game', moduleId: 'flow-skeleton', done: 1, at: body.items[0].at }],
+        };
+      }
+      if (method === 'POST' && requestOwner === 'user-b') {
+        await gateB;
+        return {
+          rev: 5,
+          items: [{ caseId: 'virtual-game', moduleId: 'god-view', done: 1, at: body.items[0].at }],
+        };
+      }
+      throw new Error(`未预期的请求 ${method} ${requestOwner}`);
+    },
+  };
+  const storage = memoryStorage({
+    'atw-juben-progress-v2:user-b': JSON.stringify({
+      version: 2,
+      rev: 4,
+      items: { 'virtual-game/god-view': { d: 1, t: 9000 } },
+    }),
+    'atw-juben-rev:user-b': '4',
+    'atw-juben-queue:user-b': JSON.stringify({ 'virtual-game/god-view': { d: 1, t: 9000 } }),
+  });
+  const { store, sync } = harness({ server, storage, quietMs: 10_000 });
+  sync.start();
+  await sync.syncNow();
+
+  store.toggle('virtual-game', 'flow-skeleton');
+  sync.note();
+  const flightA = sync.syncNow();
+  await until(() => server.calls.some((entry) => entry.method === 'POST' && entry.owner === 'user-a'));
+
+  currentOwner = 'user-b';
+  sync.setOwner('user-b');
+  store.setOwner('user-b');
+  const flightB = sync.syncNow();
+  await until(() => server.calls.some((entry) => entry.method === 'POST' && entry.owner === 'user-b'));
+
+  releaseA();
+  await flightA;
+  assert.equal(sync.status().state, SYNC_STATE.SYNCING, 'A 完成后不能把 B 标成已同步');
+  assert.equal(sync.status().rev, 4);
+  assert.equal(store.snapshot().items['virtual-game/flow-skeleton'], undefined);
+  assert.equal(sync.syncNow(), flightB, 'A 的 finally 不能清掉 B 的 inflight 引用');
+
+  releaseB();
+  await flightB;
+  assert.equal(sync.status().state, SYNC_STATE.SYNCED);
+  assert.equal(sync.status().rev, 5);
+  assert.equal(sync.status().pending, 0);
+  assert.equal(store.isDone('virtual-game', 'god-view'), true);
+  assert.equal(store.snapshot().items['virtual-game/flow-skeleton'], undefined);
+  assert.equal(queueOf(storage, 'user-b'), null);
+});
+
 test('未登录：勾选只进本机队列，状态是「本机记录」', async () => {
   const { store, sync, server } = harness({ owner: GUEST_OWNER });
   sync.start();
@@ -339,11 +508,68 @@ test('清空：本地归零 + 服务端写墓碑 + 游标重置', async () => {
   await sync.syncNow();
   const revBefore = server.rev;
 
-  await sync.reset();
+  assert.equal(await sync.reset(), true);
 
   assert.equal(store.count('virtual-game'), 0);
   assert.equal(server.rev, revBefore + 1);
   assert.equal(server.rows.get('virtual-game/flow-skeleton').d, 0, '服务端留墓碑，不是删行');
+  assert.equal(sync.status().state, SYNC_STATE.SYNCED);
+});
+
+test('清空失败：保留本地数据与待推队列，并明确返回失败', async () => {
+  const { store, sync, server, storage } = harness({ quietMs: 10_000 });
+  sync.start();
+  await sync.syncNow();
+  store.toggle('virtual-game', 'flow-skeleton');
+  sync.note();
+  server.failNext = true;
+
+  assert.equal(await sync.reset(), false);
+  assert.equal(store.isDone('virtual-game', 'flow-skeleton'), true, 'DELETE 失败不能先清本地');
+  assert.deepEqual(queueOf(storage), { 'virtual-game/flow-skeleton': { d: 1, t: 11_000 } });
+  assert.equal(sync.status().state, SYNC_STATE.ERROR);
+
+  assert.equal(await sync.reset(), true, '网络恢复后仍可按原数据执行清空');
+  assert.equal(store.count('virtual-game'), 0);
+  assert.equal(queueOf(storage), null);
+});
+
+test('清空成功后，之前 delayed GET 的旧响应不能把进度恢复', async () => {
+  let delayGet = false;
+  let open;
+  const server = {
+    calls: [],
+    async request(method, path, body) {
+      server.calls.push({ method, path, body });
+      if (method === 'GET') {
+        const response = {
+          rev: 1,
+          items: [{ caseId: 'virtual-game', moduleId: 'flow-skeleton', done: 1, at: 11_000 }],
+        };
+        if (delayGet) {
+          delayGet = false;
+          await new Promise((resolve) => { open = resolve; });
+        }
+        return response;
+      }
+      if (method === 'DELETE') return { rev: 2, cleared: 1, serverTime: Date.now() };
+      throw new Error(`未预期的请求 ${method}`);
+    },
+  };
+  const { store, sync } = harness({ server });
+  sync.start();
+  await sync.syncNow(); // 先拿到服务端已有的完成项
+
+  delayGet = true;
+  const stale = sync.syncNow();
+  await until(() => server.calls.filter((entry) => entry.method === 'GET').length === 2);
+  const resetting = sync.reset();
+  assert.equal(await resetting, true);
+  open();
+  await stale;
+
+  assert.equal(store.count('virtual-game'), 0);
+  assert.equal(sync.status().rev, 2);
   assert.equal(sync.status().state, SYNC_STATE.SYNCED);
 });
 

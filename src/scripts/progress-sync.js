@@ -121,6 +121,9 @@ export function createProgressSync(store, options = {}) {
   let pending = new Map(); // key -> { c, m, d, t }
   let timer = null;
   let inflight = null;
+  // 每次换桶 / 清空都换一代；旧请求即使晚回来，也只能被忽略，不能碰新桶。
+  let generation = 0;
+  let applyingAuthoritative = false;
   let reconcileNeeded = true; // 本机有服务端不知道的项，第一次全量拉取后要补推
   let deviceId = '';
   let remoteDevices = 0; // 服务端说这个账号有几台设备记过进度
@@ -181,7 +184,22 @@ export function createProgressSync(store, options = {}) {
     // 上次同步时间跟着账号存：刷新页面后状态卡还能说「3 分钟前」而不是「—」
     const rawSynced = Number(readRaw(`${SYNCED_PREFIX}${owner}`) || 0);
     lastSyncAt = Number.isFinite(rawSynced) && rawSynced > 0 ? rawSynced : null;
+    lastError = '';
+    remoteDevices = 0;
+    serverLastSyncAt = null;
     reconcileNeeded = rev === 0;
+  }
+
+  function isCurrent(ticket, requestOwner) {
+    return generation === ticket && owner === requestOwner;
+  }
+
+  function invalidateInflight() {
+    generation += 1;
+    if (timer) clearTimeout(timer);
+    timer = null;
+    // 无法取消已经发出的 fetch，但可以立刻放行新桶，并让所有旧回调失效。
+    inflight = null;
   }
 
   function persistQueue() {
@@ -271,10 +289,14 @@ export function createProgressSync(store, options = {}) {
     });
   }
 
-  // 服务端回来的增量一律并进本地；返回给调用方是为了推进 reconcileNeeded
-  function absorb(response) {
+  // 服务端回来的增量一律并进本地；返回给调用方是为了推进 reconcileNeeded。
+  // POST 途中又改过的键由调用方保护：新意图不参与这次旧响应的 LWW 裁决。
+  function absorb(response, protectedKeys = new Set()) {
     if (!response) return null;
-    const result = store.applyRemote(response.items || []);
+    const items = (response.items || []).filter(
+      (item) => !protectedKeys.has(`${item.caseId}/${item.moduleId}`),
+    );
+    const result = store.applyRemote(items);
     if (Number.isFinite(response.rev)) {
       rev = response.rev;
       store.setRev(rev);
@@ -293,9 +315,52 @@ export function createProgressSync(store, options = {}) {
     return result;
   }
 
+  // 服务端可能夹紧 client_at。普通 applyRemote 是 LWW，会把本机未夹紧的旧值当成「更新」，
+  // 所以已接受且请求途中没再改动的项，要以 POST 回显为准。仓库没有单项强制写 API，
+  // 仅在真的发生偏差时用公开快照重建一次；新编辑的键不在这里，仍由下一轮推送。
+  function acceptPostSnapshot(response, sent) {
+    const remote = new Map(
+      (response?.items || [])
+        .map((item) => [`${item.caseId}/${item.moduleId}`, item])
+        .filter(([key]) => sent.has(key)),
+    );
+    if (!remote.size) return;
+
+    const snapshot = store.snapshot();
+    let changed = false;
+    const items = [];
+    for (const [key, local] of Object.entries(snapshot.items)) {
+      const pair = splitKey(key);
+      if (!pair) continue;
+      const original = sent.get(key);
+      const current = pending.get(key);
+      const accepted = remote.get(key);
+      const untouched = current && original && current.t === original.t && current.d === original.d;
+      if (accepted && untouched && (local.t !== accepted.at || local.d !== (accepted.done ? 1 : 0))) {
+        items.push({ caseId: pair[0], moduleId: pair[1], done: accepted.done, at: accepted.at });
+        changed = true;
+      } else {
+        items.push({ caseId: pair[0], moduleId: pair[1], done: local.d, at: local.t });
+      }
+    }
+    if (!changed) return;
+
+    applyingAuthoritative = true;
+    try {
+      store.clearAll();
+      store.applyRemote(items);
+      store.setRev(snapshot.rev);
+    } finally {
+      applyingAuthoritative = false;
+    }
+  }
+
   async function pullOnce() {
+    const ticket = generation;
+    const requestOwner = owner;
     const since = rev;
     const response = await request('GET', `${ENDPOINT}?since=${since}`);
+    if (!isCurrent(ticket, requestOwner)) return null;
     const result = absorb(response);
 
     // 首次全量拉取后补推：本机有、服务端没有的项（老数据迁移、开关打开前勾的）
@@ -322,6 +387,8 @@ export function createProgressSync(store, options = {}) {
   }
 
   async function pushOnce() {
+    const ticket = generation;
+    const requestOwner = owner;
     const entries = [...pending].slice(0, BATCH_LIMIT);
     if (!entries.length) return null;
     const sent = new Map(entries);
@@ -330,8 +397,15 @@ export function createProgressSync(store, options = {}) {
       deviceId: ensureDeviceId(),
       items: payloadOf(entries),
     });
+    if (!isCurrent(ticket, requestOwner)) return null;
 
-    absorb(response);
+    const protectedKeys = new Set();
+    for (const [key, item] of sent) {
+      const current = pending.get(key);
+      if (current && (current.t !== item.t || current.d !== item.d)) protectedKeys.add(key);
+    }
+    acceptPostSnapshot(response, sent);
+    absorb(response, protectedKeys);
 
     // 只清掉「推的时候就是这一版」的项：请求在飞的时候用户又勾了一下，
     // 那条的 t 已经变了，必须留在队列里等下一批。
@@ -343,7 +417,7 @@ export function createProgressSync(store, options = {}) {
     return response;
   }
 
-  async function flush() {
+  function flush() {
     if (!active || owner === GUEST) {
       setStatus(active ? SYNC_STATE.GUEST : SYNC_STATE.OFF);
       return null;
@@ -354,13 +428,17 @@ export function createProgressSync(store, options = {}) {
       return null;
     }
 
-    inflight = (async () => {
+    const ticket = generation;
+    const requestOwner = owner;
+    const flight = (async () => {
       setStatus(SYNC_STATE.SYNCING);
       try {
         // 每次同步都先拉增量：别的设备做的改动要在这一轮就合并进来，
         // 否则本机的旧状态会盖掉刚在手机上取消的那一项。
         const pulled = await pullOnce();
+        if (!isCurrent(ticket, requestOwner)) return null;
         const pushed = pending.size ? await pushOnce() : null;
+        if (!isCurrent(ticket, requestOwner)) return null;
         lastSyncAt = Date.now();
         lastError = '';
         persistRev();
@@ -369,6 +447,7 @@ export function createProgressSync(store, options = {}) {
         if (pending.size) schedule();
         return pushed || pulled;
       } catch (error) {
+        if (!isCurrent(ticket, requestOwner)) return null;
         lastError = error && error.message ? error.message : '同步失败';
         const code = error && error.status;
         // 服务端没有这个接口（旧版部署）/ 功能被关：退回纯本地，不折腾用户
@@ -381,10 +460,12 @@ export function createProgressSync(store, options = {}) {
         setStatus(code === 0 || !isOnline() ? SYNC_STATE.PENDING : SYNC_STATE.ERROR);
         return null;
       } finally {
-        inflight = null;
+        // A 的旧请求结束时，不能把 B 正在用的 inflight 引用清掉。
+        if (inflight === flight) inflight = null;
       }
     })();
-    return inflight;
+    inflight = flight;
+    return flight;
   }
 
   // 服务端还没上线这个接口：静默降级成「本机记录」，勾选照旧
@@ -432,6 +513,7 @@ export function createProgressSync(store, options = {}) {
       if (target === owner) return;
       collectDirty(); // 归到旧 owner 的队列里，随它一起存档
       persistQueue();
+      invalidateInflight();
       loadBucket(target);
       if (!active) return setStatus(SYNC_STATE.OFF);
       if (target === GUEST) return setStatus(SYNC_STATE.GUEST);
@@ -441,7 +523,7 @@ export function createProgressSync(store, options = {}) {
 
     /** 勾选后由页面调用（也可直接靠 store.subscribe 触发） */
     note() {
-      if (!active) return;
+      if (!active || applyingAuthoritative) return;
       collectDirty();
       if (!pending.size) {
         setStatus(owner === GUEST ? SYNC_STATE.GUEST : status);
@@ -463,29 +545,57 @@ export function createProgressSync(store, options = {}) {
       return flush();
     },
 
-    /** 清空（本地 + 服务端）：先清本地再打 DELETE，服务端写墓碑让别的设备跟着归零 */
+    /**
+     * 清空（本地 + 服务端）。联网时先等 DELETE 成功再清本地，失败返回 false 并保留数据；
+     * 开始前作废旧请求，避免它们晚到后把刚清掉的进度写回来。
+     */
     async reset() {
-      store.clearAll();
-      pending = new Map();
-      persistQueue();
-      if (!active || owner === GUEST) {
-        setStatus(active ? SYNC_STATE.GUEST : SYNC_STATE.OFF);
-        return;
-      }
-      setStatus(SYNC_STATE.SYNCING);
-      try {
-        const response = await request('DELETE', ENDPOINT);
-        rev = Number.isFinite(response?.rev) ? response.rev : 0;
-        store.setRev(rev);
+      const requestOwner = owner;
+      invalidateInflight();
+      const ticket = generation;
+      const clearLocal = () => {
+        // 先空队列再 clearAll：页面的 store 订阅会 note()，不能把墓碑重新排回去。
+        pending = new Map();
+        persistQueue();
+        store.clearAll();
+        rev = 0;
+        reconcileNeeded = true;
         persistRev();
-        reconcileNeeded = false;
-        lastSyncAt = Date.now();
-        persistSynced();
-        setStatus(SYNC_STATE.SYNCED);
-      } catch (error) {
-        lastError = error && error.message ? error.message : '同步失败';
-        setStatus(SYNC_STATE.ERROR);
+      };
+
+      if (!active || requestOwner === GUEST) {
+        clearLocal();
+        lastError = '';
+        setStatus(active ? SYNC_STATE.GUEST : SYNC_STATE.OFF);
+        return true;
       }
+
+      setStatus(SYNC_STATE.SYNCING);
+      const flight = (async () => {
+        try {
+          const response = await request('DELETE', ENDPOINT);
+          if (!isCurrent(ticket, requestOwner)) return false;
+          clearLocal();
+          rev = Number.isFinite(response?.rev) ? response.rev : 0;
+          store.setRev(rev);
+          persistRev();
+          reconcileNeeded = false;
+          lastSyncAt = Date.now();
+          lastError = '';
+          persistSynced();
+          setStatus(SYNC_STATE.SYNCED);
+          return true;
+        } catch (error) {
+          if (!isCurrent(ticket, requestOwner)) return false;
+          lastError = error && error.message ? error.message : '同步失败';
+          setStatus(SYNC_STATE.ERROR);
+          return false;
+        } finally {
+          if (inflight === flight) inflight = null;
+        }
+      })();
+      inflight = flight;
+      return flight;
     },
 
     status: snapshotStatus,

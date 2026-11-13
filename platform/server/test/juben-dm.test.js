@@ -82,7 +82,7 @@ const config = getConfig({
 
 // 与真实 juben-dm-lab 同构：中文卷目录 + 嵌套子目录 + README/学习包命名习惯
 const REPO_FILES = {
-  "cases/954-虚拟游戏/README.md": "卷首页：没有 # 标题，考验 README 翻译。\n",
+  "cases/954-虚拟游戏/README.md": "> 源资料包：`C:\\Users\\12258\\Downloads\\954虚拟游戏`（0.83 GB，不入库）\n> 早期产物快照：`C:\\Users\\12258\\WorkBuddy\\snapshot`（保留作本机备份）\n> 目标：把全部内容转为可检索的 md 文本。\n> ⚠️ 本目录含完整剧透，仅供 DM 使用。\n\n卷首页：没有 # 标题，考验 README 翻译。\n",
   "cases/954-虚拟游戏/00_开本速查卡.md": "# 虚拟游戏 · 开本速查卡\n",
   "cases/954-虚拟游戏/00_DM主持学习手册.md": "# 虚拟游戏 · DM 手册\n\n凶手是某某。\n",
   "cases/954-虚拟游戏/01_转写/人物剧本·前言.md": "# 人物剧本 · 前言\n\n六位玩家入座。\n",
@@ -277,6 +277,15 @@ test("DM 读得到剧本清单与正文，中文目录与嵌套路径都通", as
   assert.equal(doc.status, 200);
   assert.equal(doc.payload.doc.title, "虚拟游戏 · DM 手册");
   assert.ok(doc.payload.doc.markdown.includes("凶手是某某"));
+
+  // 网页只展示主持内容：本机路径、备份说明和制作目标不随正文下发，剧透警示仍保留。
+  const readme = await call("GET", `/api/juben/doc/${encodeURIComponent("954-虚拟游戏")}/README`, {
+    token: colleagueToken,
+  });
+  assert.equal(readme.status, 200);
+  assert.doesNotMatch(readme.payload.doc.markdown, /C:\\Users|Downloads|不入库|本机备份|目标：把全部内容转为/);
+  assert.match(readme.payload.doc.markdown, /仅供 DM 使用/);
+  assert.match(readme.payload.doc.markdown, /卷首页/);
 
   // 路径白名单：含 .. 的 id 直接 404，不拼出奇怪路径
   const evil = await call(

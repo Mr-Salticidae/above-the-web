@@ -76,7 +76,7 @@ import { TASKS_ENABLED } from '../data/features.js';
     function renderPop() {
       const accounts = listAccounts();
       const others = accounts.filter((account) => !account.isActive);
-      const next = location.pathname + location.search;
+      const next = location.pathname + location.search + location.hash;
 
       if (!current) {
         const back = others.length

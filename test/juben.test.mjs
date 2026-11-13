@@ -14,6 +14,9 @@ test('剧本档案 ID 唯一，公开学习路径与自测结构完整', () => {
     for (const module of item.modules) {
       assert.ok(module.title && module.desc, `${item.id} 学习节点不能只写标题`);
       assert.ok(module.slug, `${item.id} 的「${module.title}」缺少 slug——学习进度靠它认人`);
+      assert.ok(module.docId && !module.docId.endsWith('.md'), `${item.id} 的「${module.title}」要映射站内文档 ID`);
+      assert.ok(module.challenge && module.deliverable, `${item.id} 的「${module.title}」缺少训练任务或产出`);
+      assert.equal(module.checks.length, 3, `${item.id} 的「${module.title}」要有三条自检`);
     }
   }
 });
@@ -56,7 +59,7 @@ test('跨本对照的每一行都能在两卷档案中取到值', () => {
   assert.ok(methodSteps.length >= 5);
 });
 
-test('深度链接只进私有剧本库，公开数据不含答案字段', () => {
+test('训练深链只用稳定 ID，公开数据不含答案字段或内容源地址', () => {
   const forbiddenKeys = new Set(['culprit', 'solution', 'ending', 'answers', 'fullTruth']);
   const visit = (value) => {
     if (!value || typeof value !== 'object') return;
@@ -66,11 +69,11 @@ test('深度链接只进私有剧本库，公开数据不含答案字段', () =>
     }
   };
   visit(jubenCases);
+  const serialized = JSON.stringify(jubenCases);
+  assert.doesNotMatch(serialized, /https?:\/\/|juben-dm-lab|github\.com/);
   for (const item of jubenCases) {
-    for (const url of [item.privateUrl, item.timelineUrl]) {
-      const target = new URL(url);
-      assert.equal(target.origin, 'https://github.com');
-      assert.ok(target.pathname.startsWith('/Mr-Salticidae/juben-dm-lab/'));
-    }
+    assert.match(item.vaultCaseId, /^[A-Za-z0-9][A-Za-z0-9._\-\u4e00-\u9fff]*$/);
+    assert.equal('privateUrl' in item, false);
+    assert.equal('timelineUrl' in item, false);
   }
 });

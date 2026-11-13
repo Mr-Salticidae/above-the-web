@@ -42,6 +42,20 @@ function firstHeadingOf(markdown) {
   return "";
 }
 
+// 私有卷宗同时承担资料管理与 DM 阅读两种用途。网页只呈现主持内容，
+// 本机路径、备份位置和制作目标即使误写进正文，也不能跟着接口下发。
+// 这里按整行剔除，避免留下半句难以理解的残句；剧透与主持判定提示原样保留。
+const INTERNAL_METADATA_LINE =
+  /(?:\b[A-Za-z]:[\\/]|\/(?:Users|home|root)\/|^>\s*(?:源资料|早期产物|目标：把全部内容转为)|本机备份|不入库|以本仓库为准|ocr_run\.log|\.gitignore|去\s*PM\s*化|rename mapping)/i;
+
+export function sanitizeDmMarkdown(markdown) {
+  return String(markdown ?? "")
+    .replace(/\r\n?/g, "\n")
+    .split("\n")
+    .filter((line) => !INTERNAL_METADATA_LINE.test(line))
+    .join("\n");
+}
+
 export function createJubenContent(config, log = console, deps = {}) {
   // 测试里注入假 fetch；线上走全局 fetch（Node 22 自带）
   const fetcher = deps.fetch ?? globalThis.fetch.bind(globalThis);
@@ -162,11 +176,12 @@ export function createJubenContent(config, log = console, deps = {}) {
       for (const group of groups) {
         const groupDocViews = [];
         for (const { file } of group.sorted) {
-          const markdown = await fetchRaw(file.path).catch((error) => {
+          const source = await fetchRaw(file.path).catch((error) => {
             log.warn?.(`[juben] 拉不到 ${file.path}：${error.message}`);
             return null;
           });
-          if (markdown === null) continue;
+          if (source === null) continue;
+          const markdown = sanitizeDmMarkdown(source);
           const docId = file.relPath.slice(0, -3); // 去掉 .md，保留层级
           const meta = {
             id: docId,
