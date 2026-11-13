@@ -99,6 +99,22 @@ test('带本重点区分数字、物料和停读，正文仍然转义', () => {
   assert.match(html, /&lt;物料&gt;/);
 });
 
+test('小剧场只突出明确标记为 DM 念的台词', () => {
+  const row = '剧场|0|开场|入座|角色本|齐了|【DM 念 · 旁白】<台词>；【DM 动作】发卡；【玩家接话】介绍自己';
+  const html = renderMarkdown(['```dm-runbook', row, '```'].join('\n'), { whiteboardImages: true });
+  assert.match(html, /md-run-scene-speak"><strong>DM 念 · 旁白<\/strong><div>&lt;台词&gt;/);
+  assert.match(html, /md-run-scene-cue"><strong>DM 动作<\/strong>/);
+  assert.match(html, /md-run-scene-player"><strong>玩家接话<\/strong>/);
+});
+
+test('现场音频为各音轨生成本地选档和播放控件', () => {
+  const row = '搜证|0|开始|发卡|物料|齐了|||线索一；线索二';
+  const html = renderMarkdown(['```dm-runbook', row, '```'].join('\n'), { whiteboardImages: true });
+  assert.equal((html.match(/<audio controls/g) ?? []).length, 2);
+  assert.match(html, /type="file"[^>]*data-run-audio="线索一"/);
+  assert.doesNotMatch(html, /<audio[^>]+src=/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

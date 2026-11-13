@@ -14,9 +14,23 @@ function highlightRunbookText(value) {
   return html + escapeHtml(value.slice(position));
 }
 
+function renderSceneLine(line) {
+  const match = line.match(/^【([^】]+)】(.*)$/);
+  if (!match) return `<li>${highlightRunbookText(line)}</li>`;
+  const [, role, words] = match;
+  const kind = role.includes('DM 念') ? 'speak' : role.includes('玩家接话') ? 'player' : 'cue';
+  return `<li class="md-run-scene-${kind}"><strong>${escapeHtml(role)}</strong><div>${highlightRunbookText(words)}</div></li>`;
+}
+
+function renderAudioTrack(track) {
+  const [name, encoded] = track.split('~');
+  const included = encoded && /^[A-Za-z0-9+/]+={0,2}$/.test(encoded);
+  return `<div class="md-run-audio-track"><strong>${escapeHtml(name)}</strong><label>${included ? '替换本机音源' : '选择音频'} <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac" data-run-audio="${escapeHtml(name)}"></label><audio controls preload="none"${included ? ` src="data:audio/mpeg;base64,${encoded}"` : ' hidden'}></audio><small role="status"></small></div>`;
+}
+
 export function renderRunbook(rows) {
   const steps = rows.map((row) => row.split('|'));
-  if (!steps.length || steps.some((fields) => ![6, 7, 8].includes(fields.length) || fields.slice(0, 6).some((value) => !value)
+  if (!steps.length || steps.some((fields) => fields.length < 6 || fields.length > 9 || fields.slice(0, 6).some((value) => !value)
     || !/^\d{1,2}$/.test(fields[1]))) return '<p>现场流程暂时无法显示。</p>';
   return `<div class="md-runbook-entry"><button type="button" data-run-open>打开现场带本 · ${steps.length} 步</button>
     <dialog class="md-whiteboard-cards md-trace-workspace md-runbook" aria-label="《虚拟游戏》现场带本">
@@ -27,27 +41,96 @@ export function renderRunbook(rows) {
         <button type="button" data-run-next>下一步</button>
       </nav>
       <div class="md-run-body">
-        ${steps.map(([title, minutes, say, actions, supplies, check, scene, reference], index) => `<section data-run-step data-minutes="${minutes}"${reference ? ` data-run-reference="${escapeHtml(reference)}"` : ''}${index ? ' hidden' : ''}>
+        ${steps.map(([title, minutes, say, actions, supplies, check, scene, reference, audio], index) => `<section data-run-step data-minutes="${minutes}"${reference ? ` data-run-reference="${escapeHtml(reference)}"` : ''}${index ? ' hidden' : ''}>
           <h4>${escapeHtml(title)}</h4>
+          ${audio ? `<details class="md-run-reference md-run-audio"><summary>现场音频</summary>${audio.split('；').map(renderAudioTrack).join('')}</details>` : ''}
           ${Number(minutes) ? `<div class="md-run-timer"><output>${minutes}:00</output><span role="status"></span>
             <button type="button" data-run-clock="toggle">开始</button><button type="button" data-run-clock="add">＋5 分钟</button><button type="button" data-run-clock="reset">重置</button></div>` : ''}
           <dl><div class="md-run-say"><dt>对玩家说</dt><dd>${highlightRunbookText(say)}</dd></div>
           <div><dt>DM 操作</dt><dd><ol>${actions.split('；').map((item) => `<li>${highlightRunbookText(item)}</li>`).join('')}</ol></dd></div>
           <div class="md-run-material"><dt>物料与判定 · 仅 DM 查看</dt><dd>${highlightRunbookText(supplies)}</dd></div>
           <div class="md-run-check"><dt>进入下一步前</dt><dd>${highlightRunbookText(check)}</dd></div></dl>
-          ${scene ? `<details class="md-run-reference md-run-scene"><summary>小剧场 · 台词与走位</summary><ol>${scene.split('；').map((line) => {
-            const end = line.indexOf('】') + 1;
-            return `<li><strong>${escapeHtml(line.slice(0, end))}</strong>${highlightRunbookText(line.slice(end))}</li>`;
-          }).join('')}</ol></details>` : ''}
+          ${scene ? `<details class="md-run-reference md-run-scene"><summary>小剧场 · 台词与走位</summary><ol>${scene.split('；').map(renderSceneLine).join('')}</ol></details>` : ''}
         </section>`).join('')}
       </div>
     </dialog></div>`;
+}
+
+function mountRunbookAudio(inputs) {
+  const players = new Map(inputs.map((input) => [input, input.closest('.md-run-audio-track').querySelector('audio')]));
+  const database = new Promise((resolve, reject) => {
+    const request = indexedDB.open('atw-juben-runbook-audio', 1);
+    request.onupgradeneeded = () => request.result.createObjectStore('tracks');
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+    request.onblocked = () => reject(new Error('Audio storage is blocked'));
+  });
+  const read = async (name) => {
+    const db = await database;
+    return new Promise((resolve, reject) => {
+      const request = db.transaction('tracks').objectStore('tracks').get(name);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  };
+  const save = async (name, file) => {
+    const db = await database;
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction('tracks', 'readwrite');
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error);
+      tx.onabort = () => reject(tx.error);
+      tx.objectStore('tracks').put(file, name);
+    });
+  };
+  const urls = new Map();
+  const observer = new MutationObserver(() => {
+    if (inputs[0].isConnected) return;
+    for (const [player, url] of urls) {
+      player.pause();
+      URL.revokeObjectURL(url);
+    }
+    database.then((db) => db.close(), () => {});
+    observer.disconnect();
+  });
+  observer.observe(inputs[0].ownerDocument.body, { childList: true, subtree: true });
+  for (const [input, player] of players) {
+    const name = input.dataset.runAudio;
+    const status = input.closest('.md-run-audio-track').querySelector('[role="status"]');
+    let version = 0;
+    function show(file) {
+      if (!input.isConnected) return;
+      player.pause();
+      if (urls.has(player)) URL.revokeObjectURL(urls.get(player));
+      const url = URL.createObjectURL(file);
+      urls.set(player, url);
+      player.src = url;
+      player.hidden = false;
+      status.textContent = file.name;
+    }
+    read(name).then((file) => { if (file && version === 0) show(file); }, () => {});
+    input.addEventListener('change', async () => {
+      const file = input.files[0];
+      if (!file) return;
+      const current = ++version;
+      show(file);
+      try { await save(name, file); } catch {
+        if (current === version) status.textContent = `${file.name}（本次可播，刷新后需重新选择）`;
+      }
+    });
+    player.addEventListener('play', () => {
+      for (const other of players.values()) if (other !== player) other.pause();
+    });
+    player.addEventListener('error', () => { status.textContent = '无法播放，请换用 MP3 或 M4A 文件。'; });
+  }
 }
 
 export function mountRunbook(host, autoOpen = false) {
   const entry = host.querySelector('.md-runbook-entry');
   if (!entry) return;
   const dialog = entry.querySelector('dialog');
+  const audioInputs = [...dialog.querySelectorAll('[data-run-audio]')];
+  if (audioInputs.length) mountRunbookAudio(audioInputs);
   const steps = [...dialog.querySelectorAll('[data-run-step]')];
   const select = dialog.querySelector('select');
   const prev = dialog.querySelector('[data-run-prev]');
