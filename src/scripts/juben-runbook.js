@@ -25,8 +25,10 @@ function renderSceneLine(line) {
 function renderAudioTrack(track) {
   const [name, encoded, source] = track.split('~');
   const included = encoded && /^[A-Za-z0-9+/]+={0,2}$/.test(encoded);
+  const remote = encoded?.match(/^@([a-f0-9]{64})$/)?.[1];
   const official = source && /^https:\/\//.test(source) ? `<a href="${escapeHtml(source)}" target="_blank" rel="noopener noreferrer">官方试听与下载页</a>` : '';
-  return `<div class="md-run-audio-track"><strong>${escapeHtml(name)}</strong>${official}<label>${included ? '替换本机音源' : '选择音频'} <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac" data-run-audio="${escapeHtml(name)}"></label><audio controls preload="none"${included ? ` src="data:audio/mpeg;base64,${encoded}"` : ' hidden'}></audio><small role="status"></small></div>`;
+  const load = remote ? `<button type="button" data-run-audio-load="${remote}">播放音频</button>` : '';
+  return `<div class="md-run-audio-track"><strong>${escapeHtml(name)}</strong>${official}${load}<label>${included || remote ? '替换本机音源' : '选择音频'} <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac" data-run-audio="${escapeHtml(name)}"></label><audio controls preload="none"${included ? ` src="data:audio/mpeg;base64,${encoded}"` : ' hidden'}></audio><small role="status"></small></div>`;
 }
 
 const isBgm = (track) => track.startsWith('BGM · ');
@@ -61,7 +63,7 @@ export function renderRunbook(rows) {
     </dialog></div>`;
 }
 
-function mountRunbookAudio(inputs) {
+function mountRunbookAudio(inputs, fetchAudio) {
   const players = new Map(inputs.map((input) => [input, input.closest('.md-run-audio-track').querySelector('audio')]));
   const database = new Promise((resolve, reject) => {
     const request = indexedDB.open('atw-juben-runbook-audio', 1);
@@ -101,9 +103,11 @@ function mountRunbookAudio(inputs) {
   observer.observe(inputs[0].ownerDocument.body, { childList: true, subtree: true });
   for (const [input, player] of players) {
     const name = input.dataset.runAudio;
-    const status = input.closest('.md-run-audio-track').querySelector('[role="status"]');
+    const track = input.closest('.md-run-audio-track');
+    const status = track.querySelector('[role="status"]');
+    const load = track.querySelector('[data-run-audio-load]');
     let version = 0;
-    function show(file) {
+    function show(file, message = file.name) {
       if (!input.isConnected) return;
       player.pause();
       if (urls.has(player)) URL.revokeObjectURL(urls.get(player));
@@ -111,8 +115,25 @@ function mountRunbookAudio(inputs) {
       urls.set(player, url);
       player.src = url;
       player.hidden = false;
-      status.textContent = file.name;
+      if (load) load.hidden = true;
+      status.textContent = message;
     }
+    if (load && fetchAudio) load.addEventListener('click', async () => {
+      const current = ++version;
+      load.disabled = true;
+      status.textContent = '正在加载音频…';
+      try {
+        const audio = await fetchAudio(load.dataset.runAudioLoad);
+        if (current !== version) return;
+        if (audio.type !== 'audio/mpeg' || !audio.size) throw new Error('Invalid audio');
+        show(audio, '已加载');
+        if (input.isConnected) player.play().catch(() => {});
+      } catch {
+        if (current === version) status.textContent = '音频加载失败，请重试或选择本机音源。';
+      } finally {
+        load.disabled = false;
+      }
+    });
     read(name).then((file) => { if (file && version === 0) show(file); }, () => {});
     input.addEventListener('change', async () => {
       const file = input.files[0];
@@ -132,12 +153,12 @@ function mountRunbookAudio(inputs) {
   }
 }
 
-export function mountRunbook(host, autoOpen = false) {
+export function mountRunbook(host, autoOpen = false, fetchAudio) {
   const entry = host.querySelector('.md-runbook-entry');
   if (!entry) return;
   const dialog = entry.querySelector('dialog');
   const audioInputs = [...dialog.querySelectorAll('[data-run-audio]')];
-  if (audioInputs.length) mountRunbookAudio(audioInputs);
+  if (audioInputs.length) mountRunbookAudio(audioInputs, fetchAudio);
   const steps = [...dialog.querySelectorAll('[data-run-step]')];
   const select = dialog.querySelector('select');
   const prev = dialog.querySelector('[data-run-prev]');
@@ -232,7 +253,7 @@ export function mountRunbook(host, autoOpen = false) {
   if (autoOpen) open();
 }
 
-export function attachRunbookReferences(host, workspaces) {
+export function attachRunbookReferences(host, workspaces, { includeLive = true } = {}) {
   const steps = host.querySelectorAll('[data-run-step]');
   const cases = workspaces.find(({ deck }) => deck.classList.contains('md-case-workspace'))?.slides;
   const board = workspaces.find(({ deck }) => !deck.classList.contains('md-case-workspace'))?.slides;
@@ -262,7 +283,7 @@ export function attachRunbookReferences(host, workspaces) {
     try { reference = JSON.parse(step.dataset.runReference); } catch { continue; }
     if (!reference || typeof reference !== 'object') continue;
     const { live, layout, boardStep, caseIndices } = reference;
-    if (Array.isArray(live) && live.length === 2 && live.every((value) => typeof value === 'string')) {
+    if (includeLive && Array.isArray(live) && live.length === 2 && live.every((value) => typeof value === 'string')) {
       const [title, update] = live;
       const panel = doc.createElement('aside');
       panel.className = 'md-run-live';

@@ -219,16 +219,19 @@ export async function api(method, path, body, options = {}) {
     response = await fetch(`${API_BASE}${path}`, {
       method,
       cache: options.cache,
+      signal: options.signal,
       headers: {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(body ? { 'Content-Type': 'application/json' } : {}),
       },
       body: body ? JSON.stringify(body) : undefined,
     });
-  } catch {
+  } catch (error) {
+    if (error.name === 'AbortError') throw error;
     throw new ApiError(0, 'NETWORK', '连不上服务器，稍后再试');
   }
 
+  if (response.ok && options.responseType === 'blob') return response.blob();
   const payload = await response.json().catch(() => {
     if (options.requireJson && response.ok) {
       throw new ApiError(response.status, 'INVALID_JSON', '服务器返回的内容不完整');

@@ -166,13 +166,13 @@ test('vault document loading recovers from an incomplete response and preserves 
 
   function loader(replies) {
     const calls = [];
-    const loadVaultDoc = new Function('api', 'ApiError', `async ${pageFunction('loadVaultDoc')}; return loadVaultDoc;`)(
+    const loadVaultDoc = new Function('api', 'ApiError', 'vaultDocPath', 'recentDocs', `async ${pageFunction('loadVaultDoc')}; return loadVaultDoc;`)(
       async (...args) => {
         calls.push(args);
         const reply = replies.shift();
         if (reply instanceof Error) throw reply;
         return reply;
-      }, ApiError,
+      }, ApiError, () => path, new Map(),
     );
     return { calls, load: (current = () => true) => loadVaultDoc('954-虚拟游戏', doc.id, current) };
   }
@@ -181,8 +181,10 @@ test('vault document loading recovers from an incomplete response and preserves 
     const recovered = loader([invalid, { configured: true, doc }]);
     assert.deepEqual(await recovered.load(), doc);
     assert.deepEqual(recovered.calls, Array.from({ length: 2 }, () => [
-      'GET', path, undefined, { cache: 'no-store', requireJson: true },
+      'GET', `${path}?audio=deferred`, undefined, { cache: 'no-store', requireJson: true, signal: undefined },
     ]));
+    assert.deepEqual(await recovered.load(), doc);
+    assert.equal(recovered.calls.length, 2);
   }
 
   const incomplete = loader([{}, {}]);

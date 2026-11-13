@@ -84,7 +84,7 @@ const config = getConfig({
 const REPO_FILES = {
   "cases/954-虚拟游戏/README.md": "> 源资料包：`C:\\Users\\12258\\Downloads\\954虚拟游戏`（0.83 GB，不入库）\n> 早期产物快照：`C:\\Users\\12258\\WorkBuddy\\snapshot`（保留作本机备份）\n> 目标：把全部内容转为可检索的 md 文本。\n> ⚠️ 本目录含完整剧透，仅供 DM 使用。\n\n卷首页：没有 # 标题，考验 README 翻译。\n",
   "cases/954-虚拟游戏/00_开本速查卡.md": "# 虚拟游戏 · 开本速查卡\n",
-  "cases/954-虚拟游戏/00_DM主持学习手册.md": "# 虚拟游戏 · DM 手册\n\n凶手是某某。\n",
+  "cases/954-虚拟游戏/00_DM主持学习手册.md": "# 虚拟游戏 · DM 手册\n\n凶手是某某。\n\n```dm-runbook\n第一步|0|台词|操作|物料|检查|||音频线索~SUQzAA==；BGM · 曲名~~https://example.com\n```\n",
   "cases/954-虚拟游戏/01_转写/人物剧本·前言.md": "# 人物剧本 · 前言\n\n六位玩家入座。\n",
   "cases/247-窗边的女人/README.md": "这里是另一卷。\n",
   "cases/247-窗边的女人/00_对外学习包/第一册_开本与流程.md": "# 第一册 · 开本与流程\n",
@@ -318,6 +318,21 @@ test("DM 读得到剧本清单与正文，中文目录与嵌套路径都通", as
   assert.equal(doc.status, 200);
   assert.equal(doc.payload.doc.title, "虚拟游戏 · DM 手册");
   assert.ok(doc.payload.doc.markdown.includes("凶手是某某"));
+  assert.match(doc.payload.doc.markdown, /SUQzAA==/);
+
+  const docPath = `/api/juben/doc/${encodeURIComponent("954-虚拟游戏")}/${docId}`;
+  const lightweight = await call("GET", `${docPath}?audio=deferred`, { token: colleagueToken });
+  const audioKey = lightweight.payload.doc.markdown.match(/音频线索~@([a-f0-9]{64})/)[1];
+  assert.doesNotMatch(lightweight.payload.doc.markdown, /SUQzAA==/);
+  assert.match(lightweight.payload.doc.markdown, /BGM · 曲名~~https:\/\/example\.com/);
+  const audioPath = `${docPath}/audio/${audioKey}`;
+  const audio = await fetch(`${origin}${audioPath}`, { headers: { Authorization: `Bearer ${colleagueToken}` } });
+  assert.equal(audio.status, 200);
+  assert.equal(audio.headers.get('cache-control'), 'no-store');
+  assert.equal(audio.headers.get('content-type'), 'audio/mpeg');
+  assert.equal(Buffer.from(await audio.arrayBuffer()).toString('base64'), 'SUQzAA==');
+  assert.equal((await call('GET', `${docPath}/audio/${'0'.repeat(64)}`, { token: colleagueToken })).status, 404);
+  assert.equal((await call('GET', audioPath)).status, 401);
 
   // 网页只展示主持内容：本机路径、备份说明和制作目标不随正文下发，剧透警示仍保留。
   const readme = await call("GET", `/api/juben/doc/${encodeURIComponent("954-虚拟游戏")}/README`, {
@@ -342,6 +357,7 @@ test("DM 读得到剧本清单与正文，中文目录与嵌套路径都通", as
     token: outsider,
   });
   assert.equal(blocked.status, 403);
+  assert.equal((await call('GET', audioPath, { token: outsider })).status, 403);
 });
 
 test("没配 token 的部署：通道优雅降级，兑换体系照常", async () => {

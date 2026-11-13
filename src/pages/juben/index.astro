@@ -271,6 +271,8 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
     let directPrivateCase = null;
     let inviteInfo = null;
     let docRequest = 0;
+    let docController;
+    const recentDocs = new Map();
     let vaultGeneration = 0;
     const query = new URLSearchParams(location.search);
     let pendingMission = {
@@ -282,6 +284,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
     const identityKey = (value) => value ? `${value.id}:${isDm(value) ? 'dm' : 'member'}` : 'guest';
     const scrollBehavior = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
     const beginVaultRender = () => {
+      docController?.abort();
       vaultGeneration += 1;
       docRequest += 1;
       return vaultGeneration;
@@ -385,17 +388,29 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       return ['review', 'board', 'run'].includes(view) ? view : '';
     }
 
-    async function loadVaultDoc(caseId, docId, current) {
-      const path = `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(docId)}`;
+    const vaultDocPath = (caseId, docId) => `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(docId)}`;
+
+    async function loadVaultDoc(caseId, docId, current, signal) {
+      const path = vaultDocPath(caseId, docId);
+      const cached = recentDocs.get(path);
+      if (cached && Date.now() < cached.expires) {
+        recentDocs.delete(path);
+        recentDocs.set(path, cached);
+        return cached.doc;
+      }
       for (let attempt = 0; current(); attempt += 1) {
         try {
-          const payload = await api('GET', path, undefined, { cache: 'no-store', requireJson: true });
+          const payload = await api('GET', `${path}?audio=deferred`, undefined, { cache: 'no-store', requireJson: true, signal });
           if (payload?.configured === false) {
             throw new ApiError(0, 'JUBEN_UNCONFIGURED', '档案正文服务暂不可用');
           }
           if (payload?.doc?.id !== docId || typeof payload.doc.markdown !== 'string') {
             throw new ApiError(0, 'JUBEN_INCOMPLETE', '档案正文响应不完整');
           }
+          if (!current()) return null;
+          recentDocs.delete(path);
+          recentDocs.set(path, { doc: payload.doc, expires: Date.now() + 5 * 60_000 });
+          if (recentDocs.size > 8) recentDocs.delete(recentDocs.keys().next().value);
           return payload.doc;
         } catch (error) {
           const retryable = ['NETWORK', 'INVALID_JSON', 'JUBEN_INCOMPLETE'].includes(error.code)
@@ -410,6 +425,9 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       if (!caseId || !docId || !isDm(user)) return;
       activeCase = caseId;
       activeDoc = docId;
+      docController?.abort();
+      docController = new AbortController();
+      const { signal } = docController;
       const requestId = ++docRequest;
       const generation = vaultGeneration;
       const identity = identityKey(user);
@@ -433,14 +451,15 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       const companionId = caseId === '954-虚拟游戏'
         ? ({ [reviewId]: boardId, [boardId]: reviewId })[docId]
         : null;
-      const companion = companionId ? loadVaultDoc(caseId, companionId, current).catch(() => null) : null;
       let workspaces;
       try {
-        const doc = await loadVaultDoc(caseId, docId, current);
+        const doc = await loadVaultDoc(caseId, docId, current, signal);
         if (!current()) return;
         host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
-        mountRunbook(host, view === 'run' && docId === reviewId);
+        mountRunbook(host, view === 'run' && docId === reviewId, (key) => api('GET',
+          `${vaultDocPath(caseId, docId)}/audio/${key}`, undefined, { cache: 'no-store', responseType: 'blob', signal }));
         workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: view === 'review' });
+        attachRunbookReferences(host, workspaces);
       } catch (error) {
         if (!current()) return;
         const message = error instanceof ApiError ? error.message : '档案正文暂时无法显示';
@@ -449,9 +468,12 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         host.querySelector('button').addEventListener('click', () => openDoc(caseId, docId), { once: true });
         return;
       }
-      const linked = companion && await companion;
+      if (!companionId) return;
+      // 先让当前正文可见，再请求关联图。
+      await new Promise((resolve) => requestAnimationFrame(() => setTimeout(resolve, 0)));
       if (!current()) return;
-      if (linked) {
+      const linked = await loadVaultDoc(caseId, companionId, current, signal).catch(() => null);
+      if (current() && linked) {
         const container = document.createElement('div');
         try {
           const template = document.createElement('template');
@@ -461,14 +483,14 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
             container.className = 'md-companion-workspace';
             container.append(entry);
             host.append(container);
-            workspaces = [...workspaces, ...mountWhiteboardCards(container)];
+            const added = mountWhiteboardCards(container);
+            attachRunbookReferences(host, added, { includeLive: false });
+            linkReviewBoard([...workspaces, ...added]);
           }
         } catch {
           container.remove();
         }
       }
-      attachRunbookReferences(host, workspaces);
-      if (companion) linkReviewBoard(workspaces);
     }
 
     function renderDocList() {
@@ -654,6 +676,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       sessionToken = token;
       user = next;
       if (!changed) return;
+      recentDocs.clear();
       manifest = null;
       activeCase = null;
       activeDoc = null;

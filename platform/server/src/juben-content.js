@@ -10,6 +10,8 @@
 // 服务端 decode 后只在缓存树里做等值查找——路径永远由服务端从 git 树拼出，
 // 不存在拿用户输入拼路径的口子；decode 后仍挡一道 ".."、开头 "/"、反斜杠。
 
+import { createHash } from 'node:crypto';
+
 const CASE_ID_RE = /^[0-9A-Za-z][0-9A-Za-z\u4e00-\u9fff_-]*$/;
 const RAW_FETCH_CONCURRENCY = 6;
 
@@ -55,6 +57,29 @@ export function sanitizeDmMarkdown(markdown) {
     .split("\n")
     .filter((line) => !INTERNAL_METADATA_LINE.test(line))
     .join("\n");
+}
+
+function splitRunbookAudio(markdown) {
+  const audio = new Map();
+  const text = markdown.replace(/(^```dm-runbook[ \t]*\n)([\s\S]*?)(^```[ \t]*$)/gm, (_, start, rows, end) => {
+    const updated = rows.split('\n').map((row) => {
+      const fields = row.split('|');
+      if (fields.length !== 9) return row;
+      fields[8] = fields[8].split('；').map((track) => {
+        const parts = track.split('~');
+        const encoded = parts[1];
+        if (!encoded || encoded.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/.test(encoded)) return track;
+        const bytes = Buffer.from(encoded, 'base64');
+        const key = createHash('sha256').update(bytes).digest('hex');
+        parts[1] = `@${key}`;
+        audio.set(key, bytes);
+        return parts.join('~');
+      }).join('；');
+      return fields.join('|');
+    }).join('\n');
+    return start + updated + end;
+  });
+  return { markdown: text, audio };
 }
 
 export function createJubenContent(config, log = console, deps = {}) {
@@ -165,7 +190,8 @@ export function createJubenContent(config, log = console, deps = {}) {
         }
         try {
           const markdown = sanitizeDmMarkdown(await fetchRaw(file.path));
-          sources.set(file.path, { sha: file.sha, markdown, heading: firstHeadingOf(markdown) });
+          const runbook = splitRunbookAudio(markdown);
+          sources.set(file.path, { sha: file.sha, markdown, heading: firstHeadingOf(markdown), runbook });
         } catch (error) {
           log.warn?.(`[juben] 拉不到 ${file.path}：${error.message}`);
         }
@@ -209,7 +235,7 @@ export function createJubenContent(config, log = console, deps = {}) {
             title: docTitle(docId, source.heading),
             bytes: file.size,
           };
-          caseDocs.push({ ...meta, markdown: source.markdown });
+          caseDocs.push({ ...meta, markdown: source.markdown, runbook: source.runbook });
           groupDocViews.push(meta);
         }
         if (groupDocViews.length) groupViews.push({ label: group.label, docs: groupDocViews });
@@ -268,13 +294,17 @@ export function createJubenContent(config, log = console, deps = {}) {
   return {
     configured,
     manifest,
-    async doc(caseId, docId) {
+    async doc(caseId, docId, deferredAudio = false) {
       // 正文在完整缓存里（清单视图已剥掉 markdown），缓存空就先拉一次
       if (cache.at === null) await manifest();
       const found = findDoc(cache.cases, caseId, docId);
       if (!found) return null;
-      const { markdown, ...meta } = found;
-      return { ...meta, markdown };
+      const { markdown, runbook, ...meta } = found;
+      return { ...meta, markdown: deferredAudio ? runbook.markdown : markdown };
+    },
+    async audio(caseId, docId, key) {
+      if (cache.at === null) await manifest();
+      return findDoc(cache.cases, caseId, docId)?.runbook.audio.get(key) ?? null;
     },
     status() {
       return {

@@ -1280,7 +1280,7 @@ export function createApplication(config, log = console, deps = {}) {
       // 单篇正文：DM 才能读。id 由服务端拼路径，case/doc 都过白名单正则。
       // 中文文件名进 URL 会变成百分号编码，先 decode 再交给内容模块校验；
       // 校验不过（含 ../ 之类）就是 404，不存在拼路径的口子。
-      const jubenDocMatch = url.pathname.match(/^\/api\/juben\/doc\/([^/]+)\/([^/]+)$/);
+      const jubenDocMatch = url.pathname.match(/^\/api\/juben\/doc\/([^/]+)\/([^/]+)(?:\/audio\/([a-f0-9]{64}))?$/);
       if (jubenDocMatch && request.method === "GET") {
         requireDm(request);
         if (!juben.configured()) {
@@ -1295,7 +1295,20 @@ export function createApplication(config, log = console, deps = {}) {
         } catch {
           throw new HttpError(404, "DOC_NOT_FOUND", "没有这一篇");
         }
-        const doc = await juben.doc(caseId, docId);
+        if (jubenDocMatch[3] !== undefined) {
+          const audio = await juben.audio(caseId, docId, jubenDocMatch[3]);
+          if (!audio) throw new HttpError(404, 'AUDIO_NOT_FOUND', '没有这段音频');
+          response.writeHead(200, {
+            'Content-Type': 'audio/mpeg',
+            'Content-Length': audio.length,
+            'Cache-Control': 'no-store',
+            'X-Content-Type-Options': 'nosniff',
+            ...corsHeaders(config, request),
+          });
+          response.end(audio);
+          return;
+        }
+        const doc = await juben.doc(caseId, docId, url.searchParams.get('audio') === 'deferred');
         if (!doc) throw new HttpError(404, "DOC_NOT_FOUND", "没有这一篇");
         reply(200, { configured: true, doc });
         return;
