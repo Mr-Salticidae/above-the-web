@@ -42,6 +42,15 @@ test('白板和案件卡只在 DM 阅读器中解析，后续卡片初始收起'
   assert.match(caseHtml, /data-whiteboard-next disabled/);
 });
 
+test('逐笔白板用独立工作区，步骤可跳转，说明与整图在同一张卡内', () => {
+  const markdown = ['```whiteboard-trace', '开场|发本后|画六席|手册 §5|PHN2Zy8+', '```'].join('\n');
+  assert.doesNotMatch(renderMarkdown(markdown), /<dialog/);
+  const html = renderMarkdown(markdown, { whiteboardImages: true });
+  assert.match(html, /<dialog class="md-whiteboard-cards md-trace-workspace"/);
+  assert.match(html, /data-whiteboard-select[^>]*><option value="0">1\. 开场/);
+  assert.match(html, /md-whiteboard-pan[\s\S]*?md-trace-notes[\s\S]*?照着画[\s\S]*?更新依据/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

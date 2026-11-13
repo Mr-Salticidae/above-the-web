@@ -9,35 +9,74 @@ export function renderWhiteboardCards(rows, mode = 'board') {
     (!isCase && (image.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/.test(image)))
   )) return '<p>卡片暂时无法显示，请参考下方正文。</p>';
 
-  const slides = cards.map(([title, timing, update, evidence, image], index) => `
+  const slides = cards.map(([title, timing, update, evidence, image], index) => isTrace ? `
+    <section class="md-trace-slide" data-whiteboard-slide${index ? ' hidden' : ''}>
+      <div class="md-whiteboard-pan" tabindex="0" aria-label="当前白板图，放大后可滚动">
+        <img src="data:image/svg+xml;base64,${image}" alt="第 ${index + 1} 步的完整白板，本步新增或改写处为紫色" decoding="async" />
+      </div>
+      <div class="md-trace-notes" tabindex="0" aria-label="本步说明">
+        <h4>${escapeHtml(title)}</h4>
+        <dl>
+          <div><dt>动笔时机</dt><dd>${escapeHtml(timing)}</dd></div>
+          <div><dt>照着画</dt><dd>${escapeHtml(update)}</dd></div>
+          <div><dt>更新依据</dt><dd>${escapeHtml(evidence)}</dd></div>
+        </dl>
+      </div>
+    </section>` : `
     <section data-whiteboard-slide${index ? ' hidden' : ''}>
       <h4>${escapeHtml(title)}</h4>
       <p><strong>${isCase ? '先问玩家' : '动笔时机'}</strong>　${escapeHtml(timing)}</p>
       ${isCase
         ? `<ol class="md-case-chain" aria-label="证据链">${image.split('→').map((node) => `<li>${escapeHtml(node.trim())}</li>`).join('')}</ol>`
-        : isTrace
-          ? `<div class="md-whiteboard-pan" tabindex="0" aria-label="当前白板，可左右滑动"><img src="data:image/svg+xml;base64,${image}" alt="" decoding="async" /></div>`
-          : `<img src="data:image/svg+xml;base64,${image}" alt="" decoding="async" />`}
+        : `<img src="data:image/svg+xml;base64,${image}" alt="" decoding="async" />`}
       <p><strong>${isCase ? '本轮结论' : '本阶段更新'}</strong>　${escapeHtml(update)}</p>
       <p><strong>${isCase ? '核对依据' : '更新依据'}</strong>　${escapeHtml(evidence)}</p>
     </section>`).join('');
+  if (isTrace) {
+    const options = cards.map(([title], i) => `<option value="${i}">${i + 1}. ${escapeHtml(title)}</option>`).join('');
+    return `<div class="md-trace-entry">
+      <button type="button" data-whiteboard-open>打开逐笔白板 · ${cards.length} 步</button>
+      <dialog class="md-whiteboard-cards md-trace-workspace" aria-label="《虚拟游戏》逐笔白板">
+        <header class="md-trace-heading">
+          <div><h3>《虚拟游戏》逐笔白板</h3><p>紫色是本步新增或改写的内容</p></div>
+          <button type="button" data-whiteboard-close>返回档案</button>
+        </header>
+        <nav class="md-trace-nav" aria-label="白板步骤">
+          <button type="button" data-whiteboard-prev disabled>上一步</button>
+          <select data-whiteboard-select aria-label="跳到步骤">${options}</select>
+          <span data-whiteboard-count aria-live="polite">1 / ${cards.length}</span>
+          <button type="button" data-whiteboard-next${cards.length === 1 ? ' disabled' : ''}>下一步</button>
+          <button type="button" data-whiteboard-zoom aria-pressed="false">放大白板</button>
+        </nav>
+        <div class="md-trace-stage">${slides}</div>
+      </dialog>
+    </div>`;
+  }
   return `<div class="md-whiteboard-cards">
     <nav aria-label="${isCase ? '案件推理卡' : '白板阶段卡'}">
       <button type="button" data-whiteboard-prev disabled>${isCase ? '上一张' : '上一阶段'}</button>
       <span data-whiteboard-count aria-live="polite">1 / ${cards.length}</span>
       <button type="button" data-whiteboard-next${cards.length === 1 ? ' disabled' : ''}>${isCase ? '下一张' : '下一阶段'}</button>
     </nav>
-    ${isTrace ? '<div class="md-whiteboard-tools"><button type="button" data-whiteboard-zoom aria-pressed="false">放大白板</button></div>' : ''}
     ${slides}
   </div>`;
 }
 
-export function mountWhiteboardCards(host) {
+export function mountWhiteboardCards(host, { openTrace = false } = {}) {
   for (const deck of host.querySelectorAll('.md-whiteboard-cards')) {
     const slides = [...deck.querySelectorAll('[data-whiteboard-slide]')];
     const previous = deck.querySelector('[data-whiteboard-prev]');
     const next = deck.querySelector('[data-whiteboard-next]');
     const count = deck.querySelector('[data-whiteboard-count]');
+    const select = deck.querySelector('[data-whiteboard-select]');
+    if (select) {
+      const opener = deck.parentElement.querySelector('[data-whiteboard-open]');
+      const open = () => { if (!deck.open) deck.showModal(); };
+      opener.addEventListener('click', open);
+      deck.querySelector('[data-whiteboard-close]').addEventListener('click', () => deck.close());
+      deck.addEventListener('close', () => { if (opener.isConnected) opener.focus({ preventScroll: true }); });
+      if (openTrace) open();
+    }
     const zoom = deck.querySelector('[data-whiteboard-zoom]');
     if (zoom) zoom.addEventListener('click', () => {
       const enlarged = deck.classList.toggle('is-enlarged');
@@ -45,20 +84,24 @@ export function mountWhiteboardCards(host) {
       zoom.textContent = enlarged ? '缩回全图' : '放大白板';
     });
     let current = 0;
-    function turn(step) {
-      const target = current + step;
+    function goTo(target) {
       if (target < 0 || target >= slides.length) return;
       slides[current].hidden = true;
       current = target;
       slides[current].hidden = false;
       count.textContent = `${current + 1} / ${slides.length}`;
+      if (select) {
+        select.value = String(current);
+        slides[current].querySelector('.md-trace-notes').scrollTop = 0;
+      }
       const focused = deck.ownerDocument.activeElement;
       previous.disabled = current === 0;
       next.disabled = current === slides.length - 1;
       if (focused === next && next.disabled) previous.focus();
       if (focused === previous && previous.disabled) next.focus();
     }
-    previous.addEventListener('click', () => turn(-1));
-    next.addEventListener('click', () => turn(1));
+    previous.addEventListener('click', () => goTo(current - 1));
+    next.addEventListener('click', () => goTo(current + 1));
+    select?.addEventListener('change', () => goTo(Number(select.value)));
   }
 }

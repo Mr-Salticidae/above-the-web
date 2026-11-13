@@ -411,7 +411,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
         const { doc } = await api('GET', `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(docId)}`);
         if (!current()) return;
         host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
-        mountWhiteboardCards(host);
+        mountWhiteboardCards(host, { openTrace: true });
       } catch (error) {
         if (!current()) return;
         host.innerHTML = `<p class="juben-vault-msg" data-tone="error">${escapeHtml(error.message)}</p>`;
@@ -877,10 +877,38 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   :global(.md-whiteboard-cards section[hidden]) { display: none; }
   :global(.md-whiteboard-cards h4) { margin: 0; font-size: 1.08rem; }
   :global(.md-whiteboard-cards img) { width: min(100%, 38rem); }
-  :global(.md-whiteboard-tools) { padding: .45rem .7rem 0; text-align: right; }
-  :global(.md-whiteboard-pan) { max-width: 100%; overflow-x: auto; }
-  :global(.md-whiteboard-pan img) { width: 100%; max-width: 100%; }
-  :global(.md-whiteboard-cards.is-enlarged .md-whiteboard-pan img) { width: max(100%, 776px); max-width: none; }
+  :global(.md-trace-entry > button) { min-height: 44px; padding: .5rem 1rem; border: 1px solid var(--accent); border-radius: 7px; background: var(--paper-2); color: var(--ink); font: inherit; cursor: pointer; }
+  :global(.md-trace-workspace) {
+    position: fixed; inset: 0; width: min(96vw, 90rem); height: 94dvh;
+    max-width: none; max-height: none; margin: auto; padding: 0; overflow: hidden; color: var(--ink); background: var(--paper-2);
+  }
+  :global(.md-trace-workspace[open]) { display: grid; grid-template-rows: auto auto minmax(0, 1fr); }
+  :global(.md-trace-workspace::backdrop) { background: rgb(24 19 28 / .65); }
+  :global(.md-trace-heading) { display: flex; justify-content: space-between; align-items: center; gap: .7rem; padding: .6rem 1rem; border-bottom: 1px solid var(--line); }
+  :global(.juben-vault-doc-body .md-trace-heading h3) { margin: 0; font-size: 1.05rem; }
+  :global(.juben-vault-doc-body .md-trace-heading p) { margin: 0; color: var(--accent); font-size: .75rem; line-height: 1.4; }
+  :global(.md-trace-workspace .md-trace-nav) { display: grid; grid-template-columns: auto minmax(0, 18rem) auto auto 1fr; justify-items: start; gap: .45rem; padding: .5rem 1rem; }
+  :global(.md-trace-nav select) { width: 100%; min-width: 0; min-height: 44px; padding: .35rem; font: inherit; color: var(--ink); background: var(--paper-2); border: 1px solid var(--line); border-radius: 6px; }
+  :global(.md-trace-nav [data-whiteboard-zoom]) { justify-self: end; }
+  :global(.md-trace-stage) { min-height: 0; min-width: 0; }
+  :global(.md-trace-workspace .md-trace-slide:not([hidden])) { height: 100%; box-sizing: border-box; display: grid; grid-template-columns: minmax(0, 1fr) clamp(16rem, 28vw, 24rem); grid-template-rows: minmax(0, 1fr); gap: .75rem; padding: .75rem; }
+  :global(.md-whiteboard-pan) { min-width: 0; min-height: 0; overflow: hidden; border-radius: 8px; background: var(--paper-3); }
+  :global(.is-enlarged .md-whiteboard-pan) { overflow: auto; }
+  :global(.juben-vault-doc-body .md-whiteboard-pan img) { width: 100%; height: 100%; object-fit: contain; margin: 0; }
+  :global(.juben-vault-doc-body .is-enlarged .md-whiteboard-pan img) { width: max(100%, 776px); height: auto; max-width: none; }
+  :global(.md-trace-notes) { min-height: 0; overflow: auto; padding: .85rem; border: 1px solid var(--line); border-radius: 8px; }
+  :global(.md-trace-notes dl) { margin: .65rem 0 0; display: grid; gap: .6rem; }
+  :global(.md-trace-notes dt) { font-size: .75rem; font-weight: 700; color: var(--accent); }
+  :global(.md-trace-notes dd) { margin: .12rem 0 0; font-size: .87rem; line-height: 1.55; overflow-wrap: anywhere; }
+  @media (max-width: 680px) {
+    :global(.md-trace-workspace) { width: 100vw; height: 100dvh; border: 0; border-radius: 0; }
+    :global(.md-trace-heading) { padding: .4rem .6rem; }
+    :global(.md-trace-workspace .md-trace-nav) { grid-template-columns: auto auto 1fr auto; padding: .4rem .6rem; }
+    :global(.md-trace-nav select) { grid-column: 1 / -1; grid-row: 2; }
+    :global(.md-trace-nav [data-whiteboard-next]) { justify-self: start; }
+    :global(.md-trace-workspace .md-trace-slide:not([hidden])) { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1.35fr) minmax(0, 1fr); padding: .45rem; gap: .45rem; }
+    :global(.md-trace-notes) { padding: .6rem; }
+  }
   :global(.juben-vault-doc-body .md-case-chain) { display: grid; gap: 1rem; padding: 0; list-style: none; }
   :global(.md-case-chain li) { position: relative; padding: .45rem .65rem; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-2); color: var(--ink); }
   :global(.md-case-chain li + li::before) { content: '↓'; position: absolute; top: -1.1rem; left: 1rem; color: var(--accent); }
