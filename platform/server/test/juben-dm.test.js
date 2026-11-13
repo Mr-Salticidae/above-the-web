@@ -6,6 +6,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { createHash } from 'node:crypto';
 import { DatabaseSync } from "node:sqlite";
 import { getConfig } from "../src/config.js";
 import { createApplication } from "../src/app.js";
@@ -84,7 +85,7 @@ const config = getConfig({
 const REPO_FILES = {
   "cases/954-虚拟游戏/README.md": "> 源资料包：`C:\\Users\\12258\\Downloads\\954虚拟游戏`（0.83 GB，不入库）\n> 早期产物快照：`C:\\Users\\12258\\WorkBuddy\\snapshot`（保留作本机备份）\n> 目标：把全部内容转为可检索的 md 文本。\n> ⚠️ 本目录含完整剧透，仅供 DM 使用。\n\n卷首页：没有 # 标题，考验 README 翻译。\n",
   "cases/954-虚拟游戏/00_开本速查卡.md": "# 虚拟游戏 · 开本速查卡\n",
-  "cases/954-虚拟游戏/00_DM主持学习手册.md": "# 虚拟游戏 · DM 手册\n\n凶手是某某。\n\n```dm-runbook\n第一步|0|台词|操作|物料|检查|||音频线索~SUQzAA==；BGM · 曲名~~https://example.com\n```\n",
+  "cases/954-虚拟游戏/00_DM主持学习手册.md": "# 虚拟游戏 · DM 手册\n\n凶手是某某。\n\n```dm-runbook\n第一步|0|台词|操作|物料|检查|||音频线索~SUQzAA==；BGM · 曲名~asset:track.mp3~https://example.com\n```\n",
   "cases/954-虚拟游戏/01_转写/人物剧本·前言.md": "# 人物剧本 · 前言\n\n六位玩家入座。\n",
   "cases/247-窗边的女人/README.md": "这里是另一卷。\n",
   "cases/247-窗边的女人/00_对外学习包/第一册_开本与流程.md": "# 第一册 · 开本与流程\n",
@@ -93,18 +94,26 @@ const REPO_FILES = {
   "README.md": "# juben-dm-lab",
 };
 
-function fakeGitHub(url) {
+const bgmBytes = Buffer.from('sample mp3');
+const bgmSha = createHash('sha1').update(`blob ${bgmBytes.length}\0`).update(bgmBytes).digest('hex');
+let bgmFetches = 0;
+function fakeGitHub(url, options) {
   const treeUrl = "https://api.github.com/repos/Mr-Salticidae/juben-dm-lab/git/trees/main?recursive=1";
+  if (url.endsWith(`/git/blobs/${bgmSha}`)) {
+    assert.equal(options.headers.Accept, 'application/vnd.github.raw+json');
+    bgmFetches++;
+    return Promise.resolve(new Response(bgmBytes));
+  }
   if (url === treeUrl) {
     return {
       ok: true,
       status: 200,
       json: async () => ({
-        tree: Object.keys(REPO_FILES).map((filePath) => ({
+        tree: [...Object.keys(REPO_FILES).map((filePath) => ({
           type: "blob",
           path: filePath,
           size: REPO_FILES[filePath].length,
-        })),
+        })), { type: 'blob', path: 'cases/954-虚拟游戏/audio/track.mp3', sha: bgmSha, size: bgmBytes.length }],
       }),
       text: async () => "",
     };
@@ -324,7 +333,16 @@ test("DM 读得到剧本清单与正文，中文目录与嵌套路径都通", as
   const lightweight = await call("GET", `${docPath}?audio=deferred`, { token: colleagueToken });
   const audioKey = lightweight.payload.doc.markdown.match(/音频线索~@([a-f0-9]{64})/)[1];
   assert.doesNotMatch(lightweight.payload.doc.markdown, /SUQzAA==/);
-  assert.match(lightweight.payload.doc.markdown, /BGM · 曲名~~https:\/\/example\.com/);
+  assert.ok(lightweight.payload.doc.markdown.includes(`BGM · 曲名~@${bgmSha}~https://example.com`));
+  const bgmPath = `${docPath}/audio/${bgmSha}`;
+  assert.equal(bgmFetches, 0);
+  assert.equal((await call('GET', bgmPath)).status, 401);
+  const tracks = await Promise.all([1, 2].map(() => fetch(`${origin}${bgmPath}`, { headers: { Authorization: `Bearer ${colleagueToken}` } })));
+  for (const track of tracks) {
+    assert.equal(track.status, 200);
+    assert.deepEqual(Buffer.from(await track.arrayBuffer()), bgmBytes);
+  }
+  assert.equal(bgmFetches, 1);
   const audioPath = `${docPath}/audio/${audioKey}`;
   const audio = await fetch(`${origin}${audioPath}`, { headers: { Authorization: `Bearer ${colleagueToken}` } });
   assert.equal(audio.status, 200);

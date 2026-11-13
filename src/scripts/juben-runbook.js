@@ -25,7 +25,7 @@ function renderSceneLine(line) {
 function renderAudioTrack(track) {
   const [name, encoded, source] = track.split('~');
   const included = encoded && /^[A-Za-z0-9+/]+={0,2}$/.test(encoded);
-  const remote = encoded?.match(/^@([a-f0-9]{64})$/)?.[1];
+  const remote = encoded?.match(/^@([a-f0-9]{40}|[a-f0-9]{64})$/)?.[1];
   const official = source && /^https:\/\//.test(source) ? `<a href="${escapeHtml(source)}" target="_blank" rel="noopener noreferrer">官方试听与下载页</a>` : '';
   const load = remote ? `<button type="button" data-run-audio-load="${remote}">播放音频</button>` : '';
   return `<div class="md-run-audio-track"><strong>${escapeHtml(name)}</strong>${official}${load}<label>${included || remote ? '替换本机音源' : '选择音频'} <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac" data-run-audio="${escapeHtml(name)}"></label><audio controls preload="none"${included ? ` src="data:audio/mpeg;base64,${encoded}"` : ' hidden'}></audio><small role="status"></small></div>`;

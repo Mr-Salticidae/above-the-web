@@ -59,7 +59,7 @@ export function sanitizeDmMarkdown(markdown) {
     .join("\n");
 }
 
-function splitRunbookAudio(markdown) {
+function splitRunbookAudio(markdown, assets) {
   const audio = new Map();
   const text = markdown.replace(/(^```dm-runbook[ \t]*\n)([\s\S]*?)(^```[ \t]*$)/gm, (_, start, rows, end) => {
     const updated = rows.split('\n').map((row) => {
@@ -68,6 +68,13 @@ function splitRunbookAudio(markdown) {
       fields[8] = fields[8].split('；').map((track) => {
         const parts = track.split('~');
         const encoded = parts[1];
+        const asset = encoded?.match(/^asset:([a-z0-9-]+\.mp3)$/)?.[1];
+        if (asset) {
+          const sha = assets?.get(asset);
+          parts[1] = sha ? `@${sha}` : '';
+          if (sha) audio.set(sha, { sha });
+          return parts.join('~');
+        }
         if (!encoded || encoded.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/.test(encoded)) return track;
         const bytes = Buffer.from(encoded, 'base64');
         const key = createHash('sha256').update(bytes).digest('hex');
@@ -94,6 +101,8 @@ export function createJubenContent(config, log = console, deps = {}) {
 
   let cache = { at: null, cases: [], sources: new Map() };
   let pendingRefresh = null;
+  const pendingAudio = new Map();
+  const cachedAudio = new Map();
 
   const configured = () => Boolean(config.juben.token && config.juben.repo);
 
@@ -162,6 +171,13 @@ export function createJubenContent(config, log = console, deps = {}) {
   // 标题要靠正文第一个 #，树里没有——正文逐个拉一次并进缓存，之后 TTL 内零请求。
   async function buildManifest() {
     const tree = await fetchTree();
+    const assetsByCase = new Map();
+    for (const node of tree) {
+      const asset = node.type === 'blob' && String(node.path || '').match(/^cases\/([^/]+)\/audio\/([a-z0-9-]+\.mp3)$/);
+      if (!asset || !/^[a-f0-9]{40}$/.test(node.sha) || !(node.size > 0 && node.size <= 8 * 1024 * 1024)) continue;
+      if (!assetsByCase.has(asset[1])) assetsByCase.set(asset[1], new Map());
+      assetsByCase.get(asset[1]).set(asset[2], node.sha);
+    }
     const byCase = new Map();
     const filesToRead = [];
     for (const node of tree) {
@@ -190,8 +206,7 @@ export function createJubenContent(config, log = console, deps = {}) {
         }
         try {
           const markdown = sanitizeDmMarkdown(await fetchRaw(file.path));
-          const runbook = splitRunbookAudio(markdown);
-          sources.set(file.path, { sha: file.sha, markdown, heading: firstHeadingOf(markdown), runbook });
+          sources.set(file.path, { sha: file.sha, markdown, heading: firstHeadingOf(markdown) });
         } catch (error) {
           log.warn?.(`[juben] 拉不到 ${file.path}：${error.message}`);
         }
@@ -235,7 +250,7 @@ export function createJubenContent(config, log = console, deps = {}) {
             title: docTitle(docId, source.heading),
             bytes: file.size,
           };
-          caseDocs.push({ ...meta, markdown: source.markdown, runbook: source.runbook });
+          caseDocs.push({ ...meta, markdown: source.markdown, runbook: splitRunbookAudio(source.markdown, assetsByCase.get(id)) });
           groupDocViews.push(meta);
         }
         if (groupDocViews.length) groupViews.push({ label: group.label, docs: groupDocViews });
@@ -251,6 +266,26 @@ export function createJubenContent(config, log = console, deps = {}) {
     const response = await fetcher(url, { headers });
     if (!response.ok) throw new Error(`raw ${response.status}`);
     return response.text();
+  }
+
+  async function fetchAudioAsset(sha) {
+    if (cachedAudio.has(sha)) return cachedAudio.get(sha);
+    if (!pendingAudio.has(sha)) {
+      const url = `https://api.github.com/repos/${config.juben.repo}/git/blobs/${sha}`;
+      const request = fetcher(url, { headers: { ...headers, Accept: 'application/vnd.github.raw+json' }, signal: AbortSignal.timeout(12000) })
+        .then(async (response) => {
+          if (!response.ok) throw new Error(`audio ${response.status}`);
+          const bytes = Buffer.from(await response.arrayBuffer());
+          const digest = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
+          if (digest !== sha) throw new Error('audio blob mismatch');
+          cachedAudio.set(sha, bytes);
+          if (cachedAudio.size > 4) cachedAudio.delete(cachedAudio.keys().next().value);
+          return bytes;
+        })
+        .finally(() => pendingAudio.delete(sha));
+      pendingAudio.set(sha, request);
+    }
+    return pendingAudio.get(sha);
   }
 
   // 对外清单：只给元数据（id/标题/分组），正文留在缓存里走 doc() 单独给。
@@ -304,7 +339,8 @@ export function createJubenContent(config, log = console, deps = {}) {
     },
     async audio(caseId, docId, key) {
       if (cache.at === null) await manifest();
-      return findDoc(cache.cases, caseId, docId)?.runbook.audio.get(key) ?? null;
+      const audio = findDoc(cache.cases, caseId, docId)?.runbook.audio.get(key);
+      return audio?.sha ? fetchAudioAsset(audio.sha) : audio ?? null;
     },
     status() {
       return {
