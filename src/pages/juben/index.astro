@@ -956,20 +956,29 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   }
   :global(.md-trace-workspace[open]) { display: grid; grid-template-rows: auto auto minmax(0, 1fr); }
   :global(.md-trace-workspace::backdrop) { background: rgb(24 19 28 / .65); }
-  :global(.md-runbook) { width: min(96vw, 46rem); }
-  :global(.md-runbook[open]:has(.md-run-bgm)) { grid-template-rows: auto auto auto minmax(0, 1fr); }
-  :global(.md-run-bgm) { border-bottom: 1px solid var(--line); padding-inline: .75rem; }
+  :global(.md-runbook) { width: min(96vw, 50rem); }
+  :global(.md-runbook[open]) { grid-template-rows: auto auto minmax(0, 1fr) auto; }
+  :global(.md-runbook[open]:has(.md-run-bgm)) { grid-template-rows: auto auto auto minmax(0, 1fr) auto; }
+  :global(.md-run-header > div) { display: flex; gap: .35rem; flex-shrink: 0; }
+  :global(.md-run-position) { display: grid; gap: .4rem; padding: .55rem .9rem; border-bottom: 1px solid var(--line); }
+  :global(.md-run-position select) { min-width: 0; width: 100%; min-height: 44px; padding: .35rem .6rem; border: 1px solid var(--line); border-radius: 7px; font: inherit; color: var(--ink); background: var(--paper-2); }
+  :global(.md-run-position progress) { width: 100%; height: .28rem; accent-color: var(--accent); }
+  :global(.md-run-bgm) { border-bottom: 1px solid var(--line); padding-inline: .9rem; background: var(--paper-3); }
   :global(.md-run-bgm > summary) { min-height: 44px; line-height: 44px; font-weight: 700; color: var(--accent); cursor: pointer; }
   :global(.md-run-bgm-tracks) { max-height: 33dvh; overflow: auto; }
-  :global(.md-runbook nav select) { min-width: 0; width: 100%; min-height: 44px; font: inherit; color: var(--ink); background: var(--paper-2); }
-  :global(.md-runbook nav button) { flex: none; }
-  :global(.md-run-body) { overflow: auto; overscroll-behavior: contain; }
+  :global(.md-runbook .md-run-footer) { border-top: 1px solid var(--line); border-bottom: 0; padding-bottom: max(.7rem, env(safe-area-inset-bottom)); background: var(--paper-2); }
+  :global(.md-run-footer [data-run-next]:not(:disabled)) { color: var(--paper-2); background: var(--ink); border-color: var(--ink); }
+  :global(.md-run-footer [data-run-count]) { font-variant-numeric: tabular-nums; }
+  :global(.md-run-body) { overflow: auto; overscroll-behavior: contain; background: var(--paper-3); }
+  :global(.md-runbook .md-run-body > section) { padding: 1rem clamp(.9rem, 4vw, 2rem); }
+  :global(.md-runbook .md-run-body h4) { font-family: var(--serif); font-size: clamp(1.35rem, 5vw, 1.8rem); line-height: 1.25; }
   :global(.md-run-body dl) { margin: .75rem 0; display: grid; gap: 1rem; }
   :global(.md-run-body dt) { font-weight: 700; color: var(--accent); margin-bottom: .2rem; }
   :global(.md-run-body dd) { margin: 0; line-height: 1.65; }
   :global(.md-run-say), :global(.md-run-material), :global(.md-run-check) { border-inline-start: 3px solid; border-radius: 5px; padding: .55rem .7rem; }
   :global(.md-run-say) { border-color: #7750bd; background: color-mix(in srgb, #7750bd 9%, var(--paper-2)); }
-  :global(.md-run-material) { border-color: #258477; background: color-mix(in srgb, #258477 9%, var(--paper-2)); }
+  :global(.md-run-actions), :global(.md-run-resources .md-run-reference) { background: var(--paper-2); }
+  :global(.md-run-actions) { padding: .7rem; border: 1px solid var(--line); border-radius: 8px; }
   :global(.md-run-check) { border-color: #be7828; background: color-mix(in srgb, #be7828 11%, var(--paper-2)); }
   :global(.md-run-highlight) { color: inherit; font-weight: 700; border-radius: 3px; box-decoration-break: clone; }
   :global(.md-run-highlight.is-number) { background: color-mix(in srgb, #8e63e3 24%, var(--paper-2)); }
@@ -982,12 +991,21 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.md-run-audio-track label) { font-size: .85rem; }
   :global(.md-run-audio-track input), :global(.md-run-audio-track audio) { display: block; width: 100%; margin-top: .25rem; }
   :global(.md-run-audio-track audio[hidden]) { display: none; }
+  :global(.md-run-audio-track [data-run-audio-loop][aria-pressed="true"]) { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
   :global(.juben-vault-doc-body .md-run-scene > ol) { display: grid; gap: .55rem; margin: .25rem 0 .6rem; padding: 0; list-style: none; }
   :global(.md-run-scene li) { margin: 0; padding: .45rem .65rem; border-radius: 6px; }
   :global(.md-run-scene li > strong) { display: block; margin-bottom: .2rem; font-size: .78rem; }
   :global(.md-run-scene-speak) { border-inline-start: 3px solid var(--accent); background: color-mix(in srgb, #7750bd 13%, var(--paper-2)); color: var(--ink); font-size: 1rem; line-height: 1.65; }
   :global(.md-run-scene-speak > strong) { color: var(--accent); }
   :global(.md-run-scene-cue), :global(.md-run-scene-player) { border: 1px solid var(--line); font-size: .84rem; }
+  :global(.md-run-scene) { background: var(--paper-2); }
+  :global(.md-run-scene-cue) { border-inline-start: 3px solid #be7828; background: color-mix(in srgb, #be7828 11%, var(--paper-2)); }
+  @media (max-width: 560px) {
+    :global(.md-runbook.md-trace-workspace) { width: 100vw; height: 100dvh; border-radius: 0; }
+    :global(.md-runbook .md-run-header) { padding: .4rem .65rem; gap: .35rem; }
+    :global(.md-runbook .md-run-header h3) { font-size: .9rem; }
+    :global(.md-run-header button) { font-size: .76rem; }
+  }
   :global(.md-run-reference select) { width: 100%; min-height: 44px; font: inherit; color: var(--ink); background: var(--paper-2); }
   :global(.juben-vault-doc-body .md-run-reference img) { width: 100%; height: auto; }
   :global(.md-run-live) { margin: .75rem 0; padding: .6rem .75rem; border-inline-start: 3px solid #7750bd; border-radius: 6px; background: color-mix(in srgb, #7750bd 9%, var(--paper-2)); }

@@ -22,6 +22,23 @@ function renderSceneLine(line) {
   return `<li class="md-run-scene-${kind}"><strong>${escapeHtml(role)}</strong><div>${highlightRunbookText(words)}</div></li>`;
 }
 
+function renderScene(scene) {
+  let scripts;
+  if (scene.startsWith('[')) {
+    try { scripts = JSON.parse(scene); } catch { /* 继续显示旧版文本格式。 */ }
+  }
+  if (Array.isArray(scripts) && scripts.every((script) => Array.isArray(script)
+    && typeof script[0] === 'string' && Array.isArray(script[1])
+    && script[1].every((line) => Array.isArray(line) && typeof line[0] === 'string' && typeof line[1] === 'string'))) {
+    return scripts.map(([title, lines]) => `<details class="md-run-reference md-run-scene">
+      <summary>${escapeHtml(title)}</summary><ol>${lines.map(([role, text]) => {
+        const kind = role.startsWith('DM 念') ? 'speak' : role.startsWith('DM ') ? 'cue' : 'player';
+        return `<li class="md-run-scene-${kind}"><strong>${escapeHtml(role)}</strong><div>${highlightRunbookText(text)}</div></li>`;
+      }).join('')}</ol></details>`).join('');
+  }
+  return `<details class="md-run-reference md-run-scene"><summary>小剧场 · 台词与走位</summary><ol>${scene.split('；').map(renderSceneLine).join('')}</ol></details>`;
+}
+
 function renderAudioTrack(track) {
   const [name, encoded, source] = track.split('~');
   const included = encoded && /^[A-Za-z0-9+/]+={0,2}$/.test(encoded);
@@ -41,26 +58,32 @@ export function renderRunbook(rows) {
   const bgm = [...new Set(steps.flatMap((step) => (step[8] || '').split('；').filter(isBgm)))];
   return `<div class="md-runbook-entry"><button type="button" data-run-open>打开现场带本 · ${steps.length} 步</button>
     <dialog class="md-whiteboard-cards md-trace-workspace md-runbook" aria-label="《虚拟游戏》现场带本">
-      <header class="md-trace-heading"><h3>《虚拟游戏》现场带本</h3><button type="button" data-run-new>新开一场</button><button type="button" data-run-close>返回档案</button></header>
-      <nav aria-label="现场步骤">
-        <button type="button" data-run-prev disabled>上一步</button>
-        <select aria-label="跳到步骤">${steps.map(([title], index) => `<option value="${index}">${index + 1}. ${escapeHtml(title)}</option>`).join('')}</select>
-        <button type="button" data-run-next>下一步</button>
-      </nav>
+      <header class="md-trace-heading md-run-header"><h3>《虚拟游戏》现场带本</h3><div><button type="button" data-run-new>新开一场</button><button type="button" data-run-close>返回档案</button></div></header>
+      <div class="md-run-position">
+        <select aria-label="跳到步骤" data-run-select>${steps.map(([title], index) => `<option value="${index}">${index + 1}. ${escapeHtml(title)}</option>`).join('')}</select>
+        <progress aria-label="带本进度" value="1" max="${steps.length}"></progress>
+      </div>
       ${bgm.length ? `<details class="md-run-bgm"><summary>背景音乐 · 独立播放</summary><div class="md-run-bgm-tracks">${bgm.map(renderAudioTrack).join('')}</div></details>` : ''}
       <div class="md-run-body">
         ${steps.map(([title, minutes, say, actions, supplies, check, scene, reference, audio], index) => `<section data-run-step data-minutes="${minutes}"${reference ? ` data-run-reference="${escapeHtml(reference)}"` : ''}${index ? ' hidden' : ''}>
           <h4>${escapeHtml(title)}</h4>
-          ${audio && !audio.split('；').every(isBgm) ? `<details class="md-run-reference md-run-audio"><summary>现场音频</summary>${audio.split('；').filter((track) => !isBgm(track)).map(renderAudioTrack).join('')}</details>` : ''}
           ${Number(minutes) ? `<div class="md-run-timer"><output>${minutes}:00</output><span role="status"></span>
             <button type="button" data-run-clock="toggle">开始</button><button type="button" data-run-clock="add">＋5 分钟</button><button type="button" data-run-clock="reset">重置</button></div>` : ''}
-          <dl><div class="md-run-say"><dt>对玩家说</dt><dd>${highlightRunbookText(say)}</dd></div>
-          <div><dt>DM 操作</dt><dd><ol>${actions.split('；').map((item) => `<li>${highlightRunbookText(item)}</li>`).join('')}</ol></dd></div>
-          <div class="md-run-material"><dt>物料与判定 · 仅 DM 查看</dt><dd>${highlightRunbookText(supplies)}</dd></div>
-          <div class="md-run-check"><dt>进入下一步前</dt><dd>${highlightRunbookText(check)}</dd></div></dl>
-          ${scene ? `<details class="md-run-reference md-run-scene"><summary>小剧场 · 台词与走位</summary><ol>${scene.split('；').map(renderSceneLine).join('')}</ol></details>` : ''}
+          <dl><div class="md-run-say"><dt>对玩家说</dt><dd>${highlightRunbookText(say)}</dd></div></dl>
+          ${scene ? renderScene(scene) : ''}
+          <dl class="md-run-actions"><div><dt>DM 操作</dt><dd><ol>${actions.split('；').map((item) => `<li>${highlightRunbookText(item)}</li>`).join('')}</ol></dd></div></dl>
+          <div class="md-run-resources">
+            <details class="md-run-reference md-run-material"><summary>物料与判定 <small>仅 DM 查看</small></summary><ul>${supplies.split('↵').map((item) => `<li>${highlightRunbookText(item)}</li>`).join('')}</ul></details>
+            ${audio && !audio.split('；').every(isBgm) ? `<details class="md-run-reference md-run-audio"><summary>现场音频</summary>${audio.split('；').filter((track) => !isBgm(track)).map(renderAudioTrack).join('')}</details>` : ''}
+          </div>
+          <dl class="md-run-check"><div><dt>进入下一步前</dt><dd>${highlightRunbookText(check)}</dd></div></dl>
         </section>`).join('')}
       </div>
+      <nav class="md-run-footer" aria-label="现场步骤">
+        <button type="button" data-run-prev disabled>← 上一步</button>
+        <span data-run-count aria-live="polite"></span>
+        <button type="button" data-run-next>下一步 →</button>
+      </nav>
     </dialog></div>`;
 }
 
@@ -167,7 +190,9 @@ export function mountRunbook(host, autoOpen = false, fetchAudio) {
   const audioInputs = [...dialog.querySelectorAll('[data-run-audio]')];
   if (audioInputs.length) mountRunbookAudio(audioInputs, fetchAudio);
   const steps = [...dialog.querySelectorAll('[data-run-step]')];
-  const select = dialog.querySelector('select');
+  const select = dialog.querySelector('[data-run-select]');
+  const progress = dialog.querySelector('progress');
+  const count = dialog.querySelector('[data-run-count]');
   const prev = dialog.querySelector('[data-run-prev]');
   const next = dialog.querySelector('[data-run-next]');
   const opener = entry.querySelector('[data-run-open]');
@@ -209,6 +234,8 @@ export function mountRunbook(host, autoOpen = false, fetchAudio) {
     steps.forEach((step, i) => { step.hidden = i !== target; });
     index = target;
     select.value = String(index);
+    progress.value = index + 1;
+    count.textContent = `${index + 1} / ${steps.length}`;
     prev.disabled = index === 0;
     next.disabled = index === steps.length - 1;
     dialog.querySelector('.md-run-body').scrollTop = 0;
@@ -276,7 +303,7 @@ export function attachRunbookReferences(host, workspaces, { includeLive = true }
     details.addEventListener('toggle', () => {
       if (details.open && details.children.length === 1) render(details);
     });
-    step.append(details);
+    (step.querySelector('.md-run-resources') || step).append(details);
   }
 
   function copyImage(slide, target) {
@@ -311,7 +338,7 @@ export function attachRunbookReferences(host, workspaces, { includeLive = true }
         }
         panel.append(grid);
       }
-      step.querySelector('dl').before(panel);
+      (step.querySelector('.md-run-resources') || step.querySelector('dl')).before(panel);
     }
     if (Number.isInteger(boardStep) && board?.[boardStep - 1]) {
       addReference(step, `本步白板 · 第 ${boardStep} 笔`, (target) => {
