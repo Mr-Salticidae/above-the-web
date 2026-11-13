@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-13",
+  "headline": "Gemini 4 Hydrogen 上线，ElevenLabs 更新语音模型，Nvidia CEO 辞职",
+  "items": [
+    {
+      "title": "Google 发布 Gemini 4 Hydrogen，替代 Flash 系列",
+      "summary": "Google DeepMind 推出新模型 Gemini 4 Hydrogen，用于替代原有的 Flash 系列。独立基准测试显示其表现接近 Claude Sonnet 5.5，且优于此前发布的 Argon 模型。该模型已集成至 Google Search AI Mode 及 Gemini 应用各版本中。对创作者而言，这是日常调用的高性价比主力模型的一次常规换代。",
+      "category": "模型",
+      "source": "Google DeepMind",
+      "url": "https://deepmind.google/blog/introducing-gemini-4-hydrogen",
+      "featured": true
+    },
+    {
+      "title": "ElevenLabs 发布 Scribe v3 语音识别模型",
+      "summary": "ElevenLabs 推出 Scribe v3 及 Scribe v3 Live，主打在背景噪音和多人交叉说话场景下的准确转写，并解决语音 Agent 中途打断用户的问题。第三方基准显示其准确率略高于 OpenAI、Google 和 Microsoft 的同类模型，但推理速度较慢、单价约为后者的两倍。适合对转写质量要求高、能接受更高成本的音视频创作者。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/elevenlabs-scribe-v3-live-uses-conversational-context-to-stop-voice-agents-from-cutting-off-callers-mid-sentence",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 推出 Claude Meetings，支持加入视频会议",
+      "summary": "Anthropic 发布 Claude Meetings 功能，允许 Claude 直接加入 Google Meet 视频通话，并在会议过程中实时生成文档、白板和会议记录。该功能目前面向 Team 和 Enterprise 计划开放 Beta 测试，后续将支持更多会议平台。为团队协作和内容记录提供了一个新的自动化选项。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/claude-meetings-lets-anthropics-ai-join-your-video-calls",
+      "featured": false
+    },
+    {
+      "title": "Hugging Face 发布 3D 生成模型微调指南",
+      "summary": "Hugging Face 发布了一份针对 3D 生成模型的微调（Fine-Tuning）技术指南，系统梳理了相关方法与流程。对于从事 AI 3D 资产生成的创作者，这是一份可直接参考的实践资料。",
+      "category": "研究",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/3d-lora-finetuning",
+      "featured": false
+    },
+    {
+      "title": "GDC 调查：四成游戏开发者已在工作中使用生成式 AI",
+      "summary": "GDC Festival of Gaming 最新年度调查显示，40% 的受访游戏开发者表示在工作中使用生成式 AI 工具，较 2025 年的 36% 有所上升。数据反映出 AI 工具在游戏行业的渗透率仍在稳步提高。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/games/1032085/gdc-festival-of-gaming-annual-survey-ai-layoffs",
+      "featured": false
+    },
+    {
+      "title": "用 AI Agent「发现」玛雅遗址实为乌龙",
+      "summary": "一名 Google 研究员声称借助 AI Agent 团队在墨西哥发现了一处未记录的玛雅遗址，但该遗址去年已在学术期刊上发表过。这一事件引发考古学界批评，也再次提示在使用 AI 辅助调研时核实信息源的必要性。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1032125/ai-agents-maya-site-archeology-discovery",
+      "featured": false
+    },
+    {
+      "title": "黄仁勋辞去 Nvidia CEO，开源 AI 走向存疑",
+      "summary": "Nvidia CEO 黄仁勋因个人丑闻辞职，CFO Colette Kress 暂代职务。此事引发外界对 Nvidia 开源路线的关注，包括其对 Hugging Face 的收购、开放权重模型的支持等。Hugging Face CEO 随后表态将继续推动开源 AI。作为 GPU 生态的核心节点，Nvidia 的管理层变动可能间接影响开源创作工具的长期支持环境。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/12/jensen-huangs-exit-puts-nvidias-support-for-open-source-in-question",
+      "featured": false
+    }
+  ]
+}
