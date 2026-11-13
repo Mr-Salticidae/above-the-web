@@ -17,9 +17,19 @@ export const ROLES = ["admin", "member", "dm"];
 // 任务书从哪来：md = git 里的 markdown（构建期渲染成静态页），web = 发布方在站内新建（正文存库）
 export const TASK_SOURCES = ["md", "web"];
 
+// 客户端事件时间只用来判断「同一项谁更晚」，所以必须夹紧：有人把系统时间调到 2030 年，
+// 那条记录就会永久压住之后所有的真实勾选。往前放宽到 30 天（离线很久的设备回来补传），
+// 往后只给 5 分钟（机器时钟小幅漂移是常态，穿越不是）。
+const CLIENT_AT_MAX_AHEAD_MS = 5 * 60 * 1000;
+const CLIENT_AT_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+
+function clampClientAt(value, serverNow) {
+  const at = Number.isFinite(value) ? Math.floor(value) : serverNow;
+  return Math.min(serverNow + CLIENT_AT_MAX_AHEAD_MS, Math.max(serverNow - CLIENT_AT_MAX_AGE_MS, at));
+}
+
 const SCHEMA = `
-PRAGMA journal_mode = WAL;
-PRAGMA foreign_keys = ON;
+PRAGMA journal_mode = WAL;PRAGMA foreign_keys = ON;
 PRAGMA busy_timeout = 5000;
 
 CREATE TABLE IF NOT EXISTS users (
@@ -187,6 +197,30 @@ CREATE TABLE IF NOT EXISTS dm_invites (
   uses INTEGER NOT NULL DEFAULT 0,
   created_at INTEGER NOT NULL,
   last_used_at INTEGER
+);
+
+-- 学习进度：一行 = 某人某卷的某一项。永不物理删除，取消勾选写 done=0（墓碑），
+-- 别的设备才收得到「这一项被取消了」，而不是永远看不到变化。
+-- 只存「哪一项读到过」，不存任何剧本正文；module_id 是前端手写的 slug，不是数组下标。
+CREATE TABLE IF NOT EXISTS juben_progress (
+  user_id    TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  case_id    TEXT NOT NULL,
+  module_id  TEXT NOT NULL,
+  done       INTEGER NOT NULL DEFAULT 0,
+  client_at  INTEGER NOT NULL,
+  rev        INTEGER NOT NULL,
+  PRIMARY KEY (user_id, case_id, module_id)
+);
+
+CREATE INDEX IF NOT EXISTS juben_progress_rev_idx ON juben_progress (user_id, rev);
+
+-- 每用户一个自增版本号：每次非空写入批次 +1。增量同步的游标靠它，不靠任何一方的时钟
+-- （同一毫秒写两批，用 updated_at 做游标会漏数据；回拨过的客户端时钟更是不可信）。
+CREATE TABLE IF NOT EXISTS juben_sync_state (
+  user_id      TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+  rev          INTEGER NOT NULL DEFAULT 0,
+  last_sync_at INTEGER,
+  updated_at   INTEGER NOT NULL
 );
 `;
 
@@ -574,6 +608,120 @@ export function createDatabase(config) {
     // 返回是否真的删掉了行：调用方据此决定要不要记审计（无行的 no-op 不留痕）
     clearKbMemory(userId) {
       return db.prepare("DELETE FROM kb_memory WHERE user_id = ?").run(userId).changes > 0;
+    },
+
+    // ---------- 剧本学习进度 ----------
+    //
+    // 同步单位是「一个模块」，不是整卷数组：A 机在书房勾了第 1 项、B 机在通勤路上勾了第 3 项，
+    // 整体覆盖必丢一边，逐项合并才是并集。合并规则是 LWW（谁的 client_at 更新听谁的），
+    // 同一毫秒内 done=1 优先——宁可多记一条完成，也别让勾选凭空消失。
+
+    // 没有行时是 0：空库拉取返回 rev:0 / items:[]，客户端不需要区分「没同步过」和「版本 0」。
+    progressRev(userId) {
+      return db.prepare("SELECT rev FROM juben_sync_state WHERE user_id = ?").get(userId)?.rev ?? 0;
+    },
+
+    // since=0 是全量快照；否则只回 rev > since 的行（含墓碑）。
+    pullProgress(userId, since = 0) {
+      const rev = api.progressRev(userId);
+      const from = Number.isFinite(since) && since > 0 ? Math.floor(since) : 0;
+      const rows = db
+        .prepare(
+          `SELECT case_id, module_id, done, client_at FROM juben_progress
+           WHERE user_id = ? AND rev > ?
+           ORDER BY rev, case_id, module_id`,
+        )
+        .all(userId, from);
+      return {
+        rev,
+        items: rows.map((row) => ({
+          caseId: row.case_id,
+          moduleId: row.module_id,
+          done: row.done,
+          at: row.client_at,
+        })),
+        serverTime: now(),
+      };
+    },
+
+    // baseRev 是客户端上次见到的游标：响应一律回 rev > baseRev 的增量，
+    // 这样「A 机取消、B 机同时勾选」的裁决结果能立刻回到发起方，不用等下一轮。
+    mergeProgress(userId, items, { baseRev = 0 } = {}) {
+      const serverNow = now();
+      const from = Number.isFinite(baseRev) && baseRev > 0 ? Math.floor(baseRev) : 0;
+      const list = Array.isArray(items) ? items : [];
+      // 空批次不占版本号：轮询型的调用不该把 rev 一路推高
+      if (!list.length) return { ...api.pullProgress(userId, from), written: 0 };
+
+      const nextRev = api.progressRev(userId) + 1;
+      const read = db.prepare(
+        "SELECT done, client_at FROM juben_progress WHERE user_id = ? AND case_id = ? AND module_id = ?",
+      );
+      const insert = db.prepare(
+        `INSERT INTO juben_progress (user_id, case_id, module_id, done, client_at, rev)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+      );
+      const update = db.prepare(
+        `UPDATE juben_progress SET done = ?, client_at = ?, rev = ?
+         WHERE user_id = ? AND case_id = ? AND module_id = ?`,
+      );
+
+      let written = 0;
+      db.exec("BEGIN");
+      try {
+        for (const item of list) {
+          const at = clampClientAt(item.at, serverNow);
+          const done = item.done ? 1 : 0;
+          const row = read.get(userId, item.caseId, item.moduleId);
+          if (!row) {
+            insert.run(userId, item.caseId, item.moduleId, done, at, nextRev);
+            written += 1;
+            continue;
+          }
+          // 服务端这条更新（或同毫秒下更要紧的一条）：忽略，但整批仍然换版本号，
+          // 让客户端知道「你的写入被处理过了」
+          if (at > row.client_at || (at === row.client_at && done > row.done)) {
+            update.run(done, at, nextRev, userId, item.caseId, item.moduleId);
+            written += 1;
+          }
+        }
+        api.touchProgressState(userId, nextRev, serverNow);
+        db.exec("COMMIT");
+      } catch (error) {
+        db.exec("ROLLBACK");
+        throw error;
+      }
+      return { ...api.pullProgress(userId, from), written };
+    },
+
+    touchProgressState(userId, rev, at) {
+      db.prepare(
+        `INSERT INTO juben_sync_state (user_id, rev, last_sync_at, updated_at)
+         VALUES (?, ?, ?, ?)
+         ON CONFLICT(user_id) DO UPDATE SET
+           rev = excluded.rev, last_sync_at = excluded.last_sync_at, updated_at = excluded.updated_at`,
+      ).run(userId, rev, at, at);
+    },
+
+    // 「清空我的进度」不物理删：给所有 done=1 的行写墓碑并统一换版本号，
+    // 另一台设备下次拉取会跟着归零，不会「这边清了那边又把进度推回来」。
+    // 返回值带 cleared 是因为审计只该记真的清掉了东西的那次。
+    resetProgress(userId) {
+      const serverNow = now();
+      const nextRev = api.progressRev(userId) + 1;
+      db.exec("BEGIN");
+      let cleared = 0;
+      try {
+        cleared = db
+          .prepare("UPDATE juben_progress SET done = 0, rev = ? WHERE user_id = ? AND done = 1")
+          .run(nextRev, userId).changes;
+        api.touchProgressState(userId, nextRev, serverNow);
+        db.exec("COMMIT");
+      } catch (error) {
+        db.exec("ROLLBACK");
+        throw error;
+      }
+      return { rev: nextRev, cleared, serverTime: serverNow };
     },
 
     // ---------- 任务 ----------

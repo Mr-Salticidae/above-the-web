@@ -1327,6 +1327,19 @@ html.rv-on .rv.rv-in { animation: rv-in .65s cubic-bezier(.2, .7, .3, 1) both; }
 .acc-panel h2:first-child { margin-top: 1.8rem; }
 .acc-note { color: var(--ink-soft); font-size: .84rem; line-height: 1.75; margin: .6rem 0 1rem; }
 
+/* 同步徽章：跟在「我的档案库」标题后面，比正文小一号。状态色只换色不动版式，
+   免得「待同步」三个字把标题挤得跳一下。 */
+.acc-sync {
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: var(--sans, inherit); font-size: .66rem; font-weight: 400;
+  letter-spacing: .08em; color: var(--ink-soft); vertical-align: middle;
+  transition: color .15s ease;
+}
+.acc-sync:hover { color: var(--accent); }
+.acc-sync[data-state='pending'] { color: var(--accent); }
+.acc-sync[data-state='error'] { color: var(--accent); text-decoration: underline dotted; }
+.acc-sync[data-state='syncing'] { opacity: .7; cursor: progress; }
+
 .acc-stats {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: .7rem;
   margin-top: 1.6rem;

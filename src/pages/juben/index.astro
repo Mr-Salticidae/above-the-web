@@ -113,7 +113,10 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
                 <p class="juben-kicker">Learning Path</p>
                 <h4 id="learning-title">学习路径</h4>
               </div>
-              <span id="progress-label">0 / {first.modules.length}</span>
+              <div class="juben-learning-status">
+                <span id="progress-label">0 / {first.modules.length}</span>
+                <button type="button" class="juben-sync" id="sync-badge" data-state="guest" hidden>本机记录</button>
+              </div>
             </div>
             <div class="juben-progress-track" id="progress-track" role="progressbar" aria-label="当前剧本学习进度" aria-valuemin="0" aria-valuemax={first.modules.length} aria-valuenow="0">
               <b id="progress-bar"></b>
@@ -542,7 +545,14 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   .juben-learning { margin: 1rem 1.7rem 0; padding: 1.1rem 1.2rem; border-radius: 8px; background: var(--paper-3); }
   .juben-learning-head { display: flex; justify-content: space-between; align-items: center; }
   .juben-learning h4, .juben-quiz h4 { margin: 0; font-family: var(--serif); font-size: 1.05rem; }
-  .juben-learning-head > span { color: var(--case-accent); font-size: .72rem; font-variant-numeric: tabular-nums; }
+  .juben-learning-head > span, .juben-learning-status #progress-label { color: var(--case-accent); font-size: .72rem; font-variant-numeric: tabular-nums; }
+  /* 同步徽章：常显状态而不是弹 toast——勾选是轻动作，不该被打断 */
+  .juben-learning-status { display: flex; flex-direction: column; align-items: flex-end; gap: .25rem; }
+  .juben-sync { padding: 0; border: 0; background: none; color: var(--ink-soft); font: inherit; font-size: .66rem; letter-spacing: .06em; cursor: pointer; transition: color .15s ease; }
+  .juben-sync:hover { color: var(--case-accent); }
+  .juben-sync[data-state='pending'] { color: var(--case-accent); }
+  .juben-sync[data-state='error'] { color: var(--case-accent); text-decoration: underline dotted; }
+  .juben-sync[data-state='syncing'] { color: var(--ink-soft); opacity: .72; cursor: progress; }
   .juben-progress-track { height: 3px; margin: .8rem 0 1rem; background: var(--line); }
   .juben-progress-track b { display: block; width: 0; height: 100%; background: var(--case-accent); transition: width .25s ease; }
   /* 清单行由 JS 运行时创建，拿不到 Astro scoped 属性，必须用 :global() 才能命中 */
@@ -711,7 +721,9 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   // 进度不再自己管 localStorage——统一交给 progress-store（按账号分桶、老数据迁移），
   // 个人中心的档案库读的是同一个仓库，两边不会各存一份。
   import { createProgressStore, GUEST_OWNER } from '../../scripts/progress-store.js';
-  import { getCachedUser, onAuthChange } from '../../scripts/account-core.js';
+  import { createProgressSync, mountBadge } from '../../scripts/progress-sync.js';
+  import { PROGRESS_SYNC } from '../../data/features.js';
+  import { api, getCachedUser, onAuthChange } from '../../scripts/account-core.js';
 
   (() => {
     const dataNode = document.getElementById('juben-data');
@@ -733,13 +745,52 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
 
     const store = createProgressStore({ cases, owner: getCachedUser()?.id || GUEST_OWNER });
     store.boot();
+
+    // ---------- 跨设备同步 ----------
+    // 本地永远先认，网络只是后台对账；徽章常显状态，不弹窗打断。
+    let sync = null;
+    const badge = document.getElementById('sync-badge');
+
+    async function startSync() {
+      if (!PROGRESS_SYNC) return;
+      // 运行时开关以服务端为准：静态站构建期拿不到线上配置，接口 404 / 关掉都退回纯本地
+      let allowed = true;
+      try {
+        const meta = await api('GET', '/meta');
+        allowed = meta?.features?.progressSync !== false;
+      } catch {
+        allowed = true;
+      }
+      if (!allowed) return;
+      sync = createProgressSync(store, { request: api, owner: store.owner });
+      sync.start();
+      if (badge) {
+        badge.hidden = false;
+        mountBadge(badge, sync);
+      }
+      // 断网回来、从后台切回来都补一轮；不合批等待，直接推
+      window.addEventListener('online', () => sync && sync.syncNow());
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') sync.syncNow();
+      });
+    }
+    startSync();
+
     // 登录 / 登出 / 切号都重绑桶：上一版是全站一把钥匙，切号会看到别人的勾选。
+    // 顺序有讲究：先让同步层把上一个账号的待推项归到它自己的队列，再换仓库的桶。
     onAuthChange((user) => {
+      if (sync) sync.setOwner(user ? user.id : GUEST_OWNER);
       store.setOwner(user ? user.id : GUEST_OWNER);
-      if (user) store.adoptGuest(); // 未登录时勾的，进门就并进账号
+      if (user) {
+        store.adoptGuest(); // 未登录时勾的，进门就并进账号
+        if (sync) sync.note(); // 并进来的那批也要推上去
+      }
     });
     // 别的标签页或登录态改了才重画；自己刚点的由点击路径就地更新，避免焦点丢失。
     store.subscribe(({ reason }) => {
+      // 勾选 / 清空 / 并入都意味着「本机有新意图」，交给同步层排队。
+      // 'remote' 是服务端自己下发的，不能反手再推一次（会变成乒乓）。
+      if (sync && reason !== 'remote') sync.note();
       if (reason === 'toggle') return;
       renderModules(byId.get(selected));
       syncCardProgress();

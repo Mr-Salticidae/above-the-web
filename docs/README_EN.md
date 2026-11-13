@@ -51,7 +51,7 @@ Four rules hold throughout:
 | Becoming a Prompt Master | `/prompt-master/` | [becoming-a-prompt-master](https://github.com/Mr-Salticidae/becoming-a-prompt-master) mirrored into `public/` at build time | A beginner-friendly series that breaks down prompts, one "battle" theme per episode |
 | Plays | Home page `#plays` | `src/data/games.js` plus a landing page in `public/<slug>/` | Small vibe-coded works: play online, or download a free Windows tool |
 | Music | `/music/` | `src/data/music/manifest.json`. Audio lives on the server under `/music/` | Songs made with AI. A player sits at the bottom of every page |
-| Script Study Room | `/juben/` | Public metadata in `src/data/juben.js`; the DM archive is pulled from the private `juben-dm-lab` on demand by the server | Search and filter scripts, track study progress, self-quiz and compare structure across scripts. DMs holding an invite code also get the full breakdown: opening flow, character scripts, clues, endings |
+| Script Study Room | `/juben/` | Public metadata in `src/data/juben.js`; the DM archive is pulled from the private `juben-dm-lab` on demand by the server | Search and filter scripts, track study progress (synced across devices), self-quiz and compare structure across scripts. DMs holding an invite code also get the full breakdown: opening flow, character scripts, clues, endings |
 | Commissions | `/tasks/` | `src/data/tasks/*.md`, or created in the admin console. State lives in the database | **Parked for now**: left over from previous work. It no longer appears in the nav or on the home page, and the URL shows a short note instead; the data, API and admin console are untouched |
 | About | `/about/` | The page itself. Counts for the seven sections are computed at build time | The owner, house rules, timeline, how it's built, licenses and contact |
 
@@ -122,6 +122,7 @@ Build-time environment variables:
 | `SITE_URL` | `https://mr-salticidae.github.io` | Site origin, used for canonical and other absolute URLs |
 | `PUBLIC_ATW_API` | empty | Account API URL, including `/api` (`http://127.0.0.1:3200/api` when working locally). When unset, the front end falls back to `/api/` on the main domain |
 | `PUBLIC_TASKS_ENABLED` | off | Switch for the commissions section. Off by default; `1` restores the nav entry, the home page teaser and the detail pages, and `/tasks/` stops being a placeholder |
+| `PUBLIC_PROGRESS_SYNC` | on | Cross-device study progress. `0` falls back to local only (server-side `ATW_PROGRESS_SYNC=0` does the same without a rebuild) |
 | `TOY_NEWS` / `NEWS_SITE` | empty | Set to `1` for the corresponding news-only build variant. The scripts set these, so you rarely pass them by hand |
 
 ## Repository layout
@@ -195,6 +196,12 @@ Each script is published in two layers, separated by an invite gate:
 - **Two kinds of invite code, don't mix them.** The registration code answers "may I create an account" (controlled by `meta.requiresInvite`); the DM code answers "may I read the answers". The latter is redeemed inside the study room and has nothing to do with signing up.
 - **Bodies only travel through the server.** The client never touches `juben-dm-lab`. The server lists the tree with a read-only token, reads raw markdown on demand, then groups documents in DM reading order (overview / study pack / character scripts / clue cards / opening materials…) and sorts volumes as 第一册…第五册, keeping Chinese directory names and nested paths intact.
 - **Setup**: add a `JUBEN_REPO_TOKEN` secret to this repository (a fine-grained PAT with `Contents: Read` on `juben-dm-lab` only). `deploy-platform.yml` merges it into the server's `.env` as `ATW_JUBEN_TOKEN`. Without it the site still deploys; the archive just reports "not configured".
+- **Progress sync across devices**: `src/scripts/progress-sync.js` is the network layer; the store itself never touches `fetch`. A checkbox writes locally first, then queues (the queue also lives in localStorage, bucketed per account), batches for 1.5s and pushes. Offline, a closed tab or a 5xx never loses a write — the next toggle, reconnect, tab focus or badge click resends it.
+  - Server side: `juben_progress` (one row per user × script × module; unticking writes a `done=0` tombstone, rows are never deleted) and `juben_sync_state` (one auto-incrementing `rev` per user, used as the delta cursor so no clock is trusted). Endpoints: `GET` / `POST` / `DELETE /api/juben/progress`.
+  - Merge is per-item LWW: later `client_at` wins, `done=1` wins on a tie; incoming timestamps are clamped to `[now-30d, now+5m]` so a client with a clock set to 2030 cannot pin an item forever.
+  - Privacy: only the token owner's rows, no `userId` parameter, no admin view of anyone's progress; the audit log records resets only.
+  - Readers (`member`) can sync too — the module list is public and the DM gate only covers script bodies. A badge shows the state (local / syncing / synced / N pending / failed, click to retry) instead of toasts.
+  - Rollout switch: `PUBLIC_PROGRESS_SYNC=0` at build time, or `ATW_PROGRESS_SYNC=0` on the server (the front end follows `/api/meta`, so one env var is enough — no rebuild).
 
 ## Deployment
 

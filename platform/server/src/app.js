@@ -45,6 +45,39 @@ function clean(value) {
   return String(value ?? "").trim();
 }
 
+// 进度的两个 ID 都是前端手写的 slug（见 src/data/juben.js 的台账测试）：
+// 小写、数字、连字符，不许 ../、不许大写、不许超长——它们会直接进查询条件与本地键名。
+const PROGRESS_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;
+const PROGRESS_MAX_ITEMS = 500;
+
+// 整批拒绝而不是「挑好的收」：半批写进去，客户端会以为全成功了，
+// 于是把坏的永久留在队列里，下次重推还是半批。
+function normalizeProgressItems(raw) {
+  if (raw === undefined || raw === null) return [];
+  if (!Array.isArray(raw)) throw new HttpError(422, "INVALID_ITEMS", "items 必须是数组");
+  if (raw.length > PROGRESS_MAX_ITEMS) {
+    throw new HttpError(413, "TOO_MANY_ITEMS", `一次最多同步 ${PROGRESS_MAX_ITEMS} 项`);
+  }
+  const byKey = new Map();
+  for (const entry of raw) {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
+      throw new HttpError(422, "INVALID_ITEM", "进度项格式不对");
+    }
+    const caseId = clean(entry.caseId);
+    const moduleId = clean(entry.moduleId);
+    if (!PROGRESS_ID_PATTERN.test(caseId) || !PROGRESS_ID_PATTERN.test(moduleId)) {
+      throw new HttpError(422, "INVALID_ITEM", "进度项的卷或模块编号不合法");
+    }
+    const at = Number.isFinite(entry.at) ? Math.floor(entry.at) : Date.now();
+    const item = { caseId, moduleId, done: entry.done ? 1 : 0, at };
+    // 同批里的同一项只留时间更晚的那条（客户端已去重，这是兜底）
+    const key = `${caseId}/${moduleId}`;
+    const existing = byKey.get(key);
+    if (!existing || at >= existing.at) byKey.set(key, item);
+  }
+  return [...byKey.values()];
+}
+
 function corsHeaders(config, request) {
   const origin = clean(request.headers.origin).replace(/\/$/, "");
   if (!origin || !config.corsOrigins.includes(origin)) return {};
@@ -131,6 +164,32 @@ function checkAiQuota(userId, limit, message = "AI 辅助这一小时用得有�
   if (record.count > limit) {
     throw new HttpError(429, "AI_QUOTA", message);
   }
+}
+
+// 进度推送的令牌桶：稳态 1 批 / 2 秒，桶里最多攒 10 批。
+// 勾选是连点行为（一口气勾完 4 项会合批成一次），所以突发额度要够；
+// 但一个人不该能拿这个接口当写放大用，稳态必须压住。
+const PROGRESS_RATE_PER_SECOND = 0.5;
+const PROGRESS_BURST = 10;
+const progressBuckets = new Map();
+
+function checkProgressRate(userId) {
+  const ts = Date.now();
+  if (progressBuckets.size > 1000) {
+    for (const [key, bucket] of progressBuckets) {
+      if (ts - bucket.at > 60_000) progressBuckets.delete(key);
+    }
+  }
+  const bucket = progressBuckets.get(userId) || { tokens: PROGRESS_BURST, at: ts };
+  const refilled = bucket.tokens + ((ts - bucket.at) / 1000) * PROGRESS_RATE_PER_SECOND;
+  bucket.tokens = Math.min(PROGRESS_BURST, refilled);
+  bucket.at = ts;
+  if (bucket.tokens < 1) {
+    progressBuckets.set(userId, bucket);
+    throw new HttpError(429, "TOO_MANY_SYNC", "同步太频繁了，歇一秒再勾");
+  }
+  bucket.tokens -= 1;
+  progressBuckets.set(userId, bucket);
 }
 
 // 模型给的东西一律当草稿：截到字段上限、日期不合法就丢、列表限长。
@@ -495,6 +554,9 @@ export function createApplication(config, log = console, deps = {}) {
           knowledgeChat: assistant.enabled,
           taskStatuses: TASK_STATUSES,
           roles: ROLES,
+          // 运行时开关：前端以这里为准（静态站构建期拿不到运行时配置）。
+          // 关掉只是让前端别调进度接口，接口本身仍在，纯本地跑。
+          features: { progressSync: config.juben.progressSync },
         });
         return;
       }
@@ -1234,6 +1296,49 @@ export function createApplication(config, log = console, deps = {}) {
         if (!doc) throw new HttpError(404, "DOC_NOT_FOUND", "没有这一篇");
         reply(200, { configured: true, doc });
         return;
+      }
+
+      // ---------- 剧本学习进度 ----------
+      //
+      // 模块清单本身是公开内容（/juben/ 公开页就能看到），进度只是「我读到哪」，
+      // 所以这里只 authenticate 不 requireDm——DM 门槛只管正文（manifest 与 doc）。
+      // 一律只认 auth.user.id 自己的行，接口不接受 userId 参数：换账号不串数据，
+      // 也没有「查别人学到哪」的口子。
+      if (url.pathname === "/api/juben/progress") {
+        const { user } = authenticate(request);
+
+        if (request.method === "GET") {
+          const rawSince = Number(url.searchParams.get("since") || 0);
+          reply(200, database.pullProgress(user.id, Number.isFinite(rawSince) ? rawSince : 0));
+          return;
+        }
+
+        if (request.method === "POST") {
+          checkProgressRate(user.id);
+          const body = await readJson(request);
+          const items = normalizeProgressItems(body.items);
+          const baseRev = Number.isFinite(body.baseRev) ? Math.floor(body.baseRev) : 0;
+          reply(200, database.mergeProgress(user.id, items, { baseRev }));
+          return;
+        }
+
+        // 清空是危险操作：写墓碑而不是删行，别的设备拉一次就跟着归零。
+        // 审计只记这一件事，逐次勾选不记——日志不该变成行为流水。
+        if (request.method === "DELETE") {
+          checkProgressRate(user.id);
+          const result = database.resetProgress(user.id);
+          if (result.cleared > 0) {
+            database.createAuditLog({
+              actorUserId: user.id,
+              action: "juben.progress_reset",
+              targetType: "user",
+              targetId: user.id,
+              details: { cleared: result.cleared },
+            });
+          }
+          reply(200, { rev: result.rev, items: [], serverTime: result.serverTime });
+          return;
+        }
       }
 
       // ---------- 管理台 ----------

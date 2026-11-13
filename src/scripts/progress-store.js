@@ -12,7 +12,8 @@
 //   - 取消勾选写 d:0 而不是删行——将来同步要靠这个「墓碑」把取消传播出去；
 //   - 老数据在首次加载时就地迁移，迁移完留一份 backup 不删。
 //
-// P0 只有本地：迁移、分桶、订阅。P1 会在这一层之上接 pull/push，调用方不用再改。
+// P0 是本地：迁移、分桶、订阅。P1 在这一层上加了 applyRemote / setRev / takeDirty，
+// 网络与队列都在 src/scripts/progress-sync.js 里，这个文件仍然不碰 fetch。
 
 export const GUEST_OWNER = 'guest';
 export const SCHEMA_VERSION = 2;
@@ -65,6 +66,13 @@ function newerOf(a, b) {
   return b.d > a.d ? b : a;
 }
 
+// 与服务端完全同一套比较规则：先比时间，同刻比 d（完成优先）。
+// 用正负号而不是返回对象，是因为 applyRemote 要区分「本机更新」和「两边一致」。
+function compareItems(a, b) {
+  if (a.t !== b.t) return a.t - b.t;
+  return a.d - b.d;
+}
+
 /**
  * @param {object} options
  * @param {Array} options.cases        剧本目录：[{ id, modules: [{ slug }] }]
@@ -82,6 +90,8 @@ export function createProgressStore(options = {}) {
   let owner = options.owner || GUEST_OWNER;
   let state = emptyState();
   let memory = null; // storage 不可用时的退路
+  // 「本机改过、还没同步上去」的项。同步层取走后再推，失败会由它自己重新排队。
+  const dirty = new Set();
 
   const keyFor = (who) => `${KEY_PREFIX}${who}`;
 
@@ -265,6 +275,8 @@ export function createProgressStore(options = {}) {
       const incoming = Object.keys(guest.items).length;
       if (!incoming) return 0;
       mergeInto(state.items, guest.items);
+      // 并进来的这批要推给账号，否则换个设备就「刚才勾的怎么没了」
+      for (const key of Object.keys(guest.items)) dirty.add(key);
       persist();
       writeRaw(keyFor(GUEST_OWNER), null);
       emit('adopt');
@@ -296,6 +308,7 @@ export function createProgressStore(options = {}) {
       const key = itemKey(caseId, moduleId);
       const next = !api.isDone(caseId, moduleId);
       state.items[key] = { d: next ? 1 : 0, t: now() };
+      dirty.add(key);
       persist();
       emit('toggle');
       return next;
@@ -306,7 +319,9 @@ export function createProgressStore(options = {}) {
       const slugs = catalog.get(caseId) || [];
       const stamp = now();
       for (const slug of slugs) {
-        state.items[itemKey(caseId, slug)] = { d: 0, t: stamp };
+        const key = itemKey(caseId, slug);
+        state.items[key] = { d: 0, t: stamp };
+        dirty.add(key);
       }
       persist();
       emit('reset');
@@ -315,8 +330,59 @@ export function createProgressStore(options = {}) {
     /** 整桶丢弃（换设备重置 / 测试用），本地与存储一起清。 */
     clearAll() {
       state = emptyState();
+      dirty.clear();
       persist();
       emit('clear');
+    },
+
+    /**
+     * 合并服务端下发的增量。规则与服务端一致：先比 t，同刻 d=1 优先。
+     * 返回 { applied, kept }：
+     *   applied —— 服务端赢了，本地已被覆盖（同步层拿它推进「已知」）
+     *   kept    —— 本机这条更晚，服务端那份是旧的；同步层要把它推回去
+     */
+    applyRemote(items) {
+      const applied = [];
+      const kept = [];
+      let changed = false;
+      for (const item of items || []) {
+        if (!item || typeof item.caseId !== 'string' || typeof item.moduleId !== 'string') continue;
+        const key = itemKey(item.caseId, item.moduleId);
+        const incoming = { d: item.done ? 1 : 0, t: Number(item.at) || 0 };
+        const local = state.items[key];
+        if (!local) {
+          state.items[key] = incoming;
+          applied.push(key);
+          changed = true;
+          continue;
+        }
+        const order = compareItems(local, incoming);
+        if (order > 0) kept.push(key);
+        else if (order < 0) {
+          state.items[key] = incoming;
+          applied.push(key);
+          changed = true;
+        }
+      }
+      if (changed) {
+        persist();
+        emit('remote');
+      }
+      return { applied, kept };
+    },
+
+    /** 记下服务端版本号（客户端游标，只用来做增量拉取）。 */
+    setRev(value) {
+      if (!Number.isFinite(value) || value === state.rev) return;
+      state.rev = value;
+      persist();
+    },
+
+    /** 取走待同步的键（同步层每个批次取一次，失败时由队列兜底）。 */
+    takeDirty() {
+      const keys = [...dirty];
+      dirty.clear();
+      return keys;
     },
 
     subscribe(listener) {

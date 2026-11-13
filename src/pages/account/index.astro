@@ -162,6 +162,8 @@ const progressSeed = jubenCases.map((item) => ({
     TASK_STATUS_LABEL,
   } from '../../scripts/account-core.js';
   import { createProgressStore, GUEST_OWNER } from '../../scripts/progress-store.js';
+  import { createProgressSync, mountBadge } from '../../scripts/progress-sync.js';
+  import { PROGRESS_SYNC } from '../../data/features.js';
 
   const CLAIM_LABEL = {
     pending: '等发布方定人',
@@ -251,10 +253,12 @@ const progressSeed = jubenCases.map((item) => ({
   })();
   // 与 /juben/ 共用同一个仓库（src/scripts/progress-store.js），按账号分桶：
   // 这台上切过几个号，各看各的。owner 在 renderHome 里按当前用户重绑。
-  // 目前仍是纯本地，换设备不跟着走，所以文案要把这件事说清楚。
+  // 同步层（progress-sync.js）在页面底部初始化，勾选与进度条都还读本地，网络只是对账。
   const progress = createProgressStore({ cases: CASES, owner: GUEST_OWNER });
   progress.boot();
   let inviteInfo = null;
+  let sync = null;
+  let badgeOff = null;
 
   function vaultBlock() {
     const rows = CASES.map((item) => {
@@ -280,10 +284,14 @@ const progressSeed = jubenCases.map((item) => ({
         </a>`,
       )
       .join('');
+    // 有没有同步层决定这句话怎么说：别在没有的能力上写承诺
+    const syncNote = sync && sync.enabled
+      ? '进度跟着账号走：换台设备登录同一个账号，勾选原样接着读。'
+      : '进度记在这台机器上的这个账号里，换设备暂时不跟着走。';
 
     return `<section class="acc-home-block">
-        <h2>我的档案库 <a class="acc-home-more" href="${url('juben/')}">进档案库 →</a></h2>
-        <p class="acc-note">进度记在这台机器上的这个账号里，换设备暂时不跟着走。点卷名直接从那一卷接着读。</p>
+        <h2>我的档案库 <button class="acc-sync" type="button" id="acc-sync-badge" hidden>本机记录</button> <a class="acc-home-more" href="${url('juben/')}">进档案库 →</a></h2>
+        <p class="acc-note">${syncNote}点卷名直接从那一卷接着读。</p>
         <div class="acc-vault-total">
           <b>${pctAll}%</b>
           <span>全部学习项完成 · ${doneAll}/${totalAll}</span>
@@ -321,9 +329,20 @@ const progressSeed = jubenCases.map((item) => ({
     if (!host) return;
     const dm = isDm(user);
     // 先绑到本人桶：老版本那把全站共用的钥匙，切号会让两个账号看见彼此。
+    // 同步层要排在仓库之前换人，否则上一个账号的待推项会被记到新账号名下。
+    if (sync) sync.setOwner(user.id || GUEST_OWNER);
     progress.setOwner(user.id || GUEST_OWNER);
     progress.adoptGuest(); // 未登录时在剧本研究室勾的，登录后并进来
+    if (sync) sync.note();
     host.innerHTML = dm ? vaultBlock() : readerBlock();
+    if (dm && sync) {
+      const badge = host.querySelector('#acc-sync-badge');
+      if (badge) {
+        badge.hidden = false;
+        badgeOff?.();
+        badgeOff = mountBadge(badge, sync);
+      }
+    }
     if (dm && !inviteInfo) {
       api('GET', '/dm/invite')
         .then((result) => {
@@ -601,5 +620,27 @@ const progressSeed = jubenCases.map((item) => ({
     loadSessions();
   }
 
-  boot();
+  // 进度跨设备同步：本地先认，网络只是对账。开关以服务端 /api/meta 为准，
+  // 接口不在（旧版部署）或被人为关掉都静默退回纯本地，页面上看不出少了一块。
+  async function startSync() {
+    if (!PROGRESS_SYNC || !me) return;
+    let allowed = true;
+    try {
+      const meta = await api('GET', '/meta');
+      allowed = meta?.features?.progressSync !== false;
+    } catch {
+      allowed = true;
+    }
+    if (!allowed) return;
+    sync = createProgressSync(progress, { request: api, owner: progress.owner });
+    sync.start();
+    // 文案与徽章都要按「现在有同步了」重画一遍
+    renderHome(me);
+    window.addEventListener('online', () => sync && sync.syncNow());
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible' && sync) sync.syncNow();
+    });
+  }
+
+  boot().finally(startSync);
 </script>

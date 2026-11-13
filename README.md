@@ -47,7 +47,7 @@
 | 成为 Prompt 大师 | `/prompt-master/` | 构建时镜像 [becoming-a-prompt-master](https://github.com/Mr-Salticidae/becoming-a-prompt-master) 进 `public/` | 面向小白的 prompt 拆解连载，每期一个 battle 主题 |
 | 可玩 | 首页 `#plays` | `src/data/games.js` + `public/<作品>/` 落地页 | vibe coding 小作品：在线可玩，或免费下载的 Windows 小工具 |
 | 音乐 | `/music/` | `src/data/music/manifest.json`；音频存服务器 `/music/` | AI 协作创作的歌，全站底部有播放器 |
-| 剧本研究室 | `/juben/` | 公开元数据在 `src/data/juben.js`；DM 档案库由服务端从私有 `juben-dm-lab` 按需拉取 | 可搜索筛选、记录学习进度（按账号存在本机）、复述自测与跨本结构对比；持邀请码的 DM 另开一套完整拆解档案（开本流程、角色剧本、线索、结局） |
+| 剧本研究室 | `/juben/` | 公开元数据在 `src/data/juben.js`；DM 档案库由服务端从私有 `juben-dm-lab` 按需拉取 | 可搜索筛选、记录学习进度（跟着账号跨设备同步）、复述自测与跨本结构对比；持邀请码的 DM 另开一套完整拆解档案（开本流程、角色剧本、线索、结局） |
 | 任务书 | `/tasks/` | `src/data/tasks/*.md`，或管理台直接新建；状态归数据库 | **暂时收起**：上一份工作的遗留，导航与首页都不再出现，直连给一页说明；数据、接口、管理台原样留着 |
 | 关于 | `/about/` | 页面本身；各版块的计数构建期现算 | 站长、规矩、时间线、制作说明、许可与联系方式 |
 
@@ -118,6 +118,7 @@ cd platform/server && npm run dev
 | `SITE_URL` | `https://mr-salticidae.github.io` | 站点根域，生成 canonical 等绝对地址 |
 | `PUBLIC_ATW_API` | 空 | 账号 API 地址（含 `/api`，本地调试填 `http://127.0.0.1:3200/api`）；不设时前端回落到主域 `/api/` |
 | `PUBLIC_TASKS_ENABLED` | 关 | 任务书版块的开关。默认收起；传 `1` 恢复导航、首页速览与详情页，`/tasks/` 也就不再是暂停说明页 |
+| `PUBLIC_PROGRESS_SYNC` | 开 | 学习进度跨设备同步。传 `0` 退回纯本地（服务端 `ATW_PROGRESS_SYNC=0` 也能达到同样效果，且无需重新构建） |
 | `TOY_NEWS` / `NEWS_SITE` | 空 | 置 `1` 进入对应的只带快讯的构建变体（由脚本设置，一般不用手动传） |
 
 ## 仓库结构
@@ -193,7 +194,12 @@ cd platform/server && npm run dev
 - **配置**：给本仓库加 secret `JUBEN_REPO_TOKEN`（fine-grained PAT，只授 `juben-dm-lab` 的 `Contents: Read`），`deploy-platform.yml` 会把它合并进服务器 `.env` 的 `ATW_JUBEN_TOKEN`。不配也能上线，只是档案库显示「内容通道未配置」。
 - **学习进度**：唯一入口是 `src/scripts/progress-store.js`，`/juben/` 与个人中心都只经它读写。进度按 `${caseId}/${moduleSlug}` 记，与模块顺序无关；按账号分桶（`atw-juben-progress-v2:<userId>`，未登录是 `:guest`，登录时并入账号），所以同一浏览器切号不会串。老版本的 `atw-juben-progress-v1`（存的是下标数组）在首次加载时就地迁成 slug，原文留一份 `-v1-backup`。取消勾选写 `d:0` 墓碑而不是删行，为跨设备同步留好语义。
   - **slug 是进度的身份证**：`juben.js` 每个模块都有 `slug`，`test/juben.test.mjs` 里有一份写死的台账，改 slug 或删模块会让 CI 变红——那正是「有人在让老进度失效」的信号。
-  - 目前仍是纯本机，换设备不跟随。跨设备同步的分阶段计划见 [`docs/PROGRESS_SYNC_PLAN.md`](docs/PROGRESS_SYNC_PLAN.md)。
+- **跨设备同步**：`src/scripts/progress-sync.js` 是网络层，仓库本身不碰 `fetch`。勾选先落本地再排队（队列也在 localStorage，按账号分桶），1.5 秒合批后推送；断网、关标签页、服务端 5xx 都不丢写，恢复后由「勾选 / 网络恢复 / 切回标签页 / 点徽章」任一动作补传。
+  - 服务端三张表两张：`juben_progress`（一行 = 某人某卷的某一项，取消勾选写 `done=0` 墓碑，永不物理删）、`juben_sync_state`（每用户一个自增 `rev`，做增量游标，不依赖任何一方的时钟）。接口是 `/api/juben/progress` 的 GET / POST / DELETE。
+  - 合并是逐项 LWW：`client_at` 大者赢，同刻 `done=1` 优先；客户端时钟写库前夹到 `[now-30d, now+5m]`，免得有人把系统时间调到 2030 年就永久压住别人。
+  - 隐私：只认 token 本人的行，接口不接受 `userId` 参数；管理台不提供「查看某人进度」，审计只在「清空」时记一笔。
+  - 读者（`member`）也能同步——模块清单本来就公开，DM 门槛只管正文。徽章常显状态（本机记录 / 同步中 / 已同步 / 待同步 N 项 / 失败可重试），不弹 toast 打断勾选。
+  - 开关：构建期 `PUBLIC_PROGRESS_SYNC=0` 或服务端 `ATW_PROGRESS_SYNC=0`（前端以 `/api/meta` 为准，一个环境变量就能止血，不用重发前端）。分阶段计划与冲突矩阵见 [`docs/PROGRESS_SYNC_PLAN.md`](docs/PROGRESS_SYNC_PLAN.md)。
 
 ## 部署
 

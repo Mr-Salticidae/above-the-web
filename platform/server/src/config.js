@@ -121,6 +121,9 @@ export function getConfig(env = process.env) {
       branch: String(env.ATW_JUBEN_BRANCH || "main").trim(),
       // 内容清单的内存缓存 TTL（分钟）。兑换/阅读高峰不用每次都打 GitHub。
       cacheTtlMinutes: positiveInteger(env.ATW_JUBEN_CACHE_TTL_MINUTES, 10),
+      // 学习进度跨设备同步的总闸。接口无论如何都在（先发服务端、再发前端），
+      // 这里关掉只是告诉前端「别调了，纯本地跑」——出问题一个环境变量就能退回去。
+      progressSync: truthy(env.ATW_PROGRESS_SYNC, true),
     },
   };
 }
