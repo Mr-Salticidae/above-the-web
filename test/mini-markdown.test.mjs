@@ -51,6 +51,15 @@ test('逐笔白板用独立工作区，步骤可跳转，说明与整图在同�
   assert.match(html, /md-whiteboard-pan[\s\S]*?md-trace-notes[\s\S]*?照着画[\s\S]*?更新依据/);
 });
 
+test('案件工作区使用示意图与文字证据，并隔离公开渲染', () => {
+  const markdown = ['```case-workspace', '旧案|先问谁？|本轮判断|手册 §9|PHN2Zy8+|物证 → <时间>', '```'].join('\n');
+  assert.doesNotMatch(renderMarkdown(markdown), /<dialog/);
+  const html = renderMarkdown(markdown, { whiteboardImages: true });
+  assert.match(html, /md-case-workspace/);
+  assert.match(html, /alt="物证 → &lt;时间&gt;"/);
+  assert.match(html, /先问玩家[\s\S]*核对证据[\s\S]*本轮结论/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

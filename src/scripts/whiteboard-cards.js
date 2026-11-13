@@ -2,24 +2,26 @@ import { escapeHtml } from './account-core.js';
 
 export function renderWhiteboardCards(rows, mode = 'board') {
   const isCase = mode === 'case';
-  const isTrace = mode === 'trace';
+  const isCaseWorkspace = mode === 'case-workspace';
+  const isWorkspace = mode === 'trace' || isCaseWorkspace;
   const cards = rows.map((row) => row.split('|'));
-  if (!cards.length || cards.some(([title, timing, update, evidence, image, extra]) =>
+  if (!cards.length || cards.some(([title, timing, update, evidence, image, chain, extra]) =>
     !title || !timing || !update || !evidence || !image || extra !== undefined ||
+    (isCaseWorkspace ? !chain : chain !== undefined) ||
     (!isCase && (image.length % 4 !== 0 || !/^[A-Za-z0-9+/]+={0,2}$/.test(image)))
   )) return '<p>卡片暂时无法显示，请参考下方正文。</p>';
 
-  const slides = cards.map(([title, timing, update, evidence, image], index) => isTrace ? `
+  const slides = cards.map(([title, timing, update, evidence, image, chain], index) => isWorkspace ? `
     <section class="md-trace-slide" data-whiteboard-slide${index ? ' hidden' : ''}>
       <div class="md-whiteboard-pan" tabindex="0" aria-label="当前白板图，放大后可滚动">
-        <img src="data:image/svg+xml;base64,${image}" alt="第 ${index + 1} 步的完整白板，本步新增或改写处为紫色" decoding="async" />
+        <img src="data:image/svg+xml;base64,${image}" alt="${isCaseWorkspace ? escapeHtml(chain) : `第 ${index + 1} 步的完整白板，本步新增或改写处为紫色`}" decoding="async" />
       </div>
       <div class="md-trace-notes" tabindex="0" aria-label="本步说明">
         <h4>${escapeHtml(title)}</h4>
         <dl>
-          <div><dt>动笔时机</dt><dd>${escapeHtml(timing)}</dd></div>
-          <div><dt>照着画</dt><dd>${escapeHtml(update)}</dd></div>
-          <div><dt>更新依据</dt><dd>${escapeHtml(evidence)}</dd></div>
+          <div><dt>${isCaseWorkspace ? '先问玩家' : '动笔时机'}</dt><dd>${escapeHtml(timing)}</dd></div>
+          <div><dt>${isCaseWorkspace ? '核对证据' : '照着画'}</dt><dd>${escapeHtml(isCaseWorkspace ? evidence : update)}</dd></div>
+          <div><dt>${isCaseWorkspace ? '本轮结论' : '更新依据'}</dt><dd>${escapeHtml(isCaseWorkspace ? update : evidence)}</dd></div>
         </dl>
       </div>
     </section>` : `
@@ -32,21 +34,22 @@ export function renderWhiteboardCards(rows, mode = 'board') {
       <p><strong>${isCase ? '本轮结论' : '本阶段更新'}</strong>　${escapeHtml(update)}</p>
       <p><strong>${isCase ? '核对依据' : '更新依据'}</strong>　${escapeHtml(evidence)}</p>
     </section>`).join('');
-  if (isTrace) {
+  if (isWorkspace) {
+    const heading = isCaseWorkspace ? '《虚拟游戏》案件复盘' : '《虚拟游戏》逐笔白板';
     const options = cards.map(([title], i) => `<option value="${i}">${i + 1}. ${escapeHtml(title)}</option>`).join('');
     return `<div class="md-trace-entry">
-      <button type="button" data-whiteboard-open>打开逐笔白板 · ${cards.length} 步</button>
-      <dialog class="md-whiteboard-cards md-trace-workspace" aria-label="《虚拟游戏》逐笔白板">
+      <button type="button" data-whiteboard-open>打开${isCaseWorkspace ? '案件复盘' : '逐笔白板'} · ${cards.length} ${isCaseWorkspace ? '张' : '步'}</button>
+      <dialog class="md-whiteboard-cards md-trace-workspace${isCaseWorkspace ? ' md-case-workspace' : ''}" aria-label="${heading}">
         <header class="md-trace-heading">
-          <div><h3>《虚拟游戏》逐笔白板</h3><p>紫色是本步新增或改写的内容</p></div>
+          <div><h3>${heading}</h3><p>${isCaseWorkspace ? '沿箭头复盘证据，图中人物与物品为示意' : '紫色是本步新增或改写的内容'}</p></div>
           <button type="button" data-whiteboard-close>返回档案</button>
         </header>
-        <nav class="md-trace-nav" aria-label="白板步骤">
-          <button type="button" data-whiteboard-prev disabled>上一步</button>
-          <select data-whiteboard-select aria-label="跳到步骤">${options}</select>
+        <nav class="md-trace-nav" aria-label="${isCaseWorkspace ? '案件卡片' : '白板步骤'}">
+          <button type="button" data-whiteboard-prev disabled>${isCaseWorkspace ? '上一张' : '上一步'}</button>
+          <select data-whiteboard-select aria-label="${isCaseWorkspace ? '跳到案件' : '跳到步骤'}">${options}</select>
           <span data-whiteboard-count aria-live="polite">1 / ${cards.length}</span>
-          <button type="button" data-whiteboard-next${cards.length === 1 ? ' disabled' : ''}>下一步</button>
-          <button type="button" data-whiteboard-zoom aria-pressed="false">放大白板</button>
+          <button type="button" data-whiteboard-next${cards.length === 1 ? ' disabled' : ''}>${isCaseWorkspace ? '下一张' : '下一步'}</button>
+          <button type="button" data-whiteboard-zoom aria-pressed="false">${isCaseWorkspace ? '放大示意图' : '放大白板'}</button>
         </nav>
         <div class="md-trace-stage">${slides}</div>
       </dialog>
@@ -75,13 +78,14 @@ export function mountWhiteboardCards(host, { openTrace = false } = {}) {
       opener.addEventListener('click', open);
       deck.querySelector('[data-whiteboard-close]').addEventListener('click', () => deck.close());
       deck.addEventListener('close', () => { if (opener.isConnected) opener.focus({ preventScroll: true }); });
-      if (openTrace) open();
+      if (openTrace && !deck.classList.contains('md-case-workspace')) open();
     }
     const zoom = deck.querySelector('[data-whiteboard-zoom]');
+    const zoomLabel = zoom?.textContent;
     if (zoom) zoom.addEventListener('click', () => {
       const enlarged = deck.classList.toggle('is-enlarged');
       zoom.setAttribute('aria-pressed', String(enlarged));
-      zoom.textContent = enlarged ? '缩回全图' : '放大白板';
+      zoom.textContent = enlarged ? '缩回全图' : zoomLabel;
     });
     let current = 0;
     function goTo(target) {

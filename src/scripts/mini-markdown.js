@@ -107,8 +107,8 @@ export function renderMarkdown(source, { whiteboardImages = false } = {}) {
     closeQuote();
   };
   const closeFence = () => {
-    if (whiteboardImages && ['whiteboard-cards', 'whiteboard-trace', 'case-cards'].includes(fenceLang)) {
-      const mode = fenceLang === 'case-cards' ? 'case' : fenceLang === 'whiteboard-trace' ? 'trace' : 'board';
+    if (whiteboardImages && ['whiteboard-cards', 'whiteboard-trace', 'case-cards', 'case-workspace'].includes(fenceLang)) {
+      const mode = { 'case-cards': 'case', 'whiteboard-trace': 'trace', 'case-workspace': 'case-workspace' }[fenceLang] ?? 'board';
       out.push(renderWhiteboardCards(fence, mode));
     } else if (whiteboardImages && fenceLang === 'whiteboard-images') {
       // 图与正文一起从 DM 接口下发。只在 img 中加载 SVG，让浏览器使用图片模式。
