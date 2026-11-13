@@ -69,6 +69,16 @@ test('案件卡能展开时间线、物证与揭晓顺序，正文中的 HTML �
   assert.match(html, /DM 提示与揭晓顺序/);
 });
 
+test('现场带本只在 DM 阅读器解析，计时只出现在有预设的步骤', () => {
+  const source = ['```dm-runbook', '准备|0|<开场>|发本；停页|角色本|齐了', '公聊|30|开始|计时|白板|到点', '```'].join('\n');
+  assert.doesNotMatch(renderMarkdown(source), /data-run-open/);
+  const html = renderMarkdown(source, { whiteboardImages: true });
+  assert.match(html, /&lt;开场&gt;/);
+  assert.match(html, /<ol><li>发本<\/li><li>停页<\/li><\/ol>/);
+  assert.equal((html.match(/<output>/g) ?? []).length, 1);
+  assert.match(html, /<output>30:00<\/output>/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

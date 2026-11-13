@@ -5,6 +5,7 @@
 // 正文由发布方自己写，但仍然先转义再拼 HTML：内容进过数据库，就不再是「自己写的字符串」了。
 import { escapeHtml } from './account-core.js';
 import { renderWhiteboardCards } from './whiteboard-cards.js';
+import { renderRunbook } from './juben-runbook.js';
 
 // 相对路径、锚点、http(s) 与 mailto 放行，其余协议（javascript: 之流）一律当普通文本。
 // 任务书里写 ../spec/ 指向教程规范是常事，不能因为它不带协议就拦掉。
@@ -107,7 +108,9 @@ export function renderMarkdown(source, { whiteboardImages = false } = {}) {
     closeQuote();
   };
   const closeFence = () => {
-    if (whiteboardImages && ['whiteboard-cards', 'whiteboard-trace', 'case-cards', 'case-workspace'].includes(fenceLang)) {
+    if (whiteboardImages && fenceLang === 'dm-runbook') {
+      out.push(renderRunbook(fence));
+    } else if (whiteboardImages && ['whiteboard-cards', 'whiteboard-trace', 'case-cards', 'case-workspace'].includes(fenceLang)) {
       const mode = { 'case-cards': 'case', 'whiteboard-trace': 'trace', 'case-workspace': 'case-workspace' }[fenceLang] ?? 'board';
       out.push(renderWhiteboardCards(fence, mode));
     } else if (whiteboardImages && fenceLang === 'whiteboard-images') {

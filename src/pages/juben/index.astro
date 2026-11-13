@@ -96,6 +96,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
           </dl>
 
           <nav class="juben-study-links" aria-label="本卷学习入口">
+            {workspaceCase && <a class="juben-study-primary" id="run-link" href={`?case=${workspaceCase.id}&view=run#dm-vault`}>现场带本 <span>按步骤主持与计时 →</span></a>}
             <a class="juben-study-primary" id="private-link" href={`?case=${first.id}&module=${first.modules[0].slug}#dm-vault`}>开始学本 <span>打开 DM 学习手册 →</span></a>
             {workspaceCase && <a id="review-link" href={`?case=${workspaceCase.id}&view=review#dm-vault`}>案件复盘 <span>查看图解与提示 →</span></a>}
             {workspaceCase && <a id="board-link" href={`?case=${workspaceCase.id}&view=board#dm-vault`}>白板演练 <span>逐笔跟画 →</span></a>}
@@ -255,6 +256,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   import { renderMarkdown } from '../../scripts/mini-markdown.js';
   import { mountWhiteboardCards } from '../../scripts/whiteboard-cards.js';
   import { linkReviewBoard } from '../../scripts/juben-review-board.js';
+  import { mountRunbook } from '../../scripts/juben-runbook.js';
   import { jubenCases } from '../../data/juben.js';
   import { nextMission, resolveVaultMission, vaultDocList } from '../../scripts/juben-journey.js';
 
@@ -380,7 +382,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
 
     function requestedWorkspace() {
       const view = new URLSearchParams(location.search).get('view');
-      return view === 'review' || view === 'board' ? view : '';
+      return ['review', 'board', 'run'].includes(view) ? view : '';
     }
 
     async function openDoc(caseId, docId) {
@@ -408,14 +410,16 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         const loadDoc = (id) => api('GET', `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(id)}`);
         const reviewId = '00_DM主持学习手册';
         const boardId = '09_人物关系白板示意图';
-        const companionId = caseId === '954-虚拟游戏'
+        const view = requestedWorkspace();
+        const companionId = caseId === '954-虚拟游戏' && view !== 'run'
           ? ({ [reviewId]: boardId, [boardId]: reviewId })[docId]
           : null;
         const companion = companionId ? loadDoc(companionId).catch(() => null) : null;
         const { doc } = await loadDoc(docId);
         if (!current()) return;
         host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
-        const workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: requestedWorkspace() === 'review' });
+        mountRunbook(host, view === 'run' && docId === reviewId);
+        const workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: view === 'review' });
         if (companion) {
           const linked = await companion;
           if (!current() || !linked?.doc) return;
@@ -896,6 +900,16 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   }
   :global(.md-trace-workspace[open]) { display: grid; grid-template-rows: auto auto minmax(0, 1fr); }
   :global(.md-trace-workspace::backdrop) { background: rgb(24 19 28 / .65); }
+  :global(.md-runbook) { width: min(96vw, 46rem); }
+  :global(.md-runbook nav select) { min-width: 0; width: 100%; min-height: 44px; font: inherit; color: var(--ink); background: var(--paper-2); }
+  :global(.md-runbook nav button) { flex: none; }
+  :global(.md-run-body) { overflow: auto; overscroll-behavior: contain; }
+  :global(.md-run-body dl) { margin: .75rem 0; display: grid; gap: 1rem; }
+  :global(.md-run-body dt) { font-weight: 700; color: var(--accent); margin-bottom: .2rem; }
+  :global(.md-run-body dd) { margin: 0; line-height: 1.65; }
+  :global(.md-run-timer) { position: sticky; top: 0; display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; padding: .4rem; margin-top: .5rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); }
+  :global(.md-run-timer output) { font-size: 1.3rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  :global(.md-run-timer [role="status"]:not(:empty)) { flex-basis: 100%; color: var(--accent); }
   :global(.md-trace-heading) { display: flex; justify-content: space-between; align-items: center; gap: .7rem; padding: .6rem 1rem; border-bottom: 1px solid var(--line); }
   :global(.juben-vault-doc-body .md-trace-heading h3) { margin: 0; font-size: 1.05rem; }
   :global(.juben-vault-doc-body .md-trace-heading p) { margin: 0; color: var(--accent); font-size: .75rem; line-height: 1.4; }
@@ -1446,7 +1460,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       selectedMissionSlug = missionAt(item, requestedModule || firstMission.module.slug).module.slug;
       document.getElementById('private-link').href = missionHref(url('juben/'), id, item.modules[0].slug);
       document.getElementById('timeline-link').href = missionHref(url('juben/'), id, item.modules[1].slug);
-      document.querySelectorAll('#review-link, #board-link').forEach((link) => { link.hidden = id !== 'virtual-game'; });
+      document.querySelectorAll('#run-link, #review-link, #board-link').forEach((link) => { link.hidden = id !== 'virtual-game'; });
       cards.forEach((card) => {
         const active = card.dataset.case === id;
         card.classList.toggle('is-active', active);
