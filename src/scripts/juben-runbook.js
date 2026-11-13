@@ -28,7 +28,8 @@ function renderAudioTrack(track) {
   const remote = encoded?.match(/^@([a-f0-9]{40}|[a-f0-9]{64})$/)?.[1];
   const official = source && /^https:\/\//.test(source) ? `<a href="${escapeHtml(source)}" target="_blank" rel="noopener noreferrer">官方试听与下载页</a>` : '';
   const load = remote ? `<button type="button" data-run-audio-load="${remote}">播放音频</button>` : '';
-  return `<div class="md-run-audio-track"><strong>${escapeHtml(name)}</strong>${official}${load}<label>${included || remote ? '替换本机音源' : '选择音频'} <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac" data-run-audio="${escapeHtml(name)}"></label><audio controls preload="none"${included ? ` src="data:audio/mpeg;base64,${encoded}"` : ' hidden'}></audio><small role="status"></small></div>`;
+  const loop = isBgm(name) ? '<button type="button" data-run-audio-loop aria-pressed="false" aria-label="单曲循环">单曲循环 · 关</button>' : '';
+  return `<div class="md-run-audio-track"><strong>${escapeHtml(name)}</strong>${official}${load}${loop}<label>${included || remote ? '替换本机音源' : '选择音频'} <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac" data-run-audio="${escapeHtml(name)}"></label><audio controls preload="none"${included ? ` src="data:audio/mpeg;base64,${encoded}"` : ' hidden'}></audio><small role="status"></small></div>`;
 }
 
 const isBgm = (track) => track.startsWith('BGM · ');
@@ -106,6 +107,12 @@ function mountRunbookAudio(inputs, fetchAudio) {
     const track = input.closest('.md-run-audio-track');
     const status = track.querySelector('[role="status"]');
     const load = track.querySelector('[data-run-audio-load]');
+    const loop = track.querySelector('[data-run-audio-loop]');
+    loop?.addEventListener('click', () => {
+      player.loop = !player.loop;
+      loop.setAttribute('aria-pressed', String(player.loop));
+      loop.textContent = `单曲循环 · ${player.loop ? '开' : '关'}`;
+    });
     let version = 0;
     function show(file, message = file.name) {
       if (!input.isConnected) return;
