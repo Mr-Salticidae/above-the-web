@@ -408,7 +408,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       try {
         const { doc } = await api('GET', `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(docId)}`);
         if (!current()) return;
-        host.innerHTML = renderMarkdown(doc.markdown);
+        host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
       } catch (error) {
         if (!current()) return;
         host.innerHTML = `<p class="juben-vault-msg" data-tone="error">${escapeHtml(error.message)}</p>`;
@@ -854,6 +854,8 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   :global(.juben-vault-doc-body pre) { margin: 1rem 0; padding: 1rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-3); }
   :global(.juben-vault-doc-body pre code) { background: transparent; padding: 0; }
   :global(.juben-vault-doc-body img) { display: block; max-width: 100%; height: auto; margin: 1rem auto; border-radius: 6px; }
+  :global(.juben-vault-doc-body .md-whiteboard-images) { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, max(19.5rem, calc((100% - .65rem) / 2))), 1fr)); align-items: start; gap: .65rem; margin: 1rem 0; }
+  :global(.juben-vault-doc-body .md-whiteboard-images img) { width: min(100%, 40rem); margin: 0 auto; }
   /* 表格必须保持 display:table + width:100%。给 table 设 display:block 会让浏览器
      为内部行列生成一个「按内容收缩」的匿名表格盒：外壳（.md-table，有圆角/底色）
      仍撑满整行，可见的表格却只占内容宽度，右边就空出一大片。横向滚动交给外壳的

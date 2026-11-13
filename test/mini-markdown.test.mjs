@@ -11,6 +11,22 @@ globalThis.location = { hostname: 'example.com' };
 
 const { renderMarkdown } = await import('../src/scripts/mini-markdown.js');
 
+test('白板图片组仅在档案渲染时启用，替代文字保留且转义', () => {
+  const markdown = ['```whiteboard-images', '林家 <人物>|PHN2Zy8+', '玩家席|PHN2Zy8+', '```'].join('\n');
+  assert.doesNotMatch(renderMarkdown(markdown), /<img/);
+  const html = renderMarkdown(markdown, { whiteboardImages: true });
+  assert.match(html, /<div class="md-whiteboard-images">/);
+  assert.equal((html.match(/<img src="data:image\/svg\+xml;base64,PHN2Zy8\+"/g) ?? []).length, 2);
+  assert.match(html, /alt="林家 &lt;人物&gt;"/);
+});
+
+test('白板图片组不接受外部地址或 HTML 属性', () => {
+  const markdown = ['```whiteboard-images', '白板|https://example.com/diagram.svg', '```'].join('\n');
+  const html = renderMarkdown(markdown, { whiteboardImages: true });
+  assert.doesNotMatch(html, /<img/);
+  assert.match(html, /白板图暂时无法显示/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

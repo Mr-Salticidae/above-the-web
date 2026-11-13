@@ -69,7 +69,7 @@ function joinLines(parts) {
   }, '');
 }
 
-export function renderMarkdown(source) {
+export function renderMarkdown(source, { whiteboardImages = false } = {}) {
   const lines = String(source ?? '').replace(/\r\n?/g, '\n').split('\n');
   // 卷宗 md 普遍带 YAML frontmatter（id / name / players…），那是给机器看的索引，
   // 原样渲染就是开头一坨「id: "247" name: ...」的乱麻，先整块剥掉。
@@ -106,10 +106,21 @@ export function renderMarkdown(source) {
     closeQuote();
   };
   const closeFence = () => {
-    // whiteboard 是给 DM 现场抄白板用的示意图：中文框线不能按等宽字距压，
-    // 单独挂 class 交给 CSS 处理（横向滚动 + 不断行 + 保留缩进）。
-    const lang = fenceLang === 'whiteboard' ? ' class="md-whiteboard"' : '';
-    out.push(`<pre${lang}><code>${escapeHtml(fence.join('\n'))}</code></pre>`);
+    if (whiteboardImages && fenceLang === 'whiteboard-images') {
+      // 图与正文一起从 DM 接口下发。只在 img 中加载 SVG，让浏览器使用图片模式。
+      const images = fence.map((row) => row.match(/^([^|]+)\|([A-Za-z0-9+/]+={0,2})$/));
+      if (images.length && images.every((match) => match && match[2].length % 4 === 0)) {
+        const cards = images.map(([, alt, data]) =>
+          `<img src="data:image/svg+xml;base64,${data}" alt="${escapeHtml(alt)}" decoding="async" />`,
+        );
+        out.push(`<div class="md-whiteboard-images">${cards.join('')}</div>`);
+      } else {
+        out.push('<p>白板图暂时无法显示，请参考下方的连线清单和分笔脚本。</p>');
+      }
+    } else {
+      const lang = fenceLang === 'whiteboard' ? ' class="md-whiteboard"' : '';
+      out.push(`<pre${lang}><code>${escapeHtml(fence.join('\n'))}</code></pre>`);
+    }
     fence = null;
     fenceLang = '';
   };
