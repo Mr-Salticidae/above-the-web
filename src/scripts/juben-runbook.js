@@ -23,15 +23,19 @@ function renderSceneLine(line) {
 }
 
 function renderAudioTrack(track) {
-  const [name, encoded] = track.split('~');
+  const [name, encoded, source] = track.split('~');
   const included = encoded && /^[A-Za-z0-9+/]+={0,2}$/.test(encoded);
-  return `<div class="md-run-audio-track"><strong>${escapeHtml(name)}</strong><label>${included ? '替换本机音源' : '选择音频'} <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac" data-run-audio="${escapeHtml(name)}"></label><audio controls preload="none"${included ? ` src="data:audio/mpeg;base64,${encoded}"` : ' hidden'}></audio><small role="status"></small></div>`;
+  const official = source && /^https:\/\//.test(source) ? `<a href="${escapeHtml(source)}" target="_blank" rel="noopener noreferrer">官方试听与下载页</a>` : '';
+  return `<div class="md-run-audio-track"><strong>${escapeHtml(name)}</strong>${official}<label>${included ? '替换本机音源' : '选择音频'} <input type="file" accept="audio/*,.mp3,.m4a,.wav,.ogg,.flac" data-run-audio="${escapeHtml(name)}"></label><audio controls preload="none"${included ? ` src="data:audio/mpeg;base64,${encoded}"` : ' hidden'}></audio><small role="status"></small></div>`;
 }
+
+const isBgm = (track) => track.startsWith('BGM · ');
 
 export function renderRunbook(rows) {
   const steps = rows.map((row) => row.split('|'));
   if (!steps.length || steps.some((fields) => fields.length < 6 || fields.length > 9 || fields.slice(0, 6).some((value) => !value)
     || !/^\d{1,2}$/.test(fields[1]))) return '<p>现场流程暂时无法显示。</p>';
+  const bgm = [...new Set(steps.flatMap((step) => (step[8] || '').split('；').filter(isBgm)))];
   return `<div class="md-runbook-entry"><button type="button" data-run-open>打开现场带本 · ${steps.length} 步</button>
     <dialog class="md-whiteboard-cards md-trace-workspace md-runbook" aria-label="《虚拟游戏》现场带本">
       <header class="md-trace-heading"><h3>《虚拟游戏》现场带本</h3><button type="button" data-run-new>新开一场</button><button type="button" data-run-close>返回档案</button></header>
@@ -40,10 +44,11 @@ export function renderRunbook(rows) {
         <select aria-label="跳到步骤">${steps.map(([title], index) => `<option value="${index}">${index + 1}. ${escapeHtml(title)}</option>`).join('')}</select>
         <button type="button" data-run-next>下一步</button>
       </nav>
+      ${bgm.length ? `<details class="md-run-bgm"><summary>背景音乐 · 独立播放</summary><div class="md-run-bgm-tracks">${bgm.map(renderAudioTrack).join('')}</div></details>` : ''}
       <div class="md-run-body">
         ${steps.map(([title, minutes, say, actions, supplies, check, scene, reference, audio], index) => `<section data-run-step data-minutes="${minutes}"${reference ? ` data-run-reference="${escapeHtml(reference)}"` : ''}${index ? ' hidden' : ''}>
           <h4>${escapeHtml(title)}</h4>
-          ${audio ? `<details class="md-run-reference md-run-audio"><summary>现场音频</summary>${audio.split('；').map(renderAudioTrack).join('')}</details>` : ''}
+          ${audio && !audio.split('；').every(isBgm) ? `<details class="md-run-reference md-run-audio"><summary>现场音频</summary>${audio.split('；').filter((track) => !isBgm(track)).map(renderAudioTrack).join('')}</details>` : ''}
           ${Number(minutes) ? `<div class="md-run-timer"><output>${minutes}:00</output><span role="status"></span>
             <button type="button" data-run-clock="toggle">开始</button><button type="button" data-run-clock="add">＋5 分钟</button><button type="button" data-run-clock="reset">重置</button></div>` : ''}
           <dl><div class="md-run-say"><dt>对玩家说</dt><dd>${highlightRunbookText(say)}</dd></div>
@@ -119,7 +124,9 @@ function mountRunbookAudio(inputs) {
       }
     });
     player.addEventListener('play', () => {
-      for (const other of players.values()) if (other !== player) other.pause();
+      for (const [otherInput, other] of players) {
+        if (other !== player && isBgm(otherInput.dataset.runAudio) === isBgm(name)) other.pause();
+      }
     });
     player.addEventListener('error', () => { status.textContent = '无法播放，请换用 MP3 或 M4A 文件。'; });
   }

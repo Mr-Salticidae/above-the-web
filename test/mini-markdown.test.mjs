@@ -115,6 +115,15 @@ test('现场音频为各音轨生成本地选档和播放控件', () => {
   assert.doesNotMatch(html, /<audio[^>]+src=/);
 });
 
+test('BGM 位于步骤外，线索录音在对应步骤内', () => {
+  const row = '搜证|0|开始|发卡|物料|齐了|||BGM · 曲目~~https://example.com/track；线索一~SUQz';
+  const html = renderMarkdown(['```dm-runbook', row, '```'].join('\n'), { whiteboardImages: true });
+  const body = html.indexOf('class="md-run-body"');
+  assert.ok(html.indexOf('data-run-audio="BGM · 曲目"') < body);
+  assert.ok(html.indexOf('data-run-audio="线索一"') > body);
+  assert.match(html, /src="data:audio\/mpeg;base64,SUQz"/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

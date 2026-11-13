@@ -911,6 +911,10 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.md-trace-workspace[open]) { display: grid; grid-template-rows: auto auto minmax(0, 1fr); }
   :global(.md-trace-workspace::backdrop) { background: rgb(24 19 28 / .65); }
   :global(.md-runbook) { width: min(96vw, 46rem); }
+  :global(.md-runbook[open]:has(.md-run-bgm)) { grid-template-rows: auto auto auto minmax(0, 1fr); }
+  :global(.md-run-bgm) { border-bottom: 1px solid var(--line); padding-inline: .75rem; }
+  :global(.md-run-bgm > summary) { min-height: 44px; line-height: 44px; font-weight: 700; color: var(--accent); cursor: pointer; }
+  :global(.md-run-bgm-tracks) { max-height: 33dvh; overflow: auto; }
   :global(.md-runbook nav select) { min-width: 0; width: 100%; min-height: 44px; font: inherit; color: var(--ink); background: var(--paper-2); }
   :global(.md-runbook nav button) { flex: none; }
   :global(.md-run-body) { overflow: auto; overscroll-behavior: contain; }
