@@ -154,6 +154,54 @@ test('已有 DM 会话直接读受保护的目录，普通会话先确认身份'
   assert.deepEqual(await start({ role: 'member' }, 'token', true), ['auth']);
 });
 
+test('vault document loading recovers from an incomplete response and preserves access errors', async () => {
+  class ApiError extends Error {
+    constructor(status, code, message) {
+      super(message);
+      Object.assign(this, { status, code });
+    }
+  }
+  const doc = { id: '线索/档案', markdown: '# 档案正文' };
+  const path = `/juben/doc/${encodeURIComponent('954-虚拟游戏')}/${encodeURIComponent(doc.id)}`;
+
+  function loader(replies) {
+    const calls = [];
+    const loadVaultDoc = new Function('api', 'ApiError', `async ${pageFunction('loadVaultDoc')}; return loadVaultDoc;`)(
+      async (...args) => {
+        calls.push(args);
+        const reply = replies.shift();
+        if (reply instanceof Error) throw reply;
+        return reply;
+      }, ApiError,
+    );
+    return { calls, load: (current = () => true) => loadVaultDoc('954-虚拟游戏', doc.id, current) };
+  }
+
+  for (const invalid of [{}, { doc: { id: doc.id } }, new ApiError(200, 'INVALID_JSON')]) {
+    const recovered = loader([invalid, { configured: true, doc }]);
+    assert.deepEqual(await recovered.load(), doc);
+    assert.deepEqual(recovered.calls, Array.from({ length: 2 }, () => [
+      'GET', path, undefined, { cache: 'no-store', requireJson: true },
+    ]));
+  }
+
+  const incomplete = loader([{}, {}]);
+  await assert.rejects(incomplete.load(), { code: 'JUBEN_INCOMPLETE' });
+  assert.equal(incomplete.calls.length, 2);
+
+  const forbidden = loader([new ApiError(403, 'DM_REQUIRED')]);
+  await assert.rejects(forbidden.load(), { code: 'DM_REQUIRED' });
+  assert.equal(forbidden.calls.length, 1);
+
+  const unconfigured = loader([{ configured: false }]);
+  await assert.rejects(unconfigured.load(), { code: 'JUBEN_UNCONFIGURED' });
+  assert.equal(unconfigured.calls.length, 1);
+
+  const superseded = loader([{}]);
+  assert.equal(await superseded.load(() => superseded.calls.length === 0), null);
+  assert.equal(superseded.calls.length, 1);
+});
+
 test('training rerenders retain checks and focus, scrolling honors reduced motion, and resume copy follows sync state', () => {
   assert.match(page, /const selfCheckState = new Map\(\)/);
   assert.match(page, /input\.checked = Boolean\(savedChecks\[checkIndex\]\)/);

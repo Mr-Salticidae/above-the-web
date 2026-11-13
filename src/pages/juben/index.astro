@@ -252,7 +252,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
 <script>
   // DM 档案库：整卷拆解只对 dm/admin 开放，member 在这里兑换邀请码。
   // 与公开训练区共用 case/module 深链；正文不进入公开数据，身份变化立即清掉。
-  import { api, cacheUser, displayNameOf, escapeHtml, getCachedUser, getToken, loginUrl, registerUrl, refreshUser, isDm, onAuthChange } from '../../scripts/account-core.js';
+  import { api, ApiError, cacheUser, displayNameOf, escapeHtml, getCachedUser, getToken, loginUrl, registerUrl, refreshUser, isDm, onAuthChange } from '../../scripts/account-core.js';
   import { renderMarkdown } from '../../scripts/mini-markdown.js';
   import { mountWhiteboardCards } from '../../scripts/whiteboard-cards.js';
   import { linkReviewBoard } from '../../scripts/juben-review-board.js';
@@ -385,6 +385,27 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       return ['review', 'board', 'run'].includes(view) ? view : '';
     }
 
+    async function loadVaultDoc(caseId, docId, current) {
+      const path = `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(docId)}`;
+      for (let attempt = 0; current(); attempt += 1) {
+        try {
+          const payload = await api('GET', path, undefined, { cache: 'no-store', requireJson: true });
+          if (payload?.configured === false) {
+            throw new ApiError(0, 'JUBEN_UNCONFIGURED', '档案正文服务暂不可用');
+          }
+          if (payload?.doc?.id !== docId || typeof payload.doc.markdown !== 'string') {
+            throw new ApiError(0, 'JUBEN_INCOMPLETE', '档案正文响应不完整');
+          }
+          return payload.doc;
+        } catch (error) {
+          const retryable = ['NETWORK', 'INVALID_JSON', 'JUBEN_INCOMPLETE'].includes(error.code)
+            || [502, 503, 504].includes(error.status);
+          if (attempt || !retryable) throw error;
+        }
+      }
+      return null;
+    }
+
     async function openDoc(caseId, docId) {
       if (!caseId || !docId || !isDm(user)) return;
       activeCase = caseId;
@@ -406,47 +427,48 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         && isDm(user)
         && document.getElementById('vault-reader-doc') === host
       );
+      const reviewId = '00_DM主持学习手册';
+      const boardId = '09_人物关系白板示意图';
+      const view = requestedWorkspace();
+      const companionId = caseId === '954-虚拟游戏'
+        ? ({ [reviewId]: boardId, [boardId]: reviewId })[docId]
+        : null;
+      const companion = companionId ? loadVaultDoc(caseId, companionId, current).catch(() => null) : null;
+      let workspaces;
       try {
-        const loadDoc = (id) => api('GET', `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(id)}`);
-        const reviewId = '00_DM主持学习手册';
-        const boardId = '09_人物关系白板示意图';
-        const view = requestedWorkspace();
-        const companionId = caseId === '954-虚拟游戏'
-          ? ({ [reviewId]: boardId, [boardId]: reviewId })[docId]
-          : null;
-        const companion = companionId ? loadDoc(companionId).catch(() => null) : null;
-        const { doc } = await loadDoc(docId);
+        const doc = await loadVaultDoc(caseId, docId, current);
         if (!current()) return;
         host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
         mountRunbook(host, view === 'run' && docId === reviewId);
-        const workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: view === 'review' });
-        if (!companion) attachRunbookReferences(host, workspaces);
-        if (companion) {
-          const linked = await companion;
-          if (!current()) return;
-          if (!linked?.doc) {
-            attachRunbookReferences(host, workspaces);
-            return;
-          }
-          const template = document.createElement('template');
-          template.innerHTML = renderMarkdown(linked.doc.markdown, { whiteboardImages: true });
-          const entry = template.content.querySelector('.md-trace-entry');
-          if (!entry) {
-            attachRunbookReferences(host, workspaces);
-            return;
-          }
-          const container = document.createElement('div');
-          container.className = 'md-companion-workspace';
-          container.append(entry);
-          host.append(container);
-          const allWorkspaces = [...workspaces, ...mountWhiteboardCards(container)];
-          attachRunbookReferences(host, allWorkspaces);
-          linkReviewBoard(allWorkspaces);
-        }
+        workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: view === 'review' });
       } catch (error) {
         if (!current()) return;
-        host.innerHTML = `<p class="juben-vault-msg" data-tone="error">${escapeHtml(error.message)}</p>`;
+        const message = error instanceof ApiError ? error.message : '档案正文暂时无法显示';
+        host.innerHTML = `<p class="juben-vault-msg" data-tone="error">${escapeHtml(message)}</p>
+          <button class="juben-vault-cta is-ghost juben-vault-retry" type="button">重新加载正文</button>`;
+        host.querySelector('button').addEventListener('click', () => openDoc(caseId, docId), { once: true });
+        return;
       }
+      const linked = companion && await companion;
+      if (!current()) return;
+      if (linked) {
+        const container = document.createElement('div');
+        try {
+          const template = document.createElement('template');
+          template.innerHTML = renderMarkdown(linked.markdown, { whiteboardImages: true });
+          const entry = template.content.querySelector('.md-trace-entry');
+          if (entry) {
+            container.className = 'md-companion-workspace';
+            container.append(entry);
+            host.append(container);
+            workspaces = [...workspaces, ...mountWhiteboardCards(container)];
+          }
+        } catch {
+          container.remove();
+        }
+      }
+      attachRunbookReferences(host, workspaces);
+      if (companion) linkReviewBoard(workspaces);
     }
 
     function renderDocList() {
@@ -849,6 +871,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.juben-vault-msg) { margin: 0; font-size: .72rem; color: var(--ink-soft); }
   :global(.juben-vault-msg[data-tone="error"]) { color: #b3452e; }
   :global(.juben-vault-msg[data-tone="ok"]) { color: var(--accent); }
+  :global(.juben-vault-retry) { min-height: 44px; margin-top: .8rem; cursor: pointer; }
   :global(.juben-vault-reader) { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 1.4rem; align-items: start; }
   :global(.juben-vault-side) { position: sticky; top: calc(var(--header-h) + 1rem); display: grid; gap: 1rem; }
   :global(.juben-vault-invite) { padding: 1.1rem 1.2rem; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 10px; background: var(--paper-2); }

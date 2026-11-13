@@ -218,6 +218,7 @@ export async function api(method, path, body, options = {}) {
   try {
     response = await fetch(`${API_BASE}${path}`, {
       method,
+      cache: options.cache,
       headers: {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(body ? { 'Content-Type': 'application/json' } : {}),
@@ -228,7 +229,12 @@ export async function api(method, path, body, options = {}) {
     throw new ApiError(0, 'NETWORK', '连不上服务器，稍后再试');
   }
 
-  const payload = await response.json().catch(() => ({}));
+  const payload = await response.json().catch(() => {
+    if (options.requireJson && response.ok) {
+      throw new ApiError(response.status, 'INVALID_JSON', '服务器返回的内容不完整');
+    }
+    return {};
+  });
   if (!response.ok) {
     // 会话失效就地清掉，避免页面一直以「已登录」的样子挂着。
     // 挂掉的如果是别的抽屉（切换/退出时会指定 token），只丢那一个，别误伤当前登录。
@@ -236,7 +242,7 @@ export async function api(method, path, body, options = {}) {
       if (token === getToken()) clearSession();
       else forgetToken(token);
     }
-    throw new ApiError(response.status, payload.error || 'ERROR', payload.message);
+    throw new ApiError(response.status, payload?.error || 'ERROR', payload?.message);
   }
   return payload;
 }
