@@ -22,7 +22,7 @@ function renderSceneLine(line) {
   return `<li class="md-run-scene-${kind}"><strong>${escapeHtml(role)}</strong><div>${highlightRunbookText(words)}</div></li>`;
 }
 
-function renderScene(scene) {
+function renderScene(scene, branches) {
   let scripts;
   if (scene.startsWith('[')) {
     try { scripts = JSON.parse(scene); } catch { /* 继续显示旧版文本格式。 */ }
@@ -30,7 +30,7 @@ function renderScene(scene) {
   if (Array.isArray(scripts) && scripts.every((script) => Array.isArray(script)
     && typeof script[0] === 'string' && Array.isArray(script[1])
     && script[1].every((line) => Array.isArray(line) && typeof line[0] === 'string' && typeof line[1] === 'string'))) {
-    return scripts.map(([title, lines]) => `<details class="md-run-reference md-run-scene">
+    return scripts.map(([title, lines], i) => `<details class="md-run-reference md-run-scene"${branches?.[i] ? ` data-run-branch="${escapeHtml(branches[i])}" hidden` : ''}>
       <summary>${escapeHtml(title)}</summary><ol>${lines.map(([role, text]) => {
         const kind = role.startsWith('DM 念') ? 'speak' : role.startsWith('DM ') ? 'cue' : 'player';
         return `<li class="md-run-scene-${kind}"><strong>${escapeHtml(role)}</strong><div>${highlightRunbookText(text)}</div></li>`;
@@ -51,6 +51,27 @@ function renderAudioTrack(track) {
 
 const isBgm = (track) => track.startsWith('BGM · ');
 
+const runChoices = {
+  edition: ['本场开法', { standard: '普通版（首次带本建议）', classic: '经典版' }],
+  verdict: ['首轮处决名单是否包含简清', { yes: '包含简清', no: '不包含简清' }],
+  ending: ['玩家最终向警方汇报了什么', { reveal: '说出徐光骗保或多层虚拟', conceal: '只汇报两人已死，隐去骗保和多层虚拟' }],
+};
+
+function runDecision(reference) {
+  try { return JSON.parse(reference)?.decision; } catch { return null; }
+}
+
+function renderRunDecision(decision) {
+  if (!decision) return '';
+  const controls = (decision.inputs || []).filter((key) => Object.hasOwn(runChoices, key)).map((key) => {
+    const [label, options] = runChoices[key];
+    return `<label>${label}<select data-run-choice="${key}"><option value="">请选择</option>${Object.entries(options)
+      .map(([value, text]) => `<option value="${value}">${text}</option>`).join('')}</select></label>`;
+  });
+  const notes = (decision.notes || []).map(([keys, text]) => `<p data-run-branch="${escapeHtml(keys)}" hidden>${highlightRunbookText(text)}</p>`);
+  return controls.length || notes.length ? `<aside class="md-run-decision" aria-label="本场判定">${controls.join('')}<div aria-live="polite">${notes.join('')}</div></aside>` : '';
+}
+
 export function renderRunbook(rows) {
   const steps = rows.map((row) => row.split('|'));
   if (!steps.length || steps.some((fields) => fields.length < 6 || fields.length > 9 || fields.slice(0, 6).some((value) => !value)
@@ -70,7 +91,8 @@ export function renderRunbook(rows) {
           ${Number(minutes) ? `<div class="md-run-timer"><output>${minutes}:00</output><span role="status"></span>
             <button type="button" data-run-clock="toggle">开始</button><button type="button" data-run-clock="add">＋5 分钟</button><button type="button" data-run-clock="reset">重置</button></div>` : ''}
           <dl><div class="md-run-say"><dt>对玩家说</dt><dd>${highlightRunbookText(say)}</dd></div></dl>
-          ${scene ? renderScene(scene) : ''}
+          ${renderRunDecision(runDecision(reference))}
+          ${scene ? renderScene(scene, runDecision(reference)?.scenes) : ''}
           <dl class="md-run-actions"><div><dt>DM 操作</dt><dd><ol>${actions.split('；').map((item) => `<li>${highlightRunbookText(item)}</li>`).join('')}</ol></dd></div></dl>
           <div class="md-run-resources">
             <details class="md-run-reference md-run-material"><summary>物料与判定 <small>仅 DM 查看</small></summary><ul>${supplies.split('↵').map((item) => `<li>${highlightRunbookText(item)}</li>`).join('')}</ul></details>
@@ -198,9 +220,15 @@ export function mountRunbook(host, autoOpen = false, fetchAudio) {
   const opener = entry.querySelector('[data-run-open]');
   const clocks = steps.map((step) => ({ left: Number(step.dataset.minutes) * 60_000, end: 0, announced: false }));
   const key = 'atw-juben-virtual-game-run-v1';
+  const choices = { edition: '', verdict: '', ending: '' };
+  const choiceInputs = [...dialog.querySelectorAll('[data-run-choice]')];
+  const branchNotes = [...dialog.querySelectorAll('[data-run-branch]')];
   let index = 0;
   try {
     const saved = JSON.parse(localStorage.getItem(key));
+    for (const [name, [, options]] of Object.entries(runChoices)) {
+      if (Object.hasOwn(options, saved?.choices?.[name])) choices[name] = saved.choices[name];
+    }
     if (Array.isArray(saved?.clocks) && saved.clocks.length === clocks.length) {
       saved.clocks.forEach((clock, i) => {
         if (Number(steps[i].dataset.minutes) && Number.isFinite(clock?.left) && clock.left >= 0
@@ -211,8 +239,17 @@ export function mountRunbook(host, autoOpen = false, fetchAudio) {
   } catch { /* 本机存储不可用时，仍可在本页计时。 */ }
   let interval = 0;
   const save = () => {
-    try { localStorage.setItem(key, JSON.stringify({ clocks, index })); } catch { /* 仅保存在当前页面。 */ }
+    try { localStorage.setItem(key, JSON.stringify({ clocks, index, choices })); } catch { /* 仅保存在当前页面。 */ }
   };
+  function paintChoices() {
+    for (const input of choiceInputs) input.value = choices[input.dataset.runChoice];
+    for (const note of branchNotes) {
+      note.hidden = !note.dataset.runBranch.split(' ').every((condition) => {
+        const [name, value] = condition.split('=');
+        return choices[name] === value;
+      });
+    }
+  }
   function paint() {
     for (const [i, clock] of clocks.entries()) {
       const timer = steps[i].querySelector('.md-run-timer');
@@ -226,11 +263,19 @@ export function mountRunbook(host, autoOpen = false, fetchAudio) {
       const status = timer.querySelector('[role="status"]');
       const message = clock.announced ? '时间到，可结束公聊或加时。' : '';
       if (status.textContent !== message) status.textContent = message;
-      timer.querySelector('[data-run-clock="toggle"]').textContent = clock.end ? '暂停' : '开始';
+      const toggle = timer.querySelector('[data-run-clock="toggle"]');
+      toggle.textContent = clock.end ? '暂停' : '开始';
+      toggle.disabled = !clock.left && !clock.end;
     }
   }
   function goTo(target) {
     if (!Number.isInteger(target) || target < 0 || target >= steps.length) return;
+    const previous = clocks[index];
+    if (target !== index && previous.end) {
+      previous.left = Math.max(0, previous.end - Date.now());
+      previous.end = 0;
+      previous.announced = previous.left === 0;
+    }
     steps.forEach((step, i) => { step.hidden = i !== target; });
     index = target;
     select.value = String(index);
@@ -254,16 +299,27 @@ export function mountRunbook(host, autoOpen = false, fetchAudio) {
   opener.addEventListener('click', open);
   dialog.querySelector('[data-run-close]').addEventListener('click', () => dialog.close());
   dialog.querySelector('[data-run-new]').addEventListener('click', () => {
-    if (!window.confirm('回到开场准备并重置本场所有公聊计时？')) return;
+    if (!window.confirm('新开一场会清空本场开法、投票判定、结尾选择和计时。继续吗？')) return;
+    for (const name of Object.keys(choices)) choices[name] = '';
+    for (const player of dialog.querySelectorAll('audio')) {
+      player.pause();
+      if (player.readyState) player.currentTime = 0;
+    }
     steps.forEach((step, i) => {
       clocks[i] = { left: Number(step.dataset.minutes) * 60_000, end: 0, announced: false };
     });
+    paintChoices();
     goTo(0);
   });
   dialog.addEventListener('close', () => { clearInterval(interval); opener.focus({ preventScroll: true }); });
   prev.addEventListener('click', () => goTo(index - 1));
   next.addEventListener('click', () => goTo(index + 1));
   select.addEventListener('change', () => goTo(Number(select.value)));
+  for (const input of choiceInputs) input.addEventListener('change', () => {
+    choices[input.dataset.runChoice] = input.value;
+    paintChoices();
+    save();
+  });
   dialog.addEventListener('click', (event) => {
     const action = event.target.closest('[data-run-clock]')?.dataset.runClock;
     if (!action) return;
@@ -283,6 +339,7 @@ export function mountRunbook(host, autoOpen = false, fetchAudio) {
     save();
     paint();
   });
+  paintChoices();
   goTo(index);
   if (autoOpen) open();
 }

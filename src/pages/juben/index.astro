@@ -979,6 +979,11 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.md-run-say) { border-color: #7750bd; background: color-mix(in srgb, #7750bd 9%, var(--paper-2)); }
   :global(.md-run-actions), :global(.md-run-resources .md-run-reference) { background: var(--paper-2); }
   :global(.md-run-actions) { padding: .7rem; border: 1px solid var(--line); border-radius: 8px; }
+  :global(.md-run-decision) { margin: .75rem 0; padding: .7rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); }
+  :global(.md-run-decision label) { display: grid; gap: .35rem; margin-bottom: .5rem; font-weight: 650; }
+  :global(.md-run-decision select) { width: 100%; min-height: 44px; padding: .3rem .5rem; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-2); color: var(--ink); font: inherit; }
+  :global(.juben-vault-doc-body .md-run-decision p) { margin: .25rem 0; color: var(--ink); }
+  :global(.md-runbook [data-run-branch][hidden]) { display: none; }
   :global(.md-run-check) { border-color: #be7828; background: color-mix(in srgb, #be7828 11%, var(--paper-2)); }
   :global(.md-run-highlight) { color: inherit; font-weight: 700; border-radius: 3px; box-decoration-break: clone; }
   :global(.md-run-highlight.is-number) { background: color-mix(in srgb, #8e63e3 24%, var(--paper-2)); }
