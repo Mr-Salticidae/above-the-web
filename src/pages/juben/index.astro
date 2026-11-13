@@ -877,6 +877,10 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   :global(.md-whiteboard-cards section[hidden]) { display: none; }
   :global(.md-whiteboard-cards h4) { margin: 0; font-size: 1.08rem; }
   :global(.md-whiteboard-cards img) { width: min(100%, 38rem); }
+  :global(.md-whiteboard-tools) { padding: .45rem .7rem 0; text-align: right; }
+  :global(.md-whiteboard-pan) { max-width: 100%; overflow-x: auto; }
+  :global(.md-whiteboard-pan img) { width: 100%; max-width: 100%; }
+  :global(.md-whiteboard-cards.is-enlarged .md-whiteboard-pan img) { width: max(100%, 776px); max-width: none; }
   :global(.juben-vault-doc-body .md-case-chain) { display: grid; gap: 1rem; padding: 0; list-style: none; }
   :global(.md-case-chain li) { position: relative; padding: .45rem .65rem; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-2); color: var(--ink); }
   :global(.md-case-chain li + li::before) { content: '↓'; position: absolute; top: -1.1rem; left: 1rem; color: var(--accent); }

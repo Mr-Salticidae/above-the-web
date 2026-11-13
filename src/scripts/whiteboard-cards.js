@@ -2,6 +2,7 @@ import { escapeHtml } from './account-core.js';
 
 export function renderWhiteboardCards(rows, mode = 'board') {
   const isCase = mode === 'case';
+  const isTrace = mode === 'trace';
   const cards = rows.map((row) => row.split('|'));
   if (!cards.length || cards.some(([title, timing, update, evidence, image, extra]) =>
     !title || !timing || !update || !evidence || !image || extra !== undefined ||
@@ -14,7 +15,9 @@ export function renderWhiteboardCards(rows, mode = 'board') {
       <p><strong>${isCase ? '先问玩家' : '动笔时机'}</strong>　${escapeHtml(timing)}</p>
       ${isCase
         ? `<ol class="md-case-chain" aria-label="证据链">${image.split('→').map((node) => `<li>${escapeHtml(node.trim())}</li>`).join('')}</ol>`
-        : `<img src="data:image/svg+xml;base64,${image}" alt="" decoding="async" />`}
+        : isTrace
+          ? `<div class="md-whiteboard-pan" tabindex="0" aria-label="当前白板，可左右滑动"><img src="data:image/svg+xml;base64,${image}" alt="" decoding="async" /></div>`
+          : `<img src="data:image/svg+xml;base64,${image}" alt="" decoding="async" />`}
       <p><strong>${isCase ? '本轮结论' : '本阶段更新'}</strong>　${escapeHtml(update)}</p>
       <p><strong>${isCase ? '核对依据' : '更新依据'}</strong>　${escapeHtml(evidence)}</p>
     </section>`).join('');
@@ -24,6 +27,7 @@ export function renderWhiteboardCards(rows, mode = 'board') {
       <span data-whiteboard-count aria-live="polite">1 / ${cards.length}</span>
       <button type="button" data-whiteboard-next${cards.length === 1 ? ' disabled' : ''}>${isCase ? '下一张' : '下一阶段'}</button>
     </nav>
+    ${isTrace ? '<div class="md-whiteboard-tools"><button type="button" data-whiteboard-zoom aria-pressed="false">放大白板</button></div>' : ''}
     ${slides}
   </div>`;
 }
@@ -34,6 +38,12 @@ export function mountWhiteboardCards(host) {
     const previous = deck.querySelector('[data-whiteboard-prev]');
     const next = deck.querySelector('[data-whiteboard-next]');
     const count = deck.querySelector('[data-whiteboard-count]');
+    const zoom = deck.querySelector('[data-whiteboard-zoom]');
+    if (zoom) zoom.addEventListener('click', () => {
+      const enlarged = deck.classList.toggle('is-enlarged');
+      zoom.setAttribute('aria-pressed', String(enlarged));
+      zoom.textContent = enlarged ? '缩回全图' : '放大白板';
+    });
     let current = 0;
     function turn(step) {
       const target = current + step;
