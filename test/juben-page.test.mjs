@@ -133,6 +133,27 @@ test('vault continuations are generation and identity guarded and never select t
   assert.equal(target.docId, null);
 });
 
+test('已有 DM 会话直接读受保护的目录，普通会话先确认身份', async () => {
+  async function start(user, token, changeWhileRefreshing = false) {
+    const calls = [];
+    const boot = new Function(
+      'user', 'sessionToken', 'vaultGeneration', 'isCurrentVault', 'isDm',
+      'renderAnonymous', 'renderForUser', 'refreshUser',
+      `async ${pageFunction('boot')}; return boot;`,
+    )(
+      user, token, 0, () => !changeWhileRefreshing, (value) => value?.role === 'dm',
+      () => calls.push('guest'), () => calls.push('directory'),
+      async () => { calls.push('auth'); },
+    );
+    await boot();
+    return calls;
+  }
+  assert.deepEqual(await start(null, ''), ['guest']);
+  assert.deepEqual(await start({ role: 'dm' }, 'token'), ['directory', 'auth']);
+  assert.deepEqual(await start({ role: 'member' }, 'token'), ['auth', 'directory']);
+  assert.deepEqual(await start({ role: 'member' }, 'token', true), ['auth']);
+});
+
 test('training rerenders retain checks and focus, scrolling honors reduced motion, and resume copy follows sync state', () => {
   assert.match(page, /const selfCheckState = new Map\(\)/);
   assert.match(page, /input\.checked = Boolean\(savedChecks\[checkIndex\]\)/);

@@ -4,6 +4,7 @@
 //
 // 正文由发布方自己写，但仍然先转义再拼 HTML：内容进过数据库，就不再是「自己写的字符串」了。
 import { escapeHtml } from './account-core.js';
+import { renderWhiteboardCards } from './whiteboard-cards.js';
 
 // 相对路径、锚点、http(s) 与 mailto 放行，其余协议（javascript: 之流）一律当普通文本。
 // 任务书里写 ../spec/ 指向教程规范是常事，不能因为它不带协议就拦掉。
@@ -106,7 +107,9 @@ export function renderMarkdown(source, { whiteboardImages = false } = {}) {
     closeQuote();
   };
   const closeFence = () => {
-    if (whiteboardImages && fenceLang === 'whiteboard-images') {
+    if (whiteboardImages && (fenceLang === 'whiteboard-cards' || fenceLang === 'case-cards')) {
+      out.push(renderWhiteboardCards(fence, fenceLang === 'case-cards' ? 'case' : 'board'));
+    } else if (whiteboardImages && fenceLang === 'whiteboard-images') {
       // 图与正文一起从 DM 接口下发。只在 img 中加载 SVG，让浏览器使用图片模式。
       const images = fence.map((row) => row.match(/^([^|]+)\|([A-Za-z0-9+/]+={0,2})$/));
       if (images.length && images.every((match) => match && match[2].length % 4 === 0)) {

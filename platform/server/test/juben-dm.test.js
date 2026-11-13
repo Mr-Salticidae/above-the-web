@@ -118,6 +118,47 @@ function fakeGitHub(url) {
   return { ok: false, status: 404, text: async () => "not found", json: async () => ({}) };
 }
 
+test("冷启动合并并发清单请求，续刷只读取变更的档案", async () => {
+  const { createJubenContent } = await import("../src/juben-content.js");
+  const files = Object.keys(REPO_FILES).filter((path) => path.startsWith("cases/"));
+  const changed = files[0];
+  let version = "v1";
+  let trees = 0;
+  let inFlight = 0;
+  let peak = 0;
+  const reads = [];
+  const content = createJubenContent(config, { warn() {} }, {
+    async fetch(url) {
+      if (url.includes("/git/trees/")) {
+        trees += 1;
+        return { ok: true, json: async () => ({
+          tree: files.map((path) => ({ type: "blob", path, sha: path === changed ? version : path })),
+        }) };
+      }
+      const path = files.find((entry) => url.endsWith(encodeURI(entry)));
+      reads.push(path);
+      inFlight += 1;
+      peak = Math.max(peak, inFlight);
+      await new Promise((resolve) => setImmediate(resolve));
+      inFlight -= 1;
+      return { ok: true, text: async () => path === changed ? `# ${version}\n正文` : REPO_FILES[path] };
+    },
+  });
+  const [first, second] = await Promise.all([content.manifest(), content.manifest()]);
+  assert.deepEqual(first, second);
+  assert.equal(trees, 1);
+  assert.equal(reads.length, files.length);
+  assert.ok(peak > 1 && peak <= 6);
+  assert.doesNotMatch(JSON.stringify(first), /正文|markdown/);
+
+  version = "v2";
+  reads.length = 0;
+  await content.manifest({ force: true });
+  assert.deepEqual(reads, [changed]);
+  const [, caseId, name] = changed.split("/");
+  assert.equal((await content.doc(caseId, name.slice(0, -3))).title, "v2");
+});
+
 const silent = { log() {}, warn() {}, error() {} };
 const { server, database } = createApplication(config, silent, { jubenFetcher: fakeGitHub });
 await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));

@@ -27,6 +27,21 @@ test('白板图片组不接受外部地址或 HTML 属性', () => {
   assert.match(html, /白板图暂时无法显示/);
 });
 
+test('白板和案件卡只在 DM 阅读器中解析，后续卡片初始收起', () => {
+  const row = '开场|发本后|画六席|手册 §5|PHN2Zy8+';
+  const board = ['```whiteboard-cards', row, row, '```'].join('\n');
+  assert.doesNotMatch(renderMarkdown(board), /data-whiteboard-slide/);
+  const html = renderMarkdown(board, { whiteboardImages: true });
+  assert.equal((html.match(/data-whiteboard-slide/g) ?? []).length, 2);
+  assert.match(html, /data-whiteboard-slide hidden/);
+  assert.match(html, /更新依据.*手册 §5/);
+
+  const caseDoc = ['```case-cards', '旧案|先问谁？|结论|手册|一 → <二> → 三', '```'].join('\n');
+  const caseHtml = renderMarkdown(caseDoc, { whiteboardImages: true });
+  assert.match(caseHtml, /<li>一<\/li><li>&lt;二&gt;<\/li><li>三<\/li>/);
+  assert.match(caseHtml, /data-whiteboard-next disabled/);
+});
+
 test('GFM 表格渲染成真正的 table，而不是一行管道横杠', () => {
   const html = renderMarkdown(
     ['| 文件 | 用途 |', '| --- | --- |', '| 00_对外学习包/ | 可直接转发 |', '| 07_归纳卡片.md | 五维归纳 |'].join('\n'),

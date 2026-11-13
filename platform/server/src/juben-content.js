@@ -11,6 +11,7 @@
 // 不存在拿用户输入拼路径的口子；decode 后仍挡一道 ".."、开头 "/"、反斜杠。
 
 const CASE_ID_RE = /^[0-9A-Za-z][0-9A-Za-z\u4e00-\u9fff_-]*$/;
+const RAW_FETCH_CONCURRENCY = 6;
 
 function safeDocId(id) {
   return (
@@ -66,7 +67,8 @@ export function createJubenContent(config, log = console, deps = {}) {
     ...(config.juben.token ? { Authorization: `Bearer ${config.juben.token}` } : {}),
   };
 
-  let cache = { at: 0, cases: [] };
+  let cache = { at: null, cases: [], sources: new Map() };
+  let pendingRefresh = null;
 
   const configured = () => Boolean(config.juben.token && config.juben.repo);
 
@@ -136,6 +138,7 @@ export function createJubenContent(config, log = console, deps = {}) {
   async function buildManifest() {
     const tree = await fetchTree();
     const byCase = new Map();
+    const filesToRead = [];
     for (const node of tree) {
       if (node.type !== "blob") continue;
       const match = String(node.path || "").match(/^cases\/([^/]+)\/(.+\.md)$/i);
@@ -145,8 +148,30 @@ export function createJubenContent(config, log = console, deps = {}) {
       if (!CASE_ID_RE.test(caseId)) continue;
       if (!safeDocId(relPath.slice(0, -3))) continue;
       if (!byCase.has(caseId)) byCase.set(caseId, []);
-      byCase.get(caseId).push({ path: node.path, relPath, size: node.size ?? 0 });
+      const file = { path: node.path, relPath, size: node.size ?? 0, sha: node.sha };
+      byCase.get(caseId).push(file);
+      filesToRead.push(file);
     }
+
+    const sources = new Map();
+    let cursor = 0;
+    async function readFiles() {
+      while (cursor < filesToRead.length) {
+        const file = filesToRead[cursor++];
+        const previous = cache.sources.get(file.path);
+        if (file.sha && previous?.sha === file.sha) {
+          sources.set(file.path, previous);
+          continue;
+        }
+        try {
+          const markdown = sanitizeDmMarkdown(await fetchRaw(file.path));
+          sources.set(file.path, { sha: file.sha, markdown, heading: firstHeadingOf(markdown) });
+        } catch (error) {
+          log.warn?.(`[juben] 拉不到 ${file.path}：${error.message}`);
+        }
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(RAW_FETCH_CONCURRENCY, filesToRead.length) }, readFiles));
 
     const cases = [];
     for (const [id, files] of byCase) {
@@ -176,19 +201,15 @@ export function createJubenContent(config, log = console, deps = {}) {
       for (const group of groups) {
         const groupDocViews = [];
         for (const { file } of group.sorted) {
-          const source = await fetchRaw(file.path).catch((error) => {
-            log.warn?.(`[juben] 拉不到 ${file.path}：${error.message}`);
-            return null;
-          });
-          if (source === null) continue;
-          const markdown = sanitizeDmMarkdown(source);
+          const source = sources.get(file.path);
+          if (!source) continue;
           const docId = file.relPath.slice(0, -3); // 去掉 .md，保留层级
           const meta = {
             id: docId,
-            title: docTitle(docId, firstHeadingOf(markdown)),
+            title: docTitle(docId, source.heading),
             bytes: file.size,
           };
-          caseDocs.push({ ...meta, markdown });
+          caseDocs.push({ ...meta, markdown: source.markdown });
           groupDocViews.push(meta);
         }
         if (groupDocViews.length) groupViews.push({ label: group.label, docs: groupDocViews });
@@ -196,7 +217,7 @@ export function createJubenContent(config, log = console, deps = {}) {
       if (caseDocs.length) cases.push({ id, docs: caseDocs, groups: groupViews });
     }
     cases.sort((a, b) => a.id.localeCompare(b.id, "zh-CN"));
-    return cases;
+    return { cases, sources };
   }
   async function fetchRaw(path) {
     const url =
@@ -221,10 +242,15 @@ export function createJubenContent(config, log = console, deps = {}) {
 
   async function manifest({ force = false } = {}) {
     if (!configured()) return { configured: false, cases: [] };
-    const fresh = Date.now() - cache.at < config.juben.cacheTtlMinutes * 60 * 1000;
-    if (!force && fresh && cache.cases.length) return { configured: true, cases: manifestView(cache.cases) };
+    const fresh = cache.at !== null && Date.now() - cache.at < config.juben.cacheTtlMinutes * 60 * 1000;
+    if (!force && fresh) return { configured: true, cases: manifestView(cache.cases) };
+    pendingRefresh ??= buildManifest()
+      .then((next) => {
+        cache = { at: Date.now(), ...next };
+      })
+      .finally(() => { pendingRefresh = null; });
     try {
-      cache = { at: Date.now(), cases: await buildManifest() };
+      await pendingRefresh;
     } catch (error) {
       log.warn?.(`[juben] 清单拉取失败：${error.message}`);
       if (cache.cases.length) return { configured: true, stale: true, cases: manifestView(cache.cases) };
@@ -244,7 +270,7 @@ export function createJubenContent(config, log = console, deps = {}) {
     manifest,
     async doc(caseId, docId) {
       // 正文在完整缓存里（清单视图已剥掉 markdown），缓存空就先拉一次
-      if (!cache.cases.length) await manifest();
+      if (cache.at === null) await manifest();
       const found = findDoc(cache.cases, caseId, docId);
       if (!found) return null;
       const { markdown, ...meta } = found;
@@ -256,7 +282,7 @@ export function createJubenContent(config, log = console, deps = {}) {
         repo: configured() ? config.juben.repo : null,
         branch: config.juben.branch,
         cacheTtlMinutes: config.juben.cacheTtlMinutes,
-        cachedAt: cache.cases.length ? cache.at : null,
+        cachedAt: cache.at,
         caseCount: cache.cases.length,
       };
     },

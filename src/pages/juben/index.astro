@@ -269,8 +269,9 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
 <script>
   // DM 档案库：整卷拆解只对 dm/admin 开放，member 在这里兑换邀请码。
   // 与公开训练区共用 case/module 深链；正文不进入公开数据，身份变化立即清掉。
-  import { api, cacheUser, displayNameOf, escapeHtml, getCachedUser, loginUrl, registerUrl, refreshUser, isDm, onAuthChange } from '../../scripts/account-core.js';
+  import { api, cacheUser, displayNameOf, escapeHtml, getCachedUser, getToken, loginUrl, registerUrl, refreshUser, isDm, onAuthChange } from '../../scripts/account-core.js';
   import { renderMarkdown } from '../../scripts/mini-markdown.js';
+  import { mountWhiteboardCards } from '../../scripts/whiteboard-cards.js';
   import { jubenCases } from '../../data/juben.js';
   import { nextMission, resolveVaultMission, vaultDocList } from '../../scripts/juben-journey.js';
 
@@ -278,6 +279,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   const state = document.getElementById('vault-state');
   if (body && state) {
     let user = getCachedUser();
+    let sessionToken = getToken();
     let manifest = null;
     let activeCase = null;
     let activeDoc = null;
@@ -300,7 +302,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       return vaultGeneration;
     };
     const isCurrentVault = (generation, identity = identityKey(user)) => (
-      generation === vaultGeneration && identity === identityKey(user)
+      generation === vaultGeneration && identity === identityKey(user) && sessionToken === getToken()
     );
 
     function updateGateLinks() {
@@ -409,6 +411,7 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
         const { doc } = await api('GET', `/juben/doc/${encodeURIComponent(caseId)}/${encodeURIComponent(docId)}`);
         if (!current()) return;
         host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
+        mountWhiteboardCards(host);
       } catch (error) {
         if (!current()) return;
         host.innerHTML = `<p class="juben-vault-msg" data-tone="error">${escapeHtml(error.message)}</p>`;
@@ -568,6 +571,8 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
       }
       if (!user) return renderAnonymous();
       if (!isDm(user)) return renderRedeem();
+      setState('DM 档案库');
+      body.innerHTML = '<p class="juben-vault-loading">正在读取档案目录…</p>';
       try {
         const loadedManifest = await loadManifest();
         if (!isCurrentVault(generation, identity) || !isDm(user)) return;
@@ -589,7 +594,9 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     });
 
     onAuthChange((next) => {
-      const changed = identityKey(user) !== identityKey(next);
+      const token = getToken();
+      const changed = sessionToken !== token || identityKey(user) !== identityKey(next);
+      sessionToken = token;
       user = next;
       if (!changed) return;
       manifest = null;
@@ -601,13 +608,19 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
     });
 
     async function boot() {
-      try {
-        await refreshUser();
-        // 401 会清掉缓存；网络失败则保留缓存身份，后续接口各自降级。
-        user = getCachedUser();
-      } catch {
-        user = getCachedUser();
+      // 缓存只用于选择启动路径。目录接口本身每次都会在服务端核验 DM 权限。
+      if (!sessionToken) {
+        renderAnonymous();
+        return;
       }
+      if (isDm(user)) {
+        void renderForUser();
+        void refreshUser();
+        return;
+      }
+      const generation = vaultGeneration;
+      await refreshUser();
+      if (!isCurrentVault(generation)) return;
       renderForUser();
     }
 
@@ -856,6 +869,17 @@ const totalModules = jubenCases.reduce((sum, item) => sum + item.modules.length,
   :global(.juben-vault-doc-body img) { display: block; max-width: 100%; height: auto; margin: 1rem auto; border-radius: 6px; }
   :global(.juben-vault-doc-body .md-whiteboard-images) { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, max(19.5rem, calc((100% - .65rem) / 2))), 1fr)); align-items: start; gap: .65rem; margin: 1rem 0; }
   :global(.juben-vault-doc-body .md-whiteboard-images img) { width: min(100%, 40rem); margin: 0 auto; }
+  :global(.md-whiteboard-cards) { margin: 1rem 0; border: 1px solid var(--line); border-radius: 12px; background: var(--paper-3); }
+  :global(.md-whiteboard-cards nav) { display: flex; justify-content: space-between; align-items: center; gap: .35rem; padding: .7rem; border-bottom: 1px solid var(--line); font-size: .8rem; }
+  :global(.md-whiteboard-cards button) { min-height: 44px; padding: .4rem .65rem; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-2); color: var(--ink); font: inherit; cursor: pointer; }
+  :global(.md-whiteboard-cards button:disabled) { opacity: .55; cursor: default; }
+  :global(.md-whiteboard-cards section) { padding: .85rem; }
+  :global(.md-whiteboard-cards section[hidden]) { display: none; }
+  :global(.md-whiteboard-cards h4) { margin: 0; font-size: 1.08rem; }
+  :global(.md-whiteboard-cards img) { width: min(100%, 38rem); }
+  :global(.juben-vault-doc-body .md-case-chain) { display: grid; gap: 1rem; padding: 0; list-style: none; }
+  :global(.md-case-chain li) { position: relative; padding: .45rem .65rem; border: 1px solid var(--line); border-radius: 6px; background: var(--paper-2); color: var(--ink); }
+  :global(.md-case-chain li + li::before) { content: '↓'; position: absolute; top: -1.1rem; left: 1rem; color: var(--accent); }
   /* 表格必须保持 display:table + width:100%。给 table 设 display:block 会让浏览器
      为内部行列生成一个「按内容收缩」的匿名表格盒：外壳（.md-table，有圆角/底色）
      仍撑满整行，可见的表格却只占内容宽度，右边就空出一大片。横向滚动交给外壳的

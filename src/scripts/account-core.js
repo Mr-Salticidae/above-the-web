@@ -241,16 +241,24 @@ export async function api(method, path, body, options = {}) {
   return payload;
 }
 
-// 拉一次当前用户，顺带校验 token 还有效。没登录返回 null，不抛错。
+// 同一页面的账号菜单和功能区共用在途请求。切号时按令牌分别校验。
+const userRefreshes = new Map();
+
 export async function refreshUser() {
-  if (!getToken()) return null;
-  try {
-    const { user } = await api('GET', '/auth/me');
-    cacheUser(user);
-    return user;
-  } catch {
-    return null;
+  const token = getToken();
+  if (!token) return null;
+  if (!userRefreshes.has(token)) {
+    const request = api('GET', '/auth/me', undefined, { token })
+      .then(({ user }) => {
+        if (token !== getToken()) return null;
+        cacheUser(user);
+        return user;
+      })
+      .catch(() => null)
+      .finally(() => userRefreshes.delete(token));
+    userRefreshes.set(token, request);
   }
+  return userRefreshes.get(token);
 }
 
 export function onAuthChange(handler) {
