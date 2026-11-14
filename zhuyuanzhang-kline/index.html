@@ -1,0 +1,1659 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>朱元璋K线人生 | Above the Web</title>
+  <style>
+    :root {
+      --paper: #faf8f3;
+      --paper-2: #fffdfa;
+      --paper-3: #f1ece2;
+      --ink: #1b1813;
+      --ink-soft: #6b6357;
+      --line: #e7dfd0;
+      --accent: #6d4aff;
+      --accent-2: #c44aff;
+      --accent-soft: #efeaff;
+      --cinnabar: #c84630;
+      --cinnabar-soft: #fae7df;
+      --jade: #3f7f68;
+      --gold: #b9852d;
+      --shadow: 30, 24, 60;
+      --grid-line: 27, 24, 19;
+      --glow-1: 109, 74, 255;
+      --glow-2: 200, 70, 48;
+      --serif: "Songti SC", "Noto Serif SC", Georgia, "Times New Roman", serif;
+      --sans: "PingFang SC", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(52rem 34rem at 50% -11rem, rgba(var(--glow-1), .18), transparent 72%),
+        radial-gradient(42rem 30rem at 106% 24%, rgba(var(--glow-2), .10), transparent 68%),
+        linear-gradient(180deg, var(--paper), var(--paper-3) 68%, var(--paper));
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow: hidden;
+    }
+
+    body.is-plain { background: var(--paper); }
+    body.is-plain .stage {
+      background: var(--paper-2);
+      box-shadow: none;
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
+
+    .app {
+      height: 100dvh;
+      min-height: 560px;
+      padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: .85rem;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: start;
+      max-width: 92rem;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .kicker {
+      margin: 0 0 .18rem;
+      color: var(--ink-soft);
+      font-size: .7rem;
+      letter-spacing: .34em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 3.2rem;
+      line-height: 1.06;
+      letter-spacing: .04em;
+      text-shadow: 0 20px 60px rgba(var(--glow-1), .18);
+    }
+
+    .subtitle {
+      margin: .46rem 0 0;
+      max-width: 42rem;
+      color: var(--ink-soft);
+      font-size: .94rem;
+      line-height: 1.7;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(3, auto);
+      gap: .42rem;
+      justify-content: end;
+    }
+
+    .badge {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: .24rem .68rem;
+      background: color-mix(in srgb, var(--paper-2) 86%, transparent);
+      color: var(--ink-soft);
+      font-size: .72rem;
+      white-space: nowrap;
+      box-shadow: 0 12px 34px -28px rgba(var(--shadow), .42);
+    }
+
+    .badge strong { color: var(--ink); font-weight: 600; }
+
+    .stage {
+      position: relative;
+      min-height: 0;
+      max-width: 92rem;
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(var(--grid-line), .05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(var(--grid-line), .05) 1px, transparent 1px),
+        color-mix(in srgb, var(--paper-2) 88%, transparent);
+      background-size: 100% 20%, 7.14% 100%, auto;
+      box-shadow: 0 28px 90px -44px rgba(var(--shadow), .55);
+    }
+
+    canvas {
+      width: 100%;
+      height: calc(100% - 7rem);
+      display: block;
+    }
+
+    .chart-caption {
+      position: absolute;
+      top: .9rem;
+      left: .95rem;
+      right: .95rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: .8rem;
+      pointer-events: none;
+    }
+
+    .chapter-badge {
+      justify-self: center;
+      padding: .24rem .62rem;
+      border: 1px solid color-mix(in srgb, var(--gold) 38%, var(--line));
+      border-radius: 999px;
+      color: var(--ink);
+      background: color-mix(in srgb, var(--paper-2) 86%, transparent);
+      font-family: var(--serif);
+      font-size: .72rem;
+      white-space: nowrap;
+      transition: opacity .24s ease, transform .24s ease;
+    }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: .62rem;
+      flex-wrap: wrap;
+      color: var(--ink-soft);
+      font-size: .72rem;
+    }
+
+    .legend span { white-space: nowrap; }
+    .legend i {
+      display: inline-block;
+      width: .58rem;
+      height: .58rem;
+      border-radius: 2px;
+      margin-right: .28rem;
+      vertical-align: -1px;
+    }
+
+    .legend .up { background: var(--cinnabar); }
+    .legend .down { background: var(--jade); }
+    .legend .line { background: var(--accent); }
+
+    .phase {
+      justify-self: end;
+      color: var(--ink-soft);
+      font-size: .72rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .opening {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      gap: .72rem;
+      padding: 2rem;
+      text-align: center;
+      background: color-mix(in srgb, var(--paper-2) 94%, transparent);
+      transition: opacity .42s cubic-bezier(.22, 1, .36, 1), visibility .42s;
+    }
+
+    .opening.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .opening-mark {
+      color: var(--cinnabar);
+      font-size: .68rem;
+      letter-spacing: .28em;
+    }
+
+    .opening strong {
+      max-width: 18em;
+      font-family: var(--serif);
+      font-size: 3.1rem;
+      line-height: 1.22;
+      font-weight: 600;
+    }
+
+    .opening-sub {
+      color: var(--ink-soft);
+      font-size: .78rem;
+      letter-spacing: .18em;
+    }
+
+    .start-btn {
+      margin-top: 1.15rem;
+      display: grid;
+      justify-items: center;
+      gap: .3rem;
+      min-width: 15rem;
+      border: 0;
+      border-radius: 999px;
+      padding: 1.02rem 2.9rem 1.12rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff;
+      font-family: var(--serif);
+      font-size: 1.34rem;
+      letter-spacing: .12em;
+      cursor: pointer;
+      box-shadow: 0 18px 60px -12px rgba(var(--glow-1), .55);
+      animation: startPulse 2.1s cubic-bezier(.45, 0, .55, 1) infinite;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .start-btn:hover,
+    .start-btn:focus-visible {
+      transform: scale(1.045);
+      box-shadow: 0 22px 72px -10px rgba(var(--glow-1), .68);
+    }
+
+    .start-btn em {
+      font-family: var(--sans);
+      font-style: normal;
+      font-size: .68rem;
+      letter-spacing: .3em;
+      opacity: .82;
+    }
+
+    @keyframes startPulse {
+      0%, 100% { box-shadow: 0 18px 60px -12px rgba(var(--glow-1), .55); transform: scale(1); }
+      50% { box-shadow: 0 20px 78px -8px rgba(var(--glow-1), .8); transform: scale(1.018); }
+    }
+
+    .review-popover {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      z-index: 3;
+      width: min(26rem, calc(100% - 2rem));
+      padding: .86rem 1rem .92rem;
+      border: 1px solid color-mix(in srgb, var(--gold) 56%, var(--line));
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--paper-2) 94%, transparent);
+      box-shadow: 0 24px 70px -34px rgba(var(--shadow), .62);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translate(-50%, -40%) scale(.96);
+      transition:
+        opacity .28s cubic-bezier(.22, 1, .36, 1),
+        transform .34s cubic-bezier(.22, 1, .36, 1),
+        visibility .28s;
+    }
+
+    .review-popover.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .review-kicker {
+      display: block;
+      margin-bottom: .3rem;
+      color: var(--cinnabar);
+      font-size: .66rem;
+      letter-spacing: .18em;
+    }
+
+    .review-popover strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.16rem;
+      line-height: 1.4;
+    }
+
+    .review-popover p {
+      margin: .32rem 0 0;
+      color: var(--ink-soft);
+      font-size: .82rem;
+      line-height: 1.58;
+    }
+
+    .resume-hint {
+      display: none;
+      margin-top: .55rem;
+      padding-top: .5rem;
+      border-top: 1px dashed color-mix(in srgb, var(--gold) 45%, var(--line));
+      color: var(--accent);
+      font-size: .72rem;
+      letter-spacing: .22em;
+    }
+
+    .review-popover.is-waiting {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .review-popover.is-waiting .resume-hint {
+      display: block;
+      animation: hintBlink 1.6s ease-in-out infinite;
+    }
+
+    @keyframes hintBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .45; }
+    }
+
+    .event-card {
+      position: absolute;
+      left: .95rem;
+      bottom: .95rem;
+      width: min(30rem, calc(100% - 1.9rem));
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+      border-radius: 8px;
+      padding: .88rem .98rem;
+      background: color-mix(in srgb, var(--paper-2) 93%, transparent);
+      box-shadow: 0 18px 54px -34px rgba(var(--shadow), .58);
+      backdrop-filter: blur(10px);
+    }
+
+    .event-card strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      line-height: 1.35;
+    }
+
+    .event-card span {
+      display: block;
+      margin-top: .28rem;
+      color: var(--ink-soft);
+      font-size: .84rem;
+      line-height: 1.65;
+    }
+
+    .controls {
+      position: absolute;
+      right: .95rem;
+      bottom: .95rem;
+      display: flex;
+      align-items: center;
+      gap: .48rem;
+      padding: .42rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--paper-2) 92%, transparent);
+      box-shadow: 0 18px 48px -34px rgba(var(--shadow), .48);
+      backdrop-filter: blur(10px);
+      transition: opacity .22s ease, transform .22s ease;
+    }
+
+    .stage.is-playing .controls {
+      opacity: .28;
+      transform: translateY(2px);
+    }
+
+    .stage.is-playing .controls:hover,
+    .stage.is-playing .controls:focus-within {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .icon-btn,
+    .text-btn {
+      border: 1px solid transparent;
+      background: transparent;
+      cursor: pointer;
+      transition: background .15s ease, color .15s ease, transform .15s ease;
+    }
+
+    .icon-btn {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+
+    .text-btn {
+      min-height: 2rem;
+      border-radius: 999px;
+      padding: .28rem .72rem;
+      font-size: .78rem;
+      white-space: nowrap;
+    }
+
+    .icon-btn:hover,
+    .text-btn:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .icon {
+      width: 1rem;
+      height: 1rem;
+      display: block;
+    }
+
+    .settings-dialog {
+      width: min(29rem, calc(100vw - 2rem));
+      max-height: calc(100dvh - 2rem);
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0;
+      color: var(--ink);
+      background: color-mix(in srgb, var(--paper-2) 96%, transparent);
+      box-shadow: 0 28px 90px -32px rgba(var(--shadow), .56);
+    }
+
+    .settings-dialog::backdrop {
+      background: rgba(var(--shadow), .38);
+      backdrop-filter: blur(5px);
+    }
+
+    .settings-head,
+    .settings-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: .85rem 1rem;
+    }
+
+    .settings-head { border-bottom: 1px solid var(--line); }
+    .settings-foot { border-top: 1px solid var(--line); }
+    .settings-head strong { font-family: var(--serif); font-size: 1.05rem; }
+
+    .settings-body {
+      display: grid;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .setting-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: .7rem 1rem;
+    }
+
+    .setting-row label,
+    .setting-title { font-size: .82rem; color: var(--ink); }
+    .setting-title { margin: 0 0 .5rem; }
+    .setting-value { color: var(--ink-soft); font-size: .75rem; font-variant-numeric: tabular-nums; }
+
+    .setting-row input[type="range"] {
+      grid-column: 1 / -1;
+      width: 100%;
+      accent-color: var(--accent);
+    }
+
+    .setting-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: .82rem;
+    }
+
+    .setting-toggle input { accent-color: var(--accent); width: 1rem; height: 1rem; }
+
+    .palette-options {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .45rem;
+    }
+
+    @media (max-width: 640px) {
+      .palette-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    .palette-btn {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: .58rem .48rem;
+      background: var(--paper-2);
+      cursor: pointer;
+      font-size: .74rem;
+    }
+
+    .palette-btn[aria-pressed="true"] {
+      border-color: var(--accent);
+      box-shadow: inset 0 -2px 0 var(--accent);
+    }
+
+    .swatches {
+      display: flex;
+      justify-content: center;
+      gap: .22rem;
+      margin-bottom: .34rem;
+    }
+
+    .swatches i { width: .75rem; height: .75rem; border-radius: 50%; }
+    .palette-btn[data-palette="above"] .swatches i:nth-child(1) { background: #6d4aff; }
+    .palette-btn[data-palette="above"] .swatches i:nth-child(2) { background: #c84630; }
+    .palette-btn[data-palette="above"] .swatches i:nth-child(3) { background: #3f7f68; }
+    .palette-btn[data-palette="palace"] .swatches i:nth-child(1) { background: #a43d2f; }
+    .palette-btn[data-palette="palace"] .swatches i:nth-child(2) { background: #bd842f; }
+    .palette-btn[data-palette="palace"] .swatches i:nth-child(3) { background: #4d725c; }
+    .palette-btn[data-palette="ink"] .swatches i:nth-child(1) { background: #315f63; }
+    .palette-btn[data-palette="ink"] .swatches i:nth-child(2) { background: #b84b3b; }
+    .palette-btn[data-palette="ink"] .swatches i:nth-child(3) { background: #b38a42; }
+    .palette-btn[data-palette="night"] { background: #151827; color: #f0ead9; border-color: #2b2e3e; }
+    .palette-btn[data-palette="night"] .swatches i:nth-child(1) { background: #9d7bff; }
+    .palette-btn[data-palette="night"] .swatches i:nth-child(2) { background: #ff6b4a; }
+    .palette-btn[data-palette="night"] .swatches i:nth-child(3) { background: #3fd08f; }
+
+    .timeline {
+      max-width: 92rem;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      gap: .34rem;
+      overflow-x: auto;
+      padding-bottom: .14rem;
+      scrollbar-width: none;
+    }
+
+    .timeline::-webkit-scrollbar { display: none; }
+
+    .event-button {
+      flex: 0 0 clamp(4.5rem, 5.2vw, 5.9rem);
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: .42rem .44rem;
+      background: color-mix(in srgb, var(--paper-2) 82%, transparent);
+      cursor: pointer;
+      color: var(--ink-soft);
+      text-align: left;
+      transition: border-color .22s ease, background .22s ease, color .22s ease, transform .22s ease, box-shadow .22s ease;
+    }
+
+    .event-button:hover,
+    .event-button.is-active {
+      color: var(--ink);
+      background: var(--paper-2);
+      border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+      transform: translateY(-1px);
+    }
+
+    .event-button.is-active {
+      box-shadow: inset 0 3px 0 var(--accent);
+    }
+
+    .event-button b,
+    .event-button span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .event-button b {
+      font-size: .68rem;
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: currentColor;
+    }
+
+    .event-button span {
+      margin-top: .04rem;
+      font-family: var(--serif);
+      font-size: .82rem;
+      color: var(--ink);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 980px) {
+      .app {
+        min-height: 100dvh;
+        height: 100dvh;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+        gap: .65rem;
+      }
+
+      h1 { font-size: 2.4rem; }
+
+      .meta {
+        justify-content: start;
+        grid-template-columns: repeat(3, max-content);
+        overflow-x: auto;
+        padding-bottom: .05rem;
+      }
+
+      .timeline {
+        display: flex;
+      }
+
+      .event-button {
+        flex: 0 0 7rem;
+        scroll-snap-align: start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        min-height: 100dvh;
+        padding: .78rem;
+        gap: .6rem;
+        grid-template-rows: auto minmax(0, 1fr) 3.45rem;
+      }
+
+      .kicker { font-size: .62rem; letter-spacing: .24em; }
+      h1 { font-size: 1.9rem; }
+      .opening strong { font-size: 1.82rem; }
+      .review-popover { top: 42%; }
+      .review-popover strong { font-size: 1.04rem; }
+      .review-popover p { font-size: .76rem; line-height: 1.5; }
+      .subtitle { display: none; }
+      .meta { grid-template-columns: repeat(3, max-content); }
+      .badge { font-size: .66rem; padding: .18rem .52rem; }
+
+      .chart-caption {
+        top: .62rem;
+        left: .65rem;
+        right: .65rem;
+        grid-template-columns: 1fr auto;
+        align-items: start;
+      }
+
+      canvas { height: calc(100% - 9rem); }
+
+      .phase { display: none; }
+      .chapter-badge { justify-self: end; font-size: .66rem; }
+      .legend { max-width: 10rem; gap: .36rem; font-size: .62rem; }
+      .legend span:nth-child(3) { display: none; }
+
+      .event-card {
+        left: .65rem;
+        right: .65rem;
+        bottom: 3.8rem;
+        width: auto;
+        padding: .68rem .76rem;
+      }
+
+      .event-card span {
+        font-size: .76rem;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .controls {
+        left: .65rem;
+        right: .65rem;
+        bottom: .65rem;
+        justify-content: space-between;
+        border-radius: 8px;
+      }
+
+      .text-btn {
+        flex: 1;
+        text-align: center;
+      }
+
+      .event-button {
+        flex-basis: 5.9rem;
+        padding: .38rem .42rem;
+      }
+
+      .event-button span { font-size: .76rem; }
+    }
+
+    @media (max-width: 390px) {
+      .subtitle {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      .app {
+        padding: .62rem;
+        grid-template-rows: auto minmax(0, 1fr) 3.3rem;
+      }
+
+      .legend span:nth-child(2) { display: none; }
+      .event-card { bottom: 3.55rem; }
+      .event-card span { -webkit-line-clamp: 1; }
+      .icon-btn { width: 1.88rem; height: 1.88rem; }
+      canvas { height: calc(100% - 8rem); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .icon-btn,
+      .text-btn,
+      .event-button,
+      .review-popover { transition: none; }
+      .start-btn { animation: none; }
+      .review-popover.is-waiting .resume-hint { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <p class="kicker">Above the Web Lab · Historical Candlestick</p>
+        <h1>朱元璋K线人生</h1>
+        <p class="subtitle">镜头跟随朱元璋从濠州少年走到大明开国，每根K线都是一个年龄切片。数值是叙事指数，不是金融或史学定量。</p>
+      </div>
+      <div class="meta" aria-label="关键指标">
+        <span class="badge"><strong>70年</strong> 1328-1398</span>
+        <span class="badge"><strong>27幕</strong> 人生K线</span>
+        <span class="badge"><strong>96</strong> 权力峰值</span>
+      </div>
+    </header>
+
+    <section class="stage" aria-label="朱元璋一生叙事K线图">
+      <h2 class="sr-only">朱元璋一生叙事K线图</h2>
+      <div class="opening" id="opening" aria-hidden="true">
+        <span class="opening-mark">HISTORICAL CANDLESTICK</span>
+        <strong>如果朱元璋的一生<br />是一根 K 线</strong>
+        <span class="opening-sub">1328—1398 · 从赤贫到帝国中枢</span>
+        <button class="start-btn" id="startBtn" type="button">开始播放<em>SPACE · 按下空格</em></button>
+      </div>
+      <aside class="review-popover" id="reviewPopover" role="status" aria-live="polite">
+        <span class="review-kicker" id="reviewKicker">阶段回望</span>
+        <strong id="reviewTitle">第一章 · 乱世低开</strong>
+        <p id="reviewSummary">灾荒夺走家庭，寺院与云游让一个赤贫少年看见真实天下。</p>
+        <span class="resume-hint" id="resumeHint">␣ 按空格 · 继续下一章</span>
+      </aside>
+      <canvas id="chart" aria-label="红色上行、绿色回撤、紫色均线和金色冲击量组成的朱元璋一生K线图"></canvas>
+      <div class="chart-caption">
+        <div class="legend" aria-label="图例">
+          <span><i class="up"></i>阶段抬升</span>
+          <span><i class="down"></i>阶段回撤</span>
+          <span><i class="line"></i>命运轨迹</span>
+        </div>
+        <span class="chapter-badge" id="chapterLabel">第一章 · 乱世低开</span>
+        <span class="phase" id="phaseLabel">1328 · 低位开盘</span>
+      </div>
+      <div class="event-card" id="eventCard">
+        <strong>1328 · 约0岁 · 濠州出生</strong>
+        <span>人生低开，背景是灾荒、贫困与元末社会失序。</span>
+      </div>
+      <div class="controls" aria-label="播放控制">
+        <button class="icon-btn" id="playBtn" aria-label="播放或暂停">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z" fill="currentColor"/></svg>
+        </button>
+        <button class="icon-btn" id="resetBtn" aria-label="重播">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4.5v5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn" id="darkBtn" aria-label="切换暗色调" aria-pressed="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn" id="settingsBtn" aria-label="调整播放与外观" aria-haspopup="dialog" aria-expanded="false">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" stroke="currentColor" stroke-width="1.7"/><path d="M19 13.2v-2.4l-2.1-.7a7 7 0 0 0-.6-1.4l1-2-1.7-1.7-2 1a7 7 0 0 0-1.4-.6L11.5 3h-2.4l-.7 2.1a7 7 0 0 0-1.4.6l-2-1-1.7 1.7 1 2a7 7 0 0 0-.6 1.4l-2.1.7v2.4l2.1.7a7 7 0 0 0 .6 1.4l-1 2 1.7 1.7 2-1a7 7 0 0 0 1.4.6l.7 2.1h2.4l.7-2.1a7 7 0 0 0 1.4-.6l2 1 1.7-1.7-1-2a7 7 0 0 0 .6-1.4l2.1-.7Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="text-btn" id="nextBtn">下一根</button>
+      </div>
+    </section>
+
+    <dialog class="settings-dialog" id="settingsDialog" aria-labelledby="settingsTitle">
+      <div class="settings-head">
+        <strong id="settingsTitle">播放与外观</strong>
+        <button class="icon-btn" id="closeSettingsBtn" aria-label="关闭设置">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="settings-body">
+        <div class="setting-row">
+          <label for="speedInput">播放速度</label>
+          <output class="setting-value" id="speedValue" for="speedInput">1.3×</output>
+          <input id="speedInput" type="range" min="0.5" max="2" step="0.1" value="1.3" />
+        </div>
+        <div class="setting-row">
+          <label for="zoomInput">镜头特写</label>
+          <output class="setting-value" id="zoomValue" for="zoomInput">100%</output>
+          <input id="zoomInput" type="range" min="0.5" max="1.5" step="0.1" value="1" />
+        </div>
+        <label class="setting-toggle" for="backgroundInput">
+          <span>背景纹理</span>
+          <input id="backgroundInput" type="checkbox" checked />
+        </label>
+        <label class="setting-toggle" for="bandInput">
+          <span>波动区间底色</span>
+          <input id="bandInput" type="checkbox" />
+        </label>
+        <label class="setting-toggle" for="glowInput">
+          <span>轨迹光点</span>
+          <input id="glowInput" type="checkbox" checked />
+        </label>
+        <label class="setting-toggle" for="soundInput">
+          <span>节点声音</span>
+          <input id="soundInput" type="checkbox" />
+        </label>
+        <div>
+          <p class="setting-title">配色方案</p>
+          <div class="palette-options" aria-label="配色方案">
+            <button class="palette-btn" type="button" data-palette="above" aria-pressed="true"><span class="swatches"><i></i><i></i><i></i></span>暮山紫</button>
+            <button class="palette-btn" type="button" data-palette="palace" aria-pressed="false"><span class="swatches"><i></i><i></i><i></i></span>宫墙朱</button>
+            <button class="palette-btn" type="button" data-palette="ink" aria-pressed="false"><span class="swatches"><i></i><i></i><i></i></span>山水墨</button>
+            <button class="palette-btn" type="button" data-palette="night" aria-pressed="false"><span class="swatches"><i></i><i></i><i></i></span>暗夜盘</button>
+          </div>
+        </div>
+      </div>
+      <div class="settings-foot">
+        <span class="setting-value">调整即时生效</span>
+        <button class="text-btn" id="resetSettingsBtn" type="button">恢复默认</button>
+      </div>
+    </dialog>
+
+    <nav class="timeline" id="timeline" aria-label="历史节点"></nav>
+  </main>
+
+  <script>
+    const candles = [
+      { year: 1328, age: 0, title: '濠州出生', open: 18, high: 24, low: 12, close: 16, volume: 20, phase: '低位开盘', note: '出生于濠州钟离贫苦农家，人生从乱世低位开盘。' },
+      { year: 1344, age: 16, title: '亲人相继去世', open: 16, high: 18, low: 7, close: 9, volume: 78, phase: '深度回撤', note: '灾荒与疫病击穿家庭，生存压力跌至谷底。' },
+      { year: 1344, age: 16, title: '入皇觉寺', open: 9, high: 15, low: 8, close: 13, volume: 42, phase: '低位求生', note: '孤无所依，进入皇觉寺为僧，获得短暂栖身之所。' },
+      { year: 1347, age: 19, title: '云游归寺', open: 13, high: 20, low: 10, close: 18, volume: 36, phase: '底部蓄势', note: '托钵云游后重返寺院，对民间疾苦与地理人情有了切身认识。' },
+      { year: 1352, age: 24, title: '投奔郭子兴', open: 18, high: 34, low: 14, close: 31, volume: 82, phase: '放量突破', note: '加入郭子兴部，从被动求生转入乱世博弈。' },
+      { year: 1353, age: 25, title: '回乡募兵', open: 31, high: 40, low: 27, close: 38, volume: 68, phase: '自成一军', note: '返回故里招兵买马，开始建立自己的核心队伍。' },
+      { year: 1355, age: 27, title: '渡江克太平', open: 38, high: 49, low: 34, close: 46, volume: 74, phase: '渡江上攻', note: '渡过长江攻取太平，战略视野从淮西推向江南。' },
+      { year: 1356, age: 28, title: '攻取集庆', open: 46, high: 58, low: 41, close: 55, volume: 88, phase: '根基成形', note: '攻克集庆并改为应天府，终于拥有稳定根据地。' },
+      { year: 1356, age: 28, title: '采纳朱升之策', open: 55, high: 61, low: 49, close: 58, volume: 57, phase: '积粮缓进', note: '以“高筑墙、广积粮、缓称王”收束锋芒，积蓄长期优势。' },
+      { year: 1360, age: 32, title: '龙湾之战', open: 58, high: 68, low: 47, close: 64, volume: 84, phase: '承压反攻', note: '击退陈友谅大军，把都城危机转化为战略主动。' },
+      { year: 1363, age: 35, title: '鄱阳湖决战', open: 64, high: 79, low: 51, close: 76, volume: 100, phase: '巨量决战', note: '在高波动决战中击败陈友谅，南方格局被重新定价。' },
+      { year: 1364, age: 36, title: '自立吴王', open: 76, high: 83, low: 70, close: 80, volume: 66, phase: '王权确立', note: '建立百司官属，从军事集团迈向准国家政权。' },
+      { year: 1367, age: 39, title: '平定张士诚', open: 80, high: 88, low: 73, close: 86, volume: 79, phase: '东线收官', note: '攻破平江，主要割据对手相继退出牌局。' },
+      { year: 1367, age: 39, title: '挥师北伐', open: 86, high: 91, low: 80, close: 89, volume: 86, phase: '北伐启动', note: '命徐达、常遇春北伐中原，统一进程进入最后阶段。' },
+      { year: 1368, age: 40, title: '称帝建明', open: 89, high: 96, low: 84, close: 94, volume: 100, phase: '权力峰值', note: '在应天即皇帝位，国号大明，建元洪武。' },
+      { year: 1368, age: 40, title: '攻克大都', open: 94, high: 96, low: 87, close: 92, volume: 91, phase: '北方易主', note: '明军攻克大都，元朝在中原的统治结束。' },
+      { year: 1370, age: 42, title: '分封诸王', open: 92, high: 95, low: 84, close: 89, volume: 58, phase: '高位建制', note: '以宗室分封拱卫边陲，也埋下未来藩权张力。' },
+      { year: 1372, age: 44, title: '北伐受挫', open: 89, high: 92, low: 75, close: 81, volume: 76, phase: '高位回撤', note: '深入漠北的军事行动受挫，统一之后仍有边疆压力。' },
+      { year: 1376, age: 48, title: '重整地方行政', open: 81, high: 88, low: 78, close: 86, volume: 52, phase: '制度修复', note: '调整地方行政体系，中央对地方的控制进一步制度化。' },
+      { year: 1378, age: 50, title: '定应天为京师', open: 86, high: 91, low: 82, close: 88, volume: 45, phase: '中枢落定', note: '正式确定应天的京师地位，王朝中枢稳定下来。' },
+      { year: 1380, age: 52, title: '胡惟庸案', open: 88, high: 93, low: 69, close: 78, volume: 96, phase: '制度剧震', note: '废中书省与丞相，六部直隶皇帝，权力空前集中。' },
+      { year: 1381, age: 53, title: '推行黄册里甲', open: 78, high: 87, low: 74, close: 84, volume: 63, phase: '治理反弹', note: '户籍、赋役与基层组织被纳入更严密的国家治理。' },
+      { year: 1382, age: 54, title: '设置锦衣卫', open: 84, high: 91, low: 78, close: 88, volume: 83, phase: '控制上扬', note: '皇帝直接掌控侦缉刑狱，安全感与紧张感同时升高。' },
+      { year: 1387, age: 59, title: '普丈土地', open: 88, high: 92, low: 82, close: 89, volume: 59, phase: '财赋定盘', note: '普遍丈量土地并编制鱼鳞图册，国家财赋底盘更加清晰。' },
+      { year: 1390, age: 62, title: '李善长案', open: 89, high: 91, low: 68, close: 77, volume: 90, phase: '信任下行', note: '胡案牵连继续扩大，功臣集团与皇权的信任彻底破裂。' },
+      { year: 1392, age: 64, title: '太子朱标去世', open: 77, high: 80, low: 57, close: 62, volume: 88, phase: '继承冲击', note: '长期培养的继承人突然离世，帝国未来出现巨大缺口。' },
+      { year: 1398, age: 70, title: '病逝南京', open: 62, high: 66, low: 46, close: 52, volume: 64, phase: '一生收盘', note: '在位三十一年后病逝，留下统一王朝与高度集权的制度遗产。' }
+    ];
+
+    const canvas = document.getElementById('chart');
+    const ctx = canvas.getContext('2d');
+    const stage = document.querySelector('.stage');
+    const opening = document.getElementById('opening');
+    const reviewPopover = document.getElementById('reviewPopover');
+    const reviewKicker = document.getElementById('reviewKicker');
+    const reviewTitle = document.getElementById('reviewTitle');
+    const reviewSummary = document.getElementById('reviewSummary');
+    const timeline = document.getElementById('timeline');
+    const eventCard = document.getElementById('eventCard');
+    const chapterLabel = document.getElementById('chapterLabel');
+    const phaseLabel = document.getElementById('phaseLabel');
+    const playBtn = document.getElementById('playBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const darkBtn = document.getElementById('darkBtn');
+    const startBtn = document.getElementById('startBtn');
+    const resumeHint = document.getElementById('resumeHint');
+    const settingsDialog = document.getElementById('settingsDialog');
+    const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+    const resetSettingsBtn = document.getElementById('resetSettingsBtn');
+    const speedInput = document.getElementById('speedInput');
+    const speedValue = document.getElementById('speedValue');
+    const zoomInput = document.getElementById('zoomInput');
+    const zoomValue = document.getElementById('zoomValue');
+    const backgroundInput = document.getElementById('backgroundInput');
+    const bandInput = document.getElementById('bandInput');
+    const glowInput = document.getElementById('glowInput');
+    const soundInput = document.getElementById('soundInput');
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarsePointer = matchMedia('(pointer: coarse)').matches;
+    const CONTINUE_HINT = coarsePointer ? '轻点 · 继续下一章' : '␣ 按空格 · 继续下一章';
+    const REPLAY_HINT = coarsePointer ? '轻点 · 重播一生' : '␣ 按空格 · 重播一生';
+
+    const defaultSettings = Object.freeze({ speed: 1.3, zoom: 1, background: true, band: false, glow: true, sound: false, palette: 'above' });
+    const settings = { ...defaultSettings };
+    const palettes = {
+      above: {
+        '--paper': '#faf8f3', '--paper-2': '#fffdfa', '--paper-3': '#f1ece2', '--ink': '#1b1813',
+        '--ink-soft': '#6b6357', '--line': '#e7dfd0', '--accent': '#6d4aff', '--accent-2': '#c44aff',
+        '--accent-soft': '#efeaff', '--cinnabar': '#c84630', '--jade': '#3f7f68', '--gold': '#b9852d',
+        '--shadow': '30, 24, 60', '--grid-line': '27, 24, 19', '--glow-1': '109, 74, 255', '--glow-2': '200, 70, 48'
+      },
+      palace: {
+        '--paper': '#fbf7ef', '--paper-2': '#fffaf2', '--paper-3': '#eee4d4', '--ink': '#211712',
+        '--ink-soft': '#756258', '--line': '#e5d8c5', '--accent': '#a43d2f', '--accent-2': '#bd842f',
+        '--accent-soft': '#f4e2da', '--cinnabar': '#b84230', '--jade': '#4d725c', '--gold': '#bd842f',
+        '--shadow': '52, 31, 24', '--grid-line': '33, 23, 18', '--glow-1': '164, 61, 47', '--glow-2': '189, 132, 47'
+      },
+      ink: {
+        '--paper': '#f3f6f3', '--paper-2': '#fbfdfb', '--paper-3': '#e5ebe6', '--ink': '#15201e',
+        '--ink-soft': '#596b67', '--line': '#d5dfda', '--accent': '#315f63', '--accent-2': '#b38a42',
+        '--accent-soft': '#dfeceb', '--cinnabar': '#b84b3b', '--jade': '#3d7367', '--gold': '#b38a42',
+        '--shadow': '20, 41, 39', '--grid-line': '21, 32, 30', '--glow-1': '49, 95, 99', '--glow-2': '179, 138, 66'
+      },
+      night: {
+        '--paper': '#0d0f16', '--paper-2': '#151827', '--paper-3': '#090b11', '--ink': '#f0ead9',
+        '--ink-soft': '#9e97a8', '--line': '#2b2e3e', '--accent': '#9d7bff', '--accent-2': '#d76bff',
+        '--accent-soft': '#2a2344', '--cinnabar': '#ff6b4a', '--jade': '#3fd08f', '--gold': '#e3aa4f',
+        '--shadow': '0, 0, 0', '--grid-line': '240, 234, 217', '--glow-1': '157, 123, 255', '--glow-2': '255, 107, 74'
+      }
+    };
+
+    let active = 0;
+    let progress = 0;
+    let playing = false;
+    let hasStarted = false;
+    let resumeGate = null;
+    let awaitingSpace = false;
+    let lastLightPalette = 'above';
+    let lastTime = 0;
+    let dpr = 1;
+    let frameId = 0;
+    let palette;
+    let playbackTime = 0;
+    let camera = 0;
+    let cameraSpan = NaN;
+    let narrativeKey = '';
+    let audioContext;
+
+    const LAST_INDEX = candles.length - 1;
+    const OPENING_DURATION = 1.55;
+    const TRAVEL_DURATION = .56;
+    const NODE_REVEAL_DURATION = .26;
+    const MINOR_HOLD = .5;
+    const MAJOR_HOLD = 1.85;
+    const CHAPTER_REVIEW_DURATION = 1.55;
+    const FINAL_REVIEW_DURATION = 5.5;
+    const MAJOR_NODES = new Set([0, 1, 4, 7, 10, 14, 15, 20, 24, 25, 26]);
+    const chapters = [
+      { start: 0, end: 3, label: '第一章 · 乱世低开', summary: '灾荒夺走家庭，寺院与云游让一个赤贫少年看见真实天下。' },
+      { start: 4, end: 8, label: '第二章 · 义军起势', summary: '从投军、募兵到据有应天，求生者开始拥有自己的基本盘。' },
+      { start: 9, end: 15, label: '第三章 · 逐鹿天下', summary: '龙湾承压、鄱阳决战、北伐定局，命运曲线冲上权力峰值。' },
+      { start: 16, end: 23, label: '第四章 · 洪武定盘', summary: '统一之后转向制度建设，治理能力与皇权集中同步上行。' },
+      { start: 24, end: 26, label: '第五章 · 高位余震', summary: '功臣案与继承危机接连回撤，帝王晚年在高位震荡中收盘。' }
+    ];
+
+    function chapterForIndex(index) {
+      return chapters.find((chapter) => index >= chapter.start && index <= chapter.end) || chapters[0];
+    }
+
+    const playbackSchedule = (() => {
+      let cursor = OPENING_DURATION;
+      return candles.map((_, index) => {
+        const travelStart = index === 0 ? cursor : cursor;
+        const arrival = index === 0 ? cursor : cursor + TRAVEL_DURATION;
+        const holdEnd = arrival + (MAJOR_NODES.has(index) ? MAJOR_HOLD : MINOR_HOLD);
+        const isChapterEnd = chapters.some((chapter) => chapter.end === index) && index !== LAST_INDEX;
+        const reviewEnd = holdEnd + (isChapterEnd ? CHAPTER_REVIEW_DURATION : 0);
+        cursor = reviewEnd;
+        return { travelStart, arrival, holdEnd, reviewEnd, isChapterEnd };
+      });
+    })();
+    const FINAL_REVIEW_START = playbackSchedule[LAST_INDEX].holdEnd;
+    const END_TIME = FINAL_REVIEW_START + FINAL_REVIEW_DURATION;
+    const chapterGates = playbackSchedule.filter((segment) => segment.isChapterEnd).map((segment) => segment.reviewEnd);
+
+    const movingAverages = candles.map((_, index) => {
+      const start = Math.max(0, index - 2);
+      let total = 0;
+      for (let i = start; i <= index; i++) total += candles[i].close;
+      return total / (index - start + 1);
+    });
+
+    function css(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function readPalette() {
+      palette = {
+        sans: css('--sans'),
+        line: css('--line'),
+        inkSoft: css('--ink-soft'),
+        jade: css('--jade'),
+        cinnabar: css('--cinnabar'),
+        accent: css('--accent')
+      };
+    }
+
+    function applySettings(next = {}) {
+      if (!next || typeof next !== 'object') return { ...settings };
+      const zoomChanged = 'zoom' in next;
+      if ('speed' in next) settings.speed = Math.max(.5, Math.min(2, Number(next.speed) || 1));
+      if ('zoom' in next) settings.zoom = Math.max(.5, Math.min(1.5, Number(next.zoom) || 1));
+      if ('background' in next) settings.background = Boolean(next.background);
+      if ('band' in next) settings.band = Boolean(next.band);
+      if ('glow' in next) settings.glow = Boolean(next.glow);
+      if ('sound' in next) settings.sound = Boolean(next.sound);
+      if (next.palette && palettes[next.palette]) settings.palette = next.palette;
+      if (settings.palette !== 'night') lastLightPalette = settings.palette;
+
+      Object.entries(palettes[settings.palette]).forEach(([name, value]) => {
+        document.documentElement.style.setProperty(name, value);
+      });
+      document.body.classList.toggle('is-plain', !settings.background);
+      darkBtn.setAttribute('aria-pressed', String(settings.palette === 'night'));
+
+      speedInput.value = String(settings.speed);
+      speedValue.textContent = `${settings.speed.toFixed(1)}×`;
+      zoomInput.value = String(settings.zoom);
+      zoomValue.textContent = `${Math.round(settings.zoom * 100)}%`;
+      backgroundInput.checked = settings.background;
+      bandInput.checked = settings.band;
+      glowInput.checked = settings.glow;
+      soundInput.checked = settings.sound;
+      document.querySelectorAll('.palette-btn').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.palette === settings.palette));
+      });
+
+      readPalette();
+      if (zoomChanged && !narrativeKey.startsWith('review-')) cameraSpan = closeSpanForWidth();
+      draw();
+      return { ...settings };
+    }
+
+    function resetSettings() {
+      return applySettings({ ...defaultSettings });
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+      canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!cameraSpan || !Number.isFinite(cameraSpan)) cameraSpan = closeSpanForWidth(rect.width);
+      readPalette();
+      measureTimeline();
+      draw();
+    }
+
+    function closeSpanForWidth(width = canvas.clientWidth) {
+      const baseSpan = width < 520 ? 4.6 : width < 900 ? 7.4 : 10.6;
+      const closeUp = width < 520 ? 1.15 : width < 900 ? 2 : 2.9;
+      return Math.max(2.6, baseSpan - closeUp * settings.zoom);
+    }
+
+    function xOf(i, plot, viewSpan) {
+      return plot.x + plot.w / 2 + (i - camera) * (plot.w / viewSpan);
+    }
+
+    function yOf(value, plot) {
+      return plot.y + plot.h - (value / 96) * plot.h;
+    }
+
+    function clamp01(value) {
+      return Math.max(0, Math.min(1, value));
+    }
+
+    function smoothstep(value) {
+      const t = clamp01(value);
+      return t * t * (3 - 2 * t);
+    }
+
+    function nodeArrival(index) {
+      return playbackSchedule[index]?.arrival ?? 0;
+    }
+
+    function nodeReveal(index, extraDelay = 0) {
+      return smoothstep((playbackTime - nodeArrival(index) - extraDelay) / NODE_REVEAL_DURATION);
+    }
+
+    function motionAt(time) {
+      const closeSpan = closeSpanForWidth();
+      if (time < OPENING_DURATION) {
+        return { progress: 0, active: 0, targetCamera: 0, targetSpan: closeSpan, mode: 'opening' };
+      }
+
+      for (let index = 0; index < playbackSchedule.length; index++) {
+        const segment = playbackSchedule[index];
+        if (index > 0 && time < segment.arrival) {
+          const travel = smoothstep((time - segment.travelStart) / TRAVEL_DURATION);
+          return {
+            progress: index - 1 + travel,
+            active: index - 1,
+            targetCamera: index - 1 + travel,
+            targetSpan: closeSpan,
+            mode: 'travel'
+          };
+        }
+        if (time < segment.holdEnd) {
+          return { progress: index, active: index, targetCamera: index, targetSpan: closeSpan, mode: 'node' };
+        }
+        if (time < segment.reviewEnd) {
+          const chapter = chapterForIndex(index);
+          return {
+            progress: index,
+            active: index,
+            targetCamera: (chapter.start + chapter.end) / 2,
+            targetSpan: Math.max(closeSpan, chapter.end - chapter.start + 2.2),
+            mode: 'chapter-review',
+            chapter
+          };
+        }
+      }
+
+      return {
+        progress: LAST_INDEX,
+        active: LAST_INDEX,
+        targetCamera: LAST_INDEX / 2,
+        targetSpan: LAST_INDEX + 2.4,
+        mode: 'final-review',
+        chapter: chapters[chapters.length - 1]
+      };
+    }
+
+    function roundedRect(x, y, w, h, r) {
+      const radius = Math.min(r, w / 2, h / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.arcTo(x + w, y, x + w, y + h, radius);
+      ctx.arcTo(x + w, y + h, x, y + h, radius);
+      ctx.arcTo(x, y + h, x, y, radius);
+      ctx.arcTo(x, y, x + w, y, radius);
+      ctx.closePath();
+    }
+
+    function drawLabel(text, x, y, align = 'center') {
+      ctx.textAlign = align;
+      ctx.fillText(text, x, y);
+    }
+
+    function draw() {
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      ctx.clearRect(0, 0, width, height);
+
+      const phone = width < 520;
+      const plot = {
+        x: phone ? 34 : 58,
+        y: phone ? 50 : 66,
+        w: width - (phone ? 58 : 96),
+        h: height - (phone ? 122 : 156)
+      };
+      plot.h = Math.max(phone ? 110 : 130, plot.h);
+      const viewSpan = Number.isFinite(cameraSpan) ? cameraSpan : closeSpanForWidth(width);
+      const spacing = plot.w / viewSpan;
+
+      ctx.font = `${phone ? 10 : 12}px ${palette.sans}`;
+      ctx.textBaseline = 'middle';
+      ctx.strokeStyle = palette.line;
+      ctx.fillStyle = palette.inkSoft;
+      ctx.lineWidth = 1;
+
+      [20, 40, 60, 80].forEach((tick) => {
+        const y = yOf(tick, plot);
+        ctx.beginPath();
+        ctx.moveTo(plot.x, y);
+        ctx.lineTo(plot.x + plot.w, y);
+        ctx.stroke();
+        drawLabel(tick, plot.x - 9, y, 'right');
+      });
+
+      ctx.textAlign = 'center';
+      candles.forEach((item, i) => {
+        const x = xOf(i, plot, viewSpan);
+        if (x < plot.x - 20 || x > plot.x + plot.w + 20) return;
+        if (viewSpan > 13) {
+          const overviewLabels = phone ? [0, 4, 9, 14, 20, 26] : [0, 3, 4, 8, 9, 15, 16, 23, 24, 26];
+          if (!overviewLabels.includes(i)) return;
+        }
+        drawLabel(String(item.year), x, plot.y + plot.h + 22);
+      });
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(plot.x, 0, plot.w, height);
+      ctx.clip();
+
+      if (settings.band) {
+        ctx.save();
+        ctx.globalAlpha = .10;
+        ctx.fillStyle = palette.jade;
+        ctx.beginPath();
+        candles.forEach((item, i) => {
+          const x = xOf(i, plot, viewSpan);
+          const y = yOf(item.low, plot);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        for (let i = candles.length - 1; i >= 0; i--) {
+          ctx.lineTo(xOf(i, plot, viewSpan), yOf(candles[i].high, plot));
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+
+      const volumeBase = height - (phone ? 26 : 34);
+      candles.forEach((item, i) => {
+        const reveal = nodeReveal(i, .1);
+        if (!reveal) return;
+        const x = xOf(i, plot, viewSpan);
+        const barW = Math.max(5, Math.min(phone ? 13 : 20, spacing * .16));
+        const barH = (item.volume / 100) * (phone ? 28 : 46) * reveal;
+        ctx.save();
+        ctx.globalAlpha = .23;
+        ctx.fillStyle = item.close >= item.open ? palette.cinnabar : palette.jade;
+        roundedRect(x - barW / 2, volumeBase - barH, barW, barH, 3);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      ctx.strokeStyle = palette.accent;
+      ctx.lineWidth = phone ? 1.5 : 2;
+      ctx.beginPath();
+      const lineProgress = Math.min(LAST_INDEX, progress);
+      let headX = xOf(0, plot, viewSpan);
+      let headY = yOf(movingAverages[0], plot);
+      if (lineProgress >= 0) {
+        ctx.moveTo(headX, headY);
+        for (let i = 1; i < candles.length; i++) {
+          const segment = smoothstep(lineProgress - (i - 1));
+          if (!segment) break;
+          const previousX = xOf(i - 1, plot, viewSpan);
+          const previousY = yOf(movingAverages[i - 1], plot);
+          const nextX = xOf(i, plot, viewSpan);
+          const nextY = yOf(movingAverages[i], plot);
+          headX = previousX + (nextX - previousX) * segment;
+          headY = previousY + (nextY - previousY) * segment;
+          ctx.lineTo(headX, headY);
+          if (segment < 1) break;
+        }
+      }
+      ctx.stroke();
+
+      if (progress <= LAST_INDEX && !reducedMotion && settings.glow) {
+        ctx.save();
+        ctx.fillStyle = palette.accent;
+        ctx.shadowColor = palette.accent;
+        ctx.shadowBlur = phone ? 9 : 14;
+        ctx.beginPath();
+        ctx.arc(headX, headY, phone ? 3 : 3.8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      candles.forEach((item, i) => {
+        const reveal = nodeReveal(i);
+        if (!reveal) return;
+        const x = xOf(i, plot, viewSpan);
+        const up = item.close >= item.open;
+        const color = up ? palette.cinnabar : palette.jade;
+        const wickTop = yOf(item.high, plot);
+        const wickBottom = yOf(item.low, plot);
+        const openY = yOf(item.open, plot);
+        const closeY = yOf(item.close, plot);
+        const animatedCloseY = openY + (closeY - openY) * reveal;
+        const bodyTop = Math.min(openY, animatedCloseY);
+        const bodyH = Math.max(4, Math.abs(animatedCloseY - openY));
+        const emphasis = i === active ? 1 + .24 * settings.zoom : 1;
+        const candleW = Math.max(phone ? 10 : 14, Math.min(phone ? 24 : 34, spacing * .22)) * emphasis;
+
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = i === active ? 2.4 : 1.5;
+        ctx.beginPath();
+        ctx.moveTo(x, openY + (wickBottom - openY) * reveal);
+        ctx.lineTo(x, openY + (wickTop - openY) * reveal);
+        ctx.stroke();
+        roundedRect(x - candleW / 2, bodyTop, candleW, bodyH, 3);
+        ctx.fill();
+
+        if (i === active) {
+          ctx.save();
+          ctx.strokeStyle = color;
+          ctx.globalAlpha = .32;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(x, bodyTop + bodyH / 2, candleW * 1.12, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+
+          ctx.fillStyle = palette.inkSoft;
+          ctx.font = `${phone ? 11 : 13}px ${palette.sans}`;
+          const labelAbove = wickTop - 18;
+          const labelY = labelAbove < plot.y + 18
+            ? Math.min(plot.y + plot.h - 14, wickBottom + 28)
+            : labelAbove;
+          drawLabel(`${item.year} · 约${item.age}岁`, x, labelY);
+        }
+      });
+      ctx.restore();
+      syncTimelineScroll(camera);
+    }
+
+    function playNodeSound(index) {
+      if (!settings.sound) return;
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return;
+      audioContext ||= new AudioContextClass();
+      if (audioContext.state === 'suspended') audioContext.resume().catch(() => {});
+      const now = audioContext.currentTime;
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      oscillator.type = MAJOR_NODES.has(index) ? 'triangle' : 'sine';
+      oscillator.frequency.setValueAtTime(MAJOR_NODES.has(index) ? 164 : 246, now);
+      oscillator.frequency.exponentialRampToValueAtTime(MAJOR_NODES.has(index) ? 110 : 196, now + .11);
+      gain.gain.setValueAtTime(.0001, now);
+      gain.gain.exponentialRampToValueAtTime(MAJOR_NODES.has(index) ? .055 : .025, now + .012);
+      gain.gain.exponentialRampToValueAtTime(.0001, now + .14);
+      oscillator.connect(gain).connect(audioContext.destination);
+      oscillator.start(now);
+      oscillator.stop(now + .15);
+    }
+
+    function setActive(index, { redraw = true, announce = true, reveal = true } = {}) {
+      active = Math.max(0, Math.min(candles.length - 1, index));
+      hideReview();
+      if (reveal) {
+        hasStarted = true;
+        playbackTime = nodeArrival(active) + NODE_REVEAL_DURATION;
+        progress = active;
+        camera = active;
+        cameraSpan = closeSpanForWidth();
+        opening.classList.add('is-hidden');
+      }
+      const item = candles[active];
+      const chapter = chapterForIndex(active);
+      chapterLabel.textContent = chapter.label;
+      narrativeKey = 'node-' + active;
+      if (announce) playNodeSound(active);
+      eventCard.innerHTML = `<strong>${item.year} · 约${item.age}岁 · ${item.title}</strong><span>${item.note}</span>`;
+      phaseLabel.textContent = `${item.year} · 约${item.age}岁 · ${item.phase}`;
+      if (announce && !reducedMotion && eventCard.animate) {
+        eventCard.animate(
+          [
+            { opacity: .72, transform: 'translateY(5px)' },
+            { opacity: 1, transform: 'translateY(0)' }
+          ],
+          { duration: 220, easing: 'cubic-bezier(.22, 1, .36, 1)' }
+        );
+      }
+      document.querySelectorAll('.event-button').forEach((btn, i) => {
+        btn.classList.toggle('is-active', i === active);
+      });
+      if (redraw) draw();
+    }
+
+    function hideReview() {
+      reviewPopover.classList.remove('is-visible');
+      reviewPopover.classList.remove('is-waiting');
+      awaitingSpace = false;
+    }
+
+    function showReview(motion) {
+      const isFinal = motion.mode === 'final-review';
+      const key = isFinal ? 'review-final' : 'review-' + motion.chapter.end;
+      if (narrativeKey === key) return;
+      narrativeKey = key;
+      reviewPopover.classList.add('is-visible');
+      if (isFinal) {
+        reviewKicker.textContent = '全局回望';
+        reviewTitle.textContent = '七十年，一生收盘';
+        reviewSummary.textContent = '从赤贫到帝国中枢：建立统一秩序，也留下集权与继承危机的余震。';
+        chapterLabel.textContent = '全局回望 · 1328—1398';
+        phaseLabel.textContent = '从赤贫到帝国中枢';
+      } else {
+        reviewKicker.textContent = '阶段回望';
+        reviewTitle.textContent = motion.chapter.label;
+        reviewSummary.textContent = motion.chapter.summary;
+        chapterLabel.textContent = motion.chapter.label + ' · 回望';
+        phaseLabel.textContent = '阶段曲线重新入场';
+      }
+    }
+
+    function renderTimeline() {
+      timeline.innerHTML = candles.map((item, i) => `
+        <button class="event-button${i === active ? ' is-active' : ''}" data-index="${i}" type="button">
+          <b>${item.year} · ${item.age}岁</b>
+          <span>${item.title}</span>
+        </button>
+      `).join('');
+      timeline.addEventListener('click', (event) => {
+        const button = event.target.closest('.event-button');
+        if (!button) return;
+        playing = false;
+        updatePlayIcon();
+        setActive(Number(button.dataset.index));
+      });
+      measureTimeline();
+    }
+
+    let timelineCenters = [];
+    function measureTimeline() {
+      timelineCenters = [...timeline.querySelectorAll('.event-button')]
+        .map((btn) => btn.offsetLeft + btn.offsetWidth / 2);
+    }
+
+    function syncTimelineScroll(pos) {
+      if (!timelineCenters.length) return;
+      const last = timelineCenters.length - 1;
+      const i0 = Math.max(0, Math.min(last, Math.floor(pos)));
+      const i1 = Math.min(last, i0 + 1);
+      const f = Math.max(0, Math.min(1, pos - i0));
+      const center = timelineCenters[i0] + (timelineCenters[i1] - timelineCenters[i0]) * f;
+      timeline.scrollLeft = center - timeline.clientWidth / 2;
+    }
+
+    function updatePlayIcon() {
+      playBtn.innerHTML = playing
+        ? '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 5h3v14H7V5Zm7 0h3v14h-3V5Z" fill="currentColor"/></svg>'
+        : '<svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5v14l11-7-11-7Z" fill="currentColor"/></svg>';
+      stage.classList.toggle('is-playing', playing);
+    }
+
+    function scheduleFrame() {
+      if (!frameId) frameId = requestAnimationFrame(tick);
+    }
+
+    function tick(now) {
+      frameId = 0;
+      if (!lastTime) lastTime = now;
+      const delta = Math.min(.05, (now - lastTime) / 1000);
+      lastTime = now;
+      if (playing) {
+        const prevTime = playbackTime;
+        playbackTime += delta * settings.speed;
+        for (const gate of chapterGates) {
+          if (prevTime < gate && playbackTime >= gate && resumeGate !== gate) {
+            playbackTime = gate - .001;
+            resumeGate = gate;
+            awaitingSpace = true;
+            playing = false;
+            resumeHint.textContent = CONTINUE_HINT;
+            reviewPopover.classList.add('is-waiting');
+            updatePlayIcon();
+            break;
+          }
+        }
+        const motion = motionAt(playbackTime);
+        progress = motion.progress;
+        camera += (motion.targetCamera - camera) * (1 - Math.exp(-delta * 8));
+        cameraSpan += (motion.targetSpan - cameraSpan) * (1 - Math.exp(-delta * 6));
+        if (motion.mode === 'chapter-review' || motion.mode === 'final-review') {
+          showReview(motion);
+          if (awaitingSpace) reviewPopover.classList.add('is-waiting');
+        } else {
+          hideReview();
+          if (motion.mode === 'node' && narrativeKey !== 'node-' + motion.active) {
+            setActive(motion.active, { redraw: false, reveal: false });
+          }
+        }
+        if (playbackTime >= END_TIME) {
+          playing = false;
+          playbackTime = END_TIME;
+          progress = LAST_INDEX;
+          camera = LAST_INDEX / 2;
+          cameraSpan = LAST_INDEX + 2.4;
+          showReview(motionAt(END_TIME));
+          resumeHint.textContent = REPLAY_HINT;
+          reviewPopover.classList.add('is-waiting');
+          updatePlayIcon();
+        }
+        draw();
+      }
+      if (playing) scheduleFrame();
+    }
+
+    function beginFromOpening() {
+      hasStarted = true;
+      opening.classList.add('is-hidden');
+      playbackTime = OPENING_DURATION;
+      playing = true;
+      lastTime = 0;
+      updatePlayIcon();
+      scheduleFrame();
+    }
+
+    function restartPlayback() {
+      active = 0;
+      progress = 0;
+      camera = 0;
+      cameraSpan = closeSpanForWidth();
+      resumeGate = null;
+      hideReview();
+      setActive(0, { announce: false, reveal: false });
+      hasStarted = true;
+      playbackTime = OPENING_DURATION;
+      opening.classList.add('is-hidden');
+      playing = true;
+      lastTime = 0;
+      updatePlayIcon();
+      scheduleFrame();
+    }
+
+    function togglePlayback() {
+      if (!hasStarted) {
+        beginFromOpening();
+        return;
+      }
+      if (playing) {
+        playing = false;
+        updatePlayIcon();
+        return;
+      }
+      if (awaitingSpace && resumeGate !== null) {
+        awaitingSpace = false;
+        reviewPopover.classList.remove('is-waiting');
+        playbackTime = resumeGate + .001;
+      } else if (playbackTime >= END_TIME) {
+        restartPlayback();
+        return;
+      }
+      playing = true;
+      lastTime = 0;
+      updatePlayIcon();
+      scheduleFrame();
+    }
+
+    playBtn.addEventListener('click', togglePlayback);
+    startBtn.addEventListener('click', beginFromOpening);
+    resetBtn.addEventListener('click', restartPlayback);
+
+    // 触屏无空格键：等待态直接点弹窗即可继续/重播
+    reviewPopover.addEventListener('click', () => {
+      if (reviewPopover.classList.contains('is-waiting')) togglePlayback();
+    });
+    // 触屏无空格键：点开场任意处也能开始
+    opening.addEventListener('click', (event) => {
+      if (event.target === startBtn) return;
+      if (!hasStarted) beginFromOpening();
+    });
+
+    darkBtn.addEventListener('click', () => {
+      applySettings({ palette: settings.palette === 'night' ? lastLightPalette : 'night' });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.code !== 'Space') return;
+      if (settingsDialog.open) return;
+      const tag = event.target instanceof Element ? event.target.tagName : '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      event.preventDefault();
+      togglePlayback();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      playing = false;
+      updatePlayIcon();
+      if (active >= LAST_INDEX) {
+        playbackTime = FINAL_REVIEW_START;
+        progress = LAST_INDEX;
+        showReview(motionAt(END_TIME));
+        camera = LAST_INDEX / 2;
+        cameraSpan = LAST_INDEX + 2.4;
+        draw();
+      } else {
+        setActive(active + 1);
+      }
+    });
+
+    settingsBtn.addEventListener('click', () => {
+      settingsDialog.showModal();
+      settingsBtn.setAttribute('aria-expanded', 'true');
+    });
+
+    closeSettingsBtn.addEventListener('click', () => settingsDialog.close());
+    settingsDialog.addEventListener('close', () => settingsBtn.setAttribute('aria-expanded', 'false'));
+    settingsDialog.addEventListener('click', (event) => {
+      if (event.target === settingsDialog) settingsDialog.close();
+    });
+
+    speedInput.addEventListener('input', () => applySettings({ speed: speedInput.value }));
+    zoomInput.addEventListener('input', () => applySettings({ zoom: zoomInput.value }));
+    backgroundInput.addEventListener('change', () => applySettings({ background: backgroundInput.checked }));
+    bandInput.addEventListener('change', () => applySettings({ band: bandInput.checked }));
+    glowInput.addEventListener('change', () => applySettings({ glow: glowInput.checked }));
+    soundInput.addEventListener('change', () => applySettings({ sound: soundInput.checked }));
+    resetSettingsBtn.addEventListener('click', resetSettings);
+
+    document.querySelectorAll('.palette-btn').forEach((button) => {
+      button.addEventListener('click', () => applySettings({ palette: button.dataset.palette }));
+    });
+
+    window.klineControls = Object.freeze({
+      getSettings: () => ({ ...settings }),
+      setSettings: (next) => applySettings(next),
+      resetSettings
+    });
+
+    window.addEventListener('resize', resize);
+    renderTimeline();
+    applySettings({ ...defaultSettings });
+    const startEm = startBtn.querySelector('em');
+    if (startEm) startEm.textContent = coarsePointer ? '轻点开始' : 'SPACE · 按下空格';
+    resumeHint.textContent = CONTINUE_HINT;
+    setActive(0, { redraw: false, announce: false, reveal: false });
+    narrativeKey = 'opening';
+    updatePlayIcon();
+    resize();
+    if (playing) scheduleFrame();
+  </script>
+</body>
+</html>

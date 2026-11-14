@@ -1,0 +1,357 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Juben Deconstruct · 剧本拆解工作流 · 蛛网之上</title><meta name="description" content="- 用户丢来一个剧本资料包，说「读一下 / 转成 md / 我想学 / 我要当 DM」"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/skill-fc0629a/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Juben Deconstruct · 剧本拆解工作流"><meta property="og:description" content="- 用户丢来一个剧本资料包，说「读一下 / 转成 md / 我想学 / 我要当 DM」"><meta property="og:url" content="https://tiaozhuxiansheng.com/skill-fc0629a/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Juben Deconstruct · 剧本拆解工作流"><meta name="twitter:description" content="- 用户丢来一个剧本资料包，说「读一下 / 转成 md / 我想学 / 我要当 DM」"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-11-12T21:16:13+08:00"><meta property="article:modified_time" content="2026-11-12T21:16:13+08:00"><meta property="article:section" content="skill存档"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC","https://www.kuaishou.com/profile/3xaszm4s33jffe2","https://space.bilibili.com/6891496","https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723","https://music.163.com/#/artist?id=124358911","https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/skill-fc0629a/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/skill-fc0629a/","url":"https://tiaozhuxiansheng.com/skill-fc0629a/","headline":"Juben Deconstruct · 剧本拆解工作流","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"- 用户丢来一个剧本资料包，说「读一下 / 转成 md / 我想学 / 我要当 DM」","datePublished":"2026-11-12T21:16:13+08:00","dateModified":"2026-11-12T21:16:13+08:00","articleSection":"skill存档"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"skill存档","item":"https://tiaozhuxiansheng.com/notes/?cat=skill%E5%AD%98%E6%A1%A3"},{"@type":"ListItem","position":3,"name":"Juben Deconstruct · 剧本拆解工作流","item":"https://tiaozhuxiansheng.com/skill-fc0629a/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/skills/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/yuwen-s1/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.JAzzzN2D.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/skills/">Skill</a><a class="meta series-link" href="/above-the-web/juben/">剧本</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu data-tasks="off"> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.DtEx7URI.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=skill%E5%AD%98%E6%A1%A3" data-pagefind-meta="category" data-pagefind-filter="kind:note">skill存档</a> <span aria-hidden="true">/</span><span>juben-deconstruct</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-11-12T21:16:13+08:00">2026-11-12</time></span>  <span>约 5 分钟读完 · 1,838 字</span> </p> </header>  <div class="skill-dl" data-pagefind-ignore> <div class="skill-dl-row"> <a class="skill-dl-btn" href="/above-the-web/skills/juben-deconstruct.zip" download="juben-deconstruct.zip" data-no-prerender> <span aria-hidden="true">⬇</span> 一键下载 <code>juben-deconstruct</code> </a> <span class="skill-dl-meta">
+zip · 22 KB · 9 个文件 </span> </div>  <details class="skill-dl-howto"> <summary>下载后怎么用？</summary> <ol> <li>解压，得到一个 <code>juben-deconstruct/</code> 文件夹（里面是 <code>SKILL.md</code>）。</li> <li>整个文件夹放进你用的 Agent 的技能目录：
+<ul> <li>Claude Code：<code>~/.claude/skills/</code></li> <li>Codex：<code>~/.codex/skills/</code></li> <li>Kiro / 其他支持 Agent Skills 的工具：放进它的 skills 目录</li> <li>不用 Agent：直接把 <code>SKILL.md</code> 全文贴给任意 AI 当工作手册，也能用</li> </ul> </li> <li>新开一个对话，用描述里的触发词说话即可（如「帮我复盘这次比赛」）。</li> </ol> <p>命令行一步到位（macOS / Linux / Git Bash）：</p> <pre><code>curl -L https://tiaozhuxiansheng.com/skills/juben-deconstruct.zip -o juben-deconstruct.zip &amp;&amp; unzip -o juben-deconstruct.zip -d ~/.claude/skills/</code></pre> </details> </div> <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>11 节</i></summary> <ol> <li class="d2"><a href="#何时使用">何时使用</a></li><li class="d2"><a href="#八阶段流水线">八阶段流水线</a></li><li class="d2"><a href="#版面探测决策树">版面探测决策树</a></li><li class="d2"><a href="#工具箱">工具箱</a></li><li class="d2"><a href="#三层知识结构每个本都按这个落">三层知识结构（每个本都按这个落）</a></li><li class="d2"><a href="#剧透隔离对外交付的硬规则">剧透隔离（对外交付的硬规则）</a></li><li class="d2"><a href="#对外文档去-pm-化清单">对外文档去 PM 化清单</a></li><li class="d2"><a href="#质量校验清单">质量校验清单</a></li><li class="d2"><a href="#常见坑两本实战验证">常见坑（两本实战验证）</a></li><li class="d2"><a href="#与-maieutic-skill-分工">与 maieutic-skill 分工</a></li><li class="d2"><a href="#关联">关联</a></li> </ol> </details> <h1 id="juben-deconstruct--剧本拆解工作流">Juben Deconstruct · 剧本拆解工作流</h1>
+<blockquote>
+<p><strong>核心立场</strong>：任务不是「把资料转成文字」，是<strong>让一个人能独立带完全场</strong>。
+转写只是原料，交付物必须回答：人物是谁、时间线怎么走、真相几层、线索指向什么、主持时什么时候做什么、哪里会翻车。</p>
+</blockquote>
+<h2 id="何时使用">何时使用</h2>
+<ul>
+<li>用户丢来一个剧本资料包，说「读一下 / 转成 md / 我想学 / 我要当 DM」</li>
+<li>用户要<strong>给别人</strong>（同事、学生、协作者）做学习资料</li>
+<li>用户想把一个本沉淀成可对比、可迭代的知识资产</li>
+<li>与 <code>maieutic-skill</code> 配合：本 skill 负责<strong>产出资料</strong>，maieutic 负责<strong>带着人学会</strong></li>
+</ul>
+<h2 id="八阶段流水线">八阶段流水线</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>阶段</th><th>关键动作</th><th>产出</th></tr></thead><tbody><tr><td>1</td><td><strong>盘点与去重</strong></td><td>递归列文件、按扩展名分类、MD5 比对多份资料包，找出<strong>唯一完整真源</strong>；记录缺口（如手册说 35 张卡但只有 18 张图）</td><td>文件清单 + 体积 + 去重结论</td></tr><tr><td>2</td><td><strong>版面探测</strong></td><td>判断文字层 / 扫描件 / 拼版结构；抽样测 OCR 质量与单页耗时后再定批量参数</td><td>决策表（见下）</td></tr><tr><td>3</td><td><strong>全量转写</strong></td><td>PDF 文字层直提；扫描件 OCR；图片 OCR；音视频抽音轨 ASR + 抽帧 OCR</td><td>按资料分组的 md + <code>_raw/</code> 纯文本</td></tr><tr><td>4</td><td><strong>阅读顺序校正</strong></td><td>骑马订 2-up 拼版必须按印刷页重排；图片按<strong>文件名中的数字</strong>排序（不能字典序）</td><td>顺序正确的 md，保留原序备份</td></tr><tr><td>5</td><td><strong>知识重组</strong></td><td>先读组织者手册（真相/流程/线索逻辑通常全在这里），再读角色本补第一视角任务，最后读线索卡</td><td>人物档案、时间线、真相、诡计、线索→结论表</td></tr><tr><td>6</td><td><strong>剧透隔离</strong>（对外必做）</td><td>按 🟢无剧透 / 🟡主持须知 / 🔴全剧透 <strong>分文件</strong>，导读里写明「哪份可以给谁」</td><td>可直接转发的学习包</td></tr><tr><td>7</td><td><strong>归纳卡片</strong></td><td>五维归纳：结构 / 真相 / 诡计 / 线索 / 主持；填跨本对比矩阵</td><td><code>07_归纳卡片.md</code></td></tr><tr><td>8</td><td><strong>入库与回填</strong></td><td>剧透资料进<strong>私有</strong>仓库，方法论与工具进<strong>公开</strong>知识库；开本后回填现场翻车点</td><td>commit + push + CHANGELOG</td></tr></tbody></table>
+<h2 id="版面探测决策树">版面探测决策树</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>情况</th><th>判据</th><th>处理</th></tr></thead><tbody><tr><td>PDF 有文字层</td><td><code>pdftotext</code> 前两页能抽出非空白中文</td><td>直接提取，保留表格结构</td></tr><tr><td>PDF 是扫描件</td><td>抽不出文字，但 <code>get_images</code> 有大图</td><td>渲染 → OCR</td></tr><tr><td><strong>骑马订 2-up 拼版</strong></td><td>一张 A3 上左右两栏，页脚数字分别是 1 和 32、2 和 31</td><td>按中缝切栏 → 用页脚数字还原印刷页 1→N</td></tr><tr><td>纯 JPG 扫描包</td><td>全是 5100×7014 之类高清单页</td><td>按目录分组、按数字排页序，OCR</td></tr><tr><td><strong>2×2 拼版线索卡</strong></td><td>一张图上 4 个证据块，手册却说卡有 35 张</td><td>别按「图数=卡数」计数，OCR 全抓后按手册编号体系整理</td></tr><tr><td>音视频线索</td><td>ffprobe 看时长与音轨</td><td>抽音轨 ASR <strong>＋</strong> 每 4 秒抽帧 OCR；纯视觉线索必须人工/多模态看图补</td></tr></tbody></table>
+<blockquote>
+<p><strong>无声视频是最大的暗坑</strong>：很多线索既无台词也无字幕，情报在「看见了什么」（如眼球泡在防腐液盒里、招牌写着十年老店）。只做 ASR 会漏掉官方点名的推理支点。</p>
+</blockquote>
+<h2 id="工具箱">工具箱</h2>
+<p>脚本随 skill 放在 <code>tools/</code>，路径全部参数化，不写死盘符。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>脚本</th><th>用途</th><th>典型调用</th></tr></thead><tbody><tr><td><code>scan_ocr_pipeline.py</code></td><td>纯 JPG/PNG 扫描包 → 分组 md；数字排序、行聚类还原段落、多进程</td><td><code>python tools/scan_ocr_pipeline.py --src &#x3C;资料包> --out &#x3C;输出> --workers 6</code></td></tr><tr><td><code>ocr_pipeline.py</code></td><td>PDF 扫描件 → md；双栏切分、页脚识别；<code>JUBEN_SRC</code>/<code>JUBEN_OUT</code></td><td><code>JUBEN_SRC=... JUBEN_OUT=... python tools/ocr_pipeline.py --workers 6</code></td></tr><tr><td><code>reorder_imposition.py</code></td><td>骑马订 2-up → 印刷页顺序重排</td><td>在 OCR 产物目录上运行</td></tr><tr><td><code>text_docs.py</code></td><td>PDF 文字层 / DOCX / TXT → 结构化 md</td><td>同上环境变量</td></tr><tr><td><code>video_frame_ocr.py</code></td><td>视频抽帧 + 画面文字 OCR</td><td><code>python tools/video_frame_ocr.py --src &#x3C;视频目录> --out &#x3C;md> --interval 4</code></td></tr><tr><td><code>AudioTranscribe</code></td><td>音频/视频台词转写（先 ffmpeg 抽 16k 单声道 mp3 更稳）</td><td>逐文件调用</td></tr></tbody></table>
+<p><strong>环境</strong>：<code>pymupdf pillow numpy onnxruntime rapidocr_onnxruntime python-docx pyyaml</code>；外部命令 <code>pdftotext</code> / <code>ffmpeg</code> / <code>ffprobe</code>。</p>
+<p><strong>性能要点</strong>：ONNX 推理必须<strong>每进程单线程</strong>（patch <code>SessionOptions.intra_op_num_threads=1</code>），多进程并行；否则线程争抢会让 300 页从 5 分钟拖到 20 分钟以上。缩放长边 2000px 是精度/速度平衡点。</p>
+<h2 id="三层知识结构每个本都按这个落">三层知识结构（每个本都按这个落）</h2>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>转写层  01_角色剧本 / 02_线索卡 / 03_开本资料 / _raw/   ← 可检索、可喂模型</span></span>
+<span class="line"><span>应用层  00_DM主持学习手册 / 00_开本速查卡 / 对外学习包   ← 学会 + 带本</span></span>
+<span class="line"><span>归纳层  07_归纳卡片 / 跨本对比矩阵                       ← 越学越省力</span></span></code></pre>
+<h2 id="剧透隔离对外交付的硬规则">剧透隔离（对外交付的硬规则）</h2>
+<p><strong>必须做文件级隔离</strong>，不要只在一篇文档里加「以下剧透」——转发出去就收不回。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>标记</th><th>内容</th><th>可给谁</th></tr></thead><tbody><tr><td>🟢</td><td>导读、本作是什么、学习路径、无剧透自测</td><td>任何人，含准备上车的玩家</td></tr><tr><td>🟡</td><td>流程、发本题答案、线索发放规则、角色定位表</td><td>仅主持人</td></tr><tr><td>🔴</td><td>真相、时间线、诡计、排除法、音视频指向</td><td>主持人 / 已玩完想复盘者</td></tr></tbody></table>
+<p>导读里必须写一张「哪份可以给谁」的表，以及一句「不要把后面几册发给还没玩过的人」。</p>
+<h2 id="对外文档去-pm-化清单">对外文档去 PM 化清单</h2>
+<p>给同事／学生／协作者的文档里，<strong>以下一律不出现</strong>：</p>
+<ul>
+<li>本地绝对路径、盘符、<code>_raw/</code>、<code>~/.workbuddy/skills/</code> 等目录名</li>
+<li>「OCR」「ASR」「转写」「抽取」「重排」「可信度 A/B/C/D」「来源文件」「rename mapping」等内部术语</li>
+<li>「入库」「归档」「commit」「push」「仓库」「去重」「流水线」等项目管理词</li>
+<li>任务编号、工具脚本名、报错日志、页码溯源标记</li>
+</ul>
+<p><strong>替换说法</strong>：想说明准确性，写「本文依据官方手册整理，个别字词以原册为准；涉及投票判定与编号时请与原册核对」。想说明视频线索，写「部分视频为纯画面线索，请回看原视频」，不要写「帧 OCR 未检出文字」。</p>
+<blockquote>
+<p>内部索引（<code>cases/&#x3C;本>/README.md</code>）才负责记录来源、体积、提取方式与可信度；两份文档各司其职，不要混成一份。</p>
+</blockquote>
+<h2 id="质量校验清单">质量校验清单</h2>
+<ul class="contains-task-list">
+<li class="task-list-item"><input type="checkbox" disabled> 所有页 <code>with_text</code> 数 = 总页数，或明确列出空白页；errors = 0</li>
+<li class="task-list-item"><input type="checkbox" disabled> 拼版已按印刷页验证衔接（上一页末句 → 下一页首句能连上）</li>
+<li class="task-list-item"><input type="checkbox" disabled> 角色任务、个人要隐藏的事，逐人逐幕对齐</li>
+<li class="task-list-item"><input type="checkbox" disabled> 官方手册里点名的音视频线索，逐条有对应解释</li>
+<li class="task-list-item"><input type="checkbox" disabled> 剧透红绿灯表格存在，且文件本身命名能看出级别</li>
+<li class="task-list-item"><input type="checkbox" disabled> 对外版全文搜索 <code>C:\</code>、<code>OCR</code>、<code>_raw</code>、<code>git</code>、<code>入库</code> → 0 命中</li>
+<li class="task-list-item"><input type="checkbox" disabled> 私有仓库 <code>isPrivate: true</code> 已核验；公开知识库只放方法论与脚本，<strong>不放剧透</strong></li>
+<li class="task-list-item"><input type="checkbox" disabled> 归纳卡片已填，跨本对比矩阵已更新，CHANGELOG 已记</li>
+</ul>
+<h2 id="常见坑两本实战验证">常见坑（两本实战验证）</h2>
+<ol>
+<li><strong>两份资料包不是互补而是副本</strong>：MD5 全比对，选文件数更多的那个当唯一真源。</li>
+<li><strong>人数陷阱</strong>：剧本里出现「7 名玩家」不代表 7 人本，NPC 可能由 DM 扮演；以手册为准。</li>
+<li><strong>线索编号两套体系</strong>：「线索 32」可能指虚拟世界线索而非总表，勘误要对照手册读。</li>
+<li><strong>同批卡的不同打印版</strong>：A4 / B5 / 全尺寸三套别重复发。</li>
+<li><strong>推理线程争抢</strong>：见「性能要点」。</li>
+<li><strong>中文路径</strong>：用 PowerShell 直接传 Unicode 建目录联接，别写含非 ASCII 路径的 <code>.bat</code> / <code>.ps1</code> 脚本，编码会花。</li>
+</ol>
+<h2 id="与-maieutic-skill-分工">与 maieutic-skill 分工</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>阶段</th><th>用谁</th></tr></thead><tbody><tr><td>产出资料、整理真相、写卡片</td><td><strong>本 skill</strong></td></tr><tr><td>带人学会（不灌输、一次一问、让他自己产出骨架）</td><td><code>maieutic-skill</code> 探索模式</td></tr><tr><td>用户明确要信息（「按时间线压一遍」）</td><td>maieutic 知识模式：先给足信息，末尾留一道自测</td></tr></tbody></table>
+<h2 id="关联">关联</h2>
+<ul>
+<li>私有剧本库：<code>Mr-Salticidae/juben-dm-lab</code>（<code>docs/01_新剧本入库SOP.md</code>、<code>docs/02_跨本归纳框架.md</code>、<code>cases/_模板/</code>）</li>
+<li>公开方法论库：<code>Mr-Salticidae/knowledge-base</code> · <code>07_skill存档/</code></li>
+<li>已跑通样本：<code>954 · 虚拟游戏</code>（PDF 骑马订 + 文字层 + 6 段音频）、<code>247 · 窗边的女人</code>（纯 JPG 扫描 + 15 段音视频）</li>
+</ul>  <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-11-12T21:16:13+08:00">2026-11-12</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/07_skill%E5%AD%98%E6%A1%A3/juben-deconstruct/SKILL.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/07_skill%E5%AD%98%E6%A1%A3/juben-deconstruct/SKILL.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article>  <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#何时使用" data-toc-link="何时使用">何时使用</a></li><li class="d2"><a href="#八阶段流水线" data-toc-link="八阶段流水线">八阶段流水线</a></li><li class="d2"><a href="#版面探测决策树" data-toc-link="版面探测决策树">版面探测决策树</a></li><li class="d2"><a href="#工具箱" data-toc-link="工具箱">工具箱</a></li><li class="d2"><a href="#三层知识结构每个本都按这个落" data-toc-link="三层知识结构每个本都按这个落">三层知识结构（每个本都按这个落）</a></li><li class="d2"><a href="#剧透隔离对外交付的硬规则" data-toc-link="剧透隔离对外交付的硬规则">剧透隔离（对外交付的硬规则）</a></li><li class="d2"><a href="#对外文档去-pm-化清单" data-toc-link="对外文档去-pm-化清单">对外文档去 PM 化清单</a></li><li class="d2"><a href="#质量校验清单" data-toc-link="质量校验清单">质量校验清单</a></li><li class="d2"><a href="#常见坑两本实战验证" data-toc-link="常见坑两本实战验证">常见坑（两本实战验证）</a></li><li class="d2"><a href="#与-maieutic-skill-分工" data-toc-link="与-maieutic-skill-分工">与 maieutic-skill 分工</a></li><li class="d2"><a href="#关联" data-toc-link="关联">关联</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/skills/">Skill</a><a href="/above-the-web/juben/">剧本</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="sl-footer" data-astro-cid-zamss57n>
+关注：<a href="https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC" target="_blank" rel="noopener me" class="astro-zamss57n" data-astro-cid-zamss57n>抖音</a> · <a href="https://www.kuaishou.com/profile/3xaszm4s33jffe2" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>快手</a> · <a href="https://space.bilibili.com/6891496" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>哔哩哔哩</a> · <a href="https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>小红书</a> · <a href="https://music.163.com/#/artist?id=124358911" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>网易云音乐</a> · <a href="https://github.com/Mr-Salticidae" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>GitHub</a></p><p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.BJ69VHrB.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>
