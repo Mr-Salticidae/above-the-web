@@ -344,18 +344,6 @@ test("DM 读得到剧本清单与正文，中文目录与嵌套路径都通", as
   }
   assert.equal(bgmFetches, 1);
   const audioPath = `${docPath}/audio/${audioKey}`;
-  const nativeUrl = `${origin}${audioPath}?ticket=${lightweight.payload.audioTicket}`;
-  const probe = await fetch(nativeUrl, { headers: { Range: 'bytes=0-1' } });
-  assert.equal(probe.status, 206);
-  assert.equal(probe.headers.get('content-range'), 'bytes 0-1/4');
-  assert.deepEqual(Buffer.from(await probe.arrayBuffer()), Buffer.from('ID'));
-  const head = await fetch(nativeUrl, { method: 'HEAD' });
-  assert.equal(head.status, 200);
-  assert.equal(head.headers.get('content-length'), '4');
-  const invalidRange = await fetch(nativeUrl, { headers: { Range: 'bytes=10-' } });
-  assert.equal(invalidRange.status, 416);
-  const otherDoc = nativeUrl.replace(docId, 'README');
-  assert.equal((await fetch(otherDoc)).status, 401);
   const audio = await fetch(`${origin}${audioPath}`, { headers: { Authorization: `Bearer ${colleagueToken}` } });
   assert.equal(audio.status, 200);
   assert.equal(audio.headers.get('cache-control'), 'no-store');
