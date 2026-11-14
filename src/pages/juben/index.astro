@@ -19,22 +19,17 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
     <header class="juben-hero">
       <div class="juben-hero-copy">
         <h1>剧本研究室</h1>
-        <p class="juben-hero-desc">选一卷，从开本流程学起，或直接进入案件复盘和白板演练。</p>
+        <p class="juben-hero-desc">给 DM 的学本、彩排与现场主持手册。</p>
       </div>
+      <nav class="juben-hero-nav" aria-label="栏目导航">
+        <a href="#library-title">选择剧本 <span aria-hidden="true">↓</span></a>
+        <a href="#dm-vault">DM 档案库 <span aria-hidden="true">↓</span></a>
+      </nav>
     </header>
 
-    <div class="juben-notice" role="note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3 3.5 7.5v5c0 4.7 3.5 7.7 8.5 9 5-1.3 8.5-4.3 8.5-9v-5L12 3Z"/><path d="M12 8v4M12 16h.01"/></svg>
-      <p>案件答案与原始资料仅对持邀请码的 DM 开放。</p>
-    </div>
-
     <section class="juben-library" aria-labelledby="library-title">
-      <header class="juben-section-head">
-        <div>
-          <h2 id="library-title">选择剧本</h2>
-        </div>
-      </header>
-
+      <header class="juben-section-head juben-library-head">
+      <h2 id="library-title">选择剧本</h2>
       <details class="juben-filter-panel">
         <summary>搜索与筛选</summary>
         <div class="juben-tools">
@@ -50,6 +45,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         </div>
         </div>
       </details>
+      </header>
 
       <div class="juben-workbench">
         <div class="juben-case-column">
@@ -67,7 +63,6 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
                 <span class={`juben-status ${item.statusKey}`}>{item.status}</span>
                 <strong>{item.title}</strong>
                 <small>{item.english}</small>
-                <span class="juben-case-desc">{item.intro}</span>
                 <span class="juben-case-meta">{item.players}<i></i>{item.duration}<i></i>{item.level}</span>
                 <span class="juben-card-progress"><b data-card-progress={item.id} style="width:0%"></b></span>
               </button>
@@ -76,17 +71,17 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
           <p class="juben-empty" id="juben-empty" hidden>没有找到对应档案，换个关键词试试。</p>
         </div>
 
-        <article class="juben-detail" id="juben-detail" data-tone={first.tone} aria-live="polite">
+        <article class="juben-detail" id="juben-detail" data-tone={first.tone}>
           <header class="juben-detail-head">
             <div>
               <p class="juben-detail-code" id="detail-code">{first.english}</p>
-              <h3 id="detail-title">{first.title}</h3>
-              <p id="detail-intro">{first.intro}</p>
+              <h3 id="detail-title" aria-live="polite">{first.title}</h3>
             </div>
             <span class="juben-detail-status" id="detail-status">{first.status}</span>
           </header>
 
           <p class="juben-resume" id="juben-resume" hidden></p>
+          <p class="juben-detail-intro" id="detail-intro">{first.intro}</p>
 
           <dl class="juben-facts" id="detail-facts">
             <div><dt>配置</dt><dd id="fact-players">{first.players}</dd></div>
@@ -96,11 +91,15 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
           </dl>
 
           <nav class="juben-study-links" aria-label="本卷学习入口">
-            {workspaceCase && <a class="juben-study-primary" id="run-link" href={`?case=${workspaceCase.id}&view=run#dm-vault`}>现场带本 <span>按步骤主持与计时 →</span></a>}
-            <a class="juben-study-primary" id="private-link" href={`?case=${first.id}&module=${first.modules[0].slug}#dm-vault`}>开始学本 <span>打开 DM 学习手册 →</span></a>
-            {workspaceCase && <a id="review-link" href={`?case=${workspaceCase.id}&view=review#dm-vault`}>案件复盘 <span>查看图解与提示 →</span></a>}
-            {workspaceCase && <a id="board-link" href={`?case=${workspaceCase.id}&view=board#dm-vault`}>白板演练 <span>逐笔跟画 →</span></a>}
-            <a id="timeline-link" href={`?case=${first.id}&module=${first.modules[1].slug}#dm-vault`}>故事与时间线 <span>核对完整经过 →</span></a>
+            <div class="juben-study-main">
+              {workspaceCase && <a class="juben-study-primary" id="run-link" href={`?case=${workspaceCase.id}&view=run#dm-vault`}><strong>现场带本</strong><span>主持步骤、计时与音频</span><i aria-hidden="true">↗</i></a>}
+              <a id="private-link" href={`?case=${first.id}&module=${first.modules[0].slug}#dm-vault`}><strong>DM 学习手册</strong><span>开场准备与流程拆解</span><i aria-hidden="true">↗</i></a>
+            </div>
+            <div class="juben-study-shortcuts">
+              {workspaceCase && <a id="review-link" href={`?case=${workspaceCase.id}&view=review#dm-vault`}>案件复盘 <i aria-hidden="true">↗</i></a>}
+              {workspaceCase && <a id="board-link" href={`?case=${workspaceCase.id}&view=board#dm-vault`}>白板演练 <i aria-hidden="true">↗</i></a>}
+              <a id="timeline-link" href={`?case=${first.id}&module=${first.modules[1].slug}#dm-vault`}>故事与时间线 <i aria-hidden="true">↗</i></a>
+            </div>
           </nav>
 
           <details class="juben-practice" id="juben-practice">
@@ -108,7 +107,6 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
           <section class="juben-learning" aria-labelledby="learning-title">
             <div class="juben-learning-head">
               <div>
-                <p class="juben-kicker">DM Training Run</p>
                 <h4 id="learning-title">四关主持训练</h4>
               </div>
               <div class="juben-learning-status">
@@ -124,11 +122,18 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
               <button type="button" id="start-training">开始第 1 关 <span aria-hidden="true">→</span></button>
             </div>
             <div class="juben-mission-map" id="mission-map" aria-label="训练关卡"></div>
+            <details class="juben-training-checklist">
+            <summary>学习清单与进度</summary>
             <div class="juben-module-list" id="module-list">
               {first.modules.map((module, index) => (
                 <span>{index + 1}. {module.title}</span>
               ))}
             </div>
+            <div class="juben-learning-actions">
+              <button type="button" id="copy-path">复制学习清单</button>
+              <button type="button" id="reset-progress">清空本卷进度</button>
+            </div>
+            </details>
             <section class="juben-trainer" id="juben-trainer" aria-labelledby="trainer-title">
               <header>
                 <div><p class="juben-kicker" id="trainer-step">Mission 01 / 04</p><h5 id="trainer-title">{first.modules[0].title}</h5></div>
@@ -151,16 +156,10 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
                 <button type="button" id="trainer-next" hidden>进入下一关 <span aria-hidden="true">→</span></button>
               </div>
             </section>
-            <div class="juben-learning-actions">
-              <button type="button" id="copy-path">复制学习清单</button>
-              <button type="button" id="reset-progress">清空本卷进度</button>
-            </div>
           </section>
 
           <section class="juben-quiz" aria-labelledby="quiz-title">
-            <div class="juben-quiz-mark" aria-hidden="true">?</div>
             <div>
-              <p class="juben-kicker">Recall Practice</p>
               <h4 id="quiz-title">脱稿复述一题</h4>
               <p id="quiz-question">{first.questions[0]}</p>
               <button type="button" id="next-question">换一道 <span aria-hidden="true">→</span></button>
@@ -179,22 +178,19 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         </div>
         <p id="vault-state">按登录身份开放：整卷拆解、时间线与带本提醒。</p>
       </header>
-      <p class="juben-vault-note">
-        登录后可在此兑换 DM 邀请码。
-      </p>
       <div class="juben-vault-body" id="vault-body" aria-live="polite">
         <p class="juben-vault-loading">正在确认身份…</p>
       </div>
     </section>
 
-    <details class="juben-reference">
+    <details class="juben-reference" id="juben-reference">
       <summary>跨本对照与拆解方法</summary>
     <section class="juben-compare" aria-labelledby="compare-title">
       <header class="juben-section-head">
         <div>
           <h2 id="compare-title">跨本对照</h2>
         </div>
-        <p>比较设计结构，不比较谜底。点击维度收起无关行。</p>
+        <p>按流程、线索与主持执行比较两卷。</p>
       </header>
       <div class="juben-compare-filters" aria-label="对比维度">
         <button class="is-active" type="button" data-group="all" aria-pressed="true">全部维度</button>
@@ -211,7 +207,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
             {comparisonRows.map((row) => (
               <tr data-group={row.group}>
                 <th scope="row">{row.label}{row.hint && <small>{row.hint}</small>}</th>
-                {jubenCases.map((item) => <td>{item.compare[row.key]}</td>)}
+                {jubenCases.map((item) => <td><span class="juben-compare-case" aria-hidden="true">{item.title}</span>{item.compare[row.key]}</td>)}
               </tr>
             ))}
           </tbody>
@@ -495,14 +491,14 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
 
     function renderDocList() {
       const caseData = manifest.cases.find((entry) => entry.id === activeCase);
-      if (!caseData) return '<p class="juben-vault-msg" data-tone="error">当前公开卷尚未发布到 DM 档案库。请从左侧选择已发布卷宗。</p>';
+      if (!caseData) return '<p class="juben-vault-msg" data-tone="error">当前剧本的 DM 档案尚未发布。可从卷宗列表选择已发布的剧本。</p>';
       const flat = vaultDocList(caseData);
       if (flat.length && !flat.some((doc) => doc.id === activeDoc)) activeDoc = flat[0].id;
       const groups = caseData.groups?.length ? caseData.groups : [{ label: '档案', docs: flat }];
       if (!flat.length) return '<nav class="juben-vault-docs" aria-label="本卷目录"><p class="juben-vault-invite-sub">这一卷还没有文档。</p></nav>';
       return `
         <details class="juben-vault-directory">
-          <summary>全部档案 <span>${flat.length} 篇 · 点击展开 / 收起</span></summary>
+          <summary>本卷目录 <span>${flat.length} 篇</span></summary>
           <nav class="juben-vault-docs" aria-label="本卷目录">
             ${groups.map((group) => `
               <div class="juben-vault-group">
@@ -561,20 +557,18 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       const target = applyMissionTarget();
       body.innerHTML = `
         <div class="juben-vault-reader" id="vault-reader">
-          <aside class="juben-vault-side">
-            <details class="juben-vault-invite">
-              <summary>我的邀请码</summary>
-              <code id="vault-invite-code">${escapeHtml(inviteInfo ? inviteInfo.code : '……')}</code>
-              <button type="button" id="vault-invite-copy">复制</button>
-              <p class="juben-vault-invite-sub">把它交给值得信任的准 DM；每带一人进门，传承就长一格。</p>
-            </details>
-            <div class="juben-vault-cases" id="vault-cases" aria-label="卷宗"><p class="juben-vault-invite-title">卷宗</p></div>
-          </aside>
+          <nav class="juben-vault-cases" id="vault-cases" aria-label="档案库卷宗"><p class="juben-vault-invite-title">卷宗</p></nav>
           <div class="juben-vault-main">
             ${renderMissionBar()}
             ${renderDocList()}
             <article class="juben-vault-doc-body" id="vault-reader-doc" aria-live="polite"><p class="juben-vault-loading">取文中…</p></article>
           </div>
+          <details class="juben-vault-invite">
+            <summary>我的邀请码</summary>
+            <code id="vault-invite-code">${escapeHtml(inviteInfo ? inviteInfo.code : '……')}</code>
+            <button type="button" id="vault-invite-copy">复制</button>
+            <p class="juben-vault-invite-sub">邀请码可发给其他 DM，用于开通档案库权限。</p>
+          </details>
         </div>`;
 
       if (!inviteInfo) {
@@ -707,29 +701,40 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
 </script>
 
 <style>
-  .juben-page { max-width: 74rem; margin: 0 auto; padding: 0 1.5rem 5rem; }
-  .juben-hero { min-height: 26rem; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3rem; padding: 4.2rem 0 3.6rem; border-bottom: 2px solid var(--ink); position: relative; }
-  .juben-hero h1 { margin: .15rem 0; font-family: var(--serif); font-size: clamp(3rem, 7vw, 5.6rem); letter-spacing: .09em; line-height: 1.12; }
-  .juben-hero-desc { max-width: 38rem; margin: .6rem 0 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.75; }
-  .juben-notice { display: flex; align-items: flex-start; gap: .8rem; margin: 1.5rem 0 0; padding: .85rem 1rem; background: var(--accent-soft); border-left: 2px solid var(--accent); }
-  .juben-notice svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .2rem; color: var(--accent); }
-  .juben-notice p { margin: 0; color: var(--ink-soft); font-size: .78rem; line-height: 1.7; }
-  .juben-notice strong { color: var(--ink); }
+  .juben-page { --juben-inset: clamp(1rem, 3vw, 2rem); max-width: 74rem; margin: 0 auto; padding: 0 1.5rem 5rem; }
+  .juben-hero { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: 1rem 2rem; padding: clamp(1.45rem, 5vw, 3.8rem) 0 clamp(1.2rem, 3vw, 2.2rem); border-bottom: 1px solid var(--line); }
+  .juben-hero h1 { margin: 0; font-family: var(--serif); font-size: clamp(2.2rem, 5.4vw, 4.25rem); letter-spacing: .025em; line-height: 1.1; }
+  .juben-hero-desc { margin: .55rem 0 0; color: var(--ink-soft); font-size: .9rem; line-height: 1.6; }
+  .juben-hero-nav { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .juben-hero-nav a { display: inline-flex; align-items: center; gap: .65rem; min-height: 44px; padding: 0 .8rem; border: 1px solid var(--line); border-radius: 7px; color: var(--ink); text-decoration: none; font-size: .8rem; }
+  .juben-hero-nav a:hover { color: var(--accent); border-color: var(--accent); }
+  #library-title { scroll-margin-top: calc(var(--header-h) + 1rem); }
   .juben-library, .juben-compare, .juben-method { padding-top: 1.35rem; scroll-margin-top: var(--header-h); }
-  .juben-filter-panel { margin: 0 0 .75rem; }
+  .juben-filter-panel { min-width: 0; }
   .juben-filter-panel > summary, .juben-practice > summary, .juben-reference > summary { min-height: 44px; box-sizing: border-box; padding: .65rem .8rem; cursor: pointer; color: var(--ink); font-size: .88rem; }
-  .juben-filter-panel > summary { width: fit-content; padding-left: 0; color: var(--ink-soft); }
+  .juben-filter-panel > summary { width: fit-content; margin-inline-start: auto; color: var(--ink-soft); }
   .juben-practice, .juben-reference { border: 1px solid var(--line); border-radius: 8px; }
+  .juben-practice { margin: 0 var(--juben-inset) var(--juben-inset); }
+  .juben-training-checklist { margin-top: .75rem; border-top: 1px solid var(--line); }
+  .juben-training-checklist > summary { padding: .65rem 0; cursor: pointer; font-size: .8rem; }
   .juben-practice[open], .juben-reference[open] { padding: 0 .8rem .8rem; }
   .juben-practice[open] > summary, .juben-reference[open] > summary { padding-left: 0; }
   .juben-reference { margin-top: 1.75rem; }
-  .juben-study-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin: 1rem 0; }
-  .juben-study-links a { display: grid; gap: .2rem; padding: .65rem .8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); color: var(--ink); font-size: .92rem; font-weight: 650; text-decoration: none; }
+  .juben-study-links { display: grid; gap: .65rem; margin: .15rem var(--juben-inset) 1.15rem; }
+  .juben-study-main { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .juben-study-links a { min-width: 0; box-sizing: border-box; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); color: var(--ink); text-decoration: none; }
+  .juben-study-main a { flex: 1 1 9rem; display: grid; grid-template-columns: 1fr auto; gap: .25rem .45rem; padding: .8rem .85rem; }
+  .juben-study-main a strong { font-size: .94rem; }
+  .juben-study-main a span { grid-column: 1; font-size: .74rem; line-height: 1.45; }
+  .juben-study-main a i { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+  .juben-study-links a i { font-style: normal; }
+  .juben-study-shortcuts { display: flex; flex-wrap: wrap; gap: .45rem; }
+  .juben-study-shortcuts a { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: .3rem .65rem; font-size: .76rem; }
   .juben-study-links a[hidden] { display: none; }
   .juben-study-links a:hover { border-color: var(--accent); }
-  .juben-study-links a span { font-size: .72rem; font-weight: 400; }
   .juben-study-links .juben-study-primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .juben-section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; margin-bottom: 1.6rem; }
+  .juben-library-head { align-items: center; gap: .5rem; margin-bottom: .75rem; }
   .juben-kicker { margin: 0 0 .3rem; color: var(--accent); font-size: .64rem; font-weight: 650; letter-spacing: .18em; text-transform: uppercase; }
   .juben-section-head h2 { margin: 0; font-family: var(--serif); font-size: 1.9rem; letter-spacing: .04em; }
   .juben-section-head > p { max-width: 25rem; margin: 0 0 .2rem; color: var(--ink-soft); font-size: .78rem; text-align: right; }
@@ -744,39 +749,38 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   .juben-filters button:hover, .juben-compare-filters button:hover { color: var(--ink); border-color: var(--line); }
   .juben-filters button.is-active, .juben-compare-filters button.is-active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .juben-filters button span { margin-left: .2rem; opacity: .7; }
-  .juben-workbench { display: grid; grid-template-columns: 17.5rem minmax(0, 1fr); gap: 1.4rem; margin-top: 1.4rem; align-items: start; }
+  .juben-workbench { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: clamp(.75rem, 2vw, 1.4rem); align-items: start; }
   .juben-result { margin: 0 0 .6rem; color: var(--ink-soft); font-size: .68rem; letter-spacing: .08em; }
   .juben-case-list { display: grid; gap: .8rem; }
-  .juben-case-card { position: relative; display: grid; grid-template-columns: 1fr auto; width: 100%; padding: 1.15rem; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); color: var(--ink); text-align: left; font: inherit; cursor: pointer; transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+  .juben-case-card { position: relative; display: grid; grid-template-columns: 1fr auto; width: 100%; padding: .85rem; overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); color: var(--ink); text-align: left; font: inherit; cursor: pointer; transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+  .juben-case-card[hidden] { display: none; }
   .juben-case-card:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 12px 28px -20px rgba(var(--shadow), .7); }
   .juben-case-card.is-active { border-color: var(--accent); box-shadow: inset 3px 0 var(--accent); }
-  .juben-case-no { color: var(--accent); font-size: .62rem; letter-spacing: .15em; }
-  .juben-status { justify-self: end; padding: .08rem .45rem; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); font-size: .58rem; }
+  .juben-status { grid-column: 2; grid-row: 1; align-self: center; justify-self: end; padding: .08rem .35rem; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-soft); font-size: .64rem; white-space: nowrap; }
   /* 接着上次读：只在「没指定卷、由本机记录恢复」时出现一行，随后切卷即收起 */
   .juben-resume { margin: 0; padding: .7rem 1.7rem 0; color: var(--ink-soft); font-size: .68rem; letter-spacing: .04em; }
   .juben-resume b { color: var(--case-accent); font-weight: 600; }
   .juben-status.learning { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 35%, var(--line)); }
-  .juben-case-card strong { grid-column: 1 / -1; margin-top: .65rem; font-family: var(--serif); font-size: 1.35rem; letter-spacing: .04em; }
-  .juben-case-card small { grid-column: 1 / -1; color: var(--ink-soft); font-size: .54rem; letter-spacing: .13em; }
-  .juben-case-desc { grid-column: 1 / -1; margin-top: .8rem; color: var(--ink-soft); font-size: .75rem; line-height: 1.75; }
-  .juben-case-meta { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; margin-top: .85rem; color: var(--ink-soft); font-size: .62rem; }
+  .juben-case-card strong { grid-column: 1; grid-row: 1; font-family: var(--serif); font-size: 1.12rem; }
+  .juben-case-card small { grid-column: 1 / -1; margin-top: .25rem; color: var(--ink-soft); font-size: .59rem; letter-spacing: .07em; }
+  .juben-case-meta { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; color: var(--ink-soft); font-size: .68rem; }
   .juben-case-meta i { width: 2px; height: 2px; border-radius: 50%; background: var(--accent); }
-  .juben-card-progress { grid-column: 1 / -1; height: 2px; margin-top: .9rem; background: var(--line); }
+  .juben-card-progress { grid-column: 1 / -1; height: 2px; margin-top: .6rem; background: var(--line); }
   .juben-card-progress b { display: block; height: 100%; background: var(--accent); transition: width .25s ease; }
   .juben-empty { padding: 1.5rem 0; color: var(--ink-soft); font-size: .8rem; }
   .juben-detail { --case-accent: var(--accent); min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--paper-2); overflow: hidden; }
   .juben-detail[data-tone="bronze"] { --case-accent: #a56536; }
   :global(:root[data-theme="dark"]) .juben-detail[data-tone="bronze"] { --case-accent: #d6a477; }
-  .juben-detail-head { display: flex; justify-content: space-between; gap: 1rem; padding: 1.6rem 1.7rem 1.35rem; border-top: 3px solid var(--case-accent); }
+  .juben-detail-head { display: flex; justify-content: space-between; gap: .75rem; padding: var(--juben-inset) var(--juben-inset) .8rem; border-top: 3px solid var(--case-accent); background: color-mix(in srgb, var(--case-accent) 6%, var(--paper-2)); }
   .juben-detail-code { margin: 0; color: var(--case-accent); font-size: .6rem; letter-spacing: .14em; }
   .juben-detail-head h3 { margin: .35rem 0 .45rem; font-family: var(--serif); font-size: 2rem; letter-spacing: .05em; }
-  .juben-detail-head > div > p:last-child { max-width: 35rem; margin: 0; color: var(--ink-soft); font-size: .8rem; line-height: 1.8; }
+  .juben-detail-intro { margin: 0; padding: 0 var(--juben-inset) .65rem; color: var(--ink-soft); background: color-mix(in srgb, var(--case-accent) 6%, var(--paper-2)); font-size: .82rem; line-height: 1.7; }
   .juben-detail-status { flex: none; align-self: flex-start; padding: .2rem .55rem; border: 1px solid color-mix(in srgb, var(--case-accent) 45%, var(--line)); border-radius: 999px; color: var(--case-accent); font-size: .62rem; }
-  .juben-facts { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; padding: 0 1.7rem 1.25rem; }
+  .juben-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 .8rem; padding: .1rem var(--juben-inset) .8rem; background: color-mix(in srgb, var(--case-accent) 6%, var(--paper-2)); }
   .juben-facts div { padding: .25rem .8rem .25rem 0; }
   .juben-facts dt { color: var(--ink-soft); font-size: .58rem; letter-spacing: .12em; }
   .juben-facts dd { margin: .15rem 0 0; font-size: .78rem; font-weight: 600; }
-  .juben-learning { margin: 1rem 1.7rem 0; padding: 1.1rem 1.2rem; border-radius: 8px; background: var(--paper-3); }
+  .juben-learning { margin: .45rem 0 0; padding: clamp(.7rem, 2vw, 1.2rem); border-radius: 8px; background: var(--paper-3); }
   .juben-learning-head { display: flex; justify-content: space-between; align-items: center; }
   .juben-learning h4, .juben-quiz h4 { margin: 0; font-family: var(--serif); font-size: 1.05rem; }
   .juben-learning-head > span, .juben-learning-status #progress-label { color: var(--case-accent); font-size: .72rem; font-variant-numeric: tabular-nums; }
@@ -841,8 +845,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   .juben-learning-actions { display: flex; gap: 1rem; margin-top: 1rem; }
   .juben-learning-actions button, .juben-quiz button { padding: 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--ink-soft); font: inherit; font-size: .65rem; cursor: pointer; }
   .juben-learning-actions button:hover, .juben-quiz button:hover { color: var(--case-accent); border-color: var(--case-accent); }
-  .juben-quiz { display: grid; grid-template-columns: auto 1fr; gap: 1rem; margin: 1rem 1.7rem 0; padding: 1rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-  .juben-quiz-mark { display: grid; place-items: center; width: 2.7rem; height: 2.7rem; border: 1px solid color-mix(in srgb, var(--case-accent) 40%, var(--line)); border-radius: 50%; color: var(--case-accent); font-family: var(--serif); font-size: 1.4rem; }
+  .juben-quiz { margin: 1rem 0 0; padding: 1rem .25rem .35rem; border-top: 1px solid var(--line); }
   .juben-quiz p:not(.juben-kicker) { margin: .55rem 0 .65rem; font-size: .78rem; line-height: 1.75; }
   .juben-compare-filters { margin-bottom: 1rem; }
   .juben-table-wrap { overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
@@ -855,6 +858,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   .juben-table-wrap tbody th { font-size: .75rem; font-weight: 600; }
   .juben-table-wrap tbody th small { display: block; margin-top: .2rem; color: var(--ink-soft); font-size: .56rem; font-weight: 400; }
   .juben-table-wrap td { color: var(--ink-soft); font-size: .75rem; line-height: 1.8; }
+  .juben-compare-case { display: none; }
   .juben-table-wrap tbody tr:hover { background: color-mix(in srgb, var(--accent) 4%, transparent); }
   .juben-compare-insight { margin: 1rem 0 0; padding-left: 1rem; border-left: 2px solid var(--accent); color: var(--ink-soft); font-size: .75rem; line-height: 1.85; }
   .juben-compare-insight span { margin-right: .7rem; color: var(--ink); font-weight: 650; }
@@ -876,7 +880,6 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   .juben-accordion details small { color: var(--accent); font-size: .65rem; }
   /* ---------- DM 档案库（内容全部 JS 注入，样式必须 :global） ---------- */
   .juben-vault { padding-top: 2rem; scroll-margin-top: var(--header-h); }
-  .juben-vault-note { margin: 0 0 1.2rem; padding: .85rem 1rem; color: var(--ink-soft); font-size: .78rem; line-height: 1.8; background: var(--accent-soft); border-left: 2px solid var(--accent); }
   :global(.juben-vault-loading) { margin: 1.5rem 0; color: var(--ink-soft); font-size: .78rem; }
   :global(.juben-vault-gate) { padding: 1.6rem; border: 1px dashed var(--line); border-radius: 10px; background: var(--paper-2); }
   :global(.juben-vault-gate p) { margin: 0 0 .9rem; color: var(--ink-soft); font-size: .8rem; line-height: 1.8; }
@@ -895,8 +898,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.juben-vault-msg[data-tone="error"]) { color: #b3452e; }
   :global(.juben-vault-msg[data-tone="ok"]) { color: var(--accent); }
   :global(.juben-vault-retry) { min-height: 44px; margin-top: .8rem; cursor: pointer; }
-  :global(.juben-vault-reader) { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: 1.4rem; align-items: start; }
-  :global(.juben-vault-side) { position: sticky; top: calc(var(--header-h) + 1rem); display: grid; gap: 1rem; }
+  :global(.juben-vault-reader) { display: grid; gap: .8rem; }
   :global(.juben-vault-invite) { padding: 1.1rem 1.2rem; border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); border-radius: 10px; background: var(--paper-2); }
   :global(.juben-vault-invite summary) { cursor: pointer; font-size: .8rem; color: var(--ink); }
   :global(.juben-vault-invite-title) { margin: 0 0 .5rem; color: var(--ink-soft); font-size: .62rem; letter-spacing: .14em; }
@@ -904,8 +906,9 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.juben-vault-invite button) { margin-top: .6rem; padding: .35rem .8rem; border: 1px solid var(--line); border-radius: 5px; background: transparent; color: var(--ink-soft); font: inherit; font-size: .65rem; cursor: pointer; }
   :global(.juben-vault-invite button:hover) { color: var(--accent); border-color: var(--accent); }
   :global(.juben-vault-invite-sub) { margin: .6rem 0 0; color: var(--ink-soft); font-size: .65rem; line-height: 1.7; }
-  :global(.juben-vault-cases) { display: grid; gap: .5rem; padding: 1.1rem 1.2rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); }
-  :global(.juben-vault-case) { padding: .5rem .7rem; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--ink-soft); font: inherit; font-size: .72rem; text-align: left; cursor: pointer; }
+  :global(.juben-vault-cases) { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; padding: .45rem .65rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); }
+  :global(.juben-vault-cases .juben-vault-invite-title) { margin: 0 .35rem 0 0; }
+  :global(.juben-vault-case) { min-height: 44px; padding: .4rem .7rem; border: 1px solid transparent; border-radius: 6px; background: transparent; color: var(--ink-soft); font: inherit; font-size: .8rem; text-align: left; cursor: pointer; }
   :global(.juben-vault-case:hover) { color: var(--ink); border-color: var(--line); }
   :global(.juben-vault-case.is-active) { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); background: color-mix(in srgb, var(--accent) 8%, transparent); }
   :global(.juben-vault-main) { min-width: 0; }
@@ -918,13 +921,13 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.juben-vault-mission-actions button:hover) { color: var(--accent); border-color: var(--accent); }
   :global(.juben-vault-mission-warning) { grid-column: 1 / -1; margin: 0; color: #b3452e; font-size: .65rem; }
   :global(.juben-vault-directory) { margin-bottom: 1rem; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); }
-  :global(.juben-vault-directory > summary) { padding: .75rem 1rem; color: var(--ink); font-size: .72rem; cursor: pointer; }
+  :global(.juben-vault-directory > summary) { padding: .75rem 1rem; color: var(--ink); font-size: .85rem; cursor: pointer; }
   :global(.juben-vault-directory > summary span) { margin-left: .45rem; color: var(--ink-soft); font-size: .6rem; }
   :global(.juben-vault-docs) { display: grid; gap: 1.1rem; padding: 0 1rem 1rem; }
   :global(.juben-vault-group-title) { display: flex; align-items: baseline; gap: .45rem; margin: 0 0 .5rem; color: var(--ink); font-family: var(--serif); font-size: .82rem; letter-spacing: .06em; }
   :global(.juben-vault-group-title span) { color: var(--ink-soft); font-family: var(--sans); font-size: .6rem; letter-spacing: .1em; }
   :global(.juben-vault-group-pills) { display: flex; flex-wrap: wrap; gap: .45rem; }
-  :global(.juben-vault-doc) { padding: .4rem .75rem; border: 1px solid var(--line); border-radius: 999px; background: var(--paper-2); color: var(--ink-soft); font: inherit; font-size: .68rem; cursor: pointer; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  :global(.juben-vault-doc) { min-height: 44px; padding: .4rem .7rem; border: 1px solid var(--line); border-radius: 7px; background: var(--paper-2); color: var(--ink-soft); font: inherit; font-size: .76rem; cursor: pointer; max-width: 100%; text-align: start; overflow-wrap: anywhere; }
   :global(.juben-vault-doc:hover) { color: var(--ink); border-color: var(--accent); }
   :global(.juben-vault-doc.is-active) { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   :global(.juben-vault-doc-body) { padding: 1.8rem 2rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper-2); }
@@ -1073,50 +1076,67 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(.juben-vault-doc-body :is(th, td)) { padding: .5rem .65rem; }
   :global(.juben-vault-doc-body hr) { margin: 1.6rem 0; border: 0; border-top: 1px solid var(--line); }
   @media (max-width: 900px) {
-    :global(.juben-vault-reader) { grid-template-columns: 1fr; }
-    :global(.juben-vault-main) { order: 1; }
-    :global(.juben-vault-side) { position: static; order: 2; grid-template-columns: repeat(2, minmax(0, 1fr)); display: grid; }
     :global(.juben-vault-mission) { grid-template-columns: 1fr; }
     :global(.juben-vault-mission-actions) { justify-content: flex-start; }
     :global(.juben-vault-doc-body) { padding: 1.2rem 1.1rem; }
   }
   @media (max-width: 560px) {
-    :global(.juben-vault-side) { grid-template-columns: 1fr; }
     :global(.juben-vault-redeem input) { width: 100%; }
     :global(.juben-vault-redeem) { align-items: stretch; flex-direction: column; }
   }
 
   @media (max-width: 900px) {
-    .juben-workbench { grid-template-columns: 14.5rem minmax(0, 1fr); }
-    .juben-case-desc { display: none; }
+    .juben-workbench { grid-template-columns: minmax(0, 13.5rem) minmax(0, 1fr); }
     .juben-facts { grid-template-columns: repeat(2, 1fr); gap: .5rem 0; }
     .juben-method-grid { grid-template-columns: 13rem 1fr; gap: 2rem; }
   }
   @media (max-width: 700px) {
-    .juben-page { padding-inline: 1.1rem; }
-    .juben-hero { min-height: 0; grid-template-columns: 1fr; gap: 1.5rem; padding: 3rem 0 2.4rem; }
+    .juben-page { padding-inline: .85rem; }
     .juben-section-head { align-items: flex-start; flex-direction: column; gap: .5rem; }
     .juben-section-head > p { text-align: left; }
+    .juben-library-head { flex-direction: row; flex-wrap: wrap; align-items: center; }
+    .juben-filter-panel[open] { flex-basis: 100%; }
+    .juben-filter-panel[open] > summary { margin-inline-start: 0; }
     .juben-tools { align-items: stretch; flex-direction: column; }
     .juben-search { width: 100%; }
     .juben-workbench { grid-template-columns: 1fr; }
     .juben-case-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .juben-case-card { padding: .9rem; }
-    .juben-case-card strong { font-size: 1.1rem; }
-    .juben-case-card small { letter-spacing: .05em; }
-    .juben-detail-head, .juben-facts, .juben-detail-footer { padding-inline: 1.1rem; }
+    .juben-case-card { padding: .65rem .6rem; }
+    .juben-case-card strong { grid-column: 1 / -1; font-size: 1rem; }
+    .juben-case-card .juben-status { display: none; }
+    .juben-case-list { gap: .5rem; }
+    .juben-detail { display: flex; flex-direction: column; }
+    .juben-detail-intro { order: 1; padding-bottom: .7rem; background: none; }
+    .juben-facts { order: 2; margin: 0 var(--juben-inset) .9rem; padding: .65rem; background: var(--paper-3); border-radius: 7px; }
+    .juben-practice { order: 3; }
+    .juben-study-links { margin-top: .65rem; }
     .juben-training-callout { align-items: flex-start; flex-direction: column; }
     .juben-training-callout button { width: 100%; min-height: 2.75rem; }
     .juben-mission-map { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .juben-trainer-draft small { display: block; margin: .2rem 0 0; }
     .juben-method-grid { grid-template-columns: 1fr; gap: 1rem; }
     .juben-method-intro p { max-width: 28rem; }
+    .juben-table-wrap { border: 0; overflow: visible; }
+    .juben-table-wrap table { min-width: 0; }
+    .juben-table-wrap thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .juben-table-wrap tbody tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: .65rem; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    .juben-table-wrap tbody th { grid-column: 1 / -1; background: var(--paper-3); }
+    .juben-table-wrap tbody :is(th, td) { padding: .65rem; border: 0; }
+    .juben-table-wrap td + td { border-inline-start: 1px solid var(--line); }
+    .juben-compare-case { display: block; margin-bottom: .25rem; color: var(--ink); font-weight: 650; }
   }
   @media (max-width: 430px) {
-    .juben-case-list { grid-template-columns: 1fr; }
-    .juben-case-desc { display: block; }
-    .juben-detail-head { flex-direction: column; }
-    .juben-detail-status { align-self: flex-start; }
+    .juben-study-main a { flex-basis: 7rem; }
+    .juben-detail-head h3 { font-size: 1.65rem; }
+    .juben-case-meta { display: none; }
+    .juben-detail-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; position: relative; }
+    .juben-detail-head > div { display: contents; }
+    .juben-detail-code { grid-column: 1; grid-row: 1; }
+    .juben-detail-status { grid-column: 2; grid-row: 1; }
+    .juben-detail-head h3 { grid-column: 1 / -1; margin: 0; }
+    .juben-study-main a { padding: .6rem; }
+    .juben-study-main a strong { font-size: .83rem; }
+    .juben-study-main a span { font-size: .68rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     .juben-case-card, .juben-card-progress b, .juben-progress-track b { transition: none; }
