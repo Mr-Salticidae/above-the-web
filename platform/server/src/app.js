@@ -124,6 +124,35 @@ function bearerToken(request) {
   return authorization.startsWith("Bearer ") ? authorization.slice(7).trim() : "";
 }
 
+function sendJubenAudio(request, response, audio, config) {
+  const headers = {
+    'Content-Type': 'audio/mpeg',
+    'Accept-Ranges': 'bytes',
+    'Cache-Control': 'no-store',
+    'Referrer-Policy': 'no-referrer',
+    'X-Content-Type-Options': 'nosniff',
+    ...corsHeaders(config, request),
+  };
+  const range = request.headers.range;
+  let status = 200;
+  let bytes = audio;
+  if (range) {
+    const match = /^bytes=(\d*)-(\d*)$/.exec(range);
+    const start = match?.[1] ? Number(match[1]) : Math.max(0, audio.length - Number(match?.[2]));
+    const end = match?.[1] && match[2] ? Math.min(audio.length - 1, Number(match[2])) : audio.length - 1;
+    if (!match || (!match[1] && !match[2]) || start > end || start >= audio.length) {
+      response.writeHead(416, { ...headers, 'Content-Range': `bytes */${audio.length}` });
+      response.end();
+      return;
+    }
+    status = 206;
+    headers['Content-Range'] = `bytes ${start}-${end}/${audio.length}`;
+    bytes = audio.subarray(start, end + 1);
+  }
+  response.writeHead(status, { ...headers, 'Content-Length': bytes.length });
+  response.end(request.method === 'HEAD' ? undefined : bytes);
+}
+
 // 限流按来源 IP 计数，只认 nginx 用 $remote_addr 覆盖写入的 X-Real-IP。
 // 不能取 X-Forwarded-For 的第一段：$proxy_add_x_forwarded_for 会保留客户端自带的值，
 // 每次请求换一个假 IP 就能绕过登录 / 注册限流。服务只监听 127.0.0.1，外部连不到这里伪造 X-Real-IP。
@@ -431,6 +460,7 @@ export function createApplication(config, log = console, deps = {}) {
   const juben = createJubenContent(config, log, {
     fetch: deps.jubenFetcher,
   });
+  const jubenAudioTickets = new Map();
 
   // 开一张一次性重置票。旧的没用过的一并作废，同一时间只留一个有效链接。
   function issuePasswordReset(user, { channel = "email", issuedBy = null } = {}) {
@@ -447,10 +477,10 @@ export function createApplication(config, log = console, deps = {}) {
     return { token, expiresAt, url: `${config.siteUrl}/account/reset/?token=${encodeURIComponent(token)}` };
   }
 
-  function authenticate(request) {
+  function authenticate(request, sessionHash) {
     const token = bearerToken(request);
-    if (!token) throw new HttpError(401, "UNAUTHENTICATED", "请先登录");
-    const session = database.findActiveSession(hashToken(token));
+    if (!token && !sessionHash) throw new HttpError(401, "UNAUTHENTICATED", "请先登录");
+    const session = database.findActiveSession(sessionHash || hashToken(token));
     if (!session) throw new HttpError(401, "SESSION_EXPIRED", "登录已过期，请重新登录");
     const user = database.findUserById(session.user_id);
     if (!user) throw new HttpError(401, "UNAUTHENTICATED", "账号不存在");
@@ -480,8 +510,8 @@ export function createApplication(config, log = console, deps = {}) {
     return user && (user.role === "dm" || user.role === "admin");
   }
 
-  function requireDm(request) {
-    const auth = authenticate(request);
+  function requireDm(request, sessionHash) {
+    const auth = authenticate(request, sessionHash);
     if (!isDm(auth.user)) {
       throw new HttpError(403, "NOT_DM", "这一区只对 DM 开放：需要邀请码升级身份");
     }
@@ -1281,8 +1311,10 @@ export function createApplication(config, log = console, deps = {}) {
       // 中文文件名进 URL 会变成百分号编码，先 decode 再交给内容模块校验；
       // 校验不过（含 ../ 之类）就是 404，不存在拼路径的口子。
       const jubenDocMatch = url.pathname.match(/^\/api\/juben\/doc\/([^/]+)\/([^/]+)(?:\/audio\/([a-f0-9]{40}|[a-f0-9]{64}))?$/);
-      if (jubenDocMatch && request.method === "GET") {
-        requireDm(request);
+      if (jubenDocMatch && (request.method === "GET" || (request.method === 'HEAD' && jubenDocMatch[3]))) {
+        const docPath = jubenDocMatch[0].split('/audio/')[0];
+        const ticket = jubenDocMatch[3] && jubenAudioTickets.get(url.searchParams.get('ticket'));
+        const auth = requireDm(request, ticket?.docPath === docPath && ticket.expires > Date.now() ? ticket.sessionHash : undefined);
         if (!juben.configured()) {
           reply(200, { configured: false });
           return;
@@ -1300,19 +1332,21 @@ export function createApplication(config, log = console, deps = {}) {
             throw new HttpError(502, 'JUBEN_AUDIO_UPSTREAM', '音频暂时加载失败，请重试');
           });
           if (!audio) throw new HttpError(404, 'AUDIO_NOT_FOUND', '没有这段音频');
-          response.writeHead(200, {
-            'Content-Type': 'audio/mpeg',
-            'Content-Length': audio.length,
-            'Cache-Control': 'no-store',
-            'X-Content-Type-Options': 'nosniff',
-            ...corsHeaders(config, request),
-          });
-          response.end(audio);
+          sendJubenAudio(request, response, audio, config);
           return;
         }
-        const doc = await juben.doc(caseId, docId, url.searchParams.get('audio') === 'deferred');
+        const deferred = url.searchParams.get('audio') === 'deferred';
+        const doc = await juben.doc(caseId, docId, deferred);
         if (!doc) throw new HttpError(404, "DOC_NOT_FOUND", "没有这一篇");
-        reply(200, { configured: true, doc });
+        let audioTicket;
+        if (deferred && /~@[a-f0-9]{40}(?:[a-f0-9]{24})?(?=[~；\r\n]|$)/.test(doc.markdown)) {
+          const now = Date.now();
+          for (const [id, entry] of jubenAudioTickets) if (entry.expires <= now) jubenAudioTickets.delete(id);
+          if (jubenAudioTickets.size >= 2048) jubenAudioTickets.delete(jubenAudioTickets.keys().next().value);
+          audioTicket = randomBytes(24).toString('hex');
+          jubenAudioTickets.set(audioTicket, { docPath, sessionHash: hashToken(auth.token), expires: now + 12 * 60 * 60 * 1000 });
+        }
+        reply(200, { configured: true, doc, audioTicket });
         return;
       }
 
