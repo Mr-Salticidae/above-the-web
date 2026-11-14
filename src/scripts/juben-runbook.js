@@ -109,10 +109,10 @@ export function renderRunbook(rows) {
     </dialog></div>`;
 }
 
-function mountRunbookAudio(inputs, fetchAudio) {
+function mountRunbookAudio(inputs, fetchAudio, audioUrl) {
   const players = new Map(inputs.map((input) => [input, input.closest('.md-run-audio-track').querySelector('audio')]));
   const database = new Promise((resolve, reject) => {
-    const request = indexedDB.open('atw-juben-runbook-audio', 1);
+    const request = globalThis.indexedDB.open('atw-juben-runbook-audio', 1);
     request.onupgradeneeded = () => request.result.createObjectStore('tracks');
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
@@ -139,9 +139,9 @@ function mountRunbookAudio(inputs, fetchAudio) {
   const urls = new Map();
   const observer = new MutationObserver(() => {
     if (inputs[0].isConnected) return;
-    for (const [player, url] of urls) {
+    for (const player of players.values()) {
       player.pause();
-      URL.revokeObjectURL(url);
+      if (urls.has(player)) URL.revokeObjectURL(urls.get(player));
     }
     database.then((db) => db.close(), () => {});
     observer.disconnect();
@@ -159,6 +159,23 @@ function mountRunbookAudio(inputs, fetchAudio) {
       loop.textContent = `单曲循环 · ${player.loop ? '开' : '关'}`;
     });
     let version = 0;
+    let useNativeStream = Boolean(audioUrl);
+    async function play(current) {
+      try {
+        await player.play();
+        if (current === version) status.textContent = '';
+      } catch (error) {
+        if (current !== version || error.name === 'AbortError') return;
+        if (error.name === 'NotAllowedError') {
+          status.textContent = '音频已就绪，请点播放器里的播放键。';
+        } else if (useNativeStream) {
+          useNativeStream = false;
+          load.hidden = false;
+          load.textContent = '重试播放';
+          status.textContent = '播放未开始，请重试。';
+        }
+      }
+    }
     function show(file, message = file.name) {
       if (!input.isConnected) return;
       player.pause();
@@ -172,14 +189,23 @@ function mountRunbookAudio(inputs, fetchAudio) {
     }
     if (load && fetchAudio) load.addEventListener('click', async () => {
       const current = ++version;
+      const key = load.dataset.runAudioLoad;
+      if (useNativeStream) {
+        player.src = audioUrl(key);
+        player.hidden = false;
+        load.hidden = true;
+        status.textContent = '正在连接音源…';
+        void play(current);
+        return;
+      }
       load.disabled = true;
       status.textContent = '正在加载音频…';
       try {
-        const audio = await fetchAudio(load.dataset.runAudioLoad);
+        const audio = await fetchAudio(key);
         if (current !== version) return;
         if (audio.type !== 'audio/mpeg' || !audio.size) throw new Error('Invalid audio');
         show(audio, '已加载');
-        if (input.isConnected) player.play().catch(() => {});
+        if (input.isConnected) void play(current);
       } catch {
         if (current === version) status.textContent = '音频加载失败，请重试或选择本机音源。';
       } finally {
@@ -197,20 +223,30 @@ function mountRunbookAudio(inputs, fetchAudio) {
       }
     });
     player.addEventListener('play', () => {
+      status.textContent = '';
       for (const [otherInput, other] of players) {
         if (other !== player && isBgm(otherInput.dataset.runAudio) === isBgm(name)) other.pause();
       }
     });
-    player.addEventListener('error', () => { status.textContent = '无法播放，请换用 MP3 或 M4A 文件。'; });
+    player.addEventListener('error', () => {
+      if (load && player.currentSrc.startsWith('http')) {
+        useNativeStream = false;
+        load.hidden = false;
+        load.textContent = '重试播放';
+        status.textContent = '音源连接失败，请重试。';
+      } else {
+        status.textContent = '无法播放，请换用 MP3 或 M4A 文件。';
+      }
+    });
   }
 }
 
-export function mountRunbook(host, autoOpen = false, fetchAudio) {
+export function mountRunbook(host, autoOpen = false, fetchAudio, audioUrl) {
   const entry = host.querySelector('.md-runbook-entry');
   if (!entry) return;
   const dialog = entry.querySelector('dialog');
   const audioInputs = [...dialog.querySelectorAll('[data-run-audio]')];
-  if (audioInputs.length) mountRunbookAudio(audioInputs, fetchAudio);
+  if (audioInputs.length) mountRunbookAudio(audioInputs, fetchAudio, audioUrl);
   const steps = [...dialog.querySelectorAll('[data-run-step]')];
   const select = dialog.querySelector('[data-run-select]');
   const progress = dialog.querySelector('progress');

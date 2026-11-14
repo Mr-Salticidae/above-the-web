@@ -248,7 +248,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
 <script>
   // DM 档案库：整卷拆解只对 dm/admin 开放，member 在这里兑换邀请码。
   // 与公开训练区共用 case/module 深链；正文不进入公开数据，身份变化立即清掉。
-  import { api, ApiError, cacheUser, displayNameOf, escapeHtml, getCachedUser, getToken, loginUrl, registerUrl, refreshUser, isDm, onAuthChange } from '../../scripts/account-core.js';
+  import { API_BASE, api, ApiError, cacheUser, displayNameOf, escapeHtml, getCachedUser, getToken, loginUrl, registerUrl, refreshUser, isDm, onAuthChange } from '../../scripts/account-core.js';
   import { renderMarkdown } from '../../scripts/mini-markdown.js';
   import { mountWhiteboardCards } from '../../scripts/whiteboard-cards.js';
   import { linkReviewBoard } from '../../scripts/juben-review-board.js';
@@ -405,9 +405,10 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
           }
           if (!current()) return null;
           recentDocs.delete(path);
-          recentDocs.set(path, { doc: payload.doc, expires: Date.now() + 5 * 60_000 });
+          const doc = { ...payload.doc, ...(payload.audioTicket ? { audioTicket: payload.audioTicket } : {}) };
+          recentDocs.set(path, { doc, expires: Date.now() + 5 * 60_000 });
           if (recentDocs.size > 8) recentDocs.delete(recentDocs.keys().next().value);
-          return payload.doc;
+          return doc;
         } catch (error) {
           const retryable = ['NETWORK', 'INVALID_JSON', 'JUBEN_INCOMPLETE'].includes(error.code)
             || [502, 503, 504].includes(error.status);
@@ -452,8 +453,10 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         const doc = await loadVaultDoc(caseId, docId, current, signal);
         if (!current()) return;
         host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
-        mountRunbook(host, view === 'run' && docId === reviewId, (key) => api('GET',
-          `${vaultDocPath(caseId, docId)}/audio/${key}`, undefined, { cache: 'no-store', responseType: 'blob', signal }));
+        const audioPath = (key) => `${vaultDocPath(caseId, docId)}/audio/${key}`;
+        mountRunbook(host, view === 'run' && docId === reviewId,
+          (key) => api('GET', audioPath(key), undefined, { cache: 'no-store', responseType: 'blob', signal }),
+          doc.audioTicket ? (key) => `${API_BASE}${audioPath(key)}?ticket=${encodeURIComponent(doc.audioTicket)}` : undefined);
         workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: view === 'review' });
         attachRunbookReferences(host, workspaces);
       } catch (error) {
