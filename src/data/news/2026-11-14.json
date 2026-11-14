@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-14",
+  "headline": "OpenAI 上线 ChatGPT Wallet，Anthropic IPO 超额认购六倍",
+  "items": [
+    {
+      "title": "OpenAI 上线 ChatGPT Wallet，Agent 可代用户付款",
+      "summary": "OpenAI 推出 ChatGPT Wallet，允许 Dots 等 AI Agent 在用户授权下完成购物支付。用户绑定银行卡后，通过 Face ID 或指纹确认交易，卡号信息以 token 形式隐藏。目前仅面向美国 ChatGPT Pro 订阅者开放。对创作者而言，这意味着未来基于 Agent 的自动化素材采购、API 付费调用等流程有望进一步跑通。",
+      "category": "工具",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/introducing-chatgpt-wallet",
+      "featured": true
+    },
+    {
+      "title": "Anthropic IPO 超额认购六倍，规模或创历史纪录",
+      "summary": "Anthropic 正在进行 IPO，订单量达到可用份额的六倍，有望成为史上最大规模的科技公司上市。与此同时，受美国出口管制（ITAR）影响，中国大陆及香港投资者被银行拒绝受理买单。作为 Claude 系列模型的开发商，Anthropic 的资本化进程将直接影响其在多模态创作工具上的投入节奏。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-ipo-is-six-times-oversubscribed-and-on-track-to-become-the-largest-public-offering-in-history",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 推出消费级 Agent「Claude Duet」",
+      "summary": "Anthropic 发布了面向普通消费者的 AI Agent「Duet」，旨在让不写代码的用户也能使用 Agent 功能。The Verge 的测试显示，Duet 甚至会在交互中主动协助整理和撰写体验反馈。这是继 Meetings 之后 Anthropic 在消费端的又一次尝试，关注 AI 写作与日常任务自动化的创作者可以留意其实际表现。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1032518/claude-duet-ai-agent-hands-on",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 发布制造业插件，Claude 接入工业软件",
+      "summary": "Anthropic 推出 Claude for Manufacturing 插件，将 AI 直接接入 Autodesk Fusion、Oracle NetSuite 等工业软件。该插件具备 17 项专业技能，可在人工审批后执行起草报价、比对供应商等操作。虽然目前不直接控制物理机器，但标志着大模型正在从通用内容生成向垂直行业工作流渗透。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-claude-for-manufacturing-plugs-ai-directly-into-factory-software-to-automate-industrial-workflows",
+      "featured": false
+    },
+    {
+      "title": "ElevenLabs 推出团队会议记录与听写应用 ElevenAI",
+      "summary": "ElevenLabs 发布了新应用 ElevenAI，将会议记录与语音听写功能整合，主要面向团队和企业用户。此前该公司刚更新了 Scribe v3 语音识别模型，此次推出独立应用是其从底层模型向生产力工具延伸的一步。依赖语音转文字进行播客剪辑或文案整理的创作者多了一个备选方案。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/13/elevenlabs-new-app-combines-meeting-note-taking-and-dictation-for-teams",
+      "featured": false
+    },
+    {
+      "title": "LangChain 估值达 30 亿美元，客户数增至 7000 家",
+      "summary": "AI Agent 框架初创公司 LangChain 最新估值达到 30 亿美元。其模型与平台无关的 Agent 管理工具 LangSmith 目前已有 7000 家客户。对于在本地部署或搭建自定义图像/文本生成工作流的开发者来说，LangChain 生态的资金充裕度意味着相关工具的迭代速度可能会继续加快。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation",
+      "featured": false
+    },
+    {
+      "title": "llama.cpp 发布 v1.0.0 正式版",
+      "summary": "Hugging Face 宣布 llama.cpp 迎来 v1.0.0 版本，定位为本地 AI 生态系统提供更稳固的基础。作为大量本地运行开源图像与文本模型的核心推理后端，这一里程碑版本意味着本地部署的稳定性和兼容性将得到进一步保障，利好习惯离线跑图的 AIGC 创作者。",
+      "category": "工具",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+      "featured": false
+    }
+  ]
+}
