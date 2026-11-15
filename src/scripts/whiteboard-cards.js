@@ -44,7 +44,8 @@ export function renderWhiteboardCards(rows, mode = 'board') {
       <p><strong>${isCase ? '核对依据' : '更新依据'}</strong>　${escapeHtml(evidence)}</p>
     </section>`).join('');
   if (isWorkspace) {
-    const heading = isCaseWorkspace ? '《虚拟游戏》案件复盘' : '《虚拟游戏》逐笔白板';
+    // 三本共用同一套卡片：标题不能写死书名，否则《出逃连体村》会顶着《虚拟游戏》的名字。
+    const heading = isCaseWorkspace ? '案件复盘工作区' : '逐笔白板跟画';
     const options = cards.map(([title], i) => `<option value="${i}">${i + 1}. ${escapeHtml(title)}</option>`).join('');
     return `<div class="md-trace-entry">
       <button type="button" data-whiteboard-open>打开${isCaseWorkspace ? '案件复盘' : '逐笔白板'} · ${cards.length} ${isCaseWorkspace ? '张' : '步'}</button>

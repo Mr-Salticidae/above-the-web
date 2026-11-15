@@ -213,7 +213,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
           </tbody>
         </table>
       </div>
-      <p class="juben-compare-insight"><span>对照结论</span>同为六人硬核还原，两本需要训练的 DM 能力并不相同：一本更吃节奏与复盘表达，一本更吃物料与流程执行。学习路径也应因此不同。</p>
+      <p class="juben-compare-insight"><span>对照结论</span>三卷要练的 DM 能力并不相同：954 更吃节奏与复盘表达，247 更吃物料与流程执行，连体村更吃多重解答的轮次推进；官方板书与自造板的差别，也直接决定现场该写多少字。</p>
     </section>
 
     <section class="juben-method" aria-labelledby="method-title">
@@ -221,11 +221,11 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         <div>
           <h2 id="method-title">下一本，怎么拆</h2>
         </div>
-        <p>一条可以反复使用的五步学习线。</p>
+        <p>一条可以反复使用的六步学习线。</p>
       </header>
       <div class="juben-method-grid">
         <div class="juben-method-intro">
-          <p>从“读完一份剧本”到“能独立带完全场”，中间隔着五次主动加工。</p>
+          <p>从“读完一份剧本”到“能独立带完全场”，中间隔着六次主动加工；第一步是先看官方有没有给板。</p>
           <a href={deconstructSkillUrl} target="_blank" rel="noopener">查看拆解 Skill <span>↗</span></a>
         </div>
         <div class="juben-accordion">
@@ -774,6 +774,8 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   .juben-detail { --case-accent: var(--accent); min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--paper-2); overflow: hidden; }
   .juben-detail[data-tone="bronze"] { --case-accent: #a56536; }
   :global(:root[data-theme="dark"]) .juben-detail[data-tone="bronze"] { --case-accent: #d6a477; }
+  .juben-detail[data-tone="slate"] { --case-accent: #4a6470; }
+  :global(:root[data-theme="dark"]) .juben-detail[data-tone="slate"] { --case-accent: #8fb0bd; }
   .juben-detail-head { display: flex; justify-content: space-between; gap: .75rem; padding: var(--juben-inset) var(--juben-inset) .8rem; border-top: 3px solid var(--case-accent); background: color-mix(in srgb, var(--case-accent) 6%, var(--paper-2)); }
   .juben-detail-code { margin: 0; color: var(--case-accent); font-size: .6rem; letter-spacing: .14em; }
   .juben-detail-head h3 { margin: .35rem 0 .45rem; font-family: var(--serif); font-size: 2rem; letter-spacing: .05em; }
@@ -852,7 +854,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   .juben-quiz p:not(.juben-kicker) { margin: .55rem 0 .65rem; font-size: .78rem; line-height: 1.75; }
   .juben-compare-filters { margin-bottom: 1rem; }
   .juben-table-wrap { overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
-  .juben-table-wrap table { width: 100%; min-width: 42rem; border-collapse: collapse; }
+  .juben-table-wrap table { width: 100%; min-width: 52rem; border-collapse: collapse; }
   .juben-table-wrap th, .juben-table-wrap td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
   .juben-table-wrap tr:last-child th, .juben-table-wrap tr:last-child td { border-bottom: 0; }
   .juben-table-wrap thead th { font-family: var(--serif); font-size: 1rem; }

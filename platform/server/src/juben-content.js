@@ -12,7 +12,8 @@
 
 import { createHash } from 'node:crypto';
 
-const CASE_ID_RE = /^[0-9A-Za-z][0-9A-Za-z\u4e00-\u9fff_-]*$/;
+// 卷目录名允许以中文开头（第三卷为纯中文卷名），首字符不能只认数字与拉丁字母。
+const CASE_ID_RE = /^[0-9A-Za-z\u4e00-\u9fff][0-9A-Za-z\u4e00-\u9fff_-]*$/;
 const RAW_FETCH_CONCURRENCY = 6;
 
 function safeDocId(id) {

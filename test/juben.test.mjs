@@ -27,6 +27,7 @@ test('剧本档案 ID 唯一，公开学习路径与自测结构完整', () => {
 const SLUG_LEDGER = {
   'virtual-game': ['flow-skeleton', 'god-view', 'dual-track-clues', 'layered-review'],
   'woman-by-window': ['five-stages', 'character-web', 'cross-media-evidence', 'question-layers'],
+  'escape-conjoined-village': ['opening-navigation', 'iteration-order', 'official-board', 'opening-lines'],
 };
 
 test('模块 slug 是稳定 ID：格式合法、卷内唯一、与台账一致', () => {
@@ -50,7 +51,7 @@ test('模块 slug 是稳定 ID：格式合法、卷内唯一、与台账一致',
   }
 });
 
-test('跨本对照的每一行都能在两卷档案中取到值', () => {
+test('跨本对照的每一行都能在各卷档案中取到值', () => {
   for (const row of comparisonRows) {
     for (const item of jubenCases) {
       assert.ok(item.compare[row.key], `${item.id} 缺少对照字段 ${row.key}`);
@@ -72,7 +73,7 @@ test('训练深链只用稳定 ID，公开数据不含答案字段或内容源�
   const serialized = JSON.stringify(jubenCases);
   assert.doesNotMatch(serialized, /https?:\/\/|juben-dm-lab|github\.com/);
   for (const item of jubenCases) {
-    assert.match(item.vaultCaseId, /^[A-Za-z0-9][A-Za-z0-9._\-\u4e00-\u9fff]*$/);
+    assert.match(item.vaultCaseId, /^[A-Za-z0-9\u4e00-\u9fff][A-Za-z0-9._\-\u4e00-\u9fff]*$/);
     assert.equal('privateUrl' in item, false);
     assert.equal('timelineUrl' in item, false);
   }

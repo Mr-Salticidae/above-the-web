@@ -91,6 +91,8 @@ const REPO_FILES = {
   "cases/247-窗边的女人/00_对外学习包/第一册_开本与流程.md": "# 第一册 · 开本与流程\n",
   "cases/247-窗边的女人/00_对外学习包/第二册_故事全貌.md": "# 第二册 · 故事全貌\n",
   "cases/247-窗边的女人/00_对外学习包/读我先看.md": "# 窗边的女人 · 读我先看\n",
+  "cases/出逃连体村/README.md": "# 出逃连体村 · 单本索引\n",
+  "cases/出逃连体村/00_DM主持学习手册.md": "# 出逃连体村 · DM 手册\n",
   "README.md": "# juben-dm-lab",
 };
 
@@ -293,9 +295,9 @@ test("DM 读得到剧本清单与正文，中文目录与嵌套路径都通", as
   const manifest = await call("GET", "/api/juben/manifest", { token: colleagueToken });
   assert.equal(manifest.status, 200);
   assert.equal(manifest.payload.configured, true);
-  assert.equal(manifest.payload.cases.length, 2);
+  assert.equal(manifest.payload.cases.length, 3);
   const ids = manifest.payload.cases.map((entry) => entry.id);
-  assert.deepEqual([...ids].sort(), ["247-窗边的女人", "954-虚拟游戏"]);
+  assert.deepEqual([...ids].sort(), ["247-窗边的女人", "954-虚拟游戏", "出逃连体村"]);
   // 清单按 DM 阅读视角分组：开卷总览在首，中文数字按册数排（第二册不得插队到第一册前）
   const case954 = manifest.payload.cases.find((entry) => entry.id === "954-虚拟游戏");
   assert.equal(case954.groups[0].label, "开卷 · 总览");

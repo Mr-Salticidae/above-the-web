@@ -233,3 +233,15 @@ test('白板样式保证等宽、不折行、可横滚，并压得住档案库�
   assert.match(css, /\.juben-vault-doc-body pre\.md-whiteboard/);
   assert.match(css, /\.juben-vault-doc-body pre\.md-whiteboard code/);
 });
+
+
+// 三本共用白板卡片：工作区标题不能写死某一本的书名
+test('逐笔白板工作区标题通用，不写死《虚拟游戏》', async () => {
+  const { renderWhiteboardCards } = await import('../src/scripts/whiteboard-cards.js');
+  const svg = Buffer.from('<svg xmlns="http://www.w3.org/2000/svg"></svg>').toString('base64');
+  const row = ['① 开场 · 立五列', '玩家分享时', '写五列短词', '官方第 1 张', svg].join('|');
+  const html = renderWhiteboardCards([row], 'trace');
+  assert.match(html, /<h3>逐笔白板跟画<\/h3>/);
+  assert.match(html, /打开逐笔白板 · 1 步/);
+  assert.ok(!html.includes('《虚拟游戏》'), '第三卷不能顶着第一卷的书名');
+});
