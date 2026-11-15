@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-15",
+  "headline": "Runway 开源机器人模型，Gemini 4 Carbon 登顶数学榜",
+  "items": [
+    {
+      "title": "Runway 开源 Praxis-1，视频模型可用于机器人控制",
+      "summary": "Runway 以 Apache 2.0 协议开源了机器人控制模型 Praxis-1，开放权重与源码。该模型将视频训练中获得的知识迁移至机器人控制任务，目前在 Nvidia RoboLab-120 基准的 World Action Model 类别中领先，但尚不能自主规划复杂动作序列。对 AI 视频创作者而言，这意味着视频生成模型的底层能力正被复用到物理交互领域。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/runways-open-source-praxis-1-turns-video-ai-into-a-robot-controller",
+      "featured": true
+    },
+    {
+      "title": "Gemini 4 Carbon 登顶 MathArena，调用成本为 GPT-6.1 Sol 的 15 倍",
+      "summary": "在 MathArena 数学基准测试中，Google Gemini 4 Carbon 与 Anthropic Fable 5.2 取代 GPT-6.1 Sol 占据榜首，这是近期首次没有 OpenAI 模型领跑该榜单。不过 Gemini 4 Carbon 的调用成本约为 GPT-6.1 Sol 的 15 倍，且在测试中忽略了时间限制、几乎不主动放弃任务。创作者在选择推理类任务的模型时，需要在准确率与 API 开销之间做权衡。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/gemini-4-carbon-takes-the-matharena-crown-but-costs-15-times-more-than-gpt-6-1-sol",
+      "featured": true
+    },
+    {
+      "title": "Anthropic 建议调整 Claude Opus 5.5 提示词策略",
+      "summary": "Anthropic 已将 Claude Opus 5.5 设为所有付费计划的默认模型，并发布了一份提示词指南，建议用户放弃「think hard」等旧习惯，从 Medium 努力级别开始。官方认为沿用过去的提示方式反而会拖慢新模型的表现。对于日常依赖 Claude 进行文本创作的作者，更新 prompt 写法可能直接改善输出质量。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-says-outdated-prompting-habits-are-slowing-down-claude-opus-5-5",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 再次解散独立机器人团队，研究人员分流",
+      "summary": "OpenAI 第二次解散其独立的机器人研究团队，将人员分配至其他部门。公司认为 GPT-6 Astra 等通用模型已能直接控制机器人，不再需要专门的垂直单元。这一调整反映出通用大模型正在压缩专用 AI 团队的生存空间。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-reassigns-robotics-researchers-to-other-teams-as-general-purpose-models-might-make-specialized-robotics-ai-unnecessary",
+      "featured": false
+    },
+    {
+      "title": "前研究员称 Anthropic 可用更少算力重训 Mythos",
+      "summary": "前 OpenAI 与 Anthropic 研究员 Jacob Coxon 引用 Anthropic IPO 路演材料指出，该公司目前已能用远低于初始训练的算力重新训练 Mythos 模型，算法效率呈加速提升趋势。Coxon 据此继续呼吁暂停前沿模型开发，等待竞争者追赶。这为关注模型迭代速度的创作者提供了一个来自内部的效率参考。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-can-already-retrain-mythos-with-a-fraction-of-the-compute-originally-needed-says-former-researcher-coxon",
+      "featured": false
+    },
+    {
+      "title": "TechCrunch 整理 AI 项目失败清单",
+      "summary": "TechCrunch 发布了一份持续更新的 AI 项目与初创公司失败列表，涵盖 Apple 多次延期的 Siri AI 以及 OpenAI 上线不顺的「super app」等案例。该清单梳理了那些关停或未达预期的项目，可作为创作者评估 AI 工具稳定性的背景参考。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/14/the-ai-graveyard-a-running-list-of-projects-and-startups-that-didnt-make-it",
+      "featured": false
+    }
+  ]
+}
