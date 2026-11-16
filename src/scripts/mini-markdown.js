@@ -6,6 +6,7 @@
 import { escapeHtml } from './account-core.js';
 import { renderWhiteboardCards } from './whiteboard-cards.js';
 import { renderRunbook } from './juben-runbook.js';
+import { renderRelationGraph } from './relation-graph.js';
 
 // 相对路径、锚点、http(s) 与 mailto 放行，其余协议（javascript: 之流）一律当普通文本。
 // 任务书里写 ../spec/ 指向教程规范是常事，不能因为它不带协议就拦掉。
@@ -110,6 +111,8 @@ export function renderMarkdown(source, { whiteboardImages = false } = {}) {
   const closeFence = () => {
     if (whiteboardImages && fenceLang === 'dm-runbook') {
       out.push(renderRunbook(fence));
+    } else if (whiteboardImages && fenceLang === 'relation-graph') {
+      out.push(renderRelationGraph(fence));
     } else if (whiteboardImages && ['whiteboard-cards', 'whiteboard-trace', 'case-cards', 'case-workspace'].includes(fenceLang)) {
       const mode = { 'case-cards': 'case', 'whiteboard-trace': 'trace', 'case-workspace': 'case-workspace' }[fenceLang] ?? 'board';
       out.push(renderWhiteboardCards(fence, mode));

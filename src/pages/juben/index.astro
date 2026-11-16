@@ -4,6 +4,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { jubenCases, comparisonRows, methodSteps } from '../../data/juben.js';
 import { KB_REPO, KB_BRANCH } from '../../lib/site.mjs';
+import '../../styles/relation-graph.css';
 
 const first = jubenCases[0];
 const workspaceCase = jubenCases.find((item) => item.id === 'virtual-game');
@@ -251,6 +252,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   import { API_BASE, api, ApiError, cacheUser, displayNameOf, escapeHtml, getCachedUser, getToken, loginUrl, registerUrl, refreshUser, isDm, onAuthChange } from '../../scripts/account-core.js';
   import { renderMarkdown } from '../../scripts/mini-markdown.js';
   import { mountWhiteboardCards } from '../../scripts/whiteboard-cards.js';
+  import { mountRelationGraphs } from '../../scripts/relation-graph.js';
   import { linkReviewBoard } from '../../scripts/juben-review-board.js';
   import { attachRunbookReferences, mountRunbook } from '../../scripts/juben-runbook.js';
   import { jubenCases } from '../../data/juben.js';
@@ -458,6 +460,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
           (key) => api('GET', audioPath(key), undefined, { cache: 'no-store', responseType: 'blob', signal }),
           doc.audioTicket ? (key) => `${API_BASE}${audioPath(key)}?ticket=${encodeURIComponent(doc.audioTicket)}` : undefined);
         workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: view === 'review' });
+        mountRelationGraphs(host);
         attachRunbookReferences(host, workspaces);
       } catch (error) {
         if (!current()) return;
