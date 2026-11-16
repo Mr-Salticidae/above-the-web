@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-16",
+  "headline": "Claude Fable 5.2 用代码「画」图，Adobe Firefly 安全承诺遭质疑",
+  "items": [
+    {
+      "title": "Claude Fable 5.2 不生成像素，用代码模拟笔触作画",
+      "summary": "Anthropic 发布 Claude Fable 5.2，该模型不直接计算像素，而是通过编写 Python 代码在虚拟画布上放置数十万道模拟笔触来构建图像，包含刷毛纹理和颜料涂抹效果。据 Anthropic 员工透露，一张写实停车场场景约需 70 万次笔触。对 AI 绘画创作者而言，这提供了一种完全不同于扩散模型的图像生成路径。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropics-claude-fable-5-2-doesnt-generate-images-it-paints-them",
+      "featured": true
+    },
+    {
+      "title": "Creative Bloq：Adobe Firefly 的「安全」承诺正面临考验",
+      "summary": "Creative Bloq 发文指出，Adobe Firefly 一直以版权安全的 AI 图像生成器自居，但随着 OpenAI、ByteDance 和 Kling 等竞品加入市场，其「安全」承诺的实际覆盖范围开始受到质疑。对于依赖 Firefly 进行商业创作的图像工作者，需要重新评估不同工具在版权合规上的差异。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/i-trusted-adobe-firefly-because-it-was-the-safe-ai-option-now-im-not-so-sure",
+      "featured": true
+    },
+    {
+      "title": "美团开源 LongCat-2.5，1.6 万亿参数 Agent 模型",
+      "summary": "美团开源了面向 AI Agent 的 1.6 万亿参数模型 LongCat-2.5，该模型完全基于国产硬件训练，未使用 Nvidia GPU。在 Terminal Bench 上得分 88.4，略低于 Claude Opus 5，示例部署使用了 194 张华为昇腾芯片。大参数 Agent 模型的开源为开发者提供了新的底层选择。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/meituan-releases-a-1-6-trillion-parameter-agent-model-that-never-touched-an-nvidia-gpu",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 用 GPT-6 Astra 辅助完成标准模型格点定义证明",
+      "summary": "OpenAI 发文介绍了如何利用 GPT-6 Astra 将一个关于标准模型非微扰格点定义的构想转化为详细证明，并同步上线了科学博客分享研究者使用 AI 推进科学发现的方法与案例。虽然属于基础物理研究，但展示了当前大模型处理长链条复杂推理任务的能力边界。",
+      "category": "研究",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/step-toward-defining-the-standard-model",
+      "featured": false
+    },
+    {
+      "title": "美国国会拟收紧 AI 芯片出口规则",
+      "summary": "受近期 Nvidia 相关事件影响，美国国会两党正推动进一步限制 AI 芯片出口的措施，并要求 Nvidia 管理层出席听证。出口管制政策的收紧可能直接影响国内团队获取高端算力的渠道，是 AIGC 从业者需要持续关注的行业变量。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1033984/congress-export-rules-ai-chips-china",
+      "featured": false
+    },
+    {
+      "title": "澳洲央行：AI 对年轻软件从业者的冲击已显现",
+      "summary": "澳大利亚央行数据显示，自 ChatGPT 发布以来，软件开发和客服领域 15 至 24 岁年轻人的招聘数量降幅明显高于其他年龄段。尽管作者提示经济周期和远程办公趋势也是影响因素，但初级岗位受 AI 挤压的趋势值得 AIGC 领域的年轻创作者留意。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/australias-central-bank-finds-ai-hitting-young-workers-first-especially-in-software-and-customer-service",
+      "featured": false
+    }
+  ]
+}
