@@ -33,6 +33,12 @@ const EXPECTED_DOC_IDS = {
     '09_人物关系与构造图',
     '00_开本速查卡',
   ],
+  'shoddy-troupe': [
+    '10_过本单',
+    '00_DM主持学习手册',
+    '04_角色档案与加害矩阵',
+    '09_白板现场版_4x3',
+  ],
 };
 
 const manifestFor = (item, docs = EXPECTED_DOC_IDS[item.id]) => ({
@@ -68,7 +74,7 @@ test('训练链接保留部署 base，并携带 case/module 与档案库锚点',
   );
 });
 
-test('三卷十二个关卡都能解析到各自真实文档 ID', () => {
+test('四卷十六个关卡都能解析到各自真实文档 ID', () => {
   const manifest = jubenCases.map((item) => manifestFor(item));
   for (const item of jubenCases) {
     assert.deepEqual(item.modules.map((module) => module.docId), EXPECTED_DOC_IDS[item.id]);

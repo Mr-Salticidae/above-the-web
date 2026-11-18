@@ -28,6 +28,7 @@ const SLUG_LEDGER = {
   'virtual-game': ['flow-skeleton', 'god-view', 'dual-track-clues', 'layered-review'],
   'woman-by-window': ['five-stages', 'character-web', 'cross-media-evidence', 'question-layers'],
   'escape-conjoined-village': ['opening-navigation', 'iteration-order', 'official-board', 'opening-lines'],
+  'shoddy-troupe': ['flow-one-line', 'host-voice', 'prank-matrix', 'board-minimal'],
 };
 
 test('模块 slug 是稳定 ID：格式合法、卷内唯一、与台账一致', () => {
