@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>隐私政策 · 工位池塘 Desk Pond</title>
+<meta name="description" content="工位池塘 Desk Pond 隐私政策：不注册、不登录、不收集个人信息，进度只保存在本机。">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="./assets/icon.png">
+<script>
+  (() => {
+    try {
+      const saved = localStorage.getItem('atw-theme');
+      document.documentElement.setAttribute('data-theme', saved === 'dark' ? 'dark' : 'light');
+    } catch (_) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+<style>
+  :root, :root[data-theme="light"]{
+    --paper:#f6f1e6; --paper-2:#fbf8f0; --paper-3:#efe7d6;
+    --ink:#1f2a2b; --ink-soft:#5c655e; --ink-faint:#8a938a;
+    --line:rgba(31,42,43,.12);
+    --teal:#2f8fa3; --clay:#c9824a; --clay-ink:#fff7ee;
+    --deco-teal:rgba(47,143,163,.17); --deco-clay:rgba(201,130,74,.16);
+    --shadow:0 26px 60px -38px rgba(31,42,43,.5);
+  }
+  :root[data-theme="dark"]{
+    --paper:#10171a; --paper-2:#161f22; --paper-3:#1b262a;
+    --ink:#e9efe9; --ink-soft:#9fb0ac; --ink-faint:#6f807c;
+    --line:rgba(233,239,233,.12);
+    --teal:#56b6c9; --clay:#e0a064; --clay-ink:#1b1208;
+    --deco-teal:rgba(86,182,201,.14); --deco-clay:rgba(224,160,100,.13);
+    --shadow:0 26px 60px -38px rgba(0,0,0,.7);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:"PingFang SC","Noto Sans SC",-apple-system,"Segoe UI",system-ui,sans-serif;
+    color:var(--ink); line-height:1.78;
+    background:linear-gradient(165deg, var(--paper) 0%, var(--paper-3) 100%);
+    background-attachment:fixed; min-height:100vh;
+    transition:background-color .4s ease, color .4s ease;
+  }
+  .bg-deco{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;}
+  .bg-deco i{position:absolute; border-radius:50%; border:2px solid var(--deco-teal); opacity:.7;}
+  .bg-deco .a{width:780px;height:780px;right:-300px;top:-280px;}
+  .bg-deco .b{width:520px;height:520px;right:-150px;top:-110px;}
+  .bg-deco .c{width:620px;height:620px;left:-280px;top:42%;border-color:var(--deco-clay);}
+  .bg-deco .d{width:360px;height:360px;left:-120px;top:50%;border-color:var(--deco-clay);}
+  .bg-deco .e{width:680px;height:680px;right:-280px;bottom:-300px;border-color:var(--deco-clay);}
+
+  .wrap{max-width:760px; margin:0 auto; padding:0 24px;}
+  a{color:var(--teal); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s;}
+  a:hover{border-bottom-color:currentColor;}
+  .topbar{display:flex; justify-content:space-between; align-items:center; padding:20px 0; font-size:.92rem; gap:14px;}
+  .topbar .home{color:var(--ink-soft); display:flex; align-items:center; gap:8px; border-bottom:none;}
+  .topbar .home:hover{color:var(--teal);}
+  .topbar .right{display:flex; align-items:center; gap:14px;}
+  .theme-toggle{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;
+    border:1px solid var(--line); background:var(--paper-2); color:var(--ink-soft); cursor:pointer; transition:color .2s, border-color .2s;}
+  .theme-toggle:hover{color:var(--teal); border-color:var(--teal);}
+  .theme-toggle svg{width:19px;height:19px;}
+  .theme-toggle .i-sun{display:none;} .theme-toggle .i-moon{display:block;}
+  :root[data-theme="dark"] .theme-toggle .i-sun{display:block;}
+  :root[data-theme="dark"] .theme-toggle .i-moon{display:none;}
+
+  header.head{padding:34px 0 6px;}
+  .eyebrow{font-size:.82rem; letter-spacing:.22em; color:var(--clay); font-weight:700;}
+  h1{font-family:Georgia,"Songti SC","Noto Serif SC",serif; font-size:2.15rem; line-height:1.25; margin:.22em 0 .3em;}
+  .meta{color:var(--ink-faint); font-size:.9rem; display:flex; gap:16px; flex-wrap:wrap;}
+
+  .tldr{margin:26px 0 8px; background:var(--paper-2); border:1px solid var(--line);
+    border-left:3px solid var(--clay); border-radius:14px; padding:20px 22px; box-shadow:var(--shadow);}
+  .tldr p{color:var(--ink); font-weight:600;}
+  .tldr p + p{margin-top:.5em; font-weight:400; color:var(--ink-soft); font-size:.95rem;}
+
+  section{margin:38px 0;}
+  h2{font-family:Georgia,"Songti SC","Noto Serif SC",serif; font-size:1.28rem; margin-bottom:.5em;
+    display:flex; align-items:baseline; gap:.55rem;}
+  h2 .n{font-size:.82rem; color:var(--clay); font-weight:700; letter-spacing:.08em; flex:0 0 auto;}
+  p, li{color:var(--ink-soft);}
+  p + p{margin-top:.7em;}
+  ul{margin:.4em 0 0 1.15em;}
+  li{margin:.34em 0;}
+  li b, p b{color:var(--ink);}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.86em;
+    background:var(--paper-3); border:1px solid var(--line); border-radius:5px; padding:1px 6px; color:var(--ink);}
+  .note{margin-top:.9em; font-size:.9rem; color:var(--ink-faint); border-left:2px solid var(--line); padding-left:12px;}
+
+  table{width:100%; border-collapse:collapse; margin-top:.7em; font-size:.94rem;}
+  th,td{text-align:left; padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-soft);}
+  th{color:var(--ink); font-weight:700; font-size:.88rem; letter-spacing:.02em;}
+  th:first-child, td:first-child{width:38%; color:var(--ink);}
+
+  footer{border-top:1px solid var(--line); margin-top:56px; padding:26px 0 46px; color:var(--ink-faint); font-size:.88rem;
+    display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;}
+  footer a{color:var(--ink-soft);}
+
+  @media (max-width:620px){
+    h1{font-size:1.8rem;}
+    .meta{gap:10px; font-size:.84rem;}
+    table{font-size:.88rem;}
+    th,td{padding:8px 6px;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-deco"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i></div>
+<div class="wrap">
+
+  <div class="topbar">
+    <a class="home" href="./">← 返回 工位池塘</a>
+    <div class="right">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"/></svg>
+      </button>
+      <a href="https://github.com/Mr-Salticidae/desk-pond" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+
+  <header class="head">
+    <div class="eyebrow">DESK POND · PRIVACY</div>
+    <h1>工位池塘 隐私政策</h1>
+    <div class="meta">
+      <span>生效日期：2026 年 11 月 18 日</span>
+      <span>适用版本：v0.7.1 及以上</span>
+      <span>适用平台：Windows / Android</span>
+    </div>
+  </header>
+
+  <div class="tldr">
+    <p>工位池塘不注册、不登录、不收集你的个人信息。</p>
+    <p>你的专注记录、任务和鱼，只写在你自己设备上的一个存档文件里，不会上传到任何服务器。游戏不含广告、不含内购、不接入统计或社交 SDK。</p>
+  </div>
+
+  <section>
+    <h2><span class="n">01</span>我们不收集哪些信息</h2>
+    <ul>
+      <li>不要求注册账号，不收集<b>姓名、手机号、邮箱、身份证件</b>等任何身份信息；</li>
+      <li>不收集<b>通讯录、短信、通话记录、精确位置、相册、麦克风、摄像头</b>等设备与个人数据；</li>
+      <li>不接入任何<b>广告、统计分析、崩溃上报、社交分享</b>类第三方 SDK；</li>
+      <li>不读取其他应用的数据，不在后台常驻运行，不向第三方出售或共享任何信息。</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="n">02</span>数据保存在哪里</h2>
+    <p>游戏的全部进度——累计专注时长、任务清单、鱼类图鉴、水族馆布置、个人设置——都以一个 JSON 存档文件保存在<b>本机的应用私有目录</b>：</p>
+    <table>
+      <tr><th>平台</th><th>存档位置</th></tr>
+      <tr><td>Windows</td><td><code>%APPDATA%\Godot\app_userdata\Desk Pond\save_data.json</code></td></tr>
+      <tr><td>Android</td><td><code>/data/data/com.mrsalticidae.deskpond/files/save_data.json</code>（应用私有目录，其他应用无法读取）</td></tr>
+    </table>
+    <p class="note">该文件不会同步、不会上传、不会备份到我们的服务器。卸载游戏或清除应用数据时，存档随之删除，我们也无法替你找回。</p>
+  </section>
+
+  <section>
+    <h2><span class="n">03</span>唯一的联网行为</h2>
+    <p><b>Android 版完全不联网</b>，导出的安装包未声明任何系统权限。</p>
+    <p>Windows 桌面版在启动约 10 秒后检查一次新版本，<b>每天最多一次</b>，可在设置中关闭。它会请求：</p>
+    <ul>
+      <li>地址：<code>https://tiaozhuxiansheng.com/desk-pond/latest.json</code></li>
+      <li>内容：一份只有版本号与更新说明的文本文件</li>
+    </ul>
+    <p>该请求<b>不携带任何游戏数据、设备标识或个人标识</b>。与所有网站访问一样，服务器会记录常规访问日志（IP 地址、访问时间、客户端标识），仅用于站点运维与安全防护，不用于识别、追踪或画像。查不到更新时游戏静默继续，不影响使用。</p>
+  </section>
+
+  <section>
+    <h2><span class="n">04</span>通过 TapTap 平台分发时的说明</h2>
+    <p>当你通过 TapTap 下载、安装或启动本游戏时，TapTap 客户端会依据<b>TapTap 自身的隐私政策</b>处理 TapTap 账号、设备与下载相关信息。这部分数据处理由 TapTap 平台负责，不在本游戏的控制范围内，建议你同时阅读 TapTap 的隐私政策。</p>
+    <p>Android 版若通过 TapPlay 运行，防沉迷状态由 TapTap 平台按其规则校验，本游戏不额外采集相关信息。</p>
+  </section>
+
+  <section>
+    <h2><span class="n">05</span>权限说明</h2>
+    <p>Android 版<b>未申请任何敏感权限</b>——不含通讯录、位置、相机、麦克风、外部存储、电话状态等权限，安装时不会出现权限弹窗。</p>
+    <p>Windows 版为免安装单文件程序，不需要管理员权限，不写注册表、不创建开机启动项，仅在你的用户目录下写入上文所述存档。</p>
+  </section>
+
+  <section>
+    <h2><span class="n">06</span>未成年人保护</h2>
+    <p>本游戏适龄提示为 <b>8+</b>。游戏内无充值、无内购、无广告、无社交功能、无用户生成内容，也不含任何付费诱导或随机抽取机制，未成年人可在监护人指导下放心使用。</p>
+  </section>
+
+  <section>
+    <h2><span class="n">07</span>关于 AI 生成内容</h2>
+    <p>游戏内部分美术素材在开发过程中借助 AI 工具辅助生成，并在发布前经人工筛选与调整。<b>游戏本身不提供任何 AI 生成服务</b>，不接收、不处理、不存储用户输入的内容。</p>
+  </section>
+
+  <section>
+    <h2><span class="n">08</span>政策的变更</h2>
+    <p>如果本政策发生变更，我们会更新本页顶部的生效日期，并在版本更新说明中提示。若变更涉及新的数据处理方式，会在显著位置说明，不会追溯适用于你已经产生的本地数据。</p>
+  </section>
+
+  <section>
+    <h2><span class="n">09</span>联系我们</h2>
+    <p>对本政策有任何疑问、意见，或希望了解与你相关的数据处理情况，可以通过以下方式联系开发者：</p>
+    <ul>
+      <li>开发者：<b>蛛网之上</b></li>
+      <li>邮箱：<a href="mailto:2761387478@qq.com">2761387478@qq.com</a></li>
+      <li>源码与问题反馈：<a href="https://github.com/Mr-Salticidae/desk-pond" target="_blank" rel="noopener">github.com/Mr-Salticidae/desk-pond</a></li>
+    </ul>
+    <p class="note">本游戏为免费开源项目，我们会尽力在合理时间内回复每一封来信。</p>
+  </section>
+
+  <footer>
+    <span>工位池塘 · Desk Pond —— 你专注，它钓鱼。</span>
+    <span><a href="./">下载页</a> · <a href="/">返回主页</a></span>
+  </footer>
+
+</div>
+
+<script>
+  (() => {
+    const btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const root = document.documentElement;
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('atw-theme', next); } catch (_) {}
+    });
+  })();
+</script>
+</body>
+</html>
