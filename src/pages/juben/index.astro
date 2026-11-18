@@ -214,7 +214,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
           </tbody>
         </table>
       </div>
-      <p class="juben-compare-insight"><span>对照结论</span>三卷要练的 DM 能力并不相同：954 更吃节奏与复盘表达，247 更吃物料与流程执行，连体村更吃多重解答的轮次推进；官方板书与自造板的差别，也直接决定现场该写多少字。</p>
+      <p class="juben-compare-insight"><span>对照结论</span>四卷要练的 DM 能力并不相同：954 更吃节奏与复盘表达，247 更吃物料与流程执行，连体村更吃多重解答的轮次推进，草台班子更吃身份切换与临场接梗。前三卷的白板是「写多少」，草台班子反过来是「敢少写」——无推理负荷的本，箭头数才等于信息量。</p>
     </section>
 
     <section class="juben-method" aria-labelledby="method-title">
@@ -779,6 +779,8 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   :global(:root[data-theme="dark"]) .juben-detail[data-tone="bronze"] { --case-accent: #d6a477; }
   .juben-detail[data-tone="slate"] { --case-accent: #4a6470; }
   :global(:root[data-theme="dark"]) .juben-detail[data-tone="slate"] { --case-accent: #8fb0bd; }
+  .juben-detail[data-tone="amber"] { --case-accent: #99631f; }
+  :global(:root[data-theme="dark"]) .juben-detail[data-tone="amber"] { --case-accent: #d9a85f; }
   .juben-detail-head { display: flex; justify-content: space-between; gap: .75rem; padding: var(--juben-inset) var(--juben-inset) .8rem; border-top: 3px solid var(--case-accent); background: color-mix(in srgb, var(--case-accent) 6%, var(--paper-2)); }
   .juben-detail-code { margin: 0; color: var(--case-accent); font-size: .6rem; letter-spacing: .14em; }
   .juben-detail-head h3 { margin: .35rem 0 .45rem; font-family: var(--serif); font-size: 2rem; letter-spacing: .05em; }
@@ -857,7 +859,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   .juben-quiz p:not(.juben-kicker) { margin: .55rem 0 .65rem; font-size: .78rem; line-height: 1.75; }
   .juben-compare-filters { margin-bottom: 1rem; }
   .juben-table-wrap { overflow-x: auto; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); }
-  .juben-table-wrap table { width: 100%; min-width: 52rem; border-collapse: collapse; }
+  .juben-table-wrap table { width: 100%; min-width: 64rem; border-collapse: collapse; }
   .juben-table-wrap th, .juben-table-wrap td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
   .juben-table-wrap tr:last-child th, .juben-table-wrap tr:last-child td { border-bottom: 0; }
   .juben-table-wrap thead th { font-family: var(--serif); font-size: 1rem; }
