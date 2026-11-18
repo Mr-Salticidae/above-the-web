@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-18",
+  "headline": "OpenAI 发布 GPT-6.2，Copilot 接管 Office，Gemini Tasks 免费开放",
+  "items": [
+    {
+      "title": "OpenAI 发布 GPT-6.2 Astra 和 Sol，API 降价",
+      "summary": "OpenAI 推出 GPT-6.2 Astra 与 Sol 两款新模型，在编程、计算机操作和专业输出上有所提升，同时降低了 API 价格。在独立评测中，Astra 综合排名第二，仅次于 Claude Fable 5.2，并成为首个达到 OpenAI 自研 AI 自我改进高阈值的模型。对创作者而言，更低的调用成本和更强的 Agent 能力意味着工作流自动化的门槛进一步降低。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-launches-gpt-6-2-astra-and-sol-with-lower-api-prices-and-some-benchmark-gains",
+      "featured": true
+    },
+    {
+      "title": "Office 应用全面接入 Copilot，常驻 Agent 即将上线",
+      "summary": "微软将 Word、Excel 和 PowerPoint 整合进 Copilot 界面，CEO Satya Nadella 称其为「新的工作操作系统」，并透露常驻型 AI Agent 是下一步方向。这标志着传统办公工具正式向 AI 原生交互迁移。依赖 Office 进行文案或排版工作的创作者，需要适应以对话驱动内容生产的新流程。",
+      "category": "工具",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/gadgets/2026/11/microsoft-calls-copilot-the-new-os-for-work-at-ignite-keynote",
+      "featured": true
+    },
+    {
+      "title": "Google Spark 更名为 Tasks 并免费开放",
+      "summary": "Google 将基于 Gemini 4 Hydrogen 模型的 AI Agent「Spark」更名为「Tasks」，并在六个国家免费开放。该功能可代为安排通话、管理日历、规划食谱，甚至查找邮件中的重复订阅支出。对于日常依赖 AI 处理杂务的创作者，这意味着一个无需付费即可调用的个人助理。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/tech/1035756/google-spark-ai-tasks-free",
+      "featured": false
+    },
+    {
+      "title": "人像摄影师实测六项常见 AI 修图误区",
+      "summary": "巴西人像摄影师 Joe Fraga 使用真实客户照片，逐一测试了六项摄影圈常见的 AI 自动修图偏见，验证哪些说法在实际工作中依然成立。这是一份来自一线创作者的实操参考。对于使用 AI 辅助后期处理的图像创作者，有助于校准对自动化工具的预期。",
+      "category": "研究",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/17/a-portrait-photographer-puts-6-common-ai-retouching-myths-to-the-test",
+      "featured": false
+    },
+    {
+      "title": "Instagram 上出现针对 Sam Altman 的 Deepfake",
+      "summary": "Meta 首席 AI 官 Alexandr Wang 为推广消费级 Agent「Muse」，发布了一段包含 Zuckerberg、Sam Altman 等人在内的 AI 生成视频，引发关于 Deepfake 边界的讨论。当平台高管自己也在用深度伪造做营销时，普通创作者更需要关注肖像权与合成内容的标注规范。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/news/1035957/meta-alexandr-wang-sam-altman-instagram-ai-deepfake",
+      "featured": false
+    },
+    {
+      "title": "AI 生成代码是否必须开源引发开发者争论",
+      "summary": "围绕 AI 生成代码的版权归属与开源义务，开发者社区产生分歧。作为当前主流大模型训练数据的重要提供方，Anthropic 在这一议题上的立场受到关注。这对习惯使用 AI 辅助编程或脚本创作的 AIGC 从业者来说，直接关系到产出物的合规性与分发方式。",
+      "category": "行业",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/m5arrx8021zHVI0ybFtI",
+      "featured": false
+    },
+    {
+      "title": "Proton 隐私 AI 助手 Lumo 推出桌面版",
+      "summary": "主打隐私的 Proton 推出 Lumo 桌面端应用，支持 Windows、Mac 和 Linux，可在本地文件和关联应用中执行自动化任务，并提供细粒度的 AI 访问权限控制。对于在意素材与草稿隐私的创作者，这是一个区别于 ChatGPT 和 Claude 的本地化选项。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/17/protons-lumo-a-privacy-focused-alternative-to-chatgpt-and-claude-arrives-on-desktop",
+      "featured": false
+    }
+  ]
+}
