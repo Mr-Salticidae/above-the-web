@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-19",
+  "headline": "Gemini 4 Neon 与 Genie 4 同日发布，Suno 新增 AI 视频生成",
+  "items": [
+    {
+      "title": "Google 发布 Gemini 4 Neon，支持百万上下文",
+      "summary": "Google DeepMind 推出本月第四个新模型 Gemini 4 Neon，面向软件开发、知识工作与科研场景。该模型支持文本、图像、视频、音频及 PDF 输入，上下文窗口达一百万 token。定价高于此前的 Gemini 4 系列模型（输入 $3/百万 token，输出 $15/百万 token）。对需要处理长文档或多模态素材的创作者而言，这是目前上下文容量最大的选项之一。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-ships-gemini-4-neon-its-fourth-new-gemini-model-in-a-month",
+      "featured": true
+    },
+    {
+      "title": "Genie 4 上线，支持实时文本修改 3D 世界",
+      "summary": "Google DeepMind 更新 Project Genie，推出迄今最逼真的世界模型 Genie 4，面向 AI Ultra 订阅用户开放。它可根据文本输入生成可交互的 3D 世界并实时修改，首次加入原生声音支持，同时上线社区画廊供用户分享和二次创作。对游戏原型设计和交互式内容创作者来说，这提供了一个新的快速验证工具。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/google-deepminds-project-genie-update-brings-genie-4-chainable-worlds-and-a-community-gallery-for-remixing",
+      "featured": true
+    },
+    {
+      "title": "Suno 新增 Visuals 功能，可为音乐生成视频",
+      "summary": "AI 音乐平台 Suno 推出 Visuals 功能，允许用户将生成的歌曲转化为 AI 视频片段，视频会自动对口型匹配歌词；也可通过提示词生成图片用作封面或缩略图。这标志着 Suno 从纯音频工具向音视频一体化创作平台扩展。音乐创作者现在可以在同一工作流内完成音频与视觉物料的制作。",
+      "category": "工具",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1036415/suno-visuals-ai-generated-video-images-feature",
+      "featured": false
+    },
+    {
+      "title": "微软 Ignite 发布七款自研模型替代外部方案",
+      "summary": "微软 AI 部门 MAI 在 Ignite 大会上发布七款自研模型，覆盖代码、安全、图像、语言和路由等方向。其中 MAI Code 2 达到 GPT-6.1 Sol 约 98% 的性能，成本降低至 40%，专为企业级 Agent 全天候运行设计。微软正加速用内部模型替换产品中的第三方 AI 服务，这可能影响依赖其生态的开发者选型。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/microsoft-is-replacing-outside-ai-models-in-its-own-products-with-cheaper-in-house-alternatives",
+      "featured": false
+    },
+    {
+      "title": "Snapchat 支持用 AI 编程助手构建 AR Lens",
+      "summary": "Snapchat 宣布开发者现可使用 Claude Code、Cursor 等 AI 编程助手来创建 AR Lens。创作者只需用自然语言描述想要的效果，AI 助手即可处理完整流程。这降低了 AR 滤镜开发的技术门槛，让不具备编程能力的视觉创作者也能参与互动内容制作。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/18/snapchat-now-lets-developers-build-ar-lenses-with-ai-coding-assistants-like-claude-code-and-cursor",
+      "featured": false
+    },
+    {
+      "title": "Anthropic IPO 定价 83 美元，估值 1.5 万亿",
+      "summary": "Anthropic 完成 IPO，每股定价 83 美元，高于此前预期区间，完全稀释后估值达 1.5 万亿美元。作为 Claude 系列模型的开发商，此次上市为 AI 基础模型公司的资本市场定价提供了新参照。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/18/anthropic-reportedly-prices-ipo-at-83-a-share-above-projected-range",
+      "featured": false
+    },
+    {
+      "title": "AI 检测工具将获奖小说判定为机器写作",
+      "summary": "AI 检测工具 Pangram 将一部获奖秘鲁小说的 99% 内容标记为 AI 生成，甚至将作者超过 80% 的个人文本也判定为机器撰写。出版方 Almadía 经复核后仍支持该作者，但法国出版商 Gallimard 已计划开始使用该工具筛查稿件。此事再次表明，当前 AI 文本检测工具的可靠性不足以作为创作归属的判定依据。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/pangram-flags-99-percent-of-an-award-winning-peruvian-novel-as-ai-generated-but-the-publisher-stands-by-its-author",
+      "featured": false
+    },
+    {
+      "title": "Etsy 新 AI 政策引发创作者批量离开",
+      "summary": "Etsy 近期更新的 AI 相关政策导致大量艺术家和手工创作者公开宣布离开该平台，社交媒体上出现密集的告别帖文。具体政策细节线索未充分披露，但这一现象反映出平台治理规则变动对 AIGC 与传统创作者生态边界的直接影响。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/artists-and-creators-are-leaving-etsy-in-droves-over-its-new-ai-policy",
+      "featured": false
+    }
+  ]
+}
