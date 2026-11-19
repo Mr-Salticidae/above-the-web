@@ -220,7 +220,7 @@ export const jubenCases = [
     vaultCaseId: '草台班子',
     title: '草台班子',
     english: 'THE SHODDY TROUPE',
-    status: '学习包完成',
+    status: '已首开',
     statusKey: 'ready',
     players: '6 人（3 男 3 女）',
     duration: '3–3.5 小时',
