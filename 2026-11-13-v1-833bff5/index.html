@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>剧本研究室进度同步三阶段收口 · 蛛网之上</title><meta name="description" content="两天把「任务书为主」的站改成「剧本杀档案库为主」,并把学习进度从本机推到跨设备;真正值钱的不是同步功能,而是动手前、中、后各拦下一次事故的三个判断——进度 ID 必须在第一次跨设备之前换成稳定 slug、本机没有记录不等于用户没读过、给页面…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-11-13-v1-833bff5/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="剧本研究室进度同步三阶段收口"><meta property="og:description" content="两天把「任务书为主」的站改成「剧本杀档案库为主」,并把学习进度从本机推到跨设备;真正值钱的不是同步功能,而是动手前、中、后各拦下一次事故的三个判断——进度 ID 必须在第一次跨设备之前换成稳定 slug、本机没有记录不等于用户没读过、给页面…"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-11-13-v1-833bff5/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="剧本研究室进度同步三阶段收口"><meta name="twitter:description" content="两天把「任务书为主」的站改成「剧本杀档案库为主」,并把学习进度从本机推到跨设备;真正值钱的不是同步功能,而是动手前、中、后各拦下一次事故的三个判断——进度 ID 必须在第一次跨设备之前换成稳定 slug、本机没有记录不等于用户没读过、给页面…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-11-13T00:00:00+08:00"><meta property="article:modified_time" content="2026-11-13T10:50:32+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC","https://www.kuaishou.com/profile/3xaszm4s33jffe2","https://space.bilibili.com/6891496","https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723","https://music.163.com/#/artist?id=124358911","https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-11-13-v1-833bff5/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-11-13-v1-833bff5/","url":"https://tiaozhuxiansheng.com/2026-11-13-v1-833bff5/","headline":"剧本研究室进度同步三阶段收口","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"两天把「任务书为主」的站改成「剧本杀档案库为主」,并把学习进度从本机推到跨设备;真正值钱的不是同步功能,而是动手前、中、后各拦下一次事故的三个判断——进度 ID 必须在第一次跨设备之前换成稳定 slug、本机没有记录不等于用户没读过、给页面…","datePublished":"2026-11-13T00:00:00+08:00","dateModified":"2026-11-13T10:50:32+08:00","articleSection":"平台工程","keywords":"类型/平台工程"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"剧本研究室进度同步三阶段收口","item":"https://tiaozhuxiansheng.com/2026-11-13-v1-833bff5/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/skills/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/yuwen-s1/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.JAzzzN2D.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/skills/">Skill</a><a class="meta series-link" href="/above-the-web/juben/">剧本</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu data-tasks="off"> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.DtEx7URI.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a>  </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-11-13T00:00:00+08:00">2026-11-13</time></span>  <span>约 13 分钟读完 · 5,033 字</span> </p> </header>   <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>19 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#回顾两天里实际做了什么">回顾:两天里实际做了什么</a></li><li class="d2"><a href="#结果分析两个视角分开写">结果分析(两个视角分开写)</a></li><li class="d3"><a href="#我的方案做到了什么没做到什么">我的方案:做到了什么、没做到什么</a></li><li class="d3"><a href="#对照一计划书原案-vs-实际实现">对照一:计划书原案 vs 实际实现</a></li><li class="d3"><a href="#对照二本站既有账号系统">对照二:本站既有账号系统</a></li><li class="d2"><a href="#方法论沉淀">方法论沉淀</a></li><li class="d3"><a href="#稳定-id-的迁移窗口只有第一次跨设备之前">稳定 ID 的迁移窗口,只有「第一次跨设备之前」</a></li><li class="d3"><a href="#本机没有记录不等于用户没读过空态是未知量不是零">本机没有记录,不等于用户没读过——空态是未知量,不是零</a></li><li class="d3"><a href="#给页面留位的钩子要挂在元素出现上不挂在用户行为上">给页面留位的钩子,要挂在「元素出现」上,不挂在「用户行为」上</a></li><li class="d3"><a href="#失败后的重试节奏必须由外部事件驱动不能由定时器驱动">失败后的重试节奏,必须由外部事件驱动,不能由定时器驱动</a></li><li class="d3"><a href="#同步层与存储层分离到请求函数由外部注入">同步层与存储层分离到「请求函数由外部注入」</a></li><li class="d3"><a href="#下线一个版块先摘入口不删链路">下线一个版块:先摘入口,不删链路</a></li><li class="d3"><a href="#测量工具本身要先被证伪又一次">测量工具本身要先被证伪(又一次)</a></li><li class="d2"><a href="#下次改进">下次改进</a></li><li class="d2"><a href="#附记三处只在真跑时才现形的坑">附记:三处只在真跑时才现形的坑</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="剧本研究室进度同步三阶段收口">剧本研究室进度同步三阶段收口</h1>
+<blockquote>
+<p>入档:2026-11-13
+来源:蛛网之上(above-the-web)主线转向——任务书降级为存档、开「剧本研究室 / DM 档案库」、学习进度跨设备同步 P0/P1/P2,提交 <code>650d36f</code> → <code>2ad4a4e</code>
+状态:已上线;零真实用户数据;P3 观察期未开始</p>
+</blockquote>
+<h2 id="一句话">一句话</h2>
+<p>两天把「任务书为主」的站改成「剧本杀档案库为主」,并把学习进度从本机推到跨设备;<strong>真正值钱的不是同步功能,而是动手前、中、后各拦下一次事故的三个判断</strong>——进度 ID 必须在第一次跨设备之前换成稳定 slug、本机没有记录不等于用户没读过、给页面留位的钩子不能挂在「用户点了播放」这类行为回调上。</p>
+<h2 id="事实记录不可修改区">事实记录(不可修改区)</h2>
+<ul>
+<li>作品/项目:蛛网之上 <code>above-the-web</code>(Astro 静态站)+ <code>platform/server</code>(Node + node:sqlite)</li>
+<li>提交区间:<code>650d36f</code> → <code>2ad4a4e</code>,<strong>10 个提交</strong>,2026-11-12 22:28 → 2026-11-13 10:13(约 12 小时,含一次上下文截断后续跑)</li>
+<li>代码量:37 files changed,+6257 / −132(相对 <code>650d36f~1</code>)</li>
+<li>内容规模:2 卷(《虚拟游戏》《窗边的女人》)× 4 模块 = <strong>8 个学习项</strong></li>
+<li>最终结果:<strong>已上线</strong>。<code>GET /juben/</code> → 200;<code>GET /api/meta</code> → <code>features.progressSync: true</code>;<code>GET /api/juben/progress</code> 未带 token → <strong>401(不是 404)</strong>,即路由真实存在而非静态兜底</li>
+<li>测试:前端 <strong>96 例</strong>、服务端 <strong>99 例</strong>,全绿</li>
+<li>真实用户数据:<strong>0</strong>。无真实 DM 用户登录使用过;所有验收均为自测(生产构建 + 本地 API + 双 browser context)</li>
+<li>数据来源:<code>git log</code> / <code>node --test</code> / Playwright 双 context 实测 / 线上 <code>curl</code> 只读烟测 / GitHub Actions 运行记录</li>
+<li>明确未做:P3 观察期;<code>JUBEN_REPO_TOKEN</code> 未轮换(部署体检结论「可用」,约 2027-11 到期)</li>
+</ul>
+<blockquote>
+<p>这张表的作用不是记成绩,是防止后面叙事把「上线」写成「验证通过」。六个字段里只有「最终结果」一行是结论,其余都是可复核的锚。</p>
+</blockquote>
+<h2 id="回顾两天里实际做了什么">回顾:两天里实际做了什么</h2>
+<p>四段,顺序本身就是信息:</p>
+<ol>
+<li><strong>门面先改</strong>(<code>af5aea3</code>):README 三语 + 登录/注册文案补剧本杀方向。理由是任务书是上一份工作的遗留,不能继续当门面。</li>
+<li><strong>账号架构转向</strong>(<code>ad8f56f</code>):任务书不删代码,用 <code>src/data/features.js</code> 一个开关收起(导航、首页速览、关于页计数、<code>llms.txt</code>、<code>/tasks/</code> 全跟着走);<code>member</code> 从「接单人」重标为「读者」,注册改成两步(先选身份再填表,DM 路径带邀请码当场兑换)。</li>
+<li><strong>进度改造 P0</strong>(<code>9d0e06a</code>):8 个模块各加稳定 <code>slug</code>,进度键从「第几项」改成「卷 id/模块 slug」,按账号分桶,老数据带备份迁移。</li>
+<li><strong>进度同步 P1/P2</strong>(<code>39bb100</code>、<code>2ad4a4e</code>):服务端两张表 + 三个端点 + 逐项 LWW 合并;前端独立同步层 + 五态徽章;P2 补阅读位置、自测题记忆、档案库状态卡;顺手修掉播放条压住页面。</li>
+</ol>
+<p>顺序不是最优的:正确顺序是<strong>先定数据模型,再写 UI</strong>。实际是先有 <code>/juben/</code> 页面(11-12),第二天才发现进度用「第几项」存会在同步时永久错位。</p>
+<h2 id="结果分析两个视角分开写">结果分析(两个视角分开写)</h2>
+<h3 id="我的方案做到了什么没做到什么">我的方案:做到了什么、没做到什么</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>做到了</th><th>证据</th><th>没做到</th><th>诚实说法</th></tr></thead><tbody><tr><td>进度双端同步</td><td>A 勾 3 项 → B 首开 3/4;B 取消 → A 刷新 2/4</td><td>真实用户验证</td><td>全部是测试账号,<code>0</code> 个真实 DM</td></tr><tr><td>断网不丢写</td><td>断网勾选 → 徽章「待同步 · 1 项」、服务端零写入 → 恢复后自动补上</td><td>弱网/多端并发</td><td>只测了「断/不断」两态</td></tr><tr><td>清空能传播</td><td>两次点击 → 双端归零、库内 <code>done=0</code> 墓碑</td><td>大规模数据量</td><td>8 个学习项,没测过千级</td></tr></tbody></table>
+<p><strong>没有「获胜原因」可写</strong>——这不是比赛,没有对照组,也没有外部评价。能写的只有「哪些断言真的被验证过」。把「我实现得完整」当成「它被验证过」,就是这份文档最想防的那种混淆。</p>
+<h3 id="对照一计划书原案-vs-实际实现">对照一:计划书原案 vs 实际实现</h3>
+<p>计划书(<code>docs/PROGRESS_SYNC_PLAN.md</code>)写在动工之前,P1 落地时出现三处偏离。三处都不是”实现不了”,而是”原案会出事”:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>原案</th><th>实际</th><th>为什么改</th></tr></thead><tbody><tr><td>失败保留队列并重试</td><td>失败只置状态,不自动重排</td><td>默认 1.5 秒合批窗口会变成每 1.5 秒重打一次,服务端 5xx 时就是小型自我 DDoS</td></tr><tr><td>每轮扫全量 diff 找脏项</td><td>存储层维护 dirty 集合,<code>takeDirty()</code> 取走即清</td><td>全量 diff 在 8 项时无感,在长清单上是 O(n) 常驻开销;且下发数据会被反手再推形成乒乓,靠 <code>applyRemote</code> 返回 <code>kept</code> 拆掉</td></tr><tr><td>首次全量拉取后结束</td><td>首次全量后<strong>补推本机存量项</strong></td><td>开关打开前勾的、从 v1 迁移来的,服务端都没有;不补推就永远只留在原设备</td></tr></tbody></table>
+<p>三处偏离全部回写进计划书,并把「实现时对计划的三处微调」单独成节。<strong>计划书是施工图,不是判决书</strong>——偏离如果不回写,下一篇复盘会照着错的图纸推因果。</p>
+<h3 id="对照二本站既有账号系统">对照二:本站既有账号系统</h3>
+<p>同一个站 7 月做过账号系统,当时沉淀过「内容归 git、状态归库的双源切分」。这次没有重新发明:</p>
+<ul>
+<li>体例直接复用:节点接口 <code>Authorization: Bearer</code> + localStorage、<code>HttpError</code> + <code>reply()</code>、审计只在破坏性操作记一笔。</li>
+<li>但有一处<strong>刻意的反向选择</strong>:账号系统的令牌是「会话」,有失效与主动踢出;进度同步的游标是<strong>每用户自增 <code>rev</code></strong>,不认任何一方的时钟。理由是进度是「可合并的偏好」,不是「必须唯一有效的凭证」——用时间戳做合并键,等于把正确性押在用户设备时钟上。</li>
+</ul>
+<h2 id="方法论沉淀">方法论沉淀</h2>
+<h3 id="稳定-id-的迁移窗口只有第一次跨设备之前">稳定 ID 的迁移窗口,只有「第一次跨设备之前」</h3>
+<p><strong>核心</strong>:只要数据要跨设备合并,主键就必须先稳定;用「列表里的第几项」当主键,在单机时代永远不会报错,在同步那天变成永久损坏。</p>
+<p><strong>来源</strong>:P0。11-12 的进度键是 <code>caseId:index</code>,第二天要同步时发现:8 个模块里删一个、插一个,老设备上的「第 3 项」就指向了另一个模块,而且<strong>没有任何报错</strong>——两端的勾选各自自洽,合并后谁都不知道错了。</p>
+<p><strong>验证状态</strong>:⚠️ 首次发现(单项目单次)。同类判断在 <a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a> 出现过弱形式(内容归 git 要有稳定 slug),但那次没有跨设备合并压力。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>任何「会被合并到别处」的集合,主键先定 slug / UUID,不用下标。</li>
+<li>给主键写一份<strong>写死的台账</strong>进测试(<code>SLUG_LEDGER</code>),改 slug 或删条目不报错就 CI 变红——那正是「有人在让老进度失效」的信号。</li>
+<li>迁移要能回退:老格式原样备份成另一把键(<code>-v1-backup</code>),不覆盖。</li>
+</ol>
+<p><strong>反例/边界</strong>:纯展示型列表(渲染一次就丢、从不合并、从不回读)用下标没问题;一旦有「回读 + 对账」,立刻不适用。</p>
+<h3 id="本机没有记录不等于用户没读过空态是未知量不是零">本机没有记录,不等于用户没读过——空态是未知量,不是零</h3>
+<p><strong>核心</strong>:「本机为空」是「我还不知道」,不是「答案是零」。任何在首轮拉取之前就写入默认值的逻辑,都会用默认值覆盖远端真值。</p>
+<p><strong>来源</strong>:P2 端到端实测抓到的<strong>真事故</strong>。阅读位置做到「打开 <code>/juben/</code> 自动接着上次那一卷」:新设备首开时本地没有记录,代码落到默认第一卷并立刻 <code>markReading('virtual-game')</code> 写了一条;首轮拉取回来时,服务端那条「读到《窗边的女人》」比本机这条更旧,按 LWW 输了——<strong>B 机把用户在 A 机的真实阅读位置改成了「虚拟游戏」</strong>。双 context 实测直接复现,不是推演。</p>
+<p><strong>验证状态</strong>:⚠️ 首次发现,但性质上是同族第三形态(见下条「留位钩子」)。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>分清三态:<strong>未加载</strong> / <strong>加载后为空</strong> / <strong>有值</strong>。未加载时什么都不写,不落默认值。</li>
+<li>首次同步回来之前,界面可以显示默认卷,但<strong>不许把默认卷写进存储</strong>;写操作要等 <code>settle</code> 之后。</li>
+<li>用户显式点过(本次用 <code>userPicked</code> 标记)就不再自动跳——人的动作优先级高于任何自动落位。</li>
+<li>验收必须用「新设备首开」这个场景,单设备刷新永远测不出来。</li>
+</ol>
+<p><strong>反例/边界</strong>:纯本地、不同步的功能没有这个问题,默认值随便写;一旦引入「服务端可能更新」,立刻适用。</p>
+<h3 id="给页面留位的钩子要挂在元素出现上不挂在用户行为上">给页面留位的钩子,要挂在「元素出现」上,不挂在「用户行为」上</h3>
+<p><strong>核心</strong>:布局补偿(给 fixed 元素留白、给滚动容器留高)如果只在「用户点了某个按钮」的回调里生效,那么<strong>从没点过的用户永远缺这段布局</strong>——而作者本人一定点过,所以自测永远绿。</p>
+<p><strong>来源</strong>:收口时顺手修的老毛病。播放条 bootstrap 后一直显示,但 <code>music-on</code> 类只在 <code>syncPlayUI()</code>(播放/暂停回调)里加;没点过播放的页面 body 从头到尾没有 padding,页脚被压住。同一轮还发现「问知识库」悬浮球 <code>z-index 70</code> 压在播放条 <code>60</code> 上——两个都 fixed 在底部。</p>
+<p><strong>验证状态</strong>:⭐⭐ 同族第二次 —— <a href="/above-the-web/v1-9f352e9/" class="wikilink">成稿链接存进库没人读_写入方不等于展示方_v1</a> 与 <a href="/above-the-web/v1-41b9cb0/" class="wikilink">零路由补路由_普查要能推翻已写的代码_v1</a> 里的「初值方不等于渲染方」之后,这是<strong>第五个形态</strong>:不是「状态没人写」,而是「写了,但触发条件绑在了错误的生命周期上」。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>fixed 元素的高度用 <code>ResizeObserver</code> 量出来写回 CSS 变量(<code>--mp-h</code>),body padding、浮层 <code>bottom</code>、面板 <code>height</code> 全部由这一个变量推导。</li>
+<li>钩子挂在「元素从 hidden 变可见」那一刻,不挂在任何交互回调。</li>
+<li>验收要挑<strong>一个从没交互过的新 session</strong>:<code>music-on</code> 是否已有、<code>--mp-h</code> 是否为真值、页脚 <code>bottom</code> 是否 ≤ 条 <code>top</code>。</li>
+</ol>
+<p><strong>反例/边界</strong>:纯交互态样式(hover、<code>:active</code>、播放中的进度条)本来就该挂在回调上;判断标准是「这段布局缺失时,页面是否结构性错误」——是,就必须与交互解耦。</p>
+<h3 id="失败后的重试节奏必须由外部事件驱动不能由定时器驱动">失败后的重试节奏,必须由外部事件驱动,不能由定时器驱动</h3>
+<p><strong>核心</strong>:「失败就留着队列等下一轮」听起来是稳健,实际是给故障加了一个恒定频率的放大器。</p>
+<p><strong>来源</strong>:P1 首版。合批窗口 1.5 秒,失败即重排;服务端 5xx 时变成每 1.5 秒一次 POST,单个客户端就是小型自我 DDoS,而且会把「服务端挂了」这件事掩盖成「服务端很忙」。</p>
+<p><strong>验证状态</strong>:⚠️ 首次发现。与库内「保活心跳不能搭业务轮询的便车」同族,但方向相反:那条讲「别把必要的写搭在不必要的轮询上」,这条讲「别把不必要的重试绑在固定定时器上」。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>失败只置状态(徽章变「失败可重试」),不重排定时器。</li>
+<li>补传的触发点选<strong>本来就高频且语义正确</strong>的事件:用户勾选、<code>online</code>、<code>visibilitychange</code>、登录态变化、点徽章。</li>
+<li>定时器只负责合批(短窗口),不负责重试。</li>
+</ol>
+<p><strong>反例/边界</strong>:幂等且极便宜的探活(心跳、版本号轮询)可以固定间隔;涉及写入的一律不适用。</p>
+<h3 id="同步层与存储层分离到请求函数由外部注入">同步层与存储层分离到「请求函数由外部注入」</h3>
+<p><strong>核心</strong>:把网络层写成不 import 任何 DOM 依赖的纯模块,请求函数当参数传进来,同一份代码就能在 <code>node --test</code> 里跑,不必为它拉起浏览器。</p>
+<p><strong>来源</strong>:P1 第一版把 <code>account-core.js</code> 直接 import 进来取 token,<code>node --test</code> 里因为没有 <code>document</code> 直接炸;改成 <code>request</code> 注入后,15 个同步用例(含「请求在飞途中再勾一次」)全部在 node 里跑完,单文件不到 1 秒。</p>
+<p><strong>验证状态</strong>:⚠️ 首次发现。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>网络层只依赖三个注入项:<code>request(method, path, body)</code>、<code>storage</code>、<code>online()</code>。</li>
+<li>浏览器专属能力(localStorage、<code>navigator.onLine</code>、<code>document.visibilityState</code>)由调用方包装后传入;测试里换成内存实现。</li>
+<li>想在测试里卡住「请求在飞」这一刻,用 gate(promise 未 resolve)而不是 <code>setTimeout</code> 猜时间。</li>
+</ol>
+<p><strong>反例/边界</strong>:强依赖框架生命周期的逻辑(路由守卫、框架状态管理)硬拆反而更脆;拆的判据是「这段逻辑是否需要在没有浏览器时被验证」。</p>
+<h3 id="下线一个版块先摘入口不删链路">下线一个版块:先摘入口,不删链路</h3>
+<p><strong>核心</strong>:版块「不用了」和版块「不能存在了」是两件事;前者要的是<strong>可逆</strong>,后者才需要拆链路。默认按前者做。</p>
+<p><strong>来源</strong>:任务书降级。没有删表、没有删接口、没有删管理台,只加了一个 <code>features.js</code> 开关把入口全部收起(<code>/tasks/</code> 变成暂停说明页,详情页 <code>getStaticPaths</code> 返回空)。24 小时内这个决定就被验证有用:第二天讨论「以后可能还有用」时,成本是改一个布尔值。</p>
+<p><strong>验证状态</strong>:⭐⭐ 同族第二次,方向相反。<a href="/above-the-web/v1-6532011/" class="wikilink">公屏下线只删了界面_删界面不等于关链路_v1</a> 讲的是「以为关掉了其实没关」;本条讲「以为要拆掉其实只需要关」。共同点:<strong>下线深度由「你怕什么」决定,不由「代码看起来该不该留」决定</strong>。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>决策先问一句:这是<strong>合规/安全要求</strong>,还是<strong>产品优先级调整</strong>?后者一律走开关。</li>
+<li>开关要有单一真相源,并镜像到构建期环境变量,避免「代码里关了、产物里还开着」。</li>
+<li>开关收起的范围要列全:导航、首页速览、关于页计数、<code>llms.txt</code>、sitemap、详情页路由、账号页入口——漏一处就是半开。</li>
+</ol>
+<p><strong>反例/边界</strong>:涉及隐私、法律、资金的功能必须真拆(接口 404,不是 401 也不是隐藏按钮);开关不适用。</p>
+<h3 id="测量工具本身要先被证伪又一次">测量工具本身要先被证伪(又一次)</h3>
+<p><strong>核心</strong>:「页脚被压住」的结论用了两轮才成立,两次都是工具在说谎,不是页面在说谎。</p>
+<p><strong>来源</strong>:收口验证。第一次用 <code>window.scrollTo(0, scrollHeight)</code> 后立刻量 <code>getBoundingClientRect()</code>,站点有 <code>scroll-behavior: smooth</code>,量到的是动画中途 → 误判「仍被压住」;第二次用元素级截图(<code>locator.screenshot()</code>),fixed 播放条被画进元素的框里 → 看着像压住,实际拍视口是好的。改成 <code>behavior: 'instant'</code> + 等一帧 + 拍视口/量数值,才拿到真结果。</p>
+<p><strong>验证状态</strong>:⭐⭐ 二次验证<a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> 的核心律——那次是判据里一个拍脑袋的常数把正常元素判成缺陷,这次是<strong>时序</strong>与<strong>截图坐标系</strong>。</p>
+<p><strong>操作规则</strong>:</p>
+<ol>
+<li>量几何量之前先让页面静止:滚动用 <code>behavior: 'instant'</code> 或显式等 <code>scrollend</code>。</li>
+<li>fixed 元素不要用元素级截图判定是否遮挡,用两个 <code>rect</code> 的数值比较。</li>
+<li>结论与直觉相反时,先怀疑工具,再怀疑页面。</li>
+</ol>
+<p><strong>反例/边界</strong>:纯静态页(无 smooth scroll、无 fixed 元素)可以直接量;有动效或 fixed 层时一律不适用。</p>
+<h2 id="下次改进">下次改进</h2>
+<p><strong>如果重来,最想改哪一步</strong>:不是技术顺序,是<strong>开工前没定义”什么算被验证过”</strong>。</p>
+<p>这次四段全部「上线 + 测试全绿」,读起来很顺;但把真实用户数填进事实区之后,结论只有一句:8 个学习项、0 个真实用户、所有断言来自自测。功能是对的,证据是薄的。如果一开始就把「验收 = 至少一个非作者账号在另一台设备上完成一次真实读取」写进计划书,这两天的收口会诚实得多,也不会让「已同步」的徽章在只有测试数据时显得像成果。</p>
+<p><strong>下次同类型任务的行动清单</strong>:</p>
+<ol>
+<li>开工第一张表写<strong>数据模型与主键</strong>,不写页面。</li>
+<li>给主键写台账测试,让「改 ID」变成 CI 红,不是 code review 靠眼睛。</li>
+<li>任何「本机为空 → 落默认值」的分支,先标一句注释「此处等首轮远端回来再写」。</li>
+<li>给 fixed 元素留位的 CSS 变量,挂在元素可见那一刻;验收用一个从未交互过的 session。</li>
+<li>失败路径只置状态;把重试挂在真实用户事件上。</li>
+<li>上线当天就把「真实用户数 / 真实设备数」记进事实区,别等复盘时回忆。</li>
+</ol>
+<h2 id="附记三处只在真跑时才现形的坑">附记:三处只在真跑时才现形的坑</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>现象</th><th>真因</th><th>判据</th></tr></thead><tbody><tr><td><code>Illegal return statement</code> 报在一个完全正常的函数上</td><td>一次 <code>Edit</code> 把注释后的换行吃掉,下一行 <code>function draftText(</code> 被并进注释,函数声明消失</td><td>改完立刻跑一次 <code>node --test</code>,报错行号只是”第一个解析失败处”,不是病灶</td></tr><tr><td>脚本读不到自己刚写的 sqlite</td><td>Git Bash 的 <code>/tmp</code> 是 <code>AppData\Local\Temp</code>,node <code>path.resolve('/tmp')</code> 是 <code>C:\tmp</code>,两处不同目录</td><td>跨运行时传路径,一律写 Windows 绝对路径或先 <code>cd /tmp &#x26;&#x26; pwd -W</code> 取真值</td></tr><tr><td>e2e 的点击全部超时</td><td>清单行被固定顶栏与底部播放条夹住,复选框是视觉隐藏的;<code>scrollIntoView({block:'center'})</code> 后点整行 label 才行</td><td>元素存在 ≠ 可点;先滚到视口中间再点</td></tr></tbody></table>
+<p>另有一条环境事实:<code>~/.workbuddy/skills</code> 是指向本仓库 <code>07_skill存档</code> 的目录联接(同一 inode),所以「从知识库安装 skill 到本地」这一步在结构上已经成立——<code>cp</code> 会直接报 <code>are the same file</code>。改知识库里的 SKILL.md 等于改本地 skill,单一真相源,不需要同步脚本。</p>
+<h2 id="如何使用">如何使用</h2>
+<ul>
+<li><strong>要在已有站点上做「跨设备状态同步」时</strong>:先读事实区下面的「我的方案做到了什么」表,再读策略「稳定 ID 的迁移窗口」与「空态是未知量」——这两条是动工前必须先过一遍的门。</li>
+<li><strong>要给 fixed 元素做布局补偿时</strong>:直接抄「留位钩子」那条的三步操作规则,别自己从现象推。</li>
+<li><strong>要决定「某个版块下线」时</strong>:看「先摘入口,不删链路」,并区分合规要求与优先级调整。</li>
+<li><strong>写下一篇复盘时</strong>:把本页顶部的事实区当模板——六个字段填不满,就不该开始写判断。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⭐ <a href="/above-the-web/git-v1-bd10b6f/" class="wikilink">静态站接账号系统_内容归git状态归库的双源切分_v1</a> —— <strong>本主线的地基</strong>:账号与状态的双源切分是这次进度同步直接复用的体例;本篇补上「状态也可以合并」这一层(rev 游标 + 逐项 LWW)</li>
+<li>⭐ <a href="/above-the-web/v1-6601c25/" class="wikilink">账号系统对标一线_多账号抽屉与外部通道半开陷阱_v1</a> —— 同站账号系统的上一轮;<strong>刻意反向选择</strong>的地方记在上面(会话令牌 vs 可合并游标)</li>
+<li><a href="/above-the-web/v1-5696fe2/" class="wikilink">任务系统演进_站内新建管理台拆分首页瘦身_v1</a> —— 被本次降级为存档的那套任务书;开关收起而不是拆掉,保留了它的全部代码与数据</li>
+<li>⭐⭐ <a href="/above-the-web/v1-6532011/" class="wikilink">公屏下线只删了界面_删界面不等于关链路_v1</a> —— 同族镜像:那篇讲「以为关掉了其实没关」,本篇讲「以为要拆掉其实只需关」</li>
+<li>⭐⭐ <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> —— 同族二验:smooth scroll 的时序、元素级截图与 fixed 层的坐标系,都是「工具先证伪」</li>
+<li>⚠️ <a href="/above-the-web/v1-35e4706/" class="wikilink">赛事状态机到点不切换_写入方不等于推进方_v1</a> · <a href="/above-the-web/v1-41b9cb0/" class="wikilink">零路由补路由_普查要能推翻已写的代码_v1</a> —— 「写入方 / 初值方 / 渲染方 / 留位方」同族;本篇是它的第五个形态(布局钩子挂了错误生命周期)</li>
+<li><a href="/above-the-web/2026-07-03-v1-2d712fc/" class="wikilink">2026-07-03_云端定时内容生产连环坑复盘_全绿不等于已发_v1</a> —— 同一验证纪律:测试全绿 ≠ 上线可用;本篇再加一层——上线可用 ≠ 被验证过</li>
+<li>⭐ <a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 本篇顶部事实区按它执行,并于本次首次用于纯工程收口(留出「真实用户数据:0」一行);写法来自 <span class="wikilink wikilink--dangling" title="尚未发布的笔记">aigc-postmortem/SKILL.md</span></li>
+<li><a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a> —— 本类目入口</li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-11-13T10:50:32+08:00">2026-11-13</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/2026-11-13_%E5%89%A7%E6%9C%AC%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%BF%9B%E5%BA%A6%E5%90%8C%E6%AD%A5%E4%B8%89%E9%98%B6%E6%AE%B5%E5%A4%8D%E7%9B%98_%E7%A9%BA%E6%80%81%E4%B8%8D%E6%98%AF%E9%9B%B6%E4%B8%8E%E7%95%99%E4%BD%8D%E9%92%A9%E5%AD%90%E6%8C%82%E9%94%99%E4%BA%8B%E4%BB%B6_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/2026-11-13_%E5%89%A7%E6%9C%AC%E7%A0%94%E7%A9%B6%E5%AE%A4%E8%BF%9B%E5%BA%A6%E5%90%8C%E6%AD%A5%E4%B8%89%E9%98%B6%E6%AE%B5%E5%A4%8D%E7%9B%98_%E7%A9%BA%E6%80%81%E4%B8%8D%E6%98%AF%E9%9B%B6%E4%B8%8E%E7%95%99%E4%BD%8D%E9%92%A9%E5%AD%90%E6%8C%82%E9%94%99%E4%BA%8B%E4%BB%B6_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/07-skill-8c697c0/">Skill 存档索引</a></li><li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/v1-5696fe2/">任务系统演进:站内新建、管理台拆分与首页瘦身</a></li><li><a href="/above-the-web/v1-83c88ab/">全站文字截断体检 · 检测工具本身要先被证伪</a></li><li><a href="/above-the-web/v1-6532011/">公屏下线只删了界面 · 删界面不等于关链路</a></li><li><a href="/above-the-web/v1-6601c25/">账号系统对标一线 · 多账号抽屉与外部通道的半开陷阱</a></li><li><a href="/above-the-web/git-v1-bd10b6f/">静态站接账号系统 · 内容归 git、状态归库的双源切分</a></li><li><a href="/above-the-web/v1-78108ee/">复盘事实先行原则</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/2026-07-03-v1-2d712fc/"> <span class="card-cat">平台工程</span> <h3>云端定时内容生产连环坑复盘:全绿不等于已发</h3> <p>- 项目:蛛网之上「AIGC 快讯」,GitHub Actions 云端定时 workflow(aigc-daily-news.yml,cr…</p> </a><a class="card" href="/above-the-web/v1-35e4706/"> <span class="card-cat">平台工程</span> <h3>赛事状态机到点不切换 · 写入方不等于推进方</h3> <p>- 项目:PB Arena 官方赛事(报名中 → 进行中 → 出图 / 上传 / 投票 → 完赛)</p> </a><a class="card" href="/above-the-web/v1-41b9cb0/"> <span class="card-cat">平台工程</span> <h3>零路由补路由 · 普查要能推翻已写的代码</h3> <p>- 起点：上一轮自检清单清空到只剩一项——全站零路由（对 pushState / popstate / hashchange / locat…</p> </a><a class="card" href="/above-the-web/v1-9f352e9/"> <span class="card-cat">平台工程</span> <h3>成稿链接存进库没人读 · 写入方不等于展示方</h3> <p>- 项目:蛛网之上(tiaozhuxiansheng.com)任务书系统,2026-07-30 单会话</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#事实记录不可修改区" data-toc-link="事实记录不可修改区">事实记录(不可修改区)</a></li><li class="d2"><a href="#回顾两天里实际做了什么" data-toc-link="回顾两天里实际做了什么">回顾:两天里实际做了什么</a></li><li class="d2"><a href="#结果分析两个视角分开写" data-toc-link="结果分析两个视角分开写">结果分析(两个视角分开写)</a></li><li class="d3"><a href="#我的方案做到了什么没做到什么" data-toc-link="我的方案做到了什么没做到什么">我的方案:做到了什么、没做到什么</a></li><li class="d3"><a href="#对照一计划书原案-vs-实际实现" data-toc-link="对照一计划书原案-vs-实际实现">对照一:计划书原案 vs 实际实现</a></li><li class="d3"><a href="#对照二本站既有账号系统" data-toc-link="对照二本站既有账号系统">对照二:本站既有账号系统</a></li><li class="d2"><a href="#方法论沉淀" data-toc-link="方法论沉淀">方法论沉淀</a></li><li class="d3"><a href="#稳定-id-的迁移窗口只有第一次跨设备之前" data-toc-link="稳定-id-的迁移窗口只有第一次跨设备之前">稳定 ID 的迁移窗口,只有「第一次跨设备之前」</a></li><li class="d3"><a href="#本机没有记录不等于用户没读过空态是未知量不是零" data-toc-link="本机没有记录不等于用户没读过空态是未知量不是零">本机没有记录,不等于用户没读过——空态是未知量,不是零</a></li><li class="d3"><a href="#给页面留位的钩子要挂在元素出现上不挂在用户行为上" data-toc-link="给页面留位的钩子要挂在元素出现上不挂在用户行为上">给页面留位的钩子,要挂在「元素出现」上,不挂在「用户行为」上</a></li><li class="d3"><a href="#失败后的重试节奏必须由外部事件驱动不能由定时器驱动" data-toc-link="失败后的重试节奏必须由外部事件驱动不能由定时器驱动">失败后的重试节奏,必须由外部事件驱动,不能由定时器驱动</a></li><li class="d3"><a href="#同步层与存储层分离到请求函数由外部注入" data-toc-link="同步层与存储层分离到请求函数由外部注入">同步层与存储层分离到「请求函数由外部注入」</a></li><li class="d3"><a href="#下线一个版块先摘入口不删链路" data-toc-link="下线一个版块先摘入口不删链路">下线一个版块:先摘入口,不删链路</a></li><li class="d3"><a href="#测量工具本身要先被证伪又一次" data-toc-link="测量工具本身要先被证伪又一次">测量工具本身要先被证伪(又一次)</a></li><li class="d2"><a href="#下次改进" data-toc-link="下次改进">下次改进</a></li><li class="d2"><a href="#附记三处只在真跑时才现形的坑" data-toc-link="附记三处只在真跑时才现形的坑">附记:三处只在真跑时才现形的坑</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/skills/">Skill</a><a href="/above-the-web/juben/">剧本</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="sl-footer" data-astro-cid-zamss57n>
+关注：<a href="https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC" target="_blank" rel="noopener me" class="astro-zamss57n" data-astro-cid-zamss57n>抖音</a> · <a href="https://www.kuaishou.com/profile/3xaszm4s33jffe2" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>快手</a> · <a href="https://space.bilibili.com/6891496" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>哔哩哔哩</a> · <a href="https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>小红书</a> · <a href="https://music.163.com/#/artist?id=124358911" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>网易云音乐</a> · <a href="https://github.com/Mr-Salticidae" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>GitHub</a></p><p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.BJ69VHrB.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>

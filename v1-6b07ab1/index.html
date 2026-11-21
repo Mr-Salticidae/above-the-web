@@ -1,0 +1,215 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>图表交付的确定性：坐标绘制胜过自动布局 · 蛛网之上</title><meta name="description" content="我把「图长什么样」交给了三种外部机制——私有代码块、Mermaid 的 dagre、方向参数——三次都得到了一个「结构对、位置错」的结果。第四次放弃自动化，用坐标逐点钉死，一次通过。"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/v1-6b07ab1/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="图表交付的确定性：坐标绘制胜过自动布局"><meta property="og:description" content="我把「图长什么样」交给了三种外部机制——私有代码块、Mermaid 的 dagre、方向参数——三次都得到了一个「结构对、位置错」的结果。第四次放弃自动化，用坐标逐点钉死，一次通过。"><meta property="og:url" content="https://tiaozhuxiansheng.com/v1-6b07ab1/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="图表交付的确定性：坐标绘制胜过自动布局"><meta name="twitter:description" content="我把「图长什么样」交给了三种外部机制——私有代码块、Mermaid 的 dagre、方向参数——三次都得到了一个「结构对、位置错」的结果。第四次放弃自动化，用坐标逐点钉死，一次通过。"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-11-19T19:08:24+08:00"><meta property="article:modified_time" content="2026-11-20T16:38:02+08:00"><meta property="article:section" content="方法论与洞察"><meta property="article:tag" content="类型/核心方法论"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC","https://www.kuaishou.com/profile/3xaszm4s33jffe2","https://space.bilibili.com/6891496","https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723","https://music.163.com/#/artist?id=124358911","https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/v1-6b07ab1/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/v1-6b07ab1/","url":"https://tiaozhuxiansheng.com/v1-6b07ab1/","headline":"图表交付的确定性：坐标绘制胜过自动布局","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"我把「图长什么样」交给了三种外部机制——私有代码块、Mermaid 的 dagre、方向参数——三次都得到了一个「结构对、位置错」的结果。第四次放弃自动化，用坐标逐点钉死，一次通过。","datePublished":"2026-11-19T19:08:24+08:00","dateModified":"2026-11-20T16:38:02+08:00","articleSection":"方法论与洞察","keywords":"类型/核心方法论"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"方法论与洞察","item":"https://tiaozhuxiansheng.com/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F"},{"@type":"ListItem","position":3,"name":"图表交付的确定性：坐标绘制胜过自动布局","item":"https://tiaozhuxiansheng.com/v1-6b07ab1/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/skills/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/yuwen-s1/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.JAzzzN2D.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/skills/">Skill</a><a class="meta series-link" href="/above-the-web/juben/">剧本</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu data-tasks="off"> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.DtEx7URI.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F" data-pagefind-meta="category" data-pagefind-filter="kind:note">方法论与洞察</a> <span aria-hidden="true">/</span><span>prompt与工具方法</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-11-19T19:08:24+08:00">2026-11-19</time></span> <span>更新于 <time datetime="2026-11-20T16:38:02+08:00">2026-11-20</time></span> <span>约 3 分钟读完 · 1,238 字</span> </p> </header>   <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>9 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#三种承载的取舍">三种承载的取舍</a></li><li class="d2"><a href="#引擎为什么不可控">引擎为什么不可控</a></li><li class="d2"><a href="#坐标绘制怎么做实测有效">坐标绘制怎么做（实测有效）</a></li><li class="d2"><a href="#标注规范四条都在这一轮踩过">标注规范四条（都在这一轮踩过）</a></li><li class="d2"><a href="#验收三步">验收三步</a></li><li class="d2"><a href="#资源随仓库">资源随仓库</a></li><li class="d2"><a href="#触发判据何时该坐标画">触发判据（何时该坐标画）</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="图表交付的确定性坐标绘制胜过自动布局">图表交付的确定性：坐标绘制胜过自动布局</h1>
+<blockquote>
+<p>一句话律：<strong>当顺序或位置本身是信息时，图的布局不能外包给引擎。</strong> 引擎优化的是交叉数，不是你的叙事顺序。</p>
+</blockquote>
+<blockquote>
+<p>入档:2026-11-19
+来源:《虚拟游戏》人物关系图三轮返工（私有 fence → Mermaid → Pillow 坐标绘制）
+验证状态:三次连踩同一根因，属流程性硬伤，结论可直接入规范</p>
+</blockquote>
+<h2 id="一句话">一句话</h2>
+<p>我把「图长什么样」交给了三种外部机制——私有代码块、Mermaid 的 dagre、方向参数——三次都得到了一个「结构对、位置错」的结果。第四次放弃自动化，用坐标逐点钉死，一次通过。</p>
+<h2 id="三种承载的取舍">三种承载的取舍</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>承载</th><th>优点</th><th>失效方式</th><th>何时用</th></tr></thead><tbody><tr><td>私有 fence（如 <code>relation-graph</code>）</td><td>信息密度高、可交互</td><td>渲染器不认 → 原样摊成源码（5,500 字符 JSON 铺满屏）</td><td>只在确认对方用同一套工具的封闭环境</td></tr><tr><td>通用引擎（Mermaid / Graphviz）</td><td>谁都认识、改起来快</td><td>布局由引擎决定：无入边的节点被推到起始列、分区顺序被打乱；改 <code>LR</code>/<code>TB</code> 只是换一种自动布局</td><td>结构对就行、位置无所谓的图</td></tr><tr><td>坐标绘制（Pillow / SVG 手排）</td><td>位置与顺序完全可控、可复现</td><td>要自己算坐标、自己要肉眼验收</td><td>顺序与位置承载信息的图（分区、先后、层级）</td></tr></tbody></table>
+<h2 id="引擎为什么不可控">引擎为什么不可控</h2>
+<p>dagre 的排布目标是「最小化连线交叉 + 按入边分层」。由此推出两条必然结果：</p>
+<ol>
+<li><strong>无入边的节点被推到最左/最上</strong>——它在图里没有「上游」，引擎就把它当起点。关系图里那个只有出边的旧角色因此抢到了 A 区前面。</li>
+<li><strong>方向参数不是控制点</strong>——<code>LR</code> 与 <code>TB</code> 只是两套自动布局，换方向等于换姿势，不改变「谁先谁后」的判定逻辑。</li>
+</ol>
+<blockquote>
+<p>判据：如果改一次参数后<strong>没达到预期且原因说不清</strong>，就不要再调参数了，换承载方式。</p>
+</blockquote>
+<h2 id="坐标绘制怎么做实测有效">坐标绘制怎么做（实测有效）</h2>
+<ul>
+<li><strong>分区先定 y 带</strong>：A 区 y≈180–420、B 区 y≈730–1000，区与区之间留出标题带；区内再定 x。</li>
+<li><strong>名字框宽度按实测文字宽度给</strong>：长名字（「林建国＝华叔＝何建浩」）单独加宽，别用统一宽度硬塞。</li>
+<li><strong>跨区连线走直角绕行</strong>：从源节点底部出、目标节点底部进，避开中间节点，不要用弧线穿过别人的框。</li>
+<li><strong>画布留富余</strong>：右侧与底部各留 40px 以上，图例和注释才有地方放。</li>
+</ul>
+<h2 id="标注规范四条都在这一轮踩过">标注规范四条（都在这一轮踩过）</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>规范</th><th>反面教材</th></tr></thead><tbody><tr><td>1</td><td>状态用<strong>通用视觉惯例</strong>：划掉、加粗、置灰</td><td><code>†</code>（dagger）在中文语境被读成十字架，且与「灰底＝已死」图例自相矛盾</td></tr><tr><td>2</td><td><strong>不用西文符号承载中文语义</strong></td><td>已死就写「已死 / 已亡」，或直接打红线</td></tr><tr><td>3</td><td>图例 ≥ 3 条一律<strong>动态排版</strong>：按 <code>textlength</code> 实测宽度推进</td><td>固定 <code>x += 170</code>，长文案直接撞上下一个图例</td></tr><tr><td>4</td><td>分类编码控制在<strong>两种以内</strong>，且互不重叠</td><td>同时用「灰底=死」「金框=玩家」「†=死」，一个符号背两层信息</td></tr></tbody></table>
+<h2 id="验收三步">验收三步</h2>
+<ol>
+<li><strong>看最终载体</strong>，不看源码：导出 PNG/PDF 后自己看一眼。</li>
+<li><strong>裁剪放大</strong>局部：名字是否溢出框、标签是否压线、图例是否重叠——全图缩略看不出来。</li>
+<li><strong>问一句「这个符号什么意思」</strong>：如果需要一个图例才能懂，就说明它没自解释。</li>
+</ol>
+<h2 id="资源随仓库">资源随仓库</h2>
+<p>文档一旦声明「自包含」，图就必须跟着仓库走。常见坑：仓库 <code>.gitignore</code> 把 <code>*.png</code> 全排除了，图片引用看着没问题，别人克隆下来是断链。</p>
+<blockquote>
+<p>做法：在 <code>.gitignore</code> 末尾开<strong>精确到文件</strong>的例外，而不是把整个目录放进来。</p>
+</blockquote>
+<h2 id="触发判据何时该坐标画">触发判据（何时该坐标画）</h2>
+<ul>
+<li>图里有<strong>分区</strong>，且分区先后有含义（主干 → 外围、案发 → 调查）；</li>
+<li>图里有<strong>层级或时间顺序</strong>，读者要按顺序读；</li>
+<li>同一张图要<strong>反复出图、每次必须一致</strong>（对外交付、平台备案）；</li>
+<li>已经因为「位置不对」返工过一次。</li>
+</ul>
+<p>任一命中 → 直接坐标绘制，别从 Mermaid 开始试。</p>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li><a href="/above-the-web/2026-11-19-v1-ee7438e/" class="wikilink">2026-11-19_虚拟游戏过本单_七格换芯与图表返工_复盘_v1</a> —— 三轮返工的完整事实</li>
+<li><a href="/above-the-web/v1-8888fcd/" class="wikilink">过本单七格跨类型复用_换芯不换壳_v1</a> —— 第②格关系图的内容该怎么组织</li>
+<li><a href="/above-the-web/v1-4c4054a/" class="wikilink">用错度量会给出虚假通过_v1</a> —— 同族问题：验收方式选错，结论就是假的</li>
+<li><a href="/above-the-web/hdr-v1-8d7c19f/" class="wikilink">手机HDR视频交付_三层分离与体积先定_v1</a> —— 同一条「内容清单 / 呈现人眼」双验收律搬到视频域：偏灰、死黑这类问题参数全绿也查不出</li>
+<li><a href="/above-the-web/04-1d37684/" class="wikilink">04_方法论与洞察索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/核心方法论</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-11-20T16:38:02+08:00">2026-11-20</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/%E5%9B%BE%E8%A1%A8%E4%BA%A4%E4%BB%98%E7%9A%84%E7%A1%AE%E5%AE%9A%E6%80%A7_%E5%9D%90%E6%A0%87%E7%BB%98%E5%88%B6%E8%83%9C%E8%BF%87%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/04_%E6%96%B9%E6%B3%95%E8%AE%BA%E4%B8%8E%E6%B4%9E%E5%AF%9F/05_prompt%E4%B8%8E%E5%B7%A5%E5%85%B7%E6%96%B9%E6%B3%95/%E5%9B%BE%E8%A1%A8%E4%BA%A4%E4%BB%98%E7%9A%84%E7%A1%AE%E5%AE%9A%E6%80%A7_%E5%9D%90%E6%A0%87%E7%BB%98%E5%88%B6%E8%83%9C%E8%BF%87%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/04-1d37684/">方法论与洞察索引</a></li><li><a href="/above-the-web/skill-index-b155e36/">SKILL_INDEX — Skill 使用索引</a></li><li><a href="/above-the-web/hdr-v1-8d7c19f/">手机 HDR 视频交付 · 三层分离与体积先定</a></li><li><a href="/above-the-web/09-eb48075/">剧本杀拆解与带本索引</a></li><li><a href="/above-the-web/2026-11-19-v1-ee7438e/">《虚拟游戏》过本单：七格换芯与三次图表返工</a></li><li><a href="/above-the-web/v1-8888fcd/">过本单七格跨类型复用：换芯不换壳</a></li><li><a href="/above-the-web/skill-554d032/">Video Handoff · 手机视频压缩与回传交付</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/v1-4c4054a/"> <span class="card-cat">方法论与洞察</span> <h3>用错度量会给出虚假的通过</h3> <p>做量化检查时，聚合方式（mean / min / 分位）和取样范围（外接矩形 / 真实产物）</p> </a><a class="card" href="/above-the-web/ai-niji5-nano-v2-aff7d44/"> <span class="card-cat">方法论与洞察</span> <h3>AI 形象图工作流分层 · niji5 + Nano</h3> <p>任何&quot;画风强 + 个性化要素多&quot;的 AI 形象图项目，都不可能用单一工具完成。强行让 niji 5 一次性出&quot;画风对 + 漂浮对 + 颜值对…</p> </a><a class="card" href="/above-the-web/ai-v1-374c1ce/"> <span class="card-cat">方法论与洞察</span> <h3>真实摄影手段作为 AI 时代的稀缺性</h3> <p>当 AI 图供应过剩,真实摄影手法本身就成了稀缺品 —— 红外、长曝、闪光实验、胶片光化学反应、暗房 alt processes —— 这些…</p> </a><a class="card" href="/above-the-web/gptimage2-v1-e7fe63b/"> <span class="card-cat">方法论与洞察</span> <h3>GPT Image 2 锁脸的「脸占比上限」</h3> <p>- 参考图特征：温婉圆脸、蓝灰色大而圆的眼睛、气质温婉。</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#三种承载的取舍" data-toc-link="三种承载的取舍">三种承载的取舍</a></li><li class="d2"><a href="#引擎为什么不可控" data-toc-link="引擎为什么不可控">引擎为什么不可控</a></li><li class="d2"><a href="#坐标绘制怎么做实测有效" data-toc-link="坐标绘制怎么做实测有效">坐标绘制怎么做（实测有效）</a></li><li class="d2"><a href="#标注规范四条都在这一轮踩过" data-toc-link="标注规范四条都在这一轮踩过">标注规范四条（都在这一轮踩过）</a></li><li class="d2"><a href="#验收三步" data-toc-link="验收三步">验收三步</a></li><li class="d2"><a href="#资源随仓库" data-toc-link="资源随仓库">资源随仓库</a></li><li class="d2"><a href="#触发判据何时该坐标画" data-toc-link="触发判据何时该坐标画">触发判据（何时该坐标画）</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/skills/">Skill</a><a href="/above-the-web/juben/">剧本</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="sl-footer" data-astro-cid-zamss57n>
+关注：<a href="https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC" target="_blank" rel="noopener me" class="astro-zamss57n" data-astro-cid-zamss57n>抖音</a> · <a href="https://www.kuaishou.com/profile/3xaszm4s33jffe2" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>快手</a> · <a href="https://space.bilibili.com/6891496" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>哔哩哔哩</a> · <a href="https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>小红书</a> · <a href="https://music.163.com/#/artist?id=124358911" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>网易云音乐</a> · <a href="https://github.com/Mr-Salticidae" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>GitHub</a></p><p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> </div> </div> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.BJ69VHrB.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>
