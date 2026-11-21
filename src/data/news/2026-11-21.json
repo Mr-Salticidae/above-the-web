@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-21",
+  "headline": "Nvidia 押注扩散语言模型，AI 对中国创意岗位冲击显现",
+  "items": [
+    {
+      "title": "Nvidia 拟超 5 亿美元收购 Inception，扩充 Nemotron 开源模型",
+      "summary": "据 The Information 报道，Nvidia 正接近以至少 5 亿美元收购成立仅两年的 AI 初创公司 Inception。该公司基于扩散过程构建语言模型，区别于 ChatGPT 等主流自回归逐 token 生成方式。此举旨在强化 Nvidia 的开源 Nemotron 模型线及机器人业务布局。对关注非自回归架构的创作者而言，这可能带来新的本地部署选择。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nvidia-bets-at-least-500-million-on-inceptions-diffusion-models-to-strengthen-its-open-source-nemotron-lineup",
+      "featured": true
+    },
+    {
+      "title": "Bloomberg：中国超九成微短剧已由 AI 制作，相关岗位缩减加速",
+      "summary": "Bloomberg 分析 1000 万条招聘信息发现，中国受 AI 影响的岗位下降速度比其他岗位快 10 个百分点，入门级员工和创意行业感受最为明显。数据显示超过 90% 的中国微短剧目前已使用 AI 生产。前央行顾问蔡昉警告更大的 AI 冲击仍在前方。这组数据为中文 AIGC 创作者提供了行业替代速度的量化参考。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/bloomberg-analysis-of-10-million-job-postings-shows-ai-exposed-roles-in-china-fell-10-percentage-points-faster-than-others",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 大幅加强 GPT-6.2 推理链防提取机制",
+      "summary": "OpenAI 显著提升了对 GPT-6.2 Astra 和 Sol 内部推理过程的防护能力。在自适应红队测试中，提取受保护推理的成功率从 54% 降至 0.2%，同时每周封禁数千至数万个参与协同蒸馏的账号。这意味着试图通过提示词逆向工程获取模型思维链的做法将进一步受限。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-makes-it-much-harder-for-attackers-to-extract-how-its-latest-ai-models-think",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 发文阐述对抗性蒸馏的多层防御策略",
+      "summary": "OpenAI 发布文章介绍其应对对抗性蒸馏的分层方法，结合模型训练、安全防护、检测与执行手段来防止能力被提取。该文与近期 GPT-6.2 系列的安全加固措施相呼应。对于依赖 API 进行二次开发的创作者，了解这些边界有助于规避账号风险。",
+      "category": "研究",
+      "source": "OpenAI",
+      "url": "https://openai.com/index/combatting-adversarial-distillation",
+      "featured": false
+    },
+    {
+      "title": "Signal 在 iOS 27 和 Android 上屏蔽截图以防 AI Agent 读取",
+      "summary": "Signal 开始在移动端阻止截屏功能，以防止 Apple Siri AI、Google Gemini Intelligence 和 Meta Muse 等系统级 AI Agent 读取私人聊天内容。Signal 将此称为对隐私的「生存威胁」，并承认 macOS 端的防护仍不完整。随着操作系统级 Agent 普及，创作者在处理敏感素材时需注意此类跨应用限制。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/signal-blocks-screenshots-on-ios-27-and-android-to-stop-ai-agents-from-reading-private-chats",
+      "featured": false
+    },
+    {
+      "title": "InfoQ 直播讨论：AI 漫剧不缺作品，缺什么？",
+      "summary": "InfoQ QLab 推出一场关于 AI 漫剧现状的直播讨论，核心议题是当前 AI 漫画与短剧产能充足但质量或模式存在缺口。具体讨论细节需查看原文。适合正在用 AI 工具做连载漫画或动态分镜的创作者关注。",
+      "category": "行业",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/27xI2tBkStO5qz52VBPw",
+      "featured": false
+    },
+    {
+      "title": "研究者向 AI 供应链植入 200 万个金丝雀验证隐私泄露",
+      "summary": "一名研究人员通过在 prompt 中嵌入独特且可追踪的秘密信息（canary），向 AI 供应链植入了 200 万个标记，结果证实数据并未保持私密。该测试揭示了当前大模型在处理用户输入时的隐私风险。提醒创作者在使用云端模型处理未公开作品时需谨慎对待输入内容。",
+      "category": "研究",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/security/2026/11/a-leaky-ai-supply-chain-is-exposing-secret-user-data-at-an-alarming-rate",
+      "featured": false
+    }
+  ]
+}
