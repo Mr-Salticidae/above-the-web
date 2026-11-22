@@ -72,7 +72,7 @@ function joinLines(parts) {
   }, '');
 }
 
-export function renderMarkdown(source, { whiteboardImages = false } = {}) {
+export function renderMarkdown(source, { whiteboardImages = false, runbookCase } = {}) {
   const lines = String(source ?? '').replace(/\r\n?/g, '\n').split('\n');
   // 卷宗 md 普遍带 YAML frontmatter（id / name / players…），那是给机器看的索引，
   // 原样渲染就是开头一坨「id: "247" name: ...」的乱麻，先整块剥掉。
@@ -110,7 +110,7 @@ export function renderMarkdown(source, { whiteboardImages = false } = {}) {
   };
   const closeFence = () => {
     if (whiteboardImages && fenceLang === 'dm-runbook') {
-      out.push(renderRunbook(fence));
+      out.push(renderRunbook(fence, runbookCase));
     } else if (whiteboardImages && fenceLang === 'relation-graph') {
       out.push(renderRelationGraph(fence));
     } else if (whiteboardImages && ['whiteboard-cards', 'whiteboard-trace', 'case-cards', 'case-workspace'].includes(fenceLang)) {

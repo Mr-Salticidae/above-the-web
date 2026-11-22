@@ -72,14 +72,15 @@ function renderRunDecision(decision) {
   return controls.length || notes.length ? `<aside class="md-run-decision" aria-label="本场判定">${controls.join('')}<div aria-live="polite">${notes.join('')}</div></aside>` : '';
 }
 
-export function renderRunbook(rows) {
+export function renderRunbook(rows, { id = 'virtual-game', title = '虚拟游戏' } = {}) {
   const steps = rows.map((row) => row.split('|'));
   if (!steps.length || steps.some((fields) => fields.length < 6 || fields.length > 9 || fields.slice(0, 6).some((value) => !value)
     || !/^\d{1,2}$/.test(fields[1]))) return '<p>现场流程暂时无法显示。</p>';
   const bgm = [...new Set(steps.flatMap((step) => (step[8] || '').split('；').filter(isBgm)))];
-  return `<div class="md-runbook-entry"><button type="button" data-run-open>打开现场带本 · ${steps.length} 步</button>
-    <dialog class="md-whiteboard-cards md-trace-workspace md-runbook" aria-label="《虚拟游戏》现场带本">
-      <header class="md-trace-heading md-run-header"><h3>《虚拟游戏》现场带本</h3><div><button type="button" data-run-new>新开一场</button><button type="button" data-run-close>返回档案</button></div></header>
+  const heading = `《${escapeHtml(title)}》现场带本`;
+  return `<div class="md-runbook-entry" data-run-case="${escapeHtml(id)}"><button type="button" data-run-open>打开现场带本 · ${steps.length} 步</button>
+    <dialog class="md-whiteboard-cards md-trace-workspace md-runbook" aria-label="${heading}">
+      <header class="md-trace-heading md-run-header"><h3>${heading}</h3><div><button type="button" data-run-new>新开一场</button><button type="button" data-run-close>返回档案</button></div></header>
       <div class="md-run-position">
         <select aria-label="跳到步骤" data-run-select>${steps.map(([title], index) => `<option value="${index}">${index + 1}. ${escapeHtml(title)}</option>`).join('')}</select>
         <progress aria-label="带本进度" value="1" max="${steps.length}"></progress>
@@ -255,7 +256,7 @@ export function mountRunbook(host, autoOpen = false, fetchAudio, audioUrl) {
   const next = dialog.querySelector('[data-run-next]');
   const opener = entry.querySelector('[data-run-open]');
   const clocks = steps.map((step) => ({ left: Number(step.dataset.minutes) * 60_000, end: 0, announced: false }));
-  const key = 'atw-juben-virtual-game-run-v1';
+  const key = `atw-juben-${entry.dataset.runCase}-run-v1`;
   const choices = { edition: '', verdict: '', ending: '' };
   const choiceInputs = [...dialog.querySelectorAll('[data-run-choice]')];
   const branchNotes = [...dialog.querySelectorAll('[data-run-branch]')];

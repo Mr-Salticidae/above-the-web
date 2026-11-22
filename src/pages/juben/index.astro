@@ -370,9 +370,8 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       activeCase = target.vaultCaseId;
       activeDoc = target.manifestCase ? target.docId : null;
       const view = requestedWorkspace();
-      const workspaceCase = jubenCases.find((item) => item.id === 'virtual-game');
-      if (view && activeCase === workspaceCase?.vaultCaseId) {
-        const docId = view === 'board' ? '09_人物关系白板示意图' : workspaceCase.modules[0].docId;
+      const docId = target.publicCase.workspaces?.[view];
+      if (docId) {
         if (target.manifestCase && vaultDocList(target.manifestCase).some((doc) => doc.id === docId)) {
           activeDoc = docId;
           return null;
@@ -444,19 +443,17 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         && isDm(user)
         && document.getElementById('vault-reader-doc') === host
       );
-      const reviewId = '00_DM主持学习手册';
-      const boardId = '09_人物关系白板示意图';
+      const workspace = jubenCases.find((item) => item.vaultCaseId === caseId);
+      const { run, review, board } = workspace?.workspaces || {};
       const view = requestedWorkspace();
-      const companionId = caseId === '954-虚拟游戏'
-        ? ({ [reviewId]: boardId, [boardId]: reviewId })[docId]
-        : null;
+      const companionId = docId === run ? board : docId === board && run === review ? review : null;
       let workspaces;
       try {
         const doc = await loadVaultDoc(caseId, docId, current, signal);
         if (!current()) return;
-        host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true });
+        host.innerHTML = renderMarkdown(doc.markdown, { whiteboardImages: true, runbookCase: workspace });
         const audioPath = (key) => `${vaultDocPath(caseId, docId)}/audio/${key}`;
-        mountRunbook(host, view === 'run' && docId === reviewId,
+        mountRunbook(host, view === 'run' && docId === run,
           (key) => api('GET', audioPath(key), undefined, { cache: 'no-store', responseType: 'blob', signal }),
           doc.audioTicket ? (key) => `${API_BASE}${audioPath(key)}?ticket=${encodeURIComponent(doc.audioTicket)}` : undefined);
         workspaces = mountWhiteboardCards(host, { openTrace: true, openCases: view === 'review' });
@@ -1601,7 +1598,12 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       selectedMissionSlug = missionAt(item, requestedModule || firstMission.module.slug).module.slug;
       document.getElementById('private-link').href = missionHref(url('juben/'), id, item.modules[0].slug);
       document.getElementById('timeline-link').href = missionHref(url('juben/'), id, item.modules[1].slug);
-      document.querySelectorAll('#run-link, #review-link, #board-link').forEach((link) => { link.hidden = id !== 'virtual-game'; });
+      for (const view of ['run', 'review', 'board']) {
+        const link = document.getElementById(`${view}-link`);
+        if (!link) continue;
+        link.hidden = !item.workspaces?.[view];
+        if (!link.hidden) link.href = `?case=${encodeURIComponent(id)}&view=${view}#dm-vault`;
+      }
       cards.forEach((card) => {
         const active = card.dataset.case === id;
         card.classList.toggle('is-active', active);

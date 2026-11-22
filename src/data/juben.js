@@ -9,6 +9,7 @@ export const jubenCases = [
   {
     id: 'virtual-game',
     vaultCaseId: '954-虚拟游戏',
+    workspaces: { run: '00_DM主持学习手册', review: '00_DM主持学习手册', board: '09_人物关系白板示意图' },
     title: '虚拟游戏',
     english: 'THE VIRTUAL GAME',
     status: '持续复盘',
@@ -149,6 +150,7 @@ export const jubenCases = [
   {
     id: 'escape-conjoined-village',
     vaultCaseId: '出逃连体村',
+    workspaces: { run: '00_开本速查卡', review: '08_上帝视角时间线_DM复盘底稿', board: '09_人物关系与构造图' },
     title: '出逃连体村',
     english: 'ESCAPE FROM THE CONJOINED VILLAGE',
     status: '待首开',
@@ -159,7 +161,7 @@ export const jubenCases = [
     level: '进阶',
     tone: 'slate',
     intro: '从一场解惑会进入多轮推翻：先立流程，再记每一轮用什么新信息改写上一轮结论。',
-    note: '学习包按「降低学本难度」重构；白板演示以官方 6 张参考板书原图为唯一标准，待首次开本回填实测。',
+    note: '首车可从「现场带本」逐步彩排，核对每步发放和过关条件。白板演练按官方 6 张原图推进。',
     tags: ['多重解答', '官方板书', '轮次推进'],
     modules: [
       {
