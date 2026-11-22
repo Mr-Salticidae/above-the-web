@@ -14,6 +14,7 @@ const state = {
   playing: false,
   volume: 0.9,
   mode: 'order', // order 列表循环 | single 单曲 | shuffle 随机
+  collapsed: false, // 播放器是否收起成小胶囊（手机端为腾屏常收）
 };
 
 const els = {};
@@ -24,15 +25,33 @@ let barVisible = false; // 播放条是否已经现身（曲库为空时始终�
 // 播放条是 fixed 的，它占的那一截必须由页面自己让出来：正文下沿留高度，
 // 悬浮的「问知识库」抬到它上面。高度按实际测量写回 --mp-h，
 // 窄屏折行、系统字号放大都不会算错；拿不到高度时才用 CSS 里的兜底值。
+// 收起时量的是小胶囊的高度（页面底部让位随之变小）。
 function syncBarSpace() {
   const root = document.documentElement;
   root.classList.toggle('music-on', barVisible);
-  if (!barVisible || !els.bar) {
+  const target = state.collapsed ? els.peek : els.bar;
+  if (!barVisible || !target) {
     root.style.removeProperty('--mp-h');
     return;
   }
-  const height = Math.round(els.bar.getBoundingClientRect().height);
+  const height = Math.round(target.getBoundingClientRect().height);
   if (height > 0) root.style.setProperty('--mp-h', `${height}px`);
+}
+
+// 折叠态切换：改 class 让 CSS 决定显示整条还是小胶囊，再重算让位高度
+function applyCollapsedSilently() {
+  if (els.root) els.root.classList.toggle('is-collapsed', state.collapsed);
+}
+function setCollapsed(v) {
+  state.collapsed = Boolean(v);
+  if (state.collapsed) {
+    // 收起时顺手关掉播放列表，免得抽屉悬在胶囊上方
+    if (els.drawer) els.drawer.hidden = true;
+    if (els.toggleList) els.toggleList.setAttribute('aria-expanded', 'false');
+  }
+  applyCollapsedSilently();
+  syncBarSpace();
+  persist();
 }
 
 const fmt = (s) => {
@@ -52,6 +71,7 @@ function persist() {
       playing: state.playing,
       volume: state.volume,
       mode: state.mode,
+      collapsed: state.collapsed,
     }));
   } catch {}
 }
@@ -99,6 +119,7 @@ function renderNow() {
   const t = track();
   if (!t) return;
   els.title.textContent = t.title;
+  if (els.peekTitle) els.peekTitle.textContent = t.title;
   els.artist.textContent = t.artist;
   if (t.cover) {
     els.cover.innerHTML = '';
@@ -160,6 +181,7 @@ function syncPlayUI() {
     ? 'M7 5h3.5v14H7zM13.5 5H17v14h-3.5z'
     : 'M8 5.2v13.6L19 12z');
   els.bar.classList.toggle('is-playing', state.playing);
+  if (els.root) els.root.classList.toggle('is-playing', state.playing); // 收起态胶囊的 ♪ 动画要用
   syncTitle(); // 播放态变了标题也跟着变，不只在切歌时更新
 }
 
@@ -217,6 +239,9 @@ function bind() {
     els.toggleList.setAttribute('aria-expanded', String(!els.drawer.hidden));
   });
 
+  els.collapse.addEventListener('click', () => setCollapsed(true));
+  els.peek.addEventListener('click', () => setCollapsed(false));
+
   audio.addEventListener('timeupdate', onTimeUpdate);
   audio.addEventListener('loadedmetadata', () => { els.dur.textContent = fmt(audio.duration); });
   audio.addEventListener('ended', () => {
@@ -252,6 +277,10 @@ export function initMusicPlayer(root) {
   els.drawer = root.querySelector('[data-mp-drawer]');
   els.list = root.querySelector('[data-mp-list]');
   els.closeList = root.querySelector('[data-mp-close]');
+  els.collapse = root.querySelector('[data-mp-collapse]');
+  els.peek = root.querySelector('[data-mp-peek]');
+  els.peekTitle = root.querySelector('[data-mp-peek-title]');
+  els.root = root;
   audio = root.querySelector('audio');
 
   fetch(`${root.dataset.base || '/'}music/playlist.json`)
@@ -265,6 +294,7 @@ export function initMusicPlayer(root) {
         state.index = Math.min(Number(saved.index) || 0, tracks.length - 1);
         state.volume = typeof saved.volume === 'number' ? saved.volume : 0.9;
         state.mode = ['order', 'single', 'shuffle'].includes(saved.mode) ? saved.mode : 'order';
+        state.collapsed = Boolean(saved.collapsed);
       }
 
       audio.volume = state.volume;
@@ -296,9 +326,14 @@ export function initMusicPlayer(root) {
 
       root.hidden = false; // 有曲库才现身
       barVisible = true;
+      applyCollapsedSilently(); // 恢复上次的收起状态（不写 localStorage）
       syncBarSpace();
       // 折行（窄屏）、字体载入完成都会改高度：跟着量，别让页面留错一截
-      if (typeof ResizeObserver === 'function') new ResizeObserver(syncBarSpace).observe(els.bar);
+      if (typeof ResizeObserver === 'function') {
+        const ro = new ResizeObserver(syncBarSpace);
+        ro.observe(els.bar);
+        ro.observe(els.peek);
+      }
     })
     .catch(() => {/* playlist 拉不到（Pages 早期构建等）：静默保持隐藏 */});
 }

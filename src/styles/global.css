@@ -530,6 +530,24 @@ html.music-on .kb-chat-panel { height: min(38rem, calc(100dvh - 5.5rem - var(--m
   content: ''; position: absolute; right: .18rem; bottom: .22rem;
   width: .32rem; height: .32rem; border-radius: 50%; background: var(--accent);
 }
+/* 收起 / 展开：收起后整条藏起，只留一枚底部居中的小胶囊；状态存 localStorage 跨页保持 */
+.mp-collapse { color: var(--ink-soft); }
+.mp.is-collapsed .mp-bar { display: none; }
+.mp-peek {
+  display: none; align-items: center; gap: .5rem; width: max-content;
+  max-width: calc(100vw - 2rem); margin: 0 auto max(.55rem, env(safe-area-inset-bottom));
+  padding: .4rem .8rem; cursor: pointer; color: var(--ink); font: inherit;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 999px;
+  box-shadow: 0 8px 24px -12px rgba(var(--shadow), .45);
+}
+.mp.is-collapsed .mp-peek { display: flex; }
+.mp-peek:hover { border-color: var(--accent); }
+.mp-peek-note { color: var(--accent); font-size: 1rem; line-height: 1; }
+.mp-peek-title { max-width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .78rem; }
+.mp-peek svg { flex: none; width: 1rem; height: 1rem; color: var(--ink-soft); }
+/* 收起后仍在播：让 ♪ 继续跳，提示音乐没停 */
+.mp.is-collapsed.is-playing .mp-peek-note { animation: mp-pulse 3s ease-in-out infinite; }
 .mp-drawer {
   position: absolute; right: 1rem; bottom: calc(100% + .4rem); width: min(21rem, calc(100vw - 2rem));
   max-height: min(24rem, 60vh); display: flex; flex-direction: column; overflow: hidden;
@@ -579,6 +597,7 @@ html.music-on .kb-chat-panel { height: min(38rem, calc(100dvh - 5.5rem - var(--m
   .mp-progress input { width: 100%; height: 3px; min-width: 0; }
   .mp-progress input::-webkit-slider-thumb { width: 10px; height: 10px; }
   .mp-progress input::-moz-range-thumb { width: 10px; height: 10px; }
+  .mp-peek-title { max-width: 7rem; }
 }
 
 /* 音乐板块页 */

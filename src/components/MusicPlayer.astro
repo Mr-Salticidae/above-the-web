@@ -51,8 +51,18 @@ const base = import.meta.env.BASE_URL;
       <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"/></svg>
       </button>
+      <button class="mp-btn mp-collapse" type="button" data-mp-collapse aria-label="收起播放器" title="收起播放器">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
     </div>
   </div>
+
+  <!-- 收起态：底部居中小胶囊，点它重新展开；播放中 ♪ 仍有动画提示 -->
+  <button class="mp-peek" type="button" data-mp-peek aria-label="展开音乐播放器" title="展开播放器">
+    <span class="mp-peek-note" aria-hidden="true">♪</span>
+    <span class="mp-peek-title" data-mp-peek-title>音乐</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
 </section>
 
 <script>
