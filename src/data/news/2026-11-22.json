@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-22",
+  "headline": "OpenAI 更新 GPT-6.2 提示词模板，ByteDance 开源 Axion 1.0",
+  "items": [
+    {
+      "title": "OpenAI 发布 GPT-6.2 Astra 与 Sol 新提示词模板",
+      "summary": "OpenAI 针对 GPT-6.2 Astra 和 Sol 发布新的 prompt 模板，用于改善模型回答过短、多余追问以及编码时过度测试等常见问题。同时 API 也有调整，修改对话历史可能丢失推理内容并降低回复质量。对日常依赖这些模型的创作者而言，及时更新工作流中的提示词写法有助于稳定输出效果。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-shares-new-prompting-tips-for-gpt-6-2-astra-and-sol-to-fix-brief-answers-and-unnecessary-questions",
+      "featured": true
+    },
+    {
+      "title": "ByteDance 开源 Axion 1.0，三阶段训练达到商用水平",
+      "summary": "ByteDance 联合多所美国高校推出 AI Agent 模型 Axion 1.0，仅经过三个训练阶段即在基准测试中接近 OpenAI 和 Anthropic 的头部商用模型。研究团队认为关键不在增加训练步骤，而在精心筛选的训练数据，目前模型、数据和代码均已开源。这为关注 Agent 工作流的创作者提供了一个可本地部署的新选项。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/bytedance-argues-most-ai-training-phases-are-unnecessary-and-backs-it-up-with-a-competitive-open-model",
+      "featured": true
+    },
+    {
+      "title": "Thinking Machines 开源 Inkling 2 Mini 循环推理模型",
+      "summary": "Thinking Machines 发布开源模型 Inkling 2 Mini，采用 looped transformer 架构，将 24 层中的 12 层在每个 token 上重复运行三次，从而在不增加输出文本的前提下延长内部推理。在 Artificial Analysis Intelligence Index 上，其表现与 Qwen3.8 27B 持平，但成本约为后者的六分之一，且可在笔记本电脑上运行。适合需要在本地进行轻量级文本推理的写作者试用。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/new-open-model-inkling-2-mini-thinks-in-loops-to-solve-problems-with-fewer-words-and-still-runs-on-a-laptop",
+      "featured": false
+    },
+    {
+      "title": "好莱坞演员开始向微短剧公司授权 AI 面部",
+      "summary": "一名演员已将其面部授权给一家微短剧初创公司用于生成 AI 版本，这一模式此前在中国市场已较为常见。业内人士担忧若该做法在好莱坞普及，将对表演行业产生长期影响。对从事 AI 视频和数字人创作的从业者来说，肖像授权的合规边界正在成为实际业务中需要面对的问题。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/21/is-selling-an-ai-version-of-your-face-to-this-microdrama-startup-the-future-of-hollywood",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 称用 Claude 证明黎曼猜想，斯坦福同日发人类版",
+      "summary": "Anthropic 数学家 Levent Alpöge 表示借助 Claude 完成了黎曼猜想的证明，并在 Lean 中形式化，篇幅超过 25 万页。数小时后，斯坦福研究人员发布了完全由人类完成的独立证明草稿，目前数学界正在验证两者是否成立。虽然属于纯数学领域，但这是大模型参与复杂长链条推理的一个标志性节点。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/hours-after-anthropic-claims-a-claude-proof-of-the-riemann-hypothesis-stanford-releases-an-all-human-competing-draft",
+      "featured": false
+    },
+    {
+      "title": "Nvidia 研究者提出超大上下文窗口并非最优解",
+      "summary": "Nvidia 研究团队发表论文指出，语言模型往往不需要使用完整的超长上下文窗口，因为过长上下文会带来速度、成本和错误率问题。测试显示，通过定期摘要和关键词检索，通常能以较低成本达到与全量上下文相当的效果，团队还提出了一种基于短笔记而非长上下文的新模型类别。这对习惯一次性喂入大量参考素材进行写作的创作者提供了优化输入策略的思路。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/nvidia-researchers-argue-huge-ai-context-windows-are-a-dead-end",
+      "featured": false
+    }
+  ]
+}
