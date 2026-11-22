@@ -336,7 +336,7 @@ export function mountRunbook(host, autoOpen = false, fetchAudio, audioUrl) {
   opener.addEventListener('click', open);
   dialog.querySelector('[data-run-close]').addEventListener('click', () => dialog.close());
   dialog.querySelector('[data-run-new]').addEventListener('click', () => {
-    if (!window.confirm('新开一场会清空本场开法、投票判定、结尾选择和计时。继续吗？')) return;
+    if (!window.confirm('新开一场会重置本场步骤、计时和已选选项。继续吗？')) return;
     for (const name of Object.keys(choices)) choices[name] = '';
     for (const player of dialog.querySelectorAll('audio')) {
       player.pause();
