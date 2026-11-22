@@ -1,0 +1,281 @@
+---
+// 半仙 NPC 演绎翻页卡 —— 出逃连体村专用。
+// 剧透正文不在本文件、不进静态产物：页面只有空壳，内容由浏览器在 DM 鉴权后
+// 从 /api/juben/doc/出逃连体村/11_半仙NPC演绎复习卡 拉取，解析 npc-deck 数据块渲染。
+// 非 DM / 未登录只看到门禁，拿不到正文。
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="半仙演绎卡"
+  description="出逃连体村 · 半仙 NPC 演绎复习卡（DM 专用）"
+  section="juben"
+  noindex={true}
+>
+  <div class="npc-page" id="npc-page">
+    <div class="npc-deck" id="npc-deck" hidden>
+      <header class="npc-head">
+        <div class="npc-kicker">出逃连体村 · 解惑大会</div>
+        <h1>半仙 NPC 演绎复习卡</h1>
+        <p class="npc-intro" id="npc-intro"></p>
+        <div class="npc-warn">⚠️ 仅演绎人员阅读 · 不要给玩家看</div>
+      </header>
+      <div class="npc-bar"><i id="npc-bar"></i></div>
+      <div class="npc-meta">
+        <span id="npc-counter"></span>
+        <div class="npc-dots" id="npc-dots"></div>
+      </div>
+      <div class="npc-stage" id="npc-stage"></div>
+      <div class="npc-nav">
+        <button type="button" id="npc-prev">← 上一页</button>
+        <button type="button" id="npc-next" class="is-main">下一页 →</button>
+      </div>
+      <div class="npc-hintkey">点按钮翻页 · 电脑按 ← → · 手机左右滑动 · 圆点可跳页</div>
+      <a class="npc-back" href={import.meta.env.BASE_URL + 'juben/'}>← 返回剧本研究室</a>
+    </div>
+    <div class="npc-gate" id="npc-gate">
+      <p class="npc-gate-spin">正在确认身份…</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style is:global>
+  :root{
+    --npc-bg:#faf8f4; --npc-card:#fff; --npc-ink:#2a2520; --npc-sub:#6b6156;
+    --npc-line:#e9e2d6; --npc-gold:#a97c28; --npc-goldbg:#fbf3e2;
+    --npc-ember:#c8642a; --npc-red:#b5392b; --npc-redbg:#fdf0ee;
+    --npc-green:#2f7d5b; --npc-greenbg:#eef7f2;
+  }
+  .npc-page{max-width:760px;margin:0 auto;padding:28px 16px 60px;min-height:70vh}
+  .npc-deck{display:flex;flex-direction:column;min-height:70vh}
+  .npc-head{text-align:center;margin-bottom:16px}
+  .npc-kicker{color:var(--npc-gold);font-size:12px;letter-spacing:3px;font-weight:700}
+  .npc-head h1{font-size:24px;margin:6px 0 8px;letter-spacing:1px;color:var(--npc-ink)}
+  .npc-intro{color:var(--npc-sub);font-size:13px;max-width:520px;margin:0 auto}
+  .npc-warn{background:var(--npc-redbg);border:1px solid #f0d3ce;color:var(--npc-red);font-size:12px;padding:9px 14px;border-radius:10px;margin-top:14px}
+  .npc-bar{height:5px;background:#efe7d8;border-radius:3px;overflow:hidden;margin-bottom:8px}
+  .npc-bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--npc-gold),var(--npc-ember));border-radius:3px;transition:width .32s ease}
+  .npc-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--npc-sub);margin-bottom:12px}
+  .npc-dots{display:flex;gap:6px}
+  .npc-dots b{width:7px;height:7px;border-radius:50%;background:#ddd2bf;cursor:pointer;transition:.2s}
+  .npc-dots b.on{background:var(--npc-gold);transform:scale(1.35)}
+  .npc-dots b.seen{background:#c8ad78}
+  .npc-stage{flex:1}
+  .npc-page .page{display:none;animation:npc-fade .3s ease}
+  .npc-page .page.active{display:block}
+  @keyframes npc-fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .npc-card{background:var(--npc-card);border:1px solid var(--npc-line);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(60,45,20,.04)}
+  .npc-card h2{font-size:15px;display:flex;align-items:center;gap:9px;margin-bottom:12px;color:var(--npc-ink)}
+  .npc-card h2 .n{background:var(--npc-gold);color:#fff;width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:none}
+  .npc-card ul{padding-left:20px}
+  .npc-card li{font-size:13.5px;margin:5px 0}
+  .npc-card li b,.npc-card p b{color:var(--npc-ember)}
+  .npc-steps{counter-reset:s;list-style:none;padding:0}
+  .npc-steps li{position:relative;padding-left:34px;margin:8px 0}
+  .npc-steps li:before{counter-increment:s;content:counter(s);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;background:var(--npc-goldbg);color:var(--npc-gold);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center}
+  .npc-seq{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;font-size:12px;align-items:center}
+  .npc-seq span{background:var(--npc-goldbg);color:var(--npc-gold);padding:4px 9px;border-radius:20px;font-weight:600}
+  .npc-seq i{color:var(--npc-sub);font-style:normal}
+  .npc-hero{text-align:center;margin-bottom:14px}
+  .npc-hero .bigidx{font-size:34px;font-weight:800;color:var(--npc-gold);line-height:1}
+  .npc-hero .pname{font-size:19px;font-weight:800;margin-top:4px;color:var(--npc-ink)}
+  .npc-hero .ptag{font-size:11px;color:var(--npc-sub)}
+  .npc-line{border-radius:12px;padding:13px 15px;margin-bottom:10px;border:1px solid var(--npc-line);background:#fffdf9}
+  .npc-line .cap{font-size:11px;color:var(--npc-sub);font-weight:700;letter-spacing:1px;margin-bottom:5px}
+  .npc-line.ask .txt{font-size:13.5px;color:var(--npc-ink)}
+  .npc-line.ans{background:var(--npc-greenbg);border-color:#cfe7da}
+  .npc-line.ans .cap{color:var(--npc-green)}
+  .npc-line.ans .txt{font-size:16px;font-weight:700;line-height:1.55;color:var(--npc-ink)}
+  .npc-line.ans.mute{background:var(--npc-redbg);border-color:#f0d3ce}
+  .npc-line.ans.mute .cap{color:var(--npc-red)}
+  .npc-line.ans .lbl{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;margin-bottom:7px;background:#fff;color:var(--npc-green)}
+  .npc-line.ans.mute .lbl{color:var(--npc-red)}
+  .npc-line.bye .txt{font-size:13.5px;color:var(--npc-sub)}
+  .npc-line.bye .txt b{color:var(--npc-ink)}
+  .npc-line.bye .txt b:first-child{color:var(--npc-red)}
+  .npc-trap{background:var(--npc-redbg);border:1px solid #f0d3ce;color:var(--npc-red);border-radius:10px;padding:10px 13px;font-size:12.5px;font-weight:700;margin-top:2px}
+  .npc-dont{background:var(--npc-redbg);border:1px solid #f0d3ce;border-radius:14px;padding:18px 20px}
+  .npc-dont h2 .n{background:var(--npc-red)}
+  .npc-dont ol{padding-left:22px}
+  .npc-dont li{margin:8px 0;color:#7d2a20;font-size:13.5px}
+  .npc-dont li b{color:var(--npc-red)}
+  .npc-hintbox{background:var(--npc-goldbg);border:1px solid #ecd9ac;border-radius:12px;padding:14px 16px;margin-top:12px}
+  .npc-hintbox h3{font-size:13px;color:var(--npc-ember);margin-bottom:6px}
+  .npc-hintbox li{font-size:12.5px;color:var(--npc-ink);margin:4px 0}
+  .npc-motto{text-align:center;margin-top:12px;padding:14px;background:#2a2520;color:#f3ead9;border-radius:12px;font-size:13px;line-height:1.9}
+  .npc-motto b{color:#e3b95a}
+  .npc-nav{display:flex;align-items:center;gap:10px;margin-top:16px}
+  .npc-nav button{flex:1;font-family:inherit;font-size:14px;font-weight:700;color:var(--npc-ink);background:var(--npc-card);border:1px solid var(--npc-line);border-radius:12px;padding:12px;cursor:pointer;transition:.15s}
+  .npc-nav button:hover:not(:disabled){border-color:var(--npc-gold);color:var(--npc-gold)}
+  .npc-nav button:active:not(:disabled){transform:scale(.98)}
+  .npc-nav button:disabled{opacity:.35;cursor:default}
+  .npc-nav button.is-main{background:var(--npc-gold);color:#fff;border-color:var(--npc-gold);flex:2}
+  .npc-nav button.is-main:hover:not(:disabled){background:#956d20;color:#fff}
+  .npc-hintkey{text-align:center;font-size:10.5px;color:#a99e8e;margin-top:10px}
+  .npc-back{display:inline-block;margin:18px auto 0;color:var(--npc-gold);font-size:12px;text-decoration:none}
+  .npc-gate{max-width:520px;margin:80px auto;background:#fff;border:1px solid var(--npc-line);border-radius:16px;padding:32px;text-align:center}
+  .npc-gate h2{font-size:18px;color:var(--npc-ink);margin-bottom:10px}
+  .npc-gate p{font-size:13.5px;color:var(--npc-sub);line-height:1.8}
+  .npc-gate-spin{color:var(--npc-sub)}
+  .npc-gate-actions{display:flex;gap:10px;justify-content:center;margin-top:18px;flex-wrap:wrap}
+  .npc-gate-cta{display:inline-block;padding:10px 18px;border-radius:10px;background:var(--npc-gold);color:#fff;font-size:13px;font-weight:700;text-decoration:none}
+  .npc-gate-cta.is-ghost{background:#fff;color:var(--npc-gold);border:1px solid var(--npc-gold)}
+  @media (max-width:520px){.npc-page{padding:20px 14px 48px}.npc-head h1{font-size:21px}}
+</style>
+
+<script>
+  import { api, ApiError, getCachedUser, getToken, isDm, loginUrl, registerUrl, onAuthChange } from '../../scripts/account-core.js';
+
+  const CASE_ID = '出逃连体村';
+  const DOC_ID = '11_半仙NPC演绎复习卡';
+  const deck = document.getElementById('npc-deck');
+  const gate = document.getElementById('npc-gate');
+  let user = getCachedUser();
+  let token = getToken();
+  let generation = 0;
+
+  const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (ch) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+  ));
+  // 数据块里只有少数几处刻意用的 <b>/<br> 标记，先转义再放行这两个标签。
+  const rich = (value) => escapeHtml(value).replace(/&lt;b&gt;/g, '<b>').replace(/&lt;\/b&gt;/g, '</b>').replace(/&lt;br&gt;/g, '<br>');
+  const inline = (value) => escapeHtml(value).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+  function showGate(state, message) {
+    deck.hidden = true;
+    gate.hidden = false;
+    if (state === 'gate') {
+      const here = location.pathname + location.search;
+      gate.innerHTML = `<h2>DM 专属页面</h2>
+        <p>${escapeHtml(message || '这一页是半仙演绎的剧透台词，仅对持 DM 邀请码的账号开放。')}</p>
+        <div class="npc-gate-actions">
+          <a class="npc-gate-cta" href="${loginUrl(here)}">登录并继续</a>
+          <a class="npc-gate-cta is-ghost" href="${registerUrl(here)}">注册</a>
+        </div>
+        <p style="margin-top:16px;font-size:12px"><a href="${import.meta.env.BASE_URL}juben/" style="color:var(--npc-gold)">← 返回剧本研究室</a></p>`;
+    } else {
+      gate.innerHTML = `<h2>${state === 'error' ? '暂时打不开' : '提示'}</h2><p>${escapeHtml(message || '')}</p>`;
+    }
+  }
+
+  function parseDeck(markdown) {
+    const match = String(markdown).match(/```npc-deck\s*\n([\s\S]*?)\n```/);
+    if (!match) return null;
+    try {
+      const data = JSON.parse(match[1]);
+      return Array.isArray(data.slides) && data.slides.length ? data : null;
+    } catch { return null; }
+  }
+
+  function slideHtml(s) {
+    if (s.kind === 'person') {
+      return `<div class="page">
+        <div class="npc-hero"><div class="bigidx">${escapeHtml(s.idx)}</div><div class="pname">${escapeHtml(s.name)}</div><div class="ptag">${escapeHtml(s.tag || '')}</div></div>
+        <div class="npc-line ask"><div class="cap">${escapeHtml(s.askLabel || 'TA 会问')}</div><div class="txt">${escapeHtml(s.ask)}</div></div>
+        <div class="npc-line ans${s.mute ? ' mute' : ''}"><div class="lbl">${escapeHtml(s.muteLabel || '')}</div><div class="txt">${escapeHtml(s.answer)}</div></div>
+        <div class="npc-line bye"><div class="cap">告别</div><div class="txt">${rich(s.bye)}</div></div>
+        ${s.trap ? `<div class="npc-trap">${escapeHtml(s.trap)}</div>` : ''}
+      </div>`;
+    }
+    if (s.kind === 'steps') {
+      return `<div class="page"><div class="npc-card">
+        <h2><span class="n">${escapeHtml(s.no)}</span>${escapeHtml(s.title)}</h2>
+        <ol class="npc-steps">${s.steps.map((x) => `<li>${inline(x)}</li>`).join('')}</ol>
+        <div class="npc-seq">${(s.seq || []).map((x, i) => `${i ? '<i>→</i>' : ''}<span>${escapeHtml(x)}</span>`).join('')}</div>
+      </div></div>`;
+    }
+    if (s.kind === 'redlines') {
+      return `<div class="page">
+        <div class="npc-dont"><h2><span class="n">${escapeHtml(s.no)}</span>${escapeHtml(s.title)}</h2>
+          <ol>${s.items.map((x) => `<li>${rich(x)}</li>`).join('')}</ol>
+        </div>
+        <div class="npc-hintbox"><h3>${escapeHtml(s.extraTitle || '可选加戏')}</h3><ul>${(s.extra || []).map((x) => `<li>${rich(x)}</li>`).join('')}</ul></div>
+        <div class="npc-motto">${rich(s.motto)}</div>
+      </div>`;
+    }
+    // section
+    return `<div class="page"><div class="npc-card">
+      <h2><span class="n">${escapeHtml(s.no)}</span>${escapeHtml(s.title)}</h2>
+      <ul>${s.bullets.map((x) => `<li>${inline(x)}</li>`).join('')}</ul>
+    </div></div>`;
+  }
+
+  function mount(data) {
+    const stage = document.getElementById('npc-stage');
+    stage.innerHTML = `<div class="page active"><div class="npc-card" style="text-align:center;padding:32px 20px">
+      <div style="font-size:44px;line-height:1">🎭</div>
+      <h2 style="justify-content:center;margin:12px 0 6px">点「下一页」开始复习</h2>
+      <p style="color:var(--npc-sub);font-size:13px">角色 → 准备 → 流程 → 五位玩家逐个 → 红线</p>
+    </div></div>` + data.slides.map(slideHtml).join('');
+    document.getElementById('npc-intro').textContent = data.intro || '';
+    const pages = Array.from(stage.querySelectorAll('.page'));
+    const dotsBox = document.getElementById('npc-dots');
+    dotsBox.innerHTML = pages.map(() => '<b></b>').join('');
+    const dots = Array.from(dotsBox.children);
+    const bar = document.getElementById('npc-bar');
+    const counter = document.getElementById('npc-counter');
+    const prev = document.getElementById('npc-prev');
+    const next = document.getElementById('npc-next');
+    let i = 0;
+    let maxSeen = 0;
+
+    function render() {
+      pages.forEach((p, k) => p.classList.toggle('active', k === i));
+      dots.forEach((d, k) => { d.classList.toggle('on', k === i); d.classList.toggle('seen', k < maxSeen && k !== i); });
+      bar.style.width = ((i + 1) / pages.length * 100) + '%';
+      counter.textContent = `第 ${i + 1} / ${pages.length} 页`;
+      prev.disabled = i === 0;
+      next.disabled = i === pages.length - 1;
+      next.textContent = i === pages.length - 1 ? '已到最后一页' : '下一页 →';
+    }
+    function go(k) {
+      i = Math.max(0, Math.min(pages.length - 1, k));
+      if (i > maxSeen) maxSeen = i;
+      render();
+      stage.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+    }
+    dots.forEach((d, k) => d.addEventListener('click', () => go(k)));
+    prev.addEventListener('click', () => go(i - 1));
+    next.addEventListener('click', () => go(i + 1));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(i + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(i - 1); }
+    });
+    let x0 = null;
+    stage.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (dx < -50) go(i + 1);
+      if (dx > 50) go(i - 1);
+    }, { passive: true });
+    render();
+    gate.hidden = true;
+    deck.hidden = false;
+  }
+
+  async function load() {
+    const mine = ++generation;
+    token = getToken();
+    user = getCachedUser();
+    if (!isDm(user) || !token) { showGate('gate'); return; }
+    gate.hidden = false;
+    gate.innerHTML = '<p class="npc-gate-spin">正在取演绎卡…</p>';
+    deck.hidden = true;
+    try {
+      const payload = await api('GET', `/juben/doc/${encodeURIComponent(CASE_ID)}/${encodeURIComponent(DOC_ID)}?audio=deferred`, undefined, { cache: 'no-store', requireJson: true });
+      if (mine !== generation) return;
+      if (payload?.configured === false) { showGate('error', '档案内容通道暂不可用'); return; }
+      const data = parseDeck(payload?.doc?.markdown);
+      if (!data) { showGate('error', '演绎卡数据缺失，请稍后再试'); return; }
+      mount(data);
+    } catch (error) {
+      if (mine !== generation) return;
+      if (error instanceof ApiError && error.status === 401) { showGate('gate', '登录已失效，请重新登录'); return; }
+      showGate('error', error?.message || '演绎卡暂时无法显示');
+    }
+  }
+
+  onAuthChange(() => load());
+  load();
+</script>
