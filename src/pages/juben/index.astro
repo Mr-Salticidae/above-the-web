@@ -1158,7 +1158,7 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
   import { createProgressStore, GUEST_OWNER } from '../../scripts/progress-store.js';
   import { createProgressSync, mountBadge, relativeTime } from '../../scripts/progress-sync.js';
   import { PROGRESS_SYNC } from '../../data/features.js';
-  import { api, getCachedUser, onAuthChange, url, isDm } from '../../scripts/account-core.js';
+  import { api, getCachedUser, onAuthChange, url } from '../../scripts/account-core.js';
   import { firstOpenMission, missionAt, missionHref, nextMission } from '../../scripts/juben-journey.js';
 
   (() => {
@@ -1337,12 +1337,6 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
       if (user) {
         store.adoptGuest(); // 未登录时勾的，进门就并进账号
         if (sync) sync.note(); // 并进来的那批也要推上去
-      }
-      // DM 身份变化后，半仙演绎卡入口跟着显隐（只在本卷显示）
-      const npcLink = document.getElementById('npc-link');
-      if (npcLink) {
-        const current = byId.get(selected);
-        npcLink.hidden = !(current?.vaultCaseId === '出逃连体村' && isDm(user));
       }
     });
     // 别的标签页或登录态改了才重画；自己刚点的由点击路径就地更新，避免焦点丢失。
@@ -1611,9 +1605,9 @@ const deconstructSkillUrl = `${KB_REPO}/tree/${KB_BRANCH}/07_skill存档/juben-d
         link.hidden = !item.workspaces?.[view];
         if (!link.hidden) link.href = `?case=${encodeURIComponent(id)}&view=${view}#dm-vault`;
       }
-      // 半仙演绎卡剧透，只在本卷、且 DM 登录时露出入口
+      // 半仙演绎卡：素材公开，出逃连体村卷直接露出入口，无需登录
       const npcLink = document.getElementById('npc-link');
-      if (npcLink) npcLink.hidden = !(item.vaultCaseId === '出逃连体村' && isDm(getCachedUser()));
+      if (npcLink) npcLink.hidden = item.vaultCaseId !== '出逃连体村';
       cards.forEach((card) => {
         const active = card.dataset.case === id;
         card.classList.toggle('is-active', active);
