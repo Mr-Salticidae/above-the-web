@@ -80,6 +80,7 @@ export const jubenCases = [
   {
     id: 'woman-by-window',
     vaultCaseId: '247-窗边的女人',
+    workspaces: { run: '00_对外学习包/第五册_自测与带本提醒', review: '07_归纳卡片', board: '09_白板演示_逐笔跟画' },
     title: '窗边的女人',
     english: 'THE WOMAN BY THE WINDOW',
     status: '学习包完成',
@@ -90,8 +91,8 @@ export const jubenCases = [
     level: '进阶',
     tone: 'bronze',
     intro: '从网络聊天室进入一桩旧案，把现场、人物与跨媒介证据拼成一张完整的推理网。',
-    note: '六册学习包 + 10 笔逐笔跟画已补齐；白板按「三不写」压到 288 字现场手写版。',
-    tags: ['跨媒介线索', '分幕还原', '仪式收束', '白板演示'],
+    note: '六册学习包 + 10 笔逐笔跟画 + 七格过本单已补齐；白板按「三不写」压到 288 字现场手写版；现场带本已补 20 步逐步计时 + 逐字话术，与双面 A4 互补；可直接打开速查、归纳卡片与白板演示三视图。',
+    tags: ['跨媒介线索', '分幕还原', '仪式收束', '白板演示', '七格过本单', '现场带本'],
     modules: [
       {
         slug: 'five-stages',
@@ -144,7 +145,7 @@ export const jubenCases = [
       dm: '物料执行与收束顺序',
       material: '角色本、拼版线索、音视频与地图',
       board: '四区 10 笔 · 288 字（三不写）',
-      learnkit: '六册分卷 + 答案定位自测',
+      learnkit: '六册分卷 + 答案定位自测 + 七格过本单',
     },
   },
   {
@@ -153,7 +154,7 @@ export const jubenCases = [
     workspaces: { run: '00_开本速查卡', review: '08_上帝视角时间线_DM复盘底稿', board: '09_人物关系与构造图' },
     title: '出逃连体村',
     english: 'ESCAPE FROM THE CONJOINED VILLAGE',
-    status: '待首开',
+    status: '已首开',
     statusKey: 'ready',
     players: '5 人 + DM',
     duration: '5.5 小时+',
@@ -161,8 +162,8 @@ export const jubenCases = [
     level: '进阶',
     tone: 'slate',
     intro: '从一场解惑会进入多轮推翻：先立流程，再记每一轮用什么新信息改写上一轮结论。',
-    note: '首车可从「现场带本」逐步彩排，核对每步发放和过关条件。白板演练按官方 6 张原图推进。',
-    tags: ['多重解答', '官方板书', '轮次推进'],
+    note: '已首开；「现场带本」的 27 步逐步计时与逐字话术仍可用于复开彩排，核对每步发放和过关条件。白板演练按官方 6 张原图推进。',
+    tags: ['已首开', '多重解答', '官方板书', '轮次推进', '现场带本'],
     modules: [
       {
         slug: 'opening-navigation',
@@ -220,6 +221,7 @@ export const jubenCases = [
   {
     id: 'shoddy-troupe',
     vaultCaseId: '草台班子',
+    workspaces: { run: '00_开本速查卡', review: '07_归纳卡片', board: '09_白板现场版_4x3' },
     title: '草台班子',
     english: 'THE SHODDY TROUPE',
     status: '已首开',
@@ -230,8 +232,8 @@ export const jubenCases = [
     level: '新手',
     tone: 'amber',
     intro: '一家六口被塞进同一台戏里。全场的活儿只有一件：把戏撑住别让人出戏，同时想办法让别人先出丑。',
-    note: '本卷不推凶：没有搜证、没有表决、没有时间线。成品收成一张七格过本单（约 2,600 字），白板砍到六框八箭约九十字。',
-    tags: ['无凶案', '即兴表演', '分数驱动', '换角色', '七格过本单'],
+    note: '本卷不推凶：没有搜证、没有表决、没有时间线。成品收成一张七格过本单（约 2,600 字），白板砍到六框八箭约九十字；现场带本已补 27 步逐步计时 + 逐字话术（对标出逃连体村 / 虚拟游戏）。',
+    tags: ['无凶案', '即兴表演', '分数驱动', '换角色', '七格过本单', '现场带本'],
     modules: [
       {
         slug: 'flow-one-line',
