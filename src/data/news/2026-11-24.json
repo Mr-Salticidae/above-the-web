@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-24",
+  "headline": "Maxon 为 Cinema 4D 和 ZBrush 加入 AI 生成，GPT-6.2 Sol 成为 ChatGPT 默认模型",
+  "items": [
+    {
+      "title": "Maxon 在 Cinema 4D 和 ZBrush 中引入 AI 生成",
+      "summary": "Maxon 宣布为 Cinema 4D 和 ZBrush 加入 AI 生成功能，并推出 Agentic 许可模式。官方表示每位 3D 艺术家都应配备 AI 助手，但创作者仍可通过开关关闭该功能。对 3D 创作者而言，这意味着主流 DCC 工具开始原生集成生成式能力，同时保留了手动控制的余地。",
+      "category": "工具",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/every-3d-artist-should-have-an-ai-assistant-maxon-says-as-it-launches-new-tools-and-agentic-licences",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 将 GPT-6.2 Sol 设为 ChatGPT 默认模型",
+      "summary": "OpenAI 在全球范围内将 ChatGPT 聊天标签页的默认模型更新为 GPT-6.2 Sol。内部测试显示，图像理解准确率从 47.4% 提升至 71.7%，复杂指令的正确处理率达到 78.1%。依赖 ChatGPT 进行图文分析和提示词调试的创作者将获得更稳定的多模态输出。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-updates-chatgpt-to-handle-complex-everyday-questions-web-searches-and-images-more-reliably",
+      "featured": true
+    },
+    {
+      "title": "David Fincher 新片因使用生成式 AI 画面受批评",
+      "summary": "导演 David Fincher 的新片《The Further Mis-Adventures of Cliff Booth》被指使用了低质量的生成式 AI 图像，引发外界批评。该片是昆汀 2019 年电影的续作。这一争议再次表明，影视制作中 AI 生成素材的质量把控仍是行业敏感议题。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/23/david-finchers-new-movie-the-further-mis-adventures-of-cliff-booth-is-being-criticized-for-its-blatant-use-of-ai",
+      "featured": false
+    },
+    {
+      "title": "Z.ai 发布 750B 旗舰模型 GLM-5.4，采用循环架构",
+      "summary": "Z.ai 推出 750B 参数的旗舰模型 GLM-5.4，采用 28 层运行两次的循环 Transformer 架构，称其表现可匹配 2 至 3 万亿参数模型。该公司将其定位为「通用编码」的起点，即代码可同时生成视频、游戏和 CAD 模型。目前仅有较小的 30B 测试版基准分数公开，实际创作能力有待验证。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/z-ai-follows-openai-into-loop-transformer-territory-with-its-new-750b-flagship-model",
+      "featured": false
+    },
+    {
+      "title": "多州起诉 SpaceX，要求阻止 Grok 生成违规图像",
+      "summary": "美国多个州的总检察长对 SpaceX 提起诉讼，指控 Grok 仍在生成儿童性虐待材料（CSAM）和未经同意的色情深度伪造内容。尽管 X 平台声称所有 Grok 输出均经过筛查，诉讼方认为现有防护不足。此案进一步收紧了 AI 图像生成工具面临的合规环境。",
+      "category": "政策",
+      "source": "Ars Technica",
+      "url": "https://arstechnica.com/tech-policy/2026/11/states-sue-spacex-to-stop-grok-from-generating-child-sex-images-revenge-porn",
+      "featured": false
+    },
+    {
+      "title": "Amazon 以 75 亿美元收购 Decart 的 AI 优化技术",
+      "summary": "Amazon 宣布以约 75 亿美元收购 Decart 的 AI 优化技术及研究团队，为其 Trainium 芯片业务做准备。Decart 此前以实时视频生成与视觉模型优化见长，此次收购可能影响其原有独立产品的迭代节奏。关注 AI 视频生成的创作者需留意该技术整合后的服务变化。",
+      "category": "行业",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/23/amazon-snaps-up-decarts-ai-optimization-tech-for-7-5b-as-it-prepares-to-sell-trainium-chips",
+      "featured": false
+    },
+    {
+      "title": "Anthropic 推出 Claude Ship，支持 Agent 自动处理 PR",
+      "summary": "Anthropic 发布开发者工具 Claude Ship，允许 AI Agent 自主审查、修复并批准 Pull Request。随着 AI 生成代码量增加，该工具旨在消除常规审批环节的效率瓶颈。对于使用 AI 辅助编程的创作者，这代表工作流自动化程度的进一步提升。",
+      "category": "工具",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/23/anthropic-launches-claude-ship-letting-ai-agents-review-fix-and-approve-code-changes",
+      "featured": false
+    }
+  ]
+}
