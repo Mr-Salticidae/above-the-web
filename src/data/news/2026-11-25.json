@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-25",
+  "headline": "Tidal 将全面下架 AI 生成音乐，纽约时报禁用新版 Photoshop",
+  "items": [
+    {
+      "title": "Tidal 下月起禁止并下架 AI 生成音乐",
+      "summary": "Tidal 宣布将于 12 月 9 日起正式禁止 AI 生成音乐上架，届时将删除约 2900 万首相关曲目，预计每天拒绝 8 万至 8.5 万首新提交。平台仍接受使用 AI 辅助但非完全由 AI 生成的作品。对 AI 音乐创作者而言，主流流媒体的分发渠道正在收窄。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/1041362/tidal-ai-music-ban",
+      "featured": true
+    },
+    {
+      "title": "纽约时报要求摄影师停用 Photoshop 2027",
+      "summary": "因 Photoshop 2027（28.0.0）版本新增大量生成式 AI 修图功能，《纽约时报》已通知自由摄影师不要升级，理由是这些 AI 功能可能以用户不易察觉的方式介入图像。新闻摄影机构正通过工具限制来划清 AI 编辑的边界。依赖 Adobe 生态的纪实与商业摄影师需留意甲方的合规要求变化。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1041227/the-new-york-times-warns-photographers-not-to-update-photoshop-over-ai-features",
+      "featured": true
+    },
+    {
+      "title": "Claude Artifacts 支持导出为桌面应用",
+      "summary": "Anthropic 现允许用户将 Claude Artifacts 直接安装为 macOS 和 Windows 桌面应用，免费账户即可使用。用户可在对话中免代码构建应用，支持添加菜单栏项、发送通知和创建透明窗口。这为快速制作小型创作工具或交互原型提供了一条低门槛路径。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-turns-claude-artifacts-into-standalone-desktop-apps-for-macos-and-windows",
+      "featured": false
+    },
+    {
+      "title": "MCP SDK 月下载量超 7 亿，协议扩展后台任务",
+      "summary": "Anthropic 公布 MCP 接口标准上线两年后月下载量突破 7 亿次，并新增后台任务、向用户追问及文件上传等功能，以提升 Agent 自主工作能力。对于围绕 AI Agent 搭建创作工作流的开发者，这意味着更灵活的调度与交互方式。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/anthropic-tops-700-million-monthly-mcp-sdk-downloads-and-expands-the-protocol-for-more-autonomous-ai-agents",
+      "featured": false
+    },
+    {
+      "title": "David Fincher 新片再陷 AI 画面争议",
+      "summary": "Brad Pitt 主演的《好莱坞往事》续集在早期放映后，被观众指出存在不自然、不一致的画面细节，引发对影片是否使用生成式 AI 的质疑。该事件已在近期快讯中报道过，此次为舆论持续发酵。影视从业者对 AI 介入画面的敏感度仍在上升。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/1041417/david-fincher-netflix-cliff-booth-ai-interpositive",
+      "featured": false
+    },
+    {
+      "title": "Pinterest 允许家长限制青少年看到的 AI 内容",
+      "summary": "Pinterest 推出新功能，允许家长控制青少年信息流中 AI 生成内容的可见比例。与其他平台侧重限制 AI 聊天机器人不同，Pinterest 直接针对 Feed 中的生成内容做过滤。AI 图像创作者需注意，平台端的流量分发规则正在收紧。",
+      "category": "政策",
+      "source": "TechCrunch",
+      "url": "https://techcrunch.com/2026/11/24/pinterest-will-now-let-parents-limit-the-ai-generated-content-their-teens-see",
+      "featured": false
+    }
+  ]
+}
