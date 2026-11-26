@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-26",
+  "headline": "Vibe coding 冲击合成器行业，Google 申请 AI 个性化视频专利",
+  "items": [
+    {
+      "title": "Vibe coding 正在改变合成器行业的开源生态",
+      "summary": "The Verge 报道，随着 vibe-coding agents 和 Reverse Engineer Anything 等工具的出现，音乐硬件领域的逆向工程门槛大幅降低。部分厂商如 Roland 保持沉默，另一些则开始拥抱 modding 社区。对音乐制作人和声音设计师而言，合成器固件与音色修改的自由度正在发生结构性变化。",
+      "category": "行业",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/1040081/vibe-coding-open-source-music-firmware",
+      "featured": true
+    },
+    {
+      "title": "Google 申请 AI 生成个性化视频流专利",
+      "summary": "Google 去年提交了一项名为 My Channel 的专利，旨在基于用户数据生成包含个性化 AI 视频和广告的 feed。该专利目前已被驳回，但 Google 可能上诉或重新提交修订版本。这一方向值得视频创作者关注，它意味着平台分发逻辑可能进一步向自动化内容倾斜。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/entertainment/1042221/google-my-channel-ai-video-patent",
+      "featured": true
+    },
+    {
+      "title": "AI 生成角色正在搬运真人创作者的爆款视频",
+      "summary": "PetaPixel 报道，越来越多内容创作者发现自己的视频被几乎原样复制，唯一的区别是画面中的真人被替换为 AI 生成的角色。这种“换皮”式搬运正在成为新的版权灰色地带。对于依赖个人形象出镜的视频创作者，这意味着需要更主动地监测和保护自己的内容资产。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/25/ai-generated-characters-are-stealing-content-creators-viral-videos",
+      "featured": false
+    },
+    {
+      "title": "纽约时报因未披露 AI 功能禁用 Photoshop 2027",
+      "summary": "PetaPixel Podcast 讨论了《纽约时报》禁止摄影师使用 Adobe Photoshop 2027 的决定，原因是该版本加入了过多未明确标注的 AI 功能。此前我们已报道过禁令本身，本期补充了行业播客对此的讨论背景。新闻摄影领域对 AI 介入的警惕仍在持续升级。",
+      "category": "行业",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/25/the-new-york-times-cancels-adobe-the-r8-ii-is-a-hit-and-reto-does-it-again-the-petapixel-podcast",
+      "featured": false
+    },
+    {
+      "title": "英超球队用 AI 图冒充球场照片被球迷识破",
+      "summary": "Crystal Palace 俱乐部在社交媒体上发布了一张自家球场的图片，但很快被球迷指出是 AI 生成的。球迷质疑其为何不使用真实照片。这一事件再次说明，品牌方在视觉内容中使用 AI 生成图像时，受众的辨识能力和接受度都在提高。",
+      "category": "行业",
+      "source": "Creative Bloq",
+      "url": "https://www.creativebloq.com/news/crystal-palace-tried-to-get-away-with-posting-ai-and-fans-tore-it-to-shreds",
+      "featured": false
+    },
+    {
+      "title": "澳大利亚摄影师抗议政府为 AI 削弱版权法",
+      "summary": "多位摄影师签署声明，抗议澳大利亚政府计划修改版权法以便利 AI 公司使用训练数据。这是继 Tidal 下架 AI 音乐、纽约时报禁用新版 Photoshop 之后，创作者群体围绕版权问题的又一次集体行动。",
+      "category": "政策",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/25/photographers-protest-australias-plans-to-weaken-copyright-laws-for-ai",
+      "featured": false
+    },
+    {
+      "title": "Pi 创始人：系统崩溃后工程师都在问 Claude 怎么修",
+      "summary": "Pi 创始人在分享中提到一个现象：当系统出现故障时，一屋子的工程师第一反应是向 Claude 提问如何修复，而非自行排查。这反映出 AI 编码助手已经深度嵌入开发者的日常工作流。对技术型创作者来说，工具链的使用习惯正在被重塑。",
+      "category": "行业",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/ExbJjrItIlc9KLfQ2UeT",
+      "featured": false
+    }
+  ]
+}
