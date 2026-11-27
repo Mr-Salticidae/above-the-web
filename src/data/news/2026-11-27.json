@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-27",
+  "headline": "GPT-6.2 修复计费漏洞致用量收紧，Character.AI 用户数据拍卖受阻",
+  "items": [
+    {
+      "title": "OpenAI 修复 GPT-6.2 计费漏洞，用量上限提前触达",
+      "summary": "OpenAI 表示此前一个计费漏洞导致 GPT-6.2 用户获得了错误折扣。修复后，Astra 和 Sol 用户的用量上限分别比上周提前 40% 和 25% 触发。作为补偿，订阅用户将获得一次额外重置，企业用户可免费使用 Fast Mode 至年底。依赖 GPT-6.2 进行图像或文本生成的创作者需重新评估日常调用量规划。",
+      "category": "模型",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/gpt-6-2-astra-users-now-hit-limits-40-faster-after-openai-patched-a-pricing-error",
+      "featured": true
+    },
+    {
+      "title": "美国 42 州总检察长阻止 Character.AI 拍卖用户聊天记录",
+      "summary": "Character.AI 正处于 Chapter 11 破产程序中，计划拍卖超过 2100 万个美国账户的私人聊天记录，其中包括 210 万个未成年人账户。美国 42 个州的总检察长联合介入，试图阻止这一数据出售行为。对于在平台上积累角色设定与对话素材的创作者而言，这直接关系到个人创作数据的安全归属。",
+      "category": "政策",
+      "source": "The Verge",
+      "url": "https://www.theverge.com/policy/1042620/character-ai-sale-state-ags-block-selling-users-chats",
+      "featured": true
+    },
+    {
+      "title": "OpenAI 测试 Private Inference，企业调用模型时平台不可见数据",
+      "summary": "OpenAI 正在测试一项名为 Private Inference 的新功能，允许企业在调用其最强模型时，确保 OpenAI 无法访问查询数据。该功能主要面向需要处理敏感信息的企业用户。对于将未公开剧本、设计资产或商业文案输入模型进行辅助创作的团队，这提供了一个更可控的数据边界。",
+      "category": "工具",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-wants-companies-to-trust-it-with-sensitive-work-by-promising-not-to-look-at-their-data",
+      "featured": false
+    },
+    {
+      "title": "中国 AI 公司因训练数据受限转向 Google 和 Meta",
+      "summary": "由于 OpenAI 和 Anthropic 关闭了数据访问通道，Z.AI 和 Moonshot AI 等中国 AI 公司不得不推迟下一代旗舰模型的发布，并转向从 Google 和 Meta 寻找新的训练数据来源。训练数据的变动可能影响后续中文多模态模型的生成质量与迭代节奏。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/after-openai-and-anthropic-shut-the-door-on-their-data-a-chinese-ai-developer-is-turning-to-google-and-meta-instead",
+      "featured": false
+    },
+    {
+      "title": "芯片限制与反蒸馏措施已拖慢中国 AI 实验室进度",
+      "summary": "据报告，芯片出口管制、反蒸馏措施以及海外 Nvidia 硬件获取难度增加，正对 Deepseek、Moonshot AI 和阿里巴巴带来压力。Deepseek 研究人员内部估计，其进度已落后美国模型最多九个月，且差距仍在扩大。底层模型能力的延迟会直接影响下游 AIGC 工具的可用性与效果上限。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/us-chip-access-curbs-and-anti-distillation-measures-are-reportedly-already-slowing-chinese-ai-labs",
+      "featured": false
+    },
+    {
+      "title": "Amazon 与 Meta 协商解除 AI 购物代理 Muse 的封禁",
+      "summary": "Amazon 正在与 Meta 讨论恢复后者 AI 购物代理 Muse 在其电商平台上的运行权限。Muse 目前占据所有代理式购物订单的 51%，双方在广告收入分配和搜索结果控制权上仍存在分歧。对于通过 AI 代理分发数字商品或创意周边的独立创作者，平台间的代理互通规则值得持续关注。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/amazon-and-meta-are-in-talks-to-end-the-block-on-metas-ai-shopping-agent-muse-in-amazons-online-store",
+      "featured": false
+    }
+  ]
+}
