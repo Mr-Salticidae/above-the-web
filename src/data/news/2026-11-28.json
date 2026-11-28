@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-28",
+  "headline": "LTX-2.5 支持 Trainium3 推理，JEPA 世界模型研究取得进展",
+  "items": [
+    {
+      "title": "Hugging Face：LTX-2.5 支持 Trainium3 生成视频",
+      "summary": "Hugging Face 发布技术文章，介绍如何在 AWS Trainium3 芯片上使用 LTX-2.5 模型进行视频生成。这为 AI 视频创作者提供了除 Nvidia GPU 之外的另一种算力选择。",
+      "category": "模型",
+      "source": "Hugging Face",
+      "url": "https://huggingface.co/blog/video-trainium3",
+      "featured": true
+    },
+    {
+      "title": "Meta 与 AMI Labs 发表三篇 JEPA 世界模型研究",
+      "summary": "Yann LeCun 创办的 AMI Labs 与 Meta 联合发表三项研究，展示 JEPA 架构在机器人规划、训练效率和纠错方面的进展。该路线试图让机器建立理解因果的内部世界模型，而非依赖大语言模型，可能影响未来视频与 3D 生成的底层逻辑。",
+      "category": "研究",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/three-studies-from-meta-and-ami-labs-back-yann-lecuns-bet-on-jepa-world-models-over-large-language-models",
+      "featured": true
+    },
+    {
+      "title": "Arkivism 上线，整合超四百万张公版历史图像",
+      "summary": "新网站 Arkivism 将超过四百万张公共领域的历史图像和视频集中到一个可搜索的数据库中。对于需要寻找免版权素材进行 AI 图像训练或二次创作的作者，这是一个可直接使用的资源库。",
+      "category": "工具",
+      "source": "PetaPixel",
+      "url": "https://petapixel.com/2026/11/27/arkivism-is-a-searchable-archive-of-more-than-four-million-free-public-domain-images",
+      "featured": false
+    },
+    {
+      "title": "AI 编码智能体加速 GTA 6 PC 逆向工程进程",
+      "summary": "GTA 6 主机版发售数日后，已有超过 40 个项目尝试通过逆向工程将其移植至 PC。报道指出，Claude Code 等 AI 编码智能体显著加快了这一过程，非官方多人模式已可运行。这展示了 AI 编码工具在复杂软件工程任务中的实际效率。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/rockstars-ai-dilemma-can-gta-6s-staggered-release-model-survive-coding-agents",
+      "featured": false
+    },
+    {
+      "title": "OpenAI 开发 Athena 数据平台以减少 Agent 误差",
+      "summary": "OpenAI 正在以「Athena」为代号构建语义层数据平台，旨在为 AI Agent 提供标准化的业务指标定义，减少 ChatGPT Work 中数据处理的猜测性错误。该工具若落地，将使 OpenAI 直接与 Snowflake 和 Databricks 竞争。",
+      "category": "行业",
+      "source": "The Decoder",
+      "url": "https://the-decoder.com/openai-is-building-athena-data-platform-to-cut-down-on-ai-agent-guesswork",
+      "featured": false
+    },
+    {
+      "title": "InfoQ：如何让 Agent 记得住、查得准、改得对",
+      "summary": "InfoQ 发文探讨 AI Agent 在记忆持久化、信息检索准确性和内容修改能力上的技术路径。对于正在搭建基于 Agent 的自动化创作工作流的开发者，文中涉及的架构思路具有参考价值。",
+      "category": "研究",
+      "source": "InfoQ",
+      "url": "https://www.infoq.cn/article/DUG6LEgK9Vi4sGy6QYTW",
+      "featured": false
+    }
+  ]
+}
