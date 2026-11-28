@@ -1,0 +1,347 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>安卓手机代理残留致国内 App 断网 · 清代理要连派生字段,别信 curl 的绿 · 蛛网之上</title><meta name="description" content="用 adb shell settings put global httpproxy <电脑IP:<端口 给手机临时挂过代理之后,只删 httpproxy 等于没删——Android/MIUI 会把它拆成 globalhttpproxyhos…"><meta name="generator" content="Astro v5.18.2"><meta name="theme-color" content="#faf8f3"><link rel="icon" href="/above-the-web/favicon.svg"><link rel="canonical" href="https://tiaozhuxiansheng.com/2026-11-24-app-v1-6463a98/"><meta name="author" content="跳蛛先生"><meta property="og:site_name" content="蛛网之上"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="安卓手机代理残留致国内 App 断网 · 清代理要连派生字段,别信 curl 的绿"><meta property="og:description" content="用 adb shell settings put global httpproxy <电脑IP:<端口 给手机临时挂过代理之后,只删 httpproxy 等于没删——Android/MIUI 会把它拆成 globalhttpproxyhos…"><meta property="og:url" content="https://tiaozhuxiansheng.com/2026-11-24-app-v1-6463a98/"><meta property="og:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="安卓手机代理残留致国内 App 断网 · 清代理要连派生字段,别信 curl 的绿"><meta name="twitter:description" content="用 adb shell settings put global httpproxy <电脑IP:<端口 给手机临时挂过代理之后,只删 httpproxy 等于没删——Android/MIUI 会把它拆成 globalhttpproxyhos…"><meta name="twitter:image" content="https://tiaozhuxiansheng.com/og-default.png"><meta property="article:published_time" content="2026-11-24T00:00:00+08:00"><meta property="article:modified_time" content="2026-11-24T18:59:39+08:00"><meta property="article:section" content="平台工程"><meta property="article:tag" content="类型/平台工程"><meta property="article:tag" content="主题/网络排障"><meta property="article:tag" content="主题/代理链路"><meta property="article:tag" content="主题/安卓adb"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 全站更新" href="/above-the-web/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · 笔记" href="/above-the-web/notes/rss.xml"><link rel="alternate" type="application/rss+xml" title="蛛网之上 · AIGC 快讯" href="/above-the-web/news/rss.xml"><link rel="alternate" type="application/feed+json" title="蛛网之上 · 全站更新（JSON Feed）" href="/above-the-web/feed.json"><link rel="sitemap" type="application/xml" href="/above-the-web/sitemap.xml"><link rel="manifest" href="/above-the-web/manifest.webmanifest"><link rel="apple-touch-icon" href="/above-the-web/apple-touch-icon.png"><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://tiaozhuxiansheng.com/#website","url":"https://tiaozhuxiansheng.com/","name":"蛛网之上","alternateName":"Above the Web","description":"跳蛛先生的个人站——AIGC 创作笔记、每日快讯、prompt 拆解连载，和一些做着玩的小作品。","inLanguage":"zh-CN","publisher":{"@id":"https://tiaozhuxiansheng.com/#person"}},{"@type":"Person","@id":"https://tiaozhuxiansheng.com/#person","name":"跳蛛先生","url":"https://tiaozhuxiansheng.com/about/","sameAs":["https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC","https://www.kuaishou.com/profile/3xaszm4s33jffe2","https://space.bilibili.com/6891496","https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723","https://music.163.com/#/artist?id=124358911","https://github.com/Mr-Salticidae"]},{"@type":"BlogPosting","@id":"https://tiaozhuxiansheng.com/2026-11-24-app-v1-6463a98/#article","mainEntityOfPage":"https://tiaozhuxiansheng.com/2026-11-24-app-v1-6463a98/","url":"https://tiaozhuxiansheng.com/2026-11-24-app-v1-6463a98/","headline":"安卓手机代理残留致国内 App 断网 · 清代理要连派生字段,别信 curl 的绿","inLanguage":"zh-CN","author":{"@id":"https://tiaozhuxiansheng.com/#person"},"publisher":{"@id":"https://tiaozhuxiansheng.com/#person"},"isPartOf":{"@id":"https://tiaozhuxiansheng.com/#website"},"description":"用 adb shell settings put global httpproxy \u003c电脑IP:\u003c端口 给手机临时挂过代理之后,只删 httpproxy 等于没删——Android/MIUI 会把它拆成 globalhttpproxyhos…","datePublished":"2026-11-24T00:00:00+08:00","dateModified":"2026-11-24T18:59:39+08:00","articleSection":"平台工程","keywords":"类型/平台工程, 主题/网络排障, 主题/代理链路, 主题/安卓adb"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"笔记","item":"https://tiaozhuxiansheng.com/notes/"},{"@type":"ListItem","position":2,"name":"平台工程","item":"https://tiaozhuxiansheng.com/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B"},{"@type":"ListItem","position":3,"name":"安卓手机代理残留致国内 App 断网 · 清代理要连派生字段,别信 curl 的绿","item":"https://tiaozhuxiansheng.com/2026-11-24-app-v1-6463a98/"}]}]}</script><script type="speculationrules">{"prerender":[{"source":"document","where":{"and":[{"href_matches":"/above-the-web/*"},{"not":{"href_matches":["/above-the-web/account/*","/above-the-web/admin/*","/above-the-web/api/*","/above-the-web/tasks/*","/above-the-web/beat-tapper/*","/above-the-web/desk-pond/*","/above-the-web/fraud-desk/*","/above-the-web/livelink/*","/above-the-web/prompt-master/*","/above-the-web/skills/*","/above-the-web/tasks/*","/above-the-web/tk-subtitle/*","/above-the-web/yuwen-s1/*","/above-the-web/zhuyuanzhang-kline/*","/above-the-web/*.*"]}},{"not":{"selector_matches":"[target=_blank], [download], [rel~=nofollow], [data-no-prerender]"}}]},"eagerness":"moderate"}]}</script><meta name="atw-base" content="/above-the-web/"><script>
+      (() => {
+        let theme = 'light';
+        try {
+          if (localStorage.getItem('atw-theme') === 'dark') theme = 'dark';
+        } catch (_) {}
+        document.documentElement.setAttribute('data-theme', theme);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute('content', theme === 'dark' ? '#100f16' : '#faf8f3');
+      })();
+    </script><link rel="stylesheet" href="/above-the-web/_astro/claims.BC_xztOb.css"></head> <body> <a class="skip-link" href="#main" data-pagefind-ignore>跳到正文</a> <header class="site-header" data-pagefind-ignore> <div class="bar"> <a class="brand" href="/above-the-web/"> 蛛网之上 <small>Above the Web</small> </a> <nav class="site-nav" aria-label="栏目"> <a class="meta series-link" href="/above-the-web/notes/" aria-current="true">笔记</a><a class="meta series-link" href="/above-the-web/skills/">Skill</a><a class="meta series-link" href="/above-the-web/juben/">剧本</a><a class="meta series-link" href="/above-the-web/news/">AIGC 快讯</a><a class="meta series-link" href="/above-the-web/music/">音乐</a><a class="meta series-link" href="/above-the-web/prompt-master/">Prompt 大师</a><a class="meta series-link" href="/above-the-web/about/">关于</a> </nav> <div class="header-actions"> <button class="search-trigger" id="searchOpen" aria-label="搜索"> <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> <span>搜索</span> <kbd>⌘K</kbd> </button> <div class="search-modal" id="searchModal" hidden> <div class="search-panel" role="dialog" aria-label="站内搜索"> <button class="search-close" id="searchClose" aria-label="关闭">✕</button> <div id="pagefind"></div> </div> </div> <script>(function(){const base = "/above-the-web/";
+
+  const openBtn = document.getElementById('searchOpen');
+  const modal = document.getElementById('searchModal');
+  const closeBtn = document.getElementById('searchClose');
+  let inited = false;
+
+  // 关键：本组件渲染在页头内，而 .site-header 带 backdrop-filter —— 这会为 position:fixed
+  // 后代创建「包含块」，把本该铺满视口的模态钉死在页头高度里（约 96px），导致搜索结果无法滚动浏览。
+  // 把模态挂到 <body> 顶层，脱离该包含块，fixed 定位才恢复相对视口。
+  if (modal && modal.parentElement !== document.body) document.body.appendChild(modal);
+
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function init() {
+    if (inited) return;
+    inited = true;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = base + 'pagefind/pagefind-ui.css';
+    document.head.appendChild(link);
+    try {
+      await loadScript(base + 'pagefind/pagefind-ui.js');
+      new window.PagefindUI({
+        element: '#pagefind',
+        bundlePath: base + 'pagefind/',
+        showSubResults: true,
+        showImages: false,
+        translations: {
+          placeholder: '搜索知识库…',
+          zero_results: '没有找到与「[SEARCH_TERM]」相关的笔记',
+        },
+      });
+    } catch (e) {
+      document.getElementById('pagefind').innerHTML =
+        '<p style="color:var(--ink-soft);padding:1rem">搜索索引在站点构建后生效（本地预览不可用）。</p>';
+    }
+  }
+
+  function show() {
+    modal.hidden = false;
+    init();
+    setTimeout(() => modal.querySelector('input')?.focus(), 120);
+  }
+  function hide() { modal.hidden = true; }
+
+  openBtn?.addEventListener('click', show);
+  closeBtn?.addEventListener('click', hide);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) hide(); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hide();
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)) { e.preventDefault(); show(); }
+  });
+})();</script> <div class="acct" data-account-menu data-tasks="off"> <button class="acct-trigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acct-pop" data-acct-trigger> <span class="acct-trigger-face" data-acct-face></span> <svg class="acct-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg> </button> <div class="acct-pop" id="acct-pop" role="menu" hidden data-acct-pop></div> </div> <script type="module" src="/above-the-web/_astro/AccountMenu.astro_astro_type_script_index_0_lang.DtEx7URI.js"></script> <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换昼夜主题" title="切换昼夜主题"> <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg> <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8 6 18M18 6l1.8-1.8"></path></svg> </button> <a class="meta gh-link" href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </div> </div> </header> <main id="main" tabindex="-1">  <div class="reading-progress" aria-hidden="true"></div> <div class="note-layout has-toc"> <article class="prose note" data-pagefind-filter="type:note"> <header class="note-head" data-pagefind-ignore> <nav class="crumbs" aria-label="面包屑"> <a href="/above-the-web/notes/">笔记</a> <span aria-hidden="true">/</span>  <a href="/above-the-web/notes/?cat=%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B" data-pagefind-meta="category" data-pagefind-filter="kind:note">平台工程</a> <span aria-hidden="true">/</span><span>账号与访问</span> </nav> <p class="note-meta"> <span>发布于 <time datetime="2026-11-24T00:00:00+08:00">2026-11-24</time></span>  <span>约 7 分钟读完 · 2,684 字</span> </p> </header>   <details class="toc-inline" data-pagefind-ignore> <summary>本文目录 <i>21 节</i></summary> <ol> <li class="d2"><a href="#一句话">一句话</a></li><li class="d2"><a href="#事实记录事实冻结区只追加不改写">事实记录(事实冻结区,只追加不改写)</a></li><li class="d3"><a href="#环境与时间线">环境与时间线</a></li><li class="d3"><a href="#定位到的根因实测证据">定位到的根因(实测证据)</a></li><li class="d3"><a href="#修复动作按顺序">修复动作(按顺序)</a></li><li class="d3"><a href="#最终验证均为真机截图确认">最终验证(均为真机截图确认)</a></li><li class="d3"><a href="#修复前的三次归因全部错误或不足">修复前的三次归因(全部错误或不足)</a></li><li class="d2"><a href="#如何使用">如何使用</a></li><li class="d3"><a href="#症状对照什么情况该怀疑本文">症状对照:什么情况该怀疑本文</a></li><li class="d3"><a href="#三步定位约-1-分钟">三步定位(约 1 分钟)</a></li><li class="d3"><a href="#清除与验收">清除与验收</a></li><li class="d3"><a href="#给手机临时挂代理的正确收尾">给手机临时挂代理的正确收尾</a></li><li class="d2"><a href="#回顾为什么连错三次">回顾:为什么连错三次</a></li><li class="d3"><a href="#1-选错了谁在说真话">1. 选错了「谁在说真话」</a></li><li class="d3"><a href="#2-对照实验做了但两组共用同一份污染">2. 对照实验做了,但两组共用同一份污染</a></li><li class="d3"><a href="#3-测试输入没有取证">3. 测试输入没有取证</a></li><li class="d3"><a href="#4-修好了的回执超出了验证范围">4. 「修好了」的回执超出了验证范围</a></li><li class="d2"><a href="#可以带走的规律">可以带走的规律</a></li><li class="d2"><a href="#未验证与保留项">未验证与保留项</a></li><li class="d2"><a href="#版本记录">版本记录</a></li><li class="d2"><a href="#关联文档">关联文档</a></li> </ol> </details> <h1 id="安卓手机代理残留致国内-app-断网--清代理要连派生字段别信-curl-的绿">安卓手机代理残留致国内 App 断网 · 清代理要连派生字段,别信 curl 的绿</h1>
+<blockquote>
+<p>入档:2026-11-24
+来源:一句「链接我的手机,帮我更新棕色尘埃2」引出的三轮排障(小米 17 / Android 17 / USB 调试设备号 <code>c777ac0e</code>);电脑侧 Clash Verge,手机侧新装 Clash Meta for Android <code>v2.11.37.Meta</code>
+状态:<strong>已修复并双态验证</strong>(Clash 开/关两种状态下抖音、番茄小说、Play 商店均正常);故障是排障过程中<strong>我自己留下的系统设置</strong>造成的,不是手机、运营商或 App 的问题</p>
+</blockquote>
+<h2 id="一句话">一句话</h2>
+<p>用 <code>adb shell settings put global http_proxy &#x3C;电脑IP>:&#x3C;端口></code> 给手机临时挂过代理之后,只删 <code>http_proxy</code> <strong>等于没删</strong>——Android/MIUI 会把它拆成 <code>global_http_proxy_host</code> / <code>global_http_proxy_port</code> 等独立字段持久保存,系统联网探测因此一直去连一台已经不监听的电脑,超时 → 系统判定「此网络无互联网」→ 抖音、番茄小说这类<strong>先看系统网络验证结果再发请求</strong>的 App 全部转圈。而 <code>curl</code> 不读这层设置、照样 200,把故障伪装成「网络是通的,是 App 自己坏了」,让我连错三次归因,多花了约 25 分钟。</p>
+<h2 id="事实记录事实冻结区只追加不改写">事实记录(事实冻结区,只追加不改写)</h2>
+<h3 id="环境与时间线">环境与时间线</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>时刻</th><th>事件</th></tr></thead><tbody><tr><td>17:1x</td><td>手机 USB 接入,adb 授权通过;棕色尘埃2 当前 2.38.11,安装来源 Play 商店</td></tr><tr><td>17:3x–18:1x</td><td>Play 商店直连不通。先做 Python TCP 转发 + <code>settings put global http_proxy 192.168.31.192:8899</code>,商店可用,更新到 <strong>2.39.10(239010)</strong>;随后 <code>settings delete global http_proxy</code></td></tr><tr><td>18:1x</td><td>改为长期方案:电脑 Clash 开 <code>allow-lan</code>,手机 <code>settings put global http_proxy 192.168.31.192:7897</code></td></tr><tr><td>18:2x</td><td>改为手机独立方案:装 Clash Meta(TUN 模式),再 <code>settings delete global http_proxy</code>;电脑端 <code>allow-lan</code> 回退为 false、防火墙规则删除。<strong>此时派生字段已残留,但没发现</strong></td></tr><tr><td>18:19:36</td><td>logcat <code>handleSwipeKill</code>:Clash 卡片在最近任务里被上滑清掉,VPN 服务停止</td></tr><tr><td>18:26</td><td>用户报「手机无法正常上网」。重启 Clash、锁卡片。<strong>回执写了「修好了」,但验证只覆盖 curl 200 和 Play 商店</strong></td></tr><tr><td>18:44</td><td>用户报「还是不行,抖音也无法正常使用」</td></tr><tr><td>18:49–18:51</td><td>logcat 出现 <code>failed to connect to /192.168.31.192 (port 7897)</code>;清 5 个字段 + <code>put :0</code> 触发刷新;探测 <code>ret=204</code>,Wi-Fi <code>IS_VALIDATED</code></td></tr><tr><td>18:52–18:57</td><td>双态验证通过(见下表)</td></tr></tbody></table>
+<h3 id="定位到的根因实测证据">定位到的根因(实测证据)</h3>
+<ul>
+<li><code>adb shell settings list global | grep -i proxy</code> 在 <code>http_proxy</code> 已为 null 的情况下仍列出:<code>global_http_proxy_host=192.168.31.192</code>、<code>global_http_proxy_port=7897</code>、<code>global_http_proxy_exclusion_list=</code>、<code>global_proxy_pac_url=</code></li>
+<li><code>adb logcat</code>:<code>NetworkMonitor/205: PROBE_HTTP ... failed to connect to /192.168.31.192 (port 7897) ... after 10000ms</code> → <code>isCaptivePortal: isSuccessful()=false</code> → <code>ConnectivityService: [205 WIFI] validation failed</code>;移动数据网络 195 同样 failed</li>
+<li><code>dumpsys connectivity</code>:Wi-Fi 的 Policies 里没有 <code>IS_VALIDATED</code>,只有 <code>ACCEPT_UNVALIDATED acceptPartialConnectivity</code></li>
+<li>同一时间 <code>adb shell curl https://www.baidu.com</code> 返回 200</li>
+</ul>
+<h3 id="修复动作按顺序">修复动作(按顺序)</h3>
+<ol>
+<li>逐个删除:<code>http_proxy</code>、<code>global_http_proxy_host</code>、<code>global_http_proxy_port</code>、<code>global_http_proxy_exclusion_list</code>、<code>global_proxy_pac_url</code></li>
+<li><strong>只做第 1 步 + 重启 Wi-Fi 不够</strong>:18:50 的新一轮探测仍连旧代理并 failed(有对照记录)</li>
+<li>追加 <code>settings put global http_proxy :0</code>,再 <code>delete</code>,再重启 Wi-Fi → 18:51:20 起 <code>PROBE_HTTP ... time=125ms ret=204</code>、<code>isSuccessful()=true</code>,Wi-Fi 与移动数据均 validated</li>
+<li>「<code>:0</code> 触发了代理变更事件、让缓存旧代理的系统服务刷新」是<strong>对第 2、3 步差异的推断</strong>,未读系统源码求证;确定的是:做了这一步之后探测才恢复</li>
+</ol>
+<h3 id="最终验证均为真机截图确认">最终验证(均为真机截图确认)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>场景</th><th>Clash 关闭</th><th>Clash 开启(tun0=1)</th></tr></thead><tbody><tr><td>抖音首页推荐</td><td>18:52 正常播放视频</td><td>18:57 正常播放,状态栏有 VPN 图标</td></tr><tr><td>番茄小说书城</td><td>18:52 正常显示榜单</td><td>18:57 正常,榜单内容已刷新</td></tr><tr><td>Play 商店游戏页</td><td>未测(需要代理)</td><td>18:53 正常加载,按钮「开始游戏」</td></tr><tr><td>Wi-Fi 网络验证</td><td><code>IS_VALIDATED</code></td><td><code>IS_VALIDATED</code></td></tr><tr><td><code>settings global</code> 代理字段</td><td>空</td><td>空( Clash 开启不会写回)</td></tr></tbody></table>
+<p>棕色尘埃2 保持 2.39.10,安装来源未变。</p>
+<h3 id="修复前的三次归因全部错误或不足">修复前的三次归因(全部错误或不足)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>#</th><th>当时的结论</th><th>依据</th><th>错在哪</th></tr></thead><tbody><tr><td>1</td><td>Clash 被上滑清掉,重启即可</td><td>logcat <code>handleSwipeKill</code> + 界面显示「已停止」</td><td>现象为真,但只是并存的第二个问题;真正的断网原因没查</td></tr><tr><td>2</td><td>番茄小说报错「与代理无关,是 App 自身问题」</td><td>对照实验:Clash 开/关、清 DNS、强停重开都复现</td><td><strong>两组共用同一个被污染的系统设置</strong>,对照只排除了「Clash 运行状态」,没排除「我留下的残留」</td></tr><tr><td>3</td><td>运营商 DNS 污染 / 域名被劫持</td><td><code>api.douyin.com</code> 解析失败,<code>api.amemv.com</code> 解析到 <code>112.51.126.x</code></td><td>测试域名是凭印象挑的:可信 DoH 查 <code>api.douyin.com</code> 同样返回空,说明该域名本身无 A 记录;<code>api.amemv.com</code> 的 CNAME 指向 <code>bytedns1.com</code>(字节跳动自有 DNS 域),不是劫持证据。据此还试开了一次私人 DNS(DoT),结果全部域名解析失败,已回退</td></tr></tbody></table>
+<h2 id="如何使用">如何使用</h2>
+<h3 id="症状对照什么情况该怀疑本文">症状对照:什么情况该怀疑本文</h3>
+<ul>
+<li>手机<strong>部分</strong> App 转圈/报「网络出错」,而浏览器、<code>curl</code> 能打开网页</li>
+<li>Wi-Fi 图标上有叉或「已连接,但无法访问互联网」类提示;<code>dumpsys connectivity</code> 里对应网络没有 <code>IS_VALIDATED</code></li>
+<li>这台手机<strong>曾经用 adb 设过 <code>http_proxy</code></strong>(哪怕已经删过)</li>
+</ul>
+<h3 id="三步定位约-1-分钟">三步定位(约 1 分钟)</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">ADB</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">=</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"/d/AIGC工作站/tools/android-sdk/platform-tools/adb.exe"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 1. 看全部代理字段(不要只看 http_proxy)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$ADB</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> shell</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> settings</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> list</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> global</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> grep</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -i</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -E</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "proxy|pac"</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 2. 看系统探测到底在连谁——这一行是本案唯一决定性的证据</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$ADB</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> logcat</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -d</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> grep</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -i</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -E</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "NetworkMonitor|validation (failed|passed)"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> tail</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -20</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 3. 看网络验证状态</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$ADB</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> shell</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> dumpsys</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> connectivity</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> grep</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "ni{WIFI"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> |</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0"> grep</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> -o</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "IS_VALIDATED"</span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583"> ||</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> echo</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "NOT validated"</span></span></code></pre>
+<h3 id="清除与验收">清除与验收</h3>
+<pre class="astro-code astro-code-themes github-light github-dark" style="--shiki-light:#24292e;--shiki-dark:#e1e4e8;--shiki-light-bg:#fff;--shiki-dark-bg:#24292e; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 清:5 个字段一个不留</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">for</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> k </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">in</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> http_proxy</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> global_http_proxy_host</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> global_http_proxy_port</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8"> \</span></span>
+<span class="line"><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">         global_http_proxy_exclusion_list</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> global_proxy_pac_url</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">; </span><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">do</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">  "</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$ADB</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> shell</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> settings</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> delete</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> global</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> "</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$k</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF">"</span></span>
+<span class="line"><span style="--shiki-light:#D73A49;--shiki-dark:#F97583">done</span></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 推一下系统服务(本案实测:缺这一步探测仍连旧代理)</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$ADB</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> shell</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> settings</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> put</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> global</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> http_proxy</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> :0</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$ADB</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> shell</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> settings</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> delete</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> global</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> http_proxy</span></span>
+<span class="line"></span>
+<span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D"># 重连网络,让它重新探测</span></span>
+<span class="line"><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$ADB</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> shell</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> svc</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> wifi</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> disable</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">; </span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">sleep</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 3</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">; </span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">$ADB</span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">"</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> shell</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> svc</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> wifi</span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF"> enable</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8">; </span><span style="--shiki-light:#6F42C1;--shiki-dark:#B392F0">sleep</span><span style="--shiki-light:#005CC5;--shiki-dark:#79B8FF"> 20</span></span></code></pre>
+<p><strong>验收不看 curl,看这三条:</strong></p>
+<ol>
+<li><code>logcat</code> 出现 <code>PROBE_HTTP ... ret=204</code> 且 <code>isCaptivePortal: isSuccessful()=true</code></li>
+<li><code>dumpsys connectivity</code> 的 Wi-Fi 出现 <code>IS_VALIDATED</code></li>
+<li>打开一个之前转圈的国内 App,截图确认内容真的加载出来</li>
+</ol>
+<h3 id="给手机临时挂代理的正确收尾">给手机临时挂代理的正确收尾</h3>
+<ul>
+<li>用完立刻按上面的 5 字段清单清,<strong>当场验收</strong>,不要留到下一轮</li>
+<li>更省事的做法:手机上装 Clash Meta 用 TUN 模式,完全不碰 <code>http_proxy</code> 字段(本案最终方案),电脑端也不用开 <code>allow-lan</code></li>
+</ul>
+<h2 id="回顾为什么连错三次">回顾:为什么连错三次</h2>
+<h3 id="1-选错了谁在说真话">1. 选错了「谁在说真话」</h3>
+<p><code>curl</code> 200 是整场排障里最稳定、也最误导的信号。它稳定,是因为 curl 直接走 socket,根本不读系统 HTTP 代理设置,也不问「系统认为这个网络可不可用」;而 App 先问后者。<strong>一个不经过故障点的测量工具,永远绿,而且永远没用</strong>——和 ping 在 fake-ip 下自问自答是同一类陷阱。</p>
+<p>真正该第一个看的 <code>logcat</code>,直到第三轮才抓。原因不是抓不到,是前两轮已经有了一个「说得通」的解释(服务被杀 / App 自身问题),没再去找反例。</p>
+<h3 id="2-对照实验做了但两组共用同一份污染">2. 对照实验做了,但两组共用同一份污染</h3>
+<p>「Clash 开着报错、关着也报错 → 与代理无关」——推理形式没问题,漏在<strong>变量选择</strong>:开关 Clash 改变的是「代理服务在不在」,而残留字段在两组里都在。对照实验排除的只是你想到要动的那一个变量。</p>
+<h3 id="3-测试输入没有取证">3. 测试输入没有取证</h3>
+<p>DNS 污染假说建立在两个我凭印象挑的域名上。没有抓 App 实际请求了什么,就用自己的猜测当被测对象;猜错了,后面所有对照都在验证一个不存在的问题,还顺手多改了一项系统设置(私人 DNS)。</p>
+<h3 id="4-修好了的回执超出了验证范围">4. 「修好了」的回执超出了验证范围</h3>
+<p>18:26 的回执写「问题定位到了,已经修复」,依据是 curl 200 + Play 商店截图。但 Play 商店走 VPN、curl 不经过故障点,<strong>两个验证都绕开了坏掉的那条路</strong>;受影响的国内 App 一个没测。用户 18 分钟后回来报「还是不行」,是这个缺口的直接后果。</p>
+<h2 id="可以带走的规律">可以带走的规律</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>规律</th><th>一句话</th><th>验证状态</th></tr></thead><tbody><tr><td><strong>清设置要清到派生字段</strong></td><td>一条用户可见的设置项,底层可能是多条独立记录;删除入口项不等于删除它拆出去的字段</td><td>✅首验</td></tr><tr><td><strong>测量工具要经过故障点才算数</strong></td><td>curl/ping 这类「直连底层」的工具,查不了「系统判定」层面的问题;先确定故障在哪一层,再选会经过那一层的探针</td><td>同族二次验证(前作是 ping 与 fake-ip)</td></tr><tr><td><strong>对照组不能共用污染背景</strong></td><td>对照实验只能排除你动过的那个变量;自己改过的环境,要先列「我留下过什么」</td><td>同族二次验证(前作是「测试不投毒等于没测试」)</td></tr><tr><td><strong>回执的范围 = 验证的范围</strong></td><td>写「已修复」之前,逐项核对故障报告里提到的每一个受影响对象,用会经过故障点的方式复测</td><td>⚠️首次</td></tr><tr><td><strong>排障顺序:先日志,后假说</strong></td><td>有系统日志可读时先读日志再立假说;一个「说得通」的解释会挡住去找反例的路</td><td>⚠️首次</td></tr></tbody></table>
+<h2 id="未验证与保留项">未验证与保留项</h2>
+<ul>
+<li><code>put :0</code> 让系统刷新代理缓存的具体机制未读源码求证(见修复动作第 4 条)</li>
+<li>私人 DNS(DoT,<code>dns.alidns.com</code>)在本机网络下不通的原因未查;已回退,不影响结论</li>
+<li>Clash 卡片锁定、系统自启动、电池「无限制」三项保活只做了当场验证,<strong>没有经过真实重启或长时间待机的检验</strong></li>
+<li>Clash Meta 导入的是裸订阅,未单独核对国内分流规则;实测国内 App 在 Clash 开启下正常,但换节点或换订阅后的表现未知</li>
+</ul>
+<h2 id="版本记录">版本记录</h2>
+<ul>
+<li>v1(2026-11-24):首次入档。核心三条——清代理要连派生字段;curl 的绿不经过故障点;对照实验不能共用自己造成的污染背景。附三次错误归因与双态验证记录。</li>
+</ul>
+<h2 id="关联文档">关联文档</h2>
+<ul>
+<li>⚠️ <a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/" class="wikilink">ping通不等于路通_fake-ip假信号与节点带宽实测选型_v1</a> —— 同族「永远绿的信号最没用」:那篇是 ping 在 fake-ip 下自问自答,本篇是 curl 不读系统代理设置;合起来是一条律——<strong>先确认测量工具会经过故障点</strong></li>
+<li>⚠️ <a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/" class="wikilink">2026-08-19_vpn-guard出口归属门槛与四处假绿修复_迭代复盘_v1</a> —— 同族「对照被自己的样本中和」:那篇是哨兵被待测项抵消,本篇是两组共用同一份残留设置</li>
+<li>⚠️ <a href="/above-the-web/tun-codex-cli-v1-4cbeae3/" class="wikilink">代理环境变量遇TUN双重路由_Codex_CLI流式超时排障_v1</a> —— 同一台电脑的 Clash 环境、同一类「代理多走一层」代价:那篇是电脑端环境变量与 TUN 双重路由,本篇是手机端系统代理字段残留</li>
+<li>⚠️ <a href="/above-the-web/2026-11-20-tapplay-v1-14dccca/" class="wikilink">2026-11-20_工位池塘手机自测安装_TapPlay沙盒与原生包两条路的分叉_复盘_v1</a> —— 同一台手机的 adb 实操前作(MIUI 安全门、<code>MSYS_NO_PATHCONV</code>、装完三重验收);本篇补上它的验证缺口之外的一条——<strong>验收对象要覆盖故障报告里的每一个 App</strong></li>
+<li>⚠️ <a href="/above-the-web/2026-10-09-aigc-12gb-33b-v1-02f1adf/" class="wikilink">2026-10-09_新工作电脑AIGC环境从零搭建_单域名分流失败与12GB跑33B视频模型_复盘_v1</a> —— 同为「在错误层面耗了半天」:那篇在镜像/续传层面打转,真解在分流规则;本篇在 DNS/App 层面打转,真解在系统代理字段</li>
+<li>⚠️ <a href="/above-the-web/v1-83c88ab/" class="wikilink">全站文字截断体检_检测工具本身要先被证伪_v1</a> —— 同族「检测工具先标定」:那篇是判据常数没标定就改代码,本篇是没确认 curl 能不能看见这个故障就拿它当验收</li>
+<li><a href="/above-the-web/v1-78108ee/" class="wikilink">复盘事实先行原则_v1</a> —— 本篇顶部「事实记录」按它组织</li>
+<li>目录入口:<a href="/above-the-web/09-7ea49b8/" class="wikilink">09_平台工程索引</a></li>
+</ul> <div class="tags"> <span class="tag">类型/平台工程</span><span class="tag">主题/网络排障</span><span class="tag">主题/代理链路</span><span class="tag">主题/安卓adb</span> </div> <footer class="note-foot" data-pagefind-ignore> <p> 最后修订 <time datetime="2026-11-24T18:59:39+08:00">2026-11-24</time> ·  <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/2026-11-24_%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E4%BB%A3%E7%90%86%E6%AE%8B%E7%95%99%E8%87%B4%E5%9B%BD%E5%86%85App%E6%96%AD%E7%BD%91_%E6%B8%85%E4%BB%A3%E7%90%86%E8%A6%81%E8%BF%9E%E6%B4%BE%E7%94%9F%E5%AD%97%E6%AE%B5%E4%B8%8E%E7%BD%91%E7%BB%9C%E9%AA%8C%E8%AF%81%E5%81%87%E9%98%B4%E6%80%A7_%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">在 GitHub 查看源文件 ↗</a>
+· <a href="https://github.com/Mr-Salticidae/knowledge-base/commits/main/09_%E5%B9%B3%E5%8F%B0%E5%B7%A5%E7%A8%8B/%E8%B4%A6%E5%8F%B7%E4%B8%8E%E8%AE%BF%E9%97%AE/2026-11-24_%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E4%BB%A3%E7%90%86%E6%AE%8B%E7%95%99%E8%87%B4%E5%9B%BD%E5%86%85App%E6%96%AD%E7%BD%91_%E6%B8%85%E4%BB%A3%E7%90%86%E8%A6%81%E8%BF%9E%E6%B4%BE%E7%94%9F%E5%AD%97%E6%AE%B5%E4%B8%8E%E7%BD%91%E7%BB%9C%E9%AA%8C%E8%AF%81%E5%81%87%E9%98%B4%E6%80%A7_%E5%A4%8D%E7%9B%98_v1.md" target="_blank" rel="noopener">修订历史 ↗</a> </p> <p>本文采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可，转载请注明「蛛网之上」并附原文链接。</p> </footer> </article> <div class="note-after" data-pagefind-ignore> <nav class="backlinks" aria-label="反向链接"> <h2>← 链接到这里的笔记</h2> <ul> <li><a href="/above-the-web/09-7ea49b8/">平台工程索引</a></li><li><a href="/above-the-web/2026-11-20-tapplay-v1-14dccca/">工位池塘:给自己的手机装一份,成为第一个真实测试员</a></li><li><a href="/above-the-web/2026-08-19-vpn-guard-v1-6c1f41c/">2026-08-19 · vpn-guard 出口归属门槛与四处假绿修复 · 迭代复盘</a></li><li><a href="/above-the-web/ping-fake-ip-v1-9bfe0c8/">ping 通不等于路通 · fake-ip 假信号与节点带宽实测选型</a></li> </ul> </nav> <nav class="related" aria-label="相关笔记"> <h2>接着读</h2> <div class="cards"> <a class="card" href="/above-the-web/tun-codex-cli-v1-4cbeae3/"> <span class="card-cat">平台工程</span> <h3>代理环境变量遇 TUN 双重路由 · Codex CLI 流式超时排障</h3> <p>- 用户主诉：Codex CLI 在执行指令时反复遇到网络错误，界面显示&quot;正在重新连接 2/5&quot;。</p> </a><a class="card" href="/above-the-web/2026-09-06-tun-agent-gui-v1-a8056b4/"> <span class="card-cat">平台工程</span> <h3>2026-09-06 · TUN 开关状态漂移复发 · 三层真相源与 agent 起 GUI 边界 · 复盘</h3> <p>- 截图：Codex CLI「你在 0 秒后停止了」+「正在重新连接 3/5」</p> </a><a class="card" href="/above-the-web/dns-fake-ip-dns-v1-90e0c85/"> <span class="card-cat">平台工程</span> <h3>DNS 防泄露五层修复 · fake-ip 形同虚设与物理网卡 DNS 绕过</h3> <p>vpn-leak-audit.ps1 自查 8 项中第 6 项「DNS 解析路径」FAIL：对随机子域发起真实解析后回查，3/3 个实际应答…</p> </a><a class="card" href="/above-the-web/2026-10-09-aigc-12gb-33b-v1-02f1adf/"> <span class="card-cat">平台工程</span> <h3>新工作电脑 AIGC 环境从零搭建：单域名分流失败与 12GB 跑 33B 视频模型</h3> <p>- 项目：新工作电脑 AIGC 创作环境从零搭建</p> </a> </div> </nav> </div> <aside class="toc-rail" aria-label="本文目录" data-pagefind-ignore> <p class="toc-rail-title">本文目录</p> <ol> <li class="d2"><a href="#一句话" data-toc-link="一句话">一句话</a></li><li class="d2"><a href="#事实记录事实冻结区只追加不改写" data-toc-link="事实记录事实冻结区只追加不改写">事实记录(事实冻结区,只追加不改写)</a></li><li class="d3"><a href="#环境与时间线" data-toc-link="环境与时间线">环境与时间线</a></li><li class="d3"><a href="#定位到的根因实测证据" data-toc-link="定位到的根因实测证据">定位到的根因(实测证据)</a></li><li class="d3"><a href="#修复动作按顺序" data-toc-link="修复动作按顺序">修复动作(按顺序)</a></li><li class="d3"><a href="#最终验证均为真机截图确认" data-toc-link="最终验证均为真机截图确认">最终验证(均为真机截图确认)</a></li><li class="d3"><a href="#修复前的三次归因全部错误或不足" data-toc-link="修复前的三次归因全部错误或不足">修复前的三次归因(全部错误或不足)</a></li><li class="d2"><a href="#如何使用" data-toc-link="如何使用">如何使用</a></li><li class="d3"><a href="#症状对照什么情况该怀疑本文" data-toc-link="症状对照什么情况该怀疑本文">症状对照:什么情况该怀疑本文</a></li><li class="d3"><a href="#三步定位约-1-分钟" data-toc-link="三步定位约-1-分钟">三步定位(约 1 分钟)</a></li><li class="d3"><a href="#清除与验收" data-toc-link="清除与验收">清除与验收</a></li><li class="d3"><a href="#给手机临时挂代理的正确收尾" data-toc-link="给手机临时挂代理的正确收尾">给手机临时挂代理的正确收尾</a></li><li class="d2"><a href="#回顾为什么连错三次" data-toc-link="回顾为什么连错三次">回顾:为什么连错三次</a></li><li class="d3"><a href="#1-选错了谁在说真话" data-toc-link="1-选错了谁在说真话">1. 选错了「谁在说真话」</a></li><li class="d3"><a href="#2-对照实验做了但两组共用同一份污染" data-toc-link="2-对照实验做了但两组共用同一份污染">2. 对照实验做了,但两组共用同一份污染</a></li><li class="d3"><a href="#3-测试输入没有取证" data-toc-link="3-测试输入没有取证">3. 测试输入没有取证</a></li><li class="d3"><a href="#4-修好了的回执超出了验证范围" data-toc-link="4-修好了的回执超出了验证范围">4. 「修好了」的回执超出了验证范围</a></li><li class="d2"><a href="#可以带走的规律" data-toc-link="可以带走的规律">可以带走的规律</a></li><li class="d2"><a href="#未验证与保留项" data-toc-link="未验证与保留项">未验证与保留项</a></li><li class="d2"><a href="#版本记录" data-toc-link="版本记录">版本记录</a></li><li class="d2"><a href="#关联文档" data-toc-link="关联文档">关联文档</a></li> </ol> <a class="toc-top" href="#main">↑ 回到顶部</a> </aside> </div>  </main> <footer class="site-footer" data-pagefind-ignore> <p class="footer-brand">蛛网之上 <span>Above the Web</span></p>  <p class="footer-line">跳蛛先生的个人站——把值得留下的，都织在这张网上。</p> <nav class="footer-nav" aria-label="页脚导航"> <a href="/above-the-web/notes/" aria-current="true">笔记</a><a href="/above-the-web/skills/">Skill</a><a href="/above-the-web/juben/">剧本</a><a href="/above-the-web/news/">AIGC 快讯</a><a href="/above-the-web/music/">音乐</a><a href="/above-the-web/prompt-master/">Prompt 大师</a><a href="/above-the-web/about/">关于</a> <a href="https://github.com/Mr-Salticidae/knowledge-base" target="_blank" rel="noopener">GitHub ↗</a> </nav> <p class="sl-footer" data-astro-cid-zamss57n>
+关注：<a href="https://www.douyin.com/user/MS4wLjABAAAAfqHYYGGy0kBqVj7Gkk72EkVs8ZMhxqlGb81bdfI2qEiD92KNH4bb2ZKK-vlpJEaC" target="_blank" rel="noopener me" class="astro-zamss57n" data-astro-cid-zamss57n>抖音</a> · <a href="https://www.kuaishou.com/profile/3xaszm4s33jffe2" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>快手</a> · <a href="https://space.bilibili.com/6891496" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>哔哩哔哩</a> · <a href="https://www.xiaohongshu.com/user/profile/63f1bff3000000000f010723" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>小红书</a> · <a href="https://music.163.com/#/artist?id=124358911" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>网易云音乐</a> · <a href="https://github.com/Mr-Salticidae" target="_blank" rel="noopener me" class="astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n astro-zamss57n" data-astro-cid-zamss57n>GitHub</a></p><p class="footer-subscribe">
+订阅更新：<a href="/above-the-web/rss.xml">RSS</a> · <a href="/above-the-web/feed.json">JSON Feed</a>
+· 分栏订阅 <a href="/above-the-web/notes/rss.xml">笔记</a> / <a href="/above-the-web/news/rss.xml">快讯</a> </p><p class="footer-meta">内容采用 <a href="https://github.com/Mr-Salticidae/knowledge-base/blob/main/LICENSE.md" target="_blank" rel="noopener">CC BY-NC 4.0</a> 许可 · 自动同步自 GitHub</p>  </footer>  <section class="mp" data-mp hidden data-base="/above-the-web/" data-pagefind-ignore> <audio crossorigin="anonymous" preload="metadata"></audio> <aside class="mp-drawer" data-mp-drawer hidden aria-label="播放列表"> <div class="mp-drawer-head"> <span>播放列表 · <em data-mp-count></em> 首</span> <button type="button" data-mp-close aria-label="收起播放列表">×</button> </div> <ol class="mp-list" data-mp-list></ol> </aside> <div class="mp-bar" data-mp-bar role="region" aria-label="音乐播放器"> <div class="mp-cover" data-mp-cover aria-hidden="true">♪</div> <div class="mp-info"> <b class="mp-title" data-mp-title>未在播放</b> <small class="mp-artist" data-mp-artist></small> </div> <div class="mp-controls"> <button class="mp-btn" type="button" data-mp-prev aria-label="上一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h2v12H7zM20 6v12l-9-6z"></path></svg> </button> <button class="mp-btn mp-play" type="button" data-mp-play aria-label="播放"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6L19 12z"></path></svg> </button> <button class="mp-btn" type="button" data-mp-next aria-label="下一首"> <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15 6h2v12h-2zM4 6v12l9-6z"></path></svg> </button> </div> <div class="mp-progress"> <span class="mp-time" data-mp-cur>0:00</span> <input type="range" min="0" max="1000" value="0" data-mp-progress aria-label="播放进度"> <span class="mp-time" data-mp-dur>0:00</span> </div> <div class="mp-extras"> <button class="mp-btn mp-mode" type="button" data-mp-mode aria-label="列表循环" data-mode="order"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"> <path d="M17 2l4 4-4 4"></path><path d="M3 11v-1a4 4 0 0 1 4-4h14"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v1a4 4 0 0 1-4 4H3"></path> </svg> </button> <div class="mp-volume"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"></path></svg> <input type="range" min="0" max="1" step="0.05" value="0.9" data-mp-volume aria-label="音量"> </div> <button class="mp-btn" type="button" data-mp-toggle-list aria-expanded="false" aria-label="播放列表"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h6"></path></svg> </button> <button class="mp-btn mp-collapse" type="button" data-mp-collapse aria-label="收起播放器" title="收起播放器"> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg> </button> </div> </div> <!-- 收起态：底部居中小胶囊，点它重新展开；播放中 ♪ 仍有动画提示 --> <button class="mp-peek" type="button" data-mp-peek aria-label="展开音乐播放器" title="展开播放器"> <span class="mp-peek-note" aria-hidden="true">♪</span> <span class="mp-peek-title" data-mp-peek-title>音乐</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"></path></svg> </button> </section> <script type="module" src="/above-the-web/_astro/MusicPlayer.astro_astro_type_script_index_0_lang.DvoYzKdD.js"></script> <script>
+      // 顶栏高度随宽度、换行而变：实测后写进 --header-h，二级吸顶条与锚点留白都跟着它走
+      (() => {
+        const header = document.querySelector('.site-header');
+        if (!header || !('ResizeObserver' in window)) return;
+        new ResizeObserver(([entry]) => {
+          const h = entry.borderBoxSize?.[0]?.blockSize ?? header.offsetHeight;
+          document.documentElement.style.setProperty('--header-h', `${Math.round(h)}px`);
+        }).observe(header);
+      })();
+    </script> <script>
+      (() => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const root = document.documentElement;
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', next === 'dark' ? '#100f16' : '#faf8f3');
+          try { localStorage.setItem('atw-theme', next); } catch (_) {}
+          // 通知动画背景重新读取主题色
+          window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+        });
+      })();
+    </script> </body> </html> <script type="module">async function d(n){try{return await navigator.clipboard.writeText(n),!0}catch{const e=document.createElement("textarea");e.value=n,e.setAttribute("readonly",""),e.style.cssText="position:fixed;opacity:0;pointer-events:none",document.body.appendChild(e),e.select();let t=!1;try{t=document.execCommand("copy")}catch{}return e.remove(),t}}function u(n,e,t=1400){const o=n.dataset.label??n.textContent;n.dataset.label=o,n.textContent=e,clearTimeout(n._flashTimer),n._flashTimer=setTimeout(()=>{n.textContent=o},t)}function p(n){for(const e of n.querySelectorAll("h2[id], h3[id], h4[id]")){if(e.querySelector(".h-anchor"))continue;const t=document.createElement("a");t.className="h-anchor",t.href=`#${encodeURIComponent(e.id)}`,t.setAttribute("aria-hidden","true"),t.tabIndex=-1,t.title="复制本节链接",t.textContent="#",t.addEventListener("click",async o=>{o.preventDefault();const c=`${location.origin}${location.pathname}#${encodeURIComponent(e.id)}`;history.replaceState(null,"",`#${encodeURIComponent(e.id)}`),e.scrollIntoView({behavior:"smooth",block:"start"}),await d(c)&&u(t,"已复制")}),e.appendChild(t)}}function f(n){for(const e of n.querySelectorAll("pre")){if(e.parentElement?.classList.contains("code-block"))continue;const t=document.createElement("div");t.className="code-block",e.replaceWith(t),t.appendChild(e);const o=e.dataset.language;if(o&&!["plaintext","text","txt","plain"].includes(o)){const l=document.createElement("span");l.className="code-lang",l.textContent=o,t.appendChild(l)}const c=document.createElement("button");c.type="button",c.className="code-copy",c.textContent="复制",c.setAttribute("aria-label","复制代码"),c.addEventListener("click",async()=>{u(c,await d(e.innerText.replace(/\n$/,""))?"已复制":"复制失败")}),t.appendChild(c)}}function m(){const n=new Map([...document.querySelectorAll("[data-toc-link]")].map(i=>[i.dataset.tocLink,i]));if(!n.size||!("IntersectionObserver"in window))return;const e=[...n.keys()].map(i=>document.getElementById(i)).filter(Boolean),t=new Set;let o=null;const c=i=>{if(i===o)return;n.get(o)?.removeAttribute("aria-current"),o=i;const s=n.get(i);if(!s)return;s.setAttribute("aria-current","true");const r=s.closest(".toc-rail");if(r&&r.scrollHeight>r.clientHeight){const a=s.offsetTop-r.clientHeight/3;r.scrollTo({top:a,behavior:"smooth"})}},l=new IntersectionObserver(i=>{for(const a of i)a.isIntersecting?t.add(a.target.id):t.delete(a.target.id);const s=e.find(a=>t.has(a.id));if(s)return c(s.id);const r=e.filter(a=>a.getBoundingClientRect().top<0).pop();r&&c(r.id)},{rootMargin:"-10% 0px -65% 0px"});e.forEach(i=>l.observe(i))}function h(n){if(!n)return;p(n),f(n),m();const e=n.querySelector(".toc-inline");e?.addEventListener("click",t=>{t.target.closest("a")&&(e.open=!1)})}h(document.querySelector(".prose.note"));</script>
